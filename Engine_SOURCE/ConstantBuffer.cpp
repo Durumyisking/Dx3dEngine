@@ -6,7 +6,7 @@ using namespace dru::math;
 
 namespace dru::graphics
 {
-
+	// test
 	CConstantBuffer::CConstantBuffer()
 		: mType(eCBType::End)
 	{
