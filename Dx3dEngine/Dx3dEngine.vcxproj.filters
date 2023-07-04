@@ -13,7 +13,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dx2dEngine.h" />
+    <ClInclude Include="Dx3dEngine.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -31,7 +31,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Dx2dEngine.rc">
+    <ResourceCompile Include="Dx3dEngine.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -39,7 +39,7 @@
     <Image Include="small.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="Dx2dEngine.ico">
+    <Image Include="Dx3dEngine.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
