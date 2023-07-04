@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{f7540748-bd09-4207-a85d-e2da24221101}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Entity">
+      <UniqueIdentifier>{03d96900-e23f-4f2c-a49a-e1389a5088cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Math">
+      <UniqueIdentifier>{1175759b-0440-4985-8085-7f81a1b2eda2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="High Level Interface">
+      <UniqueIdentifier>{b1b985eb-61e5-4394-a429-8ccf1bf8c059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{95003e6d-9249-4f05-b988-dc7732abf79e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{735f3f9f-373a-4508-ad09-1bf9d633e4f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{ee2222b8-6e7f-46a5-bfa8-37d8e9adec40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{e511b595-67e6-4863-b5df-87e0da6184d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Renderer">
+      <UniqueIdentifier>{3e66ee10-c4f4-4349-8a9a-9b592176b121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Mesh">
+      <UniqueIdentifier>{95a2fee9-d057-402b-acd1-f65f5ba2eb8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader">
+      <UniqueIdentifier>{ee87d9d2-0f0b-4256-aedf-8c620ec6a880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Manager">
+      <UniqueIdentifier>{f5f2cb9f-e7c9-494a-8dc9-9717435bb70f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Material">
+      <UniqueIdentifier>{f5dbc21b-39bf-46fe-8fd6-6a267aa2a30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Texture">
+      <UniqueIdentifier>{8c3b4b7c-b5ea-4ee7-8c93-ba8592693b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component">
+      <UniqueIdentifier>{62eecbab-450d-4710-9651-1fce21aeebd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\TransForm">
+      <UniqueIdentifier>{4c9ad2ce-12b6-4cc6-9c11-5c908eabbe8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Script">
+      <UniqueIdentifier>{5159e036-2e59-4ee5-8350-3ceee37140b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Camera">
+      <UniqueIdentifier>{eda891fd-0c41-4e10-8f39-73c0a24c3f84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Camera\Script">
+      <UniqueIdentifier>{097773b2-133e-409e-a687-127f52ad60f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Renderer">
+      <UniqueIdentifier>{efaa299c-5103-47ef-a951-a1d79c071d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Renderer\Mesh">
+      <UniqueIdentifier>{bb99c478-e3ba-4303-9eed-168d722681c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Renderer\Sprite">
+      <UniqueIdentifier>{ce9056db-6a9e-406d-9b7d-cee1aeef4e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Script\Grid">
+      <UniqueIdentifier>{07391d1a-6255-4748-b831-1c8a300fc277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Script\Fade">
+      <UniqueIdentifier>{8f1ca778-f3ef-4a39-9eeb-8739549585e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Collider">
+      <UniqueIdentifier>{01ea66c5-b9ca-49ae-a581-fd103eafd344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Prefab">
+      <UniqueIdentifier>{ae7f96e1-5ffe-48c6-bc75-6c61366ed4a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Collider\Manager">
+      <UniqueIdentifier>{240ebe64-11bf-443f-bbba-043d04eb07ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Collider\2D">
+      <UniqueIdentifier>{4e0c1412-183c-48bf-94e4-ef48efc0d19e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Collider\3D">
+      <UniqueIdentifier>{55f5b957-e6f1-49dc-a59c-a66be9489b0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Animator">
+      <UniqueIdentifier>{a4ee9fdf-ba9d-45cb-b92d-4df3bb641c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\RigidBody">
+      <UniqueIdentifier>{556f588a-123a-4f20-b06d-6c511ff57a84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Light">
+      <UniqueIdentifier>{6aabe6fc-84a7-4c1f-bbf3-0899e90f7263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader\ComputeShader">
+      <UniqueIdentifier>{49cb38c7-a184-4e3a-883b-714c24dcbbf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Renderer\ParticleSystem">
+      <UniqueIdentifier>{5dc4739f-364e-43ca-86ec-b939e659c796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Renderer\PostProcess">
+      <UniqueIdentifier>{9216606f-172d-437d-9883-e73f2ff4f1f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj">
+      <UniqueIdentifier>{ccd15fdd-31ba-4ced-8ea7-a2e5acfb3e55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Player">
+      <UniqueIdentifier>{58ec3c23-b57e-47a8-a2b2-2ae5eca9e2a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Cursor">
+      <UniqueIdentifier>{396a8426-32c6-4cfc-b631-138593724573}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\PostProcess">
+      <UniqueIdentifier>{1a063524-ba24-4df3-9686-60e8e18b272e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Scene">
+      <UniqueIdentifier>{ada16d80-48ba-4677-8e21-4c7d78667cb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Scene\Manager">
+      <UniqueIdentifier>{31e1b7df-1306-4a17-be07-62b78da0476f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Scene\Layer">
+      <UniqueIdentifier>{933fe2a5-3876-4974-bb9b-06c06e708c32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Scene\Base">
+      <UniqueIdentifier>{d1a04847-462f-488b-844e-954ccfe845a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Sound">
+      <UniqueIdentifier>{6f8b85f9-636e-4508-9fab-fa151ce8d8f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\StringFunctions">
+      <UniqueIdentifier>{e1788ee6-93ce-4c47-b4fe-2255eaabd9b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Font">
+      <UniqueIdentifier>{00f7409f-6c39-4951-b9ab-a5158a532e47}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommonInclude.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>High Level Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="druMath.h">
+      <Filter>Common\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicDevice.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Common\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeMgr.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="druEnums.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObj.h">
+      <Filter>Common\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Resource\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Resource\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Common\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTitle.h">
+      <Filter>Common\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Common\Component\TransForm</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Script.h">
+      <Filter>Common\Component\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Common\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraScript.h">
+      <Filter>Common\Component\Camera\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseRenderer.h">
+      <Filter>Common\Component\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>Common\Component\Renderer\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>Common\Component\Renderer\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="GridScript.h">
+      <Filter>Common\Component\Script\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Common\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeScript.h">
+      <Filter>Common\Component\Script\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Common\Scene\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>Common\Scene\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Common\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>Common\Component\Collider\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Prefab.h">
+      <Filter>Resource\Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider2D.h">
+      <Filter>Common\Component\Collider\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider3D.h">
+      <Filter>Common\Component\Collider\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="CursorScript.h">
+      <Filter>Common\GameObj\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Common\GameObj\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>Common\Component\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Common\Component\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Common\Component\RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Common\Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="StructedBuffer.h" />
+    <ClInclude Include="ComputeShader.h">
+      <Filter>Resource\Shader\ComputeShader</Filter>
+    </ClInclude>
+    <ClInclude Include="PaintShader.h">
+      <Filter>Resource\Shader\ComputeShader</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleShader.h">
+      <Filter>Resource\Shader\ComputeShader</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMath.h">
+      <Filter>Common\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="PostProcess.h">
+      <Filter>Common\GameObj\PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="PostProcessRenderer.h">
+      <Filter>Common\Component\Renderer\PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="PostProcessWave.h">
+      <Filter>Common\GameObj\PostProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="FMod.h" />
+    <ClInclude Include="AudioClip.h">
+      <Filter>Common\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioListener.h">
+      <Filter>Common\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSource.h">
+      <Filter>Common\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="StringFunctions.h">
+      <Filter>Common\StringFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="FontWrapper.h">
+      <Filter>Common\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp">
+      <Filter>High Level Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="druMath.cpp">
+      <Filter>Common\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicDevice.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Common\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeMgr.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Graphics\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObj.cpp">
+      <Filter>Common\GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Resource\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Common\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneTitle.cpp">
+      <Filter>Common\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Resource\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Common\Component\TransForm</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Script.cpp">
+      <Filter>Common\Component\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Common\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraScript.cpp">
+      <Filter>Common\Component\Camera\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseRenderer.cpp">
+      <Filter>Common\Component\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Common\Component\Renderer\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Common\Component\Renderer\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="GridScript.cpp">
+      <Filter>Common\Component\Script\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeScript.cpp">
+      <Filter>Common\Component\Script\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Common\Scene\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>Common\Scene\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Common\Scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>Common\Component\Collider\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Prefab.cpp">
+      <Filter>Resource\Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider2D.cpp">
+      <Filter>Common\Component\Collider\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider3D.cpp">
+      <Filter>Common\Component\Collider\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="CursorScript.cpp">
+      <Filter>Common\GameObj\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Common\GameObj\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Common\Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Common\Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Common\Component\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Common\Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="StructedBuffer.cpp" />
+    <ClCompile Include="ComputeShader.cpp">
+      <Filter>Resource\Shader\ComputeShader</Filter>
+    </ClCompile>
+    <ClCompile Include="PaintShader.cpp">
+      <Filter>Resource\Shader\ComputeShader</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleShader.cpp">
+      <Filter>Resource\Shader\ComputeShader</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMath.cpp">
+      <Filter>Common\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="PostProcess.cpp">
+      <Filter>Common\GameObj\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="PostProcessRenderer.cpp">
+      <Filter>Common\Component\Renderer\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="PostProcessWave.cpp">
+      <Filter>Common\GameObj\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="FMod.cpp" />
+    <ClCompile Include="AudioClip.cpp">
+      <Filter>Common\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioListener.cpp">
+      <Filter>Common\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSource.cpp">
+      <Filter>Common\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="StringFunctions.cpp">
+      <Filter>Common\StringFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="FontWrapper.cpp">
+      <Filter>Common\Font</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="druMath.ini">
+      <Filter>Common\Math</Filter>
+    </None>
+  </ItemGroup>
+</Project>
