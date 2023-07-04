@@ -96,6 +96,8 @@ namespace dru
 		CInput() = delete;
 		~CInput() = delete;
 
+		int test=0;
+
 	private:
 		static std::vector<Key> mKeys;
 		static math::Vector3 mMousePosition;
