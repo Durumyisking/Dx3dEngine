@@ -66,9 +66,6 @@ namespace dru
 
 		}
 		
-		//GH
-		int a = 0;
-
 		{
 			CGameObj* directionalLight = object::Instantiate<CGameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
 			directionalLight->SetPos({ 0.f, 0.f, -100.f });
