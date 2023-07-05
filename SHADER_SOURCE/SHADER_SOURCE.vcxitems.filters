@@ -69,11 +69,17 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)AimParticlePS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)BasicPS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)PhongPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)BasicVS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)PhongVS.hlsl">
       <Filter>VS</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)FlatVS.hlsl">
+      <Filter>VS</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)FlatPS.hlsl">
+      <Filter>PS</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

@@ -80,7 +80,7 @@ namespace dru
 			Player* player = object::Instantiate<Player>(eLayerType::Player);
 			player->SetPos(Vector3(0.f, 0.f, 0.f));
 			player->SetName(L"Player");
-			player->GetComponent<SpriteRenderer>()->SetMaterialByKey(L"BasicMaterial");
+			player->GetComponent<SpriteRenderer>()->SetMaterialByKey(L"PhongMaterial");
 			player->GetComponent<SpriteRenderer>()->SetMeshByKey(L"Spheremesh");
 			player->SetScale({ 5.f, 5.f, 5.f });
 		}
