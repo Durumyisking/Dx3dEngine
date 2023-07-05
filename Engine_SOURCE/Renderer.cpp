@@ -336,7 +336,6 @@ namespace dru::renderer
 		float fRadius = 0.5f;
 		std::vector<Vertex> sphereVtx;
 
-
 		// Top
 		v.pos = Vector4(0.0f, fRadius, 0.0f, 1.0f);
 		v.uv = Vector2(0.5f, 0.f);
@@ -345,6 +344,7 @@ namespace dru::renderer
 		v.normal.Normalize();
 		v.tangent = Vector3(1.f, 0.f, 0.f);
 		v.biNormal = Vector3(0.f, 0.f, 1.f);
+
 		sphereVtx.push_back(v);
 
 		// Body
@@ -389,7 +389,7 @@ namespace dru::renderer
 		v.pos = Vector4(0.f, -fRadius, 0.f, 1.0f);
 		v.uv = Vector2(0.5f, 1.f);
 		v.color = Vector4(1.f, 1.f, 1.f, 1.f);
-		v.normal = Vector3(v.pos.x, v.pos.y, v.pos.z);
+		v.normal = Vector3(0.0f, -fRadius, 0.0f);
 		v.normal.Normalize();
 
 		v.tangent = Vector3(1.f, 0.f, 0.f);
@@ -428,7 +428,8 @@ namespace dru::renderer
 		}
 
 		// ≥≤±ÿ¡°
-		UINT iBottomIdx = (UINT)indexes.size() - 1;
+		UINT iBottomIdx = (UINT)sphereVtx.size() - 1;
+
 		for (UINT i = 0; i < iSliceCount; ++i)
 		{
 			indexes.push_back(iBottomIdx);
@@ -549,11 +550,17 @@ namespace dru::renderer
 			, postProcessShader->GetVSBlobBufferSize()
 			, postProcessShader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> basicShader = Resources::Find<Shader>(L"BasicShader");
+		std::shared_ptr<Shader> phongShader = Resources::Find<Shader>(L"PhongShader");
 		GetDevice()->CreateInputLayout(arrLayout, 6
-			, basicShader->GetVSBlobBufferPointer()
-			, basicShader->GetVSBlobBufferSize()
-			, basicShader->GetInputLayoutAddr());
+			, phongShader->GetVSBlobBufferPointer()
+			, phongShader->GetVSBlobBufferSize()
+			, phongShader->GetInputLayoutAddr());
+
+		std::shared_ptr<Shader> flatShader = Resources::Find<Shader>(L"FlatShader");
+		GetDevice()->CreateInputLayout(arrLayout, 6
+			, flatShader->GetVSBlobBufferPointer()
+			, flatShader->GetVSBlobBufferSize()
+			, flatShader->GetInputLayoutAddr());
 
 #pragma endregion
 
@@ -699,15 +706,19 @@ namespace dru::renderer
 	void LoadShader()
 	{
 		std::shared_ptr<Shader> MeshShader = std::make_shared<Shader>();
-		MeshShader->Create(graphics::eShaderStage::VS, L"BasicVS.hlsl", "main");
-		MeshShader->Create(graphics::eShaderStage::PS, L"BasicPS.hlsl", "main");
+		MeshShader->Create(graphics::eShaderStage::VS, L"PhongVS.hlsl", "main");
+		MeshShader->Create(graphics::eShaderStage::PS, L"PhongPS.hlsl", "main");
 		Resources::Insert<Shader>(L"MeshShader", MeshShader);
 
-		std::shared_ptr<Shader> basicShader = std::make_shared<Shader>();
-		basicShader->Create(eShaderStage::VS, L"BasicVS.hlsl", "main");
-		basicShader->Create(eShaderStage::PS, L"BasicPS.hlsl", "main");
-		Resources::Insert<Shader>(L"BasicShader", basicShader);
+		std::shared_ptr<Shader> phongShader = std::make_shared<Shader>();
+		phongShader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
+		phongShader->Create(eShaderStage::PS, L"PhongPS.hlsl", "main");
+		Resources::Insert<Shader>(L"PhongShader", phongShader);
 
+		std::shared_ptr<Shader> flatShader = std::make_shared<Shader>();
+		flatShader->Create(eShaderStage::VS, L"FlatVS.hlsl", "main");
+		flatShader->Create(eShaderStage::PS, L"FlatPS.hlsl", "main");
+		Resources::Insert<Shader>(L"FlatShader", flatShader);
 
 		std::shared_ptr<Shader> SpriteShader = std::make_shared<Shader>();
 		SpriteShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
@@ -868,11 +879,17 @@ namespace dru::renderer
 		postProcessMaterial->SetTexture(postProcessTexture);
 		Resources::Insert<Material>(L"PostProcessMaterial", postProcessMaterial);
 
-		std::shared_ptr<Shader> basicShader = Resources::Find<Shader>(L"BasicShader");
-		std::shared_ptr<Material> basicMaterial = std::make_shared<Material>();
-		basicMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		basicMaterial->SetShader(basicShader);
-		Resources::Insert<Material>(L"BasicMaterial", basicMaterial);
+		std::shared_ptr<Shader> phongShader = Resources::Find<Shader>(L"PhongShader");
+		std::shared_ptr<Material> phongMaterial = std::make_shared<Material>();
+		phongMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		phongMaterial->SetShader(phongShader);
+		Resources::Insert<Material>(L"PhongMaterial", phongMaterial);
+
+		std::shared_ptr<Shader> flatShader = Resources::Find<Shader>(L"FlatShader");
+		std::shared_ptr<Material> flatMaterial = std::make_shared<Material>();
+		flatMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		flatMaterial->SetShader(flatShader);
+		Resources::Insert<Material>(L"FlatMaterial", flatMaterial);
 			
 			
 		{
@@ -909,7 +926,7 @@ namespace dru::renderer
 	void Render()
 	{
 		// ∑ª¥ı≈∏∞Ÿ º≥¡§
-//		GetDevice()->OMSetRenderTarget();
+		GetDevice()->OMSetRenderTarget();
 
 		BindNoiseTexture();
 		BindLight();
