@@ -4,11 +4,11 @@
 
 namespace dru
 {
-	class CMesh : public CResource
+	class Mesh : public Resource
 	{
 	public:
-		CMesh();
-		virtual ~CMesh();
+		Mesh();
+		virtual ~Mesh();
 
 		virtual HRESULT Load(const std::wstring& path) override;
 

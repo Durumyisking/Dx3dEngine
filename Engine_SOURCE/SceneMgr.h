@@ -3,8 +3,8 @@
 #include "GameObj.h"
 namespace dru
 {
-	class CScene;
-	class CSceneMgr
+	class Scene;
+	class SceneMgr
 	{
 	public:
 		enum class eSceneType
@@ -29,7 +29,7 @@ namespace dru
 		static void release();
 		static void LoadScene(eSceneType _Type);
 
-		static void DontDestroyOnLoad(CGameObj* _GameObj);
+		static void DontDestroyOnLoad(GameObj* _GameObj);
 
 		template <typename T>
 		static T* GetScene (eSceneType _Type)
@@ -38,8 +38,8 @@ namespace dru
 		}
 
 	public:
-		static CScene* mScenes[(static_cast<UINT>(eSceneType::End))];	// 葛电 纠 格废
-		static CScene* mActiveScene;
+		static Scene* mScenes[(static_cast<UINT>(eSceneType::End))];	// 葛电 纠 格废
+		static Scene* mActiveScene;
 
 	};
 }

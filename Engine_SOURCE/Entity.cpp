@@ -4,16 +4,16 @@
 namespace dru
 {
 
-	CEntity::CEntity()
+	Entity::Entity()
 		: mID(reinterpret_cast<uintptr_t>(this))
 	{
 	}
-	CEntity::CEntity(const CEntity& other)
+	Entity::Entity(const Entity& other)
 		: mID(reinterpret_cast<uintptr_t>(this))
 		, mName(other.mName)
 	{
 	}
-	CEntity::~CEntity()
+	Entity::~Entity()
 	{
 	}
 }

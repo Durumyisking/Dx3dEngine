@@ -4,7 +4,7 @@
 namespace dru
 {
 	using namespace math;
-	class CCameraScript;
+	class CameraScript;
 
 	enum class eProjectionType
 	{
@@ -14,9 +14,9 @@ namespace dru
 	};
 
 
-	class CCamera : public CComponent
+	class Camera : public Component
 	{
-		friend class CCameraScript;
+		friend class CameraScript;
 	public:
 
 		__forceinline static Matrix& GetGpuViewMatrix() { return View; }
@@ -24,8 +24,8 @@ namespace dru
 		__forceinline static void SetGpuViewMatrix(Matrix view) { View = view; }
 		__forceinline static void SetGpuProjectionMatrix(Matrix projection) { Projection = projection; }
 
-		CCamera();
-		virtual ~CCamera();
+		Camera();
+		virtual ~Camera();
 
 		virtual void Initialize() override;
 		virtual void update() override;
@@ -50,13 +50,13 @@ namespace dru
 		Matrix& GetProjectionMatrix() { return mProjection; }
 
 
-		void SetTarget(CGameObj* _Target);
-		CGameObj* GetTarget() const { return mTargetObj; }
+		void SetTarget(GameObj* _Target);
+		GameObj* GetTarget() const { return mTargetObj; }
 
 		void SmoothOn() { mSmooth = true; }
 		void SmoothOff() { mSmooth = false; }
 
-		CCameraScript* GetCamScript();
+		CameraScript* GetCamScript();
 
 	private:
 		void sortGameObjects();
@@ -64,8 +64,8 @@ namespace dru
 		void renderCutout();
 		void renderTransparent();
 		
-		void pushGameObjectToRenderingModes(CGameObj* obj);
-		bool renderPassCheck(CGameObj* _obj);
+		void pushGameObjectToRenderingModes(GameObj* obj);
+		bool renderPassCheck(GameObj* _obj);
 
 
 	private:
@@ -84,12 +84,12 @@ namespace dru
 		float mScale;
 
 		std::bitset<(UINT)eLayerType::End> mLayerMask;
-		std::vector<CGameObj*> mOpaqueGameObjects;
-		std::vector<CGameObj*> mCutoutGameObjects;
-		std::vector<CGameObj*> mTransparentGameObjects;
-		std::vector<CGameObj*> mPostProcessGameObjects;
+		std::vector<GameObj*> mOpaqueGameObjects;
+		std::vector<GameObj*> mCutoutGameObjects;
+		std::vector<GameObj*> mTransparentGameObjects;
+		std::vector<GameObj*> mPostProcessGameObjects;
 
-		CGameObj*	mTargetObj;
+		GameObj*	mTargetObj;
 		Vector3		mCamDir;
 
 		float		mFarDist;

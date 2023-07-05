@@ -5,16 +5,16 @@
 
 namespace dru::graphics
 {
-	CParticleShader::CParticleShader() // 얘는 컴퓨트세이더 상속받은애
-		: CComputeShader(128, 1, 1) // 쓰레드 128개 쓸거임
+	ParticleShader::ParticleShader() // 얘는 컴퓨트세이더 상속받은애
+		: ComputeShader(128, 1, 1) // 쓰레드 128개 쓸거임
 		, mBuffer(nullptr)
 		, mSharedBuffer(nullptr) 
 	{
 	}
-	CParticleShader::~CParticleShader()
+	ParticleShader::~ParticleShader()
 	{
 	}
-	void CParticleShader::Bind()
+	void ParticleShader::Bind()
 	{
 		mBuffer->BindUAV(eShaderStage::CS, 0); 
 		mSharedBuffer->BindUAV(eShaderStage::CS, 1);
@@ -22,7 +22,7 @@ namespace dru::graphics
 		mGroupY = 1;
 		mGroupZ = 1;
 	}
-	void CParticleShader::Clear()
+	void ParticleShader::Clear()
 	{
 		mBuffer->Clear();
 		mSharedBuffer->Clear();

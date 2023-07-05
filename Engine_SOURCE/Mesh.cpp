@@ -4,21 +4,21 @@
 
 namespace dru
 {
-	CMesh::CMesh()
-		: CResource(eResourceType::Mesh)
+	Mesh::Mesh()
+		: Resource(eResourceType::Mesh)
 		, mVBDesc{}
 		, mIBDesc{}
 		, mIndexCount(0)
 	{
 	}
-	CMesh::~CMesh()
+	Mesh::~Mesh()
 	{
 	}
-	HRESULT CMesh::Load(const std::wstring& path)
+	HRESULT Mesh::Load(const std::wstring& path)
 	{
 		return E_NOTIMPL;
 	}
-	bool CMesh::CreateVertexBuffer(void* _Data, UINT _Count)
+	bool Mesh::CreateVertexBuffer(void* _Data, UINT _Count)
 	{
 		mVBDesc.ByteWidth = sizeof(renderer::Vertex) * _Count;
 		mVBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
@@ -34,7 +34,7 @@ namespace dru
 		return true;
 	}
 
-	bool CMesh::CreateIndexBuffer(void* _Data, UINT _Count)
+	bool Mesh::CreateIndexBuffer(void* _Data, UINT _Count)
 	{
 		mIndexCount = _Count;
 		mIBDesc.ByteWidth = sizeof(UINT) * _Count;
@@ -52,7 +52,7 @@ namespace dru
 	}
 
 
-	void CMesh::BindBuffer()
+	void Mesh::BindBuffer()
 	{
 		UINT stride = sizeof(renderer::Vertex);
 		UINT offset = 0;
@@ -62,12 +62,12 @@ namespace dru
 	}
 
 
-	void CMesh::Render()
+	void Mesh::Render()
 	{
 		GetDevice()->DrawIndexed(mIndexCount, 0, 0);
 	}
 
-	void CMesh::RenderInstanced(UINT _Count)
+	void Mesh::RenderInstanced(UINT _Count)
 	{
 		GetDevice()->DrawIndexedInstanced(mIndexCount, _Count, 0, 0, 0);
 	}

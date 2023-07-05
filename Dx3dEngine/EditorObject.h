@@ -3,12 +3,12 @@
 
 namespace dru
 {
-    class CEditorObject :
-        public CGameObj
+    class EditorObject :
+        public GameObj
     {
 	public:
-		CEditorObject();
-		virtual ~CEditorObject();
+		EditorObject();
+		virtual ~EditorObject();
 
 		virtual void Initialize();
 		virtual void update();

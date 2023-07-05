@@ -4,33 +4,33 @@
 
 namespace dru
 {
-	CMeshRenderer::CMeshRenderer()
-		: CBaseRenderer(eComponentType::MeshRenderer)
+	MeshRenderer::MeshRenderer()
+		: BaseRenderer(eComponentType::MeshRenderer)
 	{
 	}
 
-	CMeshRenderer::~CMeshRenderer()
+	MeshRenderer::~MeshRenderer()
 	{
 	}
 
-	void CMeshRenderer::Initialize()
+	void MeshRenderer::Initialize()
 	{
-		CBaseRenderer::Initialize();
+		BaseRenderer::Initialize();
 	}
 
-	void CMeshRenderer::update()
+	void MeshRenderer::update()
 	{
-		CBaseRenderer::update();
+		BaseRenderer::update();
 	}
 
-	void CMeshRenderer::fixedUpdate()
+	void MeshRenderer::fixedUpdate()
 	{
-		CBaseRenderer::fixedUpdate();
+		BaseRenderer::fixedUpdate();
 	}
 
-	void CMeshRenderer::render()
+	void MeshRenderer::render()
 	{
-		GetOwner()->GetComponent<CTransform>()->SetConstantBuffer();
+		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
 //		GetMaterial()->Bind();
 
@@ -39,7 +39,7 @@ namespace dru
 
 		GetMaterial()->Clear();
 
-		CBaseRenderer::render();
+		BaseRenderer::render();
 	}
 
 }

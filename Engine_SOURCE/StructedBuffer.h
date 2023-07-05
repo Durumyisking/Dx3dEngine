@@ -4,11 +4,11 @@
 
 namespace dru::graphics
 {
-	class CStructedBuffer : public GpuBuffer // 구조체 상속 클래스?
+	class StructedBuffer : public GpuBuffer // 구조체 상속 클래스?
 	{
 	public:
-		CStructedBuffer();
-		~CStructedBuffer();
+		StructedBuffer();
+		~StructedBuffer();
 
 		bool Create(UINT _size, UINT _stride, graphics::eSRVType _type, void* _data, bool cpuAccess = false);
 		void SetData(void* _data, UINT _stride);

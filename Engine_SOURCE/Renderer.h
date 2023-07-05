@@ -175,19 +175,19 @@ namespace dru::renderer
 	// vertex data
 	extern Vertex	RectVertexes[4];
 
-	extern CConstantBuffer* constantBuffers[];
+	extern ConstantBuffer* constantBuffers[];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[];
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerState[];
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState[];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendState[];
 
-	extern std::vector<CCamera*> Cameras[];
+	extern std::vector<Camera*> Cameras[];
 
-	extern CCamera* mainCamera;
+	extern Camera* mainCamera;
 	extern std::vector<DebugMesh> debugMeshes;
 	extern std::vector<LightAttribute> lights;
 
-	extern CStructedBuffer* lightBuffer;
+	extern StructedBuffer* lightBuffer;
 
 
 	void Initialize();

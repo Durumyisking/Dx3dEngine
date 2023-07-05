@@ -3,12 +3,12 @@
 
 namespace dru
 {
-	class CDebugObject :
-		public CGameObj
+	class DebugObject :
+		public GameObj
 	{
 	public:
-		CDebugObject();
-		virtual ~CDebugObject();
+		DebugObject();
+		virtual ~DebugObject();
 
 		virtual void fixedUpdate();
 

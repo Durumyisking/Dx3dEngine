@@ -4,12 +4,12 @@
 
 namespace dru
 {
-    class CLight :
-        public CComponent
+    class Light :
+        public Component
     {
 	public:
-		CLight();
-		virtual ~CLight();
+		Light();
+		virtual ~Light();
 
 		virtual void Initialize();
 		virtual void update();

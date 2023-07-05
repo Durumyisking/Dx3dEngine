@@ -12,12 +12,12 @@
 //#include <winrt/Windows.Storage.Streams.h>
 //#include <winrt/Windows.Foundation.Collections.h>
 
-extern dru::CApplication application;
+extern dru::Application application;
 
 
 namespace dru::graphics
 {
-	CGraphicDevice::CGraphicDevice(eValidationMode _ValidationMode)
+	GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 	{
 		/*
 			 <summary>
@@ -70,17 +70,17 @@ namespace dru::graphics
 		if (!CreateSwapChain(&swapChainDesc))
 			return;
 
-		mRenderTargetTexture = std::make_shared<CTexture>();
+		mRenderTargetTexture = std::make_shared<Texture>();
 
 		Microsoft::WRL::ComPtr <ID3D11Texture2D> renderTarget;
 		// Get rendertarget for swapchain
 		//						0번 버퍼가 렌더타겟							렌더타겟 포인터
 		hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf());
 		mRenderTargetTexture->Create(renderTarget);
-		CResources::Insert<CTexture>(L"RenderTargetTexture", mRenderTargetTexture);
+		Resources::Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
 		// Create Rendertarget View
 
-		mDepthStencilBufferTexture = std::make_shared<CTexture>();
+		mDepthStencilBufferTexture = std::make_shared<Texture>();
 		mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
 	
 		// Setting Viewport		
@@ -93,13 +93,13 @@ namespace dru::graphics
 		mContext->OMSetRenderTargets(1, mRenderTargetTexture->GetRTV().GetAddressOf(), mDepthStencilBufferTexture->GetDSV().Get());
 	}
 
-	CGraphicDevice::~CGraphicDevice()
+	GraphicDevice::~GraphicDevice()
 	{
 		renderer::release();
 
 	}
 
-	bool CGraphicDevice::CreateSwapChain(DXGI_SWAP_CHAIN_DESC* _Desc)
+	bool GraphicDevice::CreateSwapChain(DXGI_SWAP_CHAIN_DESC* _Desc)
 	{
 		Microsoft::WRL::ComPtr<IDXGIDevice> pDXGIDevice = nullptr; 
 		Microsoft::WRL::ComPtr<IDXGIAdapter> pDXGIAdapter = nullptr; 
@@ -121,7 +121,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateTexture(D3D11_TEXTURE2D_DESC* _Desc, ID3D11Texture2D** _ppTexture2D)
+	bool GraphicDevice::CreateTexture(D3D11_TEXTURE2D_DESC* _Desc, ID3D11Texture2D** _ppTexture2D)
 	{
 		if (FAILED(mDevice->CreateTexture2D(_Desc, nullptr, _ppTexture2D)))
 			return false;
@@ -129,7 +129,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateInputLayout(D3D11_INPUT_ELEMENT_DESC* _Desc, UINT _NumElements, const void* _Bytecode, SIZE_T _BytecodeLength, ID3D11InputLayout** _ppInputLayout)
+	bool GraphicDevice::CreateInputLayout(D3D11_INPUT_ELEMENT_DESC* _Desc, UINT _NumElements, const void* _Bytecode, SIZE_T _BytecodeLength, ID3D11InputLayout** _ppInputLayout)
 	{
 		if (FAILED(mDevice->CreateInputLayout(_Desc, _NumElements, _Bytecode, _BytecodeLength, _ppInputLayout)))
 		{
@@ -140,7 +140,7 @@ namespace dru::graphics
 	}
 
 
-	bool CGraphicDevice::CreateBuffer(D3D11_BUFFER_DESC* _DESC, D3D11_SUBRESOURCE_DATA* _Data, ID3D11Buffer** _Buffer)
+	bool GraphicDevice::CreateBuffer(D3D11_BUFFER_DESC* _DESC, D3D11_SUBRESOURCE_DATA* _Data, ID3D11Buffer** _Buffer)
 	{
 		// ram -> gpu 
 		// input assembly 단계로 버퍼 넘겨주는행위
@@ -151,7 +151,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateShaderResourceView(ID3D11Resource* pResource, const D3D11_SHADER_RESOURCE_VIEW_DESC* pDesc, ID3D11ShaderResourceView** ppSRView)
+	bool GraphicDevice::CreateShaderResourceView(ID3D11Resource* pResource, const D3D11_SHADER_RESOURCE_VIEW_DESC* pDesc, ID3D11ShaderResourceView** ppSRView)
 	{
 
 		if (FAILED(mDevice->CreateShaderResourceView(pResource, pDesc, ppSRView)))
@@ -160,7 +160,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateDepthStencilView(ID3D11Resource* pResource, const D3D11_DEPTH_STENCIL_VIEW_DESC* pDesc, ID3D11DepthStencilView** ppDSView)
+	bool GraphicDevice::CreateDepthStencilView(ID3D11Resource* pResource, const D3D11_DEPTH_STENCIL_VIEW_DESC* pDesc, ID3D11DepthStencilView** ppDSView)
 	{
 		if (FAILED(mDevice->CreateDepthStencilView(pResource, pDesc, ppDSView)))
 			return false;
@@ -168,7 +168,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateRenderTargetView(ID3D11Resource* pResource, const D3D11_RENDER_TARGET_VIEW_DESC* pDesc, ID3D11RenderTargetView** ppRTView)
+	bool GraphicDevice::CreateRenderTargetView(ID3D11Resource* pResource, const D3D11_RENDER_TARGET_VIEW_DESC* pDesc, ID3D11RenderTargetView** ppRTView)
 	{
 		if (FAILED(mDevice->CreateRenderTargetView(pResource, pDesc, ppRTView)))
 			return false;
@@ -176,7 +176,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateUnorderedAccessView(ID3D11Resource* pResource, const D3D11_UNORDERED_ACCESS_VIEW_DESC* pDesc, ID3D11UnorderedAccessView** ppUAView)
+	bool GraphicDevice::CreateUnorderedAccessView(ID3D11Resource* pResource, const D3D11_UNORDERED_ACCESS_VIEW_DESC* pDesc, ID3D11UnorderedAccessView** ppUAView)
 	{
 		if (FAILED(mDevice->CreateUnorderedAccessView(pResource, pDesc, ppUAView)))
 			return false;
@@ -184,7 +184,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateVertexShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11VertexShader** ppVertexShader)
+	bool GraphicDevice::CreateVertexShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11VertexShader** ppVertexShader)
 	{
 		if (FAILED(mDevice->CreateVertexShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppVertexShader)))
 			return false;
@@ -192,7 +192,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreatePixelShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11PixelShader** ppPixelShader)
+	bool GraphicDevice::CreatePixelShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11PixelShader** ppPixelShader)
 	{
 		if (FAILED(mDevice->CreatePixelShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppPixelShader)))
 			return false;
@@ -200,7 +200,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateGeometryShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11GeometryShader** ppGeometryShader)
+	bool GraphicDevice::CreateGeometryShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11GeometryShader** ppGeometryShader)
 	{
 		if (FAILED(mDevice->CreateGeometryShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppGeometryShader)))
 			return false;
@@ -208,7 +208,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateComputeShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11ComputeShader** ppComputeShader)
+	bool GraphicDevice::CreateComputeShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11ComputeShader** ppComputeShader)
 	{
 		if (FAILED(mDevice->CreateComputeShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppComputeShader)))
 			return false;
@@ -218,7 +218,7 @@ namespace dru::graphics
 
 
 
-	bool CGraphicDevice::CreateSamplerState(const D3D11_SAMPLER_DESC* _pSamplerDesc, ID3D11SamplerState** _ppSamplerState)
+	bool GraphicDevice::CreateSamplerState(const D3D11_SAMPLER_DESC* _pSamplerDesc, ID3D11SamplerState** _ppSamplerState)
 	{
 		if (FAILED(mDevice->CreateSamplerState(_pSamplerDesc, _ppSamplerState)))
 			return false;
@@ -226,7 +226,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateRasterizerState(const D3D11_RASTERIZER_DESC* _pRasterizerDesc, ID3D11RasterizerState** _ppRasterizerState)
+	bool GraphicDevice::CreateRasterizerState(const D3D11_RASTERIZER_DESC* _pRasterizerDesc, ID3D11RasterizerState** _ppRasterizerState)
 	{
 		if (FAILED(mDevice->CreateRasterizerState(_pRasterizerDesc, _ppRasterizerState)))
 			return false;
@@ -234,7 +234,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateDepthStencilState(const D3D11_DEPTH_STENCIL_DESC* _pDepthStencilDesc, ID3D11DepthStencilState** _ppDepthStencilState)
+	bool GraphicDevice::CreateDepthStencilState(const D3D11_DEPTH_STENCIL_DESC* _pDepthStencilDesc, ID3D11DepthStencilState** _ppDepthStencilState)
 	{
 		if (FAILED(mDevice->CreateDepthStencilState(_pDepthStencilDesc, _ppDepthStencilState)))
 			return false;
@@ -242,7 +242,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CGraphicDevice::CreateBlendState(const D3D11_BLEND_DESC* _pBlendStateDesc, ID3D11BlendState** _ppBlendState)
+	bool GraphicDevice::CreateBlendState(const D3D11_BLEND_DESC* _pBlendStateDesc, ID3D11BlendState** _ppBlendState)
 	{
 		if (FAILED(mDevice->CreateBlendState(_pBlendStateDesc, _ppBlendState)))
 			return false;
@@ -251,69 +251,69 @@ namespace dru::graphics
 	}
 
 
-	void CGraphicDevice::BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY _Topology)
+	void GraphicDevice::BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY _Topology)
 	{
 		mContext->IASetPrimitiveTopology(_Topology);
 	}
 
-	void CGraphicDevice::BindInputLayout(ID3D11InputLayout* _InputLayout)
+	void GraphicDevice::BindInputLayout(ID3D11InputLayout* _InputLayout)
 	{
 		mContext->IASetInputLayout(_InputLayout	);
 	}
 
-	void CGraphicDevice::BindVertexBuffer(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppVertexBuffers, const UINT* pStrides, const UINT* pOffsets)
+	void GraphicDevice::BindVertexBuffer(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppVertexBuffers, const UINT* pStrides, const UINT* pOffsets)
 	{
 		mContext->IASetVertexBuffers(StartSlot, NumBuffers, ppVertexBuffers, pStrides, pOffsets); // vertex buffer set
 	}
 
-	void CGraphicDevice::BindIndexBuffer(ID3D11Buffer* pIndexBuffer, DXGI_FORMAT Format, UINT Offset)
+	void GraphicDevice::BindIndexBuffer(ID3D11Buffer* pIndexBuffer, DXGI_FORMAT Format, UINT Offset)
 	{
 		mContext->IASetIndexBuffer(pIndexBuffer, Format, Offset); // index buffer set
 	}
 
-	void CGraphicDevice::BindVS(ID3D11VertexShader* _VS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
+	void GraphicDevice::BindVS(ID3D11VertexShader* _VS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
 	{
 		mContext->VSSetShader(_VS, _ClassInst, NumClassInst);
 	}
 
-	void CGraphicDevice::BindHS(ID3D11HullShader* _HS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
+	void GraphicDevice::BindHS(ID3D11HullShader* _HS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
 	{
 		mContext->HSSetShader(_HS, _ClassInst, NumClassInst);
 	}
 
-	void CGraphicDevice::BindDS(ID3D11DomainShader* _DS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
+	void GraphicDevice::BindDS(ID3D11DomainShader* _DS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
 	{
 		mContext->DSSetShader(_DS, _ClassInst, NumClassInst);
 	}
 
-	void CGraphicDevice::BindGS(ID3D11GeometryShader* _GS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
+	void GraphicDevice::BindGS(ID3D11GeometryShader* _GS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
 	{
 		mContext->GSSetShader(_GS, _ClassInst, NumClassInst);
 	}
 
-	void CGraphicDevice::BindPS(ID3D11PixelShader* _PS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
+	void GraphicDevice::BindPS(ID3D11PixelShader* _PS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
 	{
 		mContext->PSSetShader(_PS, _ClassInst, NumClassInst);
 	}
 
-	void CGraphicDevice::BindCS(ID3D11ComputeShader* _CS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
+	void GraphicDevice::BindCS(ID3D11ComputeShader* _CS, ID3D11ClassInstance* const* _ClassInst, UINT NumClassInst)
 	{
 		mContext->CSSetShader(_CS, _ClassInst, NumClassInst);
 	}
 
-	void CGraphicDevice::Dispatch(UINT _mThreadGroupCountX, UINT _mThreadGroupCountY, UINT _mThreadGroupCountZ)
+	void GraphicDevice::Dispatch(UINT _mThreadGroupCountX, UINT _mThreadGroupCountY, UINT _mThreadGroupCountZ)
 	{
 		mContext->Dispatch(_mThreadGroupCountX, _mThreadGroupCountY, _mThreadGroupCountZ);
 	}
 
 
 
-	void CGraphicDevice::BindViewports(D3D11_VIEWPORT* _ViewPort)
+	void GraphicDevice::BindViewports(D3D11_VIEWPORT* _ViewPort)
 	{
 		mContext->RSSetViewports(1, _ViewPort);
 	}
 
-	void CGraphicDevice::GetData(ID3D11Buffer* buffer, void* data, UINT size)
+	void GraphicDevice::GetData(ID3D11Buffer* buffer, void* data, UINT size)
 	{
 		D3D11_MAPPED_SUBRESOURCE sub = {};
 		mContext->Map(buffer, 0, D3D11_MAP_READ, 0, &sub);
@@ -321,7 +321,7 @@ namespace dru::graphics
 		mContext->Unmap(buffer, 0);
 	}
 
-	void CGraphicDevice::SetData(ID3D11Buffer* buffer, void* data, UINT size)
+	void GraphicDevice::SetData(ID3D11Buffer* buffer, void* data, UINT size)
 	{
 		D3D11_MAPPED_SUBRESOURCE sub = {};
 		mContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub);
@@ -329,12 +329,12 @@ namespace dru::graphics
 		mContext->Unmap(buffer, 0);
 	}
 
-	void CGraphicDevice::CopyResource(ID3D11Resource* pDstResource, ID3D11Resource* pSrcResource)
+	void GraphicDevice::CopyResource(ID3D11Resource* pDstResource, ID3D11Resource* pSrcResource)
 	{
 		mContext->CopyResource(pDstResource, pSrcResource);
 	}
 
-	void CGraphicDevice::BindBuffer(ID3D11Buffer* _Buffer, void* _Data, UINT _Size)
+	void GraphicDevice::BindBuffer(ID3D11Buffer* _Buffer, void* _Data, UINT _Size)
 	{
 		// gpu에 값 줄거니까 데이터 바꿔서 보내야해
 		D3D11_MAPPED_SUBRESOURCE sub = {};
@@ -343,7 +343,7 @@ namespace dru::graphics
 		mContext->Unmap(_Buffer, 0); // 점유 해제
 	}
 
-	void CGraphicDevice::ClearConstantBuffer(ID3D11Buffer* buffer, UINT size)
+	void GraphicDevice::ClearConstantBuffer(ID3D11Buffer* buffer, UINT size)
 	{
 		D3D11_MAPPED_SUBRESOURCE sub = {};
 		mContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub);
@@ -351,7 +351,7 @@ namespace dru::graphics
 		mContext->Unmap(buffer, 0);
 	}
 
-	void CGraphicDevice::BindConstantBuffer(eShaderStage _Stage, eCBType _Type, ID3D11Buffer* _Buffer)
+	void GraphicDevice::BindConstantBuffer(eShaderStage _Stage, eCBType _Type, ID3D11Buffer* _Buffer)
 	{
 		switch (_Stage)
 		{
@@ -378,7 +378,7 @@ namespace dru::graphics
 		}
 	}
 
-	void CGraphicDevice::BindShaderResource(eShaderStage _Stage, UINT _Slot, ID3D11ShaderResourceView* const* _ppShaderResourceViews)
+	void GraphicDevice::BindShaderResource(eShaderStage _Stage, UINT _Slot, ID3D11ShaderResourceView* const* _ppShaderResourceViews)
 	{
 		switch (_Stage)
 		{
@@ -405,12 +405,12 @@ namespace dru::graphics
 		}
 	}
 
-	void CGraphicDevice::BindUnorderedAccessView(UINT _Slot, UINT _NumUAVs, ID3D11UnorderedAccessView* const* _ppUnorderedAccessView, const UINT* _pUAVInitialCount)
+	void GraphicDevice::BindUnorderedAccessView(UINT _Slot, UINT _NumUAVs, ID3D11UnorderedAccessView* const* _ppUnorderedAccessView, const UINT* _pUAVInitialCount)
 	{
 		mContext->CSSetUnorderedAccessViews(_Slot, _NumUAVs, _ppUnorderedAccessView, _pUAVInitialCount);
 	}
 
-	void CGraphicDevice::BindSamplers(eShaderStage _Stage, UINT _Slot, UINT _NumSamplers, ID3D11SamplerState* const* _ppSamplerState)
+	void GraphicDevice::BindSamplers(eShaderStage _Stage, UINT _Slot, UINT _NumSamplers, ID3D11SamplerState* const* _ppSamplerState)
 	{
 		switch (_Stage)
 		{
@@ -434,7 +434,7 @@ namespace dru::graphics
 		}
 	}
 
-	void CGraphicDevice::BindSamplers(UINT _Slot, UINT _NumSamplers, ID3D11SamplerState* const* _ppSamplerState)
+	void GraphicDevice::BindSamplers(UINT _Slot, UINT _NumSamplers, ID3D11SamplerState* const* _ppSamplerState)
 	{
 		mContext->VSSetSamplers(_Slot, _NumSamplers, _ppSamplerState);
 		mContext->HSSetSamplers(_Slot, _NumSamplers, _ppSamplerState);
@@ -443,23 +443,23 @@ namespace dru::graphics
 		mContext->PSSetSamplers(_Slot, _NumSamplers, _ppSamplerState);		
 	}
 
-	void CGraphicDevice::BindRasterizerState(ID3D11RasterizerState* _pRasterizerState)
+	void GraphicDevice::BindRasterizerState(ID3D11RasterizerState* _pRasterizerState)
 	{
 		mContext->RSSetState(_pRasterizerState);
 	}
 
-	void CGraphicDevice::BindDepthStencilState(ID3D11DepthStencilState* _pDepthStencilState)
+	void GraphicDevice::BindDepthStencilState(ID3D11DepthStencilState* _pDepthStencilState)
 	{
 		mContext->OMSetDepthStencilState(_pDepthStencilState, 0);
 	}
 
-	void CGraphicDevice::BindBlendState(ID3D11BlendState* _pBlendState)
+	void GraphicDevice::BindBlendState(ID3D11BlendState* _pBlendState)
 	{
 		mContext->OMSetBlendState(_pBlendState, nullptr, 0xffffff);
 	}
 
 
-	void CGraphicDevice::Clear()
+	void GraphicDevice::Clear()
 	{
 		// clear target
 		FLOAT backgroundColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
@@ -467,7 +467,7 @@ namespace dru::graphics
 		mContext->ClearDepthStencilView(mDepthStencilBufferTexture->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0); // 깊이버퍼도 클리어 해줘야해
 	}
 
-	void CGraphicDevice::AdjustViewPorts()
+	void GraphicDevice::AdjustViewPorts()
 	{
 		RECT winRect;
 		GetClientRect(application.GetHwnd(), &winRect);
@@ -476,23 +476,23 @@ namespace dru::graphics
 		mContext->OMSetRenderTargets(1, mRenderTargetTexture->GetRTV().GetAddressOf(), mDepthStencilBufferTexture->GetDSV().Get());
 	}
 
-	void CGraphicDevice::Draw()
+	void GraphicDevice::Draw()
 	{
 		mContext->Draw(0, 0);
 	}
 
 
-	void CGraphicDevice::DrawIndexed(UINT _IndexCount, UINT StartIndexLocation, INT BaseVertexLocation)
+	void GraphicDevice::DrawIndexed(UINT _IndexCount, UINT StartIndexLocation, INT BaseVertexLocation)
 	{
 		mContext->DrawIndexed(_IndexCount, StartIndexLocation, StartIndexLocation);
 	}
 
-	void CGraphicDevice::DrawIndexedInstanced(UINT IndexCountPerInstance, UINT InstanceCount, UINT StartIndexLocation, INT BaseVertexLocation, UINT StartInstanceLocation)
+	void GraphicDevice::DrawIndexedInstanced(UINT IndexCountPerInstance, UINT InstanceCount, UINT StartIndexLocation, INT BaseVertexLocation, UINT StartInstanceLocation)
 	{
 		mContext->DrawIndexedInstanced(IndexCountPerInstance, InstanceCount, StartIndexLocation, BaseVertexLocation, StartInstanceLocation);
 	}
 
-	void CGraphicDevice::Present()
+	void GraphicDevice::Present()
 	{
 		mSwapChain->Present(0, 0); // 두번째 인자는 윈도우가 아예 표시되지않을때 렌더링 할까말까 고르는거
 		//mSwapChain->Present(1, 0); // 수직동기화 on

@@ -1,16 +1,16 @@
 #include "Input.h"
 #include "Application.h"
 
-extern dru::CApplication application;
+extern dru::Application application;
 
 namespace dru
 {
-	std::vector<CInput::Key> CInput::mKeys;
-	math::Vector3 CInput::mMousePosition;
-	math::Vector3 CInput::mWorldMousePosition;
+	std::vector<Input::Key> Input::mKeys;
+	math::Vector3 Input::mMousePosition;
+	math::Vector3 Input::mWorldMousePosition;
 
-	float CInput::mWinWidthCenter;
-	float CInput::mWinHeightCenter;
+	float Input::mWinWidthCenter;
+	float Input::mWinHeightCenter;
 
 	int ASCII[(UINT)eKeyCode::END] =
 	{
@@ -36,7 +36,7 @@ namespace dru
 	};
 
 
-	void CInput::Initialize()
+	void Input::Initialize()
 	{
 		for (UINT i = 0; i < (UINT)eKeyCode::END; i++)
 		{
@@ -54,7 +54,7 @@ namespace dru
 		mWinHeightCenter = ((float)winRect.bottom - (float)winRect.top) / 2.0f;
 	}
 
-	void CInput::update()
+	void Input::update()
 	{
 		if (GetFocus())
 		{
@@ -101,7 +101,7 @@ namespace dru
 		}
 
 	}
-	void CInput::Render(HDC hdc)
+	void Input::Render(HDC hdc)
 	{
 		//HWND hWnd = application.GetHwnd();
 
@@ -110,7 +110,7 @@ namespace dru
 
 		//SetWindowText(hWnd, szFloat);
 	}
-	void CInput::ComputeMousePos()
+	void Input::ComputeMousePos()
 	{
 		POINT ptMouse = {};
 		GetCursorPos(&ptMouse);

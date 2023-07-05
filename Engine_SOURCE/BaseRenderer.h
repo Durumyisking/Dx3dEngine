@@ -5,26 +5,26 @@
 
 namespace dru
 {
-	class CBaseRenderer : public CComponent
+	class BaseRenderer : public Component
 	{
 
 	public:
-		CBaseRenderer(eComponentType _Type);
-		virtual ~CBaseRenderer();
+		BaseRenderer(eComponentType _Type);
+		virtual ~BaseRenderer();
 
 		virtual void Initialize() override;
 		virtual void update() override;
 		virtual void fixedUpdate() override;
 		virtual void render() override;
 
-		void SetMesh(std::shared_ptr <CMesh> _Mesh) { mMesh = _Mesh; }
-		void SetMaterial(std::shared_ptr <CMaterial> _Material);
+		void SetMesh(std::shared_ptr <Mesh> _Mesh) { mMesh = _Mesh; }
+		void SetMaterial(std::shared_ptr <Material> _Material);
 		void SetMaterialByKey(std::wstring _Key);
-		void SetAnimMaterial(std::shared_ptr <CMaterial> _Material, Vector2 _SpriteSize);
+		void SetAnimMaterial(std::shared_ptr <Material> _Material, Vector2 _SpriteSize);
 
 
-		std::shared_ptr<CMesh> GetMesh() { return mMesh; }
-		std::shared_ptr<CMaterial> GetMaterial() { return mMaterial; }
+		std::shared_ptr<Mesh> GetMesh() { return mMesh; }
+		std::shared_ptr<Material> GetMaterial() { return mMaterial; }
 
 		void ChangeSize() { mbIsChanged = true; }
 		void ChangeColor(Vector4 _color);
@@ -36,8 +36,8 @@ namespace dru
 
 
 	private:
-		std::shared_ptr <CMesh> mMesh;
-		std::shared_ptr <CMaterial> mMaterial;
+		std::shared_ptr <Mesh> mMesh;
+		std::shared_ptr <Material> mMaterial;
 
 		float mWidthRatio;
 		float mHeightRatio;

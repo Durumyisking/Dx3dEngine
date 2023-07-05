@@ -4,38 +4,38 @@
 
 namespace dru
 {
-	CCursorScript::CCursorScript()
-		: CScript(),
+	CursorScript::CursorScript()
+		: Script(),
 		mTrans(nullptr),
 		mPos{},
 		mRot{}
 	{
 	}
 
-	CCursorScript::~CCursorScript()
+	CursorScript::~CursorScript()
 	{
 	}
 
-	void CCursorScript::Initialize()
+	void CursorScript::Initialize()
 	{
-		mTrans = GetOwner()->GetComponent<CTransform>();
+		mTrans = GetOwner()->GetComponent<Transform>();
 	}
 
-	void CCursorScript::update()
+	void CursorScript::update()
 	{
 	
 
 	}
 
-	void CCursorScript::fixedUpdate()
+	void CursorScript::fixedUpdate()
 	{
-		mPos = CInput::GetMousePosition();
+		mPos = Input::GetMousePosition();
 		Vector3 newpos = mPos / 100.f;
 
 		mTrans->SetPosition(newpos);
 	}
 
-	void CCursorScript::render()
+	void CursorScript::render()
 	{
 	}
 

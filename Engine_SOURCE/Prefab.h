@@ -3,8 +3,8 @@
 
 namespace dru
 {
-    class CPrefab :
-        public CResource
+    class Prefab :
+        public Resource
     {
     };
 

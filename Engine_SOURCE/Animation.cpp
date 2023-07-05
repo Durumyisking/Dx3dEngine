@@ -4,7 +4,7 @@
 
 namespace dru
 {
-	CAnimation::CAnimation()
+	Animation::Animation()
 		: mAnimator(nullptr)
 		, mAtlas(nullptr)
 		, mSpriteSheet{}
@@ -18,17 +18,17 @@ namespace dru
 
 	}
 
-	CAnimation::~CAnimation()
+	Animation::~Animation()
 	{
 	}
 
-	UINT CAnimation::update()
+	UINT Animation::update()
 	{
 		if (mbComplete)
 			return -1;
 
 		// 시간 체크
-		mTime += CTimeMgr::DeltaTime();
+		mTime += TimeMgr::DeltaTime();
 
 		// 누적 시간이 해당 프레임의 유지시간을 넘어서면 
 		if (mSpriteSheet[mIndex].duration < mTime)
@@ -64,15 +64,15 @@ namespace dru
 		return -1;
 	}
 
-	void CAnimation::fixedUpdate()
+	void Animation::fixedUpdate()
 	{
 	}
 
-	void CAnimation::render()
+	void Animation::render()
 	{
 	}
 
-	void CAnimation::Create(const std::wstring& _name, std::shared_ptr<CTexture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
+	void Animation::Create(const std::wstring& _name, std::shared_ptr<Texture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
 	{
 		mAnimationName = _name;
 		mAtlas = _atlas;
@@ -111,11 +111,11 @@ namespace dru
 		}
 	}
 
-	void CAnimation::BindShader()
+	void Animation::BindShader()
 	{
 		mAtlas->BindShaderResource(eShaderStage::PS, 12); // 아틀라스 srv에 바인딩
 
-		CConstantBuffer* cb =  renderer::constantBuffers[(UINT)eCBType::Animation];
+		ConstantBuffer* cb =  renderer::constantBuffers[(UINT)eCBType::Animation];
 
 		renderer::AnimationCB data = {};
 
@@ -129,23 +129,23 @@ namespace dru
 		cb->Bind(eShaderStage::PS);
 	}
 
-	void CAnimation::BindSpriteToShader(renderer::AnimationCB _Sprite)
+	void Animation::BindSpriteToShader(renderer::AnimationCB _Sprite)
 	{
 		mAtlas->BindShaderResource(eShaderStage::PS, 12);
 
-		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Animation];
+		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Animation];
 
 		cb->SetData(&_Sprite);
 		cb->Bind(eShaderStage::PS);
 	}
 
 
-	void CAnimation::Clear()
+	void Animation::Clear()
 	{
 		// Texture Clear
-		CTexture::Clear(12);
+		Texture::Clear(12);
 
-		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Animation];
+		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Animation];
 		renderer::AnimationCB data = {};
 		data.type = (UINT)eAnimationType::None;
 
@@ -154,7 +154,7 @@ namespace dru
 
 	}
 
-	void CAnimation::Reset()
+	void Animation::Reset()
 	{
 		mTime = 0.f;
 
@@ -167,7 +167,7 @@ namespace dru
 		mbCompleteEventPlayed = false;
 	}
 
-	void CAnimation::SetDuration(float _Value)
+	void Animation::SetDuration(float _Value)
 	{
 		for (size_t i = 0; i < mSpriteSheet.size(); i++)
 		{	
@@ -175,7 +175,7 @@ namespace dru
 		}
 	}
 
-	renderer::AnimationCB CAnimation::GetAnimationData()
+	renderer::AnimationCB Animation::GetAnimationData()
 	{
 		renderer::AnimationCB data = {};
 		

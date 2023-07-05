@@ -4,8 +4,8 @@
 
 namespace dru
 {
-	CShader::CShader()
-		: CResource(eResourceType::GraphicShader)
+	Shader::Shader()
+		: Resource(eResourceType::GraphicShader)
 		, mTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
 		, mRSType(eRasterizerType::SolidBack)
 		, mDSType(eDepthStencilType::Less)
@@ -13,18 +13,18 @@ namespace dru
 		, mCurrentStage(eShaderStage::End)
 	{
 	}
-	CShader::~CShader()
+	Shader::~Shader()
 	{
 	}
 
-	HRESULT CShader::Load(const std::wstring& path)
+	HRESULT Shader::Load(const std::wstring& path)
 	{
 		return E_NOTIMPL;
 	}
 
 
 
-	void CShader::Create(graphics::eShaderStage _eStage, const std::wstring& _Path, const std::string& _funcName)
+	void Shader::Create(graphics::eShaderStage _eStage, const std::wstring& _Path, const std::string& _funcName)
 	{
 		mErrorBlob = nullptr;
 
@@ -62,7 +62,7 @@ namespace dru
 
 	}
 
-	void CShader::CreateVS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateVS(const std::wstring& _Path, const std::string& _funcName)
 	{
 		D3DCompileFromFile(_Path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 			, _funcName.c_str(), "vs_5_0", 0, 0, mVSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
@@ -81,17 +81,17 @@ namespace dru
 
 	}
 
-	void CShader::CreateHS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateHS(const std::wstring& _Path, const std::string& _funcName)
 	{
 
 	}
 
-	void CShader::CreateDS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateDS(const std::wstring& _Path, const std::string& _funcName)
 	{
 
 	}
 
-	void CShader::CreateGS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateGS(const std::wstring& _Path, const std::string& _funcName)
 	{
 		D3DCompileFromFile(_Path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 			, _funcName.c_str(), "gs_5_0", 0, 0, mGSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
@@ -110,7 +110,7 @@ namespace dru
 			, mGS.GetAddressOf());
 	}
 
-	void CShader::CreatePS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreatePS(const std::wstring& _Path, const std::string& _funcName)
 	{
 		D3DCompileFromFile(_Path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 			, _funcName.c_str(), "ps_5_0", 0, 0, mPSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
@@ -129,7 +129,7 @@ namespace dru
 	}
 
 
-	void CShader::Bind()
+	void Shader::Bind()
 	{
 		graphics::GetDevice()->BindPrimitiveTopology(mTopology);
 		graphics::GetDevice()->BindInputLayout(mInputLayout.Get());

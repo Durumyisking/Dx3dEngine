@@ -4,11 +4,11 @@
 namespace dru
 {
 	using namespace enums;
-	class CResource
+	class Resource
 	{
 	public:
-		CResource(eResourceType	_Type);
-		virtual ~CResource();
+		Resource(eResourceType	_Type);
+		virtual ~Resource();
 
 		virtual HRESULT Load(const std::wstring& path) = 0;
 

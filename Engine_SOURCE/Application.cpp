@@ -12,7 +12,7 @@ namespace dru
 {
 	using namespace graphics;
 
-	CApplication::CApplication()
+	Application::Application()
 		: initalized(false)
 		, graphicDevice(nullptr)
 		, mHwnd{}
@@ -23,56 +23,56 @@ namespace dru
 		, mResolution(Vector2::Zero)
 	{
 	}
-	CApplication::~CApplication()
+	Application::~Application()
 	{
-//		CFmod::Release();
-		CSceneMgr::release();
-		CFontWrapper::Release();
+//		Fmod::Release();
+		SceneMgr::release();
+		FontWrapper::Release();
 	}
 
-	void CApplication::Initialize()
+	void Application::Initialize()
 	{
-		CTimeMgr::Initialize();
-		CInput::Initialize();
-	//	CFmod::Initialize();
-		CCollisionMgr::Initialize();
+		TimeMgr::Initialize();
+		Input::Initialize();
+	//	Fmod::Initialize();
+		CollisionMgr::Initialize();
 		renderer::Initialize();
-		CFontWrapper::Initialize();
-		CSceneMgr::Initialize();
+		FontWrapper::Initialize();
+		SceneMgr::Initialize();
 
 	}
-	void CApplication::update()
+	void Application::update()
 	{
-		CTimeMgr::update();
-		CInput::update();
-		CCollisionMgr::update();
-		CSceneMgr::update();
+		TimeMgr::update();
+		Input::update();
+		CollisionMgr::update();
+		SceneMgr::update();
 	}
-	void CApplication::fixedUpdate()
+	void Application::fixedUpdate()
 	{
-		CCollisionMgr::fixedUpdate();
-		CSceneMgr::fixedUpdate();
+		CollisionMgr::fixedUpdate();
+		SceneMgr::fixedUpdate();
 	}
-	void CApplication::render()
+	void Application::render()
 	{
-		CTimeMgr::Render(mHdc);
-		CInput::Render(mHdc);
-		//		CCollisionMgr::render();
+		TimeMgr::Render(mHdc);
+		Input::Render(mHdc);
+		//		CollisionMgr::render();
 		graphicDevice->Clear();
 		graphicDevice->AdjustViewPorts();
 
 		renderer::Render();
-		CSceneMgr::render();
-		CSceneMgr::fontRender();
+		SceneMgr::render();
+		SceneMgr::fontRender();
 	}
 
-	void CApplication::destroy()
+	void Application::destroy()
 	{
-		CSceneMgr::destory();
+		SceneMgr::destory();
 
 	}
 
-	void CApplication::Run()
+	void Application::Run()
 	{
 		update();
 		fixedUpdate();
@@ -80,12 +80,12 @@ namespace dru
 		destroy();
 	}
 
-	void CApplication::Present()
+	void Application::Present()
 	{
 		graphicDevice->Present();
 	}
 
-	void CApplication::SetWindow(HWND _hwnd, UINT _width, UINT _height)
+	void Application::SetWindow(HWND _hwnd, UINT _width, UINT _height)
 	{
 		if (graphicDevice == nullptr)
 		{
@@ -95,7 +95,7 @@ namespace dru
 			mHeight = _height;
 
 			eValidationMode vaildationMode = eValidationMode::Disabled;
-			graphicDevice = std::make_unique<CGraphicDevice>();
+			graphicDevice = std::make_unique<GraphicDevice>();
 			//graphics::GetDevice() = graphicDevice.get();
 		}
 
@@ -106,7 +106,7 @@ namespace dru
 		UpdateWindow(mHwnd);
 	}
 
-	Vector2 CApplication::GetResolutionRatio()
+	Vector2 Application::GetResolutionRatio()
 	{
 		RECT	windowRC;
 
@@ -120,17 +120,17 @@ namespace dru
 	}
 
 
-	void CApplication::DockingMenu()
+	void Application::DockingMenu()
 	{
 		SetMenu(mHwnd, mHmenu);
 		ChangeWindowSize(true);
 	}
-	void CApplication::DivideMenu()
+	void Application::DivideMenu()
 	{
 		SetMenu(mHwnd, nullptr);
 		ChangeWindowSize(false);
 	}
-	void CApplication::ChangeWindowSize(bool _bMenu)
+	void Application::ChangeWindowSize(bool _bMenu)
 	{
 		RECT rt = { 0, 0, static_cast<LONG>(mResolution.x), static_cast<LONG>(mResolution.y) };
 		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, _bMenu);

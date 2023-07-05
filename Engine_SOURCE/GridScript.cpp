@@ -7,34 +7,34 @@
 #include "Scene.h"
 #include "Application.h"
 
-extern dru::CApplication application;
+extern dru::Application application;
 
 namespace dru
 {
-	CGridScript::CGridScript()
-		: CScript()
+	GridScript::GridScript()
+		: Script()
 		, mCamera(nullptr)
 	{
 		
 	}
 
-	CGridScript::~CGridScript()
+	GridScript::~GridScript()
 	{
 	}
 
-	void CGridScript::Initialize()
+	void GridScript::Initialize()
 	{
-		UINT type = (UINT)CSceneMgr::mActiveScene->GetType();
+		UINT type = (UINT)SceneMgr::mActiveScene->GetType();
 		mCamera = renderer::Cameras[type][0];
 	}
 
-	void CGridScript::update()
+	void GridScript::update()
 	{
 		if (nullptr == mCamera)
 			return;
 
-		CGameObj* gameobj = mCamera->GetOwner();
-		CTransform* tr = gameobj->GetComponent<CTransform>();
+		GameObj* gameobj = mCamera->GetOwner();
+		Transform* tr = gameobj->GetComponent<Transform>();
 
 		Vector3 campos = tr->GetPosition();
 		Vector4 pos = Vector4(campos.x, campos.y, campos.z, 1.f);
@@ -48,7 +48,7 @@ namespace dru
 		Vector2 resolution(w, h);
 
 
-		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Grid];
+		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Grid];
 		renderer::GridCB data;
 
 		data.cameraPosition = pos;
@@ -60,11 +60,11 @@ namespace dru
 		cb->Bind(eShaderStage::PS);
 	}
 
-	void CGridScript::fixedUpdate()
+	void GridScript::fixedUpdate()
 	{
 	}
 
-	void CGridScript::render()
+	void GridScript::render()
 	{
 	}
 

@@ -4,21 +4,21 @@
 
 namespace dru::graphics
 {
-    class CPaintShader :
-        public CComputeShader
+    class PaintShader :
+        public ComputeShader
     {
 	public:
-		CPaintShader();
-		~CPaintShader();
+		PaintShader();
+		~PaintShader();
 
 		virtual void Bind();
 		virtual void Clear();
 
-		void SetTarget(std::shared_ptr<CTexture> _target) { mTarget = _target; }
-		std::shared_ptr<CTexture> GetTarget() { return mTarget; }
+		void SetTarget(std::shared_ptr<Texture> _target) { mTarget = _target; }
+		std::shared_ptr<Texture> GetTarget() { return mTarget; }
 
 	private:
-		std::shared_ptr<CTexture> mTarget;
+		std::shared_ptr<Texture> mTarget;
     };
 
 }

@@ -4,7 +4,7 @@
 
 namespace dru
 {
-	class CAnimator : public CComponent
+	class Animator : public Component
 	{
 	public:
 		struct Events
@@ -31,19 +31,19 @@ namespace dru
 			std::vector<Event> mFrameEvents; // 해당 스프라이트(인덱스) 에서 실행될 이벤트
 		};
 
-		CAnimator();
-		virtual ~CAnimator();
+		Animator();
+		virtual ~Animator();
 
 		virtual void Initialize();
 		virtual void update();
 		virtual void fixedUpdate();
 		virtual void render();
 
-		bool Create(const std::wstring& _name, std::shared_ptr<CTexture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset,  UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse = false);
+		bool Create(const std::wstring& _name, std::shared_ptr<Texture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset,  UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse = false);
 		
-		CAnimation* FindAnimation(const std::wstring& _name);
+		Animation* FindAnimation(const std::wstring& _name);
 		Events* FindEvents(const std::wstring& _name);
-		CAnimation* GetCurrentAnimation() const { return mCurrentAnimation; }
+		Animation* GetCurrentAnimation() const { return mCurrentAnimation; }
 
 		bool IsPlaying(const std::wstring& _name) { if (mCurrentAnimation->GetAnimationName() == _name) return true; return false; }
 
@@ -63,9 +63,9 @@ namespace dru
 		std::function<void()>& GetFrameEvent(const std::wstring& _name, UINT _idx);
 
 	private:
-		std::map<std::wstring, CAnimation*> mAnimations;
+		std::map<std::wstring, Animation*> mAnimations;
 		std::map<std::wstring, Events*> mEvents;
-		CAnimation* mCurrentAnimation;
+		Animation* mCurrentAnimation;
 
 		bool mbLoop;
 		bool mbPause;

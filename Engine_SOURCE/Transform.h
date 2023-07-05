@@ -8,12 +8,12 @@ using namespace dru::graphics;
 using namespace dru::renderer;
 namespace dru
 {
-	class CGameObj;
-	class CTransform : public CComponent
+	class GameObj;
+	class Transform : public Component
 	{
 	public:
-		CTransform();
-		virtual ~CTransform();
+		Transform();
+		virtual ~Transform();
 
 		virtual void Initialize() override;
 		virtual void update() override;
@@ -23,8 +23,8 @@ namespace dru
 
 		void SetConstantBuffer();
 
-		void SetParent(CGameObj* parent);
-		CTransform* GetParent() { return mParent; }
+		void SetParent(GameObj* parent);
+		Transform* GetParent() { return mParent; }
 
 		Vector3 GetPosition() const { return mRelativePosition; }
 		float GetPositionX() const { return mRelativePosition.x; }
@@ -121,7 +121,7 @@ namespace dru
 				, mWorldPosition.x + mWorldScale.x * 0.5f, mWorldPosition.y - mWorldScale.y * 0.5f);
 		}
 	private:
-		CTransform* mParent;
+		Transform* mParent;
 
 		Vector3 mRelativeForward;
 		Vector3 mRelativeRight;

@@ -18,7 +18,7 @@
 namespace dru
 {
 #define FONT_RGBA(r, g, b, a) (((((BYTE)a << 24 ) | (BYTE)b << 16) | (BYTE)g << 8) | (BYTE)r)
-	class CFontWrapper
+	class FontWrapper
 	{
 	public:
 		static bool Initialize();

@@ -4,12 +4,12 @@
 
 namespace dru
 {
-	class CEntity
+	class Entity
 	{
 	public:
-		CEntity();
-		CEntity(const CEntity& other);
-		virtual ~CEntity();
+		Entity();
+		Entity(const Entity& other);
+		virtual ~Entity();
 
 		void SetName(const std::wstring& name) { mName = name; }
 		const std::wstring& GetName() { return mName; }

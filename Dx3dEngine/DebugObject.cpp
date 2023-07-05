@@ -3,17 +3,17 @@
 
 namespace dru
 {
-	CDebugObject::CDebugObject()
+	DebugObject::DebugObject()
 	{
 	}
 
-	CDebugObject::~CDebugObject()
+	DebugObject::~DebugObject()
 	{
 	}
 
-	void CDebugObject::fixedUpdate()
+	void DebugObject::fixedUpdate()
 	{
-		for (CComponent* comp : mComponents)
+		for (Component* comp : mComponents)
 		{
 			if (nullptr == comp)
 				continue;

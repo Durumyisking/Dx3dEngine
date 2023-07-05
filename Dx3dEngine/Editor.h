@@ -6,7 +6,7 @@
 
 namespace dru
 {
-	class CEditor
+	class Editor
 	{
 	public:
 		void Initialize();
@@ -18,12 +18,12 @@ namespace dru
 		void destroy();
 		void debugRender(graphics::DebugMesh& mesh);
 
-		std::shared_ptr<CMesh> GetLineMesh() const { mDebugObjects[(UINT)eColliderType::Line]->GetComponent<CMesh>(); }
+		std::shared_ptr<Mesh> GetLineMesh() const { mDebugObjects[(UINT)eColliderType::Line]->GetComponent<Mesh>(); }
 
 	private:
-		std::vector<CWidget*> mWidgets;
-		std::vector<CEditorObject*> mEditorObjects;
-		std::vector<CDebugObject*> mDebugObjects;
+		std::vector<Widget*> mWidgets;
+		std::vector<EditorObject*> mEditorObjects;
+		std::vector<DebugObject*> mDebugObjects;
 	};
 
 }

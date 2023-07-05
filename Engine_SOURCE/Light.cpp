@@ -5,27 +5,27 @@
 
 namespace dru
 {
-	CLight::CLight()
-		: CComponent(eComponentType::Light)
+	Light::Light()
+		: Component(eComponentType::Light)
 	{
 
 	}
 
-	CLight::~CLight()
+	Light::~Light()
 	{
 	}
 
-	void CLight::Initialize()
+	void Light::Initialize()
 	{
 	}
 
-	void CLight::update()
+	void Light::update()
 	{
 	}
 
-	void CLight::fixedUpdate()
+	void Light::fixedUpdate()
 	{
-		CTransform* tr = GetOwner()->GetComponent<CTransform>();
+		Transform* tr = GetOwner()->GetComponent<Transform>();
 		math::Vector3 position = tr->GetWorldPosition();
 
 		mAttribute.position = Vector4(position.x, position.y, position.z, 1.f);
@@ -34,7 +34,7 @@ namespace dru
 		renderer::PushLightAttribute(mAttribute);
 	}
 
-	void CLight::render()
+	void Light::render()
 	{
 	}
 

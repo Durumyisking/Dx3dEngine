@@ -5,10 +5,10 @@
 
 namespace dru
 {
-	//static bool CompareGameObjectByZAxis(CGameObj* a, CGameObj* b)
+	//static bool CompareGameObjectByZAxis(GameObj* a, GameObj* b)
 	//{
-	//	CTransform* aTr = a->GetComponent<CTransform>();
-	//	CTransform* bTr = b->GetComponent<CTransform>();
+	//	Transform* aTr = a->GetComponent<Transform>();
+	//	Transform* bTr = b->GetComponent<Transform>();
 
 	//	if (aTr->GetPosition().z <= bTr->GetPosition().z)
 	//	{
@@ -19,13 +19,13 @@ namespace dru
 	//}
 
 
-	CLayer::CLayer()
+	Layer::Layer()
 	{
 	}
 
-	CLayer::~CLayer()
+	Layer::~Layer()
 	{
-		for (CGameObj* Obj : mGameObjs)
+		for (GameObj* Obj : mGameObjs)
 		{
 			if (nullptr == Obj)
 				continue;
@@ -36,9 +36,9 @@ namespace dru
 
 	}
 
-	void CLayer::Initialize()
+	void Layer::Initialize()
 	{
-		for (CGameObj* Obj : mGameObjs)
+		for (GameObj* Obj : mGameObjs)
 		{
 			if (nullptr == Obj)
 				continue;
@@ -46,26 +46,26 @@ namespace dru
 		}
 	}
 
-	void CLayer::update()
+	void Layer::update()
 	{
-		for (CGameObj* Obj : mGameObjs)
+		for (GameObj* Obj : mGameObjs)
 		{
 			if (nullptr == Obj)
 				continue;
 
-			if(CGameObj::eState::Active == Obj->GetState())
+			if(GameObj::eState::Active == Obj->GetState())
 				Obj->update();
 		}
 	}
 
-	void CLayer::fixedUpdate()
+	void Layer::fixedUpdate()
 	{
-		for (CGameObj* Obj : mGameObjs)
+		for (GameObj* Obj : mGameObjs)
 		{
 			if (nullptr == Obj)
 				continue;
 
-			if (CGameObj::eState::Active == Obj->GetState())
+			if (GameObj::eState::Active == Obj->GetState())
 				Obj->fixedUpdate();
 		}
 
@@ -74,36 +74,36 @@ namespace dru
 
 	}
 
-	void CLayer::render()
+	void Layer::render()
 	{
-		for (CGameObj* Obj : mGameObjs)
+		for (GameObj* Obj : mGameObjs)
 		{
 			if (nullptr == Obj)
 				continue;
 
-			if (CGameObj::eState::Active == Obj->GetState())
+			if (GameObj::eState::Active == Obj->GetState())
 				Obj->render();
 
 		}
 	}
 
-	void CLayer::fontRender()
+	void Layer::fontRender()
 	{
-		for (CGameObj* Obj : mGameObjs)
+		for (GameObj* Obj : mGameObjs)
 		{
 			if (nullptr == Obj)
 				continue;
 
-			if (CGameObj::eState::Active == Obj->GetState())
+			if (GameObj::eState::Active == Obj->GetState())
 				Obj->fontRender();
 
 		}
 	}
 
-	void CLayer::destroy()
+	void Layer::destroy()
 	{
-		std::set<CGameObj*> DeadObjs;
-		for (CGameObj* Obj : mGameObjs)
+		std::set<GameObj*> DeadObjs;
+		for (GameObj* Obj : mGameObjs)
 		{
 			if (Obj->IsDead())
 				DeadObjs.insert(Obj);
@@ -111,7 +111,7 @@ namespace dru
 
 		for (GameObjectIter iter = mGameObjs.begin(); iter != mGameObjs.end(); )
 		{
-			std::set<CGameObj*>::iterator deleteIter = DeadObjs.find(*iter);
+			std::set<GameObj*>::iterator deleteIter = DeadObjs.find(*iter);
 
 			if (deleteIter != DeadObjs.end())
 			{
@@ -123,7 +123,7 @@ namespace dru
 			}
 		}
 
-		for (CGameObj* Obj : DeadObjs)
+		for (GameObj* Obj : DeadObjs)
 		{
 			delete Obj;
 			Obj = nullptr;
@@ -131,16 +131,16 @@ namespace dru
 
 	}
 
-	void CLayer::DeleteObject()
+	void Layer::DeleteObject()
 	{
-		for (CGameObj* Obj : mGameObjs)
+		for (GameObj* Obj : mGameObjs)
 		{
 			if (!Obj->IsDontDestroy())
 				Obj->Die();
 		}
 	}
 
-	void CLayer::AddGameObject(CGameObj* _GameObj, eLayerType _Type)
+	void Layer::AddGameObject(GameObj* _GameObj, eLayerType _Type)
 	{
 		if (nullptr == _GameObj)	
 			return;
@@ -149,9 +149,9 @@ namespace dru
 		mGameObjs.push_back(_GameObj);
  	}
 
-	std::vector<CGameObj*> CLayer::GetDontDestroyObjects()
+	std::vector<GameObj*> Layer::GetDontDestroyObjects()
 	{
-		std::vector<CGameObj*> donts;
+		std::vector<GameObj*> donts;
 
 		for (GameObjectIter iter = mGameObjs.begin();  iter != mGameObjs.end(); )
 		{

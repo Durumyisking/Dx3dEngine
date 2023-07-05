@@ -14,7 +14,7 @@ namespace dru
 {
 	using namespace math;
 
-	class CGameObj : public CEntity
+	class GameObj : public Entity
 	{
 	public:
 		enum class eState
@@ -26,8 +26,8 @@ namespace dru
 
 
 	public:
-		CGameObj();
-		virtual ~CGameObj();
+		GameObj();
+		virtual ~GameObj();
 
 		virtual void Initialize();
 		virtual void update();
@@ -47,14 +47,14 @@ namespace dru
 			}
 			else
 			{
-				mScripts.push_back(dynamic_cast<CScript*>(comp));
+				mScripts.push_back(dynamic_cast<Script*>(comp));
 				comp->SetOwner(this);
 			}
 
 			return comp;
 		}
 
-		void AddComponent(CComponent* _Component);
+		void AddComponent(Component* _Component);
 
 		template <typename T>
 		T* GetComponent()
@@ -86,7 +86,7 @@ namespace dru
 			return components;
 		}
 
-		const std::vector<CScript*>& GetScripts() { return mScripts; }
+		const std::vector<Script*>& GetScripts() { return mScripts; }
 
 		template <typename T>
 		T* GetScript()
@@ -101,9 +101,9 @@ namespace dru
 			}
 			return nullptr;
 		}
-		Vector3 Forward() { return GetComponent<CTransform>()->Forward(); }
-		Vector3 Right() { return GetComponent<CTransform>()->Right(); }
-		Vector3 Up() { return GetComponent<CTransform>()->Up(); }
+		Vector3 Forward() { return GetComponent<Transform>()->Forward(); }
+		Vector3 Right() { return GetComponent<Transform>()->Right(); }
+		Vector3 Up() { return GetComponent<Transform>()->Up(); }
 
 		void Flip();
 
@@ -112,12 +112,12 @@ namespace dru
 		void RenderingBlockOn() { mbBlockRendering = true; }
 		void RenderingBlockOff() { mbBlockRendering = false; }
 
-		bool MoveToTarget_Smooth_bool(CGameObj* _target, float _speed, bool _zOn, eDir _dir = eDir::END);
-		Vector3 MoveToTarget_Smooth_vector3(CGameObj* _target, float _speed, bool _zOn, eDir _dir = eDir::END);
+		bool MoveToTarget_Smooth_bool(GameObj* _target, float _speed, bool _zOn, eDir _dir = eDir::END);
+		Vector3 MoveToTarget_Smooth_vector3(GameObj* _target, float _speed, bool _zOn, eDir _dir = eDir::END);
 
-		CGameObj* GetParent() 
+		GameObj* GetParent() 
 		{
-			CTransform* tr = GetComponent<CTransform>()->GetParent();
+			Transform* tr = GetComponent<Transform>()->GetParent();
 			if (nullptr != tr)
 			{
 				return tr->GetOwner();
@@ -126,13 +126,13 @@ namespace dru
 		}
 
 	protected:
-		std::vector<CComponent*> mComponents;
+		std::vector<Component*> mComponents;
 
 
 	private:
 		eLayerType mType;
 		eState mState;
-		std::vector<CScript*> mScripts;
+		std::vector<Script*> mScripts;
 		bool mbDestroy;
 
 		bool mbIsLeft;
@@ -147,7 +147,7 @@ namespace dru
 		{
 			Vector3 pos = GetPos();
 			pos.z = _Z;
-			GetComponent<CTransform>()->SetPosition(pos);
+			GetComponent<Transform>()->SetPosition(pos);
 		};
 		void SetScale(Vector3 _Value);
 		void SetRotation(Vector3 _Value);
@@ -163,8 +163,8 @@ namespace dru
 		Vector3 GetRotation();
 
 
-		void SetMaterial(std::shared_ptr<CMaterial> _Material);
-		void SetMesh(std::shared_ptr<CMesh> _Mesh);
+		void SetMaterial(std::shared_ptr<Material> _Material);
+		void SetMesh(std::shared_ptr<Mesh> _Mesh);
 
 		bool IsDead()
 		{

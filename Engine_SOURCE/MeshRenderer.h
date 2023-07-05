@@ -5,11 +5,11 @@
 
 namespace dru
 {
-	class CMeshRenderer : public CBaseRenderer
+	class MeshRenderer : public BaseRenderer
 	{
 	public:
-		CMeshRenderer();
-		virtual ~CMeshRenderer();
+		MeshRenderer();
+		virtual ~MeshRenderer();
 
 		virtual void Initialize() override ;
 		virtual void update() override;

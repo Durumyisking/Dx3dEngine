@@ -5,27 +5,27 @@
 
 namespace dru
 {
-	CBaseRenderer::CBaseRenderer(eComponentType _Type)
-		:CComponent(_Type)
+	BaseRenderer::BaseRenderer(eComponentType _Type)
+		:Component(_Type)
 		, mbIsChanged(false)
 		, mbIsAnim(false)
 		, mSpriteSize(Vector2::Zero)
 	{
 		// 디폴트 매시 지정
-		std::shared_ptr<CMesh> mesh = CResources::Find<CMesh>(L"Cubemesh");
+		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"Cubemesh");
 
 		SetMesh(mesh);
 	}
-	CBaseRenderer::~CBaseRenderer()
+	BaseRenderer::~BaseRenderer()
 	{
 	}
-	void CBaseRenderer::Initialize()
+	void BaseRenderer::Initialize()
 	{
 	}
-	void CBaseRenderer::update()
+	void BaseRenderer::update()
 	{
 	}
-	void CBaseRenderer::fixedUpdate()
+	void BaseRenderer::fixedUpdate()
 	{
 		if (mbIsChanged)
 		{
@@ -33,7 +33,7 @@ namespace dru
 			if (mWidthRatio == 0.f && mHeightRatio == 0.f)
 				return;
 
-			CTransform* transform = GetOwner()->GetComponent<CTransform>();
+			Transform* transform = GetOwner()->GetComponent<Transform>();
 
 			Vector3 scale = transform->GetScale();
 			Vector3 scaleTemp = transform->GetScale();
@@ -50,25 +50,25 @@ namespace dru
 		}
 	}
 
-	void CBaseRenderer::render()
+	void BaseRenderer::render()
 	{
 	}
 
-	void CBaseRenderer::SetMaterial(std::shared_ptr<CMaterial> _Material)
+	void BaseRenderer::SetMaterial(std::shared_ptr<Material> _Material)
 	{
 		mMaterial = _Material;
 
 		adjustTexture();
 	}
 
-	void CBaseRenderer::SetMaterialByKey(std::wstring _Key)
+	void BaseRenderer::SetMaterialByKey(std::wstring _Key)
 	{
-		mMaterial = CResources::Find<CMaterial>(_Key);
+		mMaterial = Resources::Find<Material>(_Key);
 
 		adjustTexture();
 	}
 
-	void CBaseRenderer::SetAnimMaterial(std::shared_ptr<CMaterial> _Material, Vector2 _SpriteSize)
+	void BaseRenderer::SetAnimMaterial(std::shared_ptr<Material> _Material, Vector2 _SpriteSize)
 	{
 		mMaterial = _Material;
 		mbIsAnim = true;
@@ -76,25 +76,25 @@ namespace dru
 		adjustTexture();
 	}
 
-	void CBaseRenderer::ChangeColor(Vector4 _color)
+	void BaseRenderer::ChangeColor(Vector4 _color)
 	{
 		MulColor(Vector4::Zero);
 		AddColor(_color);
 	}
 
-	void CBaseRenderer::MulColor(Vector4 _color)
+	void BaseRenderer::MulColor(Vector4 _color)
 	{
 		mMaterial->SetData(eGPUParam::Vector4_1, &_color);
 	}
 
-	void CBaseRenderer::AddColor(Vector4 _color)
+	void BaseRenderer::AddColor(Vector4 _color)
 	{
 		mMaterial->SetData(eGPUParam::Vector4_2, &_color);
 	}
 
-	void CBaseRenderer::adjustTexture()
+	void BaseRenderer::adjustTexture()
 	{
-		std::shared_ptr<CTexture> texture = GetMaterial()->GetTexture(eTextureSlot::T0);
+		std::shared_ptr<Texture> texture = GetMaterial()->GetTexture(eTextureSlot::T0);
 
 		if (nullptr == texture)
 			return;

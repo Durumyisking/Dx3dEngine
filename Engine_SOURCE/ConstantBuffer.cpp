@@ -6,21 +6,21 @@ using namespace dru::math;
 
 namespace dru::graphics
 {
-	CConstantBuffer::CConstantBuffer()
+	ConstantBuffer::ConstantBuffer()
 		: mType(eCBType::End)
 	{
 	}
 
-	CConstantBuffer::CConstantBuffer(eCBType _Type)
+	ConstantBuffer::ConstantBuffer(eCBType _Type)
 		: mType(_Type)
 	{
 	}
 
-	CConstantBuffer::~CConstantBuffer()
+	ConstantBuffer::~ConstantBuffer()
 	{
 	}
 
-	bool CConstantBuffer::Create(UINT _Size)
+	bool ConstantBuffer::Create(UINT _Size)
 	{
 		desc.ByteWidth = _Size; // 들고있을 데이터 크기만큼 (일단은 위치 정보만)
 		desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
@@ -35,12 +35,12 @@ namespace dru::graphics
 		return true;
 	}
 
-	void CConstantBuffer::SetData(void* _Data)
+	void ConstantBuffer::SetData(void* _Data)
 	{
 		GetDevice()->BindBuffer(buffer.Get(), _Data, desc.ByteWidth);
 	}
 
-	void CConstantBuffer::Bind(eShaderStage _Stage)
+	void ConstantBuffer::Bind(eShaderStage _Stage)
 	{
 		if (_Stage == eShaderStage::All)
 		{
@@ -57,7 +57,7 @@ namespace dru::graphics
 		}
 	}
 
-	void CConstantBuffer::Clear()
+	void ConstantBuffer::Clear()
 	{
 		GetDevice()->ClearConstantBuffer(buffer.Get(), desc.ByteWidth);
 

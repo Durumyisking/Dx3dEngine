@@ -5,11 +5,11 @@
 namespace dru
 {
 	using namespace graphics;
-	class CShader : public CResource
+	class Shader : public Resource
 	{
 	public:
-		CShader();
-		virtual ~CShader();
+		Shader();
+		virtual ~Shader();
 
 		virtual HRESULT Load(const std::wstring& path) override;
 

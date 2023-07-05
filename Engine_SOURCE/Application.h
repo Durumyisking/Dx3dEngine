@@ -6,11 +6,11 @@
 
 namespace dru
 {
-	class CApplication
+	class Application
 	{
 	public:
-		CApplication();
-		~CApplication();
+		Application();
+		~Application();
 
 		virtual void Initialize();
 		// 캐릭터 / 로직 업데이트
@@ -43,7 +43,7 @@ namespace dru
 
 	private:
 		bool initalized = false;
-		std::unique_ptr<graphics::CGraphicDevice> graphicDevice;
+		std::unique_ptr<graphics::GraphicDevice> graphicDevice;
 
 		HWND mHwnd;
 		HDC	 mHdc;

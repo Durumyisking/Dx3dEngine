@@ -15,11 +15,11 @@
 namespace dru::graphics
 {
 
-	class CTexture : public CResource
+	class Texture : public Resource
 	{
 	public:
-		CTexture();
-		virtual ~CTexture();
+		Texture();
+		virtual ~Texture();
 
 		static void Clear(UINT startSlot);
 

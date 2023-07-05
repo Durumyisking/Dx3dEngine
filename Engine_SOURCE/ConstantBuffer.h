@@ -5,14 +5,14 @@ using namespace dru::enums;
 
 namespace dru::graphics
 {
-	class CConstantBuffer : GpuBuffer
+	class ConstantBuffer : GpuBuffer
 	{
-		friend class CMaterial;
+		friend class Material;
 
 	public:
-		CConstantBuffer();
-		CConstantBuffer(eCBType _Type);
-		virtual ~CConstantBuffer();	
+		ConstantBuffer();
+		ConstantBuffer(eCBType _Type);
+		virtual ~ConstantBuffer();	
 
 		bool Create(UINT _Size);
 		void SetData(void* _Data);

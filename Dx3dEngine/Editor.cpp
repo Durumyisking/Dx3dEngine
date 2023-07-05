@@ -9,34 +9,34 @@
 
 namespace dru
 {
-	void CEditor::Initialize()
+	void Editor::Initialize()
 	{
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
 		// rectmesh
-		std::shared_ptr<CMesh> rectMesh =  CResources::Find<CMesh>(L"DebugRectmesh");
-		std::shared_ptr<CMaterial> material = CResources::Find<CMaterial>(L"DebugMaterial");
+		std::shared_ptr<Mesh> rectMesh =  Resources::Find<Mesh>(L"DebugRectmesh");
+		std::shared_ptr<Material> material = Resources::Find<Material>(L"DebugMaterial");
 
-		mDebugObjects[(UINT)eColliderType::Rect] = new CDebugObject();
-		CMeshRenderer* RectMeshrenderer = mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<CMeshRenderer>(eComponentType::MeshRenderer);
+		mDebugObjects[(UINT)eColliderType::Rect] = new DebugObject();
+		MeshRenderer* RectMeshrenderer = mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 		RectMeshrenderer->SetMaterial(material);
 		RectMeshrenderer->SetMesh(rectMesh);
 
 		// circlemesh
-		std::shared_ptr<CMesh> CircleMesh = CResources::Find<CMesh>(L"Circlemesh");
+		std::shared_ptr<Mesh> CircleMesh = Resources::Find<Mesh>(L"Circlemesh");
 		
-		mDebugObjects[(UINT)eColliderType::Circle] = new CDebugObject();
-		CMeshRenderer* CicleMeshrenderer = mDebugObjects[(UINT)eColliderType::Circle]->AddComponent<CMeshRenderer>(eComponentType::MeshRenderer);
+		mDebugObjects[(UINT)eColliderType::Circle] = new DebugObject();
+		MeshRenderer* CicleMeshrenderer = mDebugObjects[(UINT)eColliderType::Circle]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 		CicleMeshrenderer->SetMaterial(material);
 		CicleMeshrenderer->SetMesh(CircleMesh);
 
 		// lineemesh
-		std::shared_ptr<CMesh> LineMesh = CResources::Find<CMesh>(L"Linemesh");
+		std::shared_ptr<Mesh> LineMesh = Resources::Find<Mesh>(L"Linemesh");
 
-		mDebugObjects[(UINT)eColliderType::Line] = new CDebugObject();
-		CMeshRenderer* LineMeshrenderer = mDebugObjects[(UINT)eColliderType::Line]->AddComponent<CMeshRenderer>(eComponentType::MeshRenderer);
+		mDebugObjects[(UINT)eColliderType::Line] = new DebugObject();
+		MeshRenderer* LineMeshrenderer = mDebugObjects[(UINT)eColliderType::Line]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 		LineMeshrenderer->SetMaterial(material);
 		LineMeshrenderer->SetMesh(LineMesh);
@@ -44,33 +44,33 @@ namespace dru
 
 	}
 
-	void CEditor::Run()
+	void Editor::Run()
 	{
 		update();
 		fixedUpdate();
 		render();
 	}
-	void CEditor::update()
+	void Editor::update()
 	{
-		for (CEditorObject* obj : mEditorObjects)
+		for (EditorObject* obj : mEditorObjects)
 		{
 			obj->update();
 		}
 	}
 
-	void CEditor::fixedUpdate()
+	void Editor::fixedUpdate()
 	{
-		for (CEditorObject* obj : mEditorObjects)
+		for (EditorObject* obj : mEditorObjects)
 		{
 			obj->fixedUpdate();
 		}
 	}
 
-	void CEditor::render()
+	void Editor::render()
 	{
-		if (CInput::GetKeyDown(eKeyCode::V))
+		if (Input::GetKeyDown(eKeyCode::V))
 		{
-			for (CEditorObject* obj : mEditorObjects)
+			for (EditorObject* obj : mEditorObjects)
 			{
 				obj->render();
 			}
@@ -83,7 +83,7 @@ namespace dru
 		renderer::debugMeshes.clear();
 	}
 
-	void CEditor::destroy()
+	void Editor::destroy()
 	{
 		for (auto* obj : mWidgets)
 		{
@@ -101,11 +101,11 @@ namespace dru
 		delete mDebugObjects[(UINT)eColliderType::Line];
 	}
 
-	void CEditor::debugRender(graphics::DebugMesh& mesh)
+	void Editor::debugRender(graphics::DebugMesh& mesh)
 	{
-		CDebugObject* debugObj = mDebugObjects[(UINT)mesh.type];
+		DebugObject* debugObj = mDebugObjects[(UINT)mesh.type];
 		
-		CTransform* tr = debugObj->GetComponent<CTransform>();
+		Transform* tr = debugObj->GetComponent<Transform>();
 //		tr->SetPosition(mesh.position);
 		if (mainCamera->GetProjectionType() == eProjectionType::Perspective)
 		{
@@ -140,14 +140,14 @@ namespace dru
 		}
 
 		
-		CBaseRenderer* renderer = debugObj->GetComponent<CBaseRenderer>();
+		BaseRenderer* renderer = debugObj->GetComponent<BaseRenderer>();
 
-		std::shared_ptr<CMaterial> material = renderer->GetMaterial();
+		std::shared_ptr<Material> material = renderer->GetMaterial();
 		material->SetData(eGPUParam::Int_1, &mesh.state);
 		tr->fixedUpdate(); // 행렬 다시만들어줌
 
-		CCamera::SetGpuViewMatrix(renderer::mainCamera->GetViewMatrix());
-		CCamera::SetGpuProjectionMatrix(renderer::mainCamera->GetProjectionMatrix());
+		Camera::SetGpuViewMatrix(renderer::mainCamera->GetViewMatrix());
+		Camera::SetGpuProjectionMatrix(renderer::mainCamera->GetProjectionMatrix());
 
 		debugObj->render();
 	}

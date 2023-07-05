@@ -4,7 +4,7 @@
 
 namespace dru
 {
-    class CParticleSystem : public CBaseRenderer
+    class ParticleSystem : public BaseRenderer
     {
 		enum class eSimulationSpace
 		{
@@ -12,8 +12,8 @@ namespace dru
 			World,
 		};
 	public:
-		CParticleSystem();
-		virtual ~CParticleSystem();
+		ParticleSystem();
+		virtual ~ParticleSystem();
 
 		virtual void Initialize() override;
 		virtual void update() override;
@@ -24,7 +24,7 @@ namespace dru
 
 		void MakeConstantBufferData(std::wstring _ShaderName, renderer::ParticleSystemCB _CB)
 		{
-			mCS = CResources::Find<CParticleShader>(_ShaderName);
+			mCS = Resources::Find<ParticleShader>(_ShaderName);
 			mCBData = _CB; 
 		}
 
@@ -55,9 +55,9 @@ namespace dru
 		Particle* mParticle;
 
 	
-		class CStructedBuffer* mBuffer;
-		class CStructedBuffer* mSharedBuffer;
-		std::shared_ptr<graphics::CParticleShader> mCS;
+		class StructedBuffer* mBuffer;
+		class StructedBuffer* mSharedBuffer;
+		std::shared_ptr<graphics::ParticleShader> mCS;
 		renderer::ParticleSystemCB mCBData;
 
 		Vector4 mStartPosition;

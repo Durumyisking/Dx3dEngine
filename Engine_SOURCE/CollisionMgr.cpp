@@ -4,18 +4,18 @@
 
 namespace dru
 {
-	std::bitset<static_cast<UINT>(eLayerType::End)> CCollisionMgr::mLayerCollisionMatrix[static_cast<UINT>(eLayerType::End)] = {};
-	std::map<UINT64, bool> CCollisionMgr::mCollisionMap;
+	std::bitset<static_cast<UINT>(eLayerType::End)> CollisionMgr::mLayerCollisionMatrix[static_cast<UINT>(eLayerType::End)] = {};
+	std::map<UINT64, bool> CollisionMgr::mCollisionMap;
 
 
-	void CCollisionMgr::Initialize()
+	void CollisionMgr::Initialize()
 	{
 
 	}
 
-	void CCollisionMgr::update()
+	void CollisionMgr::update()
 	{
-		CScene* scene = CSceneMgr::mActiveScene;
+		Scene* scene = SceneMgr::mActiveScene;
 
 		for (UINT row = 0; row < static_cast<UINT>(eLayerType::End); row++)
 		{
@@ -29,15 +29,15 @@ namespace dru
 		}
 	}
 
-	void CCollisionMgr::fixedUpdate()
+	void CollisionMgr::fixedUpdate()
 	{
 	}
 
-	void CCollisionMgr::render()
+	void CollisionMgr::render()
 	{
 	}
 
-	void CCollisionMgr::CollisionLayerCheck(eLayerType _left, eLayerType _right, bool _benable)
+	void CollisionMgr::CollisionLayerCheck(eLayerType _left, eLayerType _right, bool _benable)
 	{
 		int row = 0;
 		int col = 0;
@@ -57,39 +57,39 @@ namespace dru
 		mLayerCollisionMatrix[row][col] = _benable;
 	}
 
-	void CCollisionMgr::LayerCollision(CScene* _scene, eLayerType _left, eLayerType _right)
+	void CollisionMgr::LayerCollision(Scene* _scene, eLayerType _left, eLayerType _right)
 	{
-		const std::vector<CGameObj*>& lefts = _scene->GetGameObj(_left);
-		const std::vector<CGameObj*>& rights = _scene->GetGameObj(_right);
+		const std::vector<GameObj*>& lefts = _scene->GetGameObj(_left);
+		const std::vector<GameObj*>& rights = _scene->GetGameObj(_right);
 
-		for (CGameObj* left : lefts)
+		for (GameObj* left : lefts)
 		{
 
-			if (left->GetState() != CGameObj::eState::Active)
+			if (left->GetState() != GameObj::eState::Active)
 				continue;
 
-			if (!left->GetComponent<CCollider2D>())
+			if (!left->GetComponent<Collider2D>())
 				continue;
 
-			for (CGameObj* right : rights)
+			for (GameObj* right : rights)
 			{
-				if (right->GetState() != CGameObj::eState::Active)
+				if (right->GetState() != GameObj::eState::Active)
 					continue;
 
-				if (!right->GetComponent<CCollider2D>())
+				if (!right->GetComponent<Collider2D>())
 					continue;
 
 				if (left == right)
 					continue;
 
 
-				ColliderCollision(left->GetComponent<CCollider2D>(), right->GetComponent<CCollider2D>());
+				ColliderCollision(left->GetComponent<Collider2D>(), right->GetComponent<Collider2D>());
 
 			}
 		}
 	}
 
-	void CCollisionMgr::ColliderCollision(CCollider2D* _left, CCollider2D* _right)
+	void CollisionMgr::ColliderCollision(Collider2D* _left, Collider2D* _right)
 	{
 		ColliderID colliderID;
 		colliderID.left = (UINT)_left->GetColliderID();
@@ -186,7 +186,7 @@ namespace dru
 		}
 	}
 
-	bool CCollisionMgr::Intersect(CCollider2D* _left, CCollider2D* _right)
+	bool CollisionMgr::Intersect(Collider2D* _left, Collider2D* _right)
 	{
 
 	#pragma region RectVsRect
@@ -201,8 +201,8 @@ namespace dru
 				Vector3{-0.5f, -0.5f, 0.0f}
 			};
 
-			CTransform* leftTr = _left->GetOwner()->GetComponent<CTransform>();
-			CTransform* rightTr = _right->GetOwner()->GetComponent<CTransform>();
+			Transform* leftTr = _left->GetOwner()->GetComponent<Transform>();
+			Transform* rightTr = _right->GetOwner()->GetComponent<Transform>();
 
 			Matrix leftMatrix = leftTr->GetWorldMatrix();
 			Matrix rightMatrix = rightTr->GetWorldMatrix();
@@ -290,7 +290,7 @@ namespace dru
 
 		return true;
 	}
-	bool CCollisionMgr::lineLine(Vector2 _lineA_p1, Vector2 _lineA_p2, Vector2 _lineB_p1, Vector2 _lineB_p2)
+	bool CollisionMgr::lineLine(Vector2 _lineA_p1, Vector2 _lineA_p2, Vector2 _lineB_p1, Vector2 _lineB_p2)
 	{
 		// calculate the distance to intersection point
 		  // uA의 분모는 직선의 기울기
@@ -326,7 +326,7 @@ namespace dru
 
 	}
 
-	bool CCollisionMgr::lineRect(CCollider2D* _left, CCollider2D* _right)
+	bool CollisionMgr::lineRect(Collider2D* _left, Collider2D* _right)
 	{
 		Vector3 leftPos = _left->GetColliderPos();
 		Vector2 leftScale = _left->GetScale() / 2.f;

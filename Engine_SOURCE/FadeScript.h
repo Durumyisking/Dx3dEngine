@@ -3,12 +3,12 @@
 
 namespace dru
 {
-    class CFadeScript :
-        public CScript
+    class FadeScript :
+        public Script
     {
     public:
-        CFadeScript();
-        virtual ~CFadeScript();
+        FadeScript();
+        virtual ~FadeScript();
 
         virtual void Initialize() override;
         virtual void update() override;

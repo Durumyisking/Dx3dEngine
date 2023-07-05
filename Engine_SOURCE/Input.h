@@ -4,7 +4,7 @@
 #include "GameObj.h"
 #include "Application.h"
 
-extern dru::CApplication application;
+extern dru::Application application;
 
 namespace dru
 {
@@ -40,7 +40,7 @@ namespace dru
 		NONE,
 	};
 
-	class CInput
+	class Input
 	{
 	public:
 		struct Key
@@ -93,8 +93,8 @@ namespace dru
 		}
 
 	private:
-		CInput() = delete;
-		~CInput() = delete;
+		Input() = delete;
+		~Input() = delete;
 
 	private:
 		static std::vector<Key> mKeys;

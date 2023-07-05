@@ -3,11 +3,11 @@
 
 namespace dru
 {
-	class CLayer : public CEntity
+	class Layer : public Entity
 	{
 	public:
-		CLayer();
-		virtual ~CLayer();
+		Layer();
+		virtual ~Layer();
 
 		virtual void Initialize();
 		virtual void update();
@@ -18,16 +18,16 @@ namespace dru
 		void DeleteObject ();
 
 
-		void AddGameObject(CGameObj* _GameObj, eLayerType _Type);
-		const std::vector<CGameObj*>& GetGameObjects() { return mGameObjs; }
-		std::vector<CGameObj*> GetDontDestroyObjects();
+		void AddGameObject(GameObj* _GameObj, eLayerType _Type);
+		const std::vector<GameObj*>& GetGameObjects() { return mGameObjs; }
+		std::vector<GameObj*> GetDontDestroyObjects();
 
 
 	private:
-		std::vector<CGameObj*>	mGameObjs;
+		std::vector<GameObj*>	mGameObjs;
 
 	};
 
-	typedef const std::vector<CGameObj*>& GameObjects;
-	typedef std::vector<CGameObj*>::iterator GameObjectIter;
+	typedef const std::vector<GameObj*>& GameObjects;
+	typedef std::vector<GameObj*>::iterator GameObjectIter;
 }

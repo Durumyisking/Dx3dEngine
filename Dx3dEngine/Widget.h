@@ -2,7 +2,7 @@
 
 namespace dru
 {
-	class CWidget
+	class Widget
 	{
 	};
 

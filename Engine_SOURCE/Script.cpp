@@ -6,40 +6,40 @@
 #include "Input.h"
 namespace dru
 {
-	CScript::CScript()
-		: CComponent(eComponentType::Script)
+	Script::Script()
+		: Component(eComponentType::Script)
 	{
 	}
 
-	CScript::~CScript()
+	Script::~Script()
 	{
 	}
 
-	void CScript::Initialize()
+	void Script::Initialize()
 	{
 	}
 
-	void CScript::update()
+	void Script::update()
 	{
 	}
 
-	void CScript::fixedUpdate()
+	void Script::fixedUpdate()
 	{
 	}
 
-	void CScript::render()
+	void Script::render()
 	{
 
 	}
-	void CScript::fontRender()
+	void Script::fontRender()
 	{
 	}
-	void CScript::OnCollisionEnter(CCollider2D* _oppo)
+	void Script::OnCollisionEnter(Collider2D* _oppo)
 	{
 
 
 	}
-	void CScript::OnCollision(CCollider2D* _oppo)
+	void Script::OnCollision(Collider2D* _oppo)
 	{
 	}
 

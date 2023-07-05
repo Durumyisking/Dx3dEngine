@@ -3,11 +3,11 @@
 
 namespace dru
 {
-	class CAudioListener : public CComponent
+	class AudioListener : public Component
 	{
 	public:
-		CAudioListener();
-		~CAudioListener();
+		AudioListener();
+		~AudioListener();
 
 		virtual void Initialize() override;
 		virtual void update() override;

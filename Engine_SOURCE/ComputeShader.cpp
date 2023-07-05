@@ -3,8 +3,8 @@
 
 namespace dru::graphics
 {
-	CComputeShader::CComputeShader(UINT threadGroupX, UINT threadGroupY, UINT threadGroupZ)
-		: CResource(eResourceType::ComputeShader)
+	ComputeShader::ComputeShader(UINT threadGroupX, UINT threadGroupY, UINT threadGroupZ)
+		: Resource(eResourceType::ComputeShader)
 		, mCSBlob(nullptr)
 		, mCS(nullptr)
 		, mThreadGroupCountX(threadGroupX)
@@ -16,8 +16,8 @@ namespace dru::graphics
 	{
 	}
 
-	CComputeShader::CComputeShader()
-		: CResource(eResourceType::ComputeShader)
+	ComputeShader::ComputeShader()
+		: Resource(eResourceType::ComputeShader)
 		, mCSBlob(nullptr)
 		, mCS(nullptr)
 		, mThreadGroupCountX(0)
@@ -32,16 +32,16 @@ namespace dru::graphics
 		mThreadGroupCountZ = 1;
 	}
 
-	CComputeShader::~CComputeShader()
+	ComputeShader::~ComputeShader()
 	{
 	}
 
-	HRESULT CComputeShader::Load(const std::wstring& path)
+	HRESULT ComputeShader::Load(const std::wstring& path)
 	{
 		return E_NOTIMPL;
 	}
 
-	void CComputeShader::Create(const std::wstring& _Path, const std::string& _funcName)
+	void ComputeShader::Create(const std::wstring& _Path, const std::string& _funcName)
 	{
 
 		mErrorBlob = nullptr;
@@ -73,7 +73,7 @@ namespace dru::graphics
 
 
 
-	void CComputeShader::OnExcute()
+	void ComputeShader::OnExcute()
 	{
 		Bind();	
 
@@ -84,11 +84,11 @@ namespace dru::graphics
 		Clear();
 	}
 
-	void CComputeShader::Bind()
+	void ComputeShader::Bind()
 	{
 	}
 
-	void CComputeShader::Clear()
+	void ComputeShader::Clear()
 	{
 	}
 

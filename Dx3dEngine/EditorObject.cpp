@@ -1,33 +1,33 @@
 #include "EditorObject.h"
 namespace dru
 {
-	CEditorObject::CEditorObject()
-		:CGameObj()
+	EditorObject::EditorObject()
+		:GameObj()
 	{
 	}
 
-	CEditorObject::~CEditorObject()
+	EditorObject::~EditorObject()
 	{
 	}
 
-	void CEditorObject::Initialize()
+	void EditorObject::Initialize()
 	{
-		CGameObj::Initialize();
+		GameObj::Initialize();
 	}
 
-	void CEditorObject::update()
+	void EditorObject::update()
 	{
-		CGameObj::update();
+		GameObj::update();
 	}
 
-	void CEditorObject::fixedUpdate()
+	void EditorObject::fixedUpdate()
 	{
-		CGameObj::fixedUpdate();
+		GameObj::fixedUpdate();
 	}
 
-	void CEditorObject::render()
+	void EditorObject::render()
 	{
-		CGameObj::render();
+		GameObj::render();
 	}
 
 }

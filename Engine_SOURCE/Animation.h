@@ -11,7 +11,7 @@ using namespace dru::graphics;
 namespace dru
 {
 
-	class CAnimation : public CEntity
+	class Animation : public Entity
 	{
 	public:
 		struct Sprite
@@ -33,14 +33,14 @@ namespace dru
 			}
 		};
 
-		CAnimation();
-		~CAnimation();
+		Animation();
+		~Animation();
 		
 		UINT update();
 		void fixedUpdate();
 		void render();
 
-		void Create(const std::wstring& _name, std::shared_ptr<CTexture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse);
+		void Create(const std::wstring& _name, std::shared_ptr<Texture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse);
 		void BindShader();
 		void BindSpriteToShader(renderer::AnimationCB _Sprite);
 		void Clear();
@@ -58,10 +58,10 @@ namespace dru
 		renderer::AnimationCB GetAnimationData();
 
 	private:
-		class CAnimator* mAnimator;
+		class Animator* mAnimator;
 		std::wstring mAnimationName;
 
-		std::shared_ptr<CTexture> mAtlas;
+		std::shared_ptr<Texture> mAtlas;
 		std::vector<Sprite> mSpriteSheet;
 		int mIndex;
 		float mTime;

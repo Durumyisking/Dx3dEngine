@@ -4,7 +4,7 @@
 
 namespace dru
 {
-	class CTimeMgr
+	class TimeMgr
 	{
 	public:
 		static __forceinline float DeltaTime() { return mDeltaTime; }

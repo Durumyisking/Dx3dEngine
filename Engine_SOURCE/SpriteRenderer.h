@@ -6,11 +6,11 @@
 namespace dru
 {
 	 
-	class CSpriteRenderer : public CBaseRenderer
+	class SpriteRenderer : public BaseRenderer
 	{
 	public:
-		CSpriteRenderer();
-		virtual ~CSpriteRenderer();
+		SpriteRenderer();
+		virtual ~SpriteRenderer();
 
 		virtual void Initialize() override;
 		virtual void update() override;

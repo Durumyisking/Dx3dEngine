@@ -4,12 +4,12 @@
 
 namespace dru::graphics
 {
-	class CComputeShader : public CResource
+	class ComputeShader : public Resource
 	{
 	public:
-		CComputeShader(UINT threadGroupX, UINT threadGroupY, UINT threadGroupZ);
-		CComputeShader();
-		virtual ~CComputeShader();
+		ComputeShader(UINT threadGroupX, UINT threadGroupY, UINT threadGroupZ);
+		ComputeShader();
+		virtual ~ComputeShader();
 
 		virtual HRESULT Load(const std::wstring& path);
 		void Create(const std::wstring& _Path, const std::string& _funcName);

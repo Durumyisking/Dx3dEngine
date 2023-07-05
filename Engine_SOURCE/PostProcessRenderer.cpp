@@ -3,33 +3,33 @@
 
 namespace dru
 {
-	CPostProcessRenderer::CPostProcessRenderer()
-		: CBaseRenderer(eComponentType::Renderer)
+	PostProcessRenderer::PostProcessRenderer()
+		: BaseRenderer(eComponentType::Renderer)
 	{
 	}
 
-	CPostProcessRenderer::~CPostProcessRenderer()
+	PostProcessRenderer::~PostProcessRenderer()
 	{
 	}
 
-	void CPostProcessRenderer::Initialize()
+	void PostProcessRenderer::Initialize()
 	{
-		CBaseRenderer::Initialize();
+		BaseRenderer::Initialize();
 	}
 
-	void CPostProcessRenderer::update()
+	void PostProcessRenderer::update()
 	{
-		CBaseRenderer::update();
+		BaseRenderer::update();
 	}
 
-	void CPostProcessRenderer::fixedUpdate()
+	void PostProcessRenderer::fixedUpdate()
 	{
-		CBaseRenderer::fixedUpdate();
+		BaseRenderer::fixedUpdate();
 	}
 
-	void CPostProcessRenderer::render()
+	void PostProcessRenderer::render()
 	{
-		GetOwner()->GetComponent<CTransform>()->SetConstantBuffer();
+		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
 		GetMesh()->BindBuffer();
 
@@ -41,10 +41,10 @@ namespace dru
 		mPostProcess->Clear();
 		GetMaterial()->Clear();
 
-		CBaseRenderer::render();
+		BaseRenderer::render();
 	}
 
-	void CPostProcessRenderer::SetPostProcessOwner(CPostProcess* _PostProcess)
+	void PostProcessRenderer::SetPostProcessOwner(PostProcess* _PostProcess)
 	{
 		mPostProcess = _PostProcess;
 	}

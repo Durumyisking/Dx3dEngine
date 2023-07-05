@@ -2,8 +2,8 @@
 
 namespace dru
 {
-	CAnimator::CAnimator()
-		: CComponent(eComponentType::Animator)
+	Animator::Animator()
+		: Component(eComponentType::Animator)
 		, mAnimations{}
 		, mEvents{}
 		, mCurrentAnimation(nullptr)
@@ -12,7 +12,7 @@ namespace dru
 	{
 	}
 
-	CAnimator::~CAnimator()
+	Animator::~Animator()
 	{
 		for (auto anim : mAnimations)
 		{
@@ -27,11 +27,11 @@ namespace dru
 
 	}
 
-	void CAnimator::Initialize()
+	void Animator::Initialize()
 	{
 	}
 
-	void CAnimator::update()
+	void Animator::update()
 	{
 		if (!mCurrentAnimation)
 			return;
@@ -66,24 +66,24 @@ namespace dru
 		}
 	}
 
-	void CAnimator::fixedUpdate()
+	void Animator::fixedUpdate()
 	{
 	}
 
-	void CAnimator::render()
+	void Animator::render()
 	{
 	}
 
-	bool CAnimator::Create(const std::wstring& _name, std::shared_ptr<CTexture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
+	bool Animator::Create(const std::wstring& _name, std::shared_ptr<Texture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
 	{
 		if (!_atlas)
 			return false;
 
-		CAnimation* animation = FindAnimation(_name);
+		Animation* animation = FindAnimation(_name);
 		if (animation)
 			return false;
 
-		animation = new CAnimation();
+		animation = new Animation();
 		animation->Create(_name, _atlas, _leftTop, _size, _offset, _spriteLength, _Ratio, _duration, _Reverse);
 
 		mAnimations.insert(std::make_pair(_name, animation));
@@ -95,9 +95,9 @@ namespace dru
 		return true;
 	}
 
-	CAnimation* CAnimator::FindAnimation(const std::wstring& _name)
+	Animation* Animator::FindAnimation(const std::wstring& _name)
 	{
-		std::map<std::wstring, CAnimation*>::iterator iter = mAnimations.find(_name);
+		std::map<std::wstring, Animation*>::iterator iter = mAnimations.find(_name);
 
 		if (mAnimations.end() == iter)
 		{
@@ -107,7 +107,7 @@ namespace dru
 		return iter->second;
 	}
 
-	CAnimator::Events* CAnimator::FindEvents(const std::wstring& _name)
+	Animator::Events* Animator::FindEvents(const std::wstring& _name)
 	{
 		std::map<std::wstring, Events*>::iterator iter = mEvents.find(_name);
 
@@ -119,9 +119,9 @@ namespace dru
 		return iter->second;
 	}
 
-	void CAnimator::Play(std::wstring _name, bool _bLoop)
+	void Animator::Play(std::wstring _name, bool _bLoop)
 	{
-		CAnimation* prevAnimation = mCurrentAnimation;
+		Animation* prevAnimation = mCurrentAnimation;
 		Events* events = nullptr;
 		if (prevAnimation)
 			events = FindEvents(mCurrentAnimation->GetAnimationName());
@@ -140,7 +140,7 @@ namespace dru
 	}
 
 
-	void CAnimator::Binds()
+	void Animator::Binds()
 	{
 		if (!mCurrentAnimation)
 			return;
@@ -148,7 +148,7 @@ namespace dru
 		mCurrentAnimation->BindShader();
 	}
 
-	void CAnimator::BindSprite(renderer::AnimationCB _Sprite)
+	void Animator::BindSprite(renderer::AnimationCB _Sprite)
 	{
 		if (!mCurrentAnimation)
 			return;
@@ -156,38 +156,38 @@ namespace dru
 		mCurrentAnimation->BindSpriteToShader(_Sprite);
 	}
 
-	void CAnimator::Reset()
+	void Animator::Reset()
 	{
 		mCurrentAnimation->Reset();
 	}
 
-	void CAnimator::Clear()
+	void Animator::Clear()
 	{
 		mCurrentAnimation->Clear();
 	}
 
-	std::function<void()>& CAnimator::GetStartEvent(const std::wstring& _name)
+	std::function<void()>& Animator::GetStartEvent(const std::wstring& _name)
 	{
 		Events* events = FindEvents(_name);
 
 		return events->mStartEvent.mEvent;
 	}
 
-	std::function<void()>& CAnimator::GetCompleteEvent(const std::wstring& _name)
+	std::function<void()>& Animator::GetCompleteEvent(const std::wstring& _name)
 	{
 		Events* events = FindEvents(_name);
 
 		return events->mCompleteEvent.mEvent;
 	}
 
-	std::function<void()>& CAnimator::GetEndEvent(const std::wstring& _name)
+	std::function<void()>& Animator::GetEndEvent(const std::wstring& _name)
 	{
 		Events* events = FindEvents(_name);
 
 		return events->mEndEvent.mEvent;
 	}
 
-	std::function<void()>& CAnimator::GetFrameEvent(const std::wstring& _name, UINT _idx)
+	std::function<void()>& Animator::GetFrameEvent(const std::wstring& _name, UINT _idx)
 	{
 		Events* events = FindEvents(_name);
 

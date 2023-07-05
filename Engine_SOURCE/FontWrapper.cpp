@@ -6,10 +6,10 @@ namespace dru
 {
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> renderer::samplerState[];
 
-	IFW1Factory* CFontWrapper::mFW1Factory = nullptr;
-	IFW1FontWrapper* CFontWrapper::mFontWrapper = nullptr;
+	IFW1Factory* FontWrapper::mFW1Factory = nullptr;
+	IFW1FontWrapper* FontWrapper::mFontWrapper = nullptr;
 
-	bool CFontWrapper::Initialize()
+	bool FontWrapper::Initialize()
 	{
 		if (FAILED(FW1CreateFactory(FW1_VERSION, &mFW1Factory)))
 			return false;
@@ -21,7 +21,7 @@ namespace dru
 		return true;
 	}
 
-	void CFontWrapper::DrawFont(const wchar_t* str, float x, float y, float size, UINT rgb)
+	void FontWrapper::DrawFont(const wchar_t* str, float x, float y, float size, UINT rgb)
 	{
 		//RGB();
 		ID3D11DeviceContext* pContext = graphics::GetDevice()->GetDeviceContext().Get();
@@ -38,7 +38,7 @@ namespace dru
 		graphics::GetDevice()->BindSamplers((UINT)graphics::eSamplerType::Point, 1, renderer::samplerState[(UINT)eSamplerType::Point].GetAddressOf());
 	}
 
-	void CFontWrapper::DrawFont(const wchar_t* str, dru::math::Vector3 pos, float size, UINT rgb)
+	void FontWrapper::DrawFont(const wchar_t* str, dru::math::Vector3 pos, float size, UINT rgb)
 	{
 		POINT pt = WorldToWindowPos(pos);
 
@@ -48,8 +48,8 @@ namespace dru
 			pContext,
 			str, 
 			size,
-			pt.x,
-			pt.y,
+			static_cast<FLOAT>(pt.x),
+			static_cast<FLOAT>(pt.y),
 			rgb,
 			0 
 		);
@@ -57,7 +57,7 @@ namespace dru
 		graphics::GetDevice()->BindSamplers((UINT)graphics::eSamplerType::Point, 1, renderer::samplerState[(UINT)eSamplerType::Point].GetAddressOf());
 	}
 
-	void CFontWrapper::Release()
+	void FontWrapper::Release()
 	{
 		mFW1Factory->Release();
 		mFW1Factory = nullptr;

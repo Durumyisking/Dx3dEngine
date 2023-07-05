@@ -10,21 +10,21 @@ namespace dru
         float duration;   // 흔들림 지속 시간
     };
 
-    class CCameraScript :
-        public CScript
+    class CameraScript :
+        public Script
     {
     public:
-        CCameraScript();
-        virtual ~CCameraScript();
+        CameraScript();
+        virtual ~CameraScript();
 
         virtual void Initialize() override;
         virtual void update() override;
         virtual void fixedUpdate() override;
         virtual void render() override;
 
-        virtual void OnCollisionEnter(CCollider2D* _oppo);
-        virtual void OnCollision(CCollider2D* _oppo);
-        virtual void OnCollisionExit(CCollider2D* _oppo);
+        virtual void OnCollisionEnter(Collider2D* _oppo);
+        virtual void OnCollision(Collider2D* _oppo);
+        virtual void OnCollisionExit(Collider2D* _oppo);
 
         void KeyBoardMove();
         void TargetMove();
@@ -35,9 +35,9 @@ namespace dru
 
 
     private:
-        CCamera* mCameraObject;
-        CTransform* mTransform;
-        CGameObj* mTarget;
+        Camera* mCameraObject;
+        Transform* mTransform;
+        GameObj* mTarget;
         Vector3 mLookAt;
 
         float	mSpeed;

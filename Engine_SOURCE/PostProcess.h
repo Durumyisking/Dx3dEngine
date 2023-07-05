@@ -4,13 +4,13 @@
 
 namespace dru
 {
-	class CPostProcessRenderer;
-	class CPostProcess :
-		public CGameObj
+	class PostProcessRenderer;
+	class PostProcess :
+		public GameObj
 	{
 	public:
-		CPostProcess();
-		virtual ~CPostProcess();
+		PostProcess();
+		virtual ~PostProcess();
 
 		virtual void Initialize();
 		virtual void update();
@@ -23,9 +23,9 @@ namespace dru
 		void SetMaterial(std::wstring _Key);
 
 	protected:
-		std::shared_ptr<CMaterial> mPostProcessMaterial;
+		std::shared_ptr<Material> mPostProcessMaterial;
 		PostProcessCB mConstantBuffer;
-		CPostProcessRenderer* mRenderer;
+		PostProcessRenderer* mRenderer;
 	};
 
 }

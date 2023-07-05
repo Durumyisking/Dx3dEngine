@@ -3,21 +3,21 @@
 
 namespace dru
 {
-    class CPostProcessRenderer :
-        public CBaseRenderer
+    class PostProcessRenderer :
+        public BaseRenderer
     {
 	public:
-		CPostProcessRenderer();
-		virtual ~CPostProcessRenderer();
+		PostProcessRenderer();
+		virtual ~PostProcessRenderer();
 
 		virtual void Initialize() override;
 		virtual void update() override;
 		virtual void fixedUpdate() override;
 		virtual void render() override;
 
-		void SetPostProcessOwner(CPostProcess* _PostProcess);
+		void SetPostProcessOwner(PostProcess* _PostProcess);
 
 	private:
-		CPostProcess* mPostProcess;
+		PostProcess* mPostProcess;
     };
 }

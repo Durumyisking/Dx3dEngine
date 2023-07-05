@@ -4,8 +4,8 @@
 
 namespace dru
 {
-	CTransform::CTransform()
-		: CComponent(eComponentType::Transform)
+	Transform::Transform()
+		: Component(eComponentType::Transform)
 		, mParent(nullptr)
 		, mRelativeForward(Vector3::Forward)
 		, mRelativeRight(Vector3::Right)
@@ -24,19 +24,19 @@ namespace dru
 	{
 	}
 
-	CTransform::~CTransform()
+	Transform::~Transform()
 	{
 	}
 
-	void CTransform::Initialize()
+	void Transform::Initialize()
 	{
 	}
 
-	void CTransform::update()
+	void Transform::update()
 	{
 	}
 
-	void CTransform::fixedUpdate()
+	void Transform::fixedUpdate()
 	{
 		// 렌더링에 사용될 위치값을 업데이트.
 		// 1. 월드 행렬 생성
@@ -95,18 +95,18 @@ namespace dru
 		}
 	}
 
-	void CTransform::render()
+	void Transform::render()
 	{
 	}
 
-	void CTransform::SetConstantBuffer()
+	void Transform::SetConstantBuffer()
 	{
 		renderer::TransformCB trCb = {};
 		trCb.world = mWorld;
-		trCb.view = CCamera::GetGpuViewMatrix();
-		trCb.projection = CCamera::GetGpuProjectionMatrix();
+		trCb.view = Camera::GetGpuViewMatrix();
+		trCb.projection = Camera::GetGpuProjectionMatrix();
 
-		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Transform];
+		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Transform];
 		cb->SetData(&trCb);
 		cb->Bind(eShaderStage::VS);
 		cb->Bind(eShaderStage::HS);
@@ -116,9 +116,9 @@ namespace dru
 		cb->Bind(eShaderStage::CS);
 	}
 
-	void CTransform::SetParent(CGameObj* parent)
+	void Transform::SetParent(GameObj* parent)
 	{
-		mParent = parent->GetComponent<CTransform>();
+		mParent = parent->GetComponent<Transform>();
 	}
 
 
