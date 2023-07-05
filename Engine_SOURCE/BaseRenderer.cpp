@@ -54,6 +54,11 @@ namespace dru
 	{
 	}
 
+	void BaseRenderer::SetMeshByKey(std::wstring _Key)
+	{
+		mMesh = Resources::Find<Mesh>(_Key);
+	}
+
 	void BaseRenderer::SetMaterial(std::shared_ptr<Material> _Material)
 	{
 		mMaterial = _Material;

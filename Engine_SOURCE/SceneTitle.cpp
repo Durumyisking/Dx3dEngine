@@ -62,23 +62,27 @@ namespace dru
 			mCamera->AddComponent<CameraScript>(eComponentType::Script);
 			renderer::mainCamera = cameraComp;
 			cameraComp->SetProjectionType(eProjectionType::Perspective);
-			mCamera->SetPos(Vector3(0.f, 0.f, -20.f));
+			mCamera->SetPos(Vector3(0.f, 0.f, -5.f));
 
 		}
 		
 		{
 			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-			directionalLight->SetPos({ 0.f, 0.f, -100.f });
+			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 0.f, -10.f));
 			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 			lightComp->SetType(eLightType::Directional);
-			lightComp->SetDiffuse({ 1.f, 1.f, 1.f, 1.f });
+			lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
+			lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
+			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
 		}
 
 		{
 			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(0.0f, 0.0f, 10.0f));
+			player->SetPos(Vector3(0.f, 0.f, 0.f));
 			player->SetName(L"Player");
 			player->GetComponent<SpriteRenderer>()->SetMaterialByKey(L"BasicMaterial");
+			player->GetComponent<SpriteRenderer>()->SetMeshByKey(L"Spheremesh");
+			player->SetScale({ 5.f, 5.f, 5.f });
 		}
 
 

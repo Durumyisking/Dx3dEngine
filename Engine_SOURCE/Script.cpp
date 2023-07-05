@@ -34,13 +34,5 @@ namespace dru
 	void Script::fontRender()
 	{
 	}
-	void Script::OnCollisionEnter(Collider2D* _oppo)
-	{
-
-
-	}
-	void Script::OnCollision(Collider2D* _oppo)
-	{
-	}
 
 }

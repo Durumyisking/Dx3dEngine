@@ -106,15 +106,15 @@ namespace dru
 
 		if (Input::GetKeyDown(eKeyCode::Q))
 		{
-			mTransform->AddRotationX(20.f * TimeMgr::DeltaTime());
+			mTransform->AddRotationX(30.f * TimeMgr::DeltaTime());
 		}
 		if (Input::GetKeyDown(eKeyCode::W))
 		{
-			mTransform->AddRotationY(20.f * TimeMgr::DeltaTime());
+			mTransform->AddRotationY(30.f * TimeMgr::DeltaTime());
 		}
 		if (Input::GetKeyDown(eKeyCode::E))
 		{
-			mTransform->AddRotationZ(20.f * TimeMgr::DeltaTime());
+			mTransform->AddRotationZ(30.f * TimeMgr::DeltaTime());
 		}
 
 	}
