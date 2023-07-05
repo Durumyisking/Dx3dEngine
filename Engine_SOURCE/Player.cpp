@@ -10,7 +10,6 @@ namespace dru
 	Player::Player()
 	{
 		SetLayerType(eLayerType::Player);
-		SetScale(Vector3(1.25f, 1.25f, 1.f));
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
 
