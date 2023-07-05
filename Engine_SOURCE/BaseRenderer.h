@@ -18,6 +18,7 @@ namespace dru
 		virtual void render() override;
 
 		void SetMesh(std::shared_ptr <Mesh> _Mesh) { mMesh = _Mesh; }
+		void SetMeshByKey(std::wstring _Key);
 		void SetMaterial(std::shared_ptr <Material> _Material);
 		void SetMaterialByKey(std::wstring _Key);
 		void SetAnimMaterial(std::shared_ptr <Material> _Material, Vector2 _SpriteSize);

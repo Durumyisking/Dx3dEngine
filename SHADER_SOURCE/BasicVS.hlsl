@@ -12,8 +12,12 @@ struct VSOut
     float4 Position : SV_Position;
     float2 UV : TEXCOORD;
     
-};
+    
+    float3 ViewPos : POSITION;
+    float3 ViewNormal : NORMAL;
 
+    float intensity : FOG;
+};
 
 VSOut main(VSIn In)
 {
@@ -25,7 +29,13 @@ VSOut main(VSIn In)
     
     OUT.Position = ProjPosition;
     OUT.UV = In.UV;
-    //OUT.Normal = In.Normal;
+
+    // 로컬 노말을 뷰변환
+    float3 vViewNormal = normalize(mul(float4(In.Normal.xyz, 0.0f), world).xyz); 
+    vViewNormal = normalize(mul(float4(vViewNormal, 0.0f), view).xyz);
+    
+    OUT.ViewPos = viewPosition.xyz;
+    OUT.ViewNormal = vViewNormal.xyz;
     
     return OUT;
 }

@@ -65,6 +65,7 @@ namespace dru::graphics
 
 		void Clear();
 		void AdjustViewPorts();
+		void OMSetRenderTarget();
 
 		void Draw();
 		void DrawIndexed(UINT _IndexCount, UINT StartIndexLocation, INT BaseVertexLocation);

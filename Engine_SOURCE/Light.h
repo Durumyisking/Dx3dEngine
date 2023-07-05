@@ -19,6 +19,7 @@ namespace dru
 		graphics::LightAttribute GetAttribute() const { return mAttribute; }
 
 		void SetDiffuse(math::Vector4 _diffuse) { mAttribute.diffuse = _diffuse; }
+		void SetSpecular(Vector4 spec) { mAttribute.specular = spec; }
 		void SetAmbient(math::Vector4 _ambient) { mAttribute.ambient = _ambient; }
 		void SetType(enums::eLightType _type) { mAttribute.type = _type; }
 		void SetRadius(float _radius) { mAttribute.radius = _radius; }

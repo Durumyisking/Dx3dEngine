@@ -25,7 +25,7 @@ namespace dru
 	}
 	Application::~Application()
 	{
-//		Fmod::Release();
+		Fmod::Release();
 		SceneMgr::release();
 		FontWrapper::Release();
 	}
@@ -34,7 +34,7 @@ namespace dru
 	{
 		TimeMgr::Initialize();
 		Input::Initialize();
-	//	Fmod::Initialize();
+		Fmod::Initialize();
 		CollisionMgr::Initialize();
 		renderer::Initialize();
 		FontWrapper::Initialize();

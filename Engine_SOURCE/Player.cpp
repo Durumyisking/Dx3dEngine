@@ -4,6 +4,7 @@
 #include "RigidBody.h"
 #include "Input.h"
 #include "TimeMgr.h"
+#include "PlayerScript.h"
 
 namespace dru
 {
@@ -15,6 +16,7 @@ namespace dru
 
 		SpriteRenderer* spriteRenderer = AddComponent<SpriteRenderer>(eComponentType::Renderer);
 
+		PlayerScript* script = AddComponent<PlayerScript>(eComponentType::Script);
 	}
 
 	Player::~Player()

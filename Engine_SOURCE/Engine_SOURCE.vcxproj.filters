@@ -318,6 +318,9 @@
     <ClInclude Include="Input.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerScript.h">
+      <Filter>Common\GameObj\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -477,6 +480,9 @@
     </ClCompile>
     <ClCompile Include="FontWrapper.cpp">
       <Filter>Common\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>Common\GameObj\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
