@@ -17,10 +17,6 @@ struct VSOut
     float intensity : FOG;
 };
 
-//diffuse
-//specular
-//ambient
-
 float4 main(VSOut In) : SV_Target
 {
     float4 OutColor = float4(0.5f, 0.5f, 0.5f, 1.0f);

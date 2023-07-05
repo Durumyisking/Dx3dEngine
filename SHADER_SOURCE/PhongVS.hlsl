@@ -31,7 +31,7 @@ VSOut main(VSIn In)
     OUT.UV = In.UV;
 
     // 로컬 노말을 뷰변환
-    float3 vViewNormal = normalize(mul(float4(In.Normal.xyz, 0.0f), world).xyz); 
+    float3 vViewNormal = normalize(mul(float4(In.Normal.xyz, 0.0f), world).xyz);
     vViewNormal = normalize(mul(float4(vViewNormal, 0.0f), view).xyz);
     
     OUT.ViewPos = viewPosition.xyz;
