@@ -444,7 +444,6 @@ namespace dru::renderer
 
 #pragma endregion
 
-
 	}
 
 

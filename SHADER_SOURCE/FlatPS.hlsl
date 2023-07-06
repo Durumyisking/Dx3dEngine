@@ -4,7 +4,10 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float2 UV : TEXCOORD;
-    float3 Normal : NORMAL;
+    float3 ViewPos : POSITION;
+    nointerpolation float3 ViewNormal : NORMAL;
+    float intensity : FOG;
+
 };
 
 
@@ -15,10 +18,10 @@ float4 main(VSOut In) : SV_Target
     LightAttribute lightAttribute = lightAttributes[0];
        
     float3 ViewLightDir = normalize(mul(float4(lightAttribute.direction.xyz, 0.0f), view));
-    float intensity = saturate(dot(-ViewLightDir, In.Normal));
+    float intensity = saturate(dot(-ViewLightDir, In.ViewNormal));
+
     float fSpecPow = 0.0f;
-    
-    float3 vViewReflect = normalize(ViewLightDir + 2.0f * dot(-ViewLightDir, In.Normal) * In.Normal);
+    float3 vViewReflect = normalize(ViewLightDir + 2.0f * dot(-ViewLightDir, In.ViewNormal) * In.ViewNormal);
     
     float3 vEye = normalize(float3(0.0f, 0.0f, 1.0f)); // 시점 벡터는 고정된 값으로 설정
     

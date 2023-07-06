@@ -11,7 +11,11 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float2 UV : TEXCOORD;
-    float3 Normal : NORMAL; 
+    float3 ViewPos : POSITION;
+    // 해당 옵션을 붙이면 레스터라이저에서 보간을 수행하지 않습니다
+    nointerpolation float3 ViewNormal : NORMAL;
+
+    float intensity : FOG;
 };
 
 VSOut main(VSIn In)
@@ -25,7 +29,12 @@ VSOut main(VSIn In)
     OUT.Position = ProjPosition;
     OUT.UV = In.UV;
     
-    OUT.Normal = mul(float4(In.Normal.xyz, 0.0f), world).xyz; // Flat shading을 위해 월드 좌표계 법선 벡터 저장
+    // 로컬 노말을 뷰변환
+    float3 vViewNormal = normalize(mul(float4(In.Normal.xyz, 0.0f), world).xyz);
+    vViewNormal = normalize(mul(float4(vViewNormal, 0.0f), view).xyz);
+    
+    OUT.ViewPos = viewPosition.xyz;
+    OUT.ViewNormal = vViewNormal.xyz;
     
     return OUT;
 }
