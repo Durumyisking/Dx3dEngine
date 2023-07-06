@@ -26,6 +26,7 @@ namespace dru::renderer
 	StructedBuffer* lightBuffer = nullptr;
 
 	std::shared_ptr<Texture> postProcessTexture = nullptr;
+	dru::GameObj* inspectorGameObject = nullptr;
 
 	void LoadMesh()
 	{
@@ -439,8 +440,8 @@ namespace dru::renderer
 
 		std::shared_ptr<Mesh> sphereMesh = std::make_shared<Mesh>();
 		Resources::Insert<Mesh>(L"Spheremesh", sphereMesh);
-		sphereMesh->CreateVertexBuffer(sphereVtx.data(), sphereVtx.size());
-		sphereMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+		sphereMesh->CreateVertexBuffer(sphereVtx.data(), static_cast<UINT>(sphereVtx.size()));
+		sphereMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 
 #pragma endregion
 

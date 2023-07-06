@@ -11,24 +11,121 @@
     <Filter Include="Editor">
       <UniqueIdentifier>{771bb347-c4e7-41f4-a4ce-d5d3d68f45e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{fc262514-321f-41e1-a1f0-458849b011bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Object">
+      <UniqueIdentifier>{c328cb73-5973-4cdf-bbc2-e4e7d9bc0d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View">
+      <UniqueIdentifier>{c8d68a97-a69e-4670-9cca-339948ea2ab3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widget">
+      <UniqueIdentifier>{b9d620b3-168b-4a23-96fe-9b2dfad02f06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widget\Components">
+      <UniqueIdentifier>{5b3a9758-c887-4f61-ab3a-2c88fe7b10c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widget\ListWidget">
+      <UniqueIdentifier>{84f26484-b717-4c2d-89fe-51164efe3531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widget\Resource">
+      <UniqueIdentifier>{8010f4b1-551f-4f47-8889-322f15fa16fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widget\TreeWidget">
+      <UniqueIdentifier>{61f71efc-7184-4101-a29b-f2496aa09923}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widget\Components\Base">
+      <UniqueIdentifier>{7a74e626-791c-4f8d-9cf7-28ea863c9dbf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dx3dEngine.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Editor.h">
-      <Filter>Editor</Filter>
+    <ClInclude Include="imgui.h">
+      <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="DebugObject.h">
-      <Filter>Editor</Filter>
+    <ClInclude Include="imgui_internal.h">
+      <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="EditorObject.h">
-      <Filter>Editor</Filter>
+    <ClInclude Include="imstb_rectpack.h">
+      <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Widget.h">
-      <Filter>Editor</Filter>
+    <ClInclude Include="imstb_textedit.h">
+      <Filter>ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_dx11.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_win32.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="guiListWidget.h">
+      <Filter>Widget\ListWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="guiTreeWidget.h">
+      <Filter>Widget\TreeWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="guiWidget.h">
+      <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="guiMaterial.h">
+      <Filter>Widget\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="guiMesh.h">
+      <Filter>Widget\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="guiTexture.h">
+      <Filter>Widget\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="guiResource.h">
+      <Filter>Widget\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="guiConsole.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="guiGame.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="guiHierarchy.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="guiInspector.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="guiProject.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualEditor.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="guiMeshRenderer.h">
+      <Filter>Widget\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="guiTransform.h">
+      <Filter>Widget\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="guiComponent.h">
+      <Filter>Widget\Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="guiDebugObject.h">
+      <Filter>Editor\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="guiEditorObject.h">
+      <Filter>Editor\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="guiEditor.h">
+      <Filter>Editor\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="guiVisualEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Dx3dEngine.rc">
@@ -47,17 +144,84 @@
     <ClCompile Include="Main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="Editor.cpp">
-      <Filter>Editor</Filter>
+    <ClCompile Include="imgui.cpp">
+      <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="DebugObject.cpp">
-      <Filter>Editor</Filter>
+    <ClCompile Include="imgui_demo.cpp">
+      <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="EditorObject.cpp">
-      <Filter>Editor</Filter>
+    <ClCompile Include="imgui_draw.cpp">
+      <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Widget.cpp">
-      <Filter>Editor</Filter>
+    <ClCompile Include="imgui_tables.cpp">
+      <Filter>ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_dx11.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_win32.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="guiListWidget.cpp">
+      <Filter>Widget\ListWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="guiTreeWidget.cpp">
+      <Filter>Widget\TreeWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="guiWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="guiMaterial.cpp">
+      <Filter>Widget\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="guiMesh.cpp">
+      <Filter>Widget\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="guiResource.cpp">
+      <Filter>Widget\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="guiTexture.cpp">
+      <Filter>Widget\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="guiConsole.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="guiGame.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="guiHierarchy.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="guiInspector.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="guiProject.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualEditor.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="guiTransform.cpp">
+      <Filter>Widget\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="guiComponent.cpp">
+      <Filter>Widget\Components\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="guiMeshRenderer.cpp">
+      <Filter>Widget\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="guiDebugObject.cpp">
+      <Filter>Editor\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="guiEditorObject.cpp">
+      <Filter>Editor\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="guiEditor.cpp">
+      <Filter>Editor\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="guiVisualEditor.cpp" />
   </ItemGroup>
 </Project>

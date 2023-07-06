@@ -1,10 +1,11 @@
 #pragma once
 #include "Engine.h"
+#include "Entity.h"
 
 namespace dru
 {
 	using namespace enums;
-	class Resource
+	class Resource : public dru::Entity
 	{
 	public:
 		Resource(eResourceType	_Type);
@@ -17,6 +18,8 @@ namespace dru
 
 		void SetKey(const std::wstring& key) { mKey = key; }
 		void SetPath(const std::wstring& path) { mPath = path; }
+		eResourceType GetType() { return mType; }
+
 
 	private:
 		std::wstring	mPath;

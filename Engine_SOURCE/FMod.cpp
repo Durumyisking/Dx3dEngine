@@ -15,7 +15,7 @@ namespace dru
 
 		// The example Studio project is authored for 5.1 sound, so set up the system output mode to match
 		mSystem->getCoreSystem(&mCoreSystem);
-		mCoreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0);
+		mCoreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE::FMOD_SPEAKERMODE_5POINT1, 0);
 
 		mSystem->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData);
 
@@ -23,7 +23,7 @@ namespace dru
 
 	bool Fmod::CreateSound(const std::string& path, FMOD::Sound** sound)
 	{
-		if (FMOD_OK != mCoreSystem->createSound(path.c_str(), FMOD_3D, 0, sound))
+		if (FMOD_RESULT::FMOD_OK != mCoreSystem->createSound(path.c_str(), FMOD_3D, 0, sound))
 			return false;
 
 		return true;

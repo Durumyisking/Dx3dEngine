@@ -1,11 +1,11 @@
 #pragma once
-#include "GameObj.h"
+#include "..\Engine_SOURCE\GameObj.h"
 
-namespace dru
+
+namespace gui
 {
-    class EditorObject :
-        public GameObj
-    {
+	class EditorObject : public dru::GameObj
+	{
 	public:
 		EditorObject();
 		virtual ~EditorObject();
@@ -15,6 +15,7 @@ namespace dru
 		virtual void fixedUpdate();
 		virtual void render();
 
-    };
-
+	private:
+		
+	};
 }

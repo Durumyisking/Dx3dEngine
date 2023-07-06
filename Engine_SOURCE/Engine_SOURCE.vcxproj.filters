@@ -484,6 +484,9 @@
     <ClCompile Include="PlayerScript.cpp">
       <Filter>Common\GameObj\Player</Filter>
     </ClCompile>
+    <ClCompile Include="druEnums.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

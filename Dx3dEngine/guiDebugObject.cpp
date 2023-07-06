@@ -1,24 +1,25 @@
-#include "DebugObject.h"
-#include "Component.h"
+#include "guiDebugObject.h"
 
-namespace dru
+
+namespace gui
 {
 	DebugObject::DebugObject()
 	{
-	}
 
+	}
 	DebugObject::~DebugObject()
 	{
+
 	}
 
 	void DebugObject::fixedUpdate()
 	{
-		for (Component* comp : mComponents)
+		for (dru::Component* comp : mComponents)
 		{
-			if (nullptr == comp)
+			if (comp == nullptr)
 				continue;
+
 			comp->fixedUpdate();
 		}
 	}
-
 }

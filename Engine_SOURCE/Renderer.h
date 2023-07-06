@@ -189,6 +189,8 @@ namespace dru::renderer
 
 	extern StructedBuffer* lightBuffer;
 
+	extern dru::GameObj* inspectorGameObject;
+
 
 	void Initialize();
 	void release(); // 그리는 방식이 여러개일때 여러개를 할당하는게 아니라
