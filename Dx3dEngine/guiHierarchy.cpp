@@ -70,7 +70,7 @@ namespace gui
 
 		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, sceneName, 0, true);
 
-		for (size_t i = 0; i < (UINT)dru::enums::eLayerType::End; i++)
+		for (size_t i = 0; i < static_cast<UINT>(dru::enums::eLayerType::End); i++)
 		{
 			dru::Layer& layer = scene->GetLayer((dru::enums::eLayerType)i);
 			const std::vector<dru::GameObj*>& gameObjs

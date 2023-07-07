@@ -13,7 +13,7 @@ namespace dru::graphics
 		: Resource(eResourceType::Material) 
 		, mMode(eRenderingMode::Transparent) 
 	{
-		mTexture[(UINT)eTextureSlot::T0] = Resources::Find<Texture>(_TextureName);
+		mTexture[static_cast<UINT>(eTextureSlot::T0)] = Resources::Find<Texture>(_TextureName);
 		mShader = Resources::Find<Shader>(_ShaderName);
 		mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
 	}
@@ -21,7 +21,7 @@ namespace dru::graphics
 		: Resource(eResourceType::Material)
 		, mMode(eRenderingMode::Transparent)
 	{
-		mTexture[(UINT)_Slot] = Resources::Find<Texture>(_TextureName);
+		mTexture[static_cast<UINT>(_Slot)] = Resources::Find<Texture>(_TextureName);
 		mShader = Resources::Find<Shader>(_ShaderName);
 		mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
 		mConstantBuffer.xyzw2 = Vector4{ 0.f, 0.f, 0.f, 0.f };
@@ -116,7 +116,7 @@ namespace dru::graphics
 	}
 	void Material::Bind()
 	{
-		for (UINT i = 0; i < (UINT)eTextureSlot::End; i++)
+		for (UINT i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
         {
             if (mTexture[i] == nullptr)
                 continue;
@@ -128,7 +128,7 @@ namespace dru::graphics
             mTexture[i]->BindShaderResource(eShaderStage::PS, i);
             mTexture[i]->BindShaderResource(eShaderStage::CS, i);
         }
-		ConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::Material];
+		ConstantBuffer* pCB = renderer::constantBuffers[static_cast<UINT>(eCBType::Material)];
 
 
 		pCB->SetData(&mConstantBuffer);	
@@ -140,7 +140,7 @@ namespace dru::graphics
 	}
 	void Material::Clear()
 	{
-		for (size_t i = 0; i < (UINT)eTextureSlot::End; i++)
+		for (size_t i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
 		{
 			if (mTexture[i] == nullptr)
 				continue;
@@ -148,7 +148,7 @@ namespace dru::graphics
 			mTexture[i]->Clear();
 		}
 
-		ConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::Material];
+		ConstantBuffer* pCB = renderer::constantBuffers[static_cast<UINT>(eCBType::Material)];
 		pCB->Clear();
 
 	}

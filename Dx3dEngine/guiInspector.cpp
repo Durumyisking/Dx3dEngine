@@ -19,23 +19,23 @@ namespace gui
 		SetName("Inspector");
 		SetSize(ImVec2(300.0f, 100.0f));
 		
-		mComponents.resize((UINT)eComponentType::End);
+		mComponents.resize(static_cast<UINT>(eComponentType::End));
 		mTargetGameObject = dru::renderer::inspectorGameObject;
 
-		mComponents[(UINT)eComponentType::Transform] = new gui::Transform();
-		mComponents[(UINT)eComponentType::Transform]->SetName("InspectorTransform");
-		mComponents[(UINT)eComponentType::Transform]->SetTarget(mTargetGameObject);
-		AddWidget(mComponents[(UINT)eComponentType::Transform]);
+		mComponents[static_cast<UINT>(eComponentType::Transform)] = new gui::Transform();
+		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetName("InspectorTransform");
+		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetTarget(mTargetGameObject);
+		AddWidget(mComponents[static_cast<UINT>(eComponentType::Transform)]);
 		
-		mComponents[(UINT)eComponentType::MeshRenderer] = new gui::MeshRenderer();
-		mComponents[(UINT)eComponentType::MeshRenderer]->SetName("InspectorMeshRenderer");
-		mComponents[(UINT)eComponentType::MeshRenderer]->SetTarget(mTargetGameObject);
-		AddWidget(mComponents[(UINT)eComponentType::MeshRenderer]);
+		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)] = new gui::MeshRenderer();
+		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetName("InspectorMeshRenderer");
+		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetTarget(mTargetGameObject);
+		AddWidget(mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]);
 
-		mResources.resize((UINT)eResourceType::End);
-		mResources[(UINT)eResourceType::Texture] = new gui::Texture();
-		mResources[(UINT)eResourceType::Texture]->SetName("InspectorTexture");
-		AddWidget(mResources[(UINT)eResourceType::Texture]);
+		mResources.resize(static_cast<UINT>(eResourceType::End));
+		mResources[static_cast<UINT>(eResourceType::Texture)] = new gui::Texture();
+		mResources[static_cast<UINT>(eResourceType::Texture)]->SetName("InspectorTexture");
+		AddWidget(mResources[static_cast<UINT>(eResourceType::Texture)]);
 	}
 
 	Inspector::~Inspector()
@@ -55,8 +55,8 @@ namespace gui
 
 	void Inspector::FixedUpdate()
 	{
-		//mComponents[(UINT)eComponentType::Transform]->SetTarget(mTarget);
-		//mComponents[(UINT)eComponentType::MeshRenderer]->SetTarget(mTarget);
+		//mComponents[static_cast<UINT>(eComponentType::Transform]->SetTarget(mTarget);
+		//mComponents[static_cast<UINT>(eComponentType::MeshRenderer]->SetTarget(mTarget);
 	}
 
 	void Inspector::Update()
@@ -93,17 +93,17 @@ namespace gui
 	{
 		ClearTarget();
 
-		mComponents[(UINT)eComponentType::Transform]->SetState(eState::Active);
-		mComponents[(UINT)eComponentType::Transform]->SetTarget(mTargetGameObject);
-		mComponents[(UINT)eComponentType::MeshRenderer]->SetState(eState::Active);
-		mComponents[(UINT)eComponentType::MeshRenderer]->SetTarget(mTargetGameObject);
+		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetState(eState::Active);
+		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetTarget(mTargetGameObject);
+		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetState(eState::Active);
+		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetTarget(mTargetGameObject);
 	}
 
 	void Inspector::InitializeTargetResource()
 	{
 		ClearTarget();
 
-		mResources[(UINT)eResourceType::Texture]->SetState(eState::Active);
-		mResources[(UINT)eResourceType::Texture]->SetTarget(mTargetResource);
+		mResources[static_cast<UINT>(eResourceType::Texture)]->SetState(eState::Active);
+		mResources[static_cast<UINT>(eResourceType::Texture)]->SetTarget(mTargetResource);
 	}
 }

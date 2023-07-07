@@ -43,15 +43,15 @@ namespace dru
 		int col = 0;
 
 		// Matrix 절반만 사용
-		if ((UINT)_left <= (UINT)_right)
+		if (static_cast<UINT>(_left) <= static_cast<UINT>(_right))
 		{
-			row = (UINT)_left;
-			col = (UINT)_right;
+			row = static_cast<UINT>(_left);
+			col = static_cast<UINT>(_right);
 		}
 		else
 		{
-			row = (UINT)_right;
-			col = (UINT)_left;
+			row = static_cast<UINT>(_right);
+			col = static_cast<UINT>(_left);
 		}
 
 		mLayerCollisionMatrix[row][col] = _benable;
@@ -92,8 +92,8 @@ namespace dru
 	void CollisionMgr::ColliderCollision(Collider2D* _left, Collider2D* _right)
 	{
 		ColliderID colliderID;
-		colliderID.left = (UINT)_left->GetColliderID();
-		colliderID.right = (UINT)_right->GetColliderID();
+		colliderID.left = static_cast<UINT>(_left->GetColliderID());
+		colliderID.right = static_cast<UINT>(_right->GetColliderID());
 
 		std::map<UINT64, bool>::iterator iter = mCollisionMap.find(colliderID.id);
 

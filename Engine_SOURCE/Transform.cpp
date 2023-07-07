@@ -106,7 +106,7 @@ namespace dru
 		trCb.view = Camera::GetGpuViewMatrix();
 		trCb.projection = Camera::GetGpuProjectionMatrix();
 
-		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Transform];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Transform)];
 		cb->SetData(&trCb);
 		cb->Bind(eShaderStage::VS);
 		cb->Bind(eShaderStage::HS);

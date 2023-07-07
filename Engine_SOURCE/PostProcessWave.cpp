@@ -36,7 +36,7 @@ namespace dru
 
 	void PostProcessWave::Bind()
 	{
-		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::PostProcess];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::PostProcess)];
 		mConstantBuffer.wave_amount = mAmount;
 		mConstantBuffer.wave_speed = mSpeed;
 		mConstantBuffer.wave_distortion = mDistortion;

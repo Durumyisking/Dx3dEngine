@@ -83,7 +83,7 @@ namespace dru
 		float mFar;
 		float mScale;
 
-		std::bitset<(UINT)eLayerType::End> mLayerMask;
+		std::bitset<static_cast<UINT>(eLayerType::End)> mLayerMask;
 		std::vector<GameObj*> mOpaqueGameObjects;
 		std::vector<GameObj*> mCutoutGameObjects;
 		std::vector<GameObj*> mTransparentGameObjects;

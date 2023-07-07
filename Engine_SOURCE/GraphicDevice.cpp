@@ -356,22 +356,22 @@ namespace dru::graphics
 		switch (_Stage)
 		{
 		case dru::graphics::eShaderStage::VS:
-			mContext->VSSetConstantBuffers((UINT)_Type, 1, &_Buffer);
+			mContext->VSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
 		case dru::graphics::eShaderStage::HS:
-			mContext->HSSetConstantBuffers((UINT)_Type, 1, &_Buffer);
+			mContext->HSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
 		case dru::graphics::eShaderStage::DS:
-			mContext->DSSetConstantBuffers((UINT)_Type, 1, &_Buffer);
+			mContext->DSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
 		case dru::graphics::eShaderStage::GS:
-			mContext->GSSetConstantBuffers((UINT)_Type, 1, &_Buffer);
+			mContext->GSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
 		case dru::graphics::eShaderStage::PS:
-			mContext->PSSetConstantBuffers((UINT)_Type, 1, &_Buffer);
+			mContext->PSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
 		case dru::graphics::eShaderStage::CS:
-			mContext->CSSetConstantBuffers((UINT)_Type, 1, &_Buffer);
+			mContext->CSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
 		default:
 			break;

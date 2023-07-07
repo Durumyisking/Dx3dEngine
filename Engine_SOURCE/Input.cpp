@@ -12,7 +12,7 @@ namespace dru
 	float Input::mWinWidthCenter;
 	float Input::mWinHeightCenter;
 
-	int ASCII[(UINT)eKeyCode::END] =
+	int ASCII[static_cast<UINT>(eKeyCode::END)] =
 	{
 		//Alphabet
 		'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
@@ -38,7 +38,7 @@ namespace dru
 
 	void Input::Initialize()
 	{
-		for (UINT i = 0; i < (UINT)eKeyCode::END; i++)
+		for (UINT i = 0; i < static_cast<UINT>(eKeyCode::END); i++)
 		{
 			Key key;
 			key.eType = (eKeyCode)i;
@@ -59,7 +59,7 @@ namespace dru
 		if (GetFocus())
 		{
 			//KEY
-			for (UINT i = 0; i < (UINT)eKeyCode::END; ++i)
+			for (UINT i = 0; i < static_cast<UINT>(eKeyCode::END); ++i)
 			{
 				// 해당키가 현재 눌려있다.
 				if (GetAsyncKeyState(ASCII[i]) & 0x8000)
@@ -89,7 +89,7 @@ namespace dru
 		}
 		else
 		{
-			for (UINT i = 0; i < (UINT)eKeyCode::END; ++i)
+			for (UINT i = 0; i < static_cast<UINT>(eKeyCode::END); ++i)
 			{
 				if (eKeyState::TAP == mKeys[i].eState || eKeyState::DOWN == mKeys[i].eState)
 					mKeys[i].eState = eKeyState::UP;

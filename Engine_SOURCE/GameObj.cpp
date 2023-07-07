@@ -141,8 +141,8 @@ namespace dru
 
 		if (order != eComponentType::Script)
 		{
-			mComponents[(UINT)order] = _Component;
-			mComponents[(UINT)order]->SetOwner(this);
+			mComponents[static_cast<UINT>(order)] = _Component;
+			mComponents[static_cast<UINT>(order)]->SetOwner(this);
 		}
 		else
 		{

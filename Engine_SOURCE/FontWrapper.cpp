@@ -35,7 +35,7 @@ namespace dru
 			0      // Flags (for example FW1_RESTORESTATE to keep context states unchanged)
 		);
 
-		graphics::GetDevice()->BindSamplers((UINT)graphics::eSamplerType::Point, 1, renderer::samplerState[(UINT)eSamplerType::Point].GetAddressOf());
+		graphics::GetDevice()->BindSamplers(static_cast<UINT>(graphics::eSamplerType::Point), 1, renderer::samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
 	}
 
 	void FontWrapper::DrawFont(const wchar_t* str, dru::math::Vector3 pos, float size, UINT rgb)
@@ -54,7 +54,7 @@ namespace dru
 			0 
 		);
 
-		graphics::GetDevice()->BindSamplers((UINT)graphics::eSamplerType::Point, 1, renderer::samplerState[(UINT)eSamplerType::Point].GetAddressOf());
+		graphics::GetDevice()->BindSamplers(static_cast<UINT>(graphics::eSamplerType::Point), 1, renderer::samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
 	}
 
 	void FontWrapper::Release()

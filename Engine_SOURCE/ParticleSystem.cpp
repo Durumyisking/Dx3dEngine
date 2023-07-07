@@ -96,7 +96,7 @@ namespace dru
 		mCBData.endColor = mEndColor;
 
 		mCBData.maxParticles = mMaxParticles;
-		mCBData.simulationSpace = (UINT)mSimulationSpace;
+		mCBData.simulationSpace = static_cast<UINT>(mSimulationSpace);
 		mCBData.radius = mRadius;
 		mCBData.deltaTime = TimeMgr::DeltaTime();
 
@@ -122,7 +122,7 @@ namespace dru
 			mCBData.elapsedTime = 0.f;
 		}
 
-		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::ParticleSystem];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::ParticleSystem)];
 		cb->SetData(&mCBData);
 		cb->Bind(eShaderStage::All);
 

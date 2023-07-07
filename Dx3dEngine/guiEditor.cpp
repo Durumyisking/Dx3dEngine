@@ -34,23 +34,23 @@ namespace gui
 		if (mEnable == false)
 			return;
 		// 충돌체의 종류 갯수만큼만 있으면 된다.
-		mDebugObjects.resize((UINT)eColliderType::End);
+		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
 		std::shared_ptr<dru::Mesh> rectMesh = dru::Resources::Find<dru::Mesh>(L"DebugRectMesh");
 		std::shared_ptr<dru::Material> material = dru::Resources::Find<Material>(L"DebugMaterial");
 
-		mDebugObjects[(UINT)eColliderType::Rect] = new DebugObject();
+		mDebugObjects[static_cast<UINT>(eColliderType::Rect)] = new DebugObject();
 		dru::MeshRenderer* renderer
-			= mDebugObjects[(UINT)eColliderType::Rect]->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
+			= mDebugObjects[static_cast<UINT>(eColliderType::Rect)]->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
 
 		renderer->SetMaterial(material);
 		renderer->SetMesh(rectMesh);
 
 		std::shared_ptr<dru::Mesh> circleMesh = dru::Resources::Find<dru::Mesh>(L"CircleMesh");
 
-		mDebugObjects[(UINT)eColliderType::Circle] = new DebugObject();
+		mDebugObjects[static_cast<UINT>(eColliderType::Circle)] = new DebugObject();
 		renderer
-			= mDebugObjects[(UINT)eColliderType::Circle]->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
+			= mDebugObjects[static_cast<UINT>(eColliderType::Circle)]->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
 
 		renderer->SetMaterial(material);
 		renderer->SetMesh(circleMesh);
@@ -156,13 +156,13 @@ namespace gui
 			obj = nullptr;
 		}
 
-		delete mDebugObjects[(UINT)eColliderType::Rect];
-		delete mDebugObjects[(UINT)eColliderType::Circle];
+		delete mDebugObjects[static_cast<UINT>(eColliderType::Rect)];
+		delete mDebugObjects[static_cast<UINT>(eColliderType::Circle)];
 	}
 
 	void Editor::DebugRender(dru::graphics::DebugMesh& mesh)
 	{
-		DebugObject* debugObj = mDebugObjects[(UINT)mesh.type];
+		DebugObject* debugObj = mDebugObjects[static_cast<UINT>(mesh.type)];
 		
 		dru::Transform* tr = debugObj->GetComponent<dru::Transform>();
 		tr->SetPosition(mesh.position);

@@ -51,7 +51,7 @@ namespace dru
 
 	void PostProcess::Bind()
 	{
-		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::PostProcess];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::PostProcess)];
 		cb->SetData(&mConstantBuffer);
 		cb->Bind(eShaderStage::VS);
 		cb->Bind(eShaderStage::PS);
@@ -61,7 +61,7 @@ namespace dru
 
 	void PostProcess::Clear()
 	{
-		ConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::PostProcess];
+		ConstantBuffer* pCB = renderer::constantBuffers[static_cast<UINT>(eCBType::PostProcess)];
 		pCB->Clear();
 	}
 

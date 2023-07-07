@@ -140,9 +140,9 @@ namespace dru
 		graphics::GetDevice()->BindGS(mGS.Get(), nullptr, 0);
 		graphics::GetDevice()->BindPS(mPS.Get(), nullptr, 0);
 
-		Microsoft::WRL::ComPtr<ID3D11RasterizerState>	rs = renderer::rasterizerState[(UINT)mRSType];
-		Microsoft::WRL::ComPtr<ID3D11DepthStencilState>	ds = renderer::depthStencilState[(UINT)mDSType];
-		Microsoft::WRL::ComPtr<ID3D11BlendState>		bs = renderer::blendState[(UINT)mBSType];
+		Microsoft::WRL::ComPtr<ID3D11RasterizerState>	rs = renderer::rasterizerState	[static_cast<UINT>(mRSType)];
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState>	ds = renderer::depthStencilState[static_cast<UINT>(mDSType)];
+		Microsoft::WRL::ComPtr<ID3D11BlendState>		bs = renderer::blendState		[static_cast<UINT>(mBSType)];
 
 		GetDevice()->BindRasterizerState(rs.Get());
 		GetDevice()->BindDepthStencilState(ds.Get());

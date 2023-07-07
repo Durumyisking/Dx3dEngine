@@ -115,11 +115,11 @@ namespace dru
 	{
 		mAtlas->BindShaderResource(eShaderStage::PS, 12); // 아틀라스 srv에 바인딩
 
-		ConstantBuffer* cb =  renderer::constantBuffers[(UINT)eCBType::Animation];
+		ConstantBuffer* cb =  renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 
 		renderer::AnimationCB data = {};
 
-		data.type = (UINT)eAnimationType::SecondDimension;
+		data.type = static_cast<UINT>(eAnimationType::SecondDimension);
 		data.LT = mSpriteSheet[mIndex].LT;
 		data.offset = mSpriteSheet[mIndex].offset;
 		data.size = mSpriteSheet[mIndex].size;
@@ -133,7 +133,7 @@ namespace dru
 	{
 		mAtlas->BindShaderResource(eShaderStage::PS, 12);
 
-		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Animation];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 
 		cb->SetData(&_Sprite);
 		cb->Bind(eShaderStage::PS);
@@ -145,9 +145,9 @@ namespace dru
 		// Texture Clear
 		Texture::Clear(12);
 
-		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Animation];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 		renderer::AnimationCB data = {};
-		data.type = (UINT)eAnimationType::None;
+		data.type = static_cast<UINT>(eAnimationType::None);
 
 		cb->SetData(&data);
 		cb->Bind(eShaderStage::PS);
@@ -179,7 +179,7 @@ namespace dru
 	{
 		renderer::AnimationCB data = {};
 		
-		data.type = (UINT)eAnimationType::SecondDimension;
+		data.type = static_cast<UINT>(eAnimationType::SecondDimension);
 		data.LT = mSpriteSheet[mIndex].LT;
 		data.offset = mSpriteSheet[mIndex].offset;
 		data.size = mSpriteSheet[mIndex].size;

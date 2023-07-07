@@ -8,14 +8,14 @@ namespace dru
 		, mType(SceneMgr::eSceneType::End)
 		, mbPause(false)
 	{
-		mLayers.resize((UINT)eLayerType::End);
+		mLayers.resize(static_cast<UINT>(eLayerType::End));
 	}
 	Scene::~Scene()
 	{
 	}
 	void Scene::Initialize()
 	{
-//		mLayers.resize((UINT)eLayerType::None);
+//		mLayers.resize(static_cast<UINT>(eLayerType::None);
 
 	}
 
@@ -101,7 +101,7 @@ namespace dru
 	const std::vector<GameObj*>& Scene::GetGameObj(eLayerType _eLayer)
 	{
 
-		return mLayers[(UINT)_eLayer].GetGameObjects();
+		return mLayers[static_cast<UINT>(_eLayer)].GetGameObjects();
 	}
 
 }

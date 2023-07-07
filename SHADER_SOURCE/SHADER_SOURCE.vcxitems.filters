@@ -66,9 +66,6 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)PostProcessPS.hlsl">
       <Filter>PostProcess</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)AimParticlePS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)PhongPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>

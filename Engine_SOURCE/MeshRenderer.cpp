@@ -30,6 +30,8 @@ namespace dru
 
 	void MeshRenderer::render()
 	{
+		BaseRenderer::render();
+
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
 //		GetMaterial()->Bind();
@@ -39,7 +41,6 @@ namespace dru
 
 		GetMaterial()->Clear();
 
-		BaseRenderer::render();
 	}
 
 }

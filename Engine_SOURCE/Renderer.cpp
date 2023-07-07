@@ -14,10 +14,10 @@ namespace dru::renderer
 	
 
 	ConstantBuffer* constantBuffers[static_cast<UINT>(eCBType::End)] = {};
-	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[(UINT)graphics::eSamplerType::End];
-	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerState[(UINT)graphics::eRasterizerType::End];
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState[(UINT)graphics::eDepthStencilType::End];
-	Microsoft::WRL::ComPtr<ID3D11BlendState> blendState[(UINT)graphics::eBlendStateType::End];
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[static_cast<UINT>(graphics::eSamplerType::End)];
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerState[static_cast<UINT>(graphics::eRasterizerType::End)];
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState[static_cast<UINT>(graphics::eDepthStencilType::End)];
+	Microsoft::WRL::ComPtr<ID3D11BlendState> blendState[static_cast<UINT>(graphics::eBlendStateType::End)];
 
 	Camera* mainCamera = nullptr;
 	std::vector<Camera*> Cameras[static_cast<UINT>(SceneMgr::eSceneType::End)];
@@ -429,7 +429,7 @@ namespace dru::renderer
 		}
 
 		// ≥≤±ÿ¡°
-		UINT iBottomIdx = (UINT)sphereVtx.size() - 1;
+		UINT iBottomIdx = static_cast<UINT>(sphereVtx.size()) - 1;
 
 		for (UINT i = 0; i < iSliceCount; ++i)
 		{
@@ -571,15 +571,15 @@ namespace dru::renderer
 		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
 
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[(UINT)eSamplerType::Point].GetAddressOf());
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
 		samplerDesc.Filter = D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
-		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[(UINT)eSamplerType::Linear].GetAddressOf());
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
 		samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
-		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[(UINT)eSamplerType::Anisotropic].GetAddressOf());
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
 
-		GetDevice()->BindSamplers((UINT)eSamplerType::Point, 1, samplerState[(UINT)eSamplerType::Point].GetAddressOf());
-		GetDevice()->BindSamplers((UINT)eSamplerType::Linear, 1, samplerState[(UINT)eSamplerType::Linear].GetAddressOf());
-		GetDevice()->BindSamplers((UINT)eSamplerType::Anisotropic, 1, samplerState[(UINT)eSamplerType::Anisotropic].GetAddressOf());
+		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Point), 1, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
+		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Linear), 1, samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
+		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Anisotropic), 1, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
 
 #pragma endregion
 
@@ -588,19 +588,19 @@ namespace dru::renderer
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[(UINT)graphics::eRasterizerType::SolidBack].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(graphics::eRasterizerType::SolidBack)].GetAddressOf());
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_FRONT;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[(UINT)graphics::eRasterizerType::SolidFront].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(graphics::eRasterizerType::SolidFront)].GetAddressOf());
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[(UINT)graphics::eRasterizerType::SolidNone].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(graphics::eRasterizerType::SolidNone)].GetAddressOf());
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[(UINT)graphics::eRasterizerType::WireframeNone].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(graphics::eRasterizerType::WireframeNone)].GetAddressOf());
 
 #pragma endregion
 
@@ -611,31 +611,31 @@ namespace dru::renderer
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[(UINT)graphics::eDepthStencilType::Less].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(graphics::eDepthStencilType::Less)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[(UINT)graphics::eDepthStencilType::Greater].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(graphics::eDepthStencilType::Greater)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[(UINT)graphics::eDepthStencilType::NoWrite].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(graphics::eDepthStencilType::NoWrite)].GetAddressOf());
 
 		dsDesc.DepthEnable = false;
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[(UINT)graphics::eDepthStencilType::None].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(graphics::eDepthStencilType::None)].GetAddressOf());
 
 #pragma endregion
 
 #pragma region BlendState
 
-		blendState[(UINT)graphics::eBlendStateType::Default] = nullptr;
+		blendState[static_cast<UINT>(graphics::eBlendStateType::Default)] = nullptr;
 
 		D3D11_BLEND_DESC bsDesc = {};
 		bsDesc.AlphaToCoverageEnable = false;
@@ -648,7 +648,7 @@ namespace dru::renderer
 		bsDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE::D3D11_COLOR_WRITE_ENABLE_ALL;
 		bsDesc.RenderTarget[0].SrcBlend = D3D11_BLEND::D3D11_BLEND_SRC_ALPHA;
 		bsDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND::D3D11_BLEND_ONE;
-		GetDevice()->CreateBlendState(&bsDesc, blendState[(UINT)graphics::eBlendStateType::AlphaBlend].GetAddressOf());
+		GetDevice()->CreateBlendState(&bsDesc, blendState[static_cast<UINT>(graphics::eBlendStateType::AlphaBlend)].GetAddressOf());
 
 		bsDesc.AlphaToCoverageEnable = false;
 		bsDesc.IndependentBlendEnable = false;
@@ -657,7 +657,7 @@ namespace dru::renderer
 		bsDesc.RenderTarget[0].DestBlend = D3D11_BLEND::D3D11_BLEND_ONE;
 		bsDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE::D3D11_COLOR_WRITE_ENABLE_ALL;
 		bsDesc.RenderTarget[0].SrcBlend = D3D11_BLEND::D3D11_BLEND_ONE;
-		GetDevice()->CreateBlendState(&bsDesc, blendState[(UINT)graphics::eBlendStateType::OneOne].GetAddressOf());
+		GetDevice()->CreateBlendState(&bsDesc, blendState[static_cast<UINT>(graphics::eBlendStateType::OneOne)].GetAddressOf());
 
 
 #pragma endregion
@@ -689,14 +689,14 @@ namespace dru::renderer
 		constantBuffers[static_cast<UINT>(eCBType::ParticleSystem)] = new ConstantBuffer(eCBType::ParticleSystem);
 		constantBuffers[static_cast<UINT>(eCBType::ParticleSystem)]->Create(sizeof(ParticleSystemCB));
 
-		constantBuffers[(UINT)eCBType::Noise] = new ConstantBuffer(eCBType::Noise);
-		constantBuffers[(UINT)eCBType::Noise]->Create(sizeof(NoiseCB));
+		constantBuffers[static_cast<UINT>(eCBType::Noise)] = new ConstantBuffer(eCBType::Noise);
+		constantBuffers[static_cast<UINT>(eCBType::Noise)]->Create(sizeof(NoiseCB));
 
-		constantBuffers[(UINT)eCBType::PostProcess] = new ConstantBuffer(eCBType::PostProcess);
-		constantBuffers[(UINT)eCBType::PostProcess]->Create(sizeof(PostProcessCB));
+		constantBuffers[static_cast<UINT>(eCBType::PostProcess)] = new ConstantBuffer(eCBType::PostProcess);
+		constantBuffers[static_cast<UINT>(eCBType::PostProcess)]->Create(sizeof(PostProcessCB));
 
-		constantBuffers[(UINT)eCBType::LaserHit] = new ConstantBuffer(eCBType::LaserHit);
-		constantBuffers[(UINT)eCBType::LaserHit]->Create(sizeof(LaserHitCB));
+		constantBuffers[static_cast<UINT>(eCBType::LaserHit)] = new ConstantBuffer(eCBType::LaserHit);
+		constantBuffers[static_cast<UINT>(eCBType::LaserHit)]->Create(sizeof(LaserHitCB));
 
 		
 		lightBuffer = new StructedBuffer();
@@ -914,7 +914,7 @@ namespace dru::renderer
 
 	void release()
 	{
-		for (size_t i = 0; i < (UINT)eCBType::End; i++)
+		for (size_t i = 0; i < static_cast<UINT>(eCBType::End); i++)
 		{
 			delete constantBuffers[i];
 			constantBuffers[i] = nullptr;
@@ -931,7 +931,7 @@ namespace dru::renderer
 		BindNoiseTexture();
 		BindLight();
 
-		UINT type = (UINT)SceneMgr::mActiveScene->GetType();
+		UINT type = static_cast<UINT>(SceneMgr::mActiveScene->GetType());
 
 		for (Camera* cam : Cameras[type])
 		{
@@ -958,7 +958,7 @@ namespace dru::renderer
 		renderer::LightCB Lightcb = {};
 		Lightcb.lightCount = static_cast<UINT>(lights.size());
 
-		ConstantBuffer* cb = constantBuffers[(UINT)eCBType::Light];
+		ConstantBuffer* cb = constantBuffers[static_cast<UINT>(eCBType::Light)];
 		cb->SetData(&Lightcb);
 
 		cb->Bind(eShaderStage::VS);
@@ -984,7 +984,7 @@ namespace dru::renderer
 		noiseTime -= TimeMgr::DeltaTime();
 		info.noiseTime = noiseTime;
 
-		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Noise];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Noise)];
 		cb->SetData(&info);
 		cb->Bind(eShaderStage::VS);
 		cb->Bind(eShaderStage::HS);

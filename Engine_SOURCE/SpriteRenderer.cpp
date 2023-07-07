@@ -31,6 +31,8 @@ namespace dru
 
 	void SpriteRenderer::render()
 	{
+//		BaseRenderer::render();
+
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
 		GetMesh()->BindBuffer();
@@ -51,7 +53,6 @@ namespace dru
 		if (animator)
 			animator->Clear();
 
-		BaseRenderer::render();
 	}
 
 

@@ -24,7 +24,7 @@ namespace dru
 
 	void GridScript::Initialize()
 	{
-		UINT type = (UINT)SceneMgr::mActiveScene->GetType();
+		UINT type = static_cast<UINT>(SceneMgr::mActiveScene->GetType());
 		mCamera = renderer::Cameras[type][0];
 	}
 
@@ -48,7 +48,7 @@ namespace dru
 		Vector2 resolution(w, h);
 
 
-		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Grid];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Grid)];
 		renderer::GridCB data;
 
 		data.cameraPosition = pos;

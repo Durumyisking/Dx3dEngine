@@ -39,7 +39,7 @@ namespace dru
 		void SetType(SceneMgr::eSceneType _eType) { mType = _eType; }
 		SceneMgr::eSceneType GetType() const { return mType; }
 
-		Layer& GetLayer(eLayerType _Type)  { return mLayers[(UINT)_Type]; }
+		Layer& GetLayer(eLayerType _Type)  { return mLayers[static_cast<UINT>(_Type)]; }
 
 		std::vector<GameObj*> GetDontDestroyObjects();
 

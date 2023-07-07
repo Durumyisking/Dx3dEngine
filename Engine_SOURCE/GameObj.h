@@ -42,8 +42,8 @@ namespace dru
 
 			if (_eType != eComponentType::Script)
 			{
-				mComponents[(UINT)_eType] = comp;
-				mComponents[(UINT)_eType]->SetOwner(this);
+				mComponents[static_cast<UINT>(_eType)] = comp;
+				mComponents[static_cast<UINT>(_eType)]->SetOwner(this);
 			}
 			else
 			{

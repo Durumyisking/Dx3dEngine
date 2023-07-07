@@ -132,13 +132,13 @@ namespace dru
 
 	void Camera::RegisterCameraInRenderer()
 	{	
-		UINT type = (UINT)SceneMgr::mActiveScene->GetType();
+		UINT type = static_cast<UINT>(SceneMgr::mActiveScene->GetType());
 		renderer::	Cameras[type].push_back(this);
 	}
 
 	void Camera::TurnLayerMask(eLayerType _layer, bool _enable)
 	{
-		mLayerMask.set((UINT)_layer, _enable);
+		mLayerMask.set(static_cast<UINT>(_layer, _enable));
 	}
 
 	void Camera::SetTarget(GameObj* _Target)
@@ -164,7 +164,7 @@ namespace dru
 		mPostProcessGameObjects.clear();
 
 		Scene* scene = SceneMgr::mActiveScene;
-		for (size_t i = 0; i < (UINT)eLayerType::End; i++)
+		for (size_t i = 0; i < static_cast<UINT>(eLayerType::End); i++)
 		{
 			if (mLayerMask[i])
 			{
