@@ -75,7 +75,7 @@ namespace dru
 	{
 		float aliveTime = 0.1f / mFrequency;  // 프리퀀시가 높을수록 빨리생성 한번에 생성하는거
 		//누적시간
-		mElapsedTime += TimeMgr::DeltaTime();
+		mElapsedTime += DT;
 		if (aliveTime < mElapsedTime)
 		{
 			float f = (mElapsedTime / aliveTime);
@@ -98,7 +98,7 @@ namespace dru
 		mCBData.maxParticles = mMaxParticles;
 		mCBData.simulationSpace = static_cast<UINT>(mSimulationSpace);
 		mCBData.radius = mRadius;
-		mCBData.deltaTime = TimeMgr::DeltaTime();
+		mCBData.deltaTime = DT;
 
 		mCBData.startSpeed = mStartSpeed;
 		mCBData.endSpeed = mEndSpeed;
@@ -107,8 +107,8 @@ namespace dru
 
 		mCBData.startAngle = mStartAngle;
 		mCBData.endAngle = mEndAngle;
-		mCBData.elapsedTime += TimeMgr::DeltaTime();
-		mCBData.gravity += TimeMgr::DeltaTime();
+		mCBData.elapsedTime += DT;
+		mCBData.gravity += DT;
 
 		mCBData.force = mStartSpeed;
 		mCBData.radian = mRadian;

@@ -39,7 +39,7 @@ namespace dru
 	{
 		if (1 == mStart)
 		{
-			mElapsedTime += TimeMgr::DeltaTime();
+			mElapsedTime += DT;
 
 			BaseRenderer* renderer = GetOwner()->GetComponent<BaseRenderer>();
 			std::shared_ptr<Material> material = renderer->GetMaterial();

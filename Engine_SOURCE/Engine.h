@@ -31,3 +31,4 @@
 #include "druEnums.h"
 #include "SimpleMath.h"
 #include "StringFunctions.h"
+#include "Macro.h"

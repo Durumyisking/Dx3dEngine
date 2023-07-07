@@ -19,17 +19,17 @@ namespace dru
 	}
 	void PlayerScript::update()
 	{
-		if (Input::GetKeyState(eKeyCode::A) == eKeyState::DOWN)
+		if (KEY_DOWN(A))
 		{
-			mTransform->AddRotationX(50.f * TimeMgr::DeltaTime());
+			mTransform->AddRotationX(50.f * DT);
 		}
-		if (Input::GetKeyState(eKeyCode::S) == eKeyState::DOWN)
+		if (KEY_DOWN(S))
 		{
-			mTransform->AddRotationY(50.f * TimeMgr::DeltaTime());
+			mTransform->AddRotationY(50.f * DT);
 		}
-		if (Input::GetKeyState(eKeyCode::D) == eKeyState::DOWN)
+		if (KEY_DOWN(D))
 		{
-			mTransform->AddRotationZ(50.f * TimeMgr::DeltaTime());
+			mTransform->AddRotationZ(50.f * DT);
 		}
 
 	}

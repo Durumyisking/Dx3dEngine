@@ -321,6 +321,7 @@
     <ClInclude Include="PlayerScript.h">
       <Filter>Common\GameObj\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Macro.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

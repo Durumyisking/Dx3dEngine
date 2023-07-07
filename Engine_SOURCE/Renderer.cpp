@@ -984,7 +984,7 @@ namespace dru::renderer
 		NoiseCB info = {};
 		info.noiseSize.x = static_cast<float>(noise->GetWidth());
 		info.noiseSize.y = static_cast<float>(noise->GetHeight());
-		noiseTime -= TimeMgr::DeltaTime();
+		noiseTime -= DT;
 		info.noiseTime = noiseTime;
 
 		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Noise)];
