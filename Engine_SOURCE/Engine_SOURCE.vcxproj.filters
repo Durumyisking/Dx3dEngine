@@ -143,6 +143,12 @@
     <Filter Include="Common\Font">
       <UniqueIdentifier>{00f7409f-6c39-4951-b9ab-a5158a532e47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PhysX">
+      <UniqueIdentifier>{79216596-84bd-4162-9178-37eed40f0926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\Manager">
+      <UniqueIdentifier>{1d9727da-458d-4c71-9094-868de38323b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -321,7 +327,27 @@
     <ClInclude Include="PlayerScript.h">
       <Filter>Common\GameObj\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Macro.h" />
+    <ClInclude Include="PxInitialization.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsScene.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsMgr.h">
+      <Filter>PhysX\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="PxDispathcer.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PxEventCallback.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -487,6 +513,24 @@
     </ClCompile>
     <ClCompile Include="druEnums.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="PxInitialization.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysX.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsScene.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsMgr.cpp">
+      <Filter>PhysX\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="PxDispathcer.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PxEventCallback.cpp">
+      <Filter>PhysX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

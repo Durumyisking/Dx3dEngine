@@ -7,6 +7,7 @@
 #include "CollisionMgr.h"
 #include "FMod.h"
 #include "FontWrapper.h"
+#include "PhysicsMgr.h"
 
 namespace dru
 {
@@ -39,6 +40,7 @@ namespace dru
 		renderer::Initialize();
 		FontWrapper::Initialize();
 		SceneMgr::Initialize();
+//		PhysicsMgr::GetInstance()->Init();
 
 	}
 	void Application::update()
@@ -47,6 +49,8 @@ namespace dru
 		Input::update();
 		CollisionMgr::update();
 		SceneMgr::update();
+//		PhysicsMgr::GetInstance()->Update();
+
 	}
 	void Application::fixedUpdate()
 	{
