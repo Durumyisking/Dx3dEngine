@@ -79,42 +79,42 @@ namespace dru
 	{
 		// Keyboard Move
 
-		if (Input::GetKeyState(eKeyCode::U) == eKeyState::DOWN)
+		if (KEY_DOWN(U))
 		{
-			mLookAt += 10.f * mTransform->Up() * TimeMgr::DeltaTime();
+			mLookAt += 10.f * mTransform->Up() * DT;
 		}
-		if (Input::GetKeyState(eKeyCode::J) == eKeyState::DOWN)
+		if (KEY_DOWN(J))
 		{
-			mLookAt += 10.f * -mTransform->Up() * TimeMgr::DeltaTime();
+			mLookAt += 10.f * -mTransform->Up() * DT;
 		}
-		if (Input::GetKeyState(eKeyCode::H) == eKeyState::DOWN)
+		if (KEY_DOWN(H))
 		{
-			mLookAt += 10.f * -mTransform->Right() * TimeMgr::DeltaTime();
+			mLookAt += 10.f * -mTransform->Right() * DT;
 		}
-		if (Input::GetKeyState(eKeyCode::K) == eKeyState::DOWN)
+		if (KEY_DOWN(K))
 		{
-			mLookAt += 10.f * mTransform->Right() * TimeMgr::DeltaTime();
+			mLookAt += 10.f * mTransform->Right() * DT;
 		}
-		if (Input::GetKeyState(eKeyCode::P) == eKeyState::DOWN)
+		if (KEY_DOWN(P))
 		{
-			mLookAt -= 10.f * mTransform->Forward() * TimeMgr::DeltaTime();
+			mLookAt -= 10.f * mTransform->Forward() * DT;
 		}
-		if (Input::GetKeyState(eKeyCode::O) == eKeyState::DOWN)
+		if (KEY_DOWN(O))
 		{
-			mLookAt += 10.f * mTransform->Forward() * TimeMgr::DeltaTime();
+			mLookAt += 10.f * mTransform->Forward() * DT;
 		}
 
-		if (Input::GetKeyDown(eKeyCode::Q))
+		if (KEY_DOWN(Q))
 		{
-			mTransform->AddRotationX(30.f * TimeMgr::DeltaTime());
+			mTransform->AddRotationX(30.f * DT);
 		}
-		if (Input::GetKeyDown(eKeyCode::W))
+		if (KEY_DOWN(W))
 		{
-			mTransform->AddRotationY(30.f * TimeMgr::DeltaTime());
+			mTransform->AddRotationY(30.f * DT);
 		}
-		if (Input::GetKeyDown(eKeyCode::E))
+		if (KEY_DOWN(E))
 		{
-			mTransform->AddRotationZ(30.f * TimeMgr::DeltaTime());
+			mTransform->AddRotationZ(30.f * DT);
 		}
 
 	}

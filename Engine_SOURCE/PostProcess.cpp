@@ -34,7 +34,7 @@ namespace dru
 
 	void PostProcess::update()
 	{
-		mConstantBuffer.ElapsedTime += TimeMgr::DeltaTime();
+		mConstantBuffer.ElapsedTime += DT;
 
 		GameObj::update();
 	}

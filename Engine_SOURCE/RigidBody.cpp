@@ -41,7 +41,7 @@ namespace dru
 				mAccel += mCurrentGravity;
 			}
 
-			mVelocity += mAccel * TimeMgr::DeltaTime();
+			mVelocity += mAccel * DT;
 
 			CalculateFriction();
 
@@ -85,7 +85,7 @@ namespace dru
 			Vector3 FricDir = -mVelocity;
 			FricDir.Normalize();
 
-			Vector3 Friction = FricDir * mFricCoeff * TimeMgr::DeltaTime();
+			Vector3 Friction = FricDir * mFricCoeff * DT;
 
 			mAccel += Friction;
 
@@ -127,11 +127,11 @@ namespace dru
 
 			Vector3 Pos = GetOwner()->GetPos();
 			
-			Pos.x += mVelocity.x * TimeMgr::DeltaTime();
+			Pos.x += mVelocity.x * DT;
 
 			if (!(!mbOnAir && mVelocity.y < 0.f))
 			{
-				Pos.y += mVelocity.y * TimeMgr::DeltaTime();
+				Pos.y += mVelocity.y * DT;
 			}
 
 			GetOwner()->SetPos(Pos);

@@ -28,7 +28,7 @@ namespace dru
 			return -1;
 
 		// 시간 체크
-		mTime += TimeMgr::DeltaTime();
+		mTime += DT;
 
 		// 누적 시간이 해당 프레임의 유지시간을 넘어서면 
 		if (mSpriteSheet[mIndex].duration < mTime)
