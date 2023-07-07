@@ -52,6 +52,9 @@ namespace dru
 
 	void BaseRenderer::render()
 	{
+
+		LOD();
+		
 	}
 
 	void BaseRenderer::SetMeshByKey(std::wstring _Key)
@@ -95,6 +98,26 @@ namespace dru
 	void BaseRenderer::AddColor(Vector4 _color)
 	{
 		mMaterial->SetData(eGPUParam::Vector4_2, &_color);
+	}
+
+	void BaseRenderer::LOD()
+	{
+		Vector3 camPos = renderer::mainCamera->GetOwnerWorldPos();
+		Vector3 objPos = GetOwnerWorldPos();
+
+		float distance = Vector3::Distance(camPos, objPos);
+
+		if (mMaterial)
+		{
+			if (distance > 20.f)
+			{
+				mMaterial.get()->SetShaderByKey(L"FlatShader");
+			}
+			else
+			{
+				mMaterial.get()->SetShaderByKey(L"PhongShader");
+			}
+		}
 	}
 
 	void BaseRenderer::adjustTexture()

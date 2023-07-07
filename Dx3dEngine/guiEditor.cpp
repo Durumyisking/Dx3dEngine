@@ -23,6 +23,7 @@
 
 #include "guiVisualEditor.h"
 
+
 extern dru::Application application;
 
 namespace gui
@@ -30,13 +31,14 @@ namespace gui
 	void Editor::Initialize()
 	{
 		mEnable = false;
+		mImguiEnable = false;
 
 		if (mEnable == false)
 			return;
 		// 충돌체의 종류 갯수만큼만 있으면 된다.
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
-		std::shared_ptr<dru::Mesh> rectMesh = dru::Resources::Find<dru::Mesh>(L"DebugRectMesh");
+		std::shared_ptr<dru::Mesh> rectMesh = dru::Resources::Find<dru::Mesh>(L"DebugRectmesh");
 		std::shared_ptr<dru::Material> material = dru::Resources::Find<Material>(L"DebugMaterial");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Rect)] = new DebugObject();
@@ -46,7 +48,7 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(rectMesh);
 
-		std::shared_ptr<dru::Mesh> circleMesh = dru::Resources::Find<dru::Mesh>(L"CircleMesh");
+		std::shared_ptr<dru::Mesh> circleMesh = dru::Resources::Find<dru::Mesh>(L"Circlemesh");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Circle)] = new DebugObject();
 		renderer
@@ -55,17 +57,20 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(circleMesh);
 
-		//그리드 이쪽으로 옮겨줘야 한다.
-		// Grid Object
-		//EditorObject* gridObject = new EditorObject();
-		//dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>();
-		//gridMr->SetMesh(dru::Resources::Find<dru::Mesh>(L"RectMesh"));
-		//gridMr->SetMaterial(dru::Resources::Find<Material>(L"GridMaterial"));
-		//dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>();
-		//gridScript->SetCamera(mainCamera);
+		{
+			EditorObject* gridObject = new EditorObject();
+			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
+			gridMr->SetMesh(dru::Resources::Find<dru::Mesh>(L"Rectmesh"));
+			gridMr->SetMaterial(dru::Resources::Find<Material>(L"GridMaterial"));
+			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
+			gridScript->SetCamera(mainCamera);
 
-		//mEditorObjects.push_back(gridObject);
+			mEditorObjects.push_back(gridObject);
+		}
 
+		if (mImguiEnable == false)
+			return;
+		
 		ImGui_Initialize();
 
 		mVisualEditor = new VisualEditor();
@@ -100,6 +105,9 @@ namespace gui
 		Update();
 		FixedUpdate();
 		Render();
+
+		if (mImguiEnable == false)
+			return;
 
 		ImGui_Run();
 	}
@@ -139,8 +147,6 @@ namespace gui
 		if (mEnable == false)
 			return;
 
-		ImGui_Release();
-
 		for (auto iter : mWidgets)
 		{
 			delete iter.second;
@@ -158,31 +164,52 @@ namespace gui
 
 		delete mDebugObjects[static_cast<UINT>(eColliderType::Rect)];
 		delete mDebugObjects[static_cast<UINT>(eColliderType::Circle)];
+
+		if (mImguiEnable == false)
+			return;
+		ImGui_Release();
 	}
 
 	void Editor::DebugRender(dru::graphics::DebugMesh& mesh)
 	{
 		DebugObject* debugObj = mDebugObjects[static_cast<UINT>(mesh.type)];
-		
+
 		dru::Transform* tr = debugObj->GetComponent<dru::Transform>();
 		tr->SetPosition(mesh.position);
 		tr->SetRotation(mesh.rotation);
-		
 
-		if (mesh.type == eColliderType::Rect)
+		switch (mesh.type)
+		{
+		case dru::enums::eColliderType::Rect:
 			tr->SetScale(mesh.scale);
-		else
+			break;
+		case dru::enums::eColliderType::Circle:
 			tr->SetScale(Vector3(mesh.radius));
+			break;
+		case dru::enums::eColliderType::Line:
+			tr->SetScale(Vector3(mesh.scale.x, 1.f, 0.f));
+			break;
+		case dru::enums::eColliderType::Box:
+			break;
+		case dru::enums::eColliderType::Sphere:
+			break;
+		case dru::enums::eColliderType::End:
+			break;
+		default:
+			break;
+		}
 
 		dru::BaseRenderer* renderer = debugObj->GetComponent<dru::BaseRenderer>();
-		dru::Camera* camera = dru::renderer::mainCamera;
 
+		std::shared_ptr<Material> material = renderer->GetMaterial();
+		material->SetData(eGPUParam::Int_1, &mesh.state);
 		tr->fixedUpdate();
 
 		dru::Camera::SetGpuViewMatrix(dru::renderer::mainCamera->GetViewMatrix());
 		dru::Camera::SetGpuProjectionMatrix(dru::renderer::mainCamera->GetProjectionMatrix());
 
 		debugObj->render();
+
 	}
 
 	void Editor::ImGui_Initialize()

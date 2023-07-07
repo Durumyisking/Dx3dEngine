@@ -34,13 +34,11 @@ namespace dru
 
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-//		GetMaterial()->Bind();
-
 		GetMesh()->BindBuffer();
+		GetMaterial()->Bind();
+
 		GetMesh()->Render();
 
 		GetMaterial()->Clear();
-
 	}
-
 }

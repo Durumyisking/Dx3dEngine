@@ -32,6 +32,8 @@ namespace dru
 		void MulColor(Vector4 _color);
 		void AddColor(Vector4 _color);
 
+		void LOD();
+
 	private:
 		void adjustTexture();
 

@@ -40,5 +40,7 @@ namespace gui
 
 		class VisualEditor* mVisualEditor;
 		bool mEnable = true;
+		bool mImguiEnable = true;
+
 	};
 }

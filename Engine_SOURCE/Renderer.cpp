@@ -722,10 +722,13 @@ namespace dru::renderer
 
 		std::shared_ptr<Shader> SpriteShader = std::make_shared<Shader>();
 		SpriteShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		SpriteShader->Create(graphics::eShaderStage::PS, L"SpritePS.hlsl", "main");
-		
+		SpriteShader->Create(graphics::eShaderStage::PS, L"SpritePS.hlsl", "main");		
 		Resources::Insert<Shader>(L"SpriteShader", SpriteShader);
 
+		std::shared_ptr<Shader> GridShader = std::make_shared<Shader>();
+		GridShader->Create(graphics::eShaderStage::VS, L"GridVS.hlsl", "main");
+		GridShader->Create(graphics::eShaderStage::PS, L"GridPS.hlsl", "main");
+		Resources::Insert<Shader>(L"GridShader", GridShader);
 
 		std::shared_ptr<Shader> UIShader = std::make_shared<Shader>();
 		UIShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");

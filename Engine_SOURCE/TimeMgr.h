@@ -41,7 +41,7 @@ namespace dru
 			return mbFramePassCheck; 
 		}
 
-
+		 
 		static void Initialize();
 		static void update();
 		static void Render(HDC hdc);
