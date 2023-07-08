@@ -2,6 +2,9 @@
 
 #include "PhysX.h"
 #include "TimeMgr.h"
+#include "PxEventCallback.h"
+#include "Engine.h"
+#include "PxFilter.h"
 
 
 PhysicsMgr::PhysicsMgr()
@@ -16,13 +19,6 @@ PhysicsMgr::~PhysicsMgr()
 {
 	//PxCloseExtensions();
 }
-/*
-Todo
-PxSimulationFilterShader 상속받는 클래스 만들기
-현모씬느 PxQueryFilterCallback 상속받았는데;;
-
-*/
-
 
 void PhysicsMgr::Init()
 {
@@ -32,10 +28,8 @@ void PhysicsMgr::Init()
 	PxSceneDesc sceneDesc(mPhysX->GetPhysics()->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -0.05f, 0.0f);
 	sceneDesc.cpuDispatcher = mDispatcher->GetCpuDispatcher();
-//	sceneDesc.filterShader = PlayerFilterShader;
-
-	// 추후에 자식 클래스로 받아야함
-	//sceneDesc.simulationEventCallback = mDispatcher->GetSimulationCallback();
+	sceneDesc.filterShader = PlayerFilter;
+	sceneDesc.simulationEventCallback = mDispatcher->GetSimulationCallback();
 
 	mPhysX->CreatePhysicsScene(sceneDesc);
 }

@@ -348,6 +348,7 @@
     <ClInclude Include="PxEventCallback.h">
       <Filter>PhysX</Filter>
     </ClInclude>
+    <ClInclude Include="PxFilter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -532,6 +533,7 @@
     <ClCompile Include="PxEventCallback.cpp">
       <Filter>PhysX</Filter>
     </ClCompile>
+    <ClCompile Include="PxFilter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

@@ -40,7 +40,7 @@ namespace dru
 		renderer::Initialize();
 		FontWrapper::Initialize();
 		SceneMgr::Initialize();
-//		PhysicsMgr::GetInstance()->Init();
+		PhysicsMgr::GetInstance()->Init();
 
 	}
 	void Application::update()
@@ -49,7 +49,7 @@ namespace dru
 		Input::update();
 		CollisionMgr::update();
 		SceneMgr::update();
-//		PhysicsMgr::GetInstance()->Update();
+		PhysicsMgr::GetInstance()->Update();
 
 	}
 	void Application::fixedUpdate()
