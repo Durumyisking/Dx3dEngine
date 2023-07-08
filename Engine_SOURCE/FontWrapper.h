@@ -20,16 +20,18 @@ namespace dru
 #define FONT_RGBA(r, g, b, a) (((((BYTE)a << 24 ) | (BYTE)b << 16) | (BYTE)g << 8) | (BYTE)r)
 	class FontWrapper
 	{
+		SINGLE(FontWrapper)
+
 	public:
-		static bool Initialize();
-		static void DrawFont(const wchar_t* str, float x, float y, float size, UINT rgb);
-		static void DrawFont(const wchar_t* str, dru::math::Vector3 pos, float size, UINT rgb);
-		static void Release();
+		bool Initialize();
+		void DrawFont(const wchar_t* str, float x, float y, float size, UINT rgb);
+		void DrawFont(const wchar_t* str, dru::math::Vector3 pos, float size, UINT rgb);
+		void Release();
 
 
 	private:
-		static IFW1Factory* mFW1Factory;
-		static IFW1FontWrapper* mFontWrapper;
+		IFW1Factory* mFW1Factory;
+		IFW1FontWrapper* mFontWrapper;
 
 	};
 }

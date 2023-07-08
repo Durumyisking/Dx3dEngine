@@ -4,8 +4,17 @@
 
 namespace dru
 {
-	FMOD::Studio::System* Fmod::mSystem = nullptr;
-	FMOD::System* Fmod::mCoreSystem = nullptr;
+
+	Fmod::Fmod()
+		: mSystem(nullptr)
+		, mCoreSystem(nullptr)
+	{
+	}
+
+	Fmod::~Fmod()
+	{
+
+	}
 
 	void Fmod::Initialize()
 	{

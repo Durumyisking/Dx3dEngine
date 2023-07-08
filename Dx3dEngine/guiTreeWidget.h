@@ -6,7 +6,7 @@ namespace gui
 	class TreeWidget : public Widget
 	{
 	public:
-		struct Node : public Entity
+		struct Node : public GuiEntity
 		{
 			Node();
 			~Node();

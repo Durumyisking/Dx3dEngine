@@ -6,9 +6,11 @@ namespace dru
 {
 	class Resources
 	{
+		SINGLE(Resources)
+
 	public:
 		template <typename T>
-		static std::shared_ptr<T> Find(const std::wstring& key)
+		std::shared_ptr<T> Find(const std::wstring& key)
 		{
 			std::map<std::wstring, std::shared_ptr<Resource> >::iterator iter = mResources.find(key);
 
@@ -22,7 +24,7 @@ namespace dru
 		}
 
 		template <typename T>
-		static std::vector<std::shared_ptr<T>> Finds()
+		std::vector<std::shared_ptr<T>> Finds()
 		{
 			std::vector<std::shared_ptr<T>> resources = {};
 			for (auto iter : mResources)
@@ -38,7 +40,7 @@ namespace dru
 		}
 
 		template <typename T>
-		static std::shared_ptr<T> Load(const std::wstring& key, const std::wstring& path)
+		std::shared_ptr<T> Load(const std::wstring& key, const std::wstring& path)
 		{
 			// 키값으로 탐색
 			std::shared_ptr<T> resource = Resources::Find<T>(key);
@@ -65,7 +67,7 @@ namespace dru
 		}
 
 		template <typename T>
-		static void Insert(const std::wstring& key, std::shared_ptr<T> resource)
+		void Insert(const std::wstring& key, std::shared_ptr<T> resource)
 		{
 			if (Find<T>(key))
 			{
@@ -80,12 +82,7 @@ namespace dru
 			}
 		}
 
-
 	private:
-		Resources() = delete;
-		~Resources() = delete;
-
-	private:
-		static std::map<std::wstring, std::shared_ptr<Resource> > mResources;
+		std::map<std::wstring, std::shared_ptr<Resource> > mResources;
 	};
 }

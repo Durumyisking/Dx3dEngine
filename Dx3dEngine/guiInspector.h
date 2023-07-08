@@ -1,8 +1,5 @@
 #pragma once
 #include "guiWidget.h"
-#include "GameObj.h"
-#include "guiComponent.h"
-#include "guiResource.h"
 
 namespace gui
 {
@@ -16,9 +13,9 @@ namespace gui
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		dru::GameObj* GetTargetGameObject() { return mTargetGameObject; }
+		class dru::GameObj* GetTargetGameObject() { return mTargetGameObject; }
 		void SetTargetGameObject(dru::GameObj* target) { mTargetGameObject = target; }
-		dru::Resource* GetTargetResource() { return mTargetResource; }
+		class dru::Resource* GetTargetResource() { return mTargetResource; }
 		void SetTargetResource(dru::Resource* target) { mTargetResource = target; }
 
 		void ClearTarget();
@@ -28,7 +25,7 @@ namespace gui
 	private:
 		dru::GameObj* mTargetGameObject;
 		dru::Resource* mTargetResource;
-		std::vector<gui::Component*> mComponents;
-		std::vector<gui::Resource*> mResources;
+		std::vector<class Component*> mComponents;
+		std::vector<class Resource*> mResources;
 	};
 }

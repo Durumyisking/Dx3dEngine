@@ -5,8 +5,16 @@
 
 namespace dru
 {
-	Scene* SceneMgr::mScenes[(static_cast<UINT>(SceneMgr::eSceneType::End))] = {};
-	Scene* SceneMgr::mActiveScene = nullptr;
+	SceneMgr::SceneMgr()
+		: mScenes{}
+		, mActiveScene(nullptr)
+	{
+	}
+
+	SceneMgr::~SceneMgr()
+	{
+
+	}
 
 	void SceneMgr::Initialize()
 	{

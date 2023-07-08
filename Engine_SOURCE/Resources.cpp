@@ -2,6 +2,14 @@
 
 namespace dru
 {
-	std::map<std::wstring, std::shared_ptr<Resource> > Resources::mResources;
+	Resources::Resources()
+		: mResources{}
+	{
 
+	}
+
+	Resources::~Resources()
+	{
+
+	}
 }

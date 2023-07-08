@@ -6,8 +6,17 @@ namespace dru
 {
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> renderer::samplerState[];
 
-	IFW1Factory* FontWrapper::mFW1Factory = nullptr;
-	IFW1FontWrapper* FontWrapper::mFontWrapper = nullptr;
+	FontWrapper::FontWrapper()
+		: mFW1Factory(nullptr)
+		, mFontWrapper(nullptr)
+	{
+
+	}
+
+	FontWrapper::~FontWrapper()
+	{
+
+	}
 
 	bool FontWrapper::Initialize()
 	{

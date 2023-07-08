@@ -8,10 +8,8 @@ namespace dru
 	using namespace enums;
 
 	class GameObj;
-	class Component : public Entity
+	class Component : public DruEntity
 	{
-	public:
-
 	public:
 		Component(eComponentType _Type);
 		virtual ~Component();

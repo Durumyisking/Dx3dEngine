@@ -1,7 +1,5 @@
 #pragma once
 #include "guiComponent.h"
-#include "Material.h"
-#include "Mesh.h"
 
 namespace gui
 {
@@ -19,7 +17,7 @@ namespace gui
 		void SetMaterial(std::string key);
 
 	private:
-		std::shared_ptr<dru::graphics::Material> mMaterial;
-		std::shared_ptr<dru::Mesh> mMesh;
+		std::shared_ptr<class dru::graphics::Material> mMaterial;
+		std::shared_ptr<class dru::Mesh> mMesh;
 	};
 }

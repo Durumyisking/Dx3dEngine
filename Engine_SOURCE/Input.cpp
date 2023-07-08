@@ -1,17 +1,12 @@
 #include "Input.h"
+#include "druMath.h"
+#include "GameObj.h"
 #include "Application.h"
 
 extern dru::Application application;
 
 namespace dru
 {
-	std::vector<Input::Key> Input::mKeys;
-	math::Vector3 Input::mMousePosition;
-	math::Vector3 Input::mWorldMousePosition;
-
-	float Input::mWinWidthCenter;
-	float Input::mWinHeightCenter;
-
 	int ASCII[static_cast<UINT>(eKeyCode::END)] =
 	{
 		//Alphabet
@@ -35,6 +30,19 @@ namespace dru
 		'6', '7', '8', '9',
 	};
 
+	Input::Input()
+		: mKeys{}
+		, mMousePosition(Vector3::Zero)
+		, mWorldMousePosition(Vector3::Zero)
+		, mWinWidthCenter(0.0f)
+		, mWinHeightCenter(0.0f)
+	{
+	}
+
+	Input::~Input()
+	{
+
+	}
 
 	void Input::Initialize()
 	{

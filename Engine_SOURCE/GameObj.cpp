@@ -3,6 +3,15 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 
+#include "Component.h"
+#include "Script.h"
+#include "Mesh.h"
+#include "Shader.h"
+#include "AudioListener.h"
+#include "AudioSource.h"
+#include "SpriteRenderer.h"
+#include "MeshRenderer.h"
+
 namespace dru
 {
 	
@@ -65,7 +74,7 @@ namespace dru
 		{
 			if (nullptr == comp)
 				continue;		
-			if (SceneMgr::mActiveScene->mbPause && (eComponentType::Renderer != comp->GetOrder() && eComponentType::Camera != comp->GetOrder() && eComponentType::Light != comp->GetOrder()))
+			if (GETSINGLE(SceneMgr)->GetActiveScene()->mbPause && (eComponentType::Renderer != comp->GetOrder() && eComponentType::Camera != comp->GetOrder() && eComponentType::Light != comp->GetOrder()))
 			{
 				if (eLayerType::UI != mType)
 				{
@@ -77,7 +86,7 @@ namespace dru
 		}
 		for (Component* script : mScripts)
 		{
-			if (nullptr == script || SceneMgr::mActiveScene->mbPause )
+			if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause )
 				continue;
 			script->update();
 		}
@@ -89,7 +98,7 @@ namespace dru
 		{
 			if (nullptr == comp)
 				continue;
-			if (SceneMgr::mActiveScene->mbPause && (eComponentType::Renderer != comp->GetOrder() && eComponentType::Camera != comp->GetOrder() && eComponentType::Light != comp->GetOrder()))
+			if (GETSINGLE(SceneMgr)->GetActiveScene()->mbPause && (eComponentType::Renderer != comp->GetOrder() && eComponentType::Camera != comp->GetOrder() && eComponentType::Light != comp->GetOrder()))
 			{
 				if (eLayerType::UI != mType)
 				{
@@ -101,7 +110,7 @@ namespace dru
 
 		for (Component* script : mScripts)
 		{
-			if (nullptr == script || SceneMgr::mActiveScene->mbPause)
+			if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause)
 				continue;
 			script->fixedUpdate();
 		}
@@ -378,7 +387,7 @@ namespace dru
 			Speed = 1.f;
 		}
 
-		float Step = Speed * TimeMgr::DeltaTimeConstant();
+		float Step = Speed * GETSINGLE(TimeMgr)->DeltaTimeConstant();
 
 		if (Step < Distance)
 		{
@@ -436,7 +445,7 @@ namespace dru
 			Speed = 1.f;
 		}
 
-		float Step = Speed * TimeMgr::DeltaTimeConstant();
+		float Step = Speed * GETSINGLE(TimeMgr)->DeltaTimeConstant();
 
 		if (Step < Distance)
 		{

@@ -3,7 +3,7 @@
 
 namespace dru
 {
-	class Layer : public Entity
+	class Layer : public DruEntity
 	{
 	public:
 		Layer();

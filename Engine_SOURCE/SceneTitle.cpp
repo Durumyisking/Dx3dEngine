@@ -10,6 +10,15 @@
 
 #include "AudioSource.h"
 
+#include "Layer.h"
+#include "Transform.h"
+#include "MeshRenderer.h"
+#include "SpriteRenderer.h"
+#include "Renderer.h"
+#include "Texture.h"
+#include "Camera.h"
+#include "CameraScript.h"
+#include "FontWrapper.h"
 
 
 namespace dru
@@ -86,6 +95,7 @@ namespace dru
 		}
 
 		{
+			
 			Player* player = object::Instantiate<Player>(eLayerType::Player);
 			player->SetPos(Vector3(-5.f, 0.f, 5.f));
 			player->SetName(L"Player");

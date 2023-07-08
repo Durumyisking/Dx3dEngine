@@ -55,7 +55,7 @@ namespace dru
 
 	void ParticleSystem::Initialize()
 	{
-		std::shared_ptr<Mesh> point = Resources::Find<Mesh>(L"Pointmesh");
+		std::shared_ptr<Mesh> point = GETSINGLE(Resources)->Find<Mesh>(L"Pointmesh");
 
 		SetMesh(point);
 

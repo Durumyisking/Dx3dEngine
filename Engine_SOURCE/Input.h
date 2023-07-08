@@ -1,10 +1,5 @@
 #pragma once
 #include "Engine.h"
-#include "druMath.h"
-#include "GameObj.h"
-#include "Application.h"
-
-extern dru::Application application;
 
 namespace dru
 {
@@ -42,6 +37,8 @@ namespace dru
 
 	class Input
 	{
+		SINGLE(Input)
+
 	public:
 		struct Key
 		{
@@ -50,57 +47,53 @@ namespace dru
 			bool	  bPressed;
 		};
 
-		static void Initialize();
-		static void update();
-		static void Render(HDC hdc);
-		static void ComputeMousePos();
+		void Initialize();
+		void update();
+		void Render(HDC hdc);
+		void ComputeMousePos();
 
-		static __forceinline eKeyState GetKeyState(eKeyCode keyCode)
+		__forceinline eKeyState GetKeyState(eKeyCode keyCode)
 		{
 			return mKeys[static_cast<UINT>(keyCode)].eState;
 		}
 
-		static __forceinline math::Vector3 GetMousePosition()
+		__forceinline math::Vector3 GetMousePosition()
 		{
 			return mMousePosition;
 		}
 
-		static __forceinline math::Vector3 GetMousePosition_world()
+		__forceinline math::Vector3 GetMousePosition_world()
 		{
 			return mWorldMousePosition;
 		}
 
 
 
-		static __forceinline bool GetKeyDown(eKeyCode keyCode)
+		__forceinline bool GetKeyDown(eKeyCode keyCode)
 		{
 			return mKeys[static_cast<UINT>(keyCode)].eState == eKeyState::DOWN;
 		}
 
-		static __forceinline bool GetKeyTap(eKeyCode keyCode)
+		__forceinline bool GetKeyTap(eKeyCode keyCode)
 		{
 			return mKeys[static_cast<UINT>(keyCode)].eState == eKeyState::TAP;
 		}
 
-		static __forceinline bool GetKeyUp(eKeyCode keyCode)
+		__forceinline bool GetKeyUp(eKeyCode keyCode)
 		{
 			return mKeys[static_cast<UINT>(keyCode)].eState == eKeyState::UP;
 		}
 
-		static __forceinline bool GetKeyNone(eKeyCode keyCode)
+		__forceinline bool GetKeyNone(eKeyCode keyCode)
 		{
 			return mKeys[static_cast<UINT>(keyCode)].eState == eKeyState::NONE;
 		}
 
 	private:
-		Input() = delete;
-		~Input() = delete;
-
-	private:
-		static std::vector<Key> mKeys;
-		static math::Vector3 mMousePosition;
-		static math::Vector3 mWorldMousePosition;
-		static float mWinWidthCenter;
-		static float mWinHeightCenter;
+		std::vector<Key> mKeys;
+		math::Vector3 mMousePosition;
+		math::Vector3 mWorldMousePosition;
+		float mWinWidthCenter;
+		float mWinHeightCenter;
 	};
 }

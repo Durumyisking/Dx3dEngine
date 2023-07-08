@@ -1,15 +1,13 @@
 #pragma once
-#include "guiDebugObject.h"
-#include "guiEditorObject.h"
-#include "guiWidget.h"
-#include "Graphics.h"
 
 namespace gui
 {
-	class VisualEditor;
 	class Editor
 	{
 	public:
+		Editor();
+		virtual ~Editor();
+
 		void Initialize();
 		void Run();
 
@@ -34,13 +32,13 @@ namespace gui
 		}
 
 	private:
-		std::map<std::string, Widget*> mWidgets;
-		std::vector<EditorObject*> mEditorObjects;
-		std::vector<DebugObject*> mDebugObjects;
+		std::map<std::string, class Widget*> mWidgets;
+		std::vector<class EditorObject*> mEditorObjects;
+		std::vector<class DebugObject*> mDebugObjects;
 
 		class VisualEditor* mVisualEditor;
-		bool mEnable = true;
-		bool mImguiEnable = true;
+		bool mEnable;
+		bool mImguiEnable;
 
 	};
 }

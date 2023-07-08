@@ -16,23 +16,24 @@ namespace dru
 
 	class CollisionMgr
 	{
+		SINGLE(CollisionMgr)
+
 	public:
-		static void Initialize();
-		static void update();
-		static void fixedUpdate();
-		static void render();
+		void Initialize();
+		void update();
+		void fixedUpdate();
+		void render();
 
-		static void CollisionLayerCheck(eLayerType _left, eLayerType _right, bool _benable = true);
-		static void LayerCollision(class Scene* _scene, eLayerType _left, eLayerType _right);
-		static void ColliderCollision(Collider2D* _left, Collider2D* _right);
-		static bool Intersect(Collider2D* _left, Collider2D* _right);
+		void CollisionLayerCheck(eLayerType _left, eLayerType _right, bool _benable = true);
+		void LayerCollision(class Scene* _scene, eLayerType _left, eLayerType _right);
+		void ColliderCollision(Collider2D* _left, Collider2D* _right);
+		bool Intersect(Collider2D* _left, Collider2D* _right);
 
-		static bool lineLine(Vector2 _lineA_p1, Vector2 _lineA_p2, Vector2 _lineB_p1, Vector2 _lineB_p2);
-		static bool lineRect(Collider2D* _left, Collider2D* _right);
+		bool lineLine(Vector2 _lineA_p1, Vector2 _lineA_p2, Vector2 _lineB_p1, Vector2 _lineB_p2);
+		bool lineRect(Collider2D* _left, Collider2D* _right);
 
 	private:
-		static std::bitset<static_cast<UINT>(eLayerType::End)> mLayerCollisionMatrix[static_cast<UINT>(eLayerType::End)];
-		static std::map<UINT64, bool> mCollisionMap;
-
+		std::bitset<static_cast<UINT>(eLayerType::End)> mLayerCollisionMatrix[static_cast<UINT>(eLayerType::End)];
+		std::map<UINT64, bool> mCollisionMap;
 	};
 }

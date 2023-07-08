@@ -322,6 +322,9 @@
       <Filter>Common\GameObj\Player</Filter>
     </ClInclude>
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="def.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

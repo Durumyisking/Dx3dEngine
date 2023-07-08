@@ -110,12 +110,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             application.Run();
             editor.Run();
+
             application.Present();
         }
     }
     
+    application.Release();
     editor.Release();
 
+
+    application.DestroySingle();
   //  D3DMemLeak();
     return (int)msg.wParam;
 }
@@ -162,7 +166,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   Vector2 Resolution = { 1600, 900 };
+   dru::math::Vector2 Resolution = { 1600, 900 };
    application.SetResolution(Resolution);
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,

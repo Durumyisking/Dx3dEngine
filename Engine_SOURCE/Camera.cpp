@@ -7,6 +7,7 @@
 #include "Material.h"
 #include "BaseRenderer.h"
 #include "TimeMgr.h"
+#include "Layer.h"
 
 extern dru::Application application;
 
@@ -132,7 +133,7 @@ namespace dru
 
 	void Camera::RegisterCameraInRenderer()
 	{	
-		UINT type = static_cast<UINT>(SceneMgr::mActiveScene->GetType());
+		UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
 		renderer::	Cameras[type].push_back(this);
 	}
 
@@ -163,7 +164,7 @@ namespace dru
 		mTransparentGameObjects.clear();
 		mPostProcessGameObjects.clear();
 
-		Scene* scene = SceneMgr::mActiveScene;
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		for (size_t i = 0; i < static_cast<UINT>(eLayerType::End); i++)
 		{
 			if (mLayerMask[i])

@@ -6,6 +6,8 @@ namespace dru
 	class Scene;
 	class SceneMgr
 	{
+		SINGLE(SceneMgr)
+
 	public:
 		enum class eSceneType
 		{
@@ -20,27 +22,28 @@ namespace dru
 
 	public:
 		// 클래스 내부에 있는것 처럼 보이지만 전역함수임 따라서 멤버변수를 알 수가 없음
-		static void Initialize();
-		static void update();
-		static void fixedUpdate();
-		static void render();
-		static void fontRender();
-		static void destory();
-		static void release();
-		static void LoadScene(eSceneType _Type);
+		void Initialize();
+		void update();
+		void fixedUpdate();
+		void render();
+		void fontRender();
+		void destory();
+		void release();
+		void LoadScene(eSceneType _Type);
 
-		static void DontDestroyOnLoad(GameObj* _GameObj);
+		void DontDestroyOnLoad(GameObj* _GameObj);
 
 		template <typename T>
-		static T* GetScene (eSceneType _Type)
+		T* GetScene (eSceneType _Type)
 		{
 			return dynamic_cast<T*>(mScenes[(static_cast<UINT>(_Type))]);
 		}
 
-	public:
-		static Scene* mScenes[(static_cast<UINT>(eSceneType::End))];	// 모든 씬 목록
-		static Scene* mActiveScene;
 
+		GETSET(Scene*, mActiveScene, ActiveScene)
+	private:
+		Scene* mScenes[(static_cast<UINT>(eSceneType::End))];	// 모든 씬 목록
+		Scene* mActiveScene;
 	};
 }
 

@@ -23,11 +23,30 @@
 
 #include "guiVisualEditor.h"
 
+#include "guiDebugObject.h"
+#include "guiEditorObject.h"
+#include "guiWidget.h"
+#include "Graphics.h"
+
 
 extern dru::Application application;
 
 namespace gui
 {
+	Editor::Editor()
+		: mWidgets{}
+		, mEditorObjects{}
+		, mDebugObjects{}
+		, mVisualEditor(nullptr)
+		, mEnable(false)
+		, mImguiEnable(true)
+
+	{
+	}
+	Editor::~Editor()
+	{
+	}
+
 	void Editor::Initialize()
 	{
 		mEnable = false;
@@ -38,8 +57,8 @@ namespace gui
 		// 충돌체의 종류 갯수만큼만 있으면 된다.
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
-		std::shared_ptr<dru::Mesh> rectMesh = dru::Resources::Find<dru::Mesh>(L"DebugRectmesh");
-		std::shared_ptr<dru::Material> material = dru::Resources::Find<Material>(L"DebugMaterial");
+		std::shared_ptr<dru::Mesh> rectMesh = GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"DebugRectmesh");
+		std::shared_ptr<dru::Material> material = GETSINGLE(dru::Resources)->Find<Material>(L"DebugMaterial");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Rect)] = new DebugObject();
 		dru::MeshRenderer* renderer
@@ -48,7 +67,7 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(rectMesh);
 
-		std::shared_ptr<dru::Mesh> circleMesh = dru::Resources::Find<dru::Mesh>(L"Circlemesh");
+		std::shared_ptr<dru::Mesh> circleMesh = GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"Circlemesh");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Circle)] = new DebugObject();
 		renderer
@@ -60,8 +79,8 @@ namespace gui
 		{
 			EditorObject* gridObject = new EditorObject();
 			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
-			gridMr->SetMesh(dru::Resources::Find<dru::Mesh>(L"Rectmesh"));
-			gridMr->SetMaterial(dru::Resources::Find<Material>(L"GridMaterial"));
+			gridMr->SetMesh(GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"Rectmesh"));
+			gridMr->SetMaterial(GETSINGLE(dru::Resources)->Find<Material>(L"GridMaterial"));
 			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
 			gridScript->SetCamera(mainCamera);
 

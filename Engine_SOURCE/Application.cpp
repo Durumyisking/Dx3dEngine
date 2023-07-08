@@ -8,6 +8,7 @@
 #include "FMod.h"
 #include "FontWrapper.h"
 
+
 namespace dru
 {
 	using namespace graphics;
@@ -25,51 +26,48 @@ namespace dru
 	}
 	Application::~Application()
 	{
-		Fmod::Release();
-		SceneMgr::release();
-		FontWrapper::Release();
+
 	}
 
 	void Application::Initialize()
 	{
-		TimeMgr::Initialize();
-		Input::Initialize();
-		Fmod::Initialize();
-		CollisionMgr::Initialize();
+		GETSINGLE(TimeMgr)->Initialize();
+		GETSINGLE(Input)->Initialize();
+		GETSINGLE(Fmod)->Initialize();
+		GETSINGLE(CollisionMgr)->Initialize();
 		renderer::Initialize();
-		FontWrapper::Initialize();
-		SceneMgr::Initialize();
+		GETSINGLE(FontWrapper)->Initialize();
+		GETSINGLE(SceneMgr)->Initialize();
 
 	}
 	void Application::update()
 	{
-		TimeMgr::update();
-		Input::update();
-		CollisionMgr::update();
-		SceneMgr::update();
+		GETSINGLE(TimeMgr)->update();
+		GETSINGLE(Input)->update();
+		GETSINGLE(CollisionMgr)->update();
+		GETSINGLE(SceneMgr)->update();
 	}
 	void Application::fixedUpdate()
 	{
-		CollisionMgr::fixedUpdate();
-		SceneMgr::fixedUpdate();
+		GETSINGLE(CollisionMgr)->fixedUpdate();
+		GETSINGLE(SceneMgr)->fixedUpdate();
 	}
 	void Application::render()
 	{
-		TimeMgr::Render(mHdc);
-		Input::Render(mHdc);
+		GETSINGLE(TimeMgr)->Render(mHdc);
+		GETSINGLE(Input)->Render(mHdc);
 		//		CollisionMgr::render();
 		graphicDevice->Clear();
 		graphicDevice->AdjustViewPorts();
 
 		renderer::Render();
-		SceneMgr::render();
-		SceneMgr::fontRender();
+		GETSINGLE(SceneMgr)->render();
+		GETSINGLE(SceneMgr)->fontRender();
 	}
 
 	void Application::destroy()
 	{
-		SceneMgr::destory();
-
+		GETSINGLE(SceneMgr)->destory();
 	}
 
 	void Application::Run()
@@ -83,6 +81,24 @@ namespace dru
 	void Application::Present()
 	{
 		graphicDevice->Present();
+	}
+
+	void Application::Release()
+	{
+		GETSINGLE(Fmod)->Release();
+		GETSINGLE(SceneMgr)->release();
+		GETSINGLE(FontWrapper)->Release();
+	}
+
+	void Application::DestroySingle()
+	{
+		GETSINGLE(SceneMgr)->DestroyInstance();
+		GETSINGLE(FontWrapper)->DestroyInstance();
+		GETSINGLE(CollisionMgr)->DestroyInstance();
+		GETSINGLE(Fmod)->DestroyInstance();
+		GETSINGLE(Input)->DestroyInstance();
+		GETSINGLE(TimeMgr)->DestroyInstance();
+		GETSINGLE(Resources)->DestroyInstance();
 	}
 
 	void Application::SetWindow(HWND _hwnd, UINT _width, UINT _height)

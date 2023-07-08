@@ -1,11 +1,11 @@
 #pragma once
-#include "Engine.h"
 #include "Entity.h"
 
 namespace dru
 {
 	using namespace enums;
-	class Resource : public dru::Entity
+
+	class Resource : public DruEntity
 	{
 	public:
 		Resource(eResourceType	_Type);

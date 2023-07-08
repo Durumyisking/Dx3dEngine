@@ -77,7 +77,7 @@ namespace dru::graphics
 		//						0¹ø ¹öÆÛ°¡ ·»´õÅ¸°Ù							·»´õÅ¸°Ù Æ÷ÀÎÅÍ
 		hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf());
 		mRenderTargetTexture->Create(renderTarget);
-		Resources::Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
+		GETSINGLE(Resources)->Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
 		// Create Rendertarget View
 
 		mDepthStencilBufferTexture = std::make_shared<Texture>();

@@ -7,7 +7,7 @@
 
 namespace gui
 {
-	class Widget : public gui::Entity
+	class Widget : public GuiEntity
 	{
 	public:
 		enum class eState

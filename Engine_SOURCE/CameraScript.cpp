@@ -43,7 +43,7 @@ namespace dru
 		mSpeed = mCameraObject->mCamSpeed;
 		mCamStep = 0.f;
 
-		mCamStep = mSpeed * TimeMgr::DeltaTimeConstant();
+		mCamStep = mSpeed * GETSINGLE(TimeMgr)->DeltaTimeConstant();
 		
 		KeyBoardMove();
 		TargetMove();
@@ -176,7 +176,7 @@ namespace dru
 	{
 		if (mbShaking)
 		{
-			mShakeTimer += TimeMgr::DeltaTimeConstant();
+			mShakeTimer += GETSINGLE(TimeMgr)->DeltaTimeConstant();
 			if (mShakeTimer >= mShakeParams.duration)
 			{
 				// 흔들림 지속 시간이 지나면 효과 종료

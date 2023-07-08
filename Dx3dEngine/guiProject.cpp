@@ -7,7 +7,6 @@
 
 #include "guiInspector.h"
 #include "guiResource.h"
-#include "Resources.h"
 #include "guiEditor.h"
 
 extern gui::Editor editor;
