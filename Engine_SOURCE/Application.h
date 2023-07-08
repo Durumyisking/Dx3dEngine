@@ -19,6 +19,7 @@ namespace dru
 		virtual void fixedUpdate();
 		virtual void render();
 		virtual void destroy();
+		virtual void lateEvent();
 		// engine loop
 		void Run();
 		void Present();

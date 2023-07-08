@@ -7,6 +7,8 @@ namespace dru
 	class SceneMgr
 	{
 		SINGLE(SceneMgr)
+	public:
+		using LateEventVector = std::vector<GameObj*>;
 
 	public:
 		enum class eSceneType
@@ -30,8 +32,11 @@ namespace dru
 		void destory();
 		void release();
 		void LoadScene(eSceneType _Type);
+		void LateEvent(); // 렌더링까지 종료후 오브젝트 추가하는 함수
 
 		void DontDestroyOnLoad(GameObj* _GameObj);
+
+		void AddEvent(GameObj* obj) { mLateEvent.emplace_back(obj); }
 
 		template <typename T>
 		T* GetScene (eSceneType _Type)
@@ -44,6 +49,8 @@ namespace dru
 	private:
 		Scene* mScenes[(static_cast<UINT>(eSceneType::End))];	// 모든 씬 목록
 		Scene* mActiveScene;
+
+		LateEventVector mLateEvent;
 	};
 }
 

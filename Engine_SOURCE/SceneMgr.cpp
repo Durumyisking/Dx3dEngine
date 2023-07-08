@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "SceneTitle.h"
+#include "Layer.h"
 
 namespace dru
 {
@@ -82,6 +83,20 @@ namespace dru
 
 		if (mActiveScene)
 			mActiveScene->Enter();
+	}
+
+	void SceneMgr::LateEvent()
+	{
+		if (mActiveScene == nullptr)
+			return;
+
+		for (GameObj* obj : mLateEvent)
+		{
+			enums::eLayerType type = obj->GetLayerType();
+			mActiveScene->GetLayer(type).AddGameObject(obj, type);
+		}
+
+		mLateEvent.clear();
 	}
 
 	void SceneMgr::DontDestroyOnLoad(GameObj* _GameObj)

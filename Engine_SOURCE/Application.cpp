@@ -70,12 +70,20 @@ namespace dru
 		GETSINGLE(SceneMgr)->destory();
 	}
 
+	void Application::lateEvent()
+	{
+		GETSINGLE(SceneMgr)->LateEvent();
+	}
+
 	void Application::Run()
 	{
 		update();
 		fixedUpdate();
 		render();
+
+		// 프레임 종료 후 오브젝트 삭제 및 추가
 		destroy();
+		lateEvent();
 	}
 
 	void Application::Present()

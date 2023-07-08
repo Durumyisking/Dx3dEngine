@@ -7,6 +7,17 @@
 namespace dru::object
 {
 	template <typename T>
+	static T* LateInstantiate(enums::eLayerType _LayerType)
+	{
+		T* gameObj = new T();
+		Scene* scene = GETSINGLE(SceneMgr)->AddEvent(gameObj);
+		gameObj->Initialize();
+		gameObj->SetLayerType(_LayerType);
+
+		return gameObj;
+	}
+
+	template <typename T>
 	static T* Instantiate(enums::eLayerType _LayerType)
 	{
 		T* gameObj = new T();
