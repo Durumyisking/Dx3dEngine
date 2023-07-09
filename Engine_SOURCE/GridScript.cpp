@@ -14,6 +14,8 @@ namespace dru
 	GridScript::GridScript()
 		: Script()
 		, mCamera(nullptr)
+		, mThickness(2.f)
+		, mGridOffset{100.f, 100.f}
 	{
 		
 	}
@@ -30,38 +32,28 @@ namespace dru
 
 	void GridScript::update()
 	{
-		if (nullptr == mCamera)
-			return;
-
-		GameObj* gameobj = mCamera->GetOwner();
-		Transform* tr = gameobj->GetComponent<Transform>();
-
-		Vector3 campos = tr->GetPosition();
-		Vector4 pos = Vector4(campos.x, campos.y, campos.z, 1.f);
-
-		float scale = mCamera->GetScale();;
-
-		RECT winRect;
-		GetClientRect(application.GetHwnd(), &winRect);
-		float w = static_cast<float>(winRect.right - winRect.left);
-		float h = static_cast<float>(winRect.top - winRect.bottom);
-		Vector2 resolution(w, h);
-
-
-		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Grid)];
-		renderer::GridCB data;
-
-		data.cameraPosition = pos;
-		data.cameraScale = Vector2(scale, scale);
-		data.resolution = resolution;
-
-		cb->SetData(&data);
-		cb->Bind(eShaderStage::VS);
-		cb->Bind(eShaderStage::PS);
+		
 	}
 
 	void GridScript::fixedUpdate()
 	{
+		if (nullptr == mCamera)
+			return;
+
+		MeshRenderer* mr = GetOwner()->GetComponent<MeshRenderer>();
+
+		GameObj* cam = mCamera->GetOwner();
+		Transform* tr = cam->GetComponent<Transform>();
+
+		Vector3 campos = tr->GetPosition();
+		__int32 w = application.GetWidth();
+		__int32 h = application.GetHeight();
+		Vector2 resolution(w, h);
+
+		mr->GetMaterial()->SetData(eGPUParam::Vector3_1, &campos);
+		mr->GetMaterial()->SetData(eGPUParam::Vector2_1, &mGridOffset);
+		mr->GetMaterial()->SetData(eGPUParam::Vector2_2, &resolution);
+		mr->GetMaterial()->SetData(eGPUParam::Float_1, &mThickness);
 	}
 
 	void GridScript::render()

@@ -125,7 +125,7 @@ namespace dru
 		}
 		else // (mType == eProjectionType::Orthographic)
 		{
-			mProjection = Matrix::CreateOrthographic(width / 100.f, height / 100.f, mNear, mFar);
+			mProjection = Matrix::CreateOrthographic(width , height , mNear, mFar);
 		}
 
 	}

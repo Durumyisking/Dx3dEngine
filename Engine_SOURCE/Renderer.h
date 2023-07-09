@@ -96,9 +96,10 @@ namespace dru::renderer
 
 	CBUFFER(GridCB, CBSLOT_GRID)	
 	{
-		Vector4 cameraPosition;
-		Vector2 cameraScale;
-		Vector2 resolution;
+		Vector3 cameraPosition;
+		Vector2 GridOffset;
+		Vector2 Resolution;
+		float Thickness;
 	};
 
 	CBUFFER(ColorCB, CBSLOT_COLOR)

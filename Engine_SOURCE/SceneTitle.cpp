@@ -10,7 +10,11 @@
 
 #include "AudioSource.h"
 
+#include "GridScript.h"
 
+#include "Application.h"
+
+extern dru::Application appliaction;
 
 namespace dru
 {
@@ -65,6 +69,24 @@ namespace dru
 			mCamera->SetPos(Vector3(0.f, 0.f, -5.f));
 
 		}
+
+
+		{
+			GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
+		
+			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
+
+			gridMr->SetMesh(dru::Resources::Find<dru::Mesh>(L"Rectmesh"));
+			gridMr->SetMaterial(dru::Resources::Find<Material>(L"GridMaterial"));
+
+			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
+			gridScript->SetCamera(mainCamera);
+
+			float w = static_cast<float>(application.GetWidth());
+			float h = static_cast<float>(application.GetHeight());
+			gridObject->SetPos({ 0.f, 0.f, 5.f });
+			gridObject->SetScale(Vector3(3.f, 3.f, 1.f));
+		}
 		
 		{
 			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
@@ -76,14 +98,14 @@ namespace dru
 			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
 		}
 
-		{
-			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(5.f, 0.f, 5.f));
-			player->SetName(L"Player");
-			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
-			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player->SetScale({ 5.f, 5.f, 5.f });
-		}
+		//{
+		//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//	player->SetPos(Vector3(5.f, 0.f, 5.f));
+		//	player->SetName(L"Player");
+		//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+		//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		//	player->SetScale({ 5.f, 5.f, 5.f });
+		//}
 
 		{
 			Player* player = object::Instantiate<Player>(eLayerType::Player);
@@ -91,6 +113,12 @@ namespace dru
 			player->SetName(L"Player");
 			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+
+			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::CHARACTER, eGeometryType::BOX, Vector3(1.f, 1.f, 1.f));
+			player->AddComponent<Controller>(eComponentType::Controller);
+			player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+			player->AddComponent<PhysXCollider>(eComponentType::Collider);
+
 			player->SetScale({ 5.f, 5.f, 5.f });
 		}
 

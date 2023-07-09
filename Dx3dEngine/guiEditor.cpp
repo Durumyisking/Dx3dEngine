@@ -57,16 +57,20 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(circleMesh);
 
-		{
-			EditorObject* gridObject = new EditorObject();
-			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
-			gridMr->SetMesh(dru::Resources::Find<dru::Mesh>(L"Rectmesh"));
-			gridMr->SetMaterial(dru::Resources::Find<Material>(L"GridMaterial"));
-			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
-			gridScript->SetCamera(mainCamera);
+		//{
+		//	EditorObject* gridObject = new EditorObject();
+		//	dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
 
-			mEditorObjects.push_back(gridObject);
-		}
+		//	gridMr->SetMesh(dru::Resources::Find<dru::Mesh>(L"Rectmesh"));
+		//	gridMr->SetMaterial(dru::Resources::Find<Material>(L"GridMaterial"));
+
+		//	dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
+		//	gridScript->SetCamera(mainCamera);
+
+
+
+		//	mEditorObjects.push_back(gridObject);
+		//}
 
 		if (mImguiEnable == false)
 			return;

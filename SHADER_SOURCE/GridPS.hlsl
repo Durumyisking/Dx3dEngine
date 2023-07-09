@@ -1,11 +1,5 @@
 #include "global.hlsli"
 
-struct VSIn
-{
-    float4 Pos : POSITION;
-    float2 UV : TEXCOORD;
-};
-
 struct VSOut
 {
     float4 Pos : SV_Position;
@@ -18,24 +12,22 @@ float4 main(VSOut In) : SV_TARGET
 {
     float4 Out = float4(1.f, 1.f, 1.f, 1.f);
     
-    const int width = 100;
-    const int height = 100;
+    //return float4(1.f, 0.f, 1.f, 1.f);
     
-    uint worldX = (int) In.WorldPos.x;
-    uint worldY = (int) In.WorldPos.y;
+    //float thickness = cbfData1;
+    //float2 grid_offset = cbxy1;
+    //float2 resolution = cbxy2;
+    
+    //const int width = grid_offset.x;
+    //const int height = (grid_offset.y * (resolution.y / resolution.x));
 
-    // line thick
-    const float thickness = 1.f;
+    //if ((abs(In.WorldPos.x % width) <= thickness) ||
+    //    (abs(In.WorldPos.y % height) <= thickness))
+    //    return Out;
+    //else
+    //    discard;
     
-    if (abs((worldX + 1) % width) <= thickness)
-        return Out;
-//        return float4(1.f, 1.f, 1.f, 0.f);
+    //Out.y = 0.f;
     
-    if (abs((worldY + 1) % height) <= thickness)
-        return Out;
-//        return float4(1.f, 1.f, 1.f, 0.f);;
-    
-//    discard;
-     
-    return float4(1.f, 1.f, 1.f, 1.f);
+    return float4(1.f, 0.f, 1.f, 1.f);
 }

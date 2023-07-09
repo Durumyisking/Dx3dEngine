@@ -12,7 +12,7 @@ namespace dru
 		, mSpriteSize(Vector2::Zero)
 	{
 		// 디폴트 매시 지정
-		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"Cubemesh");
+		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"Rectmesh");
 
 		SetMesh(mesh);
 	}
@@ -27,7 +27,7 @@ namespace dru
 	}
 	void BaseRenderer::fixedUpdate()
 	{
-		if (mbIsChanged)
+		/*if (mbIsChanged)
 		{
 
 			if (mWidthRatio == 0.f && mHeightRatio == 0.f)
@@ -47,13 +47,13 @@ namespace dru
 			transform->SetScale(scale);
 
 			mbIsChanged = false;
-		}
+		}*/
 	}
 
 	void BaseRenderer::render()
 	{
 
-		LOD();
+		//LOD();
 		
 	}
 
@@ -66,14 +66,14 @@ namespace dru
 	{
 		mMaterial = _Material;
 
-		adjustTexture();
+		// adjustTexture();
 	}
 
 	void BaseRenderer::SetMaterialByKey(std::wstring _Key)
 	{
 		mMaterial = Resources::Find<Material>(_Key);
 
-		adjustTexture();
+		// adjustTexture();
 	}
 
 	void BaseRenderer::SetAnimMaterial(std::shared_ptr<Material> _Material, Vector2 _SpriteSize)
@@ -81,7 +81,7 @@ namespace dru
 		mMaterial = _Material;
 		mbIsAnim = true;
 		mSpriteSize = _SpriteSize;
-		adjustTexture();
+		// adjustTexture();
 	}
 
 	void BaseRenderer::ChangeColor(Vector4 _color)
