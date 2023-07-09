@@ -20,7 +20,8 @@ namespace dru
 
     private:
         Camera* mCamera;
-
+        Vector2  mGridOffset;
+        float mThickness;
     };
 }
 

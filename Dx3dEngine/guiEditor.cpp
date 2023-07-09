@@ -54,7 +54,7 @@ namespace gui
 
 		if (mEnable == false)
 			return;
-		// Ãæµ¹Ã¼ÀÇ Á¾·ù °¹¼ö¸¸Å­¸¸ ÀÖÀ¸¸é µÈ´Ù.
+		// ì¶©ëŒì²´ì˜ ì¢…ë¥˜ ê°¯ìˆ˜ë§Œí¼ë§Œ ìˆìœ¼ë©´ ëœë‹¤.
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
 		std::shared_ptr<dru::Mesh> rectMesh = GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"DebugRectmesh");
@@ -76,16 +76,6 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(circleMesh);
 
-		{
-			EditorObject* gridObject = new EditorObject();
-			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
-			gridMr->SetMesh(GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"Rectmesh"));
-			gridMr->SetMaterial(GETSINGLE(dru::Resources)->Find<Material>(L"GridMaterial"));
-			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
-			gridScript->SetCamera(mainCamera);
-
-			mEditorObjects.push_back(gridObject);
-		}
 
 		if (mImguiEnable == false)
 			return;

@@ -101,6 +101,43 @@ namespace dru::renderer
 
 #pragma endregion
 
+#pragma region GridMesh
+
+		Vertex	GridVertexes[4] = {};
+
+		GridVertexes[0].pos = Vector4(-200.f, 200.f, 0.f, 1.f);
+		GridVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		GridVertexes[0].uv = Vector2(0.f, 0.f);
+
+		GridVertexes[1].pos = Vector4(200.f, 200.f, 0.f, 1.f);
+		GridVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		GridVertexes[1].uv = Vector2(1.f, 0.f);
+
+		GridVertexes[2].pos = Vector4(200.f, -200.f, 0.f, 1.f);
+		GridVertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
+		GridVertexes[2].uv = Vector2(1.f, 1.f);
+
+		GridVertexes[3].pos = Vector4(-200.f, -200.f, 0.f, 1.f);
+		GridVertexes[3].color = Vector4(0.f, 0.f, 0.f, 1.f);
+		GridVertexes[3].uv = Vector2(0.f, 1.f);
+
+		std::shared_ptr<Mesh> Gridmesh = std::make_shared<Mesh>();
+		Resources::Insert<Mesh>(L"Gridmesh", Gridmesh);
+		Gridmesh->CreateVertexBuffer(GridVertexes, 4);
+
+		indexes.clear();
+
+		indexes.push_back(0);
+		indexes.push_back(1);
+		indexes.push_back(2);
+		indexes.push_back(0);
+		indexes.push_back(2);
+		indexes.push_back(3);
+		indexes.push_back(0);
+		Gridmesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
+
+#pragma endregion
+
 #pragma region RectMesh_Debug
 
 		Vertex	DebugRectVertexes[4] = {};
@@ -185,7 +222,7 @@ namespace dru::renderer
 		//	Vector2 uv;
 		//};
 
-		// ¿≠∏È
+		// ÏúóÎ©¥
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
@@ -207,7 +244,7 @@ namespace dru::renderer
 		arrCube[3].normal = Vector3(0.f, 1.f, 0.f);
 
 
-		// æ∆∑ß ∏È	
+		// ÏïÑÎû´ Î©¥	
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
@@ -228,7 +265,7 @@ namespace dru::renderer
 		arrCube[7].uv = Vector2(0.f, 0.f);
 		arrCube[7].normal = Vector3(0.f, -1.f, 0.f);
 
-		// øﬁ¬  ∏È
+		// ÏôºÏ™Ω Î©¥
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
@@ -249,7 +286,7 @@ namespace dru::renderer
 		arrCube[11].uv = Vector2(0.f, 0.f);
 		arrCube[11].normal = Vector3(-1.f, 0.f, 0.f);
 
-		// ø¿∏•¬  ∏È
+		// Ïò§Î•∏Ï™Ω Î©¥
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].color = Vector4(0.f, 0.f, 1.f, 1.f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
@@ -270,7 +307,7 @@ namespace dru::renderer
 		arrCube[15].uv = Vector2(0.f, 0.f);
 		arrCube[15].normal = Vector3(1.f, 0.f, 0.f);
 
-		// µﬁ ∏È
+		// Îí∑ Î©¥
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].color = Vector4(1.f, 1.f, 0.f, 1.f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
@@ -291,7 +328,7 @@ namespace dru::renderer
 		arrCube[19].uv = Vector2(0.f, 0.f);
 		arrCube[19].normal = Vector3(0.f, 0.f, 1.f);
 
-		// æ’ ∏È
+		// Ïïû Î©¥
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].color = Vector4(1.f, 0.f, 1.f, 1.f);
 		arrCube[20].uv = Vector2(0.f, 0.f);
@@ -349,8 +386,8 @@ namespace dru::renderer
 		sphereVtx.push_back(v);
 
 		// Body
-		UINT iStackCount = 40; // ∞°∑Œ ∫–«“ ∞≥ºˆ
-		UINT iSliceCount = 40; // ºº∑Œ ∫–«“ ∞≥ºˆ
+		UINT iStackCount = 40; // Í∞ÄÎ°ú Î∂ÑÌï† Í∞úÏàò
+		UINT iSliceCount = 40; // ÏÑ∏Î°ú Î∂ÑÌï† Í∞úÏàò
 
 		float fStackAngle = XM_PI / iStackCount;
 		float fSliceAngle = XM_2PI / iSliceCount;
@@ -397,8 +434,8 @@ namespace dru::renderer
 		v.biNormal = Vector3(0.f, 0.f, -1.f);
 		sphereVtx.push_back(v);
 
-		// ¿Œµ¶Ω∫
-		// ∫œ±ÿ¡°
+		// Ïù∏Îç±Ïä§
+		// Î∂ÅÍ∑πÏ†ê
 		indexes.clear();
 		for (UINT i = 0; i < iSliceCount; ++i)
 		{
@@ -407,7 +444,7 @@ namespace dru::renderer
 			indexes.push_back(i + 1);
 		}
 
-		// ∏ˆ≈Î
+		// Î™∏ÌÜµ
 		for (UINT i = 0; i < iStackCount - 2; ++i)
 		{
 			for (UINT j = 0; j < iSliceCount; ++j)
@@ -428,7 +465,7 @@ namespace dru::renderer
 			}
 		}
 
-		// ≥≤±ÿ¡°
+		// ÎÇ®Í∑πÏ†ê
 		UINT iBottomIdx = static_cast<UINT>(sphereVtx.size()) - 1;
 
 		for (UINT i = 0; i < iSliceCount; ++i)
@@ -532,7 +569,14 @@ namespace dru::renderer
 			, Colorshader->GetVSBlobBufferSize()
 			, Colorshader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> Debugshader = GETSINGLE(Resources)->Find<Shader>(L"DebugShader");
+		std::shared_ptr<Shader> Gridshader = Resources::Find<Shader>(L"GridShader");
+		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+			, Gridshader->GetVSBlobBufferPointer()
+			, Gridshader->GetVSBlobBufferSize()
+			, Gridshader->GetInputLayoutAddr());
+
+		std::shared_ptr<Shader> Debugshader = Resources::Find<Shader>(L"DebugShader");
+
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Debugshader->GetVSBlobBufferPointer()
 			, Debugshader->GetVSBlobBufferSize()
@@ -719,6 +763,7 @@ namespace dru::renderer
 		flatShader->Create(eShaderStage::VS, L"FlatVS.hlsl", "main");
 		flatShader->Create(eShaderStage::PS, L"FlatPS.hlsl", "main");
 		GETSINGLE(Resources)->Insert<Shader>(L"FlatShader", flatShader);
+
 
 		std::shared_ptr<Shader> SpriteShader = std::make_shared<Shader>();
 		SpriteShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
@@ -928,7 +973,7 @@ namespace dru::renderer
 
 	void Render()
 	{
-		// ∑ª¥ı≈∏∞Ÿ º≥¡§
+		// Î†åÎçîÌÉÄÍ≤ü ÏÑ§Ï†ï
 		GetDevice()->OMSetRenderTarget();
 
 		BindNoiseTexture();

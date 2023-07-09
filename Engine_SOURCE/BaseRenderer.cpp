@@ -9,6 +9,7 @@ namespace dru
 		:Component(_Type)
 		, mbIsChanged(false)
 		, mbIsAnim(false)
+		, mbUseLOD(true)
 		, mSpriteSize(Vector2::Zero)
 	{
 		// 디폴트 매시 지정
@@ -52,9 +53,8 @@ namespace dru
 
 	void BaseRenderer::render()
 	{
-
-		LOD();
-		
+		if(mbUseLOD)
+			LOD();	
 	}
 
 	void BaseRenderer::SetMeshByKey(std::wstring _Key)
@@ -66,14 +66,14 @@ namespace dru
 	{
 		mMaterial = _Material;
 
-		adjustTexture();
+		// adjustTexture();
 	}
 
 	void BaseRenderer::SetMaterialByKey(std::wstring _Key)
 	{
 		mMaterial = GETSINGLE(Resources)->Find<Material>(_Key);
 
-		adjustTexture();
+		// adjustTexture();
 	}
 
 	void BaseRenderer::SetAnimMaterial(std::shared_ptr<Material> _Material, Vector2 _SpriteSize)
@@ -81,7 +81,7 @@ namespace dru
 		mMaterial = _Material;
 		mbIsAnim = true;
 		mSpriteSize = _SpriteSize;
-		adjustTexture();
+		// adjustTexture();
 	}
 
 	void BaseRenderer::ChangeColor(Vector4 _color)

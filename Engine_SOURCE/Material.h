@@ -35,7 +35,7 @@ namespace dru::graphics
 		void SetRenderingMode(eRenderingMode _Mode) { mMode = _Mode; }
 
 	private:
-		std::shared_ptr<Shader>			mShader;
+		std::shared_ptr<Shader>				mShader;
 		std::shared_ptr<Texture>			mTexture[static_cast<UINT>(eTextureSlot::End)];
 		MaterialCB							mConstantBuffer;
 		eRenderingMode						mMode;

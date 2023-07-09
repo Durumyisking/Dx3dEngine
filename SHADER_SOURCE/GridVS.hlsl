@@ -18,15 +18,17 @@ struct VSOut
 VSOut main(VSIn In)
 {
     VSOut Out = (VSOut) 0.f;
+        
+    float4 worldPosition = mul(In.Pos, world);
+    float4 viewPosition = mul(worldPosition, view);
+    float4 projectionPosition = mul(viewPosition, projection);
+       
+    float2 Resolution = cbxy1;
+    float3 Camera_position = cbxyz1;
     
-    float2 worldPos = float2(0.f, 0.f);
-    worldPos.x = In.Pos.x * cameraScale.x * resolution.x + cameraPosition.x;
-    worldPos.y = In.Pos.y * cameraScale.y * resolution.y + cameraPosition.y;
-
-    const float meshScale = 2.f;
-    Out.Pos = float4(In.Pos.xy * meshScale, 0.999f, 1.f);
+    Out.Pos = projectionPosition;
     Out.UV = In.UV;
-    Out.WorldPos = worldPos;
+    Out.WorldPos = In.Pos.xy * Resolution.xy + Camera_position.xy;
     
     return Out;
 }
