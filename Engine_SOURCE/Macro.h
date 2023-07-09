@@ -1,7 +1,6 @@
 #pragma once
 
 
-
 #define DT TimeMgr::DeltaTime()
 
 #define KEY_TAP(key) (Input::GetKeyState(eKeyCode::key) == eKeyState::TAP)
