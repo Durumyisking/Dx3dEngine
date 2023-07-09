@@ -155,74 +155,7 @@ namespace dru
 	{
 		Transform* tr = GetComponent<Transform>();
 
-		if (nullptr != tr)
-		{
-
-			if (eProjectionType::Orthographic == renderer::mainCamera->GetProjectionType())
-			{
-				switch (mType)
-				{
-				case dru::enums::eLayerType::Camera:
-					break;
-				case dru::enums::eLayerType::Grid:
-					break;
-				case dru::enums::eLayerType::BackGround:
-					_Value.z = 5.f;
-					break;
-				case dru::enums::eLayerType::Objects:
-					_Value.z = 4.9f;
-					break;
-				case dru::enums::eLayerType::Monster:
-					_Value.z = 3.1f;
-					break;
-				case dru::enums::eLayerType::Boss:
-					_Value.z = 3.1f;
-					break;
-				case dru::enums::eLayerType::MonsterGun:
-					_Value.z = 0.f;
-					break;
-				case dru::enums::eLayerType::Player:
-					_Value.z = 3.f;
-					break;
-				case dru::enums::eLayerType::Bullet:
-					_Value.z = 2.81f;
-					break;
-				case dru::enums::eLayerType::AfterImage:
-//					_Value.z = 3.000001f;
-					break;
-				case dru::enums::eLayerType::Platforms:
-					_Value.z = 4.9f;
-					break;
-				case dru::enums::eLayerType::Ray:
-					_Value.z = 4.f;
-					break;
-				case dru::enums::eLayerType::Particle:
-					_Value.z = 2.8f;
-					break;
-				case dru::enums::eLayerType::FX:
-					_Value.z = 2.000001f;
-					break;
-				case dru::enums::eLayerType::UI:
-					_Value.z = 0.1f;
-					break;
-				case dru::enums::eLayerType::PostProcess:
-					break;
-				case dru::enums::eLayerType::MainMenu:
-					_Value.z = 0.05f;
-					break;
-				case dru::enums::eLayerType::End:
-					break;
-				default:
-					break;
-				}
-				if (tr->GetParent())
-				{
-					_Value.z = 0.0001f;
-				}
-			}
-			tr->SetPosition(_Value);
-
-		}
+		tr->SetPosition(_Value);		
 	}
 
 	void GameObj::SetPosAbs(Vector3 _Value)

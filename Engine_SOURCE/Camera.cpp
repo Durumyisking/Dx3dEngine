@@ -121,7 +121,7 @@ namespace dru
 
 		if (mType == eProjectionType::Perspective)
 		{
-			mProjection = Matrix::CreatePerspectiveFieldOfView(XM_2PI / 6.f, mAspectRatio, mNear, mFar);
+			mProjection = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, mAspectRatio, mNear, mFar);
 		}
 		else // (mType == eProjectionType::Orthographic)
 		{

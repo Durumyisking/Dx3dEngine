@@ -76,8 +76,9 @@ namespace dru
 		
 			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
 
-			gridMr->SetMesh(dru::Resources::Find<dru::Mesh>(L"Rectmesh"));
+			gridMr->SetMesh(dru::Resources::Find<dru::Mesh>(L"Gridmesh"));
 			gridMr->SetMaterial(dru::Resources::Find<Material>(L"GridMaterial"));
+			gridMr->LODOff();
 
 			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
 			gridScript->SetCamera(mainCamera);
@@ -85,7 +86,7 @@ namespace dru
 			float w = static_cast<float>(application.GetWidth());
 			float h = static_cast<float>(application.GetHeight());
 			gridObject->SetPos({ 0.f, 0.f, 5.f });
-			gridObject->SetScale(Vector3(3.f, 3.f, 1.f));
+			gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
 		}
 		
 		{
@@ -107,20 +108,20 @@ namespace dru
 		//	player->SetScale({ 5.f, 5.f, 5.f });
 		//}
 
-		{
-			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(-5.f, 0.f, 5.f));
-			player->SetName(L"Player");
-			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		//{
+		//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//	player->SetPos(Vector3(-5.f, 0.f, 5.f));
+		//	player->SetName(L"Player");
+		//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 
-			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::CHARACTER, eGeometryType::BOX, Vector3(1.f, 1.f, 1.f));
-			player->AddComponent<Controller>(eComponentType::Controller);
-			player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//	player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::CHARACTER, eGeometryType::BOX, Vector3(1.f, 1.f, 1.f));
+		//	player->AddComponent<Controller>(eComponentType::Controller);
+		//	player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
 
-			player->SetScale({ 5.f, 5.f, 5.f });
-		}
+		//	player->SetScale({ 5.f, 5.f, 5.f });
+		//}
 
 
 		Scene::Enter();

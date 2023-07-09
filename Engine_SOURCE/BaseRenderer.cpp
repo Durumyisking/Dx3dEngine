@@ -9,10 +9,11 @@ namespace dru
 		:Component(_Type)
 		, mbIsChanged(false)
 		, mbIsAnim(false)
+		, mbUseLOD(true)
 		, mSpriteSize(Vector2::Zero)
 	{
 		// 디폴트 매시 지정
-		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"Rectmesh");
+		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"Cubemesh");
 
 		SetMesh(mesh);
 	}
@@ -27,7 +28,7 @@ namespace dru
 	}
 	void BaseRenderer::fixedUpdate()
 	{
-		/*if (mbIsChanged)
+		if (mbIsChanged)
 		{
 
 			if (mWidthRatio == 0.f && mHeightRatio == 0.f)
@@ -47,14 +48,13 @@ namespace dru
 			transform->SetScale(scale);
 
 			mbIsChanged = false;
-		}*/
+		}
 	}
 
 	void BaseRenderer::render()
 	{
-
-		//LOD();
-		
+		if(mbUseLOD)
+			LOD();	
 	}
 
 	void BaseRenderer::SetMeshByKey(std::wstring _Key)

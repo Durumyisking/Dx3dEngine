@@ -32,7 +32,7 @@ namespace dru
 
 	void GridScript::update()
 	{
-		
+
 	}
 
 	void GridScript::fixedUpdate()
@@ -44,8 +44,8 @@ namespace dru
 
 		GameObj* cam = mCamera->GetOwner();
 		Transform* tr = cam->GetComponent<Transform>();
-
 		Vector3 campos = tr->GetPosition();
+
 		__int32 w = application.GetWidth();
 		__int32 h = application.GetHeight();
 		Vector2 resolution(w, h);

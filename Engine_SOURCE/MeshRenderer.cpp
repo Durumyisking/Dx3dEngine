@@ -34,8 +34,8 @@ namespace dru
 
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-		GetMesh()->BindBuffer();
 		GetMaterial()->Bind();
+		GetMesh()->BindBuffer();
 
 		GetMesh()->Render();
 

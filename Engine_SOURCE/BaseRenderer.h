@@ -33,6 +33,8 @@ namespace dru
 		void AddColor(Vector4 _color);
 
 		void LOD();
+		void LODOn() { mbUseLOD = true; }
+		void LODOff() { mbUseLOD = false; }
 
 	private:
 		void adjustTexture();
@@ -47,6 +49,7 @@ namespace dru
 
 		bool mbIsChanged;
 		bool mbIsAnim;
+		bool mbUseLOD;
 
 		Vector2 mSpriteSize;
 

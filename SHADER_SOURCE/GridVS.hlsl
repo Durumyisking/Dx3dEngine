@@ -18,7 +18,7 @@ struct VSOut
 VSOut main(VSIn In)
 {
     VSOut Out = (VSOut) 0.f;
-    
+        
     float4 worldPosition = mul(In.Pos, world);
     float4 viewPosition = mul(worldPosition, view);
     float4 projectionPosition = mul(viewPosition, projection);
@@ -28,7 +28,7 @@ VSOut main(VSIn In)
     
     Out.Pos = projectionPosition;
     Out.UV = In.UV;
-//    Out.WorldPos = In.Pos.xy * Resolution.xy + Camera_position.xy;
+    Out.WorldPos = In.Pos.xy * Resolution.xy + Camera_position.xy;
     
     return Out;
 }

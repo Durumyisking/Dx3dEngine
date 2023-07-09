@@ -101,6 +101,43 @@ namespace dru::renderer
 
 #pragma endregion
 
+#pragma region GridMesh
+
+		Vertex	GridVertexes[4] = {};
+
+		GridVertexes[0].pos = Vector4(-200.f, 200.f, 0.f, 1.f);
+		GridVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		GridVertexes[0].uv = Vector2(0.f, 0.f);
+
+		GridVertexes[1].pos = Vector4(200.f, 200.f, 0.f, 1.f);
+		GridVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		GridVertexes[1].uv = Vector2(1.f, 0.f);
+
+		GridVertexes[2].pos = Vector4(200.f, -200.f, 0.f, 1.f);
+		GridVertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
+		GridVertexes[2].uv = Vector2(1.f, 1.f);
+
+		GridVertexes[3].pos = Vector4(-200.f, -200.f, 0.f, 1.f);
+		GridVertexes[3].color = Vector4(0.f, 0.f, 0.f, 1.f);
+		GridVertexes[3].uv = Vector2(0.f, 1.f);
+
+		std::shared_ptr<Mesh> Gridmesh = std::make_shared<Mesh>();
+		Resources::Insert<Mesh>(L"Gridmesh", Gridmesh);
+		Gridmesh->CreateVertexBuffer(GridVertexes, 4);
+
+		indexes.clear();
+
+		indexes.push_back(0);
+		indexes.push_back(1);
+		indexes.push_back(2);
+		indexes.push_back(0);
+		indexes.push_back(2);
+		indexes.push_back(3);
+		indexes.push_back(0);
+		Gridmesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
+
+#pragma endregion
+
 #pragma region RectMesh_Debug
 
 		Vertex	DebugRectVertexes[4] = {};
@@ -532,6 +569,12 @@ namespace dru::renderer
 			, Colorshader->GetVSBlobBufferSize()
 			, Colorshader->GetInputLayoutAddr());
 
+		std::shared_ptr<Shader> Gridshader = Resources::Find<Shader>(L"GridShader");
+		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+			, Gridshader->GetVSBlobBufferPointer()
+			, Gridshader->GetVSBlobBufferSize()
+			, Gridshader->GetInputLayoutAddr());
+
 		std::shared_ptr<Shader> Debugshader = Resources::Find<Shader>(L"DebugShader");
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Debugshader->GetVSBlobBufferPointer()
@@ -717,7 +760,7 @@ namespace dru::renderer
 
 		std::shared_ptr<Shader> flatShader = std::make_shared<Shader>();
 		flatShader->Create(eShaderStage::VS, L"FlatVS.hlsl", "main");
-		flatShader->Create(eShaderStage::PS, L"FlatPS.hlsl", "main");
+		flatShader->Create(eShaderStage::PS, L"FlatPS.hlsl", "main"); 
 		Resources::Insert<Shader>(L"FlatShader", flatShader);
 
 		std::shared_ptr<Shader> SpriteShader = std::make_shared<Shader>();
