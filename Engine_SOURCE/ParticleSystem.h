@@ -24,7 +24,7 @@ namespace dru
 
 		void MakeConstantBufferData(std::wstring _ShaderName, renderer::ParticleSystemCB _CB)
 		{
-			mCS = Resources::Find<ParticleShader>(_ShaderName);
+			mCS = GETSINGLE(Resources)->Find<ParticleShader>(_ShaderName);
 			mCBData = _CB; 
 		}
 

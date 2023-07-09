@@ -13,7 +13,7 @@ namespace dru
 		, mSpriteSize(Vector2::Zero)
 	{
 		// 디폴트 매시 지정
-		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"Cubemesh");
+		std::shared_ptr<Mesh> mesh = GETSINGLE(Resources)->Find<Mesh>(L"Cubemesh");
 
 		SetMesh(mesh);
 	}
@@ -59,7 +59,7 @@ namespace dru
 
 	void BaseRenderer::SetMeshByKey(std::wstring _Key)
 	{
-		mMesh = Resources::Find<Mesh>(_Key);
+		mMesh = GETSINGLE(Resources)->Find<Mesh>(_Key);
 	}
 
 	void BaseRenderer::SetMaterial(std::shared_ptr<Material> _Material)
@@ -71,7 +71,7 @@ namespace dru
 
 	void BaseRenderer::SetMaterialByKey(std::wstring _Key)
 	{
-		mMaterial = Resources::Find<Material>(_Key);
+		mMaterial = GETSINGLE(Resources)->Find<Material>(_Key);
 
 		// adjustTexture();
 	}

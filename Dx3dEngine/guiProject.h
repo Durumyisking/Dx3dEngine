@@ -1,8 +1,8 @@
 #pragma once
 #include "guiWidget.h"
-#include "guiTreeWidget.h"
 #include "Resources.h"
-#include "Resource.h"
+#include "guiTreeWidget.h"
+
 namespace gui
 {
 	class Project : public Widget
@@ -22,7 +22,7 @@ namespace gui
 		void AddResources(TreeWidget::Node* rootNode, const char* name)
 		{
 			const std::vector<std::shared_ptr<T>> resources
-				= dru::Resources::Finds<T>();
+				= GETSINGLE(dru::Resources)->Finds<T>();
 
 			TreeWidget::Node* stemNode
 				= mTreeWidget->AddNode(rootNode, name, 0, true);

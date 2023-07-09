@@ -1,20 +1,12 @@
 #pragma once
-#include "Entity.h"
-#include "Component.h"
-#include "Script.h"
-#include "Mesh.h"
-#include "Shader.h"
 #include "Transform.h"
-#include "AudioListener.h"
-#include "AudioSource.h"
-#include "SpriteRenderer.h"
-#include "MeshRenderer.h"
+
 
 namespace dru
 {
 	using namespace math;
 
-	class GameObj : public Entity
+	class GameObj : public DruEntity
 	{
 	public:
 		enum class eState
@@ -86,7 +78,7 @@ namespace dru
 			return components;
 		}
 
-		const std::vector<Script*>& GetScripts() { return mScripts; }
+		const std::vector<class Script*>& GetScripts() { return mScripts; }
 
 		template <typename T>
 		T* GetScript()

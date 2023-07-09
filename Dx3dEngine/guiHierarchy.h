@@ -1,6 +1,5 @@
 #pragma once
 #include "guiWidget.h"
-#include "GameObj.h"
 #include "guiTreeWidget.h"
 
 namespace gui
@@ -17,7 +16,7 @@ namespace gui
 
 		void InitializeInspector(void* data);
 		void InitializeScene();
-		void AddGameObject(TreeWidget::Node* parent, dru::GameObj* gameObject);
+		void AddGameObject(TreeWidget::Node* parent, class dru::GameObj* gameObject);
 
 	private:
 		TreeWidget* mTreeWidget;

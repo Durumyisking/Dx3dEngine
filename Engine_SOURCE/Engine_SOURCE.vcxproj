@@ -44,7 +44,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -52,7 +52,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -201,6 +201,7 @@ copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Release\"</Command>
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="CursorScript.h" />
+    <ClInclude Include="def.h" />
     <ClInclude Include="druEnums.h" />
     <ClInclude Include="druMath.h" />
     <ClInclude Include="Engine.h" />

@@ -4,9 +4,15 @@
 
 namespace dru
 {
-	std::bitset<static_cast<UINT>(eLayerType::End)> CollisionMgr::mLayerCollisionMatrix[static_cast<UINT>(eLayerType::End)] = {};
-	std::map<UINT64, bool> CollisionMgr::mCollisionMap;
+	CollisionMgr::CollisionMgr()
+	{
 
+	}
+
+	CollisionMgr::~CollisionMgr()
+	{
+
+	}
 
 	void CollisionMgr::Initialize()
 	{
@@ -15,7 +21,7 @@ namespace dru
 
 	void CollisionMgr::update()
 	{
-		Scene* scene = SceneMgr::mActiveScene;
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 
 		for (UINT row = 0; row < static_cast<UINT>(eLayerType::End); row++)
 		{

@@ -181,7 +181,6 @@
     <ClInclude Include="guiTransform.h" />
     <ClInclude Include="guiTreeWidget.h" />
     <ClInclude Include="guiVisualEditor.h" />
-    <ClInclude Include="VisualEditor.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="imgui_impl_dx11.h" />

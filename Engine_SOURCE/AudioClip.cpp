@@ -26,7 +26,7 @@ namespace dru
 		std::wstring fullPath = parentPath.wstring() + L"\\..\\Resources\\" + path;
 
 		std::string cPath(fullPath.begin(), fullPath.end());
-		if (!Fmod::CreateSound(cPath, &mSound))
+		if (!GETSINGLE(Fmod)->CreateSound(cPath, &mSound))
 			return S_FALSE;
 
 		mSound->set3DMinMaxDistance(mMinDistance, mMaxDistance);
@@ -40,7 +40,7 @@ namespace dru
 		else
 			mSound->setMode(FMOD_LOOP_OFF);
 
-		Fmod::SoundPlay(mSound, &mChannel);
+		GETSINGLE(Fmod)->SoundPlay(mSound, &mChannel);
 	}
 	void AudioClip::Stop()
 	{

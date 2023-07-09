@@ -10,6 +10,10 @@
 #include "guiMeshRenderer.h"
 #include "guiTexture.h"
 
+#include "guiComponent.h"
+#include "GameObj.h"
+#include "guiResource.h"
+
 namespace gui
 {
 	using namespace dru::enums;

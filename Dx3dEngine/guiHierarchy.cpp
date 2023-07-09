@@ -8,6 +8,9 @@
 #include "guiInspector.h"
 #include "Application.h"
 
+#include "GameObj.h"
+#include "guiTreeWidget.h"
+
 extern dru::Application application;
 extern gui::Editor editor;
 
@@ -65,7 +68,7 @@ namespace gui
 	{
 		mTreeWidget->Clear();
 
-		dru::Scene* scene = dru::SceneMgr::mActiveScene;
+		dru::Scene* scene = GETSINGLE(dru::SceneMgr)->GetActiveScene();
 		std::string sceneName(scene->GetName().begin(), scene->GetName().end());
 
 		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, sceneName, 0, true);

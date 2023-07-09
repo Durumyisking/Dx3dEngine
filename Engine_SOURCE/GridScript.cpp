@@ -26,7 +26,7 @@ namespace dru
 
 	void GridScript::Initialize()
 	{
-		UINT type = static_cast<UINT>(SceneMgr::mActiveScene->GetType());
+		UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
 		mCamera = renderer::Cameras[type][0];
 	}
 

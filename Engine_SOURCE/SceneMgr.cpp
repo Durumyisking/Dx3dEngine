@@ -2,11 +2,20 @@
 
 #include "Scene.h"
 #include "SceneTitle.h"
+#include "Layer.h"
 
 namespace dru
 {
-	Scene* SceneMgr::mScenes[(static_cast<UINT>(SceneMgr::eSceneType::End))] = {};
-	Scene* SceneMgr::mActiveScene = nullptr;
+	SceneMgr::SceneMgr()
+		: mScenes{}
+		, mActiveScene(nullptr)
+	{
+	}
+
+	SceneMgr::~SceneMgr()
+	{
+
+	}
 
 	void SceneMgr::Initialize()
 	{
@@ -74,6 +83,20 @@ namespace dru
 
 		if (mActiveScene)
 			mActiveScene->Enter();
+	}
+
+	void SceneMgr::LateEvent()
+	{
+		if (mActiveScene == nullptr)
+			return;
+
+		for (GameObj* obj : mLateEvent)
+		{
+			enums::eLayerType type = obj->GetLayerType();
+			mActiveScene->GetLayer(type).AddGameObject(obj, type);
+		}
+
+		mLateEvent.clear();
 	}
 
 	void SceneMgr::DontDestroyOnLoad(GameObj* _GameObj)

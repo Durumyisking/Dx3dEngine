@@ -11,7 +11,7 @@ using namespace dru::graphics;
 namespace dru
 {
 
-	class Animation : public Entity
+	class Animation : public DruEntity
 	{
 	public:
 		struct Sprite

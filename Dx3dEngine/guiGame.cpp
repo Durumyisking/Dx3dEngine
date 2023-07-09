@@ -21,7 +21,7 @@ namespace gui
 	void Game::Update()
 	{
 		std::shared_ptr<dru::graphics::Texture> renderTarget
-			= dru::Resources::Find<dru::graphics::Texture>(L"RenderTargetTexture");
+			= GETSINGLE(dru::Resources)->Find<dru::graphics::Texture>(L"RenderTargetTexture");
 
 		std::shared_ptr<dru::graphics::Texture> gameTex
 			= std::make_shared<dru::graphics::Texture>();

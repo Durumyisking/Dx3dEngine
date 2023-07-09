@@ -3,7 +3,6 @@
 #include "GameObj.h"
 
 
-
 namespace gui
 {
 	class Component : public Widget

@@ -29,7 +29,7 @@ namespace dru
 
 	void CursorScript::fixedUpdate()
 	{
-		mPos = Input::GetMousePosition();
+		mPos = GETSINGLE(Input)->GetMousePosition();
 		Vector3 newpos = mPos / 100.f;
 
 		mTrans->SetPosition(newpos);

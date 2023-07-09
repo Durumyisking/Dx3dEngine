@@ -23,11 +23,30 @@
 
 #include "guiVisualEditor.h"
 
+#include "guiDebugObject.h"
+#include "guiEditorObject.h"
+#include "guiWidget.h"
+#include "Graphics.h"
+
 
 extern dru::Application application;
 
 namespace gui
 {
+	Editor::Editor()
+		: mWidgets{}
+		, mEditorObjects{}
+		, mDebugObjects{}
+		, mVisualEditor(nullptr)
+		, mEnable(false)
+		, mImguiEnable(true)
+
+	{
+	}
+	Editor::~Editor()
+	{
+	}
+
 	void Editor::Initialize()
 	{
 		mEnable = false;
@@ -35,11 +54,11 @@ namespace gui
 
 		if (mEnable == false)
 			return;
-		// Ãæµ¹Ã¼ÀÇ Á¾·ù °¹¼ö¸¸Å­¸¸ ÀÖÀ¸¸é µÈ´Ù.
+		// ì¶©ëŒì²´ì˜ ì¢…ë¥˜ ê°¯ìˆ˜ë§Œí¼ë§Œ ìˆìœ¼ë©´ ëœë‹¤.
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
-		std::shared_ptr<dru::Mesh> rectMesh = dru::Resources::Find<dru::Mesh>(L"DebugRectmesh");
-		std::shared_ptr<dru::Material> material = dru::Resources::Find<Material>(L"DebugMaterial");
+		std::shared_ptr<dru::Mesh> rectMesh = GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"DebugRectmesh");
+		std::shared_ptr<dru::Material> material = GETSINGLE(dru::Resources)->Find<Material>(L"DebugMaterial");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Rect)] = new DebugObject();
 		dru::MeshRenderer* renderer
@@ -48,7 +67,7 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(rectMesh);
 
-		std::shared_ptr<dru::Mesh> circleMesh = dru::Resources::Find<dru::Mesh>(L"Circlemesh");
+		std::shared_ptr<dru::Mesh> circleMesh = GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"Circlemesh");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Circle)] = new DebugObject();
 		renderer
@@ -57,20 +76,6 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(circleMesh);
 
-		//{
-		//	EditorObject* gridObject = new EditorObject();
-		//	dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
-
-		//	gridMr->SetMesh(dru::Resources::Find<dru::Mesh>(L"Rectmesh"));
-		//	gridMr->SetMaterial(dru::Resources::Find<Material>(L"GridMaterial"));
-
-		//	dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
-		//	gridScript->SetCamera(mainCamera);
-
-
-
-		//	mEditorObjects.push_back(gridObject);
-		//}
 
 		if (mImguiEnable == false)
 			return;

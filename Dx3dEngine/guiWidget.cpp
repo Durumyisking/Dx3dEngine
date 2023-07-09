@@ -3,7 +3,7 @@
 namespace gui
 {
 	Widget::Widget()
-		: Entity()
+		: GuiEntity()
 		, mState(eState::Active)
 		, mParent(nullptr)
 		, mChilds{}

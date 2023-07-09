@@ -21,10 +21,8 @@ namespace dru
 
 	};
 
+	using DruEntity = dru::Entity;
 }
-
-
-
 
 namespace gui
 {
@@ -45,4 +43,6 @@ namespace gui
 		const UINT32 mID;
 
 	};
+
+	using GuiEntity = gui::Entity;
 }

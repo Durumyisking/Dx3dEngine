@@ -2,14 +2,26 @@
 #include "Scene.h"
 #include "Layer.h"
 #include "Transform.h"
+#include "GameObj.h"
 
 namespace dru::object
 {
 	template <typename T>
+	static T* LateInstantiate(enums::eLayerType _LayerType)
+	{
+		T* gameObj = new T();
+		Scene* scene = GETSINGLE(SceneMgr)->AddEvent(gameObj);
+		gameObj->Initialize();
+		gameObj->SetLayerType(_LayerType);
+
+		return gameObj;
+	}
+
+	template <typename T>
 	static T* Instantiate(enums::eLayerType _LayerType)
 	{
 		T* gameObj = new T();
-		Scene* scene = SceneMgr::mActiveScene;
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer(_LayerType);
 		layer.AddGameObject(gameObj, _LayerType);
 
@@ -43,7 +55,7 @@ namespace dru::object
 	static T* Instantiate(enums::eLayerType _LayerType, std::wstring _Name)
 	{
 		T* gameObj = new T();
-		Scene* scene = SceneMgr::mActiveScene;
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer(_LayerType);
 		layer.AddGameObject(gameObj, _LayerType);
 
@@ -66,7 +78,7 @@ namespace dru::object
 	static T* Instantiate(enums::eLayerType _LayerType, GameObj* _Parent, std::wstring _Name)
 	{
 		T* gameObj = new T();
-		Scene* scene = SceneMgr::mActiveScene;
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer(_LayerType);
 		layer.AddGameObject(gameObj, _LayerType);
 		gameObj->SetName(_Name);
@@ -80,7 +92,7 @@ namespace dru::object
 	static T* Instantiate(enums::eLayerType _LayerType, Vector3 _Pos, Vector3 _Rotation, std::wstring _Name)
 	{
 		T* gameObj = new T();
-		Scene* scene = SceneMgr::mActiveScene;
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer();
 		layer.AddGameObject(gameObj, _LayerType);
 		gameObj->SetName(_Name);
@@ -95,7 +107,7 @@ namespace dru::object
 	static T* Instantiate(enums::eLayerType _LayerType, Vector3 _Pos, Vector3 _Rotation, GameObj* _Parent, std::wstring _Name)
 	{
 		T* gameObj = new T();
-		Scene* scene = SceneMgr::mActiveScene;
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer();
 		layer.AddGameObject(gameObj, _LayerType);
 		gameObj->SetName(_Name);

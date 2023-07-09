@@ -5,20 +5,28 @@ extern dru::Application application;
 
 namespace dru
 {
-    LARGE_INTEGER	TimeMgr::mCpuFrequency = {};
-    LARGE_INTEGER   TimeMgr::mPrevFrequency = {};
-    LARGE_INTEGER	TimeMgr::mCurFrequency = {};
-    float			TimeMgr::mDeltaTime = 0.0f;
-    float			TimeMgr::mDeltaTimeConstant = 0.0f;
-    float			TimeMgr::mOneSecond = 0.0f;
-    float			TimeMgr::mAccumulatedTime = 0.0f;
-    float			TimeMgr::mbBulletTimeTimer= 0.0f;
-    float			TimeMgr::mbBulletTimeTimerMax = 0.0f;
-    bool			TimeMgr::mbBulletTime = false;
-    bool			TimeMgr::mbPlayerBulletTime = false;
-    UINT			TimeMgr::mFramePass = 0;
-    UINT			TimeMgr::mFramePassCount = 0;
-    bool            TimeMgr::mbFramePassCheck = true;
+    TimeMgr::TimeMgr()
+        : mCpuFrequency{}
+        , mPrevFrequency{}
+        , mCurFrequency{}
+        , mDeltaTime(0.0f)
+        , mDeltaTimeConstant(0.0f)
+        , mOneSecond(0.0f)
+        , mAccumulatedTime(0.0f)
+        , mbBulletTimeTimer(0.0f)
+        , mbBulletTimeTimerMax(0.0f)
+        , mbBulletTime(false)
+        , mbPlayerBulletTime(false)
+        , mFramePass(0)
+        , mFramePassCount(0)
+        , mbFramePassCheck(0)
+    {
+    }
+
+    TimeMgr::~TimeMgr()
+    {
+
+    }
 
     void TimeMgr::Initialize()
     {

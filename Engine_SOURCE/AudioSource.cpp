@@ -35,7 +35,7 @@ namespace dru
 			AudioClip* audioClip = clip.second;
 			if (audioClip->IsPlaying())
 			{
-				if (TimeMgr::IsPlayerBulletTimeOn())
+				if (GETSINGLE(TimeMgr)->IsPlayerBulletTimeOn())
 				{
 					audioClip->SetPitch(0.333f);
 				}
@@ -79,7 +79,7 @@ namespace dru
 
 	void AudioSource::AddClipByKey(const std::wstring& _key)
 	{
-		std::shared_ptr<AudioClip> resource = Resources::Find<AudioClip>(_key);
+		std::shared_ptr<AudioClip> resource = GETSINGLE(Resources)->Find<AudioClip>(_key);
 		mAudioClips.insert(std::make_pair(_key, resource.get()));
 	}
 

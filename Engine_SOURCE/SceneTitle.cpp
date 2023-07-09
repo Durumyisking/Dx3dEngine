@@ -10,7 +10,19 @@
 
 #include "AudioSource.h"
 
+
+#include "Layer.h"
+#include "Transform.h"
+#include "MeshRenderer.h"
+#include "SpriteRenderer.h"
+#include "Renderer.h"
+#include "Texture.h"
+#include "Camera.h"
+#include "CameraScript.h"
+#include "FontWrapper.h"
+=======
 #include "GridScript.h"
+
 
 #include "Application.h"
 
@@ -58,7 +70,6 @@ namespace dru
 		//mDeleteObj = true;
 
 		{
-			// main Ä«¸Þ¶ó
 			mCamera = object::Instantiate<GameObj>(eLayerType::Camera, L"MainCam");
 			Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
 			cameraComp->TurnLayerMask(eLayerType::UI, false);
@@ -99,29 +110,34 @@ namespace dru
 			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
 		}
 
-		//{
-		//	Player* player = object::Instantiate<Player>(eLayerType::Player);
-		//	player->SetPos(Vector3(5.f, 0.f, 5.f));
-		//	player->SetName(L"Player");
-		//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
-		//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-		//	player->SetScale({ 5.f, 5.f, 5.f });
-		//}
 
-		//{
-		//	Player* player = object::Instantiate<Player>(eLayerType::Player);
-		//	player->SetPos(Vector3(-5.f, 0.f, 5.f));
-		//	player->SetName(L"Player");
-		//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-		//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		{
+			Player* player = object::Instantiate<Player>(eLayerType::Player);
+			player->SetPos(Vector3(5.f, 0.f, 5.f));
+			player->SetName(L"Player");
+			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player->SetScale({ 5.f, 5.f, 5.f });
+		}
 
-		//	player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::CHARACTER, eGeometryType::BOX, Vector3(1.f, 1.f, 1.f));
-		//	player->AddComponent<Controller>(eComponentType::Controller);
-		//	player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		{
+			
+			Player* player = object::Instantiate<Player>(eLayerType::Player);
+			player->SetPos(Vector3(-5.f, 0.f, 5.f));
+			player->SetName(L"Player");
+			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player->SetScale({ 5.f, 5.f, 5.f });
+		}
 
-		//	player->SetScale({ 5.f, 5.f, 5.f });
-		//}
+		{
+			Player* player = object::Instantiate<Player>(eLayerType::Player);
+			player->SetPos(Vector3(5.f, 0.f, 5.f));
+	  	player->SetName(L"Player");
+			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player->SetScale({ 5.f, 5.f, 5.f });
+		}
 
 
 		Scene::Enter();

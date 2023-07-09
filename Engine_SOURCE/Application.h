@@ -19,9 +19,13 @@ namespace dru
 		virtual void fixedUpdate();
 		virtual void render();
 		virtual void destroy();
+		virtual void lateEvent();
 		// engine loop
 		void Run();
 		void Present();
+
+		void Release();
+		void DestroySingle();// 프로그램 종료 시점에 호출하여 싱글톤 인스턴스 해제
 
 
 		void SetWindow(HWND _hwnd, UINT _width, UINT _height);
@@ -53,8 +57,6 @@ namespace dru
 		// 메뉴
 		HMENU	mHmenu; // Tool Scene에서만 사용하고싶은 menu
 		math::Vector2 mResolution;
-
-
 	};
 }
 
