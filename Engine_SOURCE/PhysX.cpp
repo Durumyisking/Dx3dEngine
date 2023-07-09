@@ -26,18 +26,18 @@ void PhysX::Init()
 //	CreateSceneQuery();
 }
 
-void PhysX::CreatePhysicsScene(const PxSceneDesc& SceneDesc)
+void PhysX::CreatePhysicsScene(const PxSceneDesc& sceneDesc)
 {
 	assert(mInitialization->GetPhysics());
-	CreateScene(SceneDesc);
+	CreateScene(sceneDesc);
 	CreateControllerManager();
 
 	mPhysicsScene = std::make_shared<PhysicsScene>(mScene);
 }
 
-void PhysX::CreateScene(const PxSceneDesc& SceneDesc)
+void PhysX::CreateScene(const PxSceneDesc& sceneDesc)
 {
-	mScene = mInitialization->GetPhysics()->createScene(SceneDesc);
+	mScene = mInitialization->GetPhysics()->createScene(sceneDesc);
 	assert(mScene);
 }
 

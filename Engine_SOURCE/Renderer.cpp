@@ -550,6 +550,12 @@ namespace dru::renderer
 			, postProcessShader->GetVSBlobBufferSize()
 			, postProcessShader->GetInputLayoutAddr());
 
+		std::shared_ptr<Shader> debugGeometryShader = Resources::Find<Shader>(L"DebugGeometryShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, debugGeometryShader->GetVSBlobBufferPointer()
+			, debugGeometryShader->GetVSBlobBufferSize()
+			, debugGeometryShader->GetInputLayoutAddr());
+
 		std::shared_ptr<Shader> phongShader = Resources::Find<Shader>(L"PhongShader");
 		GetDevice()->CreateInputLayout(arrLayout, 6
 			, phongShader->GetVSBlobBufferPointer()
@@ -709,6 +715,11 @@ namespace dru::renderer
 		MeshShader->Create(graphics::eShaderStage::VS, L"PhongVS.hlsl", "main");
 		MeshShader->Create(graphics::eShaderStage::PS, L"PhongPS.hlsl", "main");
 		Resources::Insert<Shader>(L"MeshShader", MeshShader);
+
+		std::shared_ptr<Shader> debugGeometryShader = std::make_shared<Shader>();
+		debugGeometryShader->Create(graphics::eShaderStage::VS, L"DebugGeometryVS.hlsl", "main");
+		debugGeometryShader->Create(graphics::eShaderStage::PS, L"DebugGeometryPS.hlsl", "main");
+		Resources::Insert<Shader>(L"DebugGeometryShader", MeshShader);
 
 		std::shared_ptr<Shader> phongShader = std::make_shared<Shader>();
 		phongShader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
@@ -881,6 +892,12 @@ namespace dru::renderer
 		postProcessMaterial->SetShader(postProcessShader);
 		postProcessMaterial->SetTexture(postProcessTexture);
 		Resources::Insert<Material>(L"PostProcessMaterial", postProcessMaterial);
+
+		std::shared_ptr<Shader> debugGeometryShader = Resources::Find<Shader>(L"DebugGeometryShader");
+		std::shared_ptr<Material> debugGeometryMaterial = std::make_shared<Material>();
+		debugGeometryMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		debugGeometryMaterial->SetShader(debugGeometryShader);
+		Resources::Insert<Material>(L"DebugGeometryMaterial", debugGeometryMaterial);
 
 		std::shared_ptr<Shader> phongShader = Resources::Find<Shader>(L"PhongShader");
 		std::shared_ptr<Material> phongMaterial = std::make_shared<Material>();

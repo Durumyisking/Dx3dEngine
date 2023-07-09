@@ -44,7 +44,11 @@ namespace dru::renderer
 		Vector3 tangent;
 		Vector3 biNormal;
 		Vector3 normal;
-		};
+
+	public:
+
+
+	};
 
 	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 	{

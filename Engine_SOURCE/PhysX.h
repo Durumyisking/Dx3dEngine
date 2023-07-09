@@ -22,10 +22,10 @@ public:
 	std::shared_ptr<PhysicsScene>	GetPhysScene() const { return mPhysicsScene; }
 	//shared_ptr<PxSceneQuery>		 GetSceneQuery() { return m_pSceneQuery; }
 
-	void CreatePhysicsScene(const PxSceneDesc& SceneDesc);
+	void CreatePhysicsScene(const PxSceneDesc& sceneDesc);
 
 private:
-	void CreateScene(const PxSceneDesc& SceneDesc);
+	void CreateScene(const PxSceneDesc& sceneDesc);
 	void CreateControllerManager();
 	//	void CreateSceneQuery();
 

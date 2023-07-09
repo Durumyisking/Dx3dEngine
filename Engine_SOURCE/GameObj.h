@@ -9,6 +9,11 @@
 #include "AudioSource.h"
 #include "SpriteRenderer.h"
 #include "MeshRenderer.h"
+#include "Physical.h"
+#include "PhysXCollider.h"
+#include "PhysXRigidBody.h"
+#include "Controller.h"
+
 
 namespace dru
 {

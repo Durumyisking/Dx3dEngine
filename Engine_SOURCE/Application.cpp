@@ -29,6 +29,7 @@ namespace dru
 		Fmod::Release();
 		SceneMgr::release();
 		FontWrapper::Release();
+		PhysicsMgr::DestroyInstance();
 	}
 
 	void Application::Initialize()
@@ -39,8 +40,8 @@ namespace dru
 		CollisionMgr::Initialize();
 		renderer::Initialize();
 		FontWrapper::Initialize();
-		SceneMgr::Initialize();
 		PhysicsMgr::GetInstance()->Init();
+		SceneMgr::Initialize();
 
 	}
 	void Application::update()

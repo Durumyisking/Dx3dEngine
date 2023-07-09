@@ -1,7 +1,8 @@
 #pragma once
 #include "Engine.h"
 
-class PxFilter
+class PxFilter 
+	: public PxQueryFilterCallback
 {
 public:
 	PxFilter();

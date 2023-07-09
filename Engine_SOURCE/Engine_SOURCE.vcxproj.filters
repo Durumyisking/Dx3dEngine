@@ -149,6 +149,21 @@
     <Filter Include="PhysX\Manager">
       <UniqueIdentifier>{1d9727da-458d-4c71-9094-868de38323b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Component\Physical">
+      <UniqueIdentifier>{447191a7-6235-4f9a-845e-321c7946b8d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Physics">
+      <UniqueIdentifier>{c8d076f8-c697-4213-b101-b4cfd19830ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\RigidBody\PhysX">
+      <UniqueIdentifier>{39bc9a29-686d-42ce-a072-eac726290252}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Collider\PhysX">
+      <UniqueIdentifier>{7a7234c4-dd75-45c7-80d1-7d1902ecdf8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Controller">
+      <UniqueIdentifier>{6d8cc4dc-4250-4547-b1a0-0601376f3c59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -348,7 +363,24 @@
     <ClInclude Include="PxEventCallback.h">
       <Filter>PhysX</Filter>
     </ClInclude>
-    <ClInclude Include="PxFilter.h" />
+    <ClInclude Include="PhysicalProperties.h">
+      <Filter>Resource\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PxFilter.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Physical.h">
+      <Filter>Common\Component\Physical</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXRigidBody.h">
+      <Filter>Common\Component\RigidBody\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXCollider.h">
+      <Filter>Common\Component\Collider\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Common\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -533,7 +565,24 @@
     <ClCompile Include="PxEventCallback.cpp">
       <Filter>PhysX</Filter>
     </ClCompile>
-    <ClCompile Include="PxFilter.cpp" />
+    <ClCompile Include="PhysicalProperties.cpp">
+      <Filter>Resource\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="PxFilter.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="Physical.cpp">
+      <Filter>Common\Component\Physical</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXRigidBody.cpp">
+      <Filter>Common\Component\RigidBody\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXCollider.cpp">
+      <Filter>Common\Component\Collider\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Common\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">
