@@ -43,7 +43,7 @@ namespace dru
 		std::shared_ptr<T> Load(const std::wstring& key, const std::wstring& path)
 		{
 			// 키값으로 탐색
-			std::shared_ptr<T> resource = Resources::Find<T>(key);
+			std::shared_ptr<T> resource = GETSINGLE(Resources)->Find<T>(key);
 			if (nullptr != resource)
 			{
 				// 해당키로 이미 로딩된게 있으면 해당 리소스를 반환

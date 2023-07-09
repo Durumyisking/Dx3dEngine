@@ -46,8 +46,8 @@ namespace dru
 		Transform* tr = cam->GetComponent<Transform>();
 		Vector3 campos = tr->GetPosition();
 
-		__int32 w = application.GetWidth();
-		__int32 h = application.GetHeight();
+		float w = static_cast<float>(application.GetWidth());
+		float h = static_cast<float>(application.GetHeight());
 		Vector2 resolution(w, h);
 
 		mr->GetMaterial()->SetData(eGPUParam::Vector3_1, &campos);

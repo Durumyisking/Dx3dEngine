@@ -122,7 +122,7 @@ namespace dru::renderer
 		GridVertexes[3].uv = Vector2(0.f, 1.f);
 
 		std::shared_ptr<Mesh> Gridmesh = std::make_shared<Mesh>();
-		Resources::Insert<Mesh>(L"Gridmesh", Gridmesh);
+		dru::GETSINGLE(Resources)->Insert<Mesh>(L"Gridmesh", Gridmesh);
 		Gridmesh->CreateVertexBuffer(GridVertexes, 4);
 
 		indexes.clear();
@@ -569,13 +569,13 @@ namespace dru::renderer
 			, Colorshader->GetVSBlobBufferSize()
 			, Colorshader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> Gridshader = Resources::Find<Shader>(L"GridShader");
+		std::shared_ptr<Shader> Gridshader = GETSINGLE(Resources)->Find<Shader>(L"GridShader");
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Gridshader->GetVSBlobBufferPointer()
 			, Gridshader->GetVSBlobBufferSize()
 			, Gridshader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> Debugshader = Resources::Find<Shader>(L"DebugShader");
+		std::shared_ptr<Shader> Debugshader = GETSINGLE(Resources)->Find<Shader>(L"DebugShader");
 
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Debugshader->GetVSBlobBufferPointer()

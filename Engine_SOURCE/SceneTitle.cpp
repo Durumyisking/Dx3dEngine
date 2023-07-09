@@ -10,7 +10,6 @@
 
 #include "AudioSource.h"
 
-
 #include "Layer.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
@@ -20,9 +19,8 @@
 #include "Camera.h"
 #include "CameraScript.h"
 #include "FontWrapper.h"
-=======
-#include "GridScript.h"
 
+#include "GridScript.h"
 
 #include "Application.h"
 
@@ -87,8 +85,8 @@ namespace dru
 		
 			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
 
-			gridMr->SetMesh(dru::Resources::Find<dru::Mesh>(L"Gridmesh"));
-			gridMr->SetMaterial(dru::Resources::Find<Material>(L"GridMaterial"));
+			gridMr->SetMesh(dru::GETSINGLE(Resources)->Find<dru::Mesh>(L"Gridmesh"));
+			gridMr->SetMaterial(dru::GETSINGLE(Resources)->Find<Material>(L"GridMaterial"));
 			gridMr->LODOff();
 
 			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
