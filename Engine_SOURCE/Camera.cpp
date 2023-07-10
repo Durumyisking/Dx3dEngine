@@ -132,6 +132,7 @@ namespace dru
 
 	void CCamera::RegisterCameraInRenderer()
 	{	
+<<<<<<< Updated upstream
 		UINT type = (UINT)CSceneMgr::mActiveScene->GetType();
 		renderer::	Cameras[type].push_back(this);
 	}
@@ -142,8 +143,20 @@ namespace dru
 	}
 
 	void CCamera::SetTarget(CGameObj* _Target)
+=======
+		UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
+		renderer::Cameras[type].push_back(this);
+	}
+
+	void Camera::TurnLayerMask(eLayerType layer, bool enable)
 	{
-		mTargetObj = _Target;
+		mLayerMask.set(static_cast<UINT>(layer, enable));
+	}
+
+	void Camera::SetTarget(GameObj* target)
+>>>>>>> Stashed changes
+	{
+		mTargetObj = target;
 
 		Vector3 Dir = mTargetObj->GetPos() - GetOwner()->GetPos();
 		Dir.z = GetOwner()->GetPos().z;
@@ -248,19 +261,23 @@ namespace dru
 		}
 	}
 
+<<<<<<< Updated upstream
 	bool CCamera::renderPassCheck(CGameObj* _obj)
+=======
+	bool Camera::renderPassCheck(GameObj* obj)
+>>>>>>> Stashed changes
 	{
-		if (nullptr == _obj)
+		if (nullptr == obj)
 		{
 			return false;
 		}
-		if (_obj->IsRenderingBlock())
+		if (obj->IsRenderingBlock())
 		{
 			return false;
 		}
-		if (nullptr != _obj->GetParent())
+		if (nullptr != obj->GetParent())
 		{
-			if (_obj->GetParent()->IsRenderingBlock())
+			if (obj->GetParent()->IsRenderingBlock())
 			{
 				return false;
 			}

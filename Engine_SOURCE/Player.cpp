@@ -14,7 +14,11 @@ namespace dru
 
 //		CRigidBody* rigidbody = this->AddComponent<CRigidBody>(eComponentType::RigidBody);
 
+<<<<<<< Updated upstream
 		CSpriteRenderer* SpriteRenderer = AddComponent<CSpriteRenderer>(eComponentType::Renderer);
+=======
+		//MeshRenderer* spriteRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
+>>>>>>> Stashed changes
 
 	}
 

@@ -74,30 +74,49 @@ namespace dru
 	{
 	}
 
+<<<<<<< Updated upstream
 	bool CAnimator::Create(const std::wstring& _name, std::shared_ptr<CTexture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
+=======
+	bool Animator::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, Vector2 ratio, float duration, bool reverse)
+>>>>>>> Stashed changes
 	{
-		if (!_atlas)
+		if (!atlas)
 			return false;
 
+<<<<<<< Updated upstream
 		CAnimation* animation = FindAnimation(_name);
 		if (animation)
 			return false;
 
 		animation = new CAnimation();
 		animation->Create(_name, _atlas, _leftTop, _size, _offset, _spriteLength, _Ratio, _duration, _Reverse);
+=======
+		Animation* animation = FindAnimation(name);
+		if (animation)
+			return false;
 
-		mAnimations.insert(std::make_pair(_name, animation));
+		animation = new Animation();
+		animation->Create(name, atlas, leftTop, size, offset, spriteLength, ratio, duration, reverse);
+>>>>>>> Stashed changes
+
+		mAnimations.insert(std::make_pair(name, animation));
 
 		Events* events = new Events();
-		events->mFrameEvents.resize(_spriteLength);
-		mEvents.insert(std::make_pair(_name, events));
+		events->mFrameEvents.resize(spriteLength);
+		mEvents.insert(std::make_pair(name, events));
 
 		return true;
 	}
 
+<<<<<<< Updated upstream
 	CAnimation* CAnimator::FindAnimation(const std::wstring& _name)
 	{
 		std::map<std::wstring, CAnimation*>::iterator iter = mAnimations.find(_name);
+=======
+	Animation* Animator::FindAnimation(const std::wstring& name)
+	{
+		std::map<std::wstring, Animation*>::iterator iter = mAnimations.find(name);
+>>>>>>> Stashed changes
 
 		if (mAnimations.end() == iter)
 		{
@@ -107,9 +126,13 @@ namespace dru
 		return iter->second;
 	}
 
+<<<<<<< Updated upstream
 	CAnimator::Events* CAnimator::FindEvents(const std::wstring& _name)
+=======
+	Animator::Events* Animator::FindEvents(const std::wstring& name)
+>>>>>>> Stashed changes
 	{
-		std::map<std::wstring, Events*>::iterator iter = mEvents.find(_name);
+		std::map<std::wstring, Events*>::iterator iter = mEvents.find(name);
 
 		if (mEvents.end() == iter)
 		{
@@ -119,7 +142,11 @@ namespace dru
 		return iter->second;
 	}
 
+<<<<<<< Updated upstream
 	void CAnimator::Play(std::wstring _name, bool _bLoop)
+=======
+	void Animator::Play(std::wstring name, bool bLoop)
+>>>>>>> Stashed changes
 	{
 		CAnimation* prevAnimation = mCurrentAnimation;
 		Events* events = nullptr;
@@ -129,9 +156,9 @@ namespace dru
 		if (events)
 			events->mEndEvent();
 
-		mCurrentAnimation = FindAnimation(_name);
+		mCurrentAnimation = FindAnimation(name);
 		mCurrentAnimation->Reset();
-		mbLoop = _bLoop;
+		mbLoop = bLoop;
 
 		events = FindEvents(mCurrentAnimation->GetAnimationName());
 
@@ -148,12 +175,16 @@ namespace dru
 		mCurrentAnimation->BindShader();
 	}
 
+<<<<<<< Updated upstream
 	void CAnimator::BindSprite(renderer::AnimationCB _Sprite)
+=======
+	void Animator::BindSprite(renderer::AnimationCB sprite)
+>>>>>>> Stashed changes
 	{
 		if (!mCurrentAnimation)
 			return;
 
-		mCurrentAnimation->BindSpriteToShader(_Sprite);
+		mCurrentAnimation->BindSpriteToShader(sprite);
 	}
 
 	void CAnimator::Reset()

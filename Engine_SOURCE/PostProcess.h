@@ -4,9 +4,14 @@
 
 namespace dru
 {
+<<<<<<< Updated upstream
 	class CPostProcessRenderer;
 	class CPostProcess :
 		public CGameObj
+=======
+	class PostProcessRenderer;
+	class PostProcess : public GameObj
+>>>>>>> Stashed changes
 	{
 	public:
 		CPostProcess();

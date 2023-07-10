@@ -11,6 +11,14 @@
 #include "AudioSource.h"
 
 
+<<<<<<< Updated upstream
+=======
+#include "GridScript.h"
+
+#include "Application.h"
+
+extern dru::Application application;
+>>>>>>> Stashed changes
 
 namespace dru
 {
@@ -77,12 +85,43 @@ namespace dru
 			lightComp->SetDiffuse({ 1.f, 1.f, 1.f, 1.f });
 		}
 
+<<<<<<< Updated upstream
 		{
 			CPlayer* player = object::Instantiate<CPlayer>(eLayerType::Player);
 			player->SetPos(Vector3(0.0f, 0.0f, 10.0f));
 			player->SetName(L"Player");
 			player->GetComponent<CSpriteRenderer>()->SetMaterialByKey(L"BasicMaterial");
 		}
+=======
+
+		//{
+		//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//	player->SetPos(Vector3(5.f, 0.f, 5.f));
+		//	player->SetName(L"Player");
+		//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+		//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		//	player->SetScale({ 5.f, 5.f, 5.f });
+		//}
+
+		//{
+		//	
+		//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//	player->SetPos(Vector3(-5.f, 0.f, 5.f));
+		//	player->SetName(L"Player");
+		//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		//	player->SetScale({ 5.f, 5.f, 5.f });
+		//}
+
+		//{
+		//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//	player->SetPos(Vector3(5.f, 0.f, 5.f));
+	 // 	player->SetName(L"Player");
+		//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+		//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		//	player->SetScale({ 5.f, 5.f, 5.f });
+		//}
+>>>>>>> Stashed changes
 
 
 

@@ -46,6 +46,7 @@ namespace dru::renderer
 		Vector3 normal;
 	};
 
+
 	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 	{
 		Matrix world;

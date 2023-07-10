@@ -72,40 +72,44 @@ namespace dru
 	{
 	}
 
+<<<<<<< Updated upstream
 	void CAnimation::Create(const std::wstring& _name, std::shared_ptr<CTexture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
+=======
+	void Animation::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, Vector2 ratio, float duration, bool reverse)
+>>>>>>> Stashed changes
 	{
-		mAnimationName = _name;
-		mAtlas = _atlas;
-		mbReversePlay = _Reverse;
-		mSpriteLength = _spriteLength;
+		mAnimationName = name;
+		mAtlas = atlas;
+		mbReversePlay = reverse;
+		mSpriteLength = spriteLength;
 
-		float width = (float)_atlas->GetWidth();
-		float height = (float)_atlas->GetHeight();
+		float width = (float)atlas->GetWidth();
+		float height = (float)atlas->GetHeight();
 
 		size_t CollSkipCount = 0;
-		for (size_t i = 0; i < _spriteLength; i++)
+		for (size_t i = 0; i < spriteLength; i++)
 		{
 			Sprite sprite = {};
 
 			// 스프라이트의 LT가 + 사이즈가 width를 넘어가면 다음줄로 바꾼다.
-			if (_leftTop.x + (_size.x * (float)i) >= width)
+			if (leftTop.x + (size.x * (float)i) >= width)
 			{
-				_leftTop.x = 0.f;
-				_leftTop.y += _size.y;
+				leftTop.x = 0.f;
+				leftTop.y += size.y;
 
 				CollSkipCount = i;
 			}
 
 			// uv좌표로 넘기기 위해 width, height로 나눈다.
 			sprite.LT = Vector2(
-				(_leftTop.x + (_size.x * (float)(i - CollSkipCount))) / width,
-				_leftTop.y / height
+				(leftTop.x + (size.x * (float)(i - CollSkipCount))) / width,
+				leftTop.y / height
 			);
 
-			sprite.size = Vector2(fabs(_size.x) / width, fabs(_size.y) / height);
-			sprite.offset = Vector2(_offset.x / width, _offset.y / height);
-			sprite.duration = _duration;
-			sprite.altasSize = Vector2(_Ratio.x / width, _Ratio.y / height);
+			sprite.size = Vector2(fabs(size.x) / width, fabs(size.y) / height);
+			sprite.offset = Vector2(offset.x / width, offset.y / height);
+			sprite.duration = duration;
+			sprite.altasSize = Vector2(ratio.x / width, ratio.y / height);
 
 			mSpriteSheet.push_back(sprite);
 		}
@@ -129,13 +133,17 @@ namespace dru
 		cb->Bind(eShaderStage::PS);
 	}
 
+<<<<<<< Updated upstream
 	void CAnimation::BindSpriteToShader(renderer::AnimationCB _Sprite)
+=======
+	void Animation::BindSpriteToShader(renderer::AnimationCB sprite)
+>>>>>>> Stashed changes
 	{
 		mAtlas->BindShaderResource(eShaderStage::PS, 12);
 
 		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Animation];
 
-		cb->SetData(&_Sprite);
+		cb->SetData(&sprite);
 		cb->Bind(eShaderStage::PS);
 	}
 
@@ -167,11 +175,15 @@ namespace dru
 		mbCompleteEventPlayed = false;
 	}
 
+<<<<<<< Updated upstream
 	void CAnimation::SetDuration(float _Value)
+=======
+	void Animation::SetDuration(float value)
+>>>>>>> Stashed changes
 	{
 		for (size_t i = 0; i < mSpriteSheet.size(); i++)
 		{	
-			mSpriteSheet[i].duration = _Value;
+			mSpriteSheet[i].duration = value;
 		}
 	}
 

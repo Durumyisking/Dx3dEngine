@@ -45,7 +45,7 @@ namespace dru
 		void SetParticleDirection(const Vector3& _Dir);
 		void SetParticleCountInFrame(UINT _Count) { mParticleCountInFrame = _Count; }
 
-		void SetFrequency(float _Frequency) { mFrequency = _Frequency; }
+		void SetFrequency(float frequency) { mFrequency = frequency; }
 
 		void UseSwitchOn() { mbUseSwitch = true; }
 		void UseSwitchOff() { mbUseSwitch = false; }

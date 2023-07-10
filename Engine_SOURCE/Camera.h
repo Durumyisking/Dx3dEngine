@@ -27,21 +27,21 @@ namespace dru
 		CCamera();
 		virtual ~CCamera();
 
-		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Initialize() final;
+		virtual void update() final;
+		virtual void fixedUpdate() final;
+		virtual void render() final;
 
 		void CreateViewMatrix();
 		void CreateProjectionMatrix();
 		
 		void RegisterCameraInRenderer();
 
-		void TurnLayerMask(eLayerType _layer, bool _enable = true);
+		void TurnLayerMask(eLayerType layer, bool enable = true);
 		void EnableLayerMasks() { mLayerMask.set(); } // 전부다 true로 }
 		void DisableLayerMasks() { mLayerMask.reset(); }
 
-		void SetProjectionType(eProjectionType _Type) { mType = _Type; }
+		void SetProjectionType(eProjectionType type) { mType = type; }
 		eProjectionType GetProjectionType() { return mType; }
 
 		float GetScale() const { return mScale; }
@@ -50,8 +50,13 @@ namespace dru
 		Matrix& GetProjectionMatrix() { return mProjection; }
 
 
+<<<<<<< Updated upstream
 		void SetTarget(CGameObj* _Target);
 		CGameObj* GetTarget() const { return mTargetObj; }
+=======
+		void SetTarget(GameObj* target);
+		GameObj* GetTarget() const { return mTargetObj; }
+>>>>>>> Stashed changes
 
 		void SmoothOn() { mSmooth = true; }
 		void SmoothOff() { mSmooth = false; }
@@ -64,8 +69,13 @@ namespace dru
 		void renderCutout();
 		void renderTransparent();
 		
+<<<<<<< Updated upstream
 		void pushGameObjectToRenderingModes(CGameObj* obj);
 		bool renderPassCheck(CGameObj* _obj);
+=======
+		void pushGameObjectToRenderingModes(GameObj* obj);
+		bool renderPassCheck(GameObj* obj);
+>>>>>>> Stashed changes
 
 
 	private:

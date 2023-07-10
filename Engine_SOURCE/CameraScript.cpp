@@ -60,17 +60,29 @@ namespace dru
 	{
 	}
 
+<<<<<<< Updated upstream
 	void CCameraScript::OnCollisionEnter(CCollider2D* _oppo)
+=======
+	void CameraScript::OnCollisionEnter(Collider2D* oppo)
+>>>>>>> Stashed changes
 	{
 
 	}
 
+<<<<<<< Updated upstream
 	void CCameraScript::OnCollision(CCollider2D* _oppo)
+=======
+	void CameraScript::OnCollision(Collider2D* oppo)
+>>>>>>> Stashed changes
 	{
 		
 	}
 
+<<<<<<< Updated upstream
 	void CCameraScript::OnCollisionExit(CCollider2D* _oppo)
+=======
+	void CameraScript::OnCollisionExit(Collider2D* oppo)
+>>>>>>> Stashed changes
 	{
 		
 	}
@@ -143,11 +155,15 @@ namespace dru
 		}
 	}
 
+<<<<<<< Updated upstream
 	void CCameraScript::MakeCamShake(float _duration, float _Magnitude)
+=======
+	void CameraScript::MakeCamShake(float duration, float magnitude)
+>>>>>>> Stashed changes
 	{
 		ShakeParams sp = {};
-		sp.duration = _duration;
-		sp.magnitude = _Magnitude;
+		sp.duration = duration;
+		sp.magnitude = magnitude;
 		renderer::mainCamera->GetCamScript()->Shake(sp);
 	}
 

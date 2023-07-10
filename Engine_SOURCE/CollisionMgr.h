@@ -22,6 +22,7 @@ namespace dru
 		static void fixedUpdate();
 		static void render();
 
+<<<<<<< Updated upstream
 		static void CollisionLayerCheck(eLayerType _left, eLayerType _right, bool _benable = true);
 		static void LayerCollision(class CScene* _scene, eLayerType _left, eLayerType _right);
 		static void ColliderCollision(CCollider2D* _left, CCollider2D* _right);
@@ -29,6 +30,15 @@ namespace dru
 
 		static bool lineLine(Vector2 _lineA_p1, Vector2 _lineA_p2, Vector2 _lineB_p1, Vector2 _lineB_p2);
 		static bool lineRect(CCollider2D* _left, CCollider2D* _right);
+=======
+		void CollisionLayerCheck(eLayerType left, eLayerType right, bool benable = true);
+		void LayerCollision(class Scene* scene, eLayerType left, eLayerType right);
+		void ColliderCollision(Collider2D* left, Collider2D* right);
+		bool Intersect(Collider2D* left, Collider2D* right);
+
+		bool lineLine(Vector2 lineA_p1, Vector2 lineA_p2, Vector2 lineB_p1, Vector2 lineB_p2);
+		bool lineRect(Collider2D* left, Collider2D* right);
+>>>>>>> Stashed changes
 
 	private:
 		static std::bitset<static_cast<UINT>(eLayerType::End)> mLayerCollisionMatrix[static_cast<UINT>(eLayerType::End)];

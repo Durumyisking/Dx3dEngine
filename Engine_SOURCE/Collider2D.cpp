@@ -72,57 +72,81 @@ namespace dru
 
 	}
 
+<<<<<<< Updated upstream
 	void CCollider2D::OnCollisionEnter(CCollider2D* _oppo)
+=======
+	void Collider2D::OnCollisionEnter(Collider2D* oppo)
+>>>>>>> Stashed changes
 	{
 		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
 		for (CScript* script : scripts)
 		{
-			script->OnCollisionEnter(_oppo);
+			script->OnCollisionEnter(oppo);
 		}
 	}
 
+<<<<<<< Updated upstream
 	void CCollider2D::OnCollision(CCollider2D* _oppo)
+=======
+	void Collider2D::OnCollision(Collider2D* oppo)
+>>>>>>> Stashed changes
 	{
 		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
 		for (CScript* script : scripts)
 		{
-			script->OnCollision(_oppo);
+			script->OnCollision(oppo);
 		}
 	}
 
+<<<<<<< Updated upstream
 	void CCollider2D::OnCollisionExit(CCollider2D* _oppo)
+=======
+	void Collider2D::OnCollisionExit(Collider2D* oppo)
+>>>>>>> Stashed changes
 	{
 		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
 		for (CScript* script : scripts)
 		{
-			script->OnCollisionExit(_oppo);
+			script->OnCollisionExit(oppo);
 		}
 	}
 
+<<<<<<< Updated upstream
 	void CCollider2D::OnTriggerEnter(CCollider2D* _oppo)
+=======
+	void Collider2D::OnTriggerEnter(Collider2D* oppo)
+>>>>>>> Stashed changes
 	{
 		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
 		for (CScript* script : scripts)
 		{
-			script->OnTriggerEnter(_oppo);
+			script->OnTriggerEnter(oppo);
 		}
 	}
 
+<<<<<<< Updated upstream
 	void CCollider2D::OnTrigger(CCollider2D* _oppo)
+=======
+	void Collider2D::OnTrigger(Collider2D* oppo)
+>>>>>>> Stashed changes
 	{
 		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
 		for (CScript* script : scripts)
 		{
-			script->OnTrigger(_oppo);
+			script->OnTrigger(oppo);
 		}
 	}
 
+<<<<<<< Updated upstream
 	void CCollider2D::OnTriggerExit(CCollider2D* _oppo)
+=======
+	void Collider2D::OnTriggerExit(Collider2D* oppo)
+>>>>>>> Stashed changes
 	{
 		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
 		for (CScript* script : scripts)
 		{
-			script->OnTriggerExit(_oppo);
+			script->OnTriggerExit(oppo);
 		}
 	}
 

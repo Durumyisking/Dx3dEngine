@@ -5,8 +5,13 @@
 
 namespace dru
 {
+<<<<<<< Updated upstream
 	CBaseRenderer::CBaseRenderer(eComponentType _Type)
 		:CComponent(_Type)
+=======
+	BaseRenderer::BaseRenderer(eComponentType type)
+		:Component(type)
+>>>>>>> Stashed changes
 		, mbIsChanged(false)
 		, mbIsAnim(false)
 		, mSpriteSize(Vector2::Zero)
@@ -54,42 +59,77 @@ namespace dru
 	{
 	}
 
+<<<<<<< Updated upstream
 	void CBaseRenderer::SetMaterial(std::shared_ptr<CMaterial> _Material)
+=======
+	void BaseRenderer::SetMeshByKey(std::wstring key)
 	{
-		mMaterial = _Material;
+		mMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(key);
+	}
+
+	void BaseRenderer::SetMaterial(Material* material)
+>>>>>>> Stashed changes
+	{
+		mMaterial = material;
 
 		adjustTexture();
 	}
 
+<<<<<<< Updated upstream
 	void CBaseRenderer::SetMaterialByKey(std::wstring _Key)
 	{
 		mMaterial = CResources::Find<CMaterial>(_Key);
+=======
+	void BaseRenderer::SetMaterialByKey(std::wstring key)
+	{
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+>>>>>>> Stashed changes
 
 		adjustTexture();
 	}
 
+<<<<<<< Updated upstream
 	void CBaseRenderer::SetAnimMaterial(std::shared_ptr<CMaterial> _Material, Vector2 _SpriteSize)
+=======
+	void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
+>>>>>>> Stashed changes
 	{
-		mMaterial = _Material;
+		mMaterial = material;
 		mbIsAnim = true;
+<<<<<<< Updated upstream
 		mSpriteSize = _SpriteSize;
 		adjustTexture();
 	}
 
 	void CBaseRenderer::ChangeColor(Vector4 _color)
+=======
+		mSpriteSize = spriteSize;
+		// adjustTexture();
+	}
+
+	void BaseRenderer::ChangeColor(Vector4 color)
+>>>>>>> Stashed changes
 	{
 		MulColor(Vector4::Zero);
-		AddColor(_color);
+		AddColor(color);
 	}
 
+<<<<<<< Updated upstream
 	void CBaseRenderer::MulColor(Vector4 _color)
+=======
+	void BaseRenderer::MulColor(Vector4 color)
+>>>>>>> Stashed changes
 	{
-		mMaterial->SetData(eGPUParam::Vector4_1, &_color);
+		mMaterial->SetData(eGPUParam::Vector4_1, &color);
 	}
 
+<<<<<<< Updated upstream
 	void CBaseRenderer::AddColor(Vector4 _color)
+=======
+	void BaseRenderer::AddColor(Vector4 color)
+>>>>>>> Stashed changes
 	{
-		mMaterial->SetData(eGPUParam::Vector4_2, &_color);
+		mMaterial->SetData(eGPUParam::Vector4_2, &color);
 	}
 
 	void CBaseRenderer::adjustTexture()
