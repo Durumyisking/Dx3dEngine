@@ -3,6 +3,7 @@
 #include "GameObj.h"
 #include "AudioClip.h"
 #include "TimeMgr.h"
+#include "ResourceMgr.h"
 
 namespace dru
 {
@@ -79,8 +80,8 @@ namespace dru
 
 	void AudioSource::AddClipByKey(const std::wstring& _key)
 	{
-		std::shared_ptr<AudioClip> resource = GETSINGLE(Resources)->Find<AudioClip>(_key);
-		mAudioClips.insert(std::make_pair(_key, resource.get()));
+		AudioClip* resource = GETSINGLE(ResourceMgr)->Find<AudioClip>(_key);
+		mAudioClips.insert(std::make_pair(_key, resource));
 	}
 
 	AudioClip* AudioSource::GetClip(const std::wstring& _key)

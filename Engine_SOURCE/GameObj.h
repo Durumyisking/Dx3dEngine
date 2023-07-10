@@ -155,8 +155,8 @@ namespace dru
 		Vector3 GetRotation();
 
 
-		void SetMaterial(std::shared_ptr<Material> _Material);
-		void SetMesh(std::shared_ptr<Mesh> _Mesh);
+		void SetMaterial(Material* _Material);
+		void SetMesh(Mesh* _Mesh);
 
 		bool IsDead()
 		{

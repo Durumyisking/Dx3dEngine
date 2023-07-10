@@ -181,7 +181,7 @@
     <ClInclude Include="GameObj.h">
       <Filter>Common\GameObj</Filter>
     </ClInclude>
-    <ClInclude Include="Resources.h">
+    <ClInclude Include="ResourceMgr.h">
       <Filter>Resource\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
@@ -354,7 +354,7 @@
     <ClCompile Include="GameObj.cpp">
       <Filter>Common\GameObj</Filter>
     </ClCompile>
-    <ClCompile Include="Resources.cpp">
+    <ClCompile Include="ResourceMgr.cpp">
       <Filter>Resource\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">

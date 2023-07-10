@@ -5,7 +5,7 @@
 #include "Shader.h"
 #include "Input.h"
 #include "Texture.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 
 #include <wincodec.h>
 //#include <winrt/Windows.Storage.Pickers.h>
@@ -70,19 +70,20 @@ namespace dru::graphics
 		if (!CreateSwapChain(&swapChainDesc))
 			return;
 
-		mRenderTargetTexture = std::make_shared<Texture>();
+		mRenderTargetTexture =  new Texture();
 
 		Microsoft::WRL::ComPtr <ID3D11Texture2D> renderTarget;
 		// Get rendertarget for swapchain
 		//						0¹ø ¹öÆÛ°¡ ·»´õÅ¸°Ù							·»´õÅ¸°Ù Æ÷ÀÎÅÍ
 		hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf());
 		mRenderTargetTexture->Create(renderTarget);
-		GETSINGLE(Resources)->Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
+		GETSINGLE(ResourceMgr)->Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
 		// Create Rendertarget View
 
-		mDepthStencilBufferTexture = std::make_shared<Texture>();
+		mDepthStencilBufferTexture =  new Texture();
 		mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
 	
+		GETSINGLE(ResourceMgr)->Insert<Texture>(L"DepthStencilBufferTexture", mDepthStencilBufferTexture);
 		// Setting Viewport		
 		RECT winRect;
 		GetClientRect(application.GetHwnd(), &winRect);
@@ -96,7 +97,6 @@ namespace dru::graphics
 	GraphicDevice::~GraphicDevice()
 	{
 		renderer::release();
-
 	}
 
 	bool GraphicDevice::CreateSwapChain(DXGI_SWAP_CHAIN_DESC* _Desc)

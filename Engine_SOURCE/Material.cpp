@@ -13,16 +13,17 @@ namespace dru::graphics
 		: Resource(eResourceType::Material) 
 		, mMode(eRenderingMode::Transparent) 
 	{
-		mTexture[static_cast<UINT>(eTextureSlot::T0)] = GETSINGLE(Resources)->Find<Texture>(textureName);
-		mShader = GETSINGLE(Resources)->Find<Shader>(shaderName);
+
+		mTexture[static_cast<UINT>(eTextureSlot::T0)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureName);
+		mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
 	}
 	Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName)
 		: Resource(eResourceType::Material)
 		, mMode(eRenderingMode::Transparent)
 	{
-		mTexture[static_cast<UINT>(slot)] = GETSINGLE(Resources)->Find<Texture>(textureName);
-		mShader = GETSINGLE(Resources)->Find<Shader>(shaderName);
+		mTexture[static_cast<UINT>(slot)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureName);
+		mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
 		mConstantBuffer.xyzw2 = Vector4{ 0.f, 0.f, 0.f, 0.f };
 	}
@@ -154,7 +155,7 @@ namespace dru::graphics
 	}
 	void Material::SetShaderByKey(std::wstring key)
 	{
-		std::shared_ptr<Shader> shader = GETSINGLE(Resources)->Find<Shader>(key);
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(key);
 		mShader = shader;
 	}
 }

@@ -17,15 +17,15 @@ namespace dru
 		virtual void fixedUpdate() override;
 		virtual void render() override;
 
-		void SetMesh(std::shared_ptr <Mesh> _Mesh) { mMesh = _Mesh; }
+		void SetMesh(Mesh* _Mesh) { mMesh = _Mesh; }
 		void SetMeshByKey(std::wstring _Key);
-		void SetMaterial(std::shared_ptr <Material> _Material);
+		void SetMaterial(Material* _Material);
 		void SetMaterialByKey(std::wstring _Key);
-		void SetAnimMaterial(std::shared_ptr <Material> _Material, Vector2 _SpriteSize);
+		void SetAnimMaterial(Material* _Material, Vector2 _SpriteSize);
 
 
-		std::shared_ptr<Mesh> GetMesh() const { return mMesh; }
-		std::shared_ptr<Material> GetMaterial() const { return mMaterial; }
+		Mesh* GetMesh() const { return mMesh; }
+		Material* GetMaterial() const { return mMaterial; }
 
 		void ChangeSize() { mbIsChanged = true; }
 		void ChangeColor(Vector4 _color);
@@ -41,8 +41,8 @@ namespace dru
 
 
 	private:
-		std::shared_ptr <Mesh> mMesh;
-		std::shared_ptr <Material> mMaterial;
+		Mesh* mMesh;
+		Material* mMaterial;
 
 		float mWidthRatio;
 		float mHeightRatio;

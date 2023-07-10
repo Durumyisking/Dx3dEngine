@@ -23,7 +23,7 @@ namespace dru
 		void SetMaterial(std::wstring _Key);
 
 	protected:
-		std::shared_ptr<Material> mPostProcessMaterial;
+		Material* mPostProcessMaterial;
 		PostProcessCB mConstantBuffer;
 		PostProcessRenderer* mRenderer;
 	};

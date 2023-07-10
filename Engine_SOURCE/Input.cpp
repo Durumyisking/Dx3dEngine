@@ -30,7 +30,7 @@ namespace dru
 		'6', '7', '8', '9',
 	};
 
-	Input::Input()
+	InputMgr::InputMgr()
 		: mKeys{}
 		, mMousePosition(Vector3::Zero)
 		, mWorldMousePosition(Vector3::Zero)
@@ -39,12 +39,12 @@ namespace dru
 	{
 	}
 
-	Input::~Input()
+	InputMgr::~InputMgr()
 	{
 
 	}
 
-	void Input::Initialize()
+	void InputMgr::Initialize()
 	{
 		for (UINT i = 0; i < static_cast<UINT>(eKeyCode::END); i++)
 		{
@@ -62,7 +62,7 @@ namespace dru
 		mWinHeightCenter = ((float)winRect.bottom - (float)winRect.top) / 2.0f;
 	}
 
-	void Input::update()
+	void InputMgr::update()
 	{
 		if (GetFocus())
 		{
@@ -109,7 +109,7 @@ namespace dru
 		}
 
 	}
-	void Input::Render(HDC hdc)
+	void InputMgr::Render(HDC hdc)
 	{
 		//HWND hWnd = application.GetHwnd();
 
@@ -118,7 +118,7 @@ namespace dru
 
 		//SetWindowText(hWnd, szFloat);
 	}
-	void Input::ComputeMousePos()
+	void InputMgr::ComputeMousePos()
 	{
 		POINT ptMouse = {};
 		GetCursorPos(&ptMouse);

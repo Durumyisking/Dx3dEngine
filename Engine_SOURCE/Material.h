@@ -22,23 +22,23 @@ namespace dru::graphics
 		void Bind();
 		void Clear();
 
-		void SetShader(std::shared_ptr<Shader>	 shader) { mShader = shader; }
+		void SetShader(Shader*	shader) { mShader = shader; }
 		void SetShaderByKey(std::wstring key);
-		std::shared_ptr<Shader> GetShader() const { return mShader; }
+		Shader* GetShader() const { return mShader; }
 
-		void SetTexture(std::shared_ptr<Texture> texture) { mTexture[static_cast<UINT>(eTextureSlot::T0)] = _Texture; }
-		void SetTexture(eTextureSlot slot, std::shared_ptr<Texture> texture) { mTexture[static_cast<UINT>(slot)] = _Texture; }
-		std::shared_ptr<Texture> GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::T0)]; }
-		std::shared_ptr<Texture> GetTexture(eTextureSlot slot) const { return mTexture[static_cast<UINT>(slot)]; }
+		void SetTexture(Texture* texture) { mTexture[static_cast<UINT>(eTextureSlot::T0)] = texture; }
+		void SetTexture(eTextureSlot slot, Texture* texture) { mTexture[static_cast<UINT>(slot)] = texture; }
+		Texture* GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::T0)]; }
+		Texture* GetTexture(eTextureSlot slot) const { return mTexture[static_cast<UINT>(slot)]; }
 
 		eRenderingMode GetRenderingMode() const { return mMode; }
 		void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 
 	private:
-		std::shared_ptr<Shader>				mShader;
-		std::shared_ptr<Texture>			mTexture[static_cast<UINT>(eTextureSlot::End)];
-		MaterialCB							mConstantBuffer;
-		eRenderingMode						mMode;
+		Shader*				mShader;
+		Texture*			mTexture[static_cast<UINT>(eTextureSlot::End)];
+		MaterialCB			mConstantBuffer;
+		eRenderingMode		mMode;
 
 
 	};

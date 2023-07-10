@@ -24,7 +24,7 @@ namespace dru
 
 		void MakeConstantBufferData(std::wstring _ShaderName, renderer::ParticleSystemCB _CB)
 		{
-			mCS = GETSINGLE(Resources)->Find<ParticleShader>(_ShaderName);
+			mCS = GETSINGLE(ResourceMgr)->Find<ParticleShader>(_ShaderName);
 			mCBData = _CB; 
 		}
 
@@ -57,7 +57,7 @@ namespace dru
 	
 		class StructedBuffer* mBuffer;
 		class StructedBuffer* mSharedBuffer;
-		std::shared_ptr<graphics::ParticleShader> mCS;
+		graphics::ParticleShader* mCS;
 		renderer::ParticleSystemCB mCBData;
 
 		Vector4 mStartPosition;
