@@ -226,7 +226,7 @@ namespace dru
 		if (nullptr == renderer)
 			return;
 
-		std::shared_ptr<Material> material = renderer->GetMaterial();
+		Material* material = renderer->GetMaterial();
 
 		dru::graphics::eRenderingMode mode = material->GetRenderingMode();
 

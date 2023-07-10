@@ -40,7 +40,7 @@ namespace dru
 		void fixedUpdate();
 		void render();
 
-		void Create(const std::wstring& _name, std::shared_ptr<Texture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse);
+		void Create(const std::wstring& _name, Texture* _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse);
 		void BindShader();
 		void BindSpriteToShader(renderer::AnimationCB _Sprite);
 		void Clear();
@@ -61,7 +61,7 @@ namespace dru
 		class Animator* mAnimator;
 		std::wstring mAnimationName;
 
-		std::shared_ptr<Texture> mAtlas;
+		Texture* mAtlas;
 		std::vector<Sprite> mSpriteSheet;
 		int mIndex;
 		float mTime;

@@ -231,7 +231,7 @@ namespace dru
 		return GetComponent<Transform>()->GetRotation();
 	}
 
-	void GameObj::SetMaterial(std::shared_ptr<Material> _Material)
+	void GameObj::SetMaterial(Material* _Material)
 	{
 		if (nullptr != GetComponent<SpriteRenderer>())
 		{
@@ -239,7 +239,7 @@ namespace dru
 		}
 	}
 
-	void GameObj::SetMesh(std::shared_ptr<Mesh> _Mesh)
+	void GameObj::SetMesh(Mesh* _Mesh)
 	{
 		if (nullptr != GetComponent<SpriteRenderer>())
 		{
@@ -252,7 +252,7 @@ namespace dru
 		BaseRenderer* baseRenderer = GetComponent<BaseRenderer>();
 		if (baseRenderer)
 		{
-			std::shared_ptr<Material> mtrl = baseRenderer->GetMaterial();
+			Material* mtrl = baseRenderer->GetMaterial();
 			if (mtrl)
 			{
 

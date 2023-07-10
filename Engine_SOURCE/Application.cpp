@@ -3,7 +3,7 @@
 #include "TimeMgr.h"
 #include "Input.h"
 #include "SceneMgr.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "CollisionMgr.h"
 #include "FMod.h"
 #include "FontWrapper.h"
@@ -32,7 +32,7 @@ namespace dru
 	void Application::Initialize()
 	{
 		GETSINGLE(TimeMgr)->Initialize();
-		GETSINGLE(Input)->Initialize();
+		GETSINGLE(InputMgr)->Initialize();
 		GETSINGLE(Fmod)->Initialize();
 		GETSINGLE(CollisionMgr)->Initialize();
 		renderer::Initialize();
@@ -43,7 +43,7 @@ namespace dru
 	void Application::update()
 	{
 		GETSINGLE(TimeMgr)->update();
-		GETSINGLE(Input)->update();
+		GETSINGLE(InputMgr)->update();
 		GETSINGLE(CollisionMgr)->update();
 		GETSINGLE(SceneMgr)->update();
 	}
@@ -55,7 +55,7 @@ namespace dru
 	void Application::render()
 	{
 		GETSINGLE(TimeMgr)->Render(mHdc);
-		GETSINGLE(Input)->Render(mHdc);
+		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::render();
 		graphicDevice->Clear();
 		graphicDevice->AdjustViewPorts();
@@ -96,6 +96,7 @@ namespace dru
 		GETSINGLE(Fmod)->Release();
 		GETSINGLE(SceneMgr)->release();
 		GETSINGLE(FontWrapper)->Release();
+		GETSINGLE(ResourceMgr)->Release();
 	}
 
 	void Application::DestroySingle()
@@ -104,9 +105,9 @@ namespace dru
 		GETSINGLE(FontWrapper)->DestroyInstance();
 		GETSINGLE(CollisionMgr)->DestroyInstance();
 		GETSINGLE(Fmod)->DestroyInstance();
-		GETSINGLE(Input)->DestroyInstance();
+		GETSINGLE(InputMgr)->DestroyInstance();
 		GETSINGLE(TimeMgr)->DestroyInstance();
-		GETSINGLE(Resources)->DestroyInstance();
+		GETSINGLE(ResourceMgr)->DestroyInstance();
 	}
 
 	void Application::SetWindow(HWND _hwnd, UINT _width, UINT _height)

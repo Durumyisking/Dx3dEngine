@@ -4,7 +4,7 @@
 #include "GameObj.h"
 #include "Transform.h"
 #include "Mesh.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "StructedBuffer.h"
 #include "Texture.h"
 #include "TimeMgr.h"
@@ -55,7 +55,7 @@ namespace dru
 
 	void ParticleSystem::Initialize()
 	{
-		std::shared_ptr<Mesh> point = GETSINGLE(Resources)->Find<Mesh>(L"Pointmesh");
+		Mesh* point = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Pointmesh");
 
 		SetMesh(point);
 

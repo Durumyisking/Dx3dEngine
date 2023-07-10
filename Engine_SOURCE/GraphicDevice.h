@@ -91,8 +91,8 @@ namespace dru::graphics
 
 		// 최종적으로 그려지는 도화지
 
-		std::shared_ptr<class Texture> mRenderTargetTexture;
-		std::shared_ptr<class Texture> mDepthStencilBufferTexture;
+		class Texture* mRenderTargetTexture;
+		class Texture* mDepthStencilBufferTexture;
 
 
 

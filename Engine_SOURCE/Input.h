@@ -35,9 +35,9 @@ namespace dru
 		NONE,
 	};
 
-	class Input
+	class InputMgr
 	{
-		SINGLE(Input)
+		SINGLE(InputMgr)
 
 	public:
 		struct Key

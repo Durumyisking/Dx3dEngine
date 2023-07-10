@@ -4,33 +4,33 @@
 
 namespace dru
 {
-	class Resources
+	class ResourceMgr
 	{
-		SINGLE(Resources)
+		SINGLE(ResourceMgr)
 
 	public:
 		template <typename T>
-		std::shared_ptr<T> Find(const std::wstring& key)
+		T* Find(const std::wstring& key)
 		{
-			std::map<std::wstring, std::shared_ptr<Resource> >::iterator iter = mResources.find(key);
+			std::map<std::wstring, Resource*>::iterator iter = mResources.find(key);
 
 			// 이미 동일한 키값으로 다른 리소스가 먼저 등록되어 있었다.
 			if (iter != mResources.end())
 			{
-				return std::dynamic_pointer_cast<T>(iter->second);
+				return dynamic_cast<T*>(iter->second);
 			}
 
 			return nullptr;
 		}
 
 		template <typename T>
-		std::vector<std::shared_ptr<T>> Finds()
+		std::vector<T*> Finds()
 		{
-			std::vector<std::shared_ptr<T>> resources = {};
+			std::vector<T*> resources = {};
 			for (auto iter : mResources)
 			{
-				std::shared_ptr<T> resource
-					= std::dynamic_pointer_cast<T>(iter.second);
+				T* resource
+					= dynamic_cast<T*>(iter.second);
 
 				if (nullptr != resource)
 					resources.push_back(resource);
@@ -40,10 +40,10 @@ namespace dru
 		}
 
 		template <typename T>
-		std::shared_ptr<T> Load(const std::wstring& key, const std::wstring& path)
+		T*  Load(const std::wstring& key, const std::wstring& path)
 		{
 			// 키값으로 탐색
-			std::shared_ptr<T> resource = GETSINGLE(Resources)->Find<T>(key);
+			T* resource = GETSINGLE(ResourceMgr)->Find<T>(key);
 			if (nullptr != resource)
 			{
 				// 해당키로 이미 로딩된게 있으면 해당 리소스를 반환
@@ -51,7 +51,7 @@ namespace dru
 			}
 
 			// 해당 키로 로딩된 리소스가 없다.
-			resource = std::make_shared<T>();
+			resource = new T();
 			if (FAILED(resource->Load(path)))
 			{
 				MessageBox(nullptr, L"Image Load Failed!", L"Error", MB_OK);
@@ -61,28 +61,29 @@ namespace dru
 
 			resource->SetKey(key);
 			resource->SetPath(path);
-			mResources.insert(std::make_pair(key, std::dynamic_pointer_cast<Resource>(resource)));
+			mResources.insert(std::make_pair(key, resource));
 
 			return resource;
 		}
 
 		template <typename T>
-		void Insert(const std::wstring& key, std::shared_ptr<T> resource)
+		void Insert(const std::wstring& key, T* resource)
 		{
 			if (Find<T>(key))
 			{
 				std::wstring newKey = key;
 				std::wstring idx = std::to_wstring(math::GetRandomNumber(65535));
 				newKey += idx;
-				mResources.insert(make_pair(key, std::dynamic_pointer_cast<Resource>(resource)));
+				mResources.insert(std::make_pair(key, resource));
 			}
 			else
 			{
-				mResources.insert(make_pair(key, std::dynamic_pointer_cast<Resource>(resource)));
+				mResources.insert(std::make_pair(key, resource));
 			}
 		}
 
+		void Release();
 	private:
-		std::map<std::wstring, std::shared_ptr<Resource> > mResources;
+		std::map<std::wstring, Resource* > mResources;
 	};
 }

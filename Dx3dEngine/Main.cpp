@@ -81,7 +81,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     //_CrtDumpMemoryLeaks();
 
+
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    //CrtSetBreakAlloc(233);
 
     if (!InitInstance (hInstance, nCmdShow))
     {

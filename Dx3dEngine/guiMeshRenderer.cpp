@@ -2,7 +2,7 @@
 #include "MeshRenderer.h"
 #include "guiEditor.h"
 #include "guiListWidget.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "Resource.h"
 #include "guiInspector.h"
 #include "SpriteRenderer.h"
@@ -74,8 +74,8 @@ namespace gui
 			
 
 			//모든 메쉬의 리소스를 가져와야한다.
-			std::vector<std::shared_ptr<dru::Mesh>> meshes 
-				= GETSINGLE(dru::Resources)->Finds<dru::Mesh>();
+			std::vector<dru::Mesh*> meshes 
+				= GETSINGLE(dru::ResourceMgr)->Finds<dru::Mesh>();
 
 			std::vector<std::wstring> wName;
 			for (auto mesh : meshes)
@@ -100,8 +100,8 @@ namespace gui
 			ListWidget* listUI = editor.GetWidget<ListWidget>("ListWidget");
 			listUI->SetState(eState::Active);
 			//모든 메쉬의 리소스를 가져와야한다.
-			std::vector<std::shared_ptr<dru::Material>> materials
-				= GETSINGLE(dru::Resources)->Finds<dru::Material>();
+			std::vector<dru::Material*> materials
+				= GETSINGLE(dru::ResourceMgr)->Finds<dru::Material>();
 
 			std::vector<std::wstring> wName;
 			for (auto material : materials)
@@ -123,7 +123,7 @@ namespace gui
 	void MeshRenderer::SetMesh(std::string key)
 	{
 		std::wstring wKey(key.begin(), key.end());
-		std::shared_ptr<dru::Mesh> mesh = GETSINGLE(dru::Resources)->Find<dru::Mesh>(wKey);
+		dru::Mesh* mesh = GETSINGLE(dru::ResourceMgr)->Find<dru::Mesh>(wKey);
 
 		Inspector* inspector = editor.GetWidget<Inspector>("Inspector");
 		inspector->GetTargetGameObject()->GetComponent<dru::MeshRenderer>()->SetMesh(mesh);
@@ -132,7 +132,7 @@ namespace gui
 	void MeshRenderer::SetMaterial(std::string key)
 	{
 		std::wstring wKey(key.begin(), key.end());
-		std::shared_ptr<dru::Material> material = GETSINGLE(dru::Resources)->Find<dru::Material>(wKey);
+		dru::Material* material = GETSINGLE(dru::ResourceMgr)->Find<dru::Material>(wKey);
 
 		Inspector* inspector = editor.GetWidget<Inspector>("Inspector");
 		inspector->GetTargetGameObject()->GetComponent<dru::MeshRenderer>()->SetMaterial(material);

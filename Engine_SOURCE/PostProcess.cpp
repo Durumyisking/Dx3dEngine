@@ -15,7 +15,7 @@ namespace dru
 		mConstantBuffer.Resolution = application.WinResolution();
 
 		mRenderer = AddComponent<PostProcessRenderer>(eComponentType::Renderer);
-		std::shared_ptr<Material> mateiral = GETSINGLE(Resources)->Find<Material>(L"PostProcessMaterial");
+		Material* mateiral = GETSINGLE(ResourceMgr)->Find<Material>(L"PostProcessMaterial");
 		mRenderer->SetMaterial(mateiral);
 		mRenderer->SetPostProcessOwner(this);
 
@@ -67,7 +67,7 @@ namespace dru
 
 	void PostProcess::SetMaterial(std::wstring _Key)
 	{
-		std::shared_ptr<Material> mateiral = GETSINGLE(Resources)->Find<Material>(_Key);
+		Material* mateiral = GETSINGLE(ResourceMgr)->Find<Material>(_Key);
 		mRenderer->SetMaterial(mateiral);
 	}
 

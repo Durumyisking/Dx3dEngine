@@ -5,6 +5,8 @@
 #include "ConstantBuffer.h"
 #include "TimeMgr.h"
 #include "Input.h"
+#include "Material.h"
+#include "BaseRenderer.h"
 
 
 namespace dru
@@ -42,7 +44,7 @@ namespace dru
 			mElapsedTime += DT;
 
 			BaseRenderer* renderer = GetOwner()->GetComponent<BaseRenderer>();
-			std::shared_ptr<Material> material = renderer->GetMaterial();
+			dru::Material* material = renderer->GetMaterial();
 
 			renderer::MaterialCB data = {};
 

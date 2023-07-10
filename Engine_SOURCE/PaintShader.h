@@ -14,11 +14,11 @@ namespace dru::graphics
 		virtual void Bind();
 		virtual void Clear();
 
-		void SetTarget(std::shared_ptr<Texture> _target) { mTarget = _target; }
-		std::shared_ptr<Texture> GetTarget() { return mTarget; }
+		void SetTarget(Texture* _target) { mTarget = _target; }
+		Texture* GetTarget() { return mTarget; }
 
 	private:
-		std::shared_ptr<Texture> mTarget;
+		Texture* mTarget;
     };
 
 }
