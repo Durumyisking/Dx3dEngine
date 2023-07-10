@@ -24,8 +24,8 @@ namespace dru
 		void SetAnimMaterial(std::shared_ptr <Material> _Material, Vector2 _SpriteSize);
 
 
-		std::shared_ptr<Mesh> GetMesh() { return mMesh; }
-		std::shared_ptr<Material> GetMaterial() { return mMaterial; }
+		std::shared_ptr<Mesh> GetMesh() const { return mMesh; }
+		std::shared_ptr<Material> GetMaterial() const { return mMaterial; }
 
 		void ChangeSize() { mbIsChanged = true; }
 		void ChangeColor(Vector4 _color);

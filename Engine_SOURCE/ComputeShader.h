@@ -12,7 +12,7 @@ namespace dru::graphics
 		virtual ~ComputeShader();
 
 		virtual HRESULT Load(const std::wstring& path);
-		void Create(const std::wstring& _Path, const std::string& _funcName);
+		void Create(const std::wstring& path, const std::string& funcName);
 		void OnExcute();
 
 		virtual void Bind();

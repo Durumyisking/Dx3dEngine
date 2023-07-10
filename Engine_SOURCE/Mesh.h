@@ -12,14 +12,14 @@ namespace dru
 
 		virtual HRESULT Load(const std::wstring& path) override;
 
-		bool CreateVertexBuffer(void* _Data, UINT _Count);
-		bool CreateIndexBuffer(void* _Data, UINT _Count);
+		bool CreateVertexBuffer(void* data, UINT count);
+		bool CreateIndexBuffer(void* data, UINT count);
 
 		void BindBuffer();
 
 		void Render();
 
-		void RenderInstanced(UINT _Count);
+		void RenderInstanced(UINT count);
 
 
 //		Microsoft::WRL::ComPtr<ID3D11Buffer> GetBuffer(graphics::eBufferStage _eStage);
