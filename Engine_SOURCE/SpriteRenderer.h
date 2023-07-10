@@ -12,10 +12,10 @@ namespace dru
 		SpriteRenderer();
 		virtual ~SpriteRenderer();
 
-		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Initialize() final;
+		virtual void update() final;
+		virtual void fixedUpdate() final;
+		virtual void render() final;
 
 	};
 

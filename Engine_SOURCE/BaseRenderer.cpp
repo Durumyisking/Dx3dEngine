@@ -7,8 +7,8 @@
 
 namespace dru
 {
-	BaseRenderer::BaseRenderer(eComponentType _Type)
-		:Component(_Type)
+	BaseRenderer::BaseRenderer(eComponentType type)
+		:Component(type)
 		, mbIsChanged(false)
 		, mbIsAnim(false)
 		, mbUseLOD(true)
@@ -59,47 +59,47 @@ namespace dru
 			LOD();	
 	}
 
-	void BaseRenderer::SetMeshByKey(std::wstring _Key)
+	void BaseRenderer::SetMeshByKey(std::wstring key)
 	{
-		mMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(_Key);
+		mMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(key);
 	}
 
-	void BaseRenderer::SetMaterial(Material* _Material)
+	void BaseRenderer::SetMaterial(Material* material)
 	{
-		mMaterial = _Material;
+		mMaterial = material;
 
 		// adjustTexture();
 	}
 
-	void BaseRenderer::SetMaterialByKey(std::wstring _Key)
+	void BaseRenderer::SetMaterialByKey(std::wstring key)
 	{
-		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(_Key);
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
 
 		// adjustTexture();
 	}
 
-	void BaseRenderer::SetAnimMaterial(Material* _Material, Vector2 _SpriteSize)
+	void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
 	{
-		mMaterial = _Material;
+		mMaterial = material;
 		mbIsAnim = true;
-		mSpriteSize = _SpriteSize;
+		mSpriteSize = spriteSize;
 		// adjustTexture();
 	}
 
-	void BaseRenderer::ChangeColor(Vector4 _color)
+	void BaseRenderer::ChangeColor(Vector4 color)
 	{
 		MulColor(Vector4::Zero);
-		AddColor(_color);
+		AddColor(color);
 	}
 
-	void BaseRenderer::MulColor(Vector4 _color)
+	void BaseRenderer::MulColor(Vector4 color)
 	{
-		mMaterial->SetData(eGPUParam::Vector4_1, &_color);
+		mMaterial->SetData(eGPUParam::Vector4_1, &color);
 	}
 
-	void BaseRenderer::AddColor(Vector4 _color)
+	void BaseRenderer::AddColor(Vector4 color)
 	{
-		mMaterial->SetData(eGPUParam::Vector4_2, &_color);
+		mMaterial->SetData(eGPUParam::Vector4_2, &color);
 	}
 
 	void BaseRenderer::LOD()

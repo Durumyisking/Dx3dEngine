@@ -27,30 +27,30 @@ namespace dru
 
 
 	public:
-		void AddForce(Vector3 _Value) { mForce += _Value; }
-		void AddForceX(float _Value) { mForce.x += _Value; }
-		void AddForceY(float _Value) { mForce.y += _Value; }
+		void AddForce(Vector3 value) { mForce += value; }
+		void AddForceX(float value) { mForce.x += value; }
+		void AddForceY(float value) { mForce.y += value; }
 
-		void SetMass(float _Value) { mMass = _Value; }
+		void SetMass(float value) { mMass = value; }
 		float GetMass() const { return mMass; }
 
-		void SetForce(Vector3 _Value) { mForce = _Value; }
+		void SetForce(Vector3 value) { mForce = value; }
 		Vector3 GetForce() const { return mForce; }
 
-		void SetVelocity(Vector3 _Value) { mVelocity = _Value; }
-		void SetVelocityX(float _Value) { mVelocity.x = _Value; }
-		void SetVelocityY(float _Value) { mVelocity.y = _Value; }
+		void SetVelocity(Vector3 value) { mVelocity = value; }
+		void SetVelocityX(float value) { mVelocity.x = value; }
+		void SetVelocityY(float value) { mVelocity.y = value; }
 
 		Vector3 GetVelocity() const { return mVelocity; }
 
-		void AddVelocity(Vector3 _Value) { mVelocity += _Value; }
-		void AddVelocityX(float _Value) { mVelocity.x += _Value; }
-		void AddVelocityY(float _Value) { mVelocity.y += _Value; }
+		void AddVelocity(Vector3 value) { mVelocity += value; }
+		void AddVelocityX(float value) { mVelocity.x += value; }
+		void AddVelocityY(float value) { mVelocity.y += value; }
 
-		void SetMaxVelocity(Vector3 _Value) { mMaxSpeed = _Value; }
+		void SetMaxVelocity(Vector3 value) { mMaxSpeed = value; }
 		Vector3 GetMaxVelocity() const { return  mMaxSpeed; }
 
-		void SetFricCoeff(float _Value) { mFricCoeff = _Value; }
+		void SetFricCoeff(float value) { mFricCoeff = value; }
 		float GetFricCoeff() const { return mFricCoeff; }
 
 		void SetGround() { mbOnAir = false; }
@@ -66,7 +66,7 @@ namespace dru
 		void CalculateFriction();
 		void MaxVelocityCheck();
 
-		void SetGravity(float _Value) { mOriginGravity.y = _Value; }
+		void SetGravity(float value) { mOriginGravity.y = value; }
 
 		void SwitchOn() { mbSwitch = true; }
 		void SwitchOff() { mbSwitch = false; }
