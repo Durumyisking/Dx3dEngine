@@ -8,7 +8,6 @@
 #include "guiInspector.h"
 #include "Application.h"
 
-#include "GameObj.h"
 #include "guiTreeWidget.h"
 
 extern dru::Application application;

@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine.h"
-#include "Resource.h"
+#include "EngineResource.h"
 
 namespace dru
 {
