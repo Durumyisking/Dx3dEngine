@@ -160,7 +160,7 @@
     <ClInclude Include="Graphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
+    <ClInclude Include="EngineResource.h">
       <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
@@ -336,7 +336,7 @@
     <ClCompile Include="GraphicDevice.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Resource.cpp">
+    <ClCompile Include="EngineResource.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">

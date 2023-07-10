@@ -1,5 +1,5 @@
 #pragma once
-#include "Resource.h"
+#include "EngineResource.h"
 #include "Graphics.h"
 
 namespace dru

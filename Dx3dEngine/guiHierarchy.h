@@ -1,9 +1,11 @@
 #pragma once
 #include "guiWidget.h"
 #include "guiTreeWidget.h"
+#include "GameObj.h"
 
 namespace gui
 {
+	class GameObj;
 	class Hierarchy : public Widget
 	{
 	public:
@@ -16,7 +18,7 @@ namespace gui
 
 		void InitializeInspector(void* data);
 		void InitializeScene();
-		void AddGameObject(TreeWidget::Node* parent, class dru::GameObj* gameObject);
+		void AddGameObject(TreeWidget::Node* parent, dru::GameObj* gameObject);
 
 	private:
 		TreeWidget* mTreeWidget;

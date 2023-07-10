@@ -231,7 +231,7 @@ copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Release\"</Command>
     <ClInclude Include="PostProcessWave.h" />
     <ClInclude Include="Prefab.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Resource.h" />
+    <ClInclude Include="EngineResource.h" />
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Scene.h" />
@@ -289,7 +289,7 @@ copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Release\"</Command>
     <ClCompile Include="PostProcessWave.cpp" />
     <ClCompile Include="Prefab.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="EngineResource.cpp" />
     <ClCompile Include="ResourceMgr.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Scene.cpp" />

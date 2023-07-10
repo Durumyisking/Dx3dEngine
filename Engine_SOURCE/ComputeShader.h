@@ -1,6 +1,6 @@
 #pragma once
 #include "Graphics.h"
-#include "Resource.h"
+#include "EngineResource.h"
 
 namespace dru::graphics
 {
