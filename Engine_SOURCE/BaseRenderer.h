@@ -24,8 +24,8 @@ namespace dru
 		void SetAnimMaterial(Material* _Material, Vector2 _SpriteSize);
 
 
-		Mesh* GetMesh() { return mMesh; }
-		Material* GetMaterial() { return mMaterial; }
+		Mesh* GetMesh() const { return mMesh; }
+		Material* GetMaterial() const { return mMaterial; }
 
 		void ChangeSize() { mbIsChanged = true; }
 		void ChangeColor(Vector4 _color);

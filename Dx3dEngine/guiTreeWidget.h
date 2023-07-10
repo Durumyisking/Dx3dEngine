@@ -52,7 +52,6 @@ namespace gui
 	private:
 		Node* mRoot;
 
-		//
 		bool mbDummyRootUse;
 		Node* mSelectedNode;
 

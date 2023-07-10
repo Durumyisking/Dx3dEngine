@@ -212,7 +212,6 @@
     <ClCompile Include="guiTransform.cpp" />
     <ClCompile Include="guiTreeWidget.cpp" />
     <ClCompile Include="guiVisualEditor.cpp" />
-    <ClCompile Include="VisualEditor.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
