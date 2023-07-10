@@ -15,8 +15,8 @@ namespace gui
 
 	void Texture::Update()
 	{
-		dru::graphics::Texture* targetTex 
-			= dynamic_cast<dru::graphics::Texture*>(GetTarget());
+		dru::Texture* targetTex 
+			= dynamic_cast<dru::Texture*>(GetTarget());
 
 		if (targetTex == nullptr)
 			return;

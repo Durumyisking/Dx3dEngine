@@ -1,10 +1,14 @@
 #pragma once
 #include "Transform.h"
-
+#include "Material.h"
+#include "Script.h"
 
 namespace dru
 {
 	using namespace math;
+	;
+
+	class Script;
 
 	class GameObj : public DruEntity
 	{
@@ -78,18 +82,18 @@ namespace dru
 			return components;
 		}
 
-		const std::vector<class Script*>& GetScripts() { return mScripts; }
+		const std::vector<Script*>& GetScripts() { return mScripts; }
 
 		template <typename T>
 		T* GetScript()
 		{
-			T* component;
-			for (auto* script : mScripts)
+			T* returnScript;
+			for (Script* script : mScripts)
 			{
-				component = dynamic_cast<T*>(script);
+				returnScript = dynamic_cast<T*>(script);
 
-				if (nullptr != component)
-					return component;
+				if (nullptr != returnScript)
+					return returnScript;
 			}
 			return nullptr;
 		}

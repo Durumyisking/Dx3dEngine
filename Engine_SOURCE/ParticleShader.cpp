@@ -3,7 +3,7 @@
 #include "ConstantBuffer.h"
 #include "TimeMgr.h"
 
-namespace dru::graphics
+namespace dru
 {
 	ParticleShader::ParticleShader() // 얘는 컴퓨트세이더 상속받은애
 		: ComputeShader(128, 1, 1) // 쓰레드 128개 쓸거임

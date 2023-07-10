@@ -14,10 +14,10 @@ namespace dru::renderer
 	
 
 	ConstantBuffer* constantBuffers[static_cast<UINT>(eCBType::End)] = {};
-	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[static_cast<UINT>(graphics::eSamplerType::End)];
-	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerState[static_cast<UINT>(graphics::eRasterizerType::End)];
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState[static_cast<UINT>(graphics::eDepthStencilType::End)];
-	Microsoft::WRL::ComPtr<ID3D11BlendState> blendState[static_cast<UINT>(graphics::eBlendStateType::End)];
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[static_cast<UINT>(dru::eSamplerType::End)];
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerState[static_cast<UINT>(dru::eRasterizerType::End)];
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState[static_cast<UINT>(dru::eDepthStencilType::End)];
+	Microsoft::WRL::ComPtr<ID3D11BlendState> blendState[static_cast<UINT>(dru::eBlendStateType::End)];
 
 	Camera* mainCamera = nullptr;
 	std::vector<Camera*> Cameras[static_cast<UINT>(SceneMgr::eSceneType::End)];
@@ -538,46 +538,46 @@ namespace dru::renderer
 		//Vector3 normal;
 
 		Shader* Meshshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
-		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+		dru::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Meshshader->GetVSBlobBufferPointer()
 			, Meshshader->GetVSBlobBufferSize()
 			, Meshshader->GetInputLayoutAddr());
 
 
 		Shader* Spriteshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
-		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+		dru::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Spriteshader->GetVSBlobBufferPointer()
 			, Spriteshader->GetVSBlobBufferSize()
 			, Spriteshader->GetInputLayoutAddr());
 
 
 		Shader* UIshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UIShader");
-		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+		dru::GetDevice()->CreateInputLayout(arrLayout, 3
 			, UIshader->GetVSBlobBufferPointer()
 			, UIshader->GetVSBlobBufferSize()
 			, UIshader->GetInputLayoutAddr());
 
 		Shader* Fadeshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FadeShader");
-		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+		dru::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Fadeshader->GetVSBlobBufferPointer()
 			, Fadeshader->GetVSBlobBufferSize()
 			, Fadeshader->GetInputLayoutAddr());
 
 		Shader* Colorshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ColorShader");
-		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+		dru::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Colorshader->GetVSBlobBufferPointer()
 			, Colorshader->GetVSBlobBufferSize()
 			, Colorshader->GetInputLayoutAddr());
 
 		Shader* Gridshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"GridShader");
-		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+		dru::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Gridshader->GetVSBlobBufferPointer()
 			, Gridshader->GetVSBlobBufferSize()
 			, Gridshader->GetInputLayoutAddr());
 
 		Shader* Debugshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugShader");
 
-		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
+		dru::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Debugshader->GetVSBlobBufferPointer()
 			, Debugshader->GetVSBlobBufferSize()
 			, Debugshader->GetInputLayoutAddr());
@@ -632,19 +632,19 @@ namespace dru::renderer
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(graphics::eRasterizerType::SolidBack)].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(dru::eRasterizerType::SolidBack)].GetAddressOf());
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_FRONT;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(graphics::eRasterizerType::SolidFront)].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(dru::eRasterizerType::SolidFront)].GetAddressOf());
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(graphics::eRasterizerType::SolidNone)].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(dru::eRasterizerType::SolidNone)].GetAddressOf());
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(graphics::eRasterizerType::WireframeNone)].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(dru::eRasterizerType::WireframeNone)].GetAddressOf());
 
 #pragma endregion
 
@@ -655,31 +655,31 @@ namespace dru::renderer
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(graphics::eDepthStencilType::Less)].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(dru::eDepthStencilType::Less)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(graphics::eDepthStencilType::Greater)].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(dru::eDepthStencilType::Greater)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(graphics::eDepthStencilType::NoWrite)].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(dru::eDepthStencilType::NoWrite)].GetAddressOf());
 
 		dsDesc.DepthEnable = false;
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(graphics::eDepthStencilType::None)].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(dru::eDepthStencilType::None)].GetAddressOf());
 
 #pragma endregion
 
 #pragma region BlendState
 
-		blendState[static_cast<UINT>(graphics::eBlendStateType::Default)] = nullptr;
+		blendState[static_cast<UINT>(dru::eBlendStateType::Default)] = nullptr;
 
 		D3D11_BLEND_DESC bsDesc = {};
 		bsDesc.AlphaToCoverageEnable = false;
@@ -692,7 +692,7 @@ namespace dru::renderer
 		bsDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE::D3D11_COLOR_WRITE_ENABLE_ALL;
 		bsDesc.RenderTarget[0].SrcBlend = D3D11_BLEND::D3D11_BLEND_SRC_ALPHA;
 		bsDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND::D3D11_BLEND_ONE;
-		GetDevice()->CreateBlendState(&bsDesc, blendState[static_cast<UINT>(graphics::eBlendStateType::AlphaBlend)].GetAddressOf());
+		GetDevice()->CreateBlendState(&bsDesc, blendState[static_cast<UINT>(dru::eBlendStateType::AlphaBlend)].GetAddressOf());
 
 		bsDesc.AlphaToCoverageEnable = false;
 		bsDesc.IndependentBlendEnable = false;
@@ -701,7 +701,7 @@ namespace dru::renderer
 		bsDesc.RenderTarget[0].DestBlend = D3D11_BLEND::D3D11_BLEND_ONE;
 		bsDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE::D3D11_COLOR_WRITE_ENABLE_ALL;
 		bsDesc.RenderTarget[0].SrcBlend = D3D11_BLEND::D3D11_BLEND_ONE;
-		GetDevice()->CreateBlendState(&bsDesc, blendState[static_cast<UINT>(graphics::eBlendStateType::OneOne)].GetAddressOf());
+		GetDevice()->CreateBlendState(&bsDesc, blendState[static_cast<UINT>(dru::eBlendStateType::OneOne)].GetAddressOf());
 
 
 #pragma endregion
@@ -750,8 +750,8 @@ namespace dru::renderer
 	void LoadShader()
 	{
 		Shader* MeshShader = new Shader();
-		MeshShader->Create(graphics::eShaderStage::VS, L"PhongVS.hlsl", "main");
-		MeshShader->Create(graphics::eShaderStage::PS, L"PhongPS.hlsl", "main");
+		MeshShader->Create(dru::eShaderStage::VS, L"PhongVS.hlsl", "main");
+		MeshShader->Create(dru::eShaderStage::PS, L"PhongPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"MeshShader", MeshShader);
 
 		Shader* phongShader = new Shader();
@@ -766,33 +766,33 @@ namespace dru::renderer
 
 
 		Shader* SpriteShader = new Shader();
-		SpriteShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		SpriteShader->Create(graphics::eShaderStage::PS, L"SpritePS.hlsl", "main");		
+		SpriteShader->Create(dru::eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		SpriteShader->Create(dru::eShaderStage::PS, L"SpritePS.hlsl", "main");		
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"SpriteShader", SpriteShader);
 
 		Shader* GridShader = new Shader();
-		GridShader->Create(graphics::eShaderStage::VS, L"GridVS.hlsl", "main");
-		GridShader->Create(graphics::eShaderStage::PS, L"GridPS.hlsl", "main");
+		GridShader->Create(dru::eShaderStage::VS, L"GridVS.hlsl", "main");
+		GridShader->Create(dru::eShaderStage::PS, L"GridPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"GridShader", GridShader);
 
 		Shader* UIShader = new Shader();
-		UIShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		UIShader->Create(graphics::eShaderStage::PS, L"UIPS.hlsl", "main");
+		UIShader->Create(dru::eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		UIShader->Create(dru::eShaderStage::PS, L"UIPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UIShader", UIShader);
 
 		Shader* FadeShader = new Shader();
-		FadeShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		FadeShader->Create(graphics::eShaderStage::PS, L"FadePS.hlsl", "main");
+		FadeShader->Create(dru::eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		FadeShader->Create(dru::eShaderStage::PS, L"FadePS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"FadeShader", FadeShader);
 
 		Shader* ColorShader = new Shader();
-		ColorShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		ColorShader->Create(graphics::eShaderStage::PS, L"ColorPS.hlsl", "main");
+		ColorShader->Create(dru::eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		ColorShader->Create(dru::eShaderStage::PS, L"ColorPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"ColorShader", ColorShader);
 
 		Shader* DebugShader = new Shader();
-		DebugShader->Create(graphics::eShaderStage::VS, L"DebugVS.hlsl", "main");
-		DebugShader->Create(graphics::eShaderStage::PS, L"DebugPS.hlsl", "main");
+		DebugShader->Create(dru::eShaderStage::VS, L"DebugVS.hlsl", "main");
+		DebugShader->Create(dru::eShaderStage::PS, L"DebugPS.hlsl", "main");
 		DebugShader->SetRSState(eRasterizerType::SolidNone);
 		DebugShader->SetDSState(eDepthStencilType::NoWrite);
 		DebugShader->SetBSState(eBlendStateType::AlphaBlend);

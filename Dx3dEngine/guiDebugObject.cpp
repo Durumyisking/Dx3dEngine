@@ -1,5 +1,5 @@
 #include "guiDebugObject.h"
-
+#include "Component.h"
 
 namespace gui
 {

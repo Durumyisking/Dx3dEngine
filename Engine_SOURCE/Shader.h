@@ -4,7 +4,7 @@
 
 namespace dru
 {
-	using namespace graphics;
+	;
 	class Shader : public Resource
 	{
 	public:
@@ -14,7 +14,7 @@ namespace dru
 		virtual HRESULT Load(const std::wstring& path) override;
 
 
-		void Create(graphics::eShaderStage _eStage, const std::wstring& _Path, const std::string& _funcName);
+		void Create(dru::eShaderStage _eStage, const std::wstring& _Path, const std::string& _funcName);
 		void Bind();
 		ID3D11InputLayout* GetInputLayOut() { return mInputLayout.Get(); }
 		ID3D11InputLayout** GetInputLayoutAddr()  { return mInputLayout.GetAddressOf(); }
@@ -41,7 +41,7 @@ namespace dru
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> mInputLayout;
 
 		D3D11_PRIMITIVE_TOPOLOGY mTopology;
-		graphics::eShaderStage mCurrentStage;
+		dru::eShaderStage mCurrentStage;
 
 
 		Microsoft::WRL::ComPtr<ID3DBlob> mErrorBlob;

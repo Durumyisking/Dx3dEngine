@@ -79,8 +79,8 @@ namespace gui
 		//	End,
 		//};
 		AddResources<dru::Mesh>(pRootNode, "Mesh");
-		AddResources<dru::graphics::Texture>(pRootNode, "Texture");
-		AddResources<dru::graphics::Material>(pRootNode, "Materials");
+		AddResources<dru::Texture>(pRootNode, "Texture");
+		AddResources<dru::Material>(pRootNode, "Materials");
 		AddResources<dru::Shader>(pRootNode, "Shaders");
 	}
 

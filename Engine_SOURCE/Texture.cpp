@@ -1,7 +1,7 @@
 #include "Texture.h"
 
 
-namespace dru::graphics
+namespace dru
 {
 	Texture::Texture()
 		: Resource(eResourceType::Texture)

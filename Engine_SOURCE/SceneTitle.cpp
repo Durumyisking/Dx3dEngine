@@ -1,16 +1,8 @@
 #include "SceneTitle.h"
 #include "TimeMgr.h"
 
-#include "FadeScript.h"
 #include "Object.h"
 #include "Camera.h"
-#include "Input.h"
-#include "Collider2D.h"
-#include "Animator.h"
-
-#include "AudioSource.h"
-
-#include "Layer.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "SpriteRenderer.h"
@@ -23,8 +15,10 @@
 #include "GridScript.h"
 
 #include "Application.h"
+#include "Player.h"
 
-extern dru::Application appliaction;
+extern dru::Application application;
+
 
 namespace dru
 {

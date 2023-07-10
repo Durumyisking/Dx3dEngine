@@ -2,6 +2,7 @@
 #include "Mesh.h"
 #include "ResourceMgr.h"
 #include "Material.h"
+#include "guiMaterial.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "GridScript.h"
@@ -27,6 +28,9 @@
 #include "guiEditorObject.h"
 #include "guiWidget.h"
 #include "Graphics.h"
+
+#include "ResourceMgr.h"
+
 
 
 extern dru::Application application;
@@ -58,7 +62,7 @@ namespace gui
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
 		dru::Mesh* rectMesh = GETSINGLE(dru::ResourceMgr)->Find<dru::Mesh>(L"DebugRectmesh");
-		dru::Material* material = GETSINGLE(dru::ResourceMgr)->Find<Material>(L"DebugMaterial");
+		dru::Material* material = GETSINGLE(dru::ResourceMgr)->Find<dru::Material>(L"DebugMaterial");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Rect)] = new DebugObject();
 		dru::MeshRenderer* renderer
@@ -144,7 +148,7 @@ namespace gui
 			obj->render();
 		}
 
-		for ( DebugMesh& mesh : dru::renderer::debugMeshes)
+		for (dru::DebugMesh & mesh : dru::renderer::debugMeshes)
 		{
 			DebugRender(mesh);
 		}
@@ -179,7 +183,7 @@ namespace gui
 		ImGui_Release();
 	}
 
-	void Editor::DebugRender(dru::graphics::DebugMesh& mesh)
+	void Editor::DebugRender(dru::DebugMesh& mesh)
 	{
 		DebugObject* debugObj = mDebugObjects[static_cast<UINT>(mesh.type)];
 
@@ -210,8 +214,8 @@ namespace gui
 
 		dru::BaseRenderer* renderer = debugObj->GetComponent<dru::BaseRenderer>();
 
-		Material* material = renderer->GetMaterial();
-		material->SetData(eGPUParam::Int_1, &mesh.state);
+		dru::Material* material = renderer->GetMaterial();
+		material->SetData(dru::eGPUParam::Int_1, &mesh.state);
 		tr->fixedUpdate();
 
 		dru::Camera::SetGpuViewMatrix(dru::renderer::mainCamera->GetViewMatrix());
@@ -253,8 +257,8 @@ namespace gui
 
 		// Setup Platform/Renderer backends
 		ImGui_ImplWin32_Init(application.GetHwnd());
-		ImGui_ImplDX11_Init(dru::graphics::GetDevice()->GetID3D11Device()
-			, dru::graphics::GetDevice()->GetDeviceContext().Get());
+		ImGui_ImplDX11_Init(dru::GetDevice()->GetID3D11Device()
+			, dru::GetDevice()->GetDeviceContext().Get());
 
 		// Load Fonts
 		// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.

@@ -2,6 +2,8 @@
 #include "Texture.h"
 #include "Transform.h"
 #include "GameObj.h"
+#include "Material.h"
+#include "Mesh.h"
 
 namespace dru
 {

@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine.h"
 #include "EngineResource.h"
+#include "SimpleMath.h"
 
 namespace dru
 {

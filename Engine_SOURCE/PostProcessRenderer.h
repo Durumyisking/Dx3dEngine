@@ -3,6 +3,7 @@
 
 namespace dru
 {
+	class PostProcess;
     class PostProcessRenderer :
         public BaseRenderer
     {

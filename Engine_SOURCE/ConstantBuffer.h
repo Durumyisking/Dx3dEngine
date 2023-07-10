@@ -3,7 +3,7 @@
 
 using namespace dru::enums;
 
-namespace dru::graphics
+namespace dru
 {
 	class ConstantBuffer : GpuBuffer
 	{

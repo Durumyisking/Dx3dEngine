@@ -6,7 +6,7 @@
 
 using namespace dru::renderer;
 
-namespace dru::graphics
+namespace dru
 {
 	class Material : public Resource
 	{

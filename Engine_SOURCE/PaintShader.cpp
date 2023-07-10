@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "TimeMgr.h"
 
-namespace dru::graphics
+namespace dru
 {
 	PaintShader::PaintShader()
 		: mTarget(nullptr)

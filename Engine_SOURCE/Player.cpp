@@ -1,10 +1,9 @@
 #include "Player.h"
-#include "CameraScript.h"
-#include "GameObj.h"
 #include "RigidBody.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "TimeMgr.h"
 #include "PlayerScript.h"
+#include "MeshRenderer.h"
 
 namespace dru
 {

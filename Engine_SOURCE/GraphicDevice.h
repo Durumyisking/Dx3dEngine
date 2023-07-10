@@ -1,6 +1,6 @@
 #pragma once
 #include "Graphics.h"
-namespace dru::graphics
+namespace dru
 {
 	class GraphicDevice
 	{

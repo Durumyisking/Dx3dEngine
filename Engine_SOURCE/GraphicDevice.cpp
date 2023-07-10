@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "Mesh.h"
 #include "Shader.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "Texture.h"
 #include "ResourceMgr.h"
 
@@ -15,7 +15,7 @@
 extern dru::Application application;
 
 
-namespace dru::graphics
+namespace dru
 {
 	GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 	{
@@ -28,7 +28,7 @@ namespace dru::graphics
 			 5. Swapchain을 이용하여 최종 디바이스(디스플레이)에 화면을 그려준다.
 		*/
 
-		graphics::GetDevice() = this;
+		dru::GetDevice() = this;
 
 		HWND hwnd = application.GetHwnd(); // 윈도우 핸들 얻어옴
 				
@@ -355,22 +355,22 @@ namespace dru::graphics
 	{
 		switch (_Stage)
 		{
-		case dru::graphics::eShaderStage::VS:
+		case dru::eShaderStage::VS:
 			mContext->VSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
-		case dru::graphics::eShaderStage::HS:
+		case dru::eShaderStage::HS:
 			mContext->HSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
-		case dru::graphics::eShaderStage::DS:
+		case dru::eShaderStage::DS:
 			mContext->DSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
-		case dru::graphics::eShaderStage::GS:
+		case dru::eShaderStage::GS:
 			mContext->GSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
-		case dru::graphics::eShaderStage::PS:
+		case dru::eShaderStage::PS:
 			mContext->PSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
-		case dru::graphics::eShaderStage::CS:
+		case dru::eShaderStage::CS:
 			mContext->CSSetConstantBuffers(static_cast<UINT>(_Type), 1, &_Buffer);
 			break;
 		default:
@@ -382,22 +382,22 @@ namespace dru::graphics
 	{
 		switch (_Stage)
 		{
-		case dru::graphics::eShaderStage::VS:
+		case dru::eShaderStage::VS:
 			mContext->VSSetShaderResources(_Slot, 1, _ppShaderResourceViews);
 			break;
-		case dru::graphics::eShaderStage::HS:
+		case dru::eShaderStage::HS:
 			mContext->HSSetShaderResources(_Slot, 1, _ppShaderResourceViews);
 			break;
-		case dru::graphics::eShaderStage::DS:
+		case dru::eShaderStage::DS:
 			mContext->DSSetShaderResources(_Slot, 1, _ppShaderResourceViews);
 			break;
-		case dru::graphics::eShaderStage::GS:
+		case dru::eShaderStage::GS:
 			mContext->GSSetShaderResources(_Slot, 1, _ppShaderResourceViews);
 			break;
-		case dru::graphics::eShaderStage::PS:
+		case dru::eShaderStage::PS:
 			mContext->PSSetShaderResources(_Slot, 1, _ppShaderResourceViews);
 			break;
-		case dru::graphics::eShaderStage::CS:
+		case dru::eShaderStage::CS:
 			mContext->CSSetShaderResources(_Slot, 1, _ppShaderResourceViews);
 			break;
 		default:
@@ -414,19 +414,19 @@ namespace dru::graphics
 	{
 		switch (_Stage)
 		{
-		case dru::graphics::eShaderStage::VS:
+		case dru::eShaderStage::VS:
 			mContext->VSSetSamplers(_Slot, _NumSamplers, _ppSamplerState);
 			break;
-		case dru::graphics::eShaderStage::HS:
+		case dru::eShaderStage::HS:
 			mContext->HSSetSamplers(_Slot, _NumSamplers, _ppSamplerState);
 			break;
-		case dru::graphics::eShaderStage::DS:
+		case dru::eShaderStage::DS:
 			mContext->DSSetSamplers(_Slot, _NumSamplers, _ppSamplerState);
 			break;
-		case dru::graphics::eShaderStage::GS:
+		case dru::eShaderStage::GS:
 			mContext->GSSetSamplers(_Slot, _NumSamplers, _ppSamplerState);
 			break;
-		case dru::graphics::eShaderStage::PS:
+		case dru::eShaderStage::PS:
 			mContext->PSSetSamplers(_Slot, _NumSamplers, _ppSamplerState);
 			break;
 		default:

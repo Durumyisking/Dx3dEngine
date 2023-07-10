@@ -1,7 +1,6 @@
 #include "ComputeShader.h"
-#include "GraphicDevice.h"
 
-namespace dru::graphics
+namespace dru
 {
 	ComputeShader::ComputeShader(UINT threadGroupX, UINT threadGroupY, UINT threadGroupZ)
 		: Resource(eResourceType::ComputeShader)
@@ -64,7 +63,7 @@ namespace dru::graphics
 		}
 
 
-		graphics::GetDevice()->CreateComputeShader(mCSBlob->GetBufferPointer()
+		dru::GetDevice()->CreateComputeShader(mCSBlob->GetBufferPointer()
 			, mCSBlob->GetBufferSize()
 			, nullptr
 			, mCS.GetAddressOf());

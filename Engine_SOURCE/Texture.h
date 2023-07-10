@@ -12,7 +12,7 @@
 
 
 
-namespace dru::graphics
+namespace dru
 {
 
 	class Texture : public Resource

@@ -1,5 +1,5 @@
 #include "Scene.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "Layer.h"
 
 namespace dru

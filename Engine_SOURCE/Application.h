@@ -1,6 +1,5 @@
 #pragma once
 #include "Engine.h"
-#include "Graphics.h"
 #include "GraphicDevice.h"
 
 
@@ -47,7 +46,7 @@ namespace dru
 
 	private:
 		bool initalized = false;
-		std::unique_ptr<graphics::GraphicDevice> graphicDevice;
+		std::unique_ptr<dru::GraphicDevice> graphicDevice;
 
 		HWND mHwnd;
 		HDC	 mHdc;

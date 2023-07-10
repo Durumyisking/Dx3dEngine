@@ -152,11 +152,6 @@ namespace dru
 		(Dir).Normalize(mCamDir);
 	}
 
-	CameraScript* Camera::GetCamScript()
-	{
-		return GetOwner()->GetScript<CameraScript>();
-	}
-
 	void Camera::sortGameObjects()
 	{
 		mOpaqueGameObjects.clear();
@@ -228,20 +223,20 @@ namespace dru
 
 		Material* material = renderer->GetMaterial();
 
-		dru::graphics::eRenderingMode mode = material->GetRenderingMode();
+		dru::eRenderingMode mode = material->GetRenderingMode();
 
 		switch (mode)
 		{
-		case dru::graphics::eRenderingMode::Opaque:
+		case dru::eRenderingMode::Opaque:
 			mOpaqueGameObjects.push_back(obj);
 			break;
-		case dru::graphics::eRenderingMode::Cutout:
+		case dru::eRenderingMode::Cutout:
 			mCutoutGameObjects.push_back(obj);
 			break;
-		case dru::graphics::eRenderingMode::Transparent:
+		case dru::eRenderingMode::Transparent:
 			mTransparentGameObjects.push_back(obj);
 			break;
-		case dru::graphics::eRenderingMode::PostProcess:
+		case dru::eRenderingMode::PostProcess:
 			mPostProcessGameObjects.push_back(obj);
 			break;
 		default:
