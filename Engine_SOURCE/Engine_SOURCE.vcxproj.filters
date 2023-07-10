@@ -325,6 +325,7 @@
     <ClInclude Include="InputMgr.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="FileMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -491,6 +492,7 @@
     <ClCompile Include="InputMgr.cpp">
       <Filter>Input</Filter>
     </ClCompile>
+    <ClCompile Include="FileMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">
