@@ -4,12 +4,14 @@
 #include "Application.h"
 #include "ConstantBuffer.h"
 #include "TimeMgr.h"
-#include "Input.h"
+#include "InputMgr.h"
+#include "Material.h"
+#include "BaseRenderer.h"
 
 
 namespace dru
 {
-	CFadeScript::CFadeScript()
+	FadeScript::FadeScript()
 		: mFadeValue(1.f)
 		, mFadeType(1)
 		, mStart(1)
@@ -19,30 +21,30 @@ namespace dru
 	{
 	}
 
-	CFadeScript::~CFadeScript()
+	FadeScript::~FadeScript()
 	{
 	}
 
-	void CFadeScript::Initialize()
+	void FadeScript::Initialize()
 	{
 	}
 
-	void CFadeScript::update()
+	void FadeScript::update()
 	{
 	}
 
-	void CFadeScript::fixedUpdate()
+	void FadeScript::fixedUpdate()
 	{
 	}
 
-	void CFadeScript::render()
+	void FadeScript::render()
 	{
 		if (1 == mStart)
 		{
-			mElapsedTime += CTimeMgr::DeltaTime();
+			mElapsedTime += DT;
 
-			CBaseRenderer* renderer = GetOwner()->GetComponent<CBaseRenderer>();
-			std::shared_ptr<CMaterial> material = renderer->GetMaterial();
+			BaseRenderer* renderer = GetOwner()->GetComponent<BaseRenderer>();
+			dru::Material* material = renderer->GetMaterial();
 
 			renderer::MaterialCB data = {};
 
@@ -58,7 +60,7 @@ namespace dru
 
 	}
 
-	void CFadeScript::restart(int _fadeType)
+	void FadeScript::restart(int _fadeType)
 	{
 		mFadeType = _fadeType;
 		mTime = 0;

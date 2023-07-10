@@ -1,18 +1,18 @@
 #pragma once
-#include "Graphics.h"
-#include "Resource.h"
+#include "EngineResource.h"
+#include "GraphicDevice.h"
 
-namespace dru::graphics
+namespace dru
 {
-	class CComputeShader : public CResource
+	class ComputeShader : public Resource
 	{
 	public:
-		CComputeShader(UINT threadGroupX, UINT threadGroupY, UINT threadGroupZ);
-		CComputeShader();
-		virtual ~CComputeShader();
+		ComputeShader(UINT threadGroupX, UINT threadGroupY, UINT threadGroupZ);
+		ComputeShader();
+		virtual ~ComputeShader();
 
 		virtual HRESULT Load(const std::wstring& path);
-		void Create(const std::wstring& _Path, const std::string& _funcName);
+		void Create(const std::wstring& path, const std::string& funcName);
 		void OnExcute();
 
 		virtual void Bind();

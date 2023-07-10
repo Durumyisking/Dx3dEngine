@@ -1,36 +1,30 @@
 #pragma once
 #include "Script.h"
-#include "Player.h"
 
 namespace dru
 {
-    // Èçµé¸² È¿°ú¸¦ À§ÇÑ ±¸Á¶Ã¼
+    // í”ë“¤ë¦¼ íš¨ê³¼ë¥¼ ìœ„í•œ êµ¬ì¡°ì²´
     struct ShakeParams {
-        float magnitude;  // Èçµé¸² Å©±â
-        float duration;   // Èçµé¸² Áö¼Ó ½Ã°£
+        float magnitude;  // í”ë“¤ë¦¼ í¬ê¸°
+        float duration;   // í”ë“¤ë¦¼ ì§€ì† ì‹œê°„
     };
 
-    class CCameraScript :
-        public CScript
+    class Camera;
+    class CameraScript :
+        public Script
     {
     public:
-        CCameraScript();
-        virtual ~CCameraScript();
+        CameraScript();
+        virtual ~CameraScript();
 
         virtual void Initialize() final;
         virtual void update() final;
         virtual void fixedUpdate() final;
         virtual void render() final;
 
-<<<<<<< Updated upstream
-        virtual void OnCollisionEnter(CCollider2D* _oppo);
-        virtual void OnCollision(CCollider2D* _oppo);
-        virtual void OnCollisionExit(CCollider2D* _oppo);
-=======
         virtual void OnCollisionEnter(Collider2D* oppo);
         virtual void OnCollision(Collider2D* oppo);
         virtual void OnCollisionExit(Collider2D* oppo);
->>>>>>> Stashed changes
 
         void KeyBoardMove();
         void TargetMove();
@@ -41,9 +35,9 @@ namespace dru
 
 
     private:
-        CCamera* mCameraObject;
-        CTransform* mTransform;
-        CGameObj* mTarget;
+        Camera* mCameraObject;
+        Transform* mTransform;
+        GameObj* mTarget;
         Vector3 mLookAt;
 
         float	mSpeed;

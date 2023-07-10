@@ -5,8 +5,8 @@
 
 namespace dru
 {
-	CRigidBody::CRigidBody()
-		: CComponent(eComponentType::RigidBody)
+	RigidBody::RigidBody()
+		: Component(eComponentType::RigidBody)
 		, mForce(Vector3::Zero)
 		, mAccel(Vector3::Zero)
 		, mVelocity(Vector3::Zero)
@@ -21,15 +21,15 @@ namespace dru
 	{
 	}
 
-	CRigidBody::~CRigidBody()
+	RigidBody::~RigidBody()
 	{
 	}
 
-	void CRigidBody::Initialize()
+	void RigidBody::Initialize()
 	{
 	}
 
-	void CRigidBody::update()
+	void RigidBody::update()
 	{
 		if (mbSwitch)
 		{
@@ -41,7 +41,7 @@ namespace dru
 				mAccel += mCurrentGravity;
 			}
 
-			mVelocity += mAccel * CTimeMgr::DeltaTime();
+			mVelocity += mAccel * DT;
 
 			CalculateFriction();
 
@@ -55,16 +55,16 @@ namespace dru
 		}
 	}
 
-	void CRigidBody::fixedUpdate()
+	void RigidBody::fixedUpdate()
 	{
 	}
 
-	void CRigidBody::render()
+	void RigidBody::render()
 	{
 	}
 
 
-	void CRigidBody::SetAccelFromForce()
+	void RigidBody::SetAccelFromForce()
 	{
 		float fForce = mForce.Length();
 
@@ -78,14 +78,14 @@ namespace dru
 		}
 	}
 
-	void CRigidBody::CalculateFriction()
+	void RigidBody::CalculateFriction()
 	{
 		if (mVelocity != Vector3::Zero && !mbOnAir)
 		{
 			Vector3 FricDir = -mVelocity;
 			FricDir.Normalize();
 
-			Vector3 Friction = FricDir * mFricCoeff * CTimeMgr::DeltaTime();
+			Vector3 Friction = FricDir * mFricCoeff * DT;
 
 			mAccel += Friction;
 
@@ -100,7 +100,7 @@ namespace dru
 		}
 	}
 
-	void CRigidBody::MaxVelocityCheck()
+	void RigidBody::MaxVelocityCheck()
 	{
 		if (mMaxSpeed.x < fabs(mVelocity.x))
 		{
@@ -114,7 +114,7 @@ namespace dru
 		}
 	}
 
-	void CRigidBody::objMove()
+	void RigidBody::objMove()
 	{
 		float Speed = mVelocity.Length();
 
@@ -127,11 +127,11 @@ namespace dru
 
 			Vector3 Pos = GetOwner()->GetPos();
 			
-			Pos.x += mVelocity.x * CTimeMgr::DeltaTime();
+			Pos.x += mVelocity.x * DT;
 
 			if (!(!mbOnAir && mVelocity.y < 0.f))
 			{
-				Pos.y += mVelocity.y * CTimeMgr::DeltaTime();
+				Pos.y += mVelocity.y * DT;
 			}
 
 			GetOwner()->SetPos(Pos);

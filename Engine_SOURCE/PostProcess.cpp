@@ -3,19 +3,19 @@
 #include "Application.h"
 #include "PostProcessRenderer.h"
 
-extern dru::CApplication application;
+extern dru::Application application;
 
 namespace dru
 {
-	CPostProcess::CPostProcess()
+	PostProcess::PostProcess()
 		: mPostProcessMaterial(nullptr)
 		, mConstantBuffer{}
 		, mRenderer(nullptr)
 	{
 		mConstantBuffer.Resolution = application.WinResolution();
 
-		mRenderer = AddComponent<CPostProcessRenderer>(eComponentType::Renderer);
-		std::shared_ptr<CMaterial> mateiral = CResources::Find<CMaterial>(L"PostProcessMaterial");
+		mRenderer = AddComponent<PostProcessRenderer>(eComponentType::Renderer);
+		Material* mateiral = GETSINGLE(ResourceMgr)->Find<Material>(L"PostProcessMaterial");
 		mRenderer->SetMaterial(mateiral);
 		mRenderer->SetPostProcessOwner(this);
 
@@ -23,35 +23,35 @@ namespace dru
 		SetScale(Vector3(16.0f, 9.0f, 1.0f));
 	}
 
-	CPostProcess::~CPostProcess()
+	PostProcess::~PostProcess()
 	{
 	}
 
-	void CPostProcess::Initialize()
+	void PostProcess::Initialize()
 	{
-		CGameObj::Initialize();
+		GameObj::Initialize();
 	}
 
-	void CPostProcess::update()
+	void PostProcess::update()
 	{
-		mConstantBuffer.ElapsedTime += CTimeMgr::DeltaTime();
+		mConstantBuffer.ElapsedTime += DT;
 
-		CGameObj::update();
+		GameObj::update();
 	}
 
-	void CPostProcess::fixedUpdate()
+	void PostProcess::fixedUpdate()
 	{
-		CGameObj::fixedUpdate();
+		GameObj::fixedUpdate();
 	}
 
-	void CPostProcess::render()
+	void PostProcess::render()
 	{
-		CGameObj::render();
+		GameObj::render();
 	}
 
-	void CPostProcess::Bind()
+	void PostProcess::Bind()
 	{
-		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::PostProcess];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::PostProcess)];
 		cb->SetData(&mConstantBuffer);
 		cb->Bind(eShaderStage::VS);
 		cb->Bind(eShaderStage::PS);
@@ -59,15 +59,15 @@ namespace dru
 
 	}
 
-	void CPostProcess::Clear()
+	void PostProcess::Clear()
 	{
-		CConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::PostProcess];
+		ConstantBuffer* pCB = renderer::constantBuffers[static_cast<UINT>(eCBType::PostProcess)];
 		pCB->Clear();
 	}
 
-	void CPostProcess::SetMaterial(std::wstring _Key)
+	void PostProcess::SetMaterial(std::wstring _Key)
 	{
-		std::shared_ptr<CMaterial> mateiral = CResources::Find<CMaterial>(_Key);
+		Material* mateiral = GETSINGLE(ResourceMgr)->Find<Material>(_Key);
 		mRenderer->SetMaterial(mateiral);
 	}
 

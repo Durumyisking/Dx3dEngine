@@ -1,16 +1,17 @@
 #include "CameraScript.h"
 #include "Transform.h"
 #include "GameObj.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "TimeMgr.h"
 #include "Camera.h"
 
 #include "Scene.h"
 #include "SceneMgr.h"
+#include "SimpleMath.h"
 
 namespace dru
 {
-	CCameraScript::CCameraScript()
+	CameraScript::CameraScript()
 		: mCameraObject(nullptr)
 		, mTransform(nullptr)
 		, mTarget(nullptr)
@@ -24,26 +25,26 @@ namespace dru
 	{
 	}
 
-	CCameraScript::~CCameraScript()
+	CameraScript::~CameraScript()
 	{
 	}
 
-	void CCameraScript::Initialize()
+	void CameraScript::Initialize()
 	{
-		mCameraObject = GetOwner()->GetComponent<CCamera>();
-		mTransform = GetOwner()->GetComponent<CTransform>();
+		mCameraObject = GetOwner()->GetComponent<Camera>();
+		mTransform = GetOwner()->GetComponent<Transform>();
 
 	}
 
-	void CCameraScript::update()
+	void CameraScript::update()
 	{
 		mLookAt = mTransform->GetPosition();
 
-		mTarget = mCameraObject->mTargetObj;
-		mSpeed = mCameraObject->mCamSpeed;
+		mTarget = mCameraObject->GetTarget();
+		mSpeed = mCameraObject->GetCamSpeed();
 		mCamStep = 0.f;
 
-		mCamStep = mSpeed * CTimeMgr::DeltaTimeConstant();
+		mCamStep = mSpeed * GETSINGLE(TimeMgr)->DeltaTimeConstant();
 		
 		KeyBoardMove();
 		TargetMove();
@@ -52,86 +53,75 @@ namespace dru
 		mTransform->SetPosition(mLookAt);
 	}
 
-	void CCameraScript::fixedUpdate()
+	void CameraScript::fixedUpdate()
 	{
 	}
 
-	void CCameraScript::render()
+	void CameraScript::render()
 	{
 	}
 
-<<<<<<< Updated upstream
-	void CCameraScript::OnCollisionEnter(CCollider2D* _oppo)
-=======
+
 	void CameraScript::OnCollisionEnter(Collider2D* oppo)
->>>>>>> Stashed changes
 	{
 
 	}
 
-<<<<<<< Updated upstream
-	void CCameraScript::OnCollision(CCollider2D* _oppo)
-=======
 	void CameraScript::OnCollision(Collider2D* oppo)
->>>>>>> Stashed changes
 	{
 		
 	}
 
-<<<<<<< Updated upstream
-	void CCameraScript::OnCollisionExit(CCollider2D* _oppo)
-=======
 	void CameraScript::OnCollisionExit(Collider2D* oppo)
->>>>>>> Stashed changes
 	{
 		
 	}
 
-	void CCameraScript::KeyBoardMove()
+	void CameraScript::KeyBoardMove()
 	{
 		// Keyboard Move
 
-		if (CInput::GetKeyState(eKeyCode::U) == eKeyState::DOWN)
+		if (KEY_DOWN(U))
 		{
-			mLookAt += 10.f * mTransform->Up() * CTimeMgr::DeltaTime();
+			mLookAt += 10.f * mTransform->Up() * DT;
 		}
-		if (CInput::GetKeyState(eKeyCode::J) == eKeyState::DOWN)
+		if (KEY_DOWN(J))
 		{
-			mLookAt += 10.f * -mTransform->Up() * CTimeMgr::DeltaTime();
+			mLookAt += 10.f * -mTransform->Up() * DT;
 		}
-		if (CInput::GetKeyState(eKeyCode::H) == eKeyState::DOWN)
+		if (KEY_DOWN(H))
 		{
-			mLookAt += 10.f * -mTransform->Right() * CTimeMgr::DeltaTime();
+			mLookAt += 10.f * -mTransform->Right() * DT;
 		}
-		if (CInput::GetKeyState(eKeyCode::K) == eKeyState::DOWN)
+		if (KEY_DOWN(K))
 		{
-			mLookAt += 10.f * mTransform->Right() * CTimeMgr::DeltaTime();
+			mLookAt += 10.f * mTransform->Right() * DT;
 		}
-		if (CInput::GetKeyState(eKeyCode::P) == eKeyState::DOWN)
+		if (KEY_DOWN(P))
 		{
-			mLookAt -= 10.f * mTransform->Forward() * CTimeMgr::DeltaTime();
+			mLookAt -= 10.f * mTransform->Forward() * DT;
 		}
-		if (CInput::GetKeyState(eKeyCode::O) == eKeyState::DOWN)
+		if (KEY_DOWN(O))
 		{
-			mLookAt += 10.f * mTransform->Forward() * CTimeMgr::DeltaTime();
+			mLookAt += 10.f * mTransform->Forward() * DT;
 		}
 
-		if (CInput::GetKeyDown(eKeyCode::Q))
+		if (KEY_DOWN(Q))
 		{
-			mTransform->AddRotationX(20.f * CTimeMgr::DeltaTime());
+			mTransform->AddRotationX(30.f * DT);
 		}
-		if (CInput::GetKeyDown(eKeyCode::W))
+		if (KEY_DOWN(W))
 		{
-			mTransform->AddRotationY(20.f * CTimeMgr::DeltaTime());
+			mTransform->AddRotationY(30.f * DT);
 		}
-		if (CInput::GetKeyDown(eKeyCode::E))
+		if (KEY_DOWN(E))
 		{
-			mTransform->AddRotationZ(20.f * CTimeMgr::DeltaTime());
+			mTransform->AddRotationZ(30.f * DT);
 		}
 
 	}
 
-	void CCameraScript::TargetMove()
+	void CameraScript::TargetMove()
 	{
 		// Target Move
 		if (mTarget)
@@ -140,39 +130,35 @@ namespace dru
 				mTarget = nullptr;
 			else
 			{
-				if (mCamStep > mCameraObject->mFarDist)
+				if (mCamStep > mCameraObject->GetFarDistFromTarget())
 				{
-					mLookAt.x = mCameraObject->mTargetObj->GetPos().x;
-					mLookAt.y = mCameraObject->mTargetObj->GetPos().y;
+					mLookAt.x = mCameraObject->GetTarget()->GetPos().x;
+					mLookAt.y = mCameraObject->GetTarget()->GetPos().y;
 
-					mCameraObject->mTargetObj = nullptr;
+					mCameraObject->SetTarget(nullptr);
 				}
 				else
 				{
-					mLookAt += mCameraObject->mCamDir * mCamStep;
+					mLookAt += mCameraObject->GetCamDir() * mCamStep;
 				}
 			}
 		}
 	}
 
-<<<<<<< Updated upstream
-	void CCameraScript::MakeCamShake(float _duration, float _Magnitude)
-=======
 	void CameraScript::MakeCamShake(float duration, float magnitude)
->>>>>>> Stashed changes
 	{
 		ShakeParams sp = {};
 		sp.duration = duration;
 		sp.magnitude = magnitude;
-		renderer::mainCamera->GetCamScript()->Shake(sp);
+		Shake(sp);
 	}
 
-	void CCameraScript::Shake(const ShakeParams& params)
+	void CameraScript::Shake(const ShakeParams& params)
 	{
 		if (mbShaking) 
 		{
-			// »õ·Î¿î Èçµé±â È¿°ú µé¾î°¡¸é
-			// ÀÌÀü Èçµé¸² È¿°ú¸¦ Ãë¼Ò
+			// ìƒˆë¡œìš´ í”ë“¤ê¸° íš¨ê³¼ ë“¤ì–´ê°€ë©´
+			// ì´ì „ í”ë“¤ë¦¼ íš¨ê³¼ë¥¼ ì·¨ì†Œ
 			CancelShake();
 		}
 
@@ -181,25 +167,25 @@ namespace dru
 		mShakeTimer= 0.f;
 	}
 
-	void CCameraScript::CancelShake()
+	void CameraScript::CancelShake()
 	{
 		mbShaking = false;
 		mShakeParams = ShakeParams();
 		mShakeTimer = 0.f;
 	}
 
-	void CCameraScript::ShakeMove()
+	void CameraScript::ShakeMove()
 	{
 		if (mbShaking)
 		{
-			mShakeTimer += CTimeMgr::DeltaTimeConstant();
+			mShakeTimer += GETSINGLE(TimeMgr)->DeltaTimeConstant();
 			if (mShakeTimer >= mShakeParams.duration)
 			{
-				// Èçµé¸² Áö¼Ó ½Ã°£ÀÌ Áö³ª¸é È¿°ú Á¾·á
+				// í”ë“¤ë¦¼ ì§€ì† ì‹œê°„ì´ ì§€ë‚˜ë©´ íš¨ê³¼ ì¢…ë£Œ
 				CancelShake();
 			}
 			else {				
-				// Èçµé¸² È¿°ú °è»ê
+				// í”ë“¤ë¦¼ íš¨ê³¼ ê³„ì‚°
 				float magnitude = mShakeParams.magnitude *
 					(1.f - mShakeTimer / mShakeParams.duration);
 

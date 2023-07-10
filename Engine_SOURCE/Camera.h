@@ -4,7 +4,6 @@
 namespace dru
 {
 	using namespace math;
-	class CCameraScript;
 
 	enum class eProjectionType
 	{
@@ -14,9 +13,8 @@ namespace dru
 	};
 
 
-	class CCamera : public CComponent
+	class Camera : public Component
 	{
-		friend class CCameraScript;
 	public:
 
 		__forceinline static Matrix& GetGpuViewMatrix() { return View; }
@@ -24,8 +22,8 @@ namespace dru
 		__forceinline static void SetGpuViewMatrix(Matrix view) { View = view; }
 		__forceinline static void SetGpuProjectionMatrix(Matrix projection) { Projection = projection; }
 
-		CCamera();
-		virtual ~CCamera();
+		Camera();
+		virtual ~Camera();
 
 		virtual void Initialize() final;
 		virtual void update() final;
@@ -38,7 +36,7 @@ namespace dru
 		void RegisterCameraInRenderer();
 
 		void TurnLayerMask(eLayerType layer, bool enable = true);
-		void EnableLayerMasks() { mLayerMask.set(); } // ¿¸∫Œ¥Ÿ true∑Œ }
+		void EnableLayerMasks() { mLayerMask.set(); } // Ï†ÑÎ∂ÄÎã§ trueÎ°ú }
 		void DisableLayerMasks() { mLayerMask.reset(); }
 
 		void SetProjectionType(eProjectionType type) { mType = type; }
@@ -50,18 +48,16 @@ namespace dru
 		Matrix& GetProjectionMatrix() { return mProjection; }
 
 
-<<<<<<< Updated upstream
-		void SetTarget(CGameObj* _Target);
-		CGameObj* GetTarget() const { return mTargetObj; }
-=======
 		void SetTarget(GameObj* target);
 		GameObj* GetTarget() const { return mTargetObj; }
->>>>>>> Stashed changes
+
+		float GetCamSpeed() const { return mCamSpeed; }
+
+		float GetFarDistFromTarget() const { return mFarDist; }
+		Vector3 GetCamDir() const { return mCamDir; }
 
 		void SmoothOn() { mSmooth = true; }
 		void SmoothOff() { mSmooth = false; }
-
-		CCameraScript* GetCamScript();
 
 	private:
 		void sortGameObjects();
@@ -69,37 +65,32 @@ namespace dru
 		void renderCutout();
 		void renderTransparent();
 		
-<<<<<<< Updated upstream
-		void pushGameObjectToRenderingModes(CGameObj* obj);
-		bool renderPassCheck(CGameObj* _obj);
-=======
 		void pushGameObjectToRenderingModes(GameObj* obj);
 		bool renderPassCheck(GameObj* obj);
->>>>>>> Stashed changes
 
 
 	private:
 		static Matrix View;
-		static Matrix Projection; // ∏µÁ objµÈ¿« «ÿ¥Á «‡∑ƒ¿∫ µø¿œ«‘
+		static Matrix Projection; // Î™®Îì† objÎì§Ïùò Ìï¥Îãπ ÌñâÎ†¨ÏùÄ ÎèôÏùºÌï®
 
 		Matrix mView;
 		Matrix mProjection;
 
 
 		eProjectionType mType;
-		float mAspectRatio; // ¡æ»æ∫Ò
+		float mAspectRatio; // Ï¢ÖÌö°ÎπÑ
 
 		float mNear;
 		float mFar;
 		float mScale;
 
-		std::bitset<(UINT)eLayerType::End> mLayerMask;
-		std::vector<CGameObj*> mOpaqueGameObjects;
-		std::vector<CGameObj*> mCutoutGameObjects;
-		std::vector<CGameObj*> mTransparentGameObjects;
-		std::vector<CGameObj*> mPostProcessGameObjects;
+		std::bitset<static_cast<UINT>(eLayerType::End)> mLayerMask;
+		std::vector<GameObj*> mOpaqueGameObjects;
+		std::vector<GameObj*> mCutoutGameObjects;
+		std::vector<GameObj*> mTransparentGameObjects;
+		std::vector<GameObj*> mPostProcessGameObjects;
 
-		CGameObj*	mTargetObj;
+		GameObj*	mTargetObj;
 		Vector3		mCamDir;
 
 		float		mFarDist;

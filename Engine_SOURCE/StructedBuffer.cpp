@@ -1,9 +1,9 @@
 #include "StructedBuffer.h"
 #include "GraphicDevice.h"
 
-namespace dru::graphics
+namespace dru
 {
-	CStructedBuffer::CStructedBuffer()
+	StructedBuffer::StructedBuffer()
 		: mSRV(nullptr)
 		, mUAV(nullptr)
 		, mType(eSRVType::SRV)
@@ -17,11 +17,11 @@ namespace dru::graphics
 
 	}
 
-	CStructedBuffer::~CStructedBuffer()
+	StructedBuffer::~StructedBuffer()
 	{
 	}
 
-	bool CStructedBuffer::Create(UINT _size, UINT _stride, eSRVType _type, void* _data, bool cpuAccess)
+	bool StructedBuffer::Create(UINT _size, UINT _stride, eSRVType _type, void* _data, bool cpuAccess)
 	{
 		mType = _type;
 		mSize = _size;
@@ -38,7 +38,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	void CStructedBuffer::SetData(void* _data, UINT _stride)
+	void StructedBuffer::SetData(void* _data, UINT _stride)
 	{
 		if (mStride < _stride) // 그니까 내가 셋데이타 해줄껀데 이 버퍼로 넘겨줄 데이터 개수가 들어온 stride보다 크면 
 		{
@@ -51,7 +51,7 @@ namespace dru::graphics
 		GetDevice()->CopyResource(buffer.Get(), mWriteBuffer.Get()); // writebuffer에 있는거 내 buffer도 들고있게함
 	}
 
-	void CStructedBuffer::GetData(void* data, UINT size) // 아직? 안쓰는중
+	void StructedBuffer::GetData(void* data, UINT size) // 아직? 안쓰는중
 	{
 		if (!mReadBuffer)
 		{
@@ -71,19 +71,19 @@ namespace dru::graphics
 		}
 	}
 
-	void CStructedBuffer::BindSRV(eShaderStage _stage, UINT _slot)
+	void StructedBuffer::BindSRV(eShaderStage _stage, UINT _slot)
 	{
 		mSRVSlot = _slot;
 
 		GetDevice()->BindShaderResource(_stage, _slot, mSRV.GetAddressOf());
 	}
-	void CStructedBuffer::BindUAV(eShaderStage stage, UINT slot)
+	void StructedBuffer::BindUAV(eShaderStage stage, UINT slot)
 	{
 		mUAVSlot = slot;
 		UINT i = -1;
 		GetDevice()->BindUnorderedAccessView(slot, 1, mUAV.GetAddressOf(), &i);
 	}
-	void CStructedBuffer::Clear()
+	void StructedBuffer::Clear()
 	{
 		ID3D11ShaderResourceView* srv = nullptr;
 		GetDevice()->BindShaderResource(eShaderStage::VS, mSRVSlot, &srv);
@@ -98,7 +98,7 @@ namespace dru::graphics
 		GetDevice()->BindUnorderedAccessView(mUAVSlot, 1, &uav, &i);
 
 	}
-	void CStructedBuffer::setDiscription()
+	void StructedBuffer::setDiscription()
 	{
 		desc.ByteWidth = mSize * mStride;
 		desc.StructureByteStride = mSize;
@@ -117,7 +117,7 @@ namespace dru::graphics
 			desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE;
 		}
 	}
-	bool CStructedBuffer::createBuffer(void* data)
+	bool StructedBuffer::createBuffer(void* data)
 	{
 		if (data)
 		{
@@ -135,7 +135,7 @@ namespace dru::graphics
 
 		return true;
 	}
-	bool CStructedBuffer::createView()
+	bool StructedBuffer::createView()
 	{
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 		srvDesc.BufferEx.NumElements = mStride;
@@ -157,7 +157,7 @@ namespace dru::graphics
 
 		return true;
 	}
-	bool CStructedBuffer::createRWBuffer()
+	bool StructedBuffer::createRWBuffer()
 	{
 		//mWriteBuffer(nullptr)
 		//mReadBuffer(nullptr)

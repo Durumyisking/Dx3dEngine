@@ -1,74 +1,75 @@
 #include "Scene.h"
-#include "Input.h"
+#include "InputMgr.h"
+#include "Layer.h"
 
 namespace dru
 {
-	CScene::CScene()
+	Scene::Scene()
 		: mDeleteObj(false)
-		, mType(CSceneMgr::eSceneType::End)
+		, mType(SceneMgr::eSceneType::End)
 		, mbPause(false)
 	{
-		mLayers.resize((UINT)eLayerType::End);
+		mLayers.resize(static_cast<UINT>(eLayerType::End));
 	}
-	CScene::~CScene()
+	Scene::~Scene()
 	{
 	}
-	void CScene::Initialize()
+	void Scene::Initialize()
 	{
-//		mLayers.resize((UINT)eLayerType::None);
+//		mLayers.resize(static_cast<UINT>(eLayerType::None);
 
 	}
 
-	void CScene::update()
+	void Scene::update()
 	{
-		for (CLayer& layer : mLayers)
+		for (Layer& layer : mLayers)
 		{
 			layer.update();
 		}
 	}
 
-	void CScene::fixedUpdate()
+	void Scene::fixedUpdate()
 	{
-		for (CLayer& layer : mLayers)
+		for (Layer& layer : mLayers)
 		{
 			layer.fixedUpdate();
 		}
 	}
 
-	void CScene::render()
+	void Scene::render()
 	{
 	}
 
-	void CScene::fontRender()
+	void Scene::fontRender()
 	{
-		for (CLayer& layer : mLayers)
+		for (Layer& layer : mLayers)
 		{
 			layer.fontRender();
 		}
 	}
 
-	void CScene::destroy()
+	void Scene::destroy()
 	{
-		for (CLayer& layer : mLayers)
+		for (Layer& layer : mLayers)
 		{
 			layer.destroy();
 		}
 	}
 
-	void CScene::Enter()
+	void Scene::Enter()
 	{
 		//Initialize();
-		for (CLayer& layer : mLayers)
+		for (Layer& layer : mLayers)
 		{
 			layer.Initialize();
 		}
 	}
 
-	void CScene::Exit()
+	void Scene::Exit()
 	{
 		if (mDeleteObj)
 		{
-			for (CLayer& layer : mLayers)
+			for (Layer& layer : mLayers)
 			{
 				layer.DeleteObject();
 			}
@@ -78,18 +79,18 @@ namespace dru
 		destroy();
 	}
 
-	void CScene::AddGameObject(CGameObj* _GameObj, eLayerType _eLayer)
+	void Scene::AddGameObject(GameObj* _GameObj, eLayerType _eLayer)
 	{
 		mLayers[static_cast<UINT>(_eLayer)].AddGameObject(_GameObj, _eLayer);
 	}
 
 
-	std::vector<CGameObj*> CScene::GetDontDestroyObjects()
+	std::vector<GameObj*> Scene::GetDontDestroyObjects()
 	{
-		std::vector<CGameObj*> allLayerDontDestroyObjs;
-		for (CLayer& layer : mLayers)
+		std::vector<GameObj*> allLayerDontDestroyObjs;
+		for (Layer& layer : mLayers)
 		{
-			std::vector<CGameObj*> dontDestroyObjs = layer.GetDontDestroyObjects();
+			std::vector<GameObj*> dontDestroyObjs = layer.GetDontDestroyObjects();
 
 			allLayerDontDestroyObjs.insert(allLayerDontDestroyObjs.end(), dontDestroyObjs.begin(), dontDestroyObjs.end());
 
@@ -98,10 +99,10 @@ namespace dru
 		return allLayerDontDestroyObjs;
 	}
 
-	const std::vector<CGameObj*>& CScene::GetGameObj(eLayerType _eLayer)
+	const std::vector<GameObj*>& Scene::GetGameObj(eLayerType _eLayer)
 	{
 
-		return mLayers[(UINT)_eLayer].GetGameObjects();
+		return mLayers[static_cast<UINT>(_eLayer)].GetGameObjects();
 	}
 
 }

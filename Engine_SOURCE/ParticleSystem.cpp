@@ -4,16 +4,16 @@
 #include "GameObj.h"
 #include "Transform.h"
 #include "Mesh.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "StructedBuffer.h"
 #include "Texture.h"
 #include "TimeMgr.h"
-
+#include "Renderer.h"
 
 namespace dru
 {
-	CParticleSystem::CParticleSystem()
-		: CBaseRenderer(eComponentType::Particle)
+	ParticleSystem::ParticleSystem()
+		: BaseRenderer(eComponentType::Particle)
 		, mParticle{}
 		, mBuffer{}
 		, mSharedBuffer{}
@@ -43,7 +43,7 @@ namespace dru
 	{
 	}
 
-	CParticleSystem::~CParticleSystem()
+	ParticleSystem::~ParticleSystem()
 	{
 		delete mParticle;
 		mParticle = nullptr;
@@ -53,29 +53,29 @@ namespace dru
 		mSharedBuffer = nullptr;
 	}
 
-	void CParticleSystem::Initialize()
+	void ParticleSystem::Initialize()
 	{
-		std::shared_ptr<CMesh> point = CResources::Find<CMesh>(L"Pointmesh");
+		Mesh* point = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Pointmesh");
 
 		SetMesh(point);
 
 //		mParticle = new Particle[mMaxParticles];
 
-		mBuffer = new CStructedBuffer();
+		mBuffer = new StructedBuffer();
 		mBuffer->Create(sizeof(Particle), mMaxParticles, eSRVType::UAV, mParticle, true);
-		mSharedBuffer = new CStructedBuffer();
+		mSharedBuffer = new StructedBuffer();
 		mSharedBuffer->Create(sizeof(ParticleShared), 1, eSRVType::UAV, nullptr, true);
 	}
 
-	void CParticleSystem::update()
+	void ParticleSystem::update()
 	{
 	}
 
-	void CParticleSystem::fixedUpdate()
+	void ParticleSystem::fixedUpdate()
 	{
 		float aliveTime = 0.1f / mFrequency;  // 프리퀀시가 높을수록 빨리생성 한번에 생성하는거
 		//누적시간
-		mElapsedTime += CTimeMgr::DeltaTime();
+		mElapsedTime += DT;
 		if (aliveTime < mElapsedTime)
 		{
 			float f = (mElapsedTime / aliveTime);
@@ -96,9 +96,9 @@ namespace dru
 		mCBData.endColor = mEndColor;
 
 		mCBData.maxParticles = mMaxParticles;
-		mCBData.simulationSpace = (UINT)mSimulationSpace;
+		mCBData.simulationSpace = static_cast<UINT>(mSimulationSpace);
 		mCBData.radius = mRadius;
-		mCBData.deltaTime = CTimeMgr::DeltaTime();
+		mCBData.deltaTime = DT;
 
 		mCBData.startSpeed = mStartSpeed;
 		mCBData.endSpeed = mEndSpeed;
@@ -107,8 +107,8 @@ namespace dru
 
 		mCBData.startAngle = mStartAngle;
 		mCBData.endAngle = mEndAngle;
-		mCBData.elapsedTime += CTimeMgr::DeltaTime();
-		mCBData.gravity += CTimeMgr::DeltaTime();
+		mCBData.elapsedTime += DT;
+		mCBData.gravity += DT;
 
 		mCBData.force = mStartSpeed;
 		mCBData.radian = mRadian;
@@ -122,7 +122,7 @@ namespace dru
 			mCBData.elapsedTime = 0.f;
 		}
 
-		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::ParticleSystem];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::ParticleSystem)];
 		cb->SetData(&mCBData);
 		cb->Bind(eShaderStage::All);
 
@@ -132,9 +132,9 @@ namespace dru
 		
 	}
 
-	void CParticleSystem::render() 
+	void ParticleSystem::render() 
 	{
-		GetOwner()->GetComponent<CTransform>()->SetConstantBuffer();
+		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 		mBuffer->BindSRV(eShaderStage::GS, 15);
 		mBuffer->BindSRV(eShaderStage::PS, 15);
 
@@ -150,7 +150,7 @@ namespace dru
 					, sin((float)i * -(XM_PI / (float)mMaxParticles)), 0.f, 1.f);
 	*/
 
-	void CParticleSystem::MakeParticleBufferData(Vector4 _StartPosition, UINT _MaxParticleCount, float _MinLifeTime, float _MaxLifeTime, float _Speed, float _Radian, UINT _Active)
+	void ParticleSystem::MakeParticleBufferData(Vector4 _StartPosition, UINT _MaxParticleCount, float _MinLifeTime, float _MaxLifeTime, float _Speed, float _Radian, UINT _Active)
 	{
 		mParticle = new Particle[_MaxParticleCount];
 		mStartPosition = _StartPosition;
@@ -166,8 +166,15 @@ namespace dru
 		}
 	}
 
+	void ParticleSystem::MakeConstantBufferData(std::wstring _ShaderName, renderer::ParticleSystemCB _CB)
+	{
+		mCS = GETSINGLE(ResourceMgr)->Find<ParticleShader>(_ShaderName);
+		mCBData = _CB;
+	}
 
-	void CParticleSystem::SetParticleDirection(const Vector3& _Dir)
+
+
+	void ParticleSystem::SetParticleDirection(const Vector3& _Dir)
 	{
 		float fAngle = atan2(_Dir.y, _Dir.x) * 180.f / XM_PI;
 

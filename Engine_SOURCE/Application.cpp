@@ -1,18 +1,19 @@
 #include "Application.h"
 #include "Renderer.h"
 #include "TimeMgr.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "SceneMgr.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "CollisionMgr.h"
 #include "FMod.h"
 #include "FontWrapper.h"
 
+
 namespace dru
 {
-	using namespace graphics;
+	;
 
-	CApplication::CApplication()
+	Application::Application()
 		: initalized(false)
 		, graphicDevice(nullptr)
 		, mHwnd{}
@@ -23,69 +24,93 @@ namespace dru
 		, mResolution(Vector2::Zero)
 	{
 	}
-	CApplication::~CApplication()
+	Application::~Application()
 	{
-//		CFmod::Release();
-		CSceneMgr::release();
-		CFontWrapper::Release();
+
 	}
 
-	void CApplication::Initialize()
+	void Application::Initialize()
 	{
-		CTimeMgr::Initialize();
-		CInput::Initialize();
-	//	CFmod::Initialize();
-		CCollisionMgr::Initialize();
+		GETSINGLE(TimeMgr)->Initialize();
+		GETSINGLE(InputMgr)->Initialize();
+		GETSINGLE(Fmod)->Initialize();
+		GETSINGLE(CollisionMgr)->Initialize();
 		renderer::Initialize();
-		CFontWrapper::Initialize();
-		CSceneMgr::Initialize();
+		GETSINGLE(FontWrapper)->Initialize();
+		GETSINGLE(SceneMgr)->Initialize();
 
 	}
-	void CApplication::update()
+	void Application::update()
 	{
-		CTimeMgr::update();
-		CInput::update();
-		CCollisionMgr::update();
-		CSceneMgr::update();
+		GETSINGLE(TimeMgr)->update();
+		GETSINGLE(InputMgr)->update();
+		GETSINGLE(CollisionMgr)->update();
+		GETSINGLE(SceneMgr)->update();
 	}
-	void CApplication::fixedUpdate()
+	void Application::fixedUpdate()
 	{
-		CCollisionMgr::fixedUpdate();
-		CSceneMgr::fixedUpdate();
+		GETSINGLE(CollisionMgr)->fixedUpdate();
+		GETSINGLE(SceneMgr)->fixedUpdate();
 	}
-	void CApplication::render()
+	void Application::render()
 	{
-		CTimeMgr::Render(mHdc);
-		CInput::Render(mHdc);
-		//		CCollisionMgr::render();
+		GETSINGLE(TimeMgr)->Render(mHdc);
+		GETSINGLE(InputMgr)->Render(mHdc);
+		//		CollisionMgr::render();
 		graphicDevice->Clear();
 		graphicDevice->AdjustViewPorts();
 
 		renderer::Render();
-		CSceneMgr::render();
-		CSceneMgr::fontRender();
+		GETSINGLE(SceneMgr)->render();
+		GETSINGLE(SceneMgr)->fontRender();
 	}
 
-	void CApplication::destroy()
+	void Application::destroy()
 	{
-		CSceneMgr::destory();
-
+		GETSINGLE(SceneMgr)->destory();
 	}
 
-	void CApplication::Run()
+	void Application::lateEvent()
+	{
+		GETSINGLE(SceneMgr)->LateEvent();
+	}
+
+	void Application::Run()
 	{
 		update();
 		fixedUpdate();
 		render();
+
+		// 프레임 종료 후 오브젝트 삭제 및 추가
 		destroy();
+		lateEvent();
 	}
 
-	void CApplication::Present()
+	void Application::Present()
 	{
 		graphicDevice->Present();
 	}
 
-	void CApplication::SetWindow(HWND _hwnd, UINT _width, UINT _height)
+	void Application::Release()
+	{
+		GETSINGLE(Fmod)->Release();
+		GETSINGLE(SceneMgr)->release();
+		GETSINGLE(FontWrapper)->Release();
+		GETSINGLE(ResourceMgr)->Release();
+	}
+
+	void Application::DestroySingle()
+	{
+		GETSINGLE(SceneMgr)->DestroyInstance();
+		GETSINGLE(FontWrapper)->DestroyInstance();
+		GETSINGLE(CollisionMgr)->DestroyInstance();
+		GETSINGLE(Fmod)->DestroyInstance();
+		GETSINGLE(InputMgr)->DestroyInstance();
+		GETSINGLE(TimeMgr)->DestroyInstance();
+		GETSINGLE(ResourceMgr)->DestroyInstance();
+	}
+
+	void Application::SetWindow(HWND _hwnd, UINT _width, UINT _height)
 	{
 		if (graphicDevice == nullptr)
 		{
@@ -95,8 +120,8 @@ namespace dru
 			mHeight = _height;
 
 			eValidationMode vaildationMode = eValidationMode::Disabled;
-			graphicDevice = std::make_unique<CGraphicDevice>();
-			//graphics::GetDevice() = graphicDevice.get();
+			graphicDevice = std::make_unique<GraphicDevice>();
+			//dru::GetDevice() = graphicDevice.get();
 		}
 
 		RECT rt = { 0, 0, (LONG)_width , (LONG)_height };
@@ -106,7 +131,7 @@ namespace dru
 		UpdateWindow(mHwnd);
 	}
 
-	Vector2 CApplication::GetResolutionRatio()
+	Vector2 Application::GetResolutionRatio()
 	{
 		RECT	windowRC;
 
@@ -120,17 +145,17 @@ namespace dru
 	}
 
 
-	void CApplication::DockingMenu()
+	void Application::DockingMenu()
 	{
 		SetMenu(mHwnd, mHmenu);
 		ChangeWindowSize(true);
 	}
-	void CApplication::DivideMenu()
+	void Application::DivideMenu()
 	{
 		SetMenu(mHwnd, nullptr);
 		ChangeWindowSize(false);
 	}
-	void CApplication::ChangeWindowSize(bool _bMenu)
+	void Application::ChangeWindowSize(bool _bMenu)
 	{
 		RECT rt = { 0, 0, static_cast<LONG>(mResolution.x), static_cast<LONG>(mResolution.y) };
 		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, _bMenu);

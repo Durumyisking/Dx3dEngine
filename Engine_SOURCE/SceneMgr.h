@@ -1,11 +1,16 @@
 #pragma once
 #include "Engine.h"
-#include "GameObj.h"
+
 namespace dru
 {
-	class CScene;
-	class CSceneMgr
+	class GameObj;
+	class Scene;
+	class SceneMgr
 	{
+		SINGLE(SceneMgr)
+	public:
+		using LateEventVector = std::vector<GameObj*>;
+
 	public:
 		enum class eSceneType
 		{
@@ -20,27 +25,33 @@ namespace dru
 
 	public:
 		// 클래스 내부에 있는것 처럼 보이지만 전역함수임 따라서 멤버변수를 알 수가 없음
-		static void Initialize();
-		static void update();
-		static void fixedUpdate();
-		static void render();
-		static void fontRender();
-		static void destory();
-		static void release();
-		static void LoadScene(eSceneType _Type);
+		void Initialize();
+		void update();
+		void fixedUpdate();
+		void render();
+		void fontRender();
+		void destory();
+		void release();
+		void LoadScene(eSceneType _Type);
+		void LateEvent(); // 렌더링까지 종료후 오브젝트 추가하는 함수
 
-		static void DontDestroyOnLoad(CGameObj* _GameObj);
+		void DontDestroyOnLoad(GameObj* _GameObj);
+
+		void AddEvent(GameObj* obj) { mLateEvent.emplace_back(obj); }
 
 		template <typename T>
-		static T* GetScene (eSceneType _Type)
+		T* GetScene (eSceneType _Type)
 		{
 			return dynamic_cast<T*>(mScenes[(static_cast<UINT>(_Type))]);
 		}
 
-	public:
-		static CScene* mScenes[(static_cast<UINT>(eSceneType::End))];	// 모든 씬 목록
-		static CScene* mActiveScene;
 
+		GETSET(Scene*, mActiveScene, ActiveScene)
+	private:
+		Scene* mScenes[(static_cast<UINT>(eSceneType::End))];	// 모든 씬 목록
+		Scene* mActiveScene;
+
+		LateEventVector mLateEvent;
 	};
 }
 

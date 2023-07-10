@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine.h"
+#include "CommonInclude.h"
 
 
 
@@ -20,6 +20,7 @@ using namespace DirectX::PackedVector;
 namespace dru::math
 {
     struct Vector2;
+    struct Vector3;
     struct Vector4;
     struct Matrix;
     struct Quaternion;
@@ -668,7 +669,7 @@ namespace dru::math
 
         static void Transform(const Plane& plane, const Quaternion& rotation, Plane& result) noexcept;
         static Plane Transform(const Plane& plane, const Quaternion& rotation) noexcept;
-        // CInput quaternion must be the inverse transpose of the transformation
+        // Input quaternion must be the inverse transpose of the transformation
     };
 
     //------------------------------------------------------------------------------

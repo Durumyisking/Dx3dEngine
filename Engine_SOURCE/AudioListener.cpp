@@ -5,36 +5,36 @@
 
 namespace dru
 {
-	CAudioListener::CAudioListener()
-		: CComponent(eComponentType::AudioListener)
+	AudioListener::AudioListener()
+		: Component(eComponentType::AudioListener)
 	{
 	}
 
-	CAudioListener::~CAudioListener()
+	AudioListener::~AudioListener()
 	{
 	}
 
-	void CAudioListener::Initialize()
+	void AudioListener::Initialize()
 	{
 	}
 
-	void CAudioListener::update()
+	void AudioListener::update()
 	{
 	}
 
-	void CAudioListener::fixedUpdate()
+	void AudioListener::fixedUpdate()
 	{
-		CTransform* tr = GetOwner()->GetComponent<CTransform>();
+		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector3 pos = tr->GetWorldPosition();
 		pos.z = 0.f;
 		Vector3 foward = tr->Forward();
 		Vector3 up = tr->Up();
 
 		Vector3 vel = { 0.0f, 0.0f, 0.0f };
-		CFmod::Set3DListenerAttributes(&pos, &vel, &foward, &up);
+		GETSINGLE(Fmod)->Set3DListenerAttributes(&pos, &vel, &foward, &up);
 	}
 
-	void CAudioListener::render()
+	void AudioListener::render()
 	{
 	}
 

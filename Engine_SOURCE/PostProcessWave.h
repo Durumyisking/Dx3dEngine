@@ -3,12 +3,12 @@
 
 namespace dru
 {
-    class CPostProcessWave :
-        public CPostProcess
+    class PostProcessWave :
+        public PostProcess
     {
 	public:
-		CPostProcessWave();
-		virtual ~CPostProcessWave();
+		PostProcessWave();
+		virtual ~PostProcessWave();
 
 		virtual void Initialize();
 		virtual void update();

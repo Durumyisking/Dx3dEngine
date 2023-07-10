@@ -2,18 +2,18 @@
 #include "Entity.h"
 #include "Graphics.h"
 
-namespace dru::graphics
+namespace dru
 {
-	class CStructedBuffer : public GpuBuffer // 구조체 상속 클래스?
+	class StructedBuffer : public GpuBuffer // 구조체 상속 클래스?
 	{
 	public:
-		CStructedBuffer();
-		~CStructedBuffer();
+		StructedBuffer();
+		~StructedBuffer();
 
-		bool Create(UINT _size, UINT _stride, graphics::eSRVType _type, void* _data, bool cpuAccess = false);
+		bool Create(UINT _size, UINT _stride, dru::eSRVType _type, void* _data, bool cpuAccess = false);
 		void SetData(void* _data, UINT _stride);
 		void GetData(void* data, UINT size = 0); 
-		void BindSRV(graphics::eShaderStage _stage, UINT _slot);
+		void BindSRV(dru::eShaderStage _stage, UINT _slot);
 		void BindUAV(eShaderStage stage, UINT slot);
 
 		void Clear();
@@ -32,7 +32,7 @@ namespace dru::graphics
 	Microsoft::WRL::ComPtr<ID3D11Buffer> mReadBuffer; private:
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> mSRV;
 		Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> mUAV;
-		graphics::eSRVType mType;
+		dru::eSRVType mType;
 
 		UINT mSize;
 		UINT mStride;

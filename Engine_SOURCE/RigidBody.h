@@ -5,8 +5,8 @@ using namespace dru::math;
 
 namespace dru
 {
-    class CRigidBody :
-        public CComponent
+    class RigidBody :
+        public Component
     {
 		// 오른쪽 기준
 #define DEGREE_90 dru::math::Vector3(0.f, 1.f, 0.f)
@@ -17,8 +17,8 @@ namespace dru
 
 
     public:
-        CRigidBody();
-        ~CRigidBody();
+        RigidBody();
+        ~RigidBody();
 
         virtual void Initialize();
         virtual void update();

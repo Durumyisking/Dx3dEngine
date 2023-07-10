@@ -4,29 +4,29 @@
 
 namespace dru
 {
-	CMesh::CMesh()
-		: CResource(eResourceType::Mesh)
+	Mesh::Mesh()
+		: Resource(eResourceType::Mesh)
 		, mVBDesc{}
 		, mIBDesc{}
 		, mIndexCount(0)
 	{
 	}
-	CMesh::~CMesh()
+	Mesh::~Mesh()
 	{
 	}
-	HRESULT CMesh::Load(const std::wstring& path)
+	HRESULT Mesh::Load(const std::wstring& path)
 	{
 		return E_NOTIMPL;
 	}
-	bool CMesh::CreateVertexBuffer(void* _Data, UINT _Count)
+	bool Mesh::CreateVertexBuffer(void* data, UINT count)
 	{
-		mVBDesc.ByteWidth = sizeof(renderer::Vertex) * _Count;
+		mVBDesc.ByteWidth = sizeof(renderer::Vertex) * count;
 		mVBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
 		mVBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
 		mVBDesc.CPUAccessFlags = 0; // 상수버퍼 통해서 값 변경할꺼임
 
 		D3D11_SUBRESOURCE_DATA subData = {};
-		subData.pSysMem = _Data;
+		subData.pSysMem = data;
 
 		if (!GetDevice()->CreateBuffer(&mVBDesc, &subData, mVertexBuffer.GetAddressOf()))
 			return false;
@@ -34,16 +34,16 @@ namespace dru
 		return true;
 	}
 
-	bool CMesh::CreateIndexBuffer(void* _Data, UINT _Count)
+	bool Mesh::CreateIndexBuffer(void* data, UINT count)
 	{
-		mIndexCount = _Count;
-		mIBDesc.ByteWidth = sizeof(UINT) * _Count;
+		mIndexCount = count;
+		mIBDesc.ByteWidth = sizeof(UINT) * count;
 		mIBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_INDEX_BUFFER;
 		mIBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
 		mIBDesc.CPUAccessFlags = 0; 
 
 		D3D11_SUBRESOURCE_DATA idxData = {};
-		idxData.pSysMem = _Data;
+		idxData.pSysMem = data;
 
 		if (!GetDevice()->CreateBuffer(&mIBDesc, &idxData, mIndexBuffer.GetAddressOf()))
 			return false;
@@ -52,7 +52,7 @@ namespace dru
 	}
 
 
-	void CMesh::BindBuffer()
+	void Mesh::BindBuffer()
 	{
 		UINT stride = sizeof(renderer::Vertex);
 		UINT offset = 0;
@@ -62,14 +62,14 @@ namespace dru
 	}
 
 
-	void CMesh::Render()
+	void Mesh::Render()
 	{
 		GetDevice()->DrawIndexed(mIndexCount, 0, 0);
 	}
 
-	void CMesh::RenderInstanced(UINT _Count)
+	void Mesh::RenderInstanced(UINT count)
 	{
-		GetDevice()->DrawIndexedInstanced(mIndexCount, _Count, 0, 0, 0);
+		GetDevice()->DrawIndexedInstanced(mIndexCount, count, 0, 0, 0);
 	}
 
 }

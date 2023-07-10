@@ -2,8 +2,8 @@
 
 namespace dru
 {
-	CAnimator::CAnimator()
-		: CComponent(eComponentType::Animator)
+	Animator::Animator()
+		: Component(eComponentType::Animator)
 		, mAnimations{}
 		, mEvents{}
 		, mCurrentAnimation(nullptr)
@@ -12,7 +12,7 @@ namespace dru
 	{
 	}
 
-	CAnimator::~CAnimator()
+	Animator::~Animator()
 	{
 		for (auto anim : mAnimations)
 		{
@@ -27,11 +27,11 @@ namespace dru
 
 	}
 
-	void CAnimator::Initialize()
+	void Animator::Initialize()
 	{
 	}
 
-	void CAnimator::update()
+	void Animator::update()
 	{
 		if (!mCurrentAnimation)
 			return;
@@ -66,38 +66,26 @@ namespace dru
 		}
 	}
 
-	void CAnimator::fixedUpdate()
+	void Animator::fixedUpdate()
 	{
 	}
 
-	void CAnimator::render()
+	void Animator::render()
 	{
 	}
 
-<<<<<<< Updated upstream
-	bool CAnimator::Create(const std::wstring& _name, std::shared_ptr<CTexture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
-=======
+
 	bool Animator::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, Vector2 ratio, float duration, bool reverse)
->>>>>>> Stashed changes
 	{
-		if (!atlas)
+		if (!_atlas)
 			return false;
 
-<<<<<<< Updated upstream
-		CAnimation* animation = FindAnimation(_name);
-		if (animation)
-			return false;
-
-		animation = new CAnimation();
-		animation->Create(_name, _atlas, _leftTop, _size, _offset, _spriteLength, _Ratio, _duration, _Reverse);
-=======
 		Animation* animation = FindAnimation(name);
 		if (animation)
 			return false;
 
 		animation = new Animation();
 		animation->Create(name, atlas, leftTop, size, offset, spriteLength, ratio, duration, reverse);
->>>>>>> Stashed changes
 
 		mAnimations.insert(std::make_pair(name, animation));
 
@@ -108,15 +96,10 @@ namespace dru
 		return true;
 	}
 
-<<<<<<< Updated upstream
-	CAnimation* CAnimator::FindAnimation(const std::wstring& _name)
-	{
-		std::map<std::wstring, CAnimation*>::iterator iter = mAnimations.find(_name);
-=======
+
 	Animation* Animator::FindAnimation(const std::wstring& name)
 	{
 		std::map<std::wstring, Animation*>::iterator iter = mAnimations.find(name);
->>>>>>> Stashed changes
 
 		if (mAnimations.end() == iter)
 		{
@@ -126,11 +109,8 @@ namespace dru
 		return iter->second;
 	}
 
-<<<<<<< Updated upstream
-	CAnimator::Events* CAnimator::FindEvents(const std::wstring& _name)
-=======
+
 	Animator::Events* Animator::FindEvents(const std::wstring& name)
->>>>>>> Stashed changes
 	{
 		std::map<std::wstring, Events*>::iterator iter = mEvents.find(name);
 
@@ -142,13 +122,10 @@ namespace dru
 		return iter->second;
 	}
 
-<<<<<<< Updated upstream
-	void CAnimator::Play(std::wstring _name, bool _bLoop)
-=======
+
 	void Animator::Play(std::wstring name, bool bLoop)
->>>>>>> Stashed changes
 	{
-		CAnimation* prevAnimation = mCurrentAnimation;
+		Animation* prevAnimation = mCurrentAnimation;
 		Events* events = nullptr;
 		if (prevAnimation)
 			events = FindEvents(mCurrentAnimation->GetAnimationName());
@@ -167,7 +144,7 @@ namespace dru
 	}
 
 
-	void CAnimator::Binds()
+	void Animator::Binds()
 	{
 		if (!mCurrentAnimation)
 			return;
@@ -175,11 +152,7 @@ namespace dru
 		mCurrentAnimation->BindShader();
 	}
 
-<<<<<<< Updated upstream
-	void CAnimator::BindSprite(renderer::AnimationCB _Sprite)
-=======
 	void Animator::BindSprite(renderer::AnimationCB sprite)
->>>>>>> Stashed changes
 	{
 		if (!mCurrentAnimation)
 			return;
@@ -187,38 +160,38 @@ namespace dru
 		mCurrentAnimation->BindSpriteToShader(sprite);
 	}
 
-	void CAnimator::Reset()
+	void Animator::Reset()
 	{
 		mCurrentAnimation->Reset();
 	}
 
-	void CAnimator::Clear()
+	void Animator::Clear()
 	{
 		mCurrentAnimation->Clear();
 	}
 
-	std::function<void()>& CAnimator::GetStartEvent(const std::wstring& _name)
+	std::function<void()>& Animator::GetStartEvent(const std::wstring& _name)
 	{
 		Events* events = FindEvents(_name);
 
 		return events->mStartEvent.mEvent;
 	}
 
-	std::function<void()>& CAnimator::GetCompleteEvent(const std::wstring& _name)
+	std::function<void()>& Animator::GetCompleteEvent(const std::wstring& _name)
 	{
 		Events* events = FindEvents(_name);
 
 		return events->mCompleteEvent.mEvent;
 	}
 
-	std::function<void()>& CAnimator::GetEndEvent(const std::wstring& _name)
+	std::function<void()>& Animator::GetEndEvent(const std::wstring& _name)
 	{
 		Events* events = FindEvents(_name);
 
 		return events->mEndEvent.mEvent;
 	}
 
-	std::function<void()>& CAnimator::GetFrameEvent(const std::wstring& _name, UINT _idx)
+	std::function<void()>& Animator::GetFrameEvent(const std::wstring& _name, UINT _idx)
 	{
 		Events* events = FindEvents(_name);
 

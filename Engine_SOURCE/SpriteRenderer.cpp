@@ -5,39 +5,41 @@
 
 namespace dru
 {
-	CSpriteRenderer::CSpriteRenderer()
-		: CBaseRenderer(eComponentType::Renderer)
+	SpriteRenderer::SpriteRenderer()
+		: BaseRenderer(eComponentType::Renderer)
 	{
 	}
 
-	CSpriteRenderer::~CSpriteRenderer()
+	SpriteRenderer::~SpriteRenderer()
 	{
 	}
 
-	void CSpriteRenderer::Initialize()
+	void SpriteRenderer::Initialize()
 	{
-		CBaseRenderer::Initialize();
+		BaseRenderer::Initialize();
 	}
 
-	void CSpriteRenderer::update()
+	void SpriteRenderer::update()
 	{
-		CBaseRenderer::update();
+		BaseRenderer::update();
 	}
 
-	void CSpriteRenderer::fixedUpdate()
+	void SpriteRenderer::fixedUpdate()
 	{
-		CBaseRenderer::fixedUpdate();
+		BaseRenderer::fixedUpdate();
 	}
 
-	void CSpriteRenderer::render()
+	void SpriteRenderer::render()
 	{
-		GetOwner()->GetComponent<CTransform>()->SetConstantBuffer();
+//		BaseRenderer::render();
+
+		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
 		GetMesh()->BindBuffer();
 		GetMaterial()->Bind();
 
 
-		CAnimator* animator = GetOwner()->GetComponent<CAnimator>();
+		Animator* animator = GetOwner()->GetComponent<Animator>();
 
 		if (animator)
 		{
@@ -51,7 +53,6 @@ namespace dru
 		if (animator)
 			animator->Clear();
 
-		CBaseRenderer::render();
 	}
 
 

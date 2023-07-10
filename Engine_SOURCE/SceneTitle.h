@@ -4,12 +4,12 @@
 namespace dru
 {
 
-    class CSceneTitle :
-        public CScene
+    class SceneTitle :
+        public Scene
     {
 	public:
-		CSceneTitle();
-		virtual ~CSceneTitle();
+		SceneTitle();
+		virtual ~SceneTitle();
 
 		virtual void Initialize();
 		virtual void update();
@@ -21,7 +21,7 @@ namespace dru
 
 
 	private:
-		CGameObj*	mCamera;
+		GameObj*	mCamera;
 
 	};
 

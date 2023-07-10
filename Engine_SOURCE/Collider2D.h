@@ -4,43 +4,25 @@
 
 namespace dru
 {
-<<<<<<< Updated upstream
-    class CCollider2D :
-        public CComponent
-=======
     class Collider2D : public Component
->>>>>>> Stashed changes
     {
     public:
-        CCollider2D();
-        ~CCollider2D();
+        Collider2D();
+        ~Collider2D();
 
         virtual void Initialize() final;
         virtual void update() final;
         virtual void fixedUpdate() final;
         virtual void render() final;
 
-<<<<<<< Updated upstream
-        virtual void OnCollisionEnter(CCollider2D* _oppo);
-        virtual void OnCollision(CCollider2D* _oppo);
-        virtual void OnCollisionExit(CCollider2D* _oppo);
-
-
-        // ¹°¸® ÇÊ¿ä ¾ø´Â¾Ö (Ãæµ¹·Î ¿òÁ÷ÀÓ ¾ø´Â ÀÌº¥Æ®¸¸ ¹ßµ¿½ÃÅ³¶§)
-        virtual void OnTriggerEnter(CCollider2D* _oppo);
-        virtual void OnTrigger(CCollider2D* _oppo);
-        virtual void OnTriggerExit(CCollider2D* _oppo);
-=======
         virtual void OnCollisionEnter(Collider2D* oppo);
         virtual void OnCollision(Collider2D* oppo);
         virtual void OnCollisionExit(Collider2D* oppo);
 
-
-        // ¹°¸® ÇÊ¿ä ¾ø´Â¾Ö (Ãæµ¹·Î ¿òÁ÷ÀÓ ¾ø´Â ÀÌº¥Æ®¸¸ ¹ßµ¿½ÃÅ³¶§)
+        // ë¬¼ë¦¬ í•„ìš” ì—†ëŠ”ì•  (ì¶©ëŒë¡œ ì›€ì§ìž„ ì—†ëŠ” ì´ë²¤íŠ¸ë§Œ ë°œë™ì‹œí‚¬ë•Œ)
         virtual void OnTriggerEnter(Collider2D* oppo);
         virtual void OnTrigger(Collider2D* oppo);
         virtual void OnTriggerExit(Collider2D* oppo);
->>>>>>> Stashed changes
 
         void SetType(eColliderType type) { mType = type; }
         eColliderType GetType() const { return mType; }
@@ -87,7 +69,7 @@ namespace dru
         eColliderType mType;
         eCollisionState mState;
 
-        CTransform* mTransform;
+        Transform* mTransform;
 
         const UINT32 mColliderID;
 

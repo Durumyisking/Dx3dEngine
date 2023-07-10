@@ -5,36 +5,36 @@
 
 namespace dru
 {
-	CLight::CLight()
-		: CComponent(eComponentType::Light)
+	Light::Light()
+		: Component(eComponentType::Light)
 	{
 
 	}
 
-	CLight::~CLight()
+	Light::~Light()
 	{
 	}
 
-	void CLight::Initialize()
+	void Light::Initialize()
 	{
 	}
 
-	void CLight::update()
+	void Light::update()
 	{
 	}
 
-	void CLight::fixedUpdate()
+	void Light::fixedUpdate()
 	{
-		CTransform* tr = GetOwner()->GetComponent<CTransform>();
+		Transform* tr = GetOwner()->GetComponent<Transform>();
 		math::Vector3 position = tr->GetWorldPosition();
 
 		mAttribute.position = Vector4(position.x, position.y, position.z, 1.f);
-		mAttribute.direction = Vector4(tr->Right().x, tr->Right().y, tr->Right().z, 1.f); // right를 정면으로 둔다.
+		mAttribute.direction = Vector4(tr->Forward().x, tr->Forward().y, tr->Forward().z, 0.0f);
 
 		renderer::PushLightAttribute(mAttribute);
 	}
 
-	void CLight::render()
+	void Light::render()
 	{
 	}
 

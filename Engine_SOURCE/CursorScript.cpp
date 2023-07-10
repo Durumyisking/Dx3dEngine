@@ -1,41 +1,41 @@
 #include "CursorScript.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "GameObj.h"
 
 namespace dru
 {
-	CCursorScript::CCursorScript()
-		: CScript(),
-		mTrans(nullptr),
+	CursorScript::CursorScript()
+		: Script(),
+		mTransform(nullptr),
 		mPos{},
 		mRot{}
 	{
 	}
 
-	CCursorScript::~CCursorScript()
+	CursorScript::~CursorScript()
 	{
 	}
 
-	void CCursorScript::Initialize()
+	void CursorScript::Initialize()
 	{
-		mTrans = GetOwner()->GetComponent<CTransform>();
+		mTransform = GetOwner()->GetComponent<Transform>();
 	}
 
-	void CCursorScript::update()
+	void CursorScript::update()
 	{
 	
 
 	}
 
-	void CCursorScript::fixedUpdate()
+	void CursorScript::fixedUpdate()
 	{
-		mPos = CInput::GetMousePosition();
+		mPos = GETSINGLE(InputMgr)->GetMousePosition();
 		Vector3 newpos = mPos / 100.f;
 
-		mTrans->SetPosition(newpos);
+		mTransform->SetPosition(newpos);
 	}
 
-	void CCursorScript::render()
+	void CursorScript::render()
 	{
 	}
 

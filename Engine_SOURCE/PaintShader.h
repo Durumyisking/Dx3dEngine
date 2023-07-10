@@ -2,23 +2,23 @@
 #include "ComputeShader.h"
 #include "Texture.h"
 
-namespace dru::graphics
+namespace dru
 {
-    class CPaintShader :
-        public CComputeShader
+    class PaintShader :
+        public ComputeShader
     {
 	public:
-		CPaintShader();
-		~CPaintShader();
+		PaintShader();
+		~PaintShader();
 
 		virtual void Bind();
 		virtual void Clear();
 
-		void SetTarget(std::shared_ptr<CTexture> _target) { mTarget = _target; }
-		std::shared_ptr<CTexture> GetTarget() { return mTarget; }
+		void SetTarget(Texture* _target) { mTarget = _target; }
+		Texture* GetTarget() { return mTarget; }
 
 	private:
-		std::shared_ptr<CTexture> mTarget;
+		Texture* mTarget;
     };
 
 }

@@ -1,10 +1,10 @@
 #pragma once
-#include "Resource.h"
+#include "EngineResource.h"
 
 namespace dru
 {
-    class CPrefab :
-        public CResource
+    class Prefab :
+        public Resource
     {
     };
 

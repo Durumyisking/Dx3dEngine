@@ -4,7 +4,7 @@
 
 namespace dru
 {
-	CAnimation::CAnimation()
+	Animation::Animation()
 		: mAnimator(nullptr)
 		, mAtlas(nullptr)
 		, mSpriteSheet{}
@@ -18,19 +18,19 @@ namespace dru
 
 	}
 
-	CAnimation::~CAnimation()
+	Animation::~Animation()
 	{
 	}
 
-	UINT CAnimation::update()
+	UINT Animation::update()
 	{
 		if (mbComplete)
 			return -1;
 
-		// ½Ã°£ Ã¼Å©
-		mTime += CTimeMgr::DeltaTime();
+		// ì‹œê°„ ì²´í¬
+		mTime += DT;
 
-		// ´©Àû ½Ã°£ÀÌ ÇØ´ç ÇÁ·¹ÀÓÀÇ À¯Áö½Ã°£À» ³Ñ¾î¼­¸é 
+		// ëˆ„ì  ì‹œê°„ì´ í•´ë‹¹ í”„ë ˆì„ì˜ ìœ ì§€ì‹œê°„ì„ ë„˜ì–´ì„œë©´ 
 		if (mSpriteSheet[mIndex].duration < mTime)
 		{
 			mTime = 0.f;
@@ -64,19 +64,16 @@ namespace dru
 		return -1;
 	}
 
-	void CAnimation::fixedUpdate()
+	void Animation::fixedUpdate()
 	{
 	}
 
-	void CAnimation::render()
+	void Animation::render()
 	{
 	}
 
-<<<<<<< Updated upstream
-	void CAnimation::Create(const std::wstring& _name, std::shared_ptr<CTexture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
-=======
+
 	void Animation::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, Vector2 ratio, float duration, bool reverse)
->>>>>>> Stashed changes
 	{
 		mAnimationName = name;
 		mAtlas = atlas;
@@ -91,7 +88,7 @@ namespace dru
 		{
 			Sprite sprite = {};
 
-			// ½ºÇÁ¶óÀÌÆ®ÀÇ LT°¡ + »çÀÌÁî°¡ width¸¦ ³Ñ¾î°¡¸é ´ÙÀ½ÁÙ·Î ¹Ù²Û´Ù.
+			// ìŠ¤í”„ë¼ì´íŠ¸ì˜ LTê°€ + ì‚¬ì´ì¦ˆê°€ widthë¥¼ ë„˜ì–´ê°€ë©´ ë‹¤ìŒì¤„ë¡œ ë°”ê¾¼ë‹¤.
 			if (leftTop.x + (size.x * (float)i) >= width)
 			{
 				leftTop.x = 0.f;
@@ -100,7 +97,7 @@ namespace dru
 				CollSkipCount = i;
 			}
 
-			// uvÁÂÇ¥·Î ³Ñ±â±â À§ÇØ width, height·Î ³ª´«´Ù.
+			// uvì¢Œí‘œë¡œ ë„˜ê¸°ê¸° ìœ„í•´ width, heightë¡œ ë‚˜ëˆˆë‹¤.
 			sprite.LT = Vector2(
 				(leftTop.x + (size.x * (float)(i - CollSkipCount))) / width,
 				leftTop.y / height
@@ -115,15 +112,15 @@ namespace dru
 		}
 	}
 
-	void CAnimation::BindShader()
+	void Animation::BindShader()
 	{
-		mAtlas->BindShaderResource(eShaderStage::PS, 12); // ¾ÆÆ²¶ó½º srv¿¡ ¹ÙÀÎµù
+		mAtlas->BindShaderResource(eShaderStage::PS, 12); // ì•„í‹€ë¼ìŠ¤ srvì— ë°”ì¸ë”©
 
-		CConstantBuffer* cb =  renderer::constantBuffers[(UINT)eCBType::Animation];
+		ConstantBuffer* cb =  renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 
 		renderer::AnimationCB data = {};
 
-		data.type = (UINT)eAnimationType::SecondDimension;
+		data.type = static_cast<UINT>(eAnimationType::SecondDimension);
 		data.LT = mSpriteSheet[mIndex].LT;
 		data.offset = mSpriteSheet[mIndex].offset;
 		data.size = mSpriteSheet[mIndex].size;
@@ -133,36 +130,32 @@ namespace dru
 		cb->Bind(eShaderStage::PS);
 	}
 
-<<<<<<< Updated upstream
-	void CAnimation::BindSpriteToShader(renderer::AnimationCB _Sprite)
-=======
 	void Animation::BindSpriteToShader(renderer::AnimationCB sprite)
->>>>>>> Stashed changes
 	{
 		mAtlas->BindShaderResource(eShaderStage::PS, 12);
 
-		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Animation];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 
 		cb->SetData(&sprite);
 		cb->Bind(eShaderStage::PS);
 	}
 
 
-	void CAnimation::Clear()
+	void Animation::Clear()
 	{
 		// Texture Clear
-		CTexture::Clear(12);
+		Texture::Clear(12);
 
-		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Animation];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 		renderer::AnimationCB data = {};
-		data.type = (UINT)eAnimationType::None;
+		data.type = static_cast<UINT>(eAnimationType::None);
 
 		cb->SetData(&data);
 		cb->Bind(eShaderStage::PS);
 
 	}
 
-	void CAnimation::Reset()
+	void Animation::Reset()
 	{
 		mTime = 0.f;
 
@@ -175,11 +168,7 @@ namespace dru
 		mbCompleteEventPlayed = false;
 	}
 
-<<<<<<< Updated upstream
-	void CAnimation::SetDuration(float _Value)
-=======
 	void Animation::SetDuration(float value)
->>>>>>> Stashed changes
 	{
 		for (size_t i = 0; i < mSpriteSheet.size(); i++)
 		{	
@@ -187,11 +176,11 @@ namespace dru
 		}
 	}
 
-	renderer::AnimationCB CAnimation::GetAnimationData()
+	renderer::AnimationCB Animation::GetAnimationData()
 	{
 		renderer::AnimationCB data = {};
 		
-		data.type = (UINT)eAnimationType::SecondDimension;
+		data.type = static_cast<UINT>(eAnimationType::SecondDimension);
 		data.LT = mSpriteSheet[mIndex].LT;
 		data.offset = mSpriteSheet[mIndex].offset;
 		data.size = mSpriteSheet[mIndex].size;
@@ -202,7 +191,7 @@ namespace dru
 
 }
 
-// ÄÁ k s if¹® ¹­ÀÌ
-// ÄÁ j ÇÔ¼öÃ£±â
-// ÄÁ mm ÄÚµåºí·Ï ´İ°í ¿­±â
-// ÄÁÆ®·Ñ RO ÇÔ¼ö ±¸Á¶º¯°æ
+// ì»¨ k s ifë¬¸ ë¬¶ì´
+// ì»¨ j í•¨ìˆ˜ì°¾ê¸°
+// ì»¨ mm ì½”ë“œë¸”ë¡ ë‹«ê³  ì—´ê¸°
+// ì»¨íŠ¸ë¡¤ RO í•¨ìˆ˜ êµ¬ì¡°ë³€ê²½

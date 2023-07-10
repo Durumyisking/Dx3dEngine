@@ -11,7 +11,7 @@ cbuffer Material : register(b1)
     int cbiData2;
     int cbiData3;
     int cbiData4;
-    
+
     float cbfData1;
     float cbfData2;
     float cbfData3;
@@ -48,9 +48,10 @@ cbuffer Material : register(b1)
 
 cbuffer Grid : register(b2)
 {
-    float4 cameraPosition;
-    float2 cameraScale;
+    float3 cameraPosition;
+    float2 gridOffset;
     float2 resolution;
+    float thickness;
 }
 
 cbuffer Color : register(b3)

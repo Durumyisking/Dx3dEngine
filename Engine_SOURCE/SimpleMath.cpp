@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "GameObj.h"
 
-extern dru::CApplication application;
+extern dru::Application application;
 
 namespace dru::math
 {

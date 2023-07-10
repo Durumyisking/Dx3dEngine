@@ -11,7 +11,7 @@
 #include "StructedBuffer.h"
 
 using namespace dru::math;
-using namespace dru::graphics;
+;
 
 #define RED		Vector4{1.f, 0.f, 0.f, 1.f}
 #define GREEN	Vector4{0.f, 1.f, 0.f, 1.f}
@@ -97,9 +97,10 @@ namespace dru::renderer
 
 	CBUFFER(GridCB, CBSLOT_GRID)	
 	{
-		Vector4 cameraPosition;
-		Vector2 cameraScale;
-		Vector2 resolution;
+		Vector3 cameraPosition;
+		Vector2 GridOffset;
+		Vector2 Resolution;
+		float Thickness;
 	};
 
 	CBUFFER(ColorCB, CBSLOT_COLOR)
@@ -176,19 +177,21 @@ namespace dru::renderer
 	// vertex data
 	extern Vertex	RectVertexes[4];
 
-	extern CConstantBuffer* constantBuffers[];
+	extern ConstantBuffer* constantBuffers[];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[];
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerState[];
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState[];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendState[];
 
-	extern std::vector<CCamera*> Cameras[];
+	extern std::vector<Camera*> Cameras[];
 
-	extern CCamera* mainCamera;
+	extern Camera* mainCamera;
 	extern std::vector<DebugMesh> debugMeshes;
 	extern std::vector<LightAttribute> lights;
 
-	extern CStructedBuffer* lightBuffer;
+	extern StructedBuffer* lightBuffer;
+
+	extern dru::GameObj* inspectorGameObject;
 
 
 	void Initialize();

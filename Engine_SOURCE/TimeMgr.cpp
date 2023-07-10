@@ -1,26 +1,34 @@
 #include "TimeMgr.h"
 #include "Application.h"
 
-extern dru::CApplication application;
+extern dru::Application application;
 
 namespace dru
 {
-    LARGE_INTEGER	CTimeMgr::mCpuFrequency = {};
-    LARGE_INTEGER   CTimeMgr::mPrevFrequency = {};
-    LARGE_INTEGER	CTimeMgr::mCurFrequency = {};
-    float			CTimeMgr::mDeltaTime = 0.0f;
-    float			CTimeMgr::mDeltaTimeConstant = 0.0f;
-    float			CTimeMgr::mOneSecond = 0.0f;
-    float			CTimeMgr::mAccumulatedTime = 0.0f;
-    float			CTimeMgr::mbBulletTimeTimer= 0.0f;
-    float			CTimeMgr::mbBulletTimeTimerMax = 0.0f;
-    bool			CTimeMgr::mbBulletTime = false;
-    bool			CTimeMgr::mbPlayerBulletTime = false;
-    UINT			CTimeMgr::mFramePass = 0;
-    UINT			CTimeMgr::mFramePassCount = 0;
-    bool            CTimeMgr::mbFramePassCheck = true;
+    TimeMgr::TimeMgr()
+        : mCpuFrequency{}
+        , mPrevFrequency{}
+        , mCurFrequency{}
+        , mDeltaTime(0.0f)
+        , mDeltaTimeConstant(0.0f)
+        , mOneSecond(0.0f)
+        , mAccumulatedTime(0.0f)
+        , mbBulletTimeTimer(0.0f)
+        , mbBulletTimeTimerMax(0.0f)
+        , mbBulletTime(false)
+        , mbPlayerBulletTime(false)
+        , mFramePass(0)
+        , mFramePassCount(0)
+        , mbFramePassCheck(0)
+    {
+    }
 
-    void CTimeMgr::Initialize()
+    TimeMgr::~TimeMgr()
+    {
+
+    }
+
+    void TimeMgr::Initialize()
     {
         //CPU 의 초당 반복되는 주파수를 얻어온다.
         QueryPerformanceFrequency(&mCpuFrequency);
@@ -29,7 +37,7 @@ namespace dru
         QueryPerformanceCounter(&mPrevFrequency);
     }
 
-    void CTimeMgr::update()
+    void TimeMgr::update()
     {
         QueryPerformanceCounter(&mCurFrequency);
 
@@ -93,7 +101,7 @@ namespace dru
 #endif
     }
 
-    void CTimeMgr::Render(HDC hdc)
+    void TimeMgr::Render(HDC hdc)
     {
         static int iCount = 0;
         ++iCount;
@@ -120,7 +128,7 @@ namespace dru
 
     }
 
-    void CTimeMgr::BulletTime(float _Time)
+    void TimeMgr::BulletTime(float _Time)
     {
         mbBulletTime = true;
         mbBulletTimeTimerMax = _Time;

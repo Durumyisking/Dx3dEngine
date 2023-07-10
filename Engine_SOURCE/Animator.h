@@ -4,7 +4,7 @@
 
 namespace dru
 {
-	class CAnimator : public CComponent
+	class Animator : public Component
 	{
 	public:
 		struct Events
@@ -25,33 +25,25 @@ namespace dru
 			};
 
 			Event mStartEvent;
-			Event mCompleteEvent; // ¾Ö´Ï¸ŞÀÌ¼Ç ÇÑ »çÀÌÅ¬ ³¡³¯ ¶§ ¸¶´Ù
-			Event mEndEvent; // ¾Ö´Ï¸ŞÀÌ¼Ç ±³Ã¼³ª interrupt °É¸±¶§ È£Ãâ
+			Event mCompleteEvent; // ì• ë‹ˆë©”ì´ì…˜ í•œ ì‚¬ì´í´ ëë‚  ë•Œ ë§ˆë‹¤
+			Event mEndEvent; // ì• ë‹ˆë©”ì´ì…˜ êµì²´ë‚˜ interrupt ê±¸ë¦´ë•Œ í˜¸ì¶œ
 
-			std::vector<Event> mFrameEvents; // ÇØ´ç ½ºÇÁ¶óÀÌÆ®(ÀÎµ¦½º) ¿¡¼­ ½ÇÇàµÉ ÀÌº¥Æ®
+			std::vector<Event> mFrameEvents; // í•´ë‹¹ ìŠ¤í”„ë¼ì´íŠ¸(ì¸ë±ìŠ¤) ì—ì„œ ì‹¤í–‰ë  ì´ë²¤íŠ¸
 		};
 
-		CAnimator();
-		virtual ~CAnimator();
+		Animator();
+		virtual ~Animator();
 
 		virtual void Initialize();
 		virtual void update();
 		virtual void fixedUpdate();
 		virtual void render();
 
-<<<<<<< Updated upstream
-		bool Create(const std::wstring& _name, std::shared_ptr<CTexture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset,  UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse = false);
-		
-		CAnimation* FindAnimation(const std::wstring& _name);
-		Events* FindEvents(const std::wstring& _name);
-		CAnimation* GetCurrentAnimation() const { return mCurrentAnimation; }
-=======
 		bool Create(const std::wstring& name, Texture* atlas, Vector2 leftTop, Vector2 size, Vector2 offset,  UINT spriteLength, Vector2 ratio, float duration, bool reverse = false);
 		
 		Animation* FindAnimation(const std::wstring& name);
 		Events* FindEvents(const std::wstring& name);
 		Animation* GetCurrentAnimation() const { return mCurrentAnimation; }
->>>>>>> Stashed changes
 
 		bool IsPlaying(const std::wstring& name) { if (mCurrentAnimation->GetAnimationName() == name) return true; return false; }
 
@@ -71,9 +63,9 @@ namespace dru
 		std::function<void()>& GetFrameEvent(const std::wstring& name, UINT idx);
 
 	private:
-		std::map<std::wstring, CAnimation*> mAnimations;
+		std::map<std::wstring, Animation*> mAnimations;
 		std::map<std::wstring, Events*> mEvents;
-		CAnimation* mCurrentAnimation;
+		Animation* mCurrentAnimation;
 
 		bool mbLoop;
 		bool mbPause;

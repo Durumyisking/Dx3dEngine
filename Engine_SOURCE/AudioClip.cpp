@@ -4,8 +4,8 @@
 
 namespace dru
 {
-	CAudioClip::CAudioClip()
-		: CResource(eResourceType::AudioClip)
+	AudioClip::AudioClip()
+		: Resource(eResourceType::AudioClip)
 		, mSound(nullptr)
 		, mChannel(nullptr)
 		, mMinDistance(1.0f)
@@ -15,38 +15,38 @@ namespace dru
 		, mPitch(0.f)
 	{
 	}
-	CAudioClip::~CAudioClip()
+	AudioClip::~AudioClip()
 	{
 		mSound->release();
 		mSound = nullptr;
 	}
-	HRESULT CAudioClip::Load(const std::wstring& path)
+	HRESULT AudioClip::Load(const std::wstring& path)
 	{
 		std::filesystem::path parentPath = std::filesystem::current_path().parent_path();
 		std::wstring fullPath = parentPath.wstring() + L"\\..\\Resources\\" + path;
 
 		std::string cPath(fullPath.begin(), fullPath.end());
-		if (!CFmod::CreateSound(cPath, &mSound))
+		if (!GETSINGLE(Fmod)->CreateSound(cPath, &mSound))
 			return S_FALSE;
 
 		mSound->set3DMinMaxDistance(mMinDistance, mMaxDistance);
 
 		return S_OK;
 	}
-	void CAudioClip::Play()
+	void AudioClip::Play()
 	{
 		if (mbLoop)
 			mSound->setMode(FMOD_LOOP_NORMAL);
 		else
 			mSound->setMode(FMOD_LOOP_OFF);
 
-		CFmod::SoundPlay(mSound, &mChannel);
+		GETSINGLE(Fmod)->SoundPlay(mSound, &mChannel);
 	}
-	void CAudioClip::Stop()
+	void AudioClip::Stop()
 	{
 		mChannel->stop();
 	}
-	void CAudioClip::Set3DAttributes(const Vector3 pos, const Vector3 vel)
+	void AudioClip::Set3DAttributes(const Vector3 pos, const Vector3 vel)
 	{
 		FMOD_VECTOR fmodPos(pos.x, pos.y, pos.z);
 		FMOD_VECTOR fmodVel(vel.x, vel.y, vel.z);

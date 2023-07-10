@@ -1,21 +1,21 @@
 #include "Texture.h"
 
 
-namespace dru::graphics
+namespace dru
 {
-	CTexture::CTexture()
-		: CResource(eResourceType::Texture)
+	Texture::Texture()
+		: Resource(eResourceType::Texture)
 		, mDesc{}
 		, mTexture(nullptr)
 		
 	{
 	}
 
-	CTexture::~CTexture()
+	Texture::~Texture()
 	{
 	}
 
-	void CTexture::Clear(UINT startSlot)
+	void Texture::Clear(UINT startSlot)
 	{
 		ID3D11ShaderResourceView* srv = nullptr;
 
@@ -27,7 +27,7 @@ namespace dru::graphics
 		GetDevice()->BindShaderResource(eShaderStage::PS, startSlot, &srv);
 	}
 
-	bool CTexture::Create(UINT _width, UINT _height, DXGI_FORMAT _format, UINT _bindflag)
+	bool Texture::Create(UINT _width, UINT _height, DXGI_FORMAT _format, UINT _bindflag)
 	{
 		mDesc.BindFlags = _bindflag;
 		mDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -83,7 +83,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool CTexture::Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> _texture)
+	bool Texture::Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> _texture)
 	{
 		mTexture = _texture;
 		mTexture->GetDesc(&mDesc);
@@ -131,7 +131,7 @@ namespace dru::graphics
 		return true;
 	}
 
-	HRESULT CTexture::Load(const std::wstring& path)
+	HRESULT Texture::Load(const std::wstring& path)
 	{
 		std::filesystem::path parentPath = std::filesystem::current_path().parent_path();
 		std::wstring fullPath = parentPath.wstring() + L"/../Resources/" + path;
@@ -176,18 +176,18 @@ namespace dru::graphics
 		return S_OK;
 	}
 
-	void CTexture::BindShaderResource(eShaderStage _Stage, UINT _Slot)
+	void Texture::BindShaderResource(eShaderStage _Stage, UINT _Slot)
 	{
 		GetDevice()->BindShaderResource(_Stage, _Slot, mSRV.GetAddressOf());
 	}
 
-	void CTexture::BindUnorderedAccessview(UINT _Slot)
+	void Texture::BindUnorderedAccessview(UINT _Slot)
 	{
 		UINT i = -1; 
 		GetDevice()->BindUnorderedAccessView(_Slot, 1, mUAV.GetAddressOf(), &i);
 	}
 
-	void CTexture::ClearUnorderedAccessview(UINT _Slot)
+	void Texture::ClearUnorderedAccessview(UINT _Slot)
 	{
 		ID3D11UnorderedAccessView* p = nullptr;
 		UINT i = -1;
@@ -195,7 +195,7 @@ namespace dru::graphics
 	}
 
 
-	void CTexture::Clear()
+	void Texture::Clear()
 	{
 		ID3D11ShaderResourceView* srv = nullptr;
 

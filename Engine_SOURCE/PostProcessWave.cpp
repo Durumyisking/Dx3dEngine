@@ -2,7 +2,7 @@
 
 namespace dru
 {
-	CPostProcessWave::CPostProcessWave()
+	PostProcessWave::PostProcessWave()
 		: mAmount(35.f)
 		, mSpeed(10.f)
 		, mDistortion(40.f)
@@ -10,38 +10,38 @@ namespace dru
 	{
 	}
 
-	CPostProcessWave::~CPostProcessWave()
+	PostProcessWave::~PostProcessWave()
 	{
 	}
 
-	void CPostProcessWave::Initialize()
+	void PostProcessWave::Initialize()
 	{
-		CPostProcess::Initialize();
+		PostProcess::Initialize();
 	}
 
-	void CPostProcessWave::update()
+	void PostProcessWave::update()
 	{
-		CPostProcess::update();
+		PostProcess::update();
 	}
 
-	void CPostProcessWave::fixedUpdate()
+	void PostProcessWave::fixedUpdate()
 	{
-		CPostProcess::fixedUpdate();
+		PostProcess::fixedUpdate();
 	}
 
-	void CPostProcessWave::render()
+	void PostProcessWave::render()
 	{
-		CPostProcess::render();
+		PostProcess::render();
 	}
 
-	void CPostProcessWave::Bind()
+	void PostProcessWave::Bind()
 	{
-		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::PostProcess];
+		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::PostProcess)];
 		mConstantBuffer.wave_amount = mAmount;
 		mConstantBuffer.wave_speed = mSpeed;
 		mConstantBuffer.wave_distortion = mDistortion;
 
-		CPostProcess::Bind();
+		PostProcess::Bind();
 	}
 
 }

@@ -3,10 +3,20 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 
+#include "Component.h"
+#include "Script.h"
+#include "Mesh.h"
+#include "Shader.h"
+#include "AudioListener.h"
+#include "AudioSource.h"
+#include "SpriteRenderer.h"
+#include "MeshRenderer.h"
+
+
 namespace dru
 {
 	
-	CGameObj::CGameObj()
+	GameObj::GameObj()
 		:mState(eState::Active)
 		, mType(eLayerType::None)
 		, mScripts{}
@@ -16,13 +26,13 @@ namespace dru
 		, mbOnFloor(false)
 	{
 		mComponents.resize(static_cast<UINT>(eComponentType::End));
-		this->AddComponent<CTransform>(eComponentType::Transform);
+		this->AddComponent<Transform>(eComponentType::Transform);
 
 	}
 
-	CGameObj::~CGameObj()
+	GameObj::~GameObj()
 	{
-		for (CComponent* comp : mComponents)
+		for (Component* comp : mComponents)
 		{
 			if (nullptr == comp)
 				continue;
@@ -31,7 +41,7 @@ namespace dru
 			comp = nullptr;
 		}
 
-		for (CComponent* script : mScripts)
+		for (Component* script : mScripts)
 		{
 			if (nullptr == script)
 				continue;
@@ -42,16 +52,16 @@ namespace dru
 
 	}
 
-	void CGameObj::Initialize()
+	void GameObj::Initialize()
 	{
-		for (CComponent* comp : mComponents)
+		for (Component* comp : mComponents)
 		{
 			if (nullptr == comp)
 				continue;
 			comp->Initialize();		
 		}
 
-		for (CComponent* script : mScripts)
+		for (Component* script : mScripts)
 		{
 			if (nullptr == script)
 				continue;
@@ -59,13 +69,13 @@ namespace dru
 		}
 	}
 
-	void CGameObj::update()
+	void GameObj::update()
 	{
-		for (CComponent* comp : mComponents)
+		for (Component* comp : mComponents)
 		{
 			if (nullptr == comp)
 				continue;		
-			if (CSceneMgr::mActiveScene->mbPause && (eComponentType::Renderer != comp->GetOrder() && eComponentType::Camera != comp->GetOrder() && eComponentType::Light != comp->GetOrder()))
+			if (GETSINGLE(SceneMgr)->GetActiveScene()->mbPause && (eComponentType::Renderer != comp->GetOrder() && eComponentType::Camera != comp->GetOrder() && eComponentType::Light != comp->GetOrder()))
 			{
 				if (eLayerType::UI != mType)
 				{
@@ -75,21 +85,21 @@ namespace dru
 
 			comp->update();
 		}
-		for (CComponent* script : mScripts)
+		for (Component* script : mScripts)
 		{
-			if (nullptr == script || CSceneMgr::mActiveScene->mbPause )
+			if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause )
 				continue;
 			script->update();
 		}
 	}
 
-	void CGameObj::fixedUpdate()
+	void GameObj::fixedUpdate()
 	{
-		for (CComponent* comp : mComponents)
+		for (Component* comp : mComponents)
 		{
 			if (nullptr == comp)
 				continue;
-			if (CSceneMgr::mActiveScene->mbPause && (eComponentType::Renderer != comp->GetOrder() && eComponentType::Camera != comp->GetOrder() && eComponentType::Light != comp->GetOrder()))
+			if (GETSINGLE(SceneMgr)->GetActiveScene()->mbPause && (eComponentType::Renderer != comp->GetOrder() && eComponentType::Camera != comp->GetOrder() && eComponentType::Light != comp->GetOrder()))
 			{
 				if (eLayerType::UI != mType)
 				{
@@ -99,24 +109,24 @@ namespace dru
 			comp->fixedUpdate();
 		}
 
-		for (CComponent* script : mScripts)
+		for (Component* script : mScripts)
 		{
-			if (nullptr == script || CSceneMgr::mActiveScene->mbPause)
+			if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause)
 				continue;
 			script->fixedUpdate();
 		}
 	}
 
-	void CGameObj::render()
+	void GameObj::render()
 	{
-		for (CComponent* comp : mComponents)
+		for (Component* comp : mComponents)
 		{
 			if (nullptr == comp)
 				continue;
 			comp->render();
 		}
 		
-		for (CComponent* script : mScripts)
+		for (Component* script : mScripts)
 		{
 			if (nullptr == script)
 				continue;
@@ -124,9 +134,9 @@ namespace dru
 		}
 	}
 
-	void CGameObj::fontRender()
+	void GameObj::fontRender()
 	{
-		for (CScript* script : mScripts)
+		for (Script* script : mScripts)
 		{
 			if (nullptr == script)
 				continue;
@@ -134,142 +144,75 @@ namespace dru
 		}
 	}
 
-	void CGameObj::AddComponent(CComponent* _Component)
+	void GameObj::AddComponent(Component* _Component)
 	{
 		eComponentType order = _Component->GetOrder();
 
 
 		if (order != eComponentType::Script)
 		{
-			mComponents[(UINT)order] = _Component;
-			mComponents[(UINT)order]->SetOwner(this);
+			mComponents[static_cast<UINT>(order)] = _Component;
+			mComponents[static_cast<UINT>(order)]->SetOwner(this);
 		}
 		else
 		{
-			mScripts.push_back(dynamic_cast<CScript*>(_Component));
+			mScripts.push_back(dynamic_cast<Script*>(_Component));
 			_Component->SetOwner(this);
 		}
 	}
 
-	void CGameObj::SetPos(Vector3 _Value)
+	void GameObj::SetPos(Vector3 _Value)
 	{
-		CTransform* tr = GetComponent<CTransform>();
+		Transform* tr = GetComponent<Transform>();
 
-		if (nullptr != tr)
-		{
-
-			if (eProjectionType::Orthographic == renderer::mainCamera->GetProjectionType())
-			{
-				switch (mType)
-				{
-				case dru::enums::eLayerType::Camera:
-					break;
-				case dru::enums::eLayerType::Grid:
-					break;
-				case dru::enums::eLayerType::BackGround:
-					_Value.z = 5.f;
-					break;
-				case dru::enums::eLayerType::Objects:
-					_Value.z = 4.9f;
-					break;
-				case dru::enums::eLayerType::Monster:
-					_Value.z = 3.1f;
-					break;
-				case dru::enums::eLayerType::Boss:
-					_Value.z = 3.1f;
-					break;
-				case dru::enums::eLayerType::MonsterGun:
-					_Value.z = 0.f;
-					break;
-				case dru::enums::eLayerType::Player:
-					_Value.z = 3.f;
-					break;
-				case dru::enums::eLayerType::Bullet:
-					_Value.z = 2.81f;
-					break;
-				case dru::enums::eLayerType::AfterImage:
-//					_Value.z = 3.000001f;
-					break;
-				case dru::enums::eLayerType::Platforms:
-					_Value.z = 4.9f;
-					break;
-				case dru::enums::eLayerType::Ray:
-					_Value.z = 4.f;
-					break;
-				case dru::enums::eLayerType::Particle:
-					_Value.z = 2.8f;
-					break;
-				case dru::enums::eLayerType::FX:
-					_Value.z = 2.000001f;
-					break;
-				case dru::enums::eLayerType::UI:
-					_Value.z = 0.1f;
-					break;
-				case dru::enums::eLayerType::PostProcess:
-					break;
-				case dru::enums::eLayerType::MainMenu:
-					_Value.z = 0.05f;
-					break;
-				case dru::enums::eLayerType::End:
-					break;
-				default:
-					break;
-				}
-				if (tr->GetParent())
-				{
-					_Value.z = 0.0001f;
-				}
-			}
-			tr->SetPosition(_Value);
-
-		}
+		tr->SetPosition(_Value);		
 	}
 
-	void CGameObj::SetPosAbs(Vector3 _Value)
+	void GameObj::SetPosAbs(Vector3 _Value)
 	{
-		CTransform* tr = GetComponent<CTransform>();
+		Transform* tr = GetComponent<Transform>();
 		tr->SetPosition(_Value);
 	}
 
-	void CGameObj::SetScale(Vector3 _Value)
+	void GameObj::SetScale(Vector3 _Value)
 	{
-		if (nullptr != GetComponent<CTransform>())
+		if (nullptr != GetComponent<Transform>())
 		{
-			GetComponent<CTransform>()->SetScale(_Value);
+			GetComponent<Transform>()->SetScale(_Value);
 		}
-		if (nullptr != GetComponent<CSpriteRenderer>())
+		if (nullptr != GetComponent<SpriteRenderer>())
 		{
-			GetComponent<CSpriteRenderer>()->ChangeSize();
+			GetComponent<SpriteRenderer>()->ChangeSize();
 		}
-		if (nullptr != GetComponent<CMeshRenderer>())
+		if (nullptr != GetComponent<MeshRenderer>())
 		{
-			GetComponent<CMeshRenderer>()->ChangeSize();
-		}
-	}
-
-	void CGameObj::SetRotation(Vector3 _Value)
-	{
-		if (nullptr != GetComponent<CTransform>())
-		{
-			GetComponent<CTransform>()->SetRotation(_Value);
+			GetComponent<MeshRenderer>()->ChangeSize();
 		}
 	}
 
-	Vector3 CGameObj::GetPos()
+	void GameObj::SetRotation(Vector3 _Value)
 	{
-		return GetComponent<CTransform>()->GetPosition();
-	}
-	Vector3 CGameObj::GetWorldPos()
-	{
-		return GetComponent<CTransform>()->GetWorldPosition();
+		if (nullptr != GetComponent<Transform>())
+		{
+			GetComponent<Transform>()->SetRotation(_Value);
+		}
 	}
 
-	Vector3 CGameObj::GetUIWorldPos()
+	Vector3 GameObj::GetPos()
+	{
+		return GetComponent<Transform>()->GetPosition();
+	}
+	Vector3 GameObj::GetWorldPos()
+	{
+		return GetComponent<Transform>()->GetWorldPosition();
+	}
+
+	Vector3 GameObj::GetUIWorldPos()
 	{
 		Vector3 UIWorldPos = {};
 		if (this->GetLayerType() == eLayerType::UI)
 		{
-			Vector3 UIPos = GetComponent<CTransform>()->GetWorldPosition();
+			Vector3 UIPos = GetComponent<Transform>()->GetWorldPosition();
 			Vector3 CamPos = renderer::mainCamera->GetOwner()->GetWorldPos();
 			UIWorldPos.z = UIPos.z;
 			UIWorldPos.x = UIPos.x + CamPos.x;
@@ -279,38 +222,38 @@ namespace dru
 		return UIWorldPos;
 	}
 
-	Vector3 CGameObj::GetScale()
+	Vector3 GameObj::GetScale()
 	{
-		return GetComponent<CTransform>()->GetScale();
+		return GetComponent<Transform>()->GetScale();
 	}
 
-	Vector3 CGameObj::GetRotation()
+	Vector3 GameObj::GetRotation()
 	{
-		return GetComponent<CTransform>()->GetRotation();
+		return GetComponent<Transform>()->GetRotation();
 	}
 
-	void CGameObj::SetMaterial(std::shared_ptr<CMaterial> _Material)
+	void GameObj::SetMaterial(Material* _Material)
 	{
-		if (nullptr != GetComponent<CSpriteRenderer>())
+		if (nullptr != GetComponent<SpriteRenderer>())
 		{
-			GetComponent<CSpriteRenderer>()->SetMaterial(_Material);
+			GetComponent<SpriteRenderer>()->SetMaterial(_Material);
 		}
 	}
 
-	void CGameObj::SetMesh(std::shared_ptr<CMesh> _Mesh)
+	void GameObj::SetMesh(Mesh* _Mesh)
 	{
-		if (nullptr != GetComponent<CSpriteRenderer>())
+		if (nullptr != GetComponent<SpriteRenderer>())
 		{
-			GetComponent<CSpriteRenderer>()->SetMesh(_Mesh);
+			GetComponent<SpriteRenderer>()->SetMesh(_Mesh);
 		}
 	}
 
-	void CGameObj::Flip()
+	void GameObj::Flip()
 	{
-		CBaseRenderer* baseRenderer = GetComponent<CBaseRenderer>();
+		BaseRenderer* baseRenderer = GetComponent<BaseRenderer>();
 		if (baseRenderer)
 		{
-			std::shared_ptr<CMaterial> mtrl = baseRenderer->GetMaterial();
+			Material* mtrl = baseRenderer->GetMaterial();
 			if (mtrl)
 			{
 
@@ -325,7 +268,7 @@ namespace dru
 		}
 
 	}
-	bool CGameObj::MoveToTarget_Smooth_bool(CGameObj* _target, float _speed, bool _zOn, eDir _dir)
+	bool GameObj::MoveToTarget_Smooth_bool(GameObj* _target, float _speed, bool _zOn, eDir _dir)
 	{
 
 		if (!_target)
@@ -378,7 +321,7 @@ namespace dru
 			Speed = 1.f;
 		}
 
-		float Step = Speed * CTimeMgr::DeltaTimeConstant();
+		float Step = Speed * GETSINGLE(TimeMgr)->DeltaTimeConstant();
 
 		if (Step < Distance)
 		{
@@ -394,7 +337,7 @@ namespace dru
 
 	}
 
-	Vector3 CGameObj::MoveToTarget_Smooth_vector3(CGameObj* _target, float _speed, bool _zOn, eDir _dir)
+	Vector3 GameObj::MoveToTarget_Smooth_vector3(GameObj* _target, float _speed, bool _zOn, eDir _dir)
 	{
 		if (!_target)
 			return Vector3::Zero;
@@ -436,7 +379,7 @@ namespace dru
 			Speed = 1.f;
 		}
 
-		float Step = Speed * CTimeMgr::DeltaTimeConstant();
+		float Step = Speed * GETSINGLE(TimeMgr)->DeltaTimeConstant();
 
 		if (Step < Distance)
 		{

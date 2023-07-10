@@ -1,10 +1,9 @@
 #include "ComputeShader.h"
-#include "GraphicDevice.h"
 
-namespace dru::graphics
+namespace dru
 {
-	CComputeShader::CComputeShader(UINT threadGroupX, UINT threadGroupY, UINT threadGroupZ)
-		: CResource(eResourceType::ComputeShader)
+	ComputeShader::ComputeShader(UINT threadGroupX, UINT threadGroupY, UINT threadGroupZ)
+		: Resource(eResourceType::ComputeShader)
 		, mCSBlob(nullptr)
 		, mCS(nullptr)
 		, mThreadGroupCountX(threadGroupX)
@@ -16,8 +15,8 @@ namespace dru::graphics
 	{
 	}
 
-	CComputeShader::CComputeShader()
-		: CResource(eResourceType::ComputeShader)
+	ComputeShader::ComputeShader()
+		: Resource(eResourceType::ComputeShader)
 		, mCSBlob(nullptr)
 		, mCS(nullptr)
 		, mThreadGroupCountX(0)
@@ -32,29 +31,29 @@ namespace dru::graphics
 		mThreadGroupCountZ = 1;
 	}
 
-	CComputeShader::~CComputeShader()
+	ComputeShader::~ComputeShader()
 	{
 	}
 
-	HRESULT CComputeShader::Load(const std::wstring& path)
+	HRESULT ComputeShader::Load(const std::wstring& path)
 	{
 		return E_NOTIMPL;
 	}
 
-	void CComputeShader::Create(const std::wstring& _Path, const std::string& _funcName)
+	void ComputeShader::Create(const std::wstring& path, const std::string& funcName)
 	{
 
 		mErrorBlob = nullptr;
 
-		std::filesystem::path path = std::filesystem::current_path().parent_path();
-		path += "\\..\\SHADER_SOURCE\\";
+		std::filesystem::path filepath = std::filesystem::current_path().parent_path();
+		filepath += "\\..\\SHADER_SOURCE\\";
 
-		std::wstring shaderPath(path.c_str());
-		shaderPath += _Path;
+		std::wstring shaderPath(filepath.c_str());
+		shaderPath += path;
 
 
 		D3DCompileFromFile(shaderPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-			, _funcName.c_str(), "cs_5_0", 0, 0, mCSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
+			, funcName.c_str(), "cs_5_0", 0, 0, mCSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
 
 		if (mErrorBlob)
 		{
@@ -64,7 +63,7 @@ namespace dru::graphics
 		}
 
 
-		graphics::GetDevice()->CreateComputeShader(mCSBlob->GetBufferPointer()
+		dru::GetDevice()->CreateComputeShader(mCSBlob->GetBufferPointer()
 			, mCSBlob->GetBufferSize()
 			, nullptr
 			, mCS.GetAddressOf());
@@ -73,7 +72,7 @@ namespace dru::graphics
 
 
 
-	void CComputeShader::OnExcute()
+	void ComputeShader::OnExcute()
 	{
 		Bind();	
 
@@ -84,11 +83,11 @@ namespace dru::graphics
 		Clear();
 	}
 
-	void CComputeShader::Bind()
+	void ComputeShader::Bind()
 	{
 	}
 
-	void CComputeShader::Clear()
+	void ComputeShader::Clear()
 	{
 	}
 

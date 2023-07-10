@@ -1,21 +1,28 @@
 #include "CollisionMgr.h"
 #include "Scene.h"
 #include "SceneMgr.h"
+#include "GameObj.h"
 
 namespace dru
 {
-	std::bitset<static_cast<UINT>(eLayerType::End)> CCollisionMgr::mLayerCollisionMatrix[static_cast<UINT>(eLayerType::End)] = {};
-	std::map<UINT64, bool> CCollisionMgr::mCollisionMap;
-
-
-	void CCollisionMgr::Initialize()
+	CollisionMgr::CollisionMgr()
 	{
 
 	}
 
-	void CCollisionMgr::update()
+	CollisionMgr::~CollisionMgr()
 	{
-		CScene* scene = CSceneMgr::mActiveScene;
+
+	}
+
+	void CollisionMgr::Initialize()
+	{
+
+	}
+
+	void CollisionMgr::update()
+	{
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 
 		for (UINT row = 0; row < static_cast<UINT>(eLayerType::End); row++)
 		{
@@ -29,35 +36,21 @@ namespace dru
 		}
 	}
 
-	void CCollisionMgr::fixedUpdate()
+	void CollisionMgr::fixedUpdate()
 	{
 	}
 
-	void CCollisionMgr::render()
+	void CollisionMgr::render()
 	{
 	}
 
-<<<<<<< Updated upstream
-	void CCollisionMgr::CollisionLayerCheck(eLayerType _left, eLayerType _right, bool _benable)
-=======
+
 	void CollisionMgr::CollisionLayerCheck(eLayerType left, eLayerType right, bool benable)
->>>>>>> Stashed changes
 	{
 		int row = 0;
 		int col = 0;
 
-		// Matrix Àý¹Ý¸¸ »ç¿ë
-<<<<<<< Updated upstream
-		if ((UINT)_left <= (UINT)_right)
-		{
-			row = (UINT)_left;
-			col = (UINT)_right;
-		}
-		else
-		{
-			row = (UINT)_right;
-			col = (UINT)_left;
-=======
+		// Matrix ì ˆë°˜ë§Œ ì‚¬ìš©
 		if (static_cast<UINT>(left) <= static_cast<UINT>(right))
 		{
 			row = static_cast<UINT>(left);
@@ -67,77 +60,61 @@ namespace dru
 		{
 			row = static_cast<UINT>(right);
 			col = static_cast<UINT>(left);
->>>>>>> Stashed changes
 		}
 
 		mLayerCollisionMatrix[row][col] = benable;
 	}
 
-<<<<<<< Updated upstream
-	void CCollisionMgr::LayerCollision(CScene* _scene, eLayerType _left, eLayerType _right)
-	{
-		const std::vector<CGameObj*>& lefts = _scene->GetGameObj(_left);
-		const std::vector<CGameObj*>& rights = _scene->GetGameObj(_right);
-=======
 	void CollisionMgr::LayerCollision(Scene* _scene, eLayerType left, eLayerType right)
 	{
 		const std::vector<GameObj*>& lefts = _scene->GetGameObj(left);
 		const std::vector<GameObj*>& rights = _scene->GetGameObj(right);
->>>>>>> Stashed changes
 
-		for (CGameObj* left : lefts)
+		for (GameObj* left : lefts)
 		{
 
-			if (left->GetState() != CGameObj::eState::Active)
+			if (left->GetState() != GameObj::eState::Active)
 				continue;
 
-			if (!left->GetComponent<CCollider2D>())
+			if (!left->GetComponent<Collider2D>())
 				continue;
 
-			for (CGameObj* right : rights)
+			for (GameObj* right : rights)
 			{
-				if (right->GetState() != CGameObj::eState::Active)
+				if (right->GetState() != GameObj::eState::Active)
 					continue;
 
-				if (!right->GetComponent<CCollider2D>())
+				if (!right->GetComponent<Collider2D>())
 					continue;
 
 				if (left == right)
 					continue;
 
 
-				ColliderCollision(left->GetComponent<CCollider2D>(), right->GetComponent<CCollider2D>());
+				ColliderCollision(left->GetComponent<Collider2D>(), right->GetComponent<Collider2D>());
 
 			}
 		}
 	}
 
-<<<<<<< Updated upstream
-	void CCollisionMgr::ColliderCollision(CCollider2D* _left, CCollider2D* _right)
-	{
-		ColliderID colliderID;
-		colliderID.left = (UINT)_left->GetColliderID();
-		colliderID.right = (UINT)_right->GetColliderID();
-=======
 	void CollisionMgr::ColliderCollision(Collider2D* left, Collider2D* right)
 	{
 		ColliderID colliderID;
 		colliderID.left = static_cast<UINT>(left->GetColliderID());
 		colliderID.right = static_cast<UINT>(right->GetColliderID());
->>>>>>> Stashed changes
 
 		std::map<UINT64, bool>::iterator iter = mCollisionMap.find(colliderID.id);
 
-		if (mCollisionMap.end() == iter) // ¼øÈ¸Çß´Âµ¥ ÇØ´ç idÀÇ trueÀÎ¾Ö°¡ ¾ø¾ú´Ù. Ãæµ¹ÁßÀÌÁö ¾Ê¾Ò´Ù.
+		if (mCollisionMap.end() == iter) // ìˆœíšŒí–ˆëŠ”ë° í•´ë‹¹ idì˜ trueì¸ì• ê°€ ì—†ì—ˆë‹¤. ì¶©ëŒì¤‘ì´ì§€ ì•Šì•˜ë‹¤.
 		{
 			mCollisionMap.insert(std::make_pair(colliderID.id, false));
 			iter = mCollisionMap.find(colliderID.id);
 		}
 
-		// Ãæµ¹Ã¼Å©
-		if (Intersect(left, right)) // Ãæµ¹À» ÇÑ »óÅÂ
+		// ì¶©ëŒì²´í¬
+		if (Intersect(left, right)) // ì¶©ëŒì„ í•œ ìƒíƒœ
 		{
-			// Ã¹ Ãæµ¹
+			// ì²« ì¶©ëŒ
 			if (iter->second == false)
 			{
 				if (!left->IsOn() || !right->IsOn())
@@ -160,7 +137,7 @@ namespace dru
 				right->SetState(eCollisionState::CollisionEnter);
 
 			}
-			else // Ãæµ¹ Áß
+			else // ì¶©ëŒ ì¤‘
 			{
 				if (!left->IsOn() || !right->IsOn())
 				{
@@ -187,9 +164,9 @@ namespace dru
 
 			}
 		}
-		else // Ãæµ¹ X
+		else // ì¶©ëŒ X
 		{
-			if (iter->second) // Ãæµ¹ ºüÁ®³ª°¨
+			if (iter->second) // ì¶©ëŒ ë¹ ì ¸ë‚˜ê°
 			{
 				if (left->IsTrigger())
 					left->OnTriggerExit(right);
@@ -217,11 +194,7 @@ namespace dru
 		}
 	}
 
-<<<<<<< Updated upstream
-	bool CCollisionMgr::Intersect(CCollider2D* _left, CCollider2D* _right)
-=======
 	bool CollisionMgr::Intersect(Collider2D* left, Collider2D* right)
->>>>>>> Stashed changes
 	{
 
 	#pragma region RectVsRect
@@ -236,18 +209,13 @@ namespace dru
 				Vector3{-0.5f, -0.5f, 0.0f}
 			};
 
-<<<<<<< Updated upstream
-			CTransform* leftTr = _left->GetOwner()->GetComponent<CTransform>();
-			CTransform* rightTr = _right->GetOwner()->GetComponent<CTransform>();
-=======
 			Transform* leftTr = left->GetOwner()->GetComponent<Transform>();
 			Transform* rightTr = right->GetOwner()->GetComponent<Transform>();
->>>>>>> Stashed changes
 
 			Matrix leftMatrix = leftTr->GetWorldMatrix();
 			Matrix rightMatrix = rightTr->GetWorldMatrix();
 
-			// ºÐ¸®Ãà º¤ÅÍ (Åõ¿µº¤ÅÍ)
+			// ë¶„ë¦¬ì¶• ë²¡í„° (íˆ¬ì˜ë²¡í„°)
 			Vector3 Axis[4] = {};
 		
 			Vector3 leftScale = Vector3(left->GetScale().x, left->GetScale().y, 1.0f);
@@ -330,16 +298,13 @@ namespace dru
 
 		return true;
 	}
-<<<<<<< Updated upstream
-	bool CCollisionMgr::lineLine(Vector2 _lineA_p1, Vector2 _lineA_p2, Vector2 _lineB_p1, Vector2 _lineB_p2)
-=======
+
 	bool CollisionMgr::lineLine(Vector2 lineA_p1, Vector2 lineA_p2, Vector2 lineB_p1, Vector2 lineB_p2)
->>>>>>> Stashed changes
 	{
 		// calculate the distance to intersection point
-		  // uAÀÇ ºÐ¸ð´Â Á÷¼±ÀÇ ±â¿ï±â
-		  // uA´Â ¼±ºÐ AÀ§¿¡ ÀÖ´Â B Áï A¿Í BÀÇ ±³Â÷Á¡ÀÌ A¼± À§ÀÇ ¾î´ÀÁ¤µµ ºñÀ²ÀÎ°¡
-		  // (uA°¡ 0.5¸é ¼±ºÐ B´Â AÀÇ Áß°£ÁöÁ¡¿¡¼­ °ãÄ¡°í 0ÀÌ¸é AÀÇ ½ÃÀÛÁöÁ¡¿¡¼­ °ãÄ£´Ù)
+		  // uAì˜ ë¶„ëª¨ëŠ” ì§ì„ ì˜ ê¸°ìš¸ê¸°
+		  // uAëŠ” ì„ ë¶„ Aìœ„ì— ìžˆëŠ” B ì¦‰ Aì™€ Bì˜ êµì°¨ì ì´ Aì„  ìœ„ì˜ ì–´ëŠì •ë„ ë¹„ìœ¨ì¸ê°€
+		  // (uAê°€ 0.5ë©´ ì„ ë¶„ BëŠ” Aì˜ ì¤‘ê°„ì§€ì ì—ì„œ ê²¹ì¹˜ê³  0ì´ë©´ Aì˜ ì‹œìž‘ì§€ì ì—ì„œ ê²¹ì¹œë‹¤)
 
 		float uA =
 			((lineB_p2.x - lineB_p1.x) 
@@ -361,7 +326,7 @@ namespace dru
 				- (lineB_p2.x - lineB_p1.x)
 				* (lineA_p2.y - lineA_p1.y));
 
-		// uA¿Í uB°¡ µÑ ´Ù 0~1»çÀÌ¸é Ãæµ¹ÁßÀÌ´Ù! 
+		// uAì™€ uBê°€ ë‘˜ ë‹¤ 0~1ì‚¬ì´ë©´ ì¶©ëŒì¤‘ì´ë‹¤! 
 		if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1)
 		{
 			return true;
@@ -370,11 +335,7 @@ namespace dru
 
 	}
 
-<<<<<<< Updated upstream
-	bool CCollisionMgr::lineRect(CCollider2D* _left, CCollider2D* _right)
-=======
 	bool CollisionMgr::lineRect(Collider2D* left, Collider2D* right)
->>>>>>> Stashed changes
 	{
 		Vector3 leftPos = left->GetColliderPos();
 		Vector2 leftScale = left->GetScale() / 2.f;
@@ -387,7 +348,7 @@ namespace dru
 		lineP1.y = leftPos.y;
 		lineP2.y = leftPos.y;
 
-		//// È¸Àü
+		//// íšŒì „
 		//float rot = _left->GetOwner()->GetRotation().z;
 		//lineP1.
 

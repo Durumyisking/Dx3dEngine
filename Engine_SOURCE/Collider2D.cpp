@@ -5,16 +5,16 @@
 
 namespace dru
 {
-	UINT32 CCollider2D::colliderID = 0;
+	UINT32 Collider2D::colliderID = 0;
 
-	CCollider2D::CCollider2D()
-		: CComponent(eComponentType::Collider)
+	Collider2D::Collider2D()
+		: Component(eComponentType::Collider)
 		, mState(eCollisionState::End)
 		, mType(eColliderType::End)
 		, mTransform(nullptr)
 		, mScale(Vector2::One)
 		, mCenter(Vector2::Zero)
-		, mbTrigger(false) // ÀÌ°Å °øºÎÇÏÀÚ
+		, mbTrigger(false) // Ã€ÃŒÂ°Ã… Â°Ã¸ÂºÃŽÃ‡ÃÃ€Ãš
 		, mRadius(0.f)
 		, mColliderID(colliderID++)
 		, mbOn(true)
@@ -23,18 +23,18 @@ namespace dru
 
 	}
 
-	CCollider2D::~CCollider2D()
+	Collider2D::~Collider2D()
 	{
 	}
 
-	void CCollider2D::Initialize()
+	void Collider2D::Initialize()
 	{
-		mTransform = GetOwner()->GetComponent<CTransform>();
+		mTransform = GetOwner()->GetComponent<Transform>();
 		//mbOn = true;
 		//mbRenderOn = true;
 	}
 
-	void CCollider2D::update()
+	void Collider2D::update()
 	{
 		if (!mbRenderOn)
 		{
@@ -42,7 +42,7 @@ namespace dru
 		}
 	}
 
-	void CCollider2D::fixedUpdate()
+	void Collider2D::fixedUpdate()
 	{
 		if (nullptr == mTransform)
 			return;
@@ -67,84 +67,60 @@ namespace dru
 		renderer::debugMeshes.push_back(meshAttribute);
 	}
 
-	void CCollider2D::render()
+	void Collider2D::render()
 	{
 
 	}
 
-<<<<<<< Updated upstream
-	void CCollider2D::OnCollisionEnter(CCollider2D* _oppo)
-=======
 	void Collider2D::OnCollisionEnter(Collider2D* oppo)
->>>>>>> Stashed changes
 	{
-		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
-		for (CScript* script : scripts)
+		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
+		for (Script* script : scripts)
 		{
 			script->OnCollisionEnter(oppo);
 		}
 	}
 
-<<<<<<< Updated upstream
-	void CCollider2D::OnCollision(CCollider2D* _oppo)
-=======
 	void Collider2D::OnCollision(Collider2D* oppo)
->>>>>>> Stashed changes
 	{
-		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
-		for (CScript* script : scripts)
+		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
+		for (Script* script : scripts)
 		{
 			script->OnCollision(oppo);
 		}
 	}
 
-<<<<<<< Updated upstream
-	void CCollider2D::OnCollisionExit(CCollider2D* _oppo)
-=======
 	void Collider2D::OnCollisionExit(Collider2D* oppo)
->>>>>>> Stashed changes
 	{
-		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
-		for (CScript* script : scripts)
+		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
+		for (Script* script : scripts)
 		{
 			script->OnCollisionExit(oppo);
 		}
 	}
 
-<<<<<<< Updated upstream
-	void CCollider2D::OnTriggerEnter(CCollider2D* _oppo)
-=======
 	void Collider2D::OnTriggerEnter(Collider2D* oppo)
->>>>>>> Stashed changes
 	{
-		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
-		for (CScript* script : scripts)
+		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
+		for (Script* script : scripts)
 		{
 			script->OnTriggerEnter(oppo);
 		}
 	}
 
-<<<<<<< Updated upstream
-	void CCollider2D::OnTrigger(CCollider2D* _oppo)
-=======
 	void Collider2D::OnTrigger(Collider2D* oppo)
->>>>>>> Stashed changes
 	{
-		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
-		for (CScript* script : scripts)
+		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
+		for (Script* script : scripts)
 		{
 			script->OnTrigger(oppo);
 		}
 	}
 
-<<<<<<< Updated upstream
-	void CCollider2D::OnTriggerExit(CCollider2D* _oppo)
-=======
 	void Collider2D::OnTriggerExit(Collider2D* oppo)
->>>>>>> Stashed changes
 	{
-		const std::vector<CScript*>& scripts = GetOwner()->GetScripts();
-		for (CScript* script : scripts)
+		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
+		for (Script* script : scripts)
 		{
 			script->OnTriggerExit(oppo);
 		}

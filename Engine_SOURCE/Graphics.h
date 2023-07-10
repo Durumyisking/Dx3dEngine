@@ -1,6 +1,7 @@
 #pragma once
 #include <wrl.h>
 #include "druMath.h"
+#include "druEnums.h"
 
 #include <d3d11.h>
 #include <d3dcompiler.h>
@@ -28,7 +29,7 @@
 #define CBSLOT_POSTPROCESS		8
 #define CBSLOT_LASERHIT			9
 
-namespace dru::graphics
+namespace dru
 {
 	enum class eValidationMode
 	{

@@ -1,5 +1,5 @@
 #pragma once
-#include "Resource.h"
+#include "EngineResource.h"
 #include "Fmod.h"
 
 //#include <Fmod/fmod_studio.hpp>
@@ -13,11 +13,11 @@ namespace dru
 {
 	using namespace math;
 
-	class CAudioClip : public CResource
+	class AudioClip : public Resource
 	{
 	public:
-		CAudioClip();
-		~CAudioClip();
+		AudioClip();
+		~AudioClip();
 
 		virtual HRESULT Load(const std::wstring& path) override;
 

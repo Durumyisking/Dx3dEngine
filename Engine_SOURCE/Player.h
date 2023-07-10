@@ -3,13 +3,13 @@
 
 namespace dru
 {
-	class CPlayer :
-		public CGameObj
+	class Player :
+		public GameObj
 	{
 
 	public:
-		CPlayer();
-		virtual ~CPlayer();
+		Player();
+		virtual ~Player();
 
 		virtual void Initialize();
 		virtual void update();

@@ -1,12 +1,12 @@
 #pragma once
 #include "Graphics.h"
-namespace dru::graphics
+namespace dru
 {
-	class CGraphicDevice
+	class GraphicDevice
 	{
 	public:
-		CGraphicDevice(eValidationMode _ValidationMode = eValidationMode::Disabled);
-		~CGraphicDevice();
+		GraphicDevice(eValidationMode _ValidationMode = eValidationMode::Disabled);
+		~GraphicDevice();
 
 		bool CreateSwapChain(DXGI_SWAP_CHAIN_DESC* _Desc);
 		bool CreateTexture(D3D11_TEXTURE2D_DESC* _Desc, ID3D11Texture2D** _ppTexture2D);
@@ -65,6 +65,7 @@ namespace dru::graphics
 
 		void Clear();
 		void AdjustViewPorts();
+		void OMSetRenderTarget();
 
 		void Draw();
 		void DrawIndexed(UINT _IndexCount, UINT StartIndexLocation, INT BaseVertexLocation);
@@ -90,8 +91,8 @@ namespace dru::graphics
 
 		// 최종적으로 그려지는 도화지
 
-		std::shared_ptr<class CTexture> mRenderTargetTexture;
-		std::shared_ptr<class CTexture> mDepthStencilBufferTexture;
+		class Texture* mRenderTargetTexture;
+		class Texture* mDepthStencilBufferTexture;
 
 
 
@@ -106,9 +107,9 @@ namespace dru::graphics
 		D3D11_VIEWPORT mViewPort;
 	};
 
-	inline CGraphicDevice*& GetDevice()
+	inline GraphicDevice*& GetDevice()
 	{
-		static CGraphicDevice* device = nullptr; // static이라서 처음 한번만 초기화 하고 담에는 안지나감
+		static GraphicDevice* device = nullptr; // static이라서 처음 한번만 초기화 하고 담에는 안지나감
 		return device;
 	}
 }	

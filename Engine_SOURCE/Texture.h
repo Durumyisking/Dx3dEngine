@@ -1,6 +1,6 @@
 #pragma once
-#include "Resource.h"
-#include "Resources.h"
+#include "EngineResource.h"
+#include "ResourceMgr.h"
 #include "../External/DirectXTex/include/DirectXTex.h"
 #include "GraphicDevice.h"
 
@@ -12,14 +12,14 @@
 
 
 
-namespace dru::graphics
+namespace dru
 {
 
-	class CTexture : public CResource
+	class Texture : public Resource
 	{
 	public:
-		CTexture();
-		virtual ~CTexture();
+		Texture();
+		virtual ~Texture();
 
 		static void Clear(UINT startSlot);
 

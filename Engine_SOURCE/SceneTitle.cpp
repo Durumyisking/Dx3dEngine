@@ -1,15 +1,23 @@
 #include "SceneTitle.h"
 #include "TimeMgr.h"
 
-#include "FadeScript.h"
 #include "Object.h"
 #include "Camera.h"
-#include "Input.h"
-#include "Collider2D.h"
-#include "Animator.h"
+#include "Transform.h"
+#include "MeshRenderer.h"
+#include "SpriteRenderer.h"
+#include "Renderer.h"
+#include "Texture.h"
+#include "Camera.h"
+#include "CameraScript.h"
+#include "FontWrapper.h"
 
-#include "AudioSource.h"
+#include "GridScript.h"
 
+#include "Application.h"
+#include "Player.h"
+
+extern dru::Application application;
 
 <<<<<<< Updated upstream
 =======
@@ -22,75 +30,114 @@ extern dru::Application application;
 
 namespace dru
 {
-	CSceneTitle::CSceneTitle()
+	SceneTitle::SceneTitle()
 		:  mCamera(nullptr)
 
 	{
 	}
 
-	CSceneTitle::~CSceneTitle()
+	SceneTitle::~SceneTitle()
 	{
 
 	}
 
-	void CSceneTitle::Initialize()
+	void SceneTitle::Initialize()
 	{
 		
 		
-		CScene::Initialize();
+		Scene::Initialize();
 	}
 
-	void CSceneTitle::update()
+	void SceneTitle::update()
 	{
 
 	
-		CScene::update();
+		Scene::update();
 	}
 
-	void CSceneTitle::fixedUpdate()
+	void SceneTitle::fixedUpdate()
 	{
-		CScene::fixedUpdate();
+		Scene::fixedUpdate();
 	}
 
-	void CSceneTitle::render()
+	void SceneTitle::render()
 	{
 		
 	}
 
-	void CSceneTitle::Enter()
+	void SceneTitle::Enter()
 	{
 		//mDeleteObj = true;
 
 		{
-			// main Ä«¸Þ¶ó
-			mCamera = object::Instantiate<CGameObj>(eLayerType::Camera, L"MainCam");
-			CCamera* cameraComp = mCamera->AddComponent<CCamera>(eComponentType::Camera);
+			mCamera = object::Instantiate<GameObj>(eLayerType::Camera, L"MainCam");
+			Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
 			cameraComp->TurnLayerMask(eLayerType::UI, false);
 			cameraComp->SmoothOn();
-			mCamera->AddComponent<CCameraScript>(eComponentType::Script);
+			mCamera->AddComponent<CameraScript>(eComponentType::Script);
 			renderer::mainCamera = cameraComp;
 			cameraComp->SetProjectionType(eProjectionType::Perspective);
-			mCamera->SetPos(Vector3(0.f, 0.f, -20.f));
+			mCamera->SetPos(Vector3(0.f, 0.f, -5.f));
 
 		}
-		
-		//GH
-		int a = 0;
+
 
 		{
-			CGameObj* directionalLight = object::Instantiate<CGameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-			directionalLight->SetPos({ 0.f, 0.f, -100.f });
-			CLight* lightComp = directionalLight->AddComponent<CLight>(eComponentType::Light);
+			GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
+		
+			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
+
+			gridMr->SetMesh(dru::GETSINGLE(ResourceMgr)->Find<dru::Mesh>(L"Gridmesh"));
+			gridMr->SetMaterial(dru::GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
+			gridMr->LODOff();
+
+			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
+			gridScript->SetCamera(mainCamera);
+
+			float w = static_cast<float>(application.GetWidth());
+			float h = static_cast<float>(application.GetHeight());
+			gridObject->SetPos({ 0.f, 0.f, 5.f });
+			gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
+		}
+		
+		{
+			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
+			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 0.f, -10.f));
+			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 			lightComp->SetType(eLightType::Directional);
-			lightComp->SetDiffuse({ 1.f, 1.f, 1.f, 1.f });
+			lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
+			lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
+			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
+		}
+
+
+		{
+			Player* player = object::Instantiate<Player>(eLayerType::Player);
+			player->SetPos(Vector3(5.f, 0.f, 5.f));
+			player->SetName(L"Player");
+			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player->SetScale({ 5.f, 5.f, 5.f });
 		}
 
 <<<<<<< Updated upstream
 		{
-			CPlayer* player = object::Instantiate<CPlayer>(eLayerType::Player);
-			player->SetPos(Vector3(0.0f, 0.0f, 10.0f));
+			
+			Player* player = object::Instantiate<Player>(eLayerType::Player);
+			player->SetPos(Vector3(-5.f, 0.f, 5.f));
 			player->SetName(L"Player");
-			player->GetComponent<CSpriteRenderer>()->SetMaterialByKey(L"BasicMaterial");
+			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player->SetScale({ 5.f, 5.f, 5.f });
+		}
+
+		{
+			Player* player = object::Instantiate<Player>(eLayerType::Player);
+			player->SetPos(Vector3(5.f, 0.f, 5.f));
+	  	player->SetName(L"Player");
+			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player->SetScale({ 5.f, 5.f, 5.f });
 		}
 =======
 
@@ -124,13 +171,12 @@ namespace dru
 >>>>>>> Stashed changes
 
 
-
-		CScene::Enter();
+		Scene::Enter();
 	}
 
-	void CSceneTitle::Exit()
+	void SceneTitle::Exit()
 	{
-		CScene::Exit();
+		Scene::Exit();
 	}
 
 

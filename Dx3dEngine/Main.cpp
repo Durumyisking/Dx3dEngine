@@ -4,7 +4,13 @@
 #include "framework.h"
 #include "Dx3dEngine.h"
 #include "Application.h"
-#include "Editor.h"
+#include "guiEditor.h"
+
+
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+
 
 //#include <dxgidebug.h>
 //#include <d3d11sdklayers.h>
@@ -52,8 +58,8 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
-dru::CApplication   application;
-dru::CEditor        editor;
+dru::Application   application;
+gui::Editor        editor;
 
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -75,7 +81,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     //_CrtDumpMemoryLeaks();
 
+
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    //CrtSetBreakAlloc(233);
 
     if (!InitInstance (hInstance, nCmdShow))
     {
@@ -104,12 +112,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             application.Run();
             editor.Run();
+
             application.Present();
         }
     }
     
-    editor.destroy();
+    application.Release();
+    editor.Release();
 
+
+    application.DestroySingle();
   //  D3DMemLeak();
     return (int)msg.wParam;
 }
@@ -156,7 +168,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   Vector2 Resolution = { 1600, 900 };
+   dru::math::Vector2 Resolution = { 1600, 900 };
    application.SetResolution(Resolution);
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
@@ -188,6 +200,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -218,6 +231,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
+        break;
+    case WM_DPICHANGED:
+        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DpiEnableScaleViewports)
+        {
+            //const int dpi = HIWORD(wParam);
+            //printf("WM_DPICHANGED to %d (%.0f%%)\n", dpi, (float)dpi / 96.0f * 100.0f);
+            const RECT* suggested_rect = (RECT*)lParam;
+            ::SetWindowPos(hWnd, nullptr, suggested_rect->left, suggested_rect->top, suggested_rect->right - suggested_rect->left, suggested_rect->bottom - suggested_rect->top, SWP_NOZORDER | SWP_NOACTIVATE);
+        }
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);

@@ -4,23 +4,24 @@
 
 namespace dru
 {
-    class CGridScript :
-        public CScript
+    class GridScript :
+        public Script
     {
     public:
-        CGridScript();
-        virtual ~CGridScript();
+        GridScript();
+        virtual ~GridScript();
 
         virtual void Initialize() override;
         virtual void update() override;
         virtual void fixedUpdate() override;
         virtual void render() override;
 
-        void SetCamera(CCamera* _Camera) { mCamera = _Camera; }
+        void SetCamera(Camera* _Camera) { mCamera = _Camera; }
 
     private:
-        CCamera* mCamera;
-
+        Camera* mCamera;
+        Vector2  mGridOffset;
+        float mThickness;
     };
 }
 

@@ -4,8 +4,8 @@
 
 namespace dru
 {
-	CShader::CShader()
-		: CResource(eResourceType::GraphicShader)
+	Shader::Shader()
+		: Resource(eResourceType::GraphicShader)
 		, mTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
 		, mRSType(eRasterizerType::SolidBack)
 		, mDSType(eDepthStencilType::Less)
@@ -13,18 +13,18 @@ namespace dru
 		, mCurrentStage(eShaderStage::End)
 	{
 	}
-	CShader::~CShader()
+	Shader::~Shader()
 	{
 	}
 
-	HRESULT CShader::Load(const std::wstring& path)
+	HRESULT Shader::Load(const std::wstring& path)
 	{
 		return E_NOTIMPL;
 	}
 
 
 
-	void CShader::Create(graphics::eShaderStage _eStage, const std::wstring& _Path, const std::string& _funcName)
+	void Shader::Create(dru::eShaderStage _eStage, const std::wstring& _Path, const std::string& _funcName)
 	{
 		mErrorBlob = nullptr;
 
@@ -37,24 +37,24 @@ namespace dru
 
 		switch (_eStage)
 		{
-		case dru::graphics::eShaderStage::VS:
+		case dru::eShaderStage::VS:
 			CreateVS(shaderPath, _funcName);
 			break;
-		case dru::graphics::eShaderStage::HS:
+		case dru::eShaderStage::HS:
 			CreateHS(shaderPath, _funcName);
 			break;
-		case dru::graphics::eShaderStage::DS:
+		case dru::eShaderStage::DS:
 			CreateDS(shaderPath, _funcName);
 			break;
-		case dru::graphics::eShaderStage::GS:	
+		case dru::eShaderStage::GS:	
 			CreateGS(shaderPath, _funcName);
 			break;
-		case dru::graphics::eShaderStage::PS:
+		case dru::eShaderStage::PS:
 			CreatePS(shaderPath, _funcName);
 			break;
-		case dru::graphics::eShaderStage::CS:
+		case dru::eShaderStage::CS:
 			break;
-		case dru::graphics::eShaderStage::End:
+		case dru::eShaderStage::End:
 			break;
 		default:
 			break;
@@ -62,7 +62,7 @@ namespace dru
 
 	}
 
-	void CShader::CreateVS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateVS(const std::wstring& _Path, const std::string& _funcName)
 	{
 		D3DCompileFromFile(_Path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 			, _funcName.c_str(), "vs_5_0", 0, 0, mVSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
@@ -74,24 +74,24 @@ namespace dru
 			mErrorBlob = nullptr;
 		}
 		
-		graphics::GetDevice()->CreateVertexShader(mVSBlob->GetBufferPointer()
+		dru::GetDevice()->CreateVertexShader(mVSBlob->GetBufferPointer()
 			, mVSBlob->GetBufferSize()
 			, nullptr
 			, mVS.GetAddressOf());
 
 	}
 
-	void CShader::CreateHS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateHS(const std::wstring& _Path, const std::string& _funcName)
 	{
 
 	}
 
-	void CShader::CreateDS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateDS(const std::wstring& _Path, const std::string& _funcName)
 	{
 
 	}
 
-	void CShader::CreateGS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateGS(const std::wstring& _Path, const std::string& _funcName)
 	{
 		D3DCompileFromFile(_Path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 			, _funcName.c_str(), "gs_5_0", 0, 0, mGSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
@@ -110,7 +110,7 @@ namespace dru
 			, mGS.GetAddressOf());
 	}
 
-	void CShader::CreatePS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreatePS(const std::wstring& _Path, const std::string& _funcName)
 	{
 		D3DCompileFromFile(_Path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 			, _funcName.c_str(), "ps_5_0", 0, 0, mPSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
@@ -122,27 +122,27 @@ namespace dru
 			mErrorBlob = nullptr;
 		}
 
-		graphics::GetDevice()->CreatePixelShader(mPSBlob->GetBufferPointer()
+		dru::GetDevice()->CreatePixelShader(mPSBlob->GetBufferPointer()
 			, mPSBlob->GetBufferSize()
 			, nullptr
 			, mPS.GetAddressOf());
 	}
 
 
-	void CShader::Bind()
+	void Shader::Bind()
 	{
-		graphics::GetDevice()->BindPrimitiveTopology(mTopology);
-		graphics::GetDevice()->BindInputLayout(mInputLayout.Get());
+		dru::GetDevice()->BindPrimitiveTopology(mTopology);
+		dru::GetDevice()->BindInputLayout(mInputLayout.Get());
 
-		graphics::GetDevice()->BindVS(mVS.Get(), nullptr, 0);
-		graphics::GetDevice()->BindHS(mHS.Get(), nullptr, 0);
-		graphics::GetDevice()->BindDS(mDS.Get(), nullptr, 0);
-		graphics::GetDevice()->BindGS(mGS.Get(), nullptr, 0);
-		graphics::GetDevice()->BindPS(mPS.Get(), nullptr, 0);
+		dru::GetDevice()->BindVS(mVS.Get(), nullptr, 0);
+		dru::GetDevice()->BindHS(mHS.Get(), nullptr, 0);
+		dru::GetDevice()->BindDS(mDS.Get(), nullptr, 0);
+		dru::GetDevice()->BindGS(mGS.Get(), nullptr, 0);
+		dru::GetDevice()->BindPS(mPS.Get(), nullptr, 0);
 
-		Microsoft::WRL::ComPtr<ID3D11RasterizerState>	rs = renderer::rasterizerState[(UINT)mRSType];
-		Microsoft::WRL::ComPtr<ID3D11DepthStencilState>	ds = renderer::depthStencilState[(UINT)mDSType];
-		Microsoft::WRL::ComPtr<ID3D11BlendState>		bs = renderer::blendState[(UINT)mBSType];
+		Microsoft::WRL::ComPtr<ID3D11RasterizerState>	rs = renderer::rasterizerState	[static_cast<UINT>(mRSType)];
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState>	ds = renderer::depthStencilState[static_cast<UINT>(mDSType)];
+		Microsoft::WRL::ComPtr<ID3D11BlendState>		bs = renderer::blendState		[static_cast<UINT>(mBSType)];
 
 		GetDevice()->BindRasterizerState(rs.Get());
 		GetDevice()->BindDepthStencilState(ds.Get());

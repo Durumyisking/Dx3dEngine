@@ -7,16 +7,17 @@
 #include "Material.h"
 #include "BaseRenderer.h"
 #include "TimeMgr.h"
+#include "Layer.h"
 
-extern dru::CApplication application;
+extern dru::Application application;
 
 namespace dru
 {
-	Matrix CCamera::View = Matrix::Identity;
-	Matrix CCamera::Projection = Matrix::Identity;
+	Matrix Camera::View = Matrix::Identity;
+	Matrix Camera::Projection = Matrix::Identity;
 
-	CCamera::CCamera()
-		: CComponent(eComponentType::Camera)
+	Camera::Camera()
+		: Component(eComponentType::Camera)
 		, mType(eProjectionType::Perspective)
 		, mAspectRatio(1.f)
 		, mNear(1.f)
@@ -33,15 +34,15 @@ namespace dru
 	{
 		EnableLayerMasks();
 	}
-	CCamera::~CCamera()
+	Camera::~Camera()
 	{
 	}
-	void CCamera::Initialize()
+	void Camera::Initialize()
 	{
 		RegisterCameraInRenderer();
 	}
 
-	void CCamera::update()
+	void Camera::update()
 	{
 		if (mTargetObj)
 		{
@@ -64,7 +65,7 @@ namespace dru
 
 	}
 
-	void CCamera::fixedUpdate()
+	void Camera::fixedUpdate()
 	{
 		CreateViewMatrix();
 		CreateProjectionMatrix();
@@ -72,7 +73,7 @@ namespace dru
 		RegisterCameraInRenderer();
 	}
 
-	void CCamera::render()
+	void Camera::render()
 	{
 		View = mView;
 		Projection = mProjection;
@@ -84,18 +85,18 @@ namespace dru
 		renderTransparent();
 	}	
 
-	void CCamera::CreateViewMatrix()
+	void Camera::CreateViewMatrix()
 	{
-		CTransform* transform = GetOwner()->GetComponent<CTransform>();
+		Transform* transform = GetOwner()->GetComponent<Transform>();
 		
-		// ÀÌµ¿Á¤º¸
+		// Ã€ÃŒÂµÂ¿ÃÂ¤ÂºÂ¸
 		Vector3 translation = transform->GetPosition();
 
 		// create view translation matrix
 		mView = Matrix::Identity;
 		mView *= Matrix::CreateTranslation(-translation);
 		
-		// È¸ÀüÁ¤º¸
+		// ÃˆÂ¸Ã€Ã¼ÃÂ¤ÂºÂ¸
 		Vector3 up = transform->Up();
 		Vector3 right = transform->Right();
 		Vector3 foward = transform->Forward();
@@ -109,7 +110,7 @@ namespace dru
 
 	}
 		
-	void CCamera::CreateProjectionMatrix()
+	void Camera::CreateProjectionMatrix()
 	{
 		RECT winRect;
 		GetClientRect(application.GetHwnd(), &winRect);
@@ -121,31 +122,24 @@ namespace dru
 
 		if (mType == eProjectionType::Perspective)
 		{
-			mProjection = Matrix::CreatePerspectiveFieldOfView(XM_2PI / 6.f, mAspectRatio, mNear, mFar);
+			mProjection = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, mAspectRatio, mNear, mFar);
 		}
 		else // (mType == eProjectionType::Orthographic)
 		{
-			mProjection = Matrix::CreateOrthographic(width / 100.f, height / 100.f, mNear, mFar);
+			mProjection = Matrix::CreateOrthographic(width , height , mNear, mFar);
 		}
 
 	}
 
-	void CCamera::RegisterCameraInRenderer()
+	void Camera::RegisterCameraInRenderer()
 	{	
-<<<<<<< Updated upstream
-		UINT type = (UINT)CSceneMgr::mActiveScene->GetType();
-		renderer::	Cameras[type].push_back(this);
-	}
-
-	void CCamera::TurnLayerMask(eLayerType _layer, bool _enable)
-	{
-		mLayerMask.set((UINT)_layer, _enable);
-	}
-
-	void CCamera::SetTarget(CGameObj* _Target)
-=======
 		UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
 		renderer::Cameras[type].push_back(this);
+	}
+
+	void Camera::TurnLayerMask(eLayerType _layer, bool _enable)
+	{
+		mLayerMask.set(static_cast<UINT>(_layer, _enable));
 	}
 
 	void Camera::TurnLayerMask(eLayerType layer, bool enable)
@@ -154,7 +148,6 @@ namespace dru
 	}
 
 	void Camera::SetTarget(GameObj* target)
->>>>>>> Stashed changes
 	{
 		mTargetObj = target;
 
@@ -164,31 +157,26 @@ namespace dru
 		(Dir).Normalize(mCamDir);
 	}
 
-	CCameraScript* CCamera::GetCamScript()
-	{
-		return GetOwner()->GetScript<CCameraScript>();
-	}
-
-	void CCamera::sortGameObjects()
+	void Camera::sortGameObjects()
 	{
 		mOpaqueGameObjects.clear();
 		mCutoutGameObjects.clear();
 		mTransparentGameObjects.clear();
 		mPostProcessGameObjects.clear();
 
-		CScene* scene = CSceneMgr::mActiveScene;
-		for (size_t i = 0; i < (UINT)eLayerType::End; i++)
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
+		for (size_t i = 0; i < static_cast<UINT>(eLayerType::End); i++)
 		{
 			if (mLayerMask[i])
 			{
-				CLayer& layer = scene->GetLayer((eLayerType)i);
+				Layer& layer = scene->GetLayer((eLayerType)i);
 
 				GameObjects gameObjects = layer.GetGameObjects();
 
 				if (0 == gameObjects.size())
 					continue;
 
-				for (CGameObj* obj : gameObjects)
+				for (GameObj* obj : gameObjects)
 				{
 					pushGameObjectToRenderingModes(obj);
 				}
@@ -197,9 +185,9 @@ namespace dru
 
 	}
 
-	void CCamera::renderOpaque()
+	void Camera::renderOpaque()
 	{
-		for (CGameObj* obj : mOpaqueGameObjects)
+		for (GameObj* obj : mOpaqueGameObjects)
 		{
 			if (renderPassCheck(obj))
 			{
@@ -208,9 +196,9 @@ namespace dru
 		}
 	}
 
-	void CCamera::renderCutout()
+	void Camera::renderCutout()
 	{
-		for (CGameObj* obj : mCutoutGameObjects)
+		for (GameObj* obj : mCutoutGameObjects)
 		{
 			if (renderPassCheck(obj))
 			{
@@ -219,9 +207,9 @@ namespace dru
 		}
 	}
 
-	void CCamera::renderTransparent()
+	void Camera::renderTransparent()
 	{
-		for (CGameObj* obj : mTransparentGameObjects)
+		for (GameObj* obj : mTransparentGameObjects)
 		{
 			if (renderPassCheck(obj))
 			{
@@ -231,29 +219,29 @@ namespace dru
 	}
 
 
-	void CCamera::pushGameObjectToRenderingModes(CGameObj* obj)
+	void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 	{
-		CBaseRenderer* renderer = obj->GetComponent<CBaseRenderer>();
+		BaseRenderer* renderer = obj->GetComponent<BaseRenderer>();
 
 		if (nullptr == renderer)
 			return;
 
-		std::shared_ptr<CMaterial> material = renderer->GetMaterial();
+		Material* material = renderer->GetMaterial();
 
-		dru::graphics::eRenderingMode mode = material->GetRenderingMode();
+		dru::eRenderingMode mode = material->GetRenderingMode();
 
 		switch (mode)
 		{
-		case dru::graphics::eRenderingMode::Opaque:
+		case dru::eRenderingMode::Opaque:
 			mOpaqueGameObjects.push_back(obj);
 			break;
-		case dru::graphics::eRenderingMode::Cutout:
+		case dru::eRenderingMode::Cutout:
 			mCutoutGameObjects.push_back(obj);
 			break;
-		case dru::graphics::eRenderingMode::Transparent:
+		case dru::eRenderingMode::Transparent:
 			mTransparentGameObjects.push_back(obj);
 			break;
-		case dru::graphics::eRenderingMode::PostProcess:
+		case dru::eRenderingMode::PostProcess:
 			mPostProcessGameObjects.push_back(obj);
 			break;
 		default:
@@ -261,11 +249,7 @@ namespace dru
 		}
 	}
 
-<<<<<<< Updated upstream
-	bool CCamera::renderPassCheck(CGameObj* _obj)
-=======
 	bool Camera::renderPassCheck(GameObj* obj)
->>>>>>> Stashed changes
 	{
 		if (nullptr == obj)
 		{

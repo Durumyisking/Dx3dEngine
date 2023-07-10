@@ -2,35 +2,33 @@
 #include "Texture.h"
 #include "Transform.h"
 #include "GameObj.h"
+#include "Material.h"
+#include "Mesh.h"
 
 namespace dru
 {
-<<<<<<< Updated upstream
-	CBaseRenderer::CBaseRenderer(eComponentType _Type)
-		:CComponent(_Type)
-=======
 	BaseRenderer::BaseRenderer(eComponentType type)
 		:Component(type)
->>>>>>> Stashed changes
 		, mbIsChanged(false)
 		, mbIsAnim(false)
+		, mbUseLOD(true)
 		, mSpriteSize(Vector2::Zero)
 	{
-		// µðÆúÆ® ¸Å½Ã ÁöÁ¤
-		std::shared_ptr<CMesh> mesh = CResources::Find<CMesh>(L"Cubemesh");
+		// ÂµÃ°Ã†ÃºÃ†Â® Â¸Ã…Â½Ãƒ ÃÃ¶ÃÂ¤
+		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
 		SetMesh(mesh);
 	}
-	CBaseRenderer::~CBaseRenderer()
+	BaseRenderer::~BaseRenderer()
 	{
 	}
-	void CBaseRenderer::Initialize()
+	void BaseRenderer::Initialize()
 	{
 	}
-	void CBaseRenderer::update()
+	void BaseRenderer::update()
 	{
 	}
-	void CBaseRenderer::fixedUpdate()
+	void BaseRenderer::fixedUpdate()
 	{
 		if (mbIsChanged)
 		{
@@ -38,7 +36,7 @@ namespace dru
 			if (mWidthRatio == 0.f && mHeightRatio == 0.f)
 				return;
 
-			CTransform* transform = GetOwner()->GetComponent<CTransform>();
+			Transform* transform = GetOwner()->GetComponent<Transform>();
 
 			Vector3 scale = transform->GetScale();
 			Vector3 scaleTemp = transform->GetScale();
@@ -55,86 +53,78 @@ namespace dru
 		}
 	}
 
-	void CBaseRenderer::render()
+	void BaseRenderer::render()
 	{
+		if(mbUseLOD)
+			LOD();	
 	}
 
-<<<<<<< Updated upstream
-	void CBaseRenderer::SetMaterial(std::shared_ptr<CMaterial> _Material)
-=======
+
 	void BaseRenderer::SetMeshByKey(std::wstring key)
 	{
 		mMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(key);
 	}
 
 	void BaseRenderer::SetMaterial(Material* material)
->>>>>>> Stashed changes
 	{
 		mMaterial = material;
 
-		adjustTexture();
+		// adjustTexture();
 	}
 
-<<<<<<< Updated upstream
-	void CBaseRenderer::SetMaterialByKey(std::wstring _Key)
-	{
-		mMaterial = CResources::Find<CMaterial>(_Key);
-=======
 	void BaseRenderer::SetMaterialByKey(std::wstring key)
 	{
 		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
->>>>>>> Stashed changes
-
-		adjustTexture();
+		// adjustTexture();
 	}
 
-<<<<<<< Updated upstream
-	void CBaseRenderer::SetAnimMaterial(std::shared_ptr<CMaterial> _Material, Vector2 _SpriteSize)
-=======
 	void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
->>>>>>> Stashed changes
 	{
 		mMaterial = material;
 		mbIsAnim = true;
-<<<<<<< Updated upstream
-		mSpriteSize = _SpriteSize;
-		adjustTexture();
-	}
-
-	void CBaseRenderer::ChangeColor(Vector4 _color)
-=======
 		mSpriteSize = spriteSize;
 		// adjustTexture();
 	}
 
 	void BaseRenderer::ChangeColor(Vector4 color)
->>>>>>> Stashed changes
 	{
 		MulColor(Vector4::Zero);
 		AddColor(color);
 	}
 
-<<<<<<< Updated upstream
-	void CBaseRenderer::MulColor(Vector4 _color)
-=======
 	void BaseRenderer::MulColor(Vector4 color)
->>>>>>> Stashed changes
 	{
 		mMaterial->SetData(eGPUParam::Vector4_1, &color);
 	}
 
-<<<<<<< Updated upstream
-	void CBaseRenderer::AddColor(Vector4 _color)
-=======
 	void BaseRenderer::AddColor(Vector4 color)
->>>>>>> Stashed changes
 	{
 		mMaterial->SetData(eGPUParam::Vector4_2, &color);
 	}
 
-	void CBaseRenderer::adjustTexture()
+	void BaseRenderer::LOD()
 	{
-		std::shared_ptr<CTexture> texture = GetMaterial()->GetTexture(eTextureSlot::T0);
+		Vector3 camPos = renderer::mainCamera->GetOwnerWorldPos();
+		Vector3 objPos = GetOwnerWorldPos();
+
+		float distance = Vector3::Distance(camPos, objPos);
+
+		if (mMaterial)
+		{
+			if (distance > 20.f)
+			{
+				mMaterial->SetShaderByKey(L"FlatShader");
+			}
+			else
+			{
+				mMaterial->SetShaderByKey(L"PhongShader");
+			}
+		}
+	}
+
+	void BaseRenderer::adjustTexture()
+	{
+		Texture* texture = GetMaterial()->GetTexture(eTextureSlot::T0);
 
 		if (nullptr == texture)
 			return;

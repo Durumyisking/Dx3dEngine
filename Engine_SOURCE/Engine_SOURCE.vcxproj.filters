@@ -160,7 +160,7 @@
     <ClInclude Include="Graphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
+    <ClInclude Include="EngineResource.h">
       <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
@@ -181,7 +181,7 @@
     <ClInclude Include="GameObj.h">
       <Filter>Common\GameObj</Filter>
     </ClInclude>
-    <ClInclude Include="Resources.h">
+    <ClInclude Include="ResourceMgr.h">
       <Filter>Resource\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
@@ -315,7 +315,14 @@
     <ClInclude Include="FontWrapper.h">
       <Filter>Common\Font</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
+    <ClInclude Include="PlayerScript.h">
+      <Filter>Common\GameObj\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h" />
+    <ClInclude Include="def.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="InputMgr.h">
       <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
@@ -329,14 +336,11 @@
     <ClCompile Include="GraphicDevice.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Resource.cpp">
+    <ClCompile Include="EngineResource.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Common\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="TimeMgr.cpp">
       <Filter>Time</Filter>
@@ -347,7 +351,7 @@
     <ClCompile Include="GameObj.cpp">
       <Filter>Common\GameObj</Filter>
     </ClCompile>
-    <ClCompile Include="Resources.cpp">
+    <ClCompile Include="ResourceMgr.cpp">
       <Filter>Resource\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
@@ -477,6 +481,15 @@
     </ClCompile>
     <ClCompile Include="FontWrapper.cpp">
       <Filter>Common\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>Common\GameObj\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="druEnums.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="InputMgr.cpp">
+      <Filter>Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

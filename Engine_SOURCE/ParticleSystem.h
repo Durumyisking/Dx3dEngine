@@ -1,10 +1,12 @@
 #pragma once
 #include "BaseRenderer.h"
 #include "ParticleShader.h"
+#include "Renderer.h"
 
 namespace dru
 {
-    class CParticleSystem : public CBaseRenderer
+	using namespace renderer;
+    class ParticleSystem : public BaseRenderer
     {
 		enum class eSimulationSpace
 		{
@@ -12,8 +14,8 @@ namespace dru
 			World,
 		};
 	public:
-		CParticleSystem();
-		virtual ~CParticleSystem();
+		ParticleSystem();
+		virtual ~ParticleSystem();
 
 		virtual void Initialize() override;
 		virtual void update() override;
@@ -22,11 +24,7 @@ namespace dru
 
 		void MakeParticleBufferData(Vector4 _StartPosition, UINT _MaxParticleCount, float _MinLifeTime, float _MaxLifeTime, float _Speed, float _Radian, UINT _Active);
 
-		void MakeConstantBufferData(std::wstring _ShaderName, renderer::ParticleSystemCB _CB)
-		{
-			mCS = CResources::Find<CParticleShader>(_ShaderName);
-			mCBData = _CB; 
-		}
+		void MakeConstantBufferData(std::wstring _ShaderName, ParticleSystemCB _CB);
 
 		void SetStartPosition(Vector3 _StartPos) { mStartPosition = Vector4(_StartPos.x, _StartPos.y, _StartPos.z, 1.f); }
 		void SetStartScale(Vector3 _StartScale) { mStartScale= Vector4(_StartScale.x, _StartScale.y, _StartScale.z, 1.f); }
@@ -55,10 +53,10 @@ namespace dru
 		Particle* mParticle;
 
 	
-		class CStructedBuffer* mBuffer;
-		class CStructedBuffer* mSharedBuffer;
-		std::shared_ptr<graphics::CParticleShader> mCS;
-		renderer::ParticleSystemCB mCBData;
+		class StructedBuffer* mBuffer;
+		class StructedBuffer* mSharedBuffer;
+		dru::ParticleShader* mCS;
+		ParticleSystemCB mCBData;
 
 		Vector4 mStartPosition;
 		Vector4 mStartScale;

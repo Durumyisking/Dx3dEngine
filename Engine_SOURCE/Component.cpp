@@ -3,23 +3,23 @@
 
 namespace dru
 {
-    CComponent::CComponent(eComponentType _Type)
+    Component::Component(eComponentType _Type)
         : mType(_Type)
         , mOwner(nullptr)
     {
     }
 
-    CComponent::~CComponent()
+    Component::~Component()
     {
     }
 
 
-    math::Vector3 CComponent::GetOwnerPos() const
+    math::Vector3 Component::GetOwnerPos() const
     {
         return mOwner->GetPos();
     }
 
-    math::Vector3 CComponent::GetOwnerWorldPos() const
+    math::Vector3 Component::GetOwnerWorldPos() const
     {
         return mOwner->GetWorldPos();
     }

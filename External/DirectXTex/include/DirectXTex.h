@@ -187,7 +187,7 @@ namespace DirectX
             // Helper for dimension
     };
 
-    enum DDS_FLAGS : unsigned long
+    enum class DDS_FLAGS : unsigned long
     {
         DDS_FLAGS_NONE = 0x0,
 

@@ -2,15 +2,25 @@
 
 #include "Scene.h"
 #include "SceneTitle.h"
+#include "Layer.h"
+#include "GameObj.h"
 
 namespace dru
 {
-	CScene* CSceneMgr::mScenes[(static_cast<UINT>(CSceneMgr::eSceneType::End))] = {};
-	CScene* CSceneMgr::mActiveScene = nullptr;
-
-	void CSceneMgr::Initialize()
+	SceneMgr::SceneMgr()
+		: mScenes{}
+		, mActiveScene(nullptr)
 	{
-		mScenes[static_cast<UINT>(eSceneType::Title)] = new CSceneTitle;
+	}
+
+	SceneMgr::~SceneMgr()
+	{
+
+	}
+
+	void SceneMgr::Initialize()
+	{
+		mScenes[static_cast<UINT>(eSceneType::Title)] = new SceneTitle;
 		mScenes[static_cast<UINT>(eSceneType::Title)]->SetType(eSceneType::Title);
 
 		for (UINT i = 0; i < static_cast<UINT>(eSceneType::End); i++)
@@ -24,50 +34,50 @@ namespace dru
 
 	}
 
-	void CSceneMgr::update()
+	void SceneMgr::update()
 	{
 		mActiveScene->update();
 	}
 
-	void CSceneMgr::fixedUpdate()
+	void SceneMgr::fixedUpdate()
 	{
 		mActiveScene->fixedUpdate();
 	}
 
-	void CSceneMgr::render()
+	void SceneMgr::render()
 	{
 		mActiveScene->render();
 	}
 
-	void CSceneMgr::fontRender()
+	void SceneMgr::fontRender()
 	{
 		mActiveScene->fontRender();
 	}
 
-	void CSceneMgr::destory()
+	void SceneMgr::destory()
 	{
 		mActiveScene->destroy();
 	}
 
-	void CSceneMgr::release()
+	void SceneMgr::release()
 	{
-		for (CScene* scene : mScenes)
+		for (Scene* scene : mScenes)
 		{
 			if (nullptr != scene)
 				delete scene;
 		}
 	}
 
-	void CSceneMgr::LoadScene(eSceneType _Type)
+	void SceneMgr::LoadScene(eSceneType _Type)
 	{
 		if (mActiveScene)
 			mActiveScene->Exit();
 
-		std::vector<CGameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
+		std::vector<GameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
 
 		mActiveScene = mScenes[static_cast<UINT>(_Type)];
 
-		for (CGameObj* obj : gameObjs)
+		for (GameObj* obj : gameObjs)
 		{
 			mActiveScene->AddGameObject(obj, obj->GetLayerType());
 		}
@@ -76,7 +86,21 @@ namespace dru
 			mActiveScene->Enter();
 	}
 
-	void CSceneMgr::DontDestroyOnLoad(CGameObj* _GameObj)
+	void SceneMgr::LateEvent()
+	{
+		if (mActiveScene == nullptr)
+			return;
+
+		for (GameObj* obj : mLateEvent)
+		{
+			enums::eLayerType type = obj->GetLayerType();
+			mActiveScene->GetLayer(type).AddGameObject(obj, type);
+		}
+
+		mLateEvent.clear();
+	}
+
+	void SceneMgr::DontDestroyOnLoad(GameObj* _GameObj)
 	{
 		if (nullptr == _GameObj)
 			return;

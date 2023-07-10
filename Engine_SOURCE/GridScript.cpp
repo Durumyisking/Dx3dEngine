@@ -6,65 +6,58 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 #include "Application.h"
+#include "MeshRenderer.h"
 
-extern dru::CApplication application;
+extern dru::Application application;
 
 namespace dru
 {
-	CGridScript::CGridScript()
-		: CScript()
+	GridScript::GridScript()
+		: Script()
 		, mCamera(nullptr)
+		, mThickness(2.f)
+		, mGridOffset{100.f, 100.f}
 	{
 		
 	}
 
-	CGridScript::~CGridScript()
+	GridScript::~GridScript()
 	{
 	}
 
-	void CGridScript::Initialize()
+	void GridScript::Initialize()
 	{
-		UINT type = (UINT)CSceneMgr::mActiveScene->GetType();
+		UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
 		mCamera = renderer::Cameras[type][0];
 	}
 
-	void CGridScript::update()
+	void GridScript::update()
+	{
+
+	}
+
+	void GridScript::fixedUpdate()
 	{
 		if (nullptr == mCamera)
 			return;
 
-		CGameObj* gameobj = mCamera->GetOwner();
-		CTransform* tr = gameobj->GetComponent<CTransform>();
+		MeshRenderer* mr = GetOwner()->GetComponent<MeshRenderer>();
 
+		GameObj* cam = mCamera->GetOwner();
+		Transform* tr = cam->GetComponent<Transform>();
 		Vector3 campos = tr->GetPosition();
-		Vector4 pos = Vector4(campos.x, campos.y, campos.z, 1.f);
 
-		float scale = mCamera->GetScale();;
-
-		RECT winRect;
-		GetClientRect(application.GetHwnd(), &winRect);
-		float w = static_cast<float>(winRect.right - winRect.left);
-		float h = static_cast<float>(winRect.top - winRect.bottom);
+		float w = static_cast<float>(application.GetWidth());
+		float h = static_cast<float>(application.GetHeight());
 		Vector2 resolution(w, h);
 
-
-		CConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Grid];
-		renderer::GridCB data;
-
-		data.cameraPosition = pos;
-		data.cameraScale = Vector2(scale, scale);
-		data.resolution = resolution;
-
-		cb->SetData(&data);
-		cb->Bind(eShaderStage::VS);
-		cb->Bind(eShaderStage::PS);
+		mr->GetMaterial()->SetData(eGPUParam::Vector3_1, &campos);
+		mr->GetMaterial()->SetData(eGPUParam::Vector2_1, &mGridOffset);
+		mr->GetMaterial()->SetData(eGPUParam::Vector2_2, &resolution);
+		mr->GetMaterial()->SetData(eGPUParam::Float_1, &mThickness);
 	}
 
-	void CGridScript::fixedUpdate()
-	{
-	}
-
-	void CGridScript::render()
+	void GridScript::render()
 	{
 	}
 

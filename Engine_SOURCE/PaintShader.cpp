@@ -3,17 +3,17 @@
 #include "Renderer.h"
 #include "TimeMgr.h"
 
-namespace dru::graphics
+namespace dru
 {
-	CPaintShader::CPaintShader()
+	PaintShader::PaintShader()
 		: mTarget(nullptr)
 	{
 	}
 
-	CPaintShader::~CPaintShader()
+	PaintShader::~PaintShader()
 	{
 	}
-	void CPaintShader::Bind()
+	void PaintShader::Bind()
 	{
 		mTarget->BindUnorderedAccessview(0);
 		mGroupX = mTarget->GetWidth() / mThreadGroupCountX + 1;
@@ -21,7 +21,7 @@ namespace dru::graphics
 		mGroupZ = 1;
 	}
 
-	void CPaintShader::Clear()
+	void PaintShader::Clear()
 	{
 		mTarget->ClearUnorderedAccessview(0);
 	}

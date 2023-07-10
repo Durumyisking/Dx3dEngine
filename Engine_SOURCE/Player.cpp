@@ -1,56 +1,52 @@
 #include "Player.h"
-#include "CameraScript.h"
-#include "GameObj.h"
 #include "RigidBody.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "TimeMgr.h"
+#include "PlayerScript.h"
+#include "MeshRenderer.h"
 
 namespace dru
 {
-	CPlayer::CPlayer()
+	Player::Player()
 	{
 		SetLayerType(eLayerType::Player);
-		SetScale(Vector3(1.25f, 1.25f, 1.f));
 
-//		CRigidBody* rigidbody = this->AddComponent<CRigidBody>(eComponentType::RigidBody);
+//		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
 
-<<<<<<< Updated upstream
-		CSpriteRenderer* SpriteRenderer = AddComponent<CSpriteRenderer>(eComponentType::Renderer);
-=======
 		//MeshRenderer* spriteRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
->>>>>>> Stashed changes
 
+		PlayerScript* script = AddComponent<PlayerScript>(eComponentType::Script);
 	}
 
-	CPlayer::~CPlayer()
+	Player::~Player()
 	{
 
 	}
 
-	void CPlayer::Initialize()
+	void Player::Initialize()
 	{
 
-		CGameObj::Initialize();
+		GameObj::Initialize();
 	}
 
-	void CPlayer::update()
+	void Player::update()
 	{
 
-		CGameObj::update();
+		GameObj::update();
 	}
 
-	void CPlayer::fixedUpdate()
+	void Player::fixedUpdate()
 	{
-		CGameObj::fixedUpdate();
+		GameObj::fixedUpdate();
 	}
 
-	void CPlayer::render()
+	void Player::render()
 	{
 		
-		CGameObj::render();
+		GameObj::render();
 	}
 
-	void CPlayer::fontRender()
+	void Player::fontRender()
 	{
 
 

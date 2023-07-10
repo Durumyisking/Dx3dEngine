@@ -6,21 +6,21 @@
 
 
 using namespace dru::math;
-using namespace dru::graphics;
+;
 
 namespace dru
 {
 
-	class CAnimation : public CEntity
+	class Animation : public DruEntity
 	{
 	public:
 		struct Sprite
 		{
 			Vector2 LT;
-			Vector2 size;	// Àß¶ó³¾ ÇÈ¼¿ Å©±â
+			Vector2 size;	// ì˜ë¼ë‚¼ í”½ì…€ í¬ê¸°
 			Vector2 offset;
 			Vector2 altasSize;
-			float duration; // ÀÌ¹ÌÁö ÇÁ·¹ÀÓ´ç ½Ã°£ °£°İ
+			float duration; // ì´ë¯¸ì§€ í”„ë ˆì„ë‹¹ ì‹œê°„ ê°„ê²©
 
 			Sprite()
 				: LT(Vector2::Zero)
@@ -33,18 +33,15 @@ namespace dru
 			}
 		};
 
-		CAnimation();
-		~CAnimation();
+		Animation();
+		~Animation();
 		
 		UINT update();
 		void fixedUpdate();
 		void render();
 
-<<<<<<< Updated upstream
-		void Create(const std::wstring& _name, std::shared_ptr<CTexture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse);
-=======
+
 		void Create(const std::wstring& name, Texture* atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, Vector2 ratio, float duration, bool reverse);
->>>>>>> Stashed changes
 		void BindShader();
 		void BindSpriteToShader(renderer::AnimationCB sprite);
 		void Clear();
@@ -62,10 +59,10 @@ namespace dru
 		renderer::AnimationCB GetAnimationData();
 
 	private:
-		class CAnimator* mAnimator;
+		class Animator* mAnimator;
 		std::wstring mAnimationName;
 
-		std::shared_ptr<CTexture> mAtlas;
+		Texture* mAtlas;
 		std::vector<Sprite> mSpriteSheet;
 		int mIndex;
 		float mTime;

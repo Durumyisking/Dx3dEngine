@@ -4,11 +4,11 @@
 
 namespace dru
 {
-	class CAudioSource : public CComponent
+	class AudioSource : public Component
 	{
 	public:
-		CAudioSource();
-		~CAudioSource();
+		AudioSource();
+		~AudioSource();
 
 		virtual void Initialize() override;
 		virtual void update() override;
@@ -20,9 +20,9 @@ namespace dru
 		void Stop(const std::wstring& _key);
 		void SetLoop(const std::wstring& _key, bool loop);
 
-//		void AddClip(std::shared_ptr<CAudioClip> clip) { mAudioClip = clip; }
+//		void AddClip(std::shared_ptr<AudioClip> clip) { mAudioClip = clip; }
 		void AddClipByKey(const std::wstring& _key);
-		CAudioClip* GetClip(const std::wstring& _key);
+		AudioClip* GetClip(const std::wstring& _key);
 
 		void SetWholeVolume(float _Volume);
 		void SetWholePitch(float _Pitch);
@@ -39,7 +39,7 @@ namespace dru
 		
 
 	private:
-		std::map<std::wstring, CAudioClip*> mAudioClips;
+		std::map<std::wstring, AudioClip*> mAudioClips;
 		
 	};
 }
