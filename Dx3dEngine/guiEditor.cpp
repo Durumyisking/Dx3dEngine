@@ -1,6 +1,6 @@
 #include "guiEditor.h"
 #include "Mesh.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "Material.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
@@ -57,8 +57,8 @@ namespace gui
 		// 충돌체의 종류 갯수만큼만 있으면 된다.
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
-		std::shared_ptr<dru::Mesh> rectMesh = GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"DebugRectmesh");
-		std::shared_ptr<dru::Material> material = GETSINGLE(dru::Resources)->Find<Material>(L"DebugMaterial");
+		dru::Mesh* rectMesh = GETSINGLE(dru::ResourceMgr)->Find<dru::Mesh>(L"DebugRectmesh");
+		dru::Material* material = GETSINGLE(dru::ResourceMgr)->Find<Material>(L"DebugMaterial");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Rect)] = new DebugObject();
 		dru::MeshRenderer* renderer
@@ -67,7 +67,7 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(rectMesh);
 
-		std::shared_ptr<dru::Mesh> circleMesh = GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"Circlemesh");
+		dru::Mesh* circleMesh = GETSINGLE(dru::ResourceMgr)->Find<dru::Mesh>(L"Circlemesh");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Circle)] = new DebugObject();
 		renderer
@@ -210,7 +210,7 @@ namespace gui
 
 		dru::BaseRenderer* renderer = debugObj->GetComponent<dru::BaseRenderer>();
 
-		std::shared_ptr<Material> material = renderer->GetMaterial();
+		Material* material = renderer->GetMaterial();
 		material->SetData(eGPUParam::Int_1, &mesh.state);
 		tr->fixedUpdate();
 

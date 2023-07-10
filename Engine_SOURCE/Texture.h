@@ -1,6 +1,6 @@
 #pragma once
 #include "Resource.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "../External/DirectXTex/include/DirectXTex.h"
 #include "GraphicDevice.h"
 

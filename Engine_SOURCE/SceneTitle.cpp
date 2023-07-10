@@ -85,8 +85,8 @@ namespace dru
 		
 			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
 
-			gridMr->SetMesh(dru::GETSINGLE(Resources)->Find<dru::Mesh>(L"Gridmesh"));
-			gridMr->SetMaterial(dru::GETSINGLE(Resources)->Find<Material>(L"GridMaterial"));
+			gridMr->SetMesh(dru::GETSINGLE(ResourceMgr)->Find<dru::Mesh>(L"Gridmesh"));
+			gridMr->SetMaterial(dru::GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
 			gridMr->LODOff();
 
 			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);

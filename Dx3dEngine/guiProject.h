@@ -1,6 +1,6 @@
 #pragma once
 #include "guiWidget.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "guiTreeWidget.h"
 
 namespace gui
@@ -21,16 +21,16 @@ namespace gui
 		template <typename T>
 		void AddResources(TreeWidget::Node* rootNode, const char* name)
 		{
-			const std::vector<std::shared_ptr<T>> resources
-				= GETSINGLE(dru::Resources)->Finds<T>();
+			const std::vector<T*> resources
+				= GETSINGLE(dru::ResourceMgr)->Finds<T>();
 
 			TreeWidget::Node* stemNode
 				= mTreeWidget->AddNode(rootNode, name, 0, true);
 
-			for (std::shared_ptr<T> resource : resources)
+			for (T* resource : resources)
 			{
 				std::string name(resource->GetName().begin(), resource->GetName().end());
-				mTreeWidget->AddNode(stemNode, name, resource.get());
+				mTreeWidget->AddNode(stemNode, name, resource);
 			}
 		}
 

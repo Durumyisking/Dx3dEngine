@@ -17,7 +17,7 @@ namespace gui
 		void SetMaterial(std::string key);
 
 	private:
-		std::shared_ptr<class dru::graphics::Material> mMaterial;
-		std::shared_ptr<class dru::Mesh> mMesh;
+		class dru::graphics::Material* mMaterial;
+		class dru::Mesh* mMesh;
 	};
 }

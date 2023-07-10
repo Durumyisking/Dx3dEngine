@@ -13,7 +13,7 @@ namespace dru
 		, mSpriteSize(Vector2::Zero)
 	{
 		// 디폴트 매시 지정
-		std::shared_ptr<Mesh> mesh = GETSINGLE(Resources)->Find<Mesh>(L"Cubemesh");
+		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
 		SetMesh(mesh);
 	}
@@ -59,10 +59,10 @@ namespace dru
 
 	void BaseRenderer::SetMeshByKey(std::wstring _Key)
 	{
-		mMesh = GETSINGLE(Resources)->Find<Mesh>(_Key);
+		mMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(_Key);
 	}
 
-	void BaseRenderer::SetMaterial(std::shared_ptr<Material> _Material)
+	void BaseRenderer::SetMaterial(Material* _Material)
 	{
 		mMaterial = _Material;
 
@@ -71,12 +71,12 @@ namespace dru
 
 	void BaseRenderer::SetMaterialByKey(std::wstring _Key)
 	{
-		mMaterial = GETSINGLE(Resources)->Find<Material>(_Key);
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(_Key);
 
 		// adjustTexture();
 	}
 
-	void BaseRenderer::SetAnimMaterial(std::shared_ptr<Material> _Material, Vector2 _SpriteSize)
+	void BaseRenderer::SetAnimMaterial(Material* _Material, Vector2 _SpriteSize)
 	{
 		mMaterial = _Material;
 		mbIsAnim = true;
@@ -111,18 +111,18 @@ namespace dru
 		{
 			if (distance > 20.f)
 			{
-				mMaterial.get()->SetShaderByKey(L"FlatShader");
+				mMaterial->SetShaderByKey(L"FlatShader");
 			}
 			else
 			{
-				mMaterial.get()->SetShaderByKey(L"PhongShader");
+				mMaterial->SetShaderByKey(L"PhongShader");
 			}
 		}
 	}
 
 	void BaseRenderer::adjustTexture()
 	{
-		std::shared_ptr<Texture> texture = GetMaterial()->GetTexture(eTextureSlot::T0);
+		Texture* texture = GetMaterial()->GetTexture(eTextureSlot::T0);
 
 		if (nullptr == texture)
 			return;

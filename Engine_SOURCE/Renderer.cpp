@@ -1,5 +1,5 @@
 #include "Renderer.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "Material.h"
 #include "SceneMgr.h"
 #include "Scene.h"
@@ -25,7 +25,7 @@ namespace dru::renderer
 	std::vector<LightAttribute> lights;
 	StructedBuffer* lightBuffer = nullptr;
 
-	std::shared_ptr<Texture> postProcessTexture = nullptr;
+	Texture* postProcessTexture = nullptr;
 	dru::GameObj* inspectorGameObject = nullptr;
 
 	void LoadMesh()
@@ -34,8 +34,8 @@ namespace dru::renderer
 #pragma region PointMesh
 
 		Vertex PointVertex = {};
-		std::shared_ptr<Mesh> pointMesh = std::make_shared<Mesh>();
-		GETSINGLE(Resources)->Insert<Mesh>(L"Pointmesh", pointMesh);
+		Mesh* pointMesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Pointmesh", pointMesh);
 		pointMesh->CreateVertexBuffer(&PointVertex, 1);
 		UINT pointIndex = 0;
 		pointMesh->CreateIndexBuffer(&pointIndex, 1);
@@ -55,8 +55,8 @@ namespace dru::renderer
 		LineVertex[1].uv = Vector2(1.f, 0.f);
 
 
-		std::shared_ptr<Mesh> lineMesh = std::make_shared<Mesh>();
-		GETSINGLE(Resources)->Insert<Mesh>(L"Linemesh", lineMesh);
+		Mesh* lineMesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Linemesh", lineMesh);
 		lineMesh->CreateVertexBuffer(&LineVertex, 2);
 		std::vector<UINT> lineindexes;
 		lineindexes.push_back(0);
@@ -85,8 +85,8 @@ namespace dru::renderer
 		RectVertexes[3].color = Vector4(0.f, 0.f, 0.f, 1.f);
 		RectVertexes[3].uv = Vector2(0.f, 1.f);
 
-		std::shared_ptr<Mesh> Rectmesh = std::make_shared<Mesh>();
-		GETSINGLE(Resources)->Insert<Mesh>(L"Rectmesh", Rectmesh);
+		Mesh* Rectmesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Rectmesh", Rectmesh);
 		Rectmesh->CreateVertexBuffer(RectVertexes, 4);
 
 		std::vector<UINT> indexes;
@@ -121,8 +121,8 @@ namespace dru::renderer
 		GridVertexes[3].color = Vector4(0.f, 0.f, 0.f, 1.f);
 		GridVertexes[3].uv = Vector2(0.f, 1.f);
 
-		std::shared_ptr<Mesh> Gridmesh = std::make_shared<Mesh>();
-		dru::GETSINGLE(Resources)->Insert<Mesh>(L"Gridmesh", Gridmesh);
+		Mesh* Gridmesh = new Mesh();
+		dru::GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Gridmesh", Gridmesh);
 		Gridmesh->CreateVertexBuffer(GridVertexes, 4);
 
 		indexes.clear();
@@ -165,8 +165,8 @@ namespace dru::renderer
 		indexes.push_back(3);
 		indexes.push_back(0);
 
-		std::shared_ptr<Mesh> DebugRectmesh = std::make_shared<Mesh>();
-		GETSINGLE(Resources)->Insert<Mesh>(L"DebugRectmesh", DebugRectmesh);
+		Mesh* DebugRectmesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"DebugRectmesh", DebugRectmesh);
 		DebugRectmesh->CreateVertexBuffer(DebugRectVertexes, 4);
 		DebugRectmesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 
@@ -204,8 +204,8 @@ namespace dru::renderer
 		}
 		indexes.push_back(1);
 
-		std::shared_ptr<Mesh> Circlemesh = std::make_shared<Mesh>();
-		GETSINGLE(Resources)->Insert<Mesh>(L"Circlemesh", Circlemesh);
+		Mesh* Circlemesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Circlemesh", Circlemesh);
 		Circlemesh->CreateVertexBuffer(CircleVertexes.data(), static_cast<UINT>(CircleVertexes.size()));
 		Circlemesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 
@@ -362,8 +362,8 @@ namespace dru::renderer
 		}
 
 		// Crate Mesh
-		std::shared_ptr<Mesh> cubMesh = std::make_shared<Mesh>();
-		GETSINGLE(Resources)->Insert<Mesh>(L"Cubemesh", cubMesh);
+		Mesh* cubMesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Cubemesh", cubMesh);
 		cubMesh->CreateVertexBuffer(arrCube, 24);
 		cubMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 #pragma endregion
@@ -475,8 +475,8 @@ namespace dru::renderer
 			indexes.push_back(iBottomIdx - (i + 1));
 		}
 
-		std::shared_ptr<Mesh> sphereMesh = std::make_shared<Mesh>();
-		GETSINGLE(Resources)->Insert<Mesh>(L"Spheremesh", sphereMesh);
+		Mesh* sphereMesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Spheremesh", sphereMesh);
 		sphereMesh->CreateVertexBuffer(sphereVtx.data(), static_cast<UINT>(sphereVtx.size()));
 		sphereMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 
@@ -537,70 +537,70 @@ namespace dru::renderer
 		//Vector3 biNormal;
 		//Vector3 normal;
 
-		std::shared_ptr<Shader> Meshshader = GETSINGLE(Resources)->Find<Shader>(L"MeshShader");
+		Shader* Meshshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Meshshader->GetVSBlobBufferPointer()
 			, Meshshader->GetVSBlobBufferSize()
 			, Meshshader->GetInputLayoutAddr());
 
 
-		std::shared_ptr<Shader> Spriteshader = GETSINGLE(Resources)->Find<Shader>(L"SpriteShader");
+		Shader* Spriteshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Spriteshader->GetVSBlobBufferPointer()
 			, Spriteshader->GetVSBlobBufferSize()
 			, Spriteshader->GetInputLayoutAddr());
 
 
-		std::shared_ptr<Shader> UIshader = GETSINGLE(Resources)->Find<Shader>(L"UIShader");
+		Shader* UIshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UIShader");
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, UIshader->GetVSBlobBufferPointer()
 			, UIshader->GetVSBlobBufferSize()
 			, UIshader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> Fadeshader = GETSINGLE(Resources)->Find<Shader>(L"FadeShader");
+		Shader* Fadeshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FadeShader");
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Fadeshader->GetVSBlobBufferPointer()
 			, Fadeshader->GetVSBlobBufferSize()
 			, Fadeshader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> Colorshader = GETSINGLE(Resources)->Find<Shader>(L"ColorShader");
+		Shader* Colorshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ColorShader");
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Colorshader->GetVSBlobBufferPointer()
 			, Colorshader->GetVSBlobBufferSize()
 			, Colorshader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> Gridshader = GETSINGLE(Resources)->Find<Shader>(L"GridShader");
+		Shader* Gridshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"GridShader");
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Gridshader->GetVSBlobBufferPointer()
 			, Gridshader->GetVSBlobBufferSize()
 			, Gridshader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> Debugshader = GETSINGLE(Resources)->Find<Shader>(L"DebugShader");
+		Shader* Debugshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugShader");
 
 		graphics::GetDevice()->CreateInputLayout(arrLayout, 3
 			, Debugshader->GetVSBlobBufferPointer()
 			, Debugshader->GetVSBlobBufferSize()
 			, Debugshader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> particleShader = GETSINGLE(Resources)->Find<Shader>(L"ParticleShader");
+		Shader* particleShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ParticleShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, particleShader->GetVSBlobBufferPointer()
 			, particleShader->GetVSBlobBufferSize()
 			, particleShader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> postProcessShader = GETSINGLE(Resources)->Find<Shader>(L"PostProcessShader");
+		Shader* postProcessShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PostProcessShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, postProcessShader->GetVSBlobBufferPointer()
 			, postProcessShader->GetVSBlobBufferSize()
 			, postProcessShader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> phongShader = GETSINGLE(Resources)->Find<Shader>(L"PhongShader");
+		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
 		GetDevice()->CreateInputLayout(arrLayout, 6
 			, phongShader->GetVSBlobBufferPointer()
 			, phongShader->GetVSBlobBufferSize()
 			, phongShader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> flatShader = GETSINGLE(Resources)->Find<Shader>(L"FlatShader");
+		Shader* flatShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FlatShader");
 		GetDevice()->CreateInputLayout(arrLayout, 6
 			, flatShader->GetVSBlobBufferPointer()
 			, flatShader->GetVSBlobBufferSize()
@@ -749,62 +749,62 @@ namespace dru::renderer
 
 	void LoadShader()
 	{
-		std::shared_ptr<Shader> MeshShader = std::make_shared<Shader>();
+		Shader* MeshShader = new Shader();
 		MeshShader->Create(graphics::eShaderStage::VS, L"PhongVS.hlsl", "main");
 		MeshShader->Create(graphics::eShaderStage::PS, L"PhongPS.hlsl", "main");
-		GETSINGLE(Resources)->Insert<Shader>(L"MeshShader", MeshShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"MeshShader", MeshShader);
 
-		std::shared_ptr<Shader> phongShader = std::make_shared<Shader>();
+		Shader* phongShader = new Shader();
 		phongShader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
 		phongShader->Create(eShaderStage::PS, L"PhongPS.hlsl", "main");
-		GETSINGLE(Resources)->Insert<Shader>(L"PhongShader", phongShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"PhongShader", phongShader);
 
-		std::shared_ptr<Shader> flatShader = std::make_shared<Shader>();
+		Shader* flatShader = new Shader();
 		flatShader->Create(eShaderStage::VS, L"FlatVS.hlsl", "main");
 		flatShader->Create(eShaderStage::PS, L"FlatPS.hlsl", "main");
-		GETSINGLE(Resources)->Insert<Shader>(L"FlatShader", flatShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"FlatShader", flatShader);
 
 
-		std::shared_ptr<Shader> SpriteShader = std::make_shared<Shader>();
+		Shader* SpriteShader = new Shader();
 		SpriteShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
 		SpriteShader->Create(graphics::eShaderStage::PS, L"SpritePS.hlsl", "main");		
-		GETSINGLE(Resources)->Insert<Shader>(L"SpriteShader", SpriteShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"SpriteShader", SpriteShader);
 
-		std::shared_ptr<Shader> GridShader = std::make_shared<Shader>();
+		Shader* GridShader = new Shader();
 		GridShader->Create(graphics::eShaderStage::VS, L"GridVS.hlsl", "main");
 		GridShader->Create(graphics::eShaderStage::PS, L"GridPS.hlsl", "main");
-		GETSINGLE(Resources)->Insert<Shader>(L"GridShader", GridShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"GridShader", GridShader);
 
-		std::shared_ptr<Shader> UIShader = std::make_shared<Shader>();
+		Shader* UIShader = new Shader();
 		UIShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
 		UIShader->Create(graphics::eShaderStage::PS, L"UIPS.hlsl", "main");
-		GETSINGLE(Resources)->Insert<Shader>(L"UIShader", UIShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UIShader", UIShader);
 
-		std::shared_ptr<Shader> FadeShader = std::make_shared<Shader>();
+		Shader* FadeShader = new Shader();
 		FadeShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
 		FadeShader->Create(graphics::eShaderStage::PS, L"FadePS.hlsl", "main");
-		GETSINGLE(Resources)->Insert<Shader>(L"FadeShader", FadeShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"FadeShader", FadeShader);
 
-		std::shared_ptr<Shader> ColorShader = std::make_shared<Shader>();
+		Shader* ColorShader = new Shader();
 		ColorShader->Create(graphics::eShaderStage::VS, L"SpriteVS.hlsl", "main");
 		ColorShader->Create(graphics::eShaderStage::PS, L"ColorPS.hlsl", "main");
-		GETSINGLE(Resources)->Insert<Shader>(L"ColorShader", ColorShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"ColorShader", ColorShader);
 
-		std::shared_ptr<Shader> DebugShader = std::make_shared<Shader>();
+		Shader* DebugShader = new Shader();
 		DebugShader->Create(graphics::eShaderStage::VS, L"DebugVS.hlsl", "main");
 		DebugShader->Create(graphics::eShaderStage::PS, L"DebugPS.hlsl", "main");
 		DebugShader->SetRSState(eRasterizerType::SolidNone);
 		DebugShader->SetDSState(eDepthStencilType::NoWrite);
 		DebugShader->SetBSState(eBlendStateType::AlphaBlend);
 		DebugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_LINESTRIP);
-		GETSINGLE(Resources)->Insert<Shader>(L"DebugShader", DebugShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"DebugShader", DebugShader);
 
-		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
+		PaintShader* paintShader = new PaintShader();
 		paintShader->Create(L"PaintCS.hlsl", "main");
-		GETSINGLE(Resources)->Insert<PaintShader>(L"PaintShader", paintShader);
+		GETSINGLE(ResourceMgr)->Insert<PaintShader>(L"PaintShader", paintShader);
 
 		{
-			std::shared_ptr<Shader> particleShader = std::make_shared<Shader>();
+			Shader* particleShader = new Shader();
 			particleShader->Create(eShaderStage::VS, L"ParticleVS.hlsl", "main");
 			particleShader->Create(eShaderStage::GS, L"ParticleGS.hlsl", "main");
 			particleShader->Create(eShaderStage::PS, L"ParticlePS.hlsl", "main");
@@ -812,137 +812,138 @@ namespace dru::renderer
 			particleShader->SetDSState(eDepthStencilType::NoWrite);
 			particleShader->SetBSState(eBlendStateType::AlphaBlend);
 			particleShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
-			GETSINGLE(Resources)->Insert<Shader>(L"ParticleShader", particleShader);
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"ParticleShader", particleShader);
 		}
 
 
-		std::shared_ptr<ParticleShader> particleCS = std::make_shared<ParticleShader>();
-		GETSINGLE(Resources)->Insert<ParticleShader>(L"ParticleCS", particleCS);
+		ParticleShader* particleCS = new ParticleShader();
+		GETSINGLE(ResourceMgr)->Insert<ParticleShader>(L"ParticleCS", particleCS);
 		particleCS->Create(L"ParticleCS.hlsl", "main");
 
-		std::shared_ptr<Shader> postProcessShader = std::make_shared<Shader>();
+		Shader* postProcessShader = new Shader();
 		postProcessShader->Create(eShaderStage::VS, L"PostProcessVS.hlsl", "main");
 		postProcessShader->Create(eShaderStage::PS, L"PostProcessPS.hlsl", "main");
 		postProcessShader->SetDSState(eDepthStencilType::NoWrite);
-		GETSINGLE(Resources)->Insert<Shader>(L"PostProcessShader", postProcessShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"PostProcessShader", postProcessShader);
 
 
 	}
 
 	void LoadTexture()
 	{		
-		GETSINGLE(Resources)->Load<Texture>(L"noise1", L"noise/noise_01.png");
-		GETSINGLE(Resources)->Load<Texture>(L"noise2", L"noise/noise_02.png");
-		GETSINGLE(Resources)->Load<Texture>(L"noise3", L"noise/noise_03.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise1", L"noise/noise_01.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise2", L"noise/noise_02.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise3", L"noise/noise_03.png");
 
-		GETSINGLE(Resources)->Load<Texture>(L"default", L"default.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"default", L"default.png");
 
-		GETSINGLE(Resources)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
 
-		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
+		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
 			DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM,
 			D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS);
-		GETSINGLE(Resources)->Insert<Texture>(L"PaintTexture", uavTexture);
+		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PaintTexture", uavTexture);
 
-		postProcessTexture = std::make_shared<Texture>();
+		postProcessTexture =  new Texture();
 		postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
-		GETSINGLE(Resources)->Insert<Texture>(L"PostProcessTexture", postProcessTexture);
+		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PostProcessTexture", postProcessTexture);
 	}
 
 
 	void LoadMaterial()
 	{
 
-		std::shared_ptr<Texture> Meshtexture = GETSINGLE(Resources)->Find<Texture>(L"default");
-		std::shared_ptr<Shader> MeshShader = GETSINGLE(Resources)->Find<Shader>(L"MeshShader");
-		std::shared_ptr<Material> MeshMaterial = std::make_shared<Material>();
+		Texture* Meshtexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"default");
+		Shader* MeshShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
+		Material* MeshMaterial = new Material();
 		MeshMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		MeshMaterial->SetShader(MeshShader);
 		MeshMaterial->SetTexture(Meshtexture);
-		GETSINGLE(Resources)->Insert<Material>(L"MeshMaterial", MeshMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"MeshMaterial", MeshMaterial);
 
-		std::shared_ptr<Texture> Spritetexture = GETSINGLE(Resources)->Find<Texture>(L"default");
-		std::shared_ptr<Shader> SpriteShader = GETSINGLE(Resources)->Find<Shader>(L"SpriteShader");
-		std::shared_ptr<Material> SpriteMaterial = std::make_shared<Material>();
+		Texture* Spritetexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"default");
+		Shader* SpriteShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
+		Material* SpriteMaterial = new Material();
 		SpriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		SpriteMaterial->SetShader(SpriteShader);
 		SpriteMaterial->SetTexture(Spritetexture);
-		GETSINGLE(Resources)->Insert<Material>(L"SpriteMaterial", SpriteMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"SpriteMaterial", SpriteMaterial);
 
-		std::shared_ptr<Texture> UItexture = GETSINGLE(Resources)->Find<Texture>(L"Title");
-		std::shared_ptr<Shader> UIShader = GETSINGLE(Resources)->Find<Shader>(L"UIShader");
-		std::shared_ptr<Material> UIMaterial = std::make_shared<Material>();
+		Texture* UItexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Title");
+		Shader* UIShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UIShader");
+		Material* UIMaterial = new Material();
 		UIMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		UIMaterial->SetShader(UIShader);
 		UIMaterial->SetTexture(UItexture);
-		GETSINGLE(Resources)->Insert<Material>(L"UIMaterial", UIMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"UIMaterial", UIMaterial);
 
-		std::shared_ptr<Shader> GridShader = GETSINGLE(Resources)->Find<Shader>(L"GridShader");
-		std::shared_ptr<Material> GridMaterial = std::make_shared<Material>();
+		Shader* GridShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"GridShader");
+		Material* GridMaterial = new Material();
 		GridMaterial->SetRenderingMode(eRenderingMode::Opaque);
 		GridMaterial->SetShader(GridShader);
-		GETSINGLE(Resources)->Insert<Material>(L"GridMaterial", GridMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"GridMaterial", GridMaterial);
 
-		std::shared_ptr<Texture> Fadetexture = GETSINGLE(Resources)->Find<Texture>(L"default");
-		std::shared_ptr<Shader> FadeShader = GETSINGLE(Resources)->Find<Shader>(L"FadeShader");
-		std::shared_ptr<Material> FadeMaterial = std::make_shared<Material>();
+		Texture* Fadetexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"default");
+		Shader* FadeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FadeShader");
+		Material* FadeMaterial = new Material();
 		FadeMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		FadeMaterial->SetShader(FadeShader);
 		FadeMaterial->SetTexture(Fadetexture);
-		GETSINGLE(Resources)->Insert<Material>(L"FadeMaterial", FadeMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"FadeMaterial", FadeMaterial);
 
-		std::shared_ptr<Texture> Colortexture = GETSINGLE(Resources)->Find<Texture>(L"Black");
-		std::shared_ptr<Shader> ColorShader = GETSINGLE(Resources)->Find<Shader>(L"ColorShader");
-		std::shared_ptr<Material> ColorMaterial = std::make_shared<Material>();
+		Texture* Colortexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Black");
+		Shader* ColorShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ColorShader");
+		Material* ColorMaterial = new Material();
 		ColorMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		ColorMaterial->SetShader(ColorShader);
 		ColorMaterial->SetTexture(Colortexture);
-		GETSINGLE(Resources)->Insert<Material>(L"ColorMaterial", ColorMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"ColorMaterial", ColorMaterial);
 
-		std::shared_ptr <Texture> Painttexture = GETSINGLE(Resources)->Find<Texture>(L"PaintTexture");
-		std::shared_ptr<Shader> PaintShader = GETSINGLE(Resources)->Find<Shader>(L"MeshShader");
-		std::shared_ptr<Material> PaintMaterial = std::make_shared<Material>();
+		Texture* Painttexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"PaintTexture");
+		Shader* PaintShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
+		Material* PaintMaterial = new Material();
+
 		PaintMaterial->SetShader(PaintShader);
 		PaintMaterial->SetTexture(Painttexture);
-		GETSINGLE(Resources)->Insert<Material>(L"PaintMaterial", PaintMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"PaintMaterial", PaintMaterial);
 
-		std::shared_ptr<Shader> particleShader = GETSINGLE(Resources)->Find<Shader>(L"ParticleShader");
-		std::shared_ptr<Material> particleMaterial = std::make_shared<Material>();
+		Shader* particleShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ParticleShader");
+		Material* particleMaterial = new Material();
 		particleMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		particleMaterial->SetShader(particleShader);
-		GETSINGLE(Resources)->Insert<Material>(L"ParticleMaterial", particleMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"ParticleMaterial", particleMaterial);
 
-		std::shared_ptr<Shader> DebugShader = GETSINGLE(Resources)->Find<Shader>(L"DebugShader");
-		std::shared_ptr<Material> DebugMaterial = std::make_shared<Material>();
+		Shader* DebugShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugShader");
+		Material* DebugMaterial = new Material();
 		DebugMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		DebugMaterial->SetShader(DebugShader);
-		GETSINGLE(Resources)->Insert<Material>(L"DebugMaterial", DebugMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"DebugMaterial", DebugMaterial);
 
-		std::shared_ptr<Shader> postProcessShader = GETSINGLE(Resources)->Find<Shader>(L"PostProcessShader");
-		std::shared_ptr<Material> postProcessMaterial = std::make_shared<Material>();
+		Shader* postProcessShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PostProcessShader");
+		Material* postProcessMaterial = new Material();
 		postProcessMaterial->SetRenderingMode(eRenderingMode::PostProcess);
 		postProcessMaterial->SetShader(postProcessShader);
 		postProcessMaterial->SetTexture(postProcessTexture);
-		GETSINGLE(Resources)->Insert<Material>(L"PostProcessMaterial", postProcessMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"PostProcessMaterial", postProcessMaterial);
 
-		std::shared_ptr<Shader> phongShader = GETSINGLE(Resources)->Find<Shader>(L"PhongShader");
-		std::shared_ptr<Material> phongMaterial = std::make_shared<Material>();
+		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
+		Material* phongMaterial = new Material();
 		phongMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		phongMaterial->SetShader(phongShader);
-		GETSINGLE(Resources)->Insert<Material>(L"PhongMaterial", phongMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"PhongMaterial", phongMaterial);
 
-		std::shared_ptr<Shader> flatShader = GETSINGLE(Resources)->Find<Shader>(L"FlatShader");
-		std::shared_ptr<Material> flatMaterial = std::make_shared<Material>();
+		Shader* flatShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FlatShader");
+		Material* flatMaterial = new Material();
 		flatMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		flatMaterial->SetShader(flatShader);
-		GETSINGLE(Resources)->Insert<Material>(L"FlatMaterial", flatMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"FlatMaterial", flatMaterial);
 			
 			
 		{
-			std::shared_ptr<Material> material = std::make_shared<Material>(L"texCursor", L"UIShader");
-			GETSINGLE(Resources)->Insert<Material>(L"CursorMat", material);
+			Material* material = new Material(L"texCursor", L"UIShader");
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"CursorMat", material);
 		};
 	}
 
@@ -1018,7 +1019,7 @@ namespace dru::renderer
 
 	void BindNoiseTexture()
 	{
-		std::shared_ptr<Texture> noise = GETSINGLE(Resources)->Find<Texture>(L"noise1");
+		Texture* noise = GETSINGLE(ResourceMgr)->Find<Texture>(L"noise1");
 		noise->BindShaderResource(eShaderStage::VS, 16);
 		noise->BindShaderResource(eShaderStage::HS, 16);
 		noise->BindShaderResource(eShaderStage::DS, 16);
@@ -1043,7 +1044,7 @@ namespace dru::renderer
 	}
 	void CopyRenderTarget()
 	{
-		std::shared_ptr<Texture> renderTarget = GETSINGLE(Resources)->Find<Texture>(L"RenderTargetTexture");
+		Texture* renderTarget = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
 
 		ID3D11ShaderResourceView* srv = nullptr;
 		GetDevice()->BindShaderResource(eShaderStage::PS, 60, &srv);

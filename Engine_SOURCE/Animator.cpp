@@ -74,7 +74,7 @@ namespace dru
 	{
 	}
 
-	bool Animator::Create(const std::wstring& _name, std::shared_ptr<Texture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
+	bool Animator::Create(const std::wstring& _name, Texture* _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
 	{
 		if (!_atlas)
 			return false;
