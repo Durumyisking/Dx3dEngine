@@ -15,8 +15,8 @@ namespace dru
 {
 
 	Application::Application()
-		: initalized(false)
-		, graphicDevice(nullptr)
+		: mbInitalized(false)
+		, mGraphicDevice(nullptr)
 		, mHwnd{}
 		, mHdc{}
 		, mWidth(0)
@@ -27,9 +27,9 @@ namespace dru
 	}
 	Application::~Application()
 	{
-		Fmod::Release();
-		SceneMgr::release();
-		FontWrapper::Release();
+		GETSINGLE(Fmod)->Release();
+		GETSINGLE(SceneMgr)->Release();
+		GETSINGLE(FontWrapper)->Release();
 		PhysicsMgr::DestroyInstance();
 	}
 
@@ -40,7 +40,7 @@ namespace dru
 		GETSINGLE(Fmod)->Initialize();
 		GETSINGLE(CollisionMgr)->Initialize();
 		renderer::Initialize();
-		GETSINGLE(PhysicsMgr)->GetInstance()->Init();
+		GETSINGLE(PhysicsMgr)->GetInstance()->Initialize();
 		GETSINGLE(FontWrapper)->Initialize();
 		GETSINGLE(SceneMgr)->Initialize();
 	}
@@ -48,31 +48,31 @@ namespace dru
 	{
 		GETSINGLE(TimeMgr)->update();
 		GETSINGLE(InputMgr)->update();
-		GETSINGLE(PhysicsMgr)->update();
+		GETSINGLE(PhysicsMgr)->Update();
 		GETSINGLE(CollisionMgr)->update();
-		GETSINGLE(SceneMgr)->update();
+		GETSINGLE(SceneMgr)->Update();
 	}
 	void Application::fixedUpdate()
 	{
 		GETSINGLE(CollisionMgr)->fixedUpdate();
-		GETSINGLE(SceneMgr)->fixedUpdate();
+		GETSINGLE(SceneMgr)->FixedUpdate();
 	}
 	void Application::render()
 	{
 		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
-		//		CollisionMgr::render();
-		graphicDevice->Clear();
-		graphicDevice->AdjustViewPorts();
+		//		CollisionMgr::Render();
+		mGraphicDevice->Clear();
+		mGraphicDevice->AdjustViewPorts();
 
 		renderer::Render();
-		GETSINGLE(SceneMgr)->render();
-		GETSINGLE(SceneMgr)->fontRender();
+		GETSINGLE(SceneMgr)->Render();
+		GETSINGLE(SceneMgr)->FontRender();
 	}
 
 	void Application::destroy()
 	{
-		GETSINGLE(SceneMgr)->destory();
+		GETSINGLE(SceneMgr)->Destory();
 	}
 
 	void Application::lateEvent()
@@ -93,14 +93,14 @@ namespace dru
 
 	void Application::Present()
 	{
-		graphicDevice->Present();
+		mGraphicDevice->Present();
 	}
 
 	void Application::Release()
 	{
 		GETSINGLE(FileMgr)->FileLoad(L"..//Resources/MarioHackStart.SMD");
 		GETSINGLE(Fmod)->Release();
-		GETSINGLE(SceneMgr)->release();
+		GETSINGLE(SceneMgr)->Release();
 		GETSINGLE(FontWrapper)->Release();
 		GETSINGLE(ResourceMgr)->Release();
 	}
@@ -116,21 +116,21 @@ namespace dru
 		GETSINGLE(ResourceMgr)->DestroyInstance();
 	}
 
-	void Application::SetWindow(HWND _hwnd, UINT _width, UINT _height)
+	void Application::SetWindow(HWND hwnd, UINT width, UINT height)
 	{
-		if (graphicDevice == nullptr)
+		if (mGraphicDevice == nullptr)
 		{
-			mHwnd = _hwnd;
+			mHwnd = hwnd;
 			mHdc = GetDC(mHwnd);
-			mWidth = _width;
-			mHeight = _height;
+			mWidth = width;
+			mHeight = height;
 
 			eValidationMode vaildationMode = eValidationMode::Disabled;
-			graphicDevice = std::make_unique<GraphicDevice>();
-			//dru::GetDevice() = graphicDevice.get();
+			mGraphicDevice = std::make_unique<GraphicDevice>();
+			//dru::GetDevice() = mGraphicDevice.get();
 		}
 
-		RECT rt = { 0, 0, (LONG)_width , (LONG)_height };
+		RECT rt = { 0, 0, static_cast<LONG>(width) , static_cast<LONG>(height) };
 		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
 		SetWindowPos(mHwnd, nullptr, 0, 0, rt.right - rt.left, rt.bottom - rt.top, 0);
 		ShowWindow(mHwnd, true);
@@ -161,10 +161,10 @@ namespace dru
 		SetMenu(mHwnd, nullptr);
 		ChangeWindowSize(false);
 	}
-	void Application::ChangeWindowSize(bool _bMenu)
+	void Application::ChangeWindowSize(bool bMenu)
 	{
 		RECT rt = { 0, 0, static_cast<LONG>(mResolution.x), static_cast<LONG>(mResolution.y) };
-		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, _bMenu);
+		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, bMenu);
 		SetWindowPos(mHwnd, nullptr, 0, 0, rt.right - rt.left, rt.bottom - rt.top, 0);
 	}
 }

@@ -594,13 +594,13 @@ namespace dru::renderer
 			, postProcessShader->GetVSBlobBufferSize()
 			, postProcessShader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> debugGeometryShader = Resources::Find<Shader>(L"DebugGeometryShader");
+		Shader* debugGeometryShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugGeometryShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, debugGeometryShader->GetVSBlobBufferPointer()
 			, debugGeometryShader->GetVSBlobBufferSize()
 			, debugGeometryShader->GetInputLayoutAddr());
 
-		std::shared_ptr<Shader> phongShader = Resources::Find<Shader>(L"PhongShader");
+		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
 		GetDevice()->CreateInputLayout(arrLayout, 6
 			, phongShader->GetVSBlobBufferPointer()
 			, phongShader->GetVSBlobBufferSize()
@@ -761,8 +761,8 @@ namespace dru::renderer
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"MeshShader", MeshShader);
 
 		Shader* debugGeometryShader = new Shader();
-		debugGeometryShader->Create(graphics::eShaderStage::VS, L"DebugGeometryVS.hlsl", "main");
-		debugGeometryShader->Create(graphics::eShaderStage::PS, L"DebugGeometryPS.hlsl", "main");
+		debugGeometryShader->Create(dru::eShaderStage::VS, L"DebugGeometryVS.hlsl", "main");
+		debugGeometryShader->Create(dru::eShaderStage::PS, L"DebugGeometryPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"DebugGeometryShader", MeshShader);
 
 		Shader* phongShader = new Shader();
@@ -939,14 +939,14 @@ namespace dru::renderer
 		postProcessMaterial->SetTexture(postProcessTexture);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"PostProcessMaterial", postProcessMaterial);
 
-		std::shared_ptr<Shader> debugGeometryShader = Resources::Find<Shader>(L"DebugGeometryShader");
-		std::shared_ptr<Material> debugGeometryMaterial = std::make_shared<Material>();
+		Shader* debugGeometryShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugGeometryShader");
+		Material* debugGeometryMaterial = new Material();
 		debugGeometryMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		debugGeometryMaterial->SetShader(debugGeometryShader);
-		Resources::Insert<Material>(L"DebugGeometryMaterial", debugGeometryMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"DebugGeometryMaterial", debugGeometryMaterial);
 
-		std::shared_ptr<Shader> phongShader = Resources::Find<Shader>(L"PhongShader");
-		std::shared_ptr<Material> phongMaterial = std::make_shared<Material>();
+		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
+		Material* phongMaterial = new Material();
 		phongMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		phongMaterial->SetShader(phongShader);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"PhongMaterial", phongMaterial);

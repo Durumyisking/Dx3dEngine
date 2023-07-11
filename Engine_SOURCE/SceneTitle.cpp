@@ -17,6 +17,10 @@
 #include "Application.h"
 #include "Player.h"
 
+#include "Physical.h"
+#include "PhysXRigidBody.h"
+#include "PhysXCollider.h"
+
 extern dru::Application application;
 
 

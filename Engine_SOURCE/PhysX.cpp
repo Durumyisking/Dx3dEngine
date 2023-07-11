@@ -1,4 +1,5 @@
 #include "PhysX.h"
+#include "PhysicsScene.h"
 
 
 PhysX::PhysX()

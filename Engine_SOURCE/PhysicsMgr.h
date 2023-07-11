@@ -10,7 +10,7 @@ class PhysicsMgr
 	SINGLE(PhysicsMgr)
 
 public:
-	void Init();
+	void Initialize();
 	void Update();
 
 	std::shared_ptr<PhysX>			GetEnvironment() { return mPhysX; }

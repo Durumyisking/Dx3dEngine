@@ -1,8 +1,8 @@
 #include "PhysicsScene.h"
 
 
-PhysicsScene::PhysicsScene(PxScene* Scene)
-	:mScene(Scene)
+PhysicsScene::PhysicsScene(PxScene* scene)
+	:mScene(scene)
 {
 }
 
@@ -10,14 +10,14 @@ PhysicsScene::~PhysicsScene()
 {
 }
 
-void PhysicsScene::AddActor(PxActor* Actor)
+void PhysicsScene::AddActor(PxActor* actor)
 {
 	assert(mScene);
-	mScene->addActor(*Actor);
+	mScene->addActor(*actor);
 }
 
-void PhysicsScene::RemoveActor(PxActor* Actor)
+void PhysicsScene::RemoveActor(PxActor* actor)
 {
 	assert(mScene);
-	mScene->removeActor(*Actor);
+	mScene->removeActor(*actor);
 }

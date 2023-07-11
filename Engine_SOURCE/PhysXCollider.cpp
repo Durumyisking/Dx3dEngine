@@ -75,7 +75,7 @@ namespace dru
 	{
 		//auto [vVertices, vIndices] = Vertex::CreateHemisphereVerticesAndIndices(radius, halfHeight);
 		//shared_ptr<Mesh> pMesh = make_shared<Mesh>();
-		//pMesh->Init(vVertices, vIndices);
+		//pMesh->Initialize(vVertices, vIndices);
 		//shared_ptr<Material> pMaterial = GET_SINGLE(Resources)->Get<Material>(L"DebugGeometry");
 
 		//GetDebugRenderer()->SetMaterial(pMaterial);

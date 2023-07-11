@@ -89,7 +89,7 @@ namespace gui
 		mVisualEditor = new VisualEditor();
 		//mWidgets.push_back(mVisualEditor);
 
-		// Init Widget 
+		// Initialize Widget 
 		Inspector* inspector = new Inspector();
 		mWidgets.insert(std::make_pair("Inspector", inspector));
 
@@ -299,7 +299,7 @@ namespace gui
 
 		//for (Widget* widget : mWidgets) 
 		//{
-		//	widget->update();
+		//	widget->Update();
 		//}
 
 		mVisualEditor->Render();
@@ -348,7 +348,7 @@ namespace gui
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 		
-		// update and render additional Platform Windows
+		// Update and Render additional Platform Windows
 		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
 			ImGui::UpdatePlatformWindows();

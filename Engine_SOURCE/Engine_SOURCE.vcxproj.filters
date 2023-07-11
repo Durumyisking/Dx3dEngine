@@ -344,6 +344,17 @@
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="FileMgr.h" />
+    <ClInclude Include="Physical.h" />
+    <ClInclude Include="PhysicalProperties.h" />
+    <ClInclude Include="PhysicsMgr.h" />
+    <ClInclude Include="PhysicsScene.h" />
+    <ClInclude Include="PhysX.h" />
+    <ClInclude Include="PhysXCollider.h" />
+    <ClInclude Include="PhysXRigidBody.h" />
+    <ClInclude Include="PxDispathcer.h" />
+    <ClInclude Include="PxFilter.h" />
+    <ClInclude Include="PxInitialization.h" />
+    <ClInclude Include="PxEventCallback.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -511,6 +522,17 @@
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="FileMgr.cpp" />
+    <ClCompile Include="Physical.cpp" />
+    <ClCompile Include="PhysicalProperties.cpp" />
+    <ClCompile Include="PhysicsMgr.cpp" />
+    <ClCompile Include="PhysicsScene.cpp" />
+    <ClCompile Include="PhysX.cpp" />
+    <ClCompile Include="PhysXCollider.cpp" />
+    <ClCompile Include="PhysXRigidBody.cpp" />
+    <ClCompile Include="PxDispathcer.cpp" />
+    <ClCompile Include="PxEventCallback.cpp" />
+    <ClCompile Include="PxFilter.cpp" />
+    <ClCompile Include="PxInitialization.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

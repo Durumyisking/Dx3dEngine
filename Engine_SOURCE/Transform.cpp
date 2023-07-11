@@ -1,6 +1,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "GameObj.h"
+#include "Physical.h"
 
 namespace dru
 {

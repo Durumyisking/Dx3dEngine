@@ -1,10 +1,8 @@
 #pragma once
 #include "Engine.h"
 #include "PxInitialization.h"
-#include "PhysicsScene.h"
-//#include "PxSceneQuery.h"
 
-
+class PhysicsScene;
 class PhysX
 {
 public:

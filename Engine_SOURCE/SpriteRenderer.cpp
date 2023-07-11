@@ -31,7 +31,7 @@ namespace dru
 
 	void SpriteRenderer::render()
 	{
-//		BaseRenderer::render();
+//		BaseRenderer::Render();
 
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 

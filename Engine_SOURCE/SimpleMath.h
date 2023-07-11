@@ -1,6 +1,32 @@
 #pragma once
 #include "druMath.h"
 
+#include "../External/PhysX/Include/PxPhysicsAPI.h"
+
+
+#ifdef _DEBUG
+
+
+#pragma comment(lib, "../External/PhysX/lib/debug/PhysX_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/debug/PhysXFoundation_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/debug/PhysXCommon_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/debug/PhysXExtensions_static_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/debug/PhysXPvdSDK_static_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/debug/PhysXCharacterKinematic_static_64.lib")
+#else
+
+
+#pragma comment(lib, "../External/PhysX/lib/release/PhysX_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/release/PhysXFoundation_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/release/PhysXCommon_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/release/PhysXExtensions_static_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/release/PhysXPvdSDK_static_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/release/PhysXCharacterKinematic_static_64.lib")
+#endif
+
+using namespace physx;
+
+
 namespace dru::math
 {
 	int SM_rand();

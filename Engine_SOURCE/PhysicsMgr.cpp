@@ -5,7 +5,9 @@
 #include "PxEventCallback.h"
 #include "Engine.h"
 #include "PxFilter.h"
+#include "PhysicsScene.h"
 
+using namespace dru;
 
 PhysicsMgr::PhysicsMgr()
 	: mPhysX(nullptr)
@@ -20,7 +22,7 @@ PhysicsMgr::~PhysicsMgr()
 	//PxCloseExtensions();
 }
 
-void PhysicsMgr::Init()
+void PhysicsMgr::Initialize()
 {
 	mPhysX->Init();
 
@@ -37,7 +39,7 @@ void PhysicsMgr::Init()
 
 void PhysicsMgr::Update()
 {
-	GetScene()->simulate(dru::DT);
+	GetScene()->simulate(DT);
 	GetScene()->fetchResults(true);
 }
 

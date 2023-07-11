@@ -34,32 +34,32 @@ namespace dru
 
 	}
 
-	void SceneMgr::update()
+	void SceneMgr::Update()
 	{
 		mActiveScene->update();
 	}
 
-	void SceneMgr::fixedUpdate()
+	void SceneMgr::FixedUpdate()
 	{
 		mActiveScene->fixedUpdate();
 	}
 
-	void SceneMgr::render()
+	void SceneMgr::Render()
 	{
 		mActiveScene->render();
 	}
 
-	void SceneMgr::fontRender()
+	void SceneMgr::FontRender()
 	{
 		mActiveScene->fontRender();
 	}
 
-	void SceneMgr::destory()
+	void SceneMgr::Destory()
 	{
 		mActiveScene->destroy();
 	}
 
-	void SceneMgr::release()
+	void SceneMgr::Release()
 	{
 		for (Scene* scene : mScenes)
 		{

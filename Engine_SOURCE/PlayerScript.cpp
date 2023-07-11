@@ -3,6 +3,7 @@
 #include "TimeMgr.h"
 #include "Transform.h"
 #include "PxFilter.h"
+#include "GameObj.h"
 
 
 namespace dru

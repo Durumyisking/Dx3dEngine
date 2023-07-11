@@ -44,7 +44,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -52,7 +52,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -147,12 +147,18 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>copy "$(SolutionDir)fmodL.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)FW1FontWrapperL.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)fmod.dll" "$(SolutionDir)\x64\Debug\"
+      <Command>copy "$(SolutionDir)fmod.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)fmodLww.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Debug\"</Command>
+copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)\x64\Debug\"
+
+copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)FW1FontWrapperL.dll" "$(SolutionDir)\x64\Debug\"
+
+copy "$(SolutionDir)PhysX_64.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)PhysXCommon_64.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)PhysXCooking_64.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -178,9 +184,18 @@ copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Debug\"</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>copy "$(SolutionDir)fmod.dll" "$(SolutionDir)\x64\Release\"
-copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)\x64\Release\"
-copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Release\"</Command>
+      <Command>copy "$(SolutionDir)fmod.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)fmodLww.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)\x64\Debug\"
+
+copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)FW1FontWrapperL.dll" "$(SolutionDir)\x64\Debug\"
+
+copy "$(SolutionDir)PhysX_64.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)PhysXCommon_64.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)PhysXCooking_64.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
