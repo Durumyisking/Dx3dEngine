@@ -3,6 +3,7 @@
 
 namespace dru
 {
+    class Physical;
     class PhysXRigidBody :
         public Component
     {

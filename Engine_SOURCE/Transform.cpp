@@ -1,6 +1,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "GameObj.h"
+#include "Physical.h"
 
 namespace dru
 {
@@ -158,7 +159,8 @@ namespace dru
 	{
 		if (GetOwner()->GetComponent<Physical>())
 		{
-			return GetPhysicalPosition();
+			Vector3 vec = GetPhysicalPosition();
+			return vec;
 		}
 		else
 		{

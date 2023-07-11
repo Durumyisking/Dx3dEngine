@@ -26,10 +26,10 @@ namespace dru
 	}
 	Application::~Application()
 	{
-		Fmod::Release();
-		SceneMgr::release();
-		FontWrapper::Release();
-		PhysicsMgr::DestroyInstance();
+		GETSINGLE(Fmod)->Release();
+		GETSINGLE(SceneMgr)->release();
+		GETSINGLE(FontWrapper)->Release();
+		GETSINGLE(PhysicsMgr)->DestroyInstance();
 	}
 
 	void Application::Initialize()
@@ -46,12 +46,11 @@ namespace dru
 	}
 	void Application::update()
 	{
-		TimeMgr::update();
-		Input::update();
-		CollisionMgr::update();
-		SceneMgr::update();
-		PhysicsMgr::GetInstance()->Update();
-
+		GETSINGLE(TimeMgr)->update();
+		GETSINGLE(InputMgr)->update();
+		GETSINGLE(PhysicsMgr)->Update();
+		GETSINGLE(CollisionMgr)->update();
+		GETSINGLE(SceneMgr)->update();
 	}
 	void Application::fixedUpdate()
 	{

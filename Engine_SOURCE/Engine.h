@@ -26,8 +26,6 @@
 
 
 #ifdef _DEBUG
-
-
 #pragma comment(lib, "../External/PhysX/lib/debug/PhysX_64.lib")
 #pragma comment(lib, "../External/PhysX/lib/debug/PhysXFoundation_64.lib")
 #pragma comment(lib, "../External/PhysX/lib/debug/PhysXCommon_64.lib")
@@ -54,12 +52,6 @@ using namespace physx;
 #define IMGUI_DEFINE_MATH_OPERATORS
 #endif
 
-
-#include "CommonInclude.h"
-#include "druEnums.h"
-#include "SimpleMath.h"
-#include "StringFunctions.h"
-#include "Macro.h"
 
 using namespace dru::enums;
 

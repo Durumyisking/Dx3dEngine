@@ -11,6 +11,11 @@
 #include "AudioSource.h"
 
 
+#include "Physical.h"
+#include "PhysXRigidBody.h"
+#include "PhysXCollider.h"
+
+extern dru::Application application;
 
 namespace dru
 {

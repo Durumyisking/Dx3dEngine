@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "PhysicalProperties.h"
+#include "SimpleMath.h"
 
 using namespace dru::enums;
 

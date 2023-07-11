@@ -1,6 +1,8 @@
 #include "Physical.h"
 #include "GameObj.h"
 #include "PhysicsMgr.h"
+#include "PhysXRigidBody.h"
+
 namespace dru
 {
 	Physical::Physical()
