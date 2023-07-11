@@ -25,10 +25,6 @@ namespace dru
 
 
 	void Shader::Create(dru::eShaderStage eStage, const std::wstring& path, const std::string& funcName)
-	void Shader::Create(dru::eShaderStage _eStage, const std::wstring& _Path, const std::string& _funcName)
-=========
-	void Shader::Create(graphics::eShaderStage eStage, const std::wstring& path, const std::string& funcName)
->>>>>>>>> Temporary merge branch 2
 	{
 		mErrorBlob = nullptr;
 
@@ -47,16 +43,15 @@ namespace dru
 		case dru::eShaderStage::HS:
 			CreateHS(shaderPath, funcName);
 			break;
+		case dru::eShaderStage::GS:	
 			CreateGS(shaderPath, funcName);
 			break;
 		case dru::eShaderStage::PS:
-		case dru::graphics::eShaderStage::GS:	
-			CreateGS(shaderPath, funcName);
-			break;
-		case dru::graphics::eShaderStage::PS:
 			CreatePS(shaderPath, funcName);
 			break;
 		case dru::eShaderStage::CS:
+			break;
+		case dru::eShaderStage::DS:
 			break;
 		case dru::eShaderStage::End:
 			break;
