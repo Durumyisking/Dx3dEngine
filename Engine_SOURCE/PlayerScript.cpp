@@ -43,22 +43,22 @@ namespace dru
 	void PlayerScript::fontRender()
 	{
 	}
-	void PlayerScript::OnCollisionEnter(Collider2D* _oppo)
+	void PlayerScript::OnCollisionEnter(Collider2D* oppo)
 	{
 	}
-	void PlayerScript::OnCollision(Collider2D* _oppo)
+	void PlayerScript::OnCollision(Collider2D* oppo)
 	{
 	}
-	void PlayerScript::OnCollisionExit(Collider2D* _oppo)
+	void PlayerScript::OnCollisionExit(Collider2D* oppo)
 	{
 	}
-	void PlayerScript::OnTriggerEnter(Collider2D* _oppo)
+	void PlayerScript::OnTriggerEnter(Collider2D* oppo)
 	{
 	}
-	void PlayerScript::OnTrigger(Collider2D* _oppo)
+	void PlayerScript::OnTrigger(Collider2D* oppo)
 	{
 	}
-	void PlayerScript::OnTriggerExit(Collider2D* _oppo)
+	void PlayerScript::OnTriggerExit(Collider2D* oppo)
 	{
 	}
 }

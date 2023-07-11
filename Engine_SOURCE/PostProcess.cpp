@@ -65,9 +65,9 @@ namespace dru
 		pCB->Clear();
 	}
 
-	void PostProcess::SetMaterial(std::wstring _Key)
+	void PostProcess::SetMaterial(std::wstring key)
 	{
-		Material* mateiral = GETSINGLE(ResourceMgr)->Find<Material>(_Key);
+		Material* mateiral = GETSINGLE(ResourceMgr)->Find<Material>(key);
 		mRenderer->SetMaterial(mateiral);
 	}
 

@@ -32,14 +32,14 @@ namespace dru
 		virtual void fontRender();
 
 		template <typename T>
-		T* AddComponent(eComponentType _eType)
+		T* AddComponent(eComponentType eType)
 		{			
 			T* comp = new T();
 
-			if (_eType != eComponentType::Script)
+			if (eType != eComponentType::Script)
 			{
-				mComponents[static_cast<UINT>(_eType)] = comp;
-				mComponents[static_cast<UINT>(_eType)]->SetOwner(this);
+				mComponents[static_cast<UINT>(eType)] = comp;
+				mComponents[static_cast<UINT>(eType)]->SetOwner(this);
 			}
 			else
 			{
@@ -50,7 +50,7 @@ namespace dru
 			return comp;
 		}
 
-		void AddComponent(Component* _Component);
+		void AddComponent(Component* component);
 
 		template <typename T>
 		T* GetComponent()
@@ -108,8 +108,8 @@ namespace dru
 		void RenderingBlockOn() { mbBlockRendering = true; }
 		void RenderingBlockOff() { mbBlockRendering = false; }
 
-		bool MoveToTarget_Smooth_bool(GameObj* _target, float _speed, bool _zOn, eDir _dir = eDir::END);
-		Vector3 MoveToTarget_Smooth_vector3(GameObj* _target, float _speed, bool _zOn, eDir _dir = eDir::END);
+		bool MoveToTarget_Smooth_bool(GameObj* target, float speed, bool zOn, eDir dir = eDir::END);
+		Vector3 MoveToTarget_Smooth_vector3(GameObj* target, float speed, bool zOn, eDir dir = eDir::END);
 
 		GameObj* GetParent() 
 		{
@@ -136,17 +136,17 @@ namespace dru
 		bool mbBlockRendering;
 
 	public:
-		void SetPos(Vector3 _Value);
-		void SetPosAbs(Vector3 _Value);
+		void SetPos(Vector3 value);
+		void SetPosAbs(Vector3 value);
 
-		void SetPosZ(float _Z) 
+		void SetPosZ(float z) 
 		{
 			Vector3 pos = GetPos();
-			pos.z = _Z;
+			pos.z = z;
 			GetComponent<Transform>()->SetPosition(pos);
 		};
-		void SetScale(Vector3 _Value);
-		void SetRotation(Vector3 _Value);
+		void SetScale(Vector3 value);
+		void SetRotation(Vector3 value);
 
 
 		Vector3 GetPos();
@@ -159,8 +159,8 @@ namespace dru
 		Vector3 GetRotation();
 
 
-		void SetMaterial(Material* _Material);
-		void SetMesh(Mesh* _Mesh);
+		void SetMaterial(Material* material);
+		void SetMesh(Mesh* mesh);
 
 		bool IsDead()
 		{
@@ -201,7 +201,7 @@ namespace dru
 		void DontDestroy() { mbDestroy = true; }
 
 		eLayerType GetLayerType() const { return mType; }
-		void SetLayerType(eLayerType _Type) { mType = _Type; }
+		void SetLayerType(eLayerType type) { mType = type; }
 
 		bool IsLeft() { return mbIsLeft; }
 		void SetLeft() { mbIsLeft = true; }

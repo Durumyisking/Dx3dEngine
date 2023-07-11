@@ -19,7 +19,7 @@ namespace dru
 		void DeleteObject ();
 
 
-		void AddGameObject(GameObj* _GameObj, enums::eLayerType _Type);
+		void AddGameObject(GameObj* gameObj, enums::eLayerType type);
 		const std::vector<GameObj*>& GetGameObjects() { return mGameObjs; }
 		std::vector<GameObj*> GetDontDestroyObjects();
 

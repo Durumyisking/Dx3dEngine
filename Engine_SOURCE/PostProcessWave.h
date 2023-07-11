@@ -17,11 +17,11 @@ namespace dru
 
 		virtual void Bind();
 
-		void SetWaveInfo(float _Amout, float _Speed, float _Distortion)
+		void SetWaveInfo(float amout, float speed, float distortion)
 		{
-			mAmount = _Amout;
-			mSpeed = _Speed;
-			mDistortion = _Distortion;
+			mAmount = amout;
+			mSpeed = speed;
+			mDistortion = distortion;
 		}
 
 	private:

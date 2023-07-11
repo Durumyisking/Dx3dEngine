@@ -3,7 +3,7 @@
 
 namespace dru
 {
-	void SetRandIndex(std::wstring& _String,  UINT _Range);
+	void SetRandIndex(std::wstring& string,  UINT range);
 
 
 }

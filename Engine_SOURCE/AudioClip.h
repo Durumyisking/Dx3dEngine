@@ -33,9 +33,9 @@ namespace dru
 			return playing;
 		}
 
-		void SetVolume(float _Volume)
+		void SetVolume(float volume)
 		{
-			mVolume = _Volume;
+			mVolume = volume;
 			mChannel->setVolume(mVolume);
 		}
 		float GetVolume()  
@@ -43,9 +43,9 @@ namespace dru
 			mChannel->getVolume(&mVolume);
 			return mVolume;
 		}
-		void SetPitch(float _Pitch)
+		void SetPitch(float pitch)
 		{
-			mPitch = _Pitch;
+			mPitch = pitch;
 			mChannel->setPitch(mPitch);
 		}
 		float GetPitch()

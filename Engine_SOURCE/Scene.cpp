@@ -79,9 +79,9 @@ namespace dru
 		destroy();
 	}
 
-	void Scene::AddGameObject(GameObj* _GameObj, eLayerType _eLayer)
+	void Scene::AddGameObject(GameObj* gameObj, eLayerType eLayer)
 	{
-		mLayers[static_cast<UINT>(_eLayer)].AddGameObject(_GameObj, _eLayer);
+		mLayers[static_cast<UINT>(eLayer)].AddGameObject(gameObj, eLayer);
 	}
 
 

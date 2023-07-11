@@ -53,40 +53,40 @@ namespace dru
 	{
 	}
 
-	void AudioSource::Play(const std::wstring& _key, bool _loop)
+	void AudioSource::Play(const std::wstring& key, bool loop)
 	{
-		GetClip(_key)->SetLoop(_loop);
-		GetClip(_key)->Play();
+		GetClip(key)->SetLoop(loop);
+		GetClip(key)->Play();
 	}
 
-	void AudioSource::Play_NoInterrupt(const std::wstring& _key, bool _loop)
+	void AudioSource::Play_NoInterrupt(const std::wstring& key, bool loop)
 	{
-		if (!GetClip(_key)->IsPlaying())
+		if (!GetClip(key)->IsPlaying())
 		{
-			GetClip(_key)->SetLoop(_loop);
-			GetClip(_key)->Play();
+			GetClip(key)->SetLoop(loop);
+			GetClip(key)->Play();
 		}
 	}
 
-	void AudioSource::Stop(const std::wstring& _key)
+	void AudioSource::Stop(const std::wstring& key)
 	{
-		GetClip(_key)->Stop();
+		GetClip(key)->Stop();
 	}
 
-	void AudioSource::SetLoop(const std::wstring& _key, bool loop)
+	void AudioSource::SetLoop(const std::wstring& key, bool loop)
 	{
-		GetClip(_key)->SetLoop(loop);
+		GetClip(key)->SetLoop(loop);
 	}
 
-	void AudioSource::AddClipByKey(const std::wstring& _key)
+	void AudioSource::AddClipByKey(const std::wstring& key)
 	{
-		AudioClip* resource = GETSINGLE(ResourceMgr)->Find<AudioClip>(_key);
-		mAudioClips.insert(std::make_pair(_key, resource));
+		AudioClip* resource = GETSINGLE(ResourceMgr)->Find<AudioClip>(key);
+		mAudioClips.insert(std::make_pair(key, resource));
 	}
 
-	AudioClip* AudioSource::GetClip(const std::wstring& _key)
+	AudioClip* AudioSource::GetClip(const std::wstring& key)
 	{
-		std::map<std::wstring, AudioClip*>::iterator iter = mAudioClips.find(_key);
+		std::map<std::wstring, AudioClip*>::iterator iter = mAudioClips.find(key);
 
 		if (iter != mAudioClips.end())
 		{
@@ -96,64 +96,64 @@ namespace dru
 		return nullptr;
 	}
 
-	void AudioSource::SetWholeVolume(float _Volume)
+	void AudioSource::SetWholeVolume(float volume)
 	{
 		for (std::pair<const std::wstring, AudioClip*> clip : mAudioClips)
 		{
 			AudioClip* audioClip = clip.second;
-			audioClip->SetVolume(_Volume);
+			audioClip->SetVolume(volume);
 		}
 	}
 
-	void AudioSource::SetWholePitch(float _Pitch)
+	void AudioSource::SetWholePitch(float pitch)
 	{
 		for (std::pair<const std::wstring, AudioClip*> clip : mAudioClips)
 		{
 			AudioClip* audioClip = clip.second;
-			audioClip->SetPitch(_Pitch);
+			audioClip->SetPitch(pitch);
 		}
 	}
 
-	void AudioSource::SetWholeVolume_Ratio(float _Volume)
+	void AudioSource::SetWholeVolume_Ratio(float volume)
 	{
 		for (std::pair<const std::wstring, AudioClip*> clip : mAudioClips)
 		{
 			AudioClip* audioClip = clip.second;
 			float vol = audioClip->GetVolume();
-			vol *= _Volume;
+			vol *= volume;
 			audioClip->SetVolume(vol);
 		}
 	}
 
-	void AudioSource::SetWholePitch_Ratio(float _Pitch)
+	void AudioSource::SetWholePitch_Ratio(float pitchValue)
 	{
 		for (std::pair<const std::wstring, AudioClip*> clip : mAudioClips)
 		{
 			AudioClip* audioClip = clip.second;
 			float pitch = audioClip->GetPitch();
-			pitch *= _Pitch;
+			pitch *= pitchValue;
 			audioClip->SetPitch(pitch);
 		}
 	}
 
-	void AudioSource::SetVolume(const std::wstring& _key, float _Volume)
+	void AudioSource::SetVolume(const std::wstring& key, float volume)
 	{
-		mAudioClips.find(_key)->second->SetVolume(_Volume);
+		mAudioClips.find(key)->second->SetVolume(volume);
 	}
 
-	void AudioSource::SetPitch(const std::wstring& _key, float _Pitch)
+	void AudioSource::SetPitch(const std::wstring& key, float pitch)
 	{
-		mAudioClips.find(_key)->second->SetPitch(_Pitch);
+		mAudioClips.find(key)->second->SetPitch(pitch);
 	}
 
-	float AudioSource::GetVolume(const std::wstring& _key)
+	float AudioSource::GetVolume(const std::wstring& key)
 	{
-		return mAudioClips.find(_key)->second->GetVolume();
+		return mAudioClips.find(key)->second->GetVolume();
 	}
 
-	float AudioSource::GetPitch(const std::wstring& _key)
+	float AudioSource::GetPitch(const std::wstring& key)
 	{
-		return mAudioClips.find(_key)->second->GetPitch();
+		return mAudioClips.find(key)->second->GetPitch();
 	}
 
 

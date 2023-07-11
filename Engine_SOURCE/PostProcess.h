@@ -20,7 +20,7 @@ namespace dru
 		virtual void Bind();
 		void Clear();
 
-		void SetMaterial(std::wstring _Key);
+		void SetMaterial(std::wstring key);
 
 	protected:
 		Material* mPostProcessMaterial;
