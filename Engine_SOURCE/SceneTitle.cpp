@@ -102,6 +102,14 @@ namespace dru
 			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
 		}
 
+		{
+			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
+			pointLight->GetComponent<Transform>()->SetPosition(Vector3(2.5f, 0.f, 0.f));
+			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
+			lightComp->SetRadius(10.f);
+		}
 
 		{
 			Player* player = object::Instantiate<Player>(eLayerType::Player);

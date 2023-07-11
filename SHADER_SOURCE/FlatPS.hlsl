@@ -13,24 +13,21 @@ struct VSOut
 
 float4 main(VSOut In) : SV_Target
 {
-    float4 OutColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
-    
-    LightAttribute lightAttribute = lightAttributes[0];
-       
-    float3 ViewLightDir = normalize(mul(float4(lightAttribute.direction.xyz, 0.0f), view));
-    float intensity = saturate(dot(-ViewLightDir, In.ViewNormal));
+    float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
 
-    float fSpecPow = 0.0f;
-    float3 vViewReflect = normalize(ViewLightDir + 2.0f * dot(-ViewLightDir, In.ViewNormal) * In.ViewNormal);
+    LightColor lightColor = (LightColor) 0.0f;
     
-    float3 vEye = normalize(float3(0.0f, 0.0f, 1.0f)); // 시점 벡터는 고정된 값으로 설정
+    for (int i = 0; i < lightCount; i++)
+    {
+        CalculateLight3D(In.ViewPos, In.ViewNormal, i, lightColor);
+    }
     
-    fSpecPow = saturate(dot(-vEye, vViewReflect));
-    fSpecPow = pow(fSpecPow, 30);
+    outColor.rgb *= lightColor.diffuse.rgb;
+
+    outColor.rgb += lightColor.specular.rgb;
     
-    OutColor.rgb *= lightAttribute.color.diffuse.rgb * intensity;
-    OutColor.rgb += lightAttribute.color.specular.rgb * fSpecPow * 0.5f;
-    OutColor.rgb += OutColor.xyz * lightAttribute.color.ambient.rgb;
+    outColor.rgb += outColor.rgb * lightColor.ambient.rgb;
+
     
-    return OutColor;
+    return outColor;
 }
