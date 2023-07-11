@@ -8,6 +8,8 @@
 
 #include <string>
 #include <iostream>
+#include <filesystem>
+#include <fstream>
 #include <Windows.h>
 
 #include <vector>
@@ -24,7 +26,6 @@
 #include <numeric>
 #include <limits>
 #include <memory>
-#include <filesystem>
 #include <thread>
 #include <future>
 

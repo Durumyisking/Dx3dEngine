@@ -7,11 +7,11 @@
 #include "CollisionMgr.h"
 #include "FMod.h"
 #include "FontWrapper.h"
+#include "FileMgr.h"
 
 
 namespace dru
 {
-	;
 
 	Application::Application()
 		: initalized(false)
@@ -26,7 +26,6 @@ namespace dru
 	}
 	Application::~Application()
 	{
-
 	}
 
 	void Application::Initialize()
@@ -38,7 +37,6 @@ namespace dru
 		renderer::Initialize();
 		GETSINGLE(FontWrapper)->Initialize();
 		GETSINGLE(SceneMgr)->Initialize();
-
 	}
 	void Application::update()
 	{
@@ -93,6 +91,7 @@ namespace dru
 
 	void Application::Release()
 	{
+		GETSINGLE(FileMgr)->FileLoad(L"..//Resources/MarioHackStart.SMD");
 		GETSINGLE(Fmod)->Release();
 		GETSINGLE(SceneMgr)->release();
 		GETSINGLE(FontWrapper)->Release();
