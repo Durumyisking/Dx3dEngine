@@ -1009,9 +1009,9 @@ namespace dru::renderer
 		renderer::lights.clear();
 	}
 
-	void PushLightAttribute(LightAttribute _attribute)
+	void PushLightAttribute(LightAttribute attribute)
 	{
-		lights.push_back(_attribute);
+		lights.push_back(attribute);
 	}
 
 	void BindLight()

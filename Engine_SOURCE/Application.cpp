@@ -83,7 +83,7 @@ namespace dru
 		fixedUpdate();
 		render();
 
-		// ÇÁ·¹ÀÓ Á¾·á ÈÄ ¿ÀºêÁ§Æ® »èÁ¦ ¹× Ãß°¡
+		// í”„ë ˆì„ ì¢…ë£Œ í›„ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ ë° ì¶”ê°€
 		destroy();
 		lateEvent();
 	}
@@ -127,6 +127,7 @@ namespace dru
 			mGraphicDevice = std::make_unique<GraphicDevice>();
 			//dru::GetDevice() = mGraphicDevice.get();
 		}
+
 
 		RECT rt = { 0, 0, static_cast<LONG>(width) , static_cast<LONG>(height) };
 		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
