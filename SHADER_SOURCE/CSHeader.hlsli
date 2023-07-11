@@ -2,7 +2,7 @@
 #include "Random.hlsli"
 
 
-void ParticleThreadSync(uint _ThreadID)
+void ParticleThreadSync(uint threadID)
 {
     while (0 < ParticleSharedBufferUAV[0].gActiveCount)
     {
@@ -20,29 +20,29 @@ void ParticleThreadSync(uint _ThreadID)
             
         if (originValue == expected)
         {
-            ParticleBufferUAV[_ThreadID].active = 1;
+            ParticleBufferUAV[threadID].active = 1;
             break;
         }
     }
 }
 
-void InitalizeParticleBufferUAV(uint _ThreadID, float3 _Position, float4 _Direction, float3 _Scale, float4 _StartColor, float4 _EndColor, float _LifeTime, float _Speed, float _Radian)
+void InitalizeParticleBufferUAV(uint threadID, float3 _Position, float4 _Direction, float3 _Scale, float4 _StartColor, float4 _EndColor, float _LifeTime, float _Speed, float _Radian)
 {
-    ParticleBufferUAV[_ThreadID].position.xyz = _Position;
+    ParticleBufferUAV[threadID].position.xyz = _Position;
     
     if (simulationSpace) // 1 world , 0 local
     {
-        ParticleBufferUAV[_ThreadID].position.xyz += worldPosition.xyz;
+        ParticleBufferUAV[threadID].position.xyz += worldPosition.xyz;
     }
 
     _Direction = normalize(_Direction);
-    ParticleBufferUAV[_ThreadID].direction = _Direction;
-    ParticleBufferUAV[_ThreadID].startScale = _Scale;
-    ParticleBufferUAV[_ThreadID].startColor= _StartColor;
-    ParticleBufferUAV[_ThreadID].endColor = _EndColor;
-//    ParticleBufferUAV[_ThreadID].lifeTime = _LifeTime;
-    ParticleBufferUAV[_ThreadID].gravityAcc = 0.f;
-    ParticleBufferUAV[_ThreadID].elapsedTime = 0.f;
-    ParticleBufferUAV[_ThreadID].speed = _Speed;
-    ParticleBufferUAV[_ThreadID].radian = _Radian;
+    ParticleBufferUAV[threadID].direction = _Direction;
+    ParticleBufferUAV[threadID].startScale = _Scale;
+    ParticleBufferUAV[threadID].startColor= _StartColor;
+    ParticleBufferUAV[threadID].endColor = _EndColor;
+//    ParticleBufferUAV[threadID].lifeTime = _LifeTime;
+    ParticleBufferUAV[threadID].gravityAcc = 0.f;
+    ParticleBufferUAV[threadID].elapsedTime = 0.f;
+    ParticleBufferUAV[threadID].speed = _Speed;
+    ParticleBufferUAV[threadID].radian = _Radian;
 }

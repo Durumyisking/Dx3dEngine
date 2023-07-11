@@ -24,33 +24,33 @@ namespace dru
 
 
 
-	void Shader::Create(graphics::eShaderStage _eStage, const std::wstring& _Path, const std::string& _funcName)
+	void Shader::Create(graphics::eShaderStage eStage, const std::wstring& path, const std::string& funcName)
 	{
 		mErrorBlob = nullptr;
 
-		std::filesystem::path path = std::filesystem::current_path().parent_path();
-		path += "\\..\\SHADER_SOURCE\\";
+		std::filesystem::path filepath = std::filesystem::current_path().parent_path();
+		filepath += "\\..\\SHADER_SOURCE\\";
 
-		std::wstring shaderPath(path.c_str());
-		shaderPath += _Path;
+		std::wstring shaderPath(filepath.c_str());
+		shaderPath += path;
 
 
-		switch (_eStage)
+		switch (eStage)
 		{
 		case dru::graphics::eShaderStage::VS:
-			CreateVS(shaderPath, _funcName);
+			CreateVS(shaderPath, funcName);
 			break;
 		case dru::graphics::eShaderStage::HS:
-			CreateHS(shaderPath, _funcName);
+			CreateHS(shaderPath, funcName);
 			break;
 		case dru::graphics::eShaderStage::DS:
-			CreateDS(shaderPath, _funcName);
+			CreateDS(shaderPath, funcName);
 			break;
 		case dru::graphics::eShaderStage::GS:	
-			CreateGS(shaderPath, _funcName);
+			CreateGS(shaderPath, funcName);
 			break;
 		case dru::graphics::eShaderStage::PS:
-			CreatePS(shaderPath, _funcName);
+			CreatePS(shaderPath, funcName);
 			break;
 		case dru::graphics::eShaderStage::CS:
 			break;
@@ -62,10 +62,10 @@ namespace dru
 
 	}
 
-	void Shader::CreateVS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateVS(const std::wstring& path, const std::string& funcName)
 	{
-		D3DCompileFromFile(_Path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-			, _funcName.c_str(), "vs_5_0", 0, 0, mVSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
+		D3DCompileFromFile(path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
+			, funcName.c_str(), "vs_5_0", 0, 0, mVSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
 
 		if (mErrorBlob)
 		{
@@ -81,20 +81,20 @@ namespace dru
 
 	}
 
-	void Shader::CreateHS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateHS(const std::wstring& path, const std::string& funcName)
 	{
 
 	}
 
-	void Shader::CreateDS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateDS(const std::wstring& path, const std::string& funcName)
 	{
 
 	}
 
-	void Shader::CreateGS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreateGS(const std::wstring& path, const std::string& funcName)
 	{
-		D3DCompileFromFile(_Path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-			, _funcName.c_str(), "gs_5_0", 0, 0, mGSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
+		D3DCompileFromFile(path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
+			, funcName.c_str(), "gs_5_0", 0, 0, mGSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
 
 		if (mErrorBlob)
 		{
@@ -110,10 +110,10 @@ namespace dru
 			, mGS.GetAddressOf());
 	}
 
-	void Shader::CreatePS(const std::wstring& _Path, const std::string& _funcName)
+	void Shader::CreatePS(const std::wstring& path, const std::string& funcName)
 	{
-		D3DCompileFromFile(_Path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-			, _funcName.c_str(), "ps_5_0", 0, 0, mPSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
+		D3DCompileFromFile(path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
+			, funcName.c_str(), "ps_5_0", 0, 0, mPSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
 
 		if (mErrorBlob)
 		{
