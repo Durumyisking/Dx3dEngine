@@ -44,10 +44,8 @@ namespace dru
 		BaseRenderer::render();
 	}
 
-	void PostProcessRenderer::SetPostProcessOwner(PostProcess* _PostProcess)
+	void PostProcessRenderer::SetPostProcessOwner(PostProcess* postProcess)
 	{
-		mPostProcess = _PostProcess;
+		mPostProcess = postProcess;
 	}
-
-
 }

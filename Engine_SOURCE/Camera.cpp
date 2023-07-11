@@ -137,14 +137,14 @@ namespace dru
 		renderer::	Cameras[type].push_back(this);
 	}
 
-	void Camera::TurnLayerMask(eLayerType _layer, bool _enable)
+	void Camera::TurnLayerMask(eLayerType layer, bool enable)
 	{
-		mLayerMask.set(static_cast<UINT>(_layer, _enable));
+		mLayerMask.set(static_cast<UINT>(layer, enable));
 	}
 
-	void Camera::SetTarget(GameObj* _Target)
+	void Camera::SetTarget(GameObj* target)
 	{
-		mTargetObj = _Target;
+		mTargetObj = target;
 
 		Vector3 Dir = mTargetObj->GetPos() - GetOwner()->GetPos();
 		Dir.z = GetOwner()->GetPos().z;
@@ -244,19 +244,19 @@ namespace dru
 		}
 	}
 
-	bool Camera::renderPassCheck(GameObj* _obj)
+	bool Camera::renderPassCheck(GameObj* obj)
 	{
-		if (nullptr == _obj)
+		if (nullptr == obj)
 		{
 			return false;
 		}
-		if (_obj->IsRenderingBlock())
+		if (obj->IsRenderingBlock())
 		{
 			return false;
 		}
-		if (nullptr != _obj->GetParent())
+		if (nullptr != obj->GetParent())
 		{
-			if (_obj->GetParent()->IsRenderingBlock())
+			if (obj->GetParent()->IsRenderingBlock())
 			{
 				return false;
 			}

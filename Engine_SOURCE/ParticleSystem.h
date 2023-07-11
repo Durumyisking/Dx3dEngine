@@ -17,33 +17,33 @@ namespace dru
 		ParticleSystem();
 		virtual ~ParticleSystem();
 
-		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Initialize() final;
+		virtual void update() final;
+		virtual void fixedUpdate() final;
+		virtual void render() final;
 
-		void MakeParticleBufferData(Vector4 _StartPosition, UINT _MaxParticleCount, float _MinLifeTime, float _MaxLifeTime, float _Speed, float _Radian, UINT _Active);
+		void MakeParticleBufferData(Vector4 startPosition, UINT maxParticleCount, float minLifeTime, float maxLifeTime, float speed, float radian, UINT active);
 
-		void MakeConstantBufferData(std::wstring _ShaderName, ParticleSystemCB _CB);
+		void MakeConstantBufferData(std::wstring shaderName, ParticleSystemCB CB);
 
-		void SetStartPosition(Vector3 _StartPos) { mStartPosition = Vector4(_StartPos.x, _StartPos.y, _StartPos.z, 1.f); }
-		void SetStartScale(Vector3 _StartScale) { mStartScale= Vector4(_StartScale.x, _StartScale.y, _StartScale.z, 1.f); }
+		void SetStartPosition(Vector3 startPos) { mStartPosition = Vector4(startPos.x, startPos.y, startPos.z, 1.f); }
+		void SetStartScale(Vector3 startScale) { mStartScale= Vector4(startScale.x, startScale.y, startScale.z, 1.f); }
 
-		void SetMaxElapsedTime(float _Value) { mMaxElapsedTime = _Value; }
+		void SetMaxElapsedTime(float value) { mMaxElapsedTime = value; }
 
-		void SetMaxParticleCount(UINT _MaxParticleCount) { mMaxParticles = _MaxParticleCount; }
-		void SetStartColor(Vector4 _Color) { mStartColor = _Color; }
-		void SetEndColor(Vector4 _Color) { mEndColor = _Color; }
-		void SetStartSpeed(float _StartSpeed) { mStartSpeed = _StartSpeed; }
-		void SetEndSpeed(float _EndSpeed) { mEndSpeed = _EndSpeed; }
-		void SetMaxLifeTime(float _MaxLifeTime) { mMaxLifeTime = _MaxLifeTime; }
-		void SetMinLifeTime(float _MinLifeTime) { mMinLifeTime = _MinLifeTime; }
+		void SetMaxParticleCount(UINT maxParticleCount) { mMaxParticles = maxParticleCount; }
+		void SetStartColor(Vector4 color) { mStartColor = color; }
+		void SetEndColor(Vector4 color) { mEndColor = color; }
+		void SetStartSpeed(float startSpeed) { mStartSpeed = startSpeed; }
+		void SetEndSpeed(float endSpeed) { mEndSpeed = endSpeed; }
+		void SetMaxLifeTime(float maxLifeTime) { mMaxLifeTime = maxLifeTime; }
+		void SetMinLifeTime(float minLifeTime) { mMinLifeTime = minLifeTime; }
 		void SetRadius(float _Radius) { mRadius = _Radius; }
 
-		void SetParticleDirection(const Vector3& _Dir);
-		void SetParticleCountInFrame(UINT _Count) { mParticleCountInFrame = _Count; }
+		void SetParticleDirection(const Vector3& dir);
+		void SetParticleCountInFrame(UINT count) { mParticleCountInFrame = count; }
 
-		void SetFrequency(float _Frequency) { mFrequency = _Frequency; }
+		void SetFrequency(float frequency) { mFrequency = frequency; }
 
 		void UseSwitchOn() { mbUseSwitch = true; }
 		void UseSwitchOff() { mbUseSwitch = false; }
