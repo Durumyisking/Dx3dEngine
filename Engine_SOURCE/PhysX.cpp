@@ -4,8 +4,12 @@
 PhysX::PhysX()
 	:mPhysicsScene(nullptr)
 	, mInitialization(nullptr)
+	, mTransport (nullptr)
+	, mPvd (nullptr)
+	, mSceneClient (nullptr)
 	, mScene(nullptr)
 	, mControllerMgr(nullptr)
+
 {
 	mInitialization = std::make_shared<PxInitialization>();
 }
@@ -16,6 +20,12 @@ PhysX::~PhysX()
 
 	if (mScene)
 		mScene->release();
+
+	if (mPvd)
+		mPvd->release();
+
+	if (mTransport)
+		mTransport->release();
 }
 
 void PhysX::Init()
@@ -45,5 +55,13 @@ void PhysX::CreateControllerManager()
 {
 	mControllerMgr = PxCreateControllerManager(*mScene);
 	assert(mControllerMgr);
+}
+
+void PhysX::CreateDebugger(const char* szHost, __int32 iPort)
+{
+}
+
+void PhysX::ConnectDebugger()
+{
 }
 

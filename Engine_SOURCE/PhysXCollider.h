@@ -21,9 +21,9 @@ namespace dru
         virtual void OnCollision();
 
     private:
-        void CreateDebugGeometry(std::shared_ptr<Geometries> geometries);
-        void CreateDebugBox(math::Vector3 halfSize);
-        void CreateDebugCapsule(float radius, float halfHeight);
+        void createDebugGeometry(std::shared_ptr<Geometries> geometries);
+        void createDebugBox(math::Vector3 halfSize);
+        void createDebugCapsule(float radius, float halfHeight);
 
     public:
         PxEventCallback* mCallback;

@@ -20,7 +20,7 @@ namespace dru
 
 		if (mPhysical)
 		{
-			CreateDebugGeometry(mPhysical->GetGeometries());
+			createDebugGeometry(mPhysical->GetGeometries());
 		}
 
 		mCallback = PhysicsMgr::GetInstance()->GetDispatcher()->GetSimulationCallback();
@@ -37,7 +37,7 @@ namespace dru
 	void PhysXCollider::OnCollision()
 	{
 	}
-	void PhysXCollider::CreateDebugGeometry(std::shared_ptr<Geometries> geometries)
+	void PhysXCollider::createDebugGeometry(std::shared_ptr<Geometries> geometries)
 	{
 		switch (geometries->eGeomType)
 		{
@@ -45,7 +45,7 @@ namespace dru
 		{
 			const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(geometries->boxGeom);
 			Vector3 vHalfSize = convert::PxVec3ToVector3(boxGeom.halfExtents);
-			CreateDebugBox(vHalfSize);
+			createDebugBox(vHalfSize);
 		}
 		break;
 
@@ -54,7 +54,7 @@ namespace dru
 			const PxCapsuleGeometry& capsuleGeom = static_cast<const PxCapsuleGeometry&>(geometries->capsuleGeom);
 			float fRadius = capsuleGeom.radius;
 			float fHalfHeight = capsuleGeom.halfHeight;
-			CreateDebugCapsule(fRadius, fHalfHeight);
+			createDebugCapsule(fRadius, fHalfHeight);
 		}
 		break;
 
@@ -62,7 +62,7 @@ namespace dru
 			break;
 		}
 	}
-	void PhysXCollider::CreateDebugBox(math::Vector3 halfSize)
+	void PhysXCollider::createDebugBox(math::Vector3 halfSize)
 	{
 		//std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"Cubemesh");
 
@@ -71,7 +71,7 @@ namespace dru
 		//GetDebugRenderer()->SetMaterial(material);
 		//GetDebugRenderer()->SetMesh(mesh);
 	}
-	void PhysXCollider::CreateDebugCapsule(float radius, float halfHeight)
+	void PhysXCollider::createDebugCapsule(float radius, float halfHeight)
 	{
 		//auto [vVertices, vIndices] = Vertex::CreateHemisphereVerticesAndIndices(radius, halfHeight);
 		//shared_ptr<Mesh> pMesh = make_shared<Mesh>();

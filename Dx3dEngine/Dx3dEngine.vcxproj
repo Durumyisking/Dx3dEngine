@@ -181,7 +181,6 @@
     <ClInclude Include="guiTransform.h" />
     <ClInclude Include="guiTreeWidget.h" />
     <ClInclude Include="guiVisualEditor.h" />
-    <ClInclude Include="VisualEditor.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="imgui_impl_dx11.h" />
@@ -213,7 +212,6 @@
     <ClCompile Include="guiTransform.cpp" />
     <ClCompile Include="guiTreeWidget.cpp" />
     <ClCompile Include="guiVisualEditor.cpp" />
-    <ClCompile Include="VisualEditor.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />

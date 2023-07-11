@@ -47,6 +47,7 @@
 
 using namespace physx;
 
+
 // ImGui_internal.h
 // ImGui.h 보다 먼저 선언 되어야 하므로 미리 선언 해둠
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
@@ -59,3 +60,88 @@ using namespace physx;
 #include "SimpleMath.h"
 #include "StringFunctions.h"
 #include "Macro.h"
+
+using namespace dru::enums;
+
+
+struct Timer
+{
+public:
+	Timer(float endTime)
+		:mElapsedTime(0.f)
+		, mEndTime(endTime)
+		, mbRunning(false)
+		, mbFinished(true)
+	{}
+
+	void Reset()
+	{
+		mElapsedTime = 0.f;
+		mbRunning = false;
+		mbFinished = false;
+	}
+
+	void Start()
+	{
+		mElapsedTime = 0.f;
+		mbRunning = true;
+		mbFinished = false;
+	}
+
+	void Stop()
+	{
+		mElapsedTime = 0.f;
+		mbRunning = false;
+		mbFinished = false;
+	}
+
+	void Update(float deltaTime)
+	{
+		if (mbFinished)
+			return;
+
+		if (mbRunning)
+		{
+			mElapsedTime += deltaTime;
+			if (mElapsedTime > mEndTime)
+			{
+				mElapsedTime = mEndTime;
+				mbFinished = true;
+			}
+		}
+	}
+
+	void SetEndTime(float endTime)
+	{
+		mEndTime = endTime;
+	}
+
+	bool IsRunning()
+	{
+		return mbRunning;
+	}
+
+	bool IsFinished()
+	{
+		return mbFinished;
+	}
+
+	float GetProgress() const
+	{
+		if (mEndTime == 0.f)
+			return 1.f;
+
+		return std::clamp(mElapsedTime / mEndTime, 0.f, 1.f);
+	}
+
+	void SetProgress(float progress)
+	{
+		mElapsedTime = mEndTime * progress;
+	}
+
+private:
+	float mElapsedTime;
+	float mEndTime;
+	bool  mbRunning;
+	bool  mbFinished;
+};

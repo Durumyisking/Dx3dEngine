@@ -30,8 +30,7 @@ namespace dru::enums
 	enum class eComponentType
 	{
 		None,
-		Transform, // 위치 데이터 수정하는 컴포넌트
-		Controller,
+		Transform,
 		Camera,
 		Physical,
 		Mesh,
@@ -128,8 +127,16 @@ namespace dru::enums
 	{
 		BOX,
 		CAPSULE,
+		SPHERE,
 		PLANE,
 		END,
+	};
+
+	enum class AXIS
+	{
+		X,
+		Y,
+		Z,
 	};
 
 

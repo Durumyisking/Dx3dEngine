@@ -15,26 +15,29 @@ public:
 	void Init();
 
 public:
-	PxFoundation* GetFoundation() const { return mInitialization->GetFoundation(); }
-	PxPhysics* GetPhysics() const { return mInitialization->GetPhysics(); }
-	PxControllerManager* GetControllerManager() const { return mControllerMgr; }
+	PxFoundation*			GetFoundation() const { return mInitialization->GetFoundation(); }
+	PxPhysics*				GetPhysics() const { return mInitialization->GetPhysics(); }
+	PxControllerManager*	GetControllerManager() const { return mControllerMgr; }
 
 	std::shared_ptr<PhysicsScene>	GetPhysScene() const { return mPhysicsScene; }
-	//shared_ptr<PxSceneQuery>		 GetSceneQuery() { return m_pSceneQuery; }
 
 	void CreatePhysicsScene(const PxSceneDesc& sceneDesc);
 
 private:
 	void CreateScene(const PxSceneDesc& sceneDesc);
 	void CreateControllerManager();
-	//	void CreateSceneQuery();
+	void CreateDebugger(const char* szHost, __int32 iPort);
+	void ConnectDebugger();
 
 private:
-	std::shared_ptr<PhysicsScene>		 mPhysicsScene;
-	std::shared_ptr<PxInitialization> mInitialization;
-	//shared_ptr<PxSceneQuery>		 m_pSceneQuery;
+	std::shared_ptr<PhysicsScene>		mPhysicsScene;
+	std::shared_ptr<PxInitialization>	mInitialization;
 
-	PxScene* mScene;
-	PxControllerManager* mControllerMgr;
+
+	PxPvdTransport*			mTransport;
+	PxPvd*					mPvd;
+	PxPvdSceneClient*		mSceneClient;
+	PxScene*				mScene;
+	PxControllerManager*	mControllerMgr;
 };
 

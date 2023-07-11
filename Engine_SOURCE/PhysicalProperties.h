@@ -3,12 +3,11 @@
 
 struct MassProperties
 {
-
-        // 정적마찰 (움직이기 전의 마찰:막 움직이기 시작할때 마찰계수                // 물체 충돌 전 후 속도 비율
-    MassProperties(float StaticFriction = 0.5f, float DynamicFriction = 0.2f, float Restitution = 0.603f)
-        : mStaticFriction(StaticFriction)
-        , mDynamicFriction(DynamicFriction)
-        , mRestitution(Restitution)
+    // 정적마찰 (움직이기 전의 마찰:막 움직이기 시작할때 마찰계수                // 물체 충돌 전 후 속도 비율
+    MassProperties(float staticFriction = 0.5f, float dynamicFriction = 0.2f, float restitution = 0.603f)
+        : mStaticFriction(staticFriction)
+        , mDynamicFriction(dynamicFriction)
+        , mRestitution(restitution)
     { }
 
     float mStaticFriction;
@@ -22,19 +21,19 @@ public:
     PhysicalProperties(const MassProperties& massProperties);
     ~PhysicalProperties();
 
-    void ApplyToShape(PxShape* shape);
+    void ApplyToShape(PxShape& shape);
     void SetMaterialFlag(PxMaterialFlags flag) { mMaterial->setFlags(flag); }
 
 public:
-    PxMaterial* GetMaterial() { return mMaterial; }
+    PxMaterial* GetMaterial()   const { return mMaterial; }
 
-    float GetStaticFriction() { return mStaticFriction; }
-    float GetDynamicFriction() { return mDynamicFriction; }
-    float GetRestitution() { return mRestitution; }
+    float GetStaticFriction()   const { return mStaticFriction; }
+    float GetDynamicFriction()  const { return mDynamicFriction; }
+    float GetRestitution()      const { return mRestitution; }
 
-    void SetStaticFriction(float fFriction);
-    void SetDynamicFriction(float fFriction);
-    void SetRestitution(float fRestitution);
+    void SetStaticFriction(float friction);
+    void SetDynamicFriction(float friction);
+    void SetRestitution(float restitution);
 
 private:
     float mStaticFriction;

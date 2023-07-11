@@ -161,9 +161,6 @@
     <Filter Include="Common\Component\Collider\PhysX">
       <UniqueIdentifier>{7a7234c4-dd75-45c7-80d1-7d1902ecdf8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Controller">
-      <UniqueIdentifier>{6d8cc4dc-4250-4547-b1a0-0601376f3c59}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -378,9 +375,6 @@
     <ClInclude Include="PhysXCollider.h">
       <Filter>Common\Component\Collider\PhysX</Filter>
     </ClInclude>
-    <ClInclude Include="Controller.h">
-      <Filter>Common\Controller</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -579,9 +573,6 @@
     </ClCompile>
     <ClCompile Include="PhysXCollider.cpp">
       <Filter>Common\Component\Collider\PhysX</Filter>
-    </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>Common\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

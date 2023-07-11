@@ -93,7 +93,7 @@ namespace dru
 
 		const Matrix& GetWorldMatrix() const { return mWorld; }
 
-		const Vector3& GetWorldPosition() const { return mWorldPosition; }
+		const Vector3& GetWorldPosition();
 		const Vector3& GetWorldRotation() const { return mWorldRotation; }
 		const Vector3& GetWorldScale() const { return mWorldScale; }
 
@@ -124,6 +124,10 @@ namespace dru
 		bool IsScaleChanged() { return mbIsScaleChanged; }
 		void ScaleChangedOff() { mbIsScaleChanged = false; }
 
+		Vector3 GetPhysicalPosition();
+		void SetPhysicalPosition(const Vector3& vPosition);
+
+
 	private:
 		Transform* mParent;
 
@@ -147,6 +151,11 @@ namespace dru
 		Vector3 mWorldScale;
 
 		bool mbIsScaleChanged;
+
+
+		Matrix  mPxWorld = {};
+
+		PxTransform mPxTransform;
 
 	};
 }

@@ -110,5 +110,8 @@ namespace dru::convert
 
 		return mat;
 	}
-
+	static Quaternion PxQuatToQuaternion(const PxQuat& pxQuat)
+	{
+		return Quaternion(pxQuat.x, pxQuat.y, pxQuat.z, pxQuat.w);
+	}
 }

@@ -200,7 +200,6 @@ copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Release\"</Command>
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="ConstantBuffer.h" />
-    <ClInclude Include="Controller.h" />
     <ClInclude Include="CursorScript.h" />
     <ClInclude Include="druEnums.h" />
     <ClInclude Include="druMath.h" />
@@ -274,7 +273,6 @@ copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Release\"</Command>
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
-    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="CursorScript.cpp" />
     <ClCompile Include="druEnums.cpp" />
     <ClCompile Include="druMath.cpp" />

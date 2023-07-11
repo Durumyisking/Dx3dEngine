@@ -2,7 +2,6 @@
 #include "Input.h"
 #include "TimeMgr.h"
 #include "Transform.h"
-#include "Controller.h"
 #include "PxFilter.h"
 
 
@@ -67,10 +66,6 @@ namespace dru
 		filterData.word0 = 1 << 0;
 		filterData.word1 = 1 << 1;
 
-		Controller* ctr = GetOwner()->GetComponent<Controller>();
-	
-		if(ctr)
-			ctr->Move(convert::Vector3ToPxVec3(Pos), &filter, filterData);
 	}
 	void PlayerScript::render()
 	{

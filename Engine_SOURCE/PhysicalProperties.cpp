@@ -16,7 +16,7 @@ PhysicalProperties::~PhysicalProperties()
 {
 }
 
-void PhysicalProperties::ApplyToShape(PxShape* pShape)
+void PhysicalProperties::ApplyToShape(PxShape& shape)
 {
 	if (mMaterial)
 	{
@@ -24,27 +24,27 @@ void PhysicalProperties::ApplyToShape(PxShape* pShape)
 		mMaterial->setDynamicFriction(mDynamicFriction);
 		mMaterial->setRestitution(mRestitution);
 
-		pShape->setMaterials(&mMaterial, 1);
+		shape.setMaterials(&mMaterial, 1);
 	}
 }
 
-void PhysicalProperties::SetStaticFriction(float fFriction)
+void PhysicalProperties::SetStaticFriction(float friction)
 {
-	mStaticFriction = fFriction;
+	mStaticFriction = friction;
 	if (mMaterial)
 		mMaterial->setStaticFriction(mStaticFriction);
 }
 
-void PhysicalProperties::SetDynamicFriction(float fFriction)
+void PhysicalProperties::SetDynamicFriction(float friction)
 {
-	mDynamicFriction = fFriction;
+	mDynamicFriction = friction;
 	if (mMaterial)
 		mMaterial->setDynamicFriction(mDynamicFriction);
 }
 
-void PhysicalProperties::SetRestitution(float fRestitution)
+void PhysicalProperties::SetRestitution(float restitution)
 {
-	mRestitution = fRestitution;
+	mRestitution = restitution;
 	if (mMaterial)
 		mMaterial->setRestitution(mRestitution);
 }

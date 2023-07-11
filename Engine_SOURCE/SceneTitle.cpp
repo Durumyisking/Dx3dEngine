@@ -92,8 +92,7 @@ namespace dru
 			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 
-			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::CHARACTER, eGeometryType::BOX, Vector3(1.f, 1.f, 1.f));
-			player->AddComponent<Controller>(eComponentType::Controller);
+			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::KINEMATIC, eGeometryType::BOX, Vector3(30.f, 30.f, 1.f));
 			player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 			player->AddComponent<PhysXCollider>(eComponentType::Collider);
 

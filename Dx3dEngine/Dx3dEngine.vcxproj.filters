@@ -104,9 +104,6 @@
     <ClInclude Include="guiProject.h">
       <Filter>View</Filter>
     </ClInclude>
-    <ClInclude Include="VisualEditor.h">
-      <Filter>View</Filter>
-    </ClInclude>
     <ClInclude Include="guiMeshRenderer.h">
       <Filter>Widget\Components</Filter>
     </ClInclude>
@@ -199,9 +196,6 @@
       <Filter>View</Filter>
     </ClCompile>
     <ClCompile Include="guiProject.cpp">
-      <Filter>View</Filter>
-    </ClCompile>
-    <ClCompile Include="VisualEditor.cpp">
       <Filter>View</Filter>
     </ClCompile>
     <ClCompile Include="guiTransform.cpp">
