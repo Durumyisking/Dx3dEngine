@@ -43,9 +43,9 @@ namespace dru
 			mChannel->getVolume(&mVolume);
 			return mVolume;
 		}
-		void SetPitch(float _Pitch)
+		void SetPitch(float pitch)
 		{
-			mPitch = _Pitch;
+			mPitch = pitch;
 			mChannel->setPitch(mPitch);
 		}
 		float GetPitch()
