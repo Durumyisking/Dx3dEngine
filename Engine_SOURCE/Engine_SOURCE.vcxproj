@@ -148,7 +148,7 @@
     </Link>
     <PreBuildEvent>
       <Command>copy "$(SolutionDir)fmod.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)fmodLww.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)fmodL.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)\x64\Debug\"
 
@@ -185,7 +185,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     </Link>
     <PreBuildEvent>
       <Command>copy "$(SolutionDir)fmod.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)fmodLww.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)fmodL.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)\x64\Debug\"
 
