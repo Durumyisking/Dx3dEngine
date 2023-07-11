@@ -32,17 +32,17 @@ namespace dru
 		void fontRender();
 		void destory();
 		void release();
-		void LoadScene(eSceneType _Type);
+		void LoadScene(eSceneType type);
 		void LateEvent(); // 렌더링까지 종료후 오브젝트 추가하는 함수
 
-		void DontDestroyOnLoad(GameObj* _GameObj);
+		void DontDestroyOnLoad(GameObj* gameObj);
 
 		void AddEvent(GameObj* obj) { mLateEvent.emplace_back(obj); }
 
 		template <typename T>
-		T* GetScene (eSceneType _Type)
+		T* GetScene (eSceneType type)
 		{
-			return dynamic_cast<T*>(mScenes[(static_cast<UINT>(_Type))]);
+			return dynamic_cast<T*>(mScenes[(static_cast<UINT>(type))]);
 		}
 
 

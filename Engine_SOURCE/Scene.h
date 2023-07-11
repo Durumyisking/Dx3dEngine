@@ -25,16 +25,16 @@ namespace dru
 		virtual void Exit();
 
 
-		void AddGameObject(GameObj* _GameObj, const eLayerType _eLayer);
+		void AddGameObject(GameObj* gameObj, const eLayerType eLayer);
 
-		void SetType(SceneMgr::eSceneType _eType) { mType = _eType; }
+		void SetType(SceneMgr::eSceneType eType) { mType = eType; }
 		SceneMgr::eSceneType GetType() const { return mType; }
 
-		Layer& GetLayer(eLayerType _Type)  { return mLayers[static_cast<UINT>(_Type)]; }
+		Layer& GetLayer(eLayerType type)  { return mLayers[static_cast<UINT>(type)]; }
 
 		std::vector<GameObj*> GetDontDestroyObjects();
 
-		const std::vector<GameObj*>& GetGameObj(eLayerType _eLayer);
+		const std::vector<GameObj*>& GetGameObj(eLayerType eLayer);
 
 	protected :
 		std::vector<Layer> mLayers;

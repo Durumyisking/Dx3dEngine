@@ -33,9 +33,9 @@ namespace dru
 			return playing;
 		}
 
-		void SetVolume(float _Volume)
+		void SetVolume(float volume)
 		{
-			mVolume = _Volume;
+			mVolume = volume;
 			mChannel->setVolume(mVolume);
 		}
 		float GetVolume()  

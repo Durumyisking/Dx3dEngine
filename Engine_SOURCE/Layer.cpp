@@ -140,13 +140,13 @@ namespace dru
 		}
 	}
 
-	void Layer::AddGameObject(GameObj* _GameObj, eLayerType _Type)
+	void Layer::AddGameObject(GameObj* gameObj, eLayerType type)
 	{
-		if (nullptr == _GameObj)	
+		if (nullptr == gameObj)	
 			return;
 		
-		_GameObj->SetLayerType(_Type);
-		mGameObjs.push_back(_GameObj);
+		gameObj->SetLayerType(type);
+		mGameObjs.push_back(gameObj);
  	}
 
 	std::vector<GameObj*> Layer::GetDontDestroyObjects()
