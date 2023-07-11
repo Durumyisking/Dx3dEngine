@@ -150,26 +150,26 @@ namespace dru
 					, sin((float)i * -(XM_PI / (float)mMaxParticles)), 0.f, 1.f);
 	*/
 
-	void ParticleSystem::MakeParticleBufferData(Vector4 _StartPosition, UINT _MaxParticleCount, float _MinLifeTime, float _MaxLifeTime, float _Speed, float _Radian, UINT _Active)
+	void ParticleSystem::MakeParticleBufferData(Vector4 startPosition, UINT maxParticleCount, float minLifeTime, float maxLifeTime, float speed, float radian, UINT active)
 	{
-		mParticle = new Particle[_MaxParticleCount];
-		mStartPosition = _StartPosition;
-		mMaxParticles = _MaxParticleCount;
+		mParticle = new Particle[maxParticleCount];
+		mStartPosition = startPosition;
+		mMaxParticles = maxParticleCount;
 		for (size_t i = 0; i < mMaxParticles; i++)
 		{
-			mParticle[i].position = _StartPosition;
+			mParticle[i].position = startPosition;
 			mParticle[i].direction.Normalize();
-			mParticle[i].lifeTime = _MaxLifeTime;
-			mParticle[i].speed = _Speed;
-			mParticle[i].radian = _Radian;
+			mParticle[i].lifeTime = maxLifeTime;
+			mParticle[i].speed = speed;
+			mParticle[i].radian = radian;
 			mParticle[i].active = 0;
 		}
 	}
 
-	void ParticleSystem::MakeConstantBufferData(std::wstring _ShaderName, renderer::ParticleSystemCB _CB)
+	void ParticleSystem::MakeConstantBufferData(std::wstring shaderName, renderer::ParticleSystemCB CB)
 	{
-		mCS = GETSINGLE(ResourceMgr)->Find<ParticleShader>(_ShaderName);
-		mCBData = _CB;
+		mCS = GETSINGLE(ResourceMgr)->Find<ParticleShader>(shaderName);
+		mCBData = CB;
 	}
 
 

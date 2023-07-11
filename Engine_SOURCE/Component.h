@@ -9,7 +9,7 @@ namespace dru
 	class Component : public DruEntity
 	{
 	public:
-		Component(eComponentType _Type);
+		Component(eComponentType type);
 		virtual ~Component();
 
 		virtual void Initialize()	= 0;
@@ -19,7 +19,7 @@ namespace dru
 
 		eComponentType GetOrder() { return mType; }
 
-		void SetOwner(GameObj* _Owner) { mOwner = _Owner; }
+		void SetOwner(GameObj* owner) { mOwner = owner; }
 		GameObj* GetOwner() { return mOwner; }
 
 		template <typename T>

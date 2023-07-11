@@ -74,30 +74,30 @@ namespace dru
 	{
 	}
 
-	bool Animator::Create(const std::wstring& _name, Texture* _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse)
+	bool Animator::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, Vector2 ratio, float duration, bool reverse)
 	{
-		if (!_atlas)
+		if (!atlas)
 			return false;
 
-		Animation* animation = FindAnimation(_name);
+		Animation* animation = FindAnimation(name);
 		if (animation)
 			return false;
 
 		animation = new Animation();
-		animation->Create(_name, _atlas, _leftTop, _size, _offset, _spriteLength, _Ratio, _duration, _Reverse);
+		animation->Create(name, atlas, leftTop, size, offset, spriteLength, ratio, duration, reverse);
 
-		mAnimations.insert(std::make_pair(_name, animation));
+		mAnimations.insert(std::make_pair(name, animation));
 
 		Events* events = new Events();
-		events->mFrameEvents.resize(_spriteLength);
-		mEvents.insert(std::make_pair(_name, events));
+		events->mFrameEvents.resize(spriteLength);
+		mEvents.insert(std::make_pair(name, events));
 
 		return true;
 	}
 
-	Animation* Animator::FindAnimation(const std::wstring& _name)
+	Animation* Animator::FindAnimation(const std::wstring& name)
 	{
-		std::map<std::wstring, Animation*>::iterator iter = mAnimations.find(_name);
+		std::map<std::wstring, Animation*>::iterator iter = mAnimations.find(name);
 
 		if (mAnimations.end() == iter)
 		{
@@ -107,9 +107,9 @@ namespace dru
 		return iter->second;
 	}
 
-	Animator::Events* Animator::FindEvents(const std::wstring& _name)
+	Animator::Events* Animator::FindEvents(const std::wstring& name)
 	{
-		std::map<std::wstring, Events*>::iterator iter = mEvents.find(_name);
+		std::map<std::wstring, Events*>::iterator iter = mEvents.find(name);
 
 		if (mEvents.end() == iter)
 		{
@@ -119,7 +119,7 @@ namespace dru
 		return iter->second;
 	}
 
-	void Animator::Play(std::wstring _name, bool _bLoop)
+	void Animator::Play(std::wstring name, bool bLoop)
 	{
 		Animation* prevAnimation = mCurrentAnimation;
 		Events* events = nullptr;
@@ -129,9 +129,9 @@ namespace dru
 		if (events)
 			events->mEndEvent();
 
-		mCurrentAnimation = FindAnimation(_name);
+		mCurrentAnimation = FindAnimation(name);
 		mCurrentAnimation->Reset();
-		mbLoop = _bLoop;
+		mbLoop = bLoop;
 
 		events = FindEvents(mCurrentAnimation->GetAnimationName());
 
@@ -148,12 +148,12 @@ namespace dru
 		mCurrentAnimation->BindShader();
 	}
 
-	void Animator::BindSprite(renderer::AnimationCB _Sprite)
+	void Animator::BindSprite(renderer::AnimationCB sprite)
 	{
 		if (!mCurrentAnimation)
 			return;
 
-		mCurrentAnimation->BindSpriteToShader(_Sprite);
+		mCurrentAnimation->BindSpriteToShader(sprite);
 	}
 
 	void Animator::Reset()
@@ -166,32 +166,32 @@ namespace dru
 		mCurrentAnimation->Clear();
 	}
 
-	std::function<void()>& Animator::GetStartEvent(const std::wstring& _name)
+	std::function<void()>& Animator::GetStartEvent(const std::wstring& name)
 	{
-		Events* events = FindEvents(_name);
+		Events* events = FindEvents(name);
 
 		return events->mStartEvent.mEvent;
 	}
 
-	std::function<void()>& Animator::GetCompleteEvent(const std::wstring& _name)
+	std::function<void()>& Animator::GetCompleteEvent(const std::wstring& name)
 	{
-		Events* events = FindEvents(_name);
+		Events* events = FindEvents(name);
 
 		return events->mCompleteEvent.mEvent;
 	}
 
-	std::function<void()>& Animator::GetEndEvent(const std::wstring& _name)
+	std::function<void()>& Animator::GetEndEvent(const std::wstring& name)
 	{
-		Events* events = FindEvents(_name);
+		Events* events = FindEvents(name);
 
 		return events->mEndEvent.mEvent;
 	}
 
-	std::function<void()>& Animator::GetFrameEvent(const std::wstring& _name, UINT _idx)
+	std::function<void()>& Animator::GetFrameEvent(const std::wstring& name, UINT idx)
 	{
-		Events* events = FindEvents(_name);
+		Events* events = FindEvents(name);
 
-		return events->mFrameEvents[_idx].mEvent;
+		return events->mFrameEvents[idx].mEvent;
 	}
 
 }

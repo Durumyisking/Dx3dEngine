@@ -11,12 +11,12 @@ namespace dru
 		PostProcessRenderer();
 		virtual ~PostProcessRenderer();
 
-		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Initialize() final;
+		virtual void update() final;
+		virtual void fixedUpdate() final;
+		virtual void render() final;
 
-		void SetPostProcessOwner(PostProcess* _PostProcess);
+		void SetPostProcessOwner(PostProcess* postProcess);
 
 	private:
 		PostProcess* mPostProcess;

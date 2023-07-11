@@ -3,8 +3,8 @@
 
 namespace dru
 {
-    Component::Component(eComponentType _Type)
-        : mType(_Type)
+    Component::Component(eComponentType type)
+        : mType(type)
         , mOwner(nullptr)
     {
     }
