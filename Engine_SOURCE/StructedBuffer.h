@@ -10,10 +10,10 @@ namespace dru
 		StructedBuffer();
 		~StructedBuffer();
 
-		bool Create(UINT _size, UINT _stride, dru::eSRVType _type, void* _data, bool cpuAccess = false);
+		bool Create(UINT size, UINT stride, graphics::eSRVType type, void* data, bool cpuAccess = false);
 		void SetData(void* _data, UINT _stride);
 		void GetData(void* data, UINT size = 0); 
-		void BindSRV(dru::eShaderStage _stage, UINT _slot);
+		void BindSRV(graphics::eShaderStage _stage, UINT _slot);
 		void BindUAV(eShaderStage stage, UINT slot);
 
 		void Clear();

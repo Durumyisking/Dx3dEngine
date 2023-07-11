@@ -14,8 +14,8 @@ namespace dru
 		virtual void Bind();
 		virtual void Clear();
 
-		void SetTarget(Texture* _target) { mTarget = _target; }
-		Texture* GetTarget() { return mTarget; }
+		void SetTarget(Texture* target) { mTarget = target; }
+		Texture* GetTarget() const { return mTarget; }
 
 	private:
 		Texture* mTarget;

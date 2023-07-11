@@ -18,7 +18,7 @@ struct GSOutput
 [maxvertexcount(6)]
 void main(point VSOut input[1], inout TriangleStream<GSOutput> output) // input은 input output은 output (output 주소에 값을 넣고 그걸 cpu에서 받는 너낌)
 {
-    GSOutput Out[4] = { (GSOutput) 0.0f, (GSOutput) 0.0f, (GSOutput) 0.0f, (GSOutput) 0.0f };
+    GSOutput gsOut[4] = { (GSOutput) 0.0f, (GSOutput) 0.0f, (GSOutput) 0.0f, (GSOutput) 0.0f };
 	
     if (0 == particleBuffer[input[0].Instance].active)
         return;
@@ -51,30 +51,30 @@ void main(point VSOut input[1], inout TriangleStream<GSOutput> output) // input�
 	
     for (int j = 0; j < 4; j++)
     {
-        Out[j].Pos = mul(float4(NewPos[j], 1.0f), projection);
+        gsOut[j].Pos = mul(float4(NewPos[j], 1.0f), projection);
     }
 	
-    Out[0].UV = float2(0.0f, 0.0f);
-    Out[1].UV = float2(1.0f, 0.0f);
-    Out[2].UV = float2(1.0f, 1.0f);
-    Out[3].UV = float2(0.0f, 1.0f);
+    gsOut[0].UV = float2(0.0f, 0.0f);
+    gsOut[1].UV = float2(1.0f, 0.0f);
+    gsOut[2].UV = float2(1.0f, 1.0f);
+    gsOut[3].UV = float2(0.0f, 1.0f);
 	
-    Out[0].Instance = input[0].Instance;
-    Out[1].Instance = input[0].Instance;
-    Out[2].Instance = input[0].Instance;
-    Out[3].Instance = input[0].Instance;
+    gsOut[0].Instance = input[0].Instance;
+    gsOut[1].Instance = input[0].Instance;
+    gsOut[2].Instance = input[0].Instance;
+    gsOut[3].Instance = input[0].Instance;
     
     // 0 -- 1
     // | \  |
     // 3 -- 2
     
-    output.Append(Out[0]);
-    output.Append(Out[1]);
-    output.Append(Out[2]);
+    output.Append(gsOut[0]);
+    output.Append(gsOut[1]);
+    output.Append(gsOut[2]);
     output.RestartStrip();
     
-    output.Append(Out[0]);
-    output.Append(Out[2]);
-    output.Append(Out[3]);
+    output.Append(gsOut[0]);
+    output.Append(gsOut[2]);
+    output.Append(gsOut[3]);
     output.RestartStrip();
 }

@@ -37,7 +37,7 @@ namespace dru
 		__forceinline bool IsBulletTimeOn() { return mbBulletTime; }
 		__forceinline bool IsPlayerBulletTimeOn() { return mbPlayerBulletTime; }
 
-		__forceinline void SetFramePass(UINT _Value) { mFramePass = _Value; }
+		__forceinline void SetFramePass(UINT value) { mFramePass = value; }
 		__forceinline bool IsFramePass() 
 		{
 			return mbFramePassCheck; 
@@ -47,7 +47,7 @@ namespace dru
 		void Initialize();
 		void update();
 		void Render(HDC hdc);
-		void BulletTime(float _Time);
+		void BulletTime(float time);
 
 
 

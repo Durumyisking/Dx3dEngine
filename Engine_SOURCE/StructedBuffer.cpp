@@ -21,14 +21,14 @@ namespace dru
 	{
 	}
 
-	bool StructedBuffer::Create(UINT _size, UINT _stride, eSRVType _type, void* _data, bool cpuAccess)
+	bool StructedBuffer::Create(UINT size, UINT stride, eSRVType type, void* data, bool cpuAccess)
 	{
-		mType = _type;
-		mSize = _size;
-		mStride = _stride;
+		mType = type;
+		mSize = size;
+		mStride = stride;
 
 		setDiscription();
-		createBuffer(_data);
+		createBuffer(data);
 		createView();
 
 		if (cpuAccess)
@@ -38,15 +38,15 @@ namespace dru
 		return true;
 	}
 
-	void StructedBuffer::SetData(void* _data, UINT _stride)
+	void StructedBuffer::SetData(void* data, UINT stride)
 	{
-		if (mStride < _stride) // 그니까 내가 셋데이타 해줄껀데 이 버퍼로 넘겨줄 데이터 개수가 들어온 stride보다 크면 
+		if (mStride < stride) // 셋데이터시 버퍼로 넘겨줄 데이터 개수가 들어온 stride보다 크면 
 		{
-			Create(mSize, _stride, eSRVType::SRV, _data); // 그 크기만큼 새로 buffer 만들어버림
+			Create(mSize, stride, eSRVType::SRV, data); //크기만큼 새로 buffer 생성
 		}
 		else
 		{
-			GetDevice()->SetData(mWriteBuffer.Get(), _data, mSize * _stride); // 데이터 크기 * stride(개수)만큼 데이터 세팅한다.
+			GetDevice()->SetData(mWriteBuffer.Get(), data, mSize * stride); // 데이터 크기 * stride(개수)만큼 데이터 세팅한다.
 		}
 		GetDevice()->CopyResource(buffer.Get(), mWriteBuffer.Get()); // writebuffer에 있는거 내 buffer도 들고있게함
 	}
@@ -71,11 +71,11 @@ namespace dru
 		}
 	}
 
-	void StructedBuffer::BindSRV(eShaderStage _stage, UINT _slot)
+	void StructedBuffer::BindSRV(eShaderStage stage, UINT slot)
 	{
-		mSRVSlot = _slot;
+		mSRVSlot = slot;
 
-		GetDevice()->BindShaderResource(_stage, _slot, mSRV.GetAddressOf());
+		GetDevice()->BindShaderResource(stage, slot, mSRV.GetAddressOf());
 	}
 	void StructedBuffer::BindUAV(eShaderStage stage, UINT slot)
 	{

@@ -128,10 +128,10 @@ namespace dru
 
     }
 
-    void TimeMgr::BulletTime(float _Time)
+    void TimeMgr::BulletTime(float time)
     {
         mbBulletTime = true;
-        mbBulletTimeTimerMax = _Time;
+        mbBulletTimeTimerMax = time;
     }
 
 }

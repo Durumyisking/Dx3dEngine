@@ -17,14 +17,14 @@ struct VSOut
     float  intensity : FOG;
 };
 
-float4 main(VSOut In) : SV_Target
+float4 main(VSOut vsIn) : SV_Target
 {
     float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
     LightColor lightColor = (LightColor) 0.0f;
     
     for (int i = 0; i < lightCount; i++)
     {
-        CalculateLight3D(In.ViewPos, In.ViewNormal, i, lightColor);
+        CalculateLight3D(vsIn.ViewPos, vsIn.ViewNormal, i, lightColor);
     }
     
     outColor.rgb *= lightColor.diffuse.rgb;

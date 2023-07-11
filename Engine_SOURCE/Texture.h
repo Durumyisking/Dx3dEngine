@@ -22,17 +22,17 @@ namespace dru
 
 		static void Clear(UINT startSlot);
 
-		bool Create(UINT _width, UINT _height, DXGI_FORMAT _format, UINT _bindflag);
-		bool Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> _texture);
+		bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag);
+		bool Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture);
 		virtual HRESULT Load(const std::wstring& path) override;
 
-		void BindShaderResource(eShaderStage _Stage, UINT _Slot);
-		void BindUnorderedAccessview(UINT _Slot);
-		void ClearUnorderedAccessview(UINT _Slot);
+		void BindShaderResource(eShaderStage stage, UINT slot);
+		void BindUnorderedAccessview(UINT slot);
+		void ClearUnorderedAccessview(UINT slot);
 
 		void Clear();
 
-		void SetTexture(Microsoft::WRL::ComPtr<ID3D11Texture2D> _texture) { mTexture = _texture; }
+		void SetTexture(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture) { mTexture = texture; }
 		void MakeCropTexture(UINT DstSubresource, UINT DstX, UINT DstY, UINT DstZ, ID3D11Resource* pSrcResource, UINT SrcSubresource, const D3D11_BOX* pSrcBox);
 		ScratchImage& GetScratchImage() { return mImage; }
 
