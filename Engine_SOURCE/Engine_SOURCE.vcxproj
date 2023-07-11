@@ -137,7 +137,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
     </ClCompile>
@@ -225,12 +225,23 @@ copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Release\"</Command>
     <ClInclude Include="PaintShader.h" />
     <ClInclude Include="ParticleShader.h" />
     <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="Physical.h" />
+    <ClInclude Include="PhysicalProperties.h" />
+    <ClInclude Include="PhysicsMgr.h" />
+    <ClInclude Include="PhysicsScene.h" />
+    <ClInclude Include="PhysX.h" />
+    <ClInclude Include="PhysXCollider.h" />
+    <ClInclude Include="PhysXRigidBody.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="PostProcess.h" />
     <ClInclude Include="PostProcessRenderer.h" />
     <ClInclude Include="PostProcessWave.h" />
     <ClInclude Include="Prefab.h" />
+    <ClInclude Include="PxDispathcer.h" />
+    <ClInclude Include="PxFilter.h" />
+    <ClInclude Include="PxInitialization.h" />
+    <ClInclude Include="PxEventCallback.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="EngineResource.h" />
     <ClInclude Include="ResourceMgr.h" />
@@ -284,12 +295,23 @@ copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Release\"</Command>
     <ClCompile Include="PaintShader.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="Physical.cpp" />
+    <ClCompile Include="PhysicalProperties.cpp" />
+    <ClCompile Include="PhysicsMgr.cpp" />
+    <ClCompile Include="PhysicsScene.cpp" />
+    <ClCompile Include="PhysX.cpp" />
+    <ClCompile Include="PhysXCollider.cpp" />
+    <ClCompile Include="PhysXRigidBody.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="PostProcess.cpp" />
     <ClCompile Include="PostProcessRenderer.cpp" />
     <ClCompile Include="PostProcessWave.cpp" />
     <ClCompile Include="Prefab.cpp" />
+    <ClCompile Include="PxDispathcer.cpp" />
+    <ClCompile Include="PxEventCallback.cpp" />
+    <ClCompile Include="PxFilter.cpp" />
+    <ClCompile Include="PxInitialization.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="EngineResource.cpp" />
     <ClCompile Include="ResourceMgr.cpp" />

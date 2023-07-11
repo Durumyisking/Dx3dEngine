@@ -2,7 +2,8 @@
 #include "InputMgr.h"
 #include "TimeMgr.h"
 #include "Transform.h"
-#include "GameObj.h"
+#include "PxFilter.h"
+
 
 namespace dru
 {
@@ -20,6 +21,12 @@ namespace dru
 	}
 	void PlayerScript::update()
 	{
+
+	}
+	void PlayerScript::fixedUpdate()
+	{
+		Vector3 Pos = {};
+
 		if (KEY_DOWN(A))
 		{
 			mTransform->AddRotationX(50.f * DT);
@@ -33,9 +40,32 @@ namespace dru
 			mTransform->AddRotationZ(50.f * DT);
 		}
 
-	}
-	void PlayerScript::fixedUpdate()
-	{
+		if (KEY_DOWN(UP))
+		{
+			Pos = mTransform->Forward() * 5.f * DT;
+		}
+
+		if (KEY_DOWN(DOWN))
+		{
+			Pos = mTransform->Forward() * -5.f * DT;
+		}
+
+		if (KEY_DOWN(LEFT))
+		{
+			Pos = mTransform->Right() * -5.f * DT;
+		}
+
+		if (KEY_DOWN(RIGHT))
+		{
+			Pos = mTransform->Right() * 5.f * DT;
+		}
+
+		PxFilter filter = PxFilter();
+
+		PxFilterData filterData = {};
+		filterData.word0 = 1 << 0;
+		filterData.word1 = 1 << 1;
+
 	}
 	void PlayerScript::render()
 	{

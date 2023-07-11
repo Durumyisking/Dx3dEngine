@@ -10,11 +10,11 @@ namespace dru
 		PlayerScript();
 		virtual ~PlayerScript();
 
-		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
-		virtual void fontRender();
+		virtual void Initialize() final;
+		virtual void update() final;
+		virtual void fixedUpdate() final;
+		virtual void render() final;
+		virtual void fontRender() final;
 
 		virtual void OnCollisionEnter(Collider2D* oppo);
 		virtual void OnCollision(Collider2D* oppo);

@@ -143,6 +143,24 @@
     <Filter Include="Common\Font">
       <UniqueIdentifier>{00f7409f-6c39-4951-b9ab-a5158a532e47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PhysX">
+      <UniqueIdentifier>{79216596-84bd-4162-9178-37eed40f0926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\Manager">
+      <UniqueIdentifier>{1d9727da-458d-4c71-9094-868de38323b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Physical">
+      <UniqueIdentifier>{447191a7-6235-4f9a-845e-321c7946b8d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Physics">
+      <UniqueIdentifier>{c8d076f8-c697-4213-b101-b4cfd19830ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\RigidBody\PhysX">
+      <UniqueIdentifier>{39bc9a29-686d-42ce-a072-eac726290252}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Collider\PhysX">
+      <UniqueIdentifier>{7a7234c4-dd75-45c7-80d1-7d1902ecdf8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">

@@ -8,6 +8,7 @@
 #include "FMod.h"
 #include "FontWrapper.h"
 #include "FileMgr.h"
+#include "PhysicsMgr.h"
 
 
 namespace dru
@@ -26,6 +27,10 @@ namespace dru
 	}
 	Application::~Application()
 	{
+		Fmod::Release();
+		SceneMgr::release();
+		FontWrapper::Release();
+		PhysicsMgr::DestroyInstance();
 	}
 
 	void Application::Initialize()
@@ -35,6 +40,7 @@ namespace dru
 		GETSINGLE(Fmod)->Initialize();
 		GETSINGLE(CollisionMgr)->Initialize();
 		renderer::Initialize();
+		GETSINGLE(PhysicsMgr)->GetInstance()->Init();
 		GETSINGLE(FontWrapper)->Initialize();
 		GETSINGLE(SceneMgr)->Initialize();
 	}
@@ -42,6 +48,7 @@ namespace dru
 	{
 		GETSINGLE(TimeMgr)->update();
 		GETSINGLE(InputMgr)->update();
+		GETSINGLE(PhysicsMgr)->update();
 		GETSINGLE(CollisionMgr)->update();
 		GETSINGLE(SceneMgr)->update();
 	}

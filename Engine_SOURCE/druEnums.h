@@ -30,8 +30,9 @@ namespace dru::enums
 	enum class eComponentType
 	{
 		None,
-		Transform, // 위치 데이터 수정하는 컴포넌트
+		Transform,
 		Camera,
+		Physical,
 		Mesh,
 		RigidBody,
 		Collider,
@@ -112,6 +113,32 @@ namespace dru::enums
 		RIGHT,
 		END,
 	};
+
+	enum class eActorType
+	{
+		STATIC,
+		DYNAMIC,
+		KINEMATIC,
+		CHARACTER,
+		END,
+	};
+
+	enum class eGeometryType
+	{
+		BOX,
+		CAPSULE,
+		SPHERE,
+		PLANE,
+		END,
+	};
+
+	enum class AXIS
+	{
+		X,
+		Y,
+		Z,
+	};
+
 
 	extern const char* charComponentType[(int)eComponentType::End];
 	extern const wchar_t* wcharComponentType[(int)eComponentType::End];

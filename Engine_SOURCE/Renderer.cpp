@@ -222,7 +222,7 @@ namespace dru::renderer
 		//	Vector2 uv;
 		//};
 
-		// 윗면
+		// ����
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
@@ -244,7 +244,7 @@ namespace dru::renderer
 		arrCube[3].normal = Vector3(0.f, 1.f, 0.f);
 
 
-		// 아랫 면	
+		// �Ʒ� ��	
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
@@ -265,7 +265,7 @@ namespace dru::renderer
 		arrCube[7].uv = Vector2(0.f, 0.f);
 		arrCube[7].normal = Vector3(0.f, -1.f, 0.f);
 
-		// 왼쪽 면
+		// ���� ��
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
@@ -286,7 +286,7 @@ namespace dru::renderer
 		arrCube[11].uv = Vector2(0.f, 0.f);
 		arrCube[11].normal = Vector3(-1.f, 0.f, 0.f);
 
-		// 오른쪽 면
+		// ������ ��
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].color = Vector4(0.f, 0.f, 1.f, 1.f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
@@ -307,7 +307,7 @@ namespace dru::renderer
 		arrCube[15].uv = Vector2(0.f, 0.f);
 		arrCube[15].normal = Vector3(1.f, 0.f, 0.f);
 
-		// 뒷 면
+		// �� ��
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].color = Vector4(1.f, 1.f, 0.f, 1.f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
@@ -328,7 +328,7 @@ namespace dru::renderer
 		arrCube[19].uv = Vector2(0.f, 0.f);
 		arrCube[19].normal = Vector3(0.f, 0.f, 1.f);
 
-		// 앞 면
+		// �� ��
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].color = Vector4(1.f, 0.f, 1.f, 1.f);
 		arrCube[20].uv = Vector2(0.f, 0.f);
@@ -386,8 +386,8 @@ namespace dru::renderer
 		sphereVtx.push_back(v);
 
 		// Body
-		UINT iStackCount = 40; // 가로 분할 개수
-		UINT iSliceCount = 40; // 세로 분할 개수
+		UINT iStackCount = 40; // ���� ���� ����
+		UINT iSliceCount = 40; // ���� ���� ����
 
 		float fStackAngle = XM_PI / iStackCount;
 		float fSliceAngle = XM_2PI / iSliceCount;
@@ -434,8 +434,8 @@ namespace dru::renderer
 		v.biNormal = Vector3(0.f, 0.f, -1.f);
 		sphereVtx.push_back(v);
 
-		// 인덱스
-		// 북극점
+		// �ε���
+		// �ϱ���
 		indexes.clear();
 		for (UINT i = 0; i < iSliceCount; ++i)
 		{
@@ -444,7 +444,7 @@ namespace dru::renderer
 			indexes.push_back(i + 1);
 		}
 
-		// 몸통
+		// ����
 		for (UINT i = 0; i < iStackCount - 2; ++i)
 		{
 			for (UINT j = 0; j < iSliceCount; ++j)
@@ -465,7 +465,7 @@ namespace dru::renderer
 			}
 		}
 
-		// 남극점
+		// ������
 		UINT iBottomIdx = static_cast<UINT>(sphereVtx.size()) - 1;
 
 		for (UINT i = 0; i < iSliceCount; ++i)
@@ -594,7 +594,13 @@ namespace dru::renderer
 			, postProcessShader->GetVSBlobBufferSize()
 			, postProcessShader->GetInputLayoutAddr());
 
-		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
+		std::shared_ptr<Shader> debugGeometryShader = Resources::Find<Shader>(L"DebugGeometryShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, debugGeometryShader->GetVSBlobBufferPointer()
+			, debugGeometryShader->GetVSBlobBufferSize()
+			, debugGeometryShader->GetInputLayoutAddr());
+
+		std::shared_ptr<Shader> phongShader = Resources::Find<Shader>(L"PhongShader");
 		GetDevice()->CreateInputLayout(arrLayout, 6
 			, phongShader->GetVSBlobBufferPointer()
 			, phongShader->GetVSBlobBufferSize()
@@ -753,6 +759,11 @@ namespace dru::renderer
 		MeshShader->Create(dru::eShaderStage::VS, L"PhongVS.hlsl", "main");
 		MeshShader->Create(dru::eShaderStage::PS, L"PhongPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"MeshShader", MeshShader);
+
+		Shader* debugGeometryShader = new Shader();
+		debugGeometryShader->Create(graphics::eShaderStage::VS, L"DebugGeometryVS.hlsl", "main");
+		debugGeometryShader->Create(graphics::eShaderStage::PS, L"DebugGeometryPS.hlsl", "main");
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"DebugGeometryShader", MeshShader);
 
 		Shader* phongShader = new Shader();
 		phongShader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
@@ -928,8 +939,14 @@ namespace dru::renderer
 		postProcessMaterial->SetTexture(postProcessTexture);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"PostProcessMaterial", postProcessMaterial);
 
-		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
-		Material* phongMaterial = new Material();
+		std::shared_ptr<Shader> debugGeometryShader = Resources::Find<Shader>(L"DebugGeometryShader");
+		std::shared_ptr<Material> debugGeometryMaterial = std::make_shared<Material>();
+		debugGeometryMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		debugGeometryMaterial->SetShader(debugGeometryShader);
+		Resources::Insert<Material>(L"DebugGeometryMaterial", debugGeometryMaterial);
+
+		std::shared_ptr<Shader> phongShader = Resources::Find<Shader>(L"PhongShader");
+		std::shared_ptr<Material> phongMaterial = std::make_shared<Material>();
 		phongMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		phongMaterial->SetShader(phongShader);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"PhongMaterial", phongMaterial);
@@ -974,7 +991,6 @@ namespace dru::renderer
 
 	void Render()
 	{
-		// 렌더타겟 설정
 		GetDevice()->OMSetRenderTarget();
 
 		BindNoiseTexture();
