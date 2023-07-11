@@ -60,9 +60,9 @@ namespace dru
 
 	}
 
-	void FadeScript::restart(int _fadeType)
+	void FadeScript::restart(int fadeType)
 	{
-		mFadeType = _fadeType;
+		mFadeType = fadeType;
 		mTime = 0;
 	}
 
