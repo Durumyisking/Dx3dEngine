@@ -3,7 +3,8 @@
 #include "GameObj.h"
 #include "Animator.h"
 #include "Object.h"
-#include "Input.h"
+#include "InputMgr.h"
+
 namespace dru
 {
 	Script::Script()

@@ -1,12 +1,12 @@
 #include "CursorScript.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "GameObj.h"
 
 namespace dru
 {
 	CursorScript::CursorScript()
 		: Script(),
-		mTrans(nullptr),
+		mTransform(nullptr),
 		mPos{},
 		mRot{}
 	{
@@ -18,7 +18,7 @@ namespace dru
 
 	void CursorScript::Initialize()
 	{
-		mTrans = GetOwner()->GetComponent<Transform>();
+		mTransform = GetOwner()->GetComponent<Transform>();
 	}
 
 	void CursorScript::update()
@@ -32,7 +32,7 @@ namespace dru
 		mPos = GETSINGLE(InputMgr)->GetMousePosition();
 		Vector3 newpos = mPos / 100.f;
 
-		mTrans->SetPosition(newpos);
+		mTransform->SetPosition(newpos);
 	}
 
 	void CursorScript::render()

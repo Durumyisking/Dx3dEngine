@@ -1,9 +1,11 @@
 #pragma once
 #include "BaseRenderer.h"
 #include "ParticleShader.h"
+#include "Renderer.h"
 
 namespace dru
 {
+	using namespace renderer;
     class ParticleSystem : public BaseRenderer
     {
 		enum class eSimulationSpace
@@ -22,11 +24,7 @@ namespace dru
 
 		void MakeParticleBufferData(Vector4 _StartPosition, UINT _MaxParticleCount, float _MinLifeTime, float _MaxLifeTime, float _Speed, float _Radian, UINT _Active);
 
-		void MakeConstantBufferData(std::wstring _ShaderName, renderer::ParticleSystemCB _CB)
-		{
-			mCS = GETSINGLE(ResourceMgr)->Find<ParticleShader>(_ShaderName);
-			mCBData = _CB; 
-		}
+		void MakeConstantBufferData(std::wstring _ShaderName, ParticleSystemCB _CB);
 
 		void SetStartPosition(Vector3 _StartPos) { mStartPosition = Vector4(_StartPos.x, _StartPos.y, _StartPos.z, 1.f); }
 		void SetStartScale(Vector3 _StartScale) { mStartScale= Vector4(_StartScale.x, _StartScale.y, _StartScale.z, 1.f); }
@@ -57,8 +55,8 @@ namespace dru
 	
 		class StructedBuffer* mBuffer;
 		class StructedBuffer* mSharedBuffer;
-		graphics::ParticleShader* mCS;
-		renderer::ParticleSystemCB mCBData;
+		dru::ParticleShader* mCS;
+		ParticleSystemCB mCBData;
 
 		Vector4 mStartPosition;
 		Vector4 mStartScale;

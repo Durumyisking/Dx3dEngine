@@ -2,7 +2,7 @@
 #include "Light.hlsli"
 #include "Particle.hlsli"
 #include "Sampler.hlsli"
-#include "Random.hlsli"
+
 
 struct VTX_IN
 {

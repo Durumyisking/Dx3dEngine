@@ -6,6 +6,7 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 #include "Application.h"
+#include "MeshRenderer.h"
 
 extern dru::Application application;
 

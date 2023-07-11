@@ -1,6 +1,7 @@
 #include "CollisionMgr.h"
 #include "Scene.h"
 #include "SceneMgr.h"
+#include "GameObj.h"
 
 namespace dru
 {

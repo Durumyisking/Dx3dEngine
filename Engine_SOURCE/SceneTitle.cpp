@@ -1,16 +1,8 @@
 #include "SceneTitle.h"
 #include "TimeMgr.h"
 
-#include "FadeScript.h"
 #include "Object.h"
 #include "Camera.h"
-#include "Input.h"
-#include "Collider2D.h"
-#include "Animator.h"
-
-#include "AudioSource.h"
-
-#include "Layer.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "SpriteRenderer.h"
@@ -23,8 +15,10 @@
 #include "GridScript.h"
 
 #include "Application.h"
+#include "Player.h"
 
-extern dru::Application appliaction;
+extern dru::Application application;
+
 
 namespace dru
 {
@@ -108,6 +102,14 @@ namespace dru
 			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
 		}
 
+		{
+			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
+			pointLight->GetComponent<Transform>()->SetPosition(Vector3(2.5f, 0.f, 0.f));
+			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
+			lightComp->SetRadius(10.f);
+		}
 
 		{
 			Player* player = object::Instantiate<Player>(eLayerType::Player);

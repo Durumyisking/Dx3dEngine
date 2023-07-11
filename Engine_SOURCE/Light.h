@@ -16,10 +16,10 @@ namespace dru
 		virtual void fixedUpdate();
 		virtual void render();
 
-		graphics::LightAttribute GetAttribute() const { return mAttribute; }
+		LightAttribute GetAttribute() const { return mAttribute; }
 
 		void SetDiffuse(math::Vector4 _diffuse) { mAttribute.diffuse = _diffuse; }
-		void SetSpecular(Vector4 spec) { mAttribute.specular = spec; }
+		void SetSpecular(math::Vector4 spec) { mAttribute.specular = spec; }
 		void SetAmbient(math::Vector4 _ambient) { mAttribute.ambient = _ambient; }
 		void SetType(enums::eLightType _type) { mAttribute.type = _type; }
 		void SetRadius(float _radius) { mAttribute.radius = _radius; }
@@ -34,7 +34,7 @@ namespace dru
 
 
 	private:
-		graphics::LightAttribute mAttribute;
+		LightAttribute mAttribute;
     };
 }
 

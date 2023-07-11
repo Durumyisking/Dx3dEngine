@@ -11,7 +11,7 @@ cbuffer Material : register(b1)
     int cbiData2;
     int cbiData3;
     int cbiData4;
-    
+
     float cbfData1;
     float cbfData2;
     float cbfData3;

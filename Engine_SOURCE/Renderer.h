@@ -11,7 +11,7 @@
 #include "StructedBuffer.h"
 
 using namespace dru::math;
-using namespace dru::graphics;
+;
 
 #define RED		Vector4{1.f, 0.f, 0.f, 1.f}
 #define GREEN	Vector4{0.f, 1.f, 0.f, 1.f}

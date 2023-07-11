@@ -6,7 +6,7 @@
 
 
 using namespace dru::math;
-using namespace dru::graphics;
+;
 
 namespace dru
 {

@@ -8,7 +8,7 @@
 #include "StructedBuffer.h"
 #include "Texture.h"
 #include "TimeMgr.h"
-
+#include "Renderer.h"
 
 namespace dru
 {
@@ -165,6 +165,13 @@ namespace dru
 			mParticle[i].active = 0;
 		}
 	}
+
+	void ParticleSystem::MakeConstantBufferData(std::wstring _ShaderName, renderer::ParticleSystemCB _CB)
+	{
+		mCS = GETSINGLE(ResourceMgr)->Find<ParticleShader>(_ShaderName);
+		mCBData = _CB;
+	}
+
 
 
 	void ParticleSystem::SetParticleDirection(const Vector3& _Dir)

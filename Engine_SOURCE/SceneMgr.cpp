@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "SceneTitle.h"
 #include "Layer.h"
+#include "GameObj.h"
 
 namespace dru
 {

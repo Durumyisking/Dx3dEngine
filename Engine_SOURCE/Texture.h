@@ -1,5 +1,5 @@
 #pragma once
-#include "Resource.h"
+#include "EngineResource.h"
 #include "ResourceMgr.h"
 #include "../External/DirectXTex/include/DirectXTex.h"
 #include "GraphicDevice.h"
@@ -11,8 +11,7 @@
 #endif
 
 
-
-namespace dru::graphics
+namespace dru
 {
 
 	class Texture : public Resource

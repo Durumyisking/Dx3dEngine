@@ -4,7 +4,7 @@
 #include "Renderer.h"
 
 using namespace dru::math;
-using namespace dru::graphics;
+;
 using namespace dru::renderer;
 namespace dru
 {

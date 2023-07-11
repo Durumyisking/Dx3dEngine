@@ -160,7 +160,7 @@
     <ClInclude Include="Graphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
+    <ClInclude Include="EngineResource.h">
       <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
@@ -315,15 +315,15 @@
     <ClInclude Include="FontWrapper.h">
       <Filter>Common\Font</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Input</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerScript.h">
       <Filter>Common\GameObj\Player</Filter>
     </ClInclude>
     <ClInclude Include="Macro.h" />
     <ClInclude Include="def.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="InputMgr.h">
+      <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -336,14 +336,11 @@
     <ClCompile Include="GraphicDevice.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Resource.cpp">
+    <ClCompile Include="EngineResource.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Common\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="TimeMgr.cpp">
       <Filter>Time</Filter>
@@ -490,6 +487,9 @@
     </ClCompile>
     <ClCompile Include="druEnums.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="InputMgr.cpp">
+      <Filter>Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

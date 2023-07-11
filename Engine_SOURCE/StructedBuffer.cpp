@@ -1,7 +1,7 @@
 #include "StructedBuffer.h"
 #include "GraphicDevice.h"
 
-namespace dru::graphics
+namespace dru
 {
 	StructedBuffer::StructedBuffer()
 		: mSRV(nullptr)

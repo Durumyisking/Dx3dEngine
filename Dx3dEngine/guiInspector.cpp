@@ -11,8 +11,9 @@
 #include "guiTexture.h"
 
 #include "guiComponent.h"
-#include "GameObj.h"
 #include "guiResource.h"
+
+#include "Resource.h"
 
 namespace gui
 {
