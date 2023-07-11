@@ -42,7 +42,7 @@ namespace dru
 		RegisterCameraInRenderer();
 	}
 
-	void Camera::update()
+	void Camera::Update()
 	{
 		if (mTargetObj)
 		{
@@ -65,7 +65,7 @@ namespace dru
 
 	}
 
-	void Camera::fixedUpdate()
+	void Camera::FixedUpdate()
 	{
 		CreateViewMatrix();
 		CreateProjectionMatrix();
@@ -73,7 +73,7 @@ namespace dru
 		RegisterCameraInRenderer();
 	}
 
-	void Camera::render()
+	void Camera::Render()
 	{
 		View = mView;
 		Projection = mProjection;

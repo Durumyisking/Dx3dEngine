@@ -11,11 +11,11 @@ namespace dru
 		Player();
 		virtual ~Player();
 
-		virtual void Initialize();
-		virtual void update();
-		virtual void fixedUpdate();
-		virtual void render();
-		virtual void fontRender();
+		virtual void Initialize() override;
+		virtual void update() override;
+		virtual void fixedUpdate() override;
+		virtual void render() override;
+		virtual void fontRender() override;
 
 
 	private:

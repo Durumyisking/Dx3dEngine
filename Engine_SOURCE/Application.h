@@ -45,8 +45,8 @@ namespace dru
 
 
 	private:
-		bool initalized = false;
-		std::unique_ptr<dru::GraphicDevice> graphicDevice;
+		bool mbInitalized = false;
+		std::unique_ptr<dru::GraphicDevice> mGraphicDevice;
 
 		HWND mHwnd;
 		HDC	 mHdc;

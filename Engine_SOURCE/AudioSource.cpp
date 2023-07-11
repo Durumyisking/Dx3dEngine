@@ -21,11 +21,11 @@ namespace dru
 	{
 	}
 
-	void AudioSource::update()
+	void AudioSource::Update()
 	{
 	}
 
-	void AudioSource::fixedUpdate()
+	void AudioSource::FixedUpdate()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector3 pos = tr->GetPosition();
@@ -49,7 +49,7 @@ namespace dru
 		}
 	}
 
-	void AudioSource::render()
+	void AudioSource::Render()
 	{
 	}
 

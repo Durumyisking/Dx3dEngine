@@ -36,7 +36,7 @@ namespace dru
 
 	}
 
-	void CameraScript::update()
+	void CameraScript::Update()
 	{
 		mLookAt = mTransform->GetPosition();
 
@@ -53,11 +53,11 @@ namespace dru
 		mTransform->SetPosition(mLookAt);
 	}
 
-	void CameraScript::fixedUpdate()
+	void CameraScript::FixedUpdate()
 	{
 	}
 
-	void CameraScript::render()
+	void CameraScript::Render()
 	{
 	}
 

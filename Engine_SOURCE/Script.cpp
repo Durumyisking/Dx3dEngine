@@ -20,15 +20,15 @@ namespace dru
 	{
 	}
 
-	void Script::update()
+	void Script::Update()
 	{
 	}
 
-	void Script::fixedUpdate()
+	void Script::FixedUpdate()
 	{
 	}
 
-	void Script::render()
+	void Script::Render()
 	{
 
 	}

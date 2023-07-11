@@ -26,12 +26,12 @@ namespace dru
 	public:
 		// 클래스 내부에 있는것 처럼 보이지만 전역함수임 따라서 멤버변수를 알 수가 없음
 		void Initialize();
-		void update();
-		void fixedUpdate();
-		void render();
-		void fontRender();
-		void destory();
-		void release();
+		void Update();
+		void FixedUpdate();
+		void Render();
+		void FontRender();
+		void Destory();
+		void Release();
 		void LoadScene(eSceneType type);
 		void LateEvent(); // 렌더링까지 종료후 오브젝트 추가하는 함수
 

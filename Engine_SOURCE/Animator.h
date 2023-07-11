@@ -34,10 +34,10 @@ namespace dru
 		Animator();
 		virtual ~Animator();
 
-		virtual void Initialize();
-		virtual void update();
-		virtual void fixedUpdate();
-		virtual void render();
+		virtual void Initialize() final;
+		virtual void Update() final;
+		virtual void FixedUpdate() final;
+		virtual void Render() final;
 
 		bool Create(const std::wstring& name, Texture* atlas, Vector2 leftTop, Vector2 size, Vector2 offset,  UINT spriteLength, Vector2 ratio, float duration, bool reverse = false);
 		

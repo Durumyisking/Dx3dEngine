@@ -14,9 +14,9 @@ namespace dru
 		virtual ~Script();
 
 		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Update() override;
+		virtual void FixedUpdate() override;
+		virtual void Render() override;
 		virtual void fontRender();
 
 		virtual void OnCollisionEnter(Collider2D* oppo) {};

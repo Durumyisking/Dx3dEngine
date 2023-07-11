@@ -143,6 +143,27 @@
     <Filter Include="Common\Font">
       <UniqueIdentifier>{00f7409f-6c39-4951-b9ab-a5158a532e47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PhysX">
+      <UniqueIdentifier>{79216596-84bd-4162-9178-37eed40f0926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\Manager">
+      <UniqueIdentifier>{1d9727da-458d-4c71-9094-868de38323b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Physical">
+      <UniqueIdentifier>{447191a7-6235-4f9a-845e-321c7946b8d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Physics">
+      <UniqueIdentifier>{c8d076f8-c697-4213-b101-b4cfd19830ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\RigidBody\PhysX">
+      <UniqueIdentifier>{39bc9a29-686d-42ce-a072-eac726290252}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Collider\PhysX">
+      <UniqueIdentifier>{7a7234c4-dd75-45c7-80d1-7d1902ecdf8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Movement">
+      <UniqueIdentifier>{92b997d7-fbfb-4ec2-802e-5c583ea87d78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -326,6 +347,20 @@
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="FileMgr.h" />
+    <ClInclude Include="Physical.h" />
+    <ClInclude Include="PhysicalProperties.h" />
+    <ClInclude Include="PhysicsMgr.h" />
+    <ClInclude Include="PhysicsScene.h" />
+    <ClInclude Include="PhysX.h" />
+    <ClInclude Include="PhysXCollider.h" />
+    <ClInclude Include="PhysXRigidBody.h" />
+    <ClInclude Include="PxDispathcer.h" />
+    <ClInclude Include="PxFilter.h" />
+    <ClInclude Include="PxInitialization.h" />
+    <ClInclude Include="PxEventCallback.h" />
+    <ClInclude Include="PhysicalMovement.h">
+      <Filter>Common\Component\Movement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -493,6 +528,20 @@
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="FileMgr.cpp" />
+    <ClCompile Include="Physical.cpp" />
+    <ClCompile Include="PhysicalProperties.cpp" />
+    <ClCompile Include="PhysicsMgr.cpp" />
+    <ClCompile Include="PhysicsScene.cpp" />
+    <ClCompile Include="PhysX.cpp" />
+    <ClCompile Include="PhysXCollider.cpp" />
+    <ClCompile Include="PhysXRigidBody.cpp" />
+    <ClCompile Include="PxDispathcer.cpp" />
+    <ClCompile Include="PxEventCallback.cpp" />
+    <ClCompile Include="PxFilter.cpp" />
+    <ClCompile Include="PxInitialization.cpp" />
+    <ClCompile Include="PhysicalMovement.cpp">
+      <Filter>Common\Component\Movement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

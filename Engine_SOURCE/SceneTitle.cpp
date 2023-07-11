@@ -17,6 +17,12 @@
 #include "Application.h"
 #include "Player.h"
 
+#include "Physical.h"
+#include "PhysXRigidBody.h"
+#include "PhysXCollider.h"
+#include "PlayerScript.h"
+#include "PhysicalMovement.h"
+
 extern dru::Application application;
 
 
@@ -127,6 +133,14 @@ namespace dru
 			player->SetName(L"Player");
 			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player->AddComponent<PlayerScript>(eComponentType::Script);
+
+			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::KINEMATIC, eGeometryType::BOX, Vector3(30.f, 30.f, 1.f));
+			
+			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+			rigid->RemoveGravity();
+			player->AddComponent<PhysXCollider>(eComponentType::Collider);
+			player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 			player->SetScale({ 5.f, 5.f, 5.f });
 		}
 

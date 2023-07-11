@@ -19,11 +19,11 @@ namespace dru
 	{
 	}
 
-	void Light::update()
+	void Light::Update()
 	{
 	}
 
-	void Light::fixedUpdate()
+	void Light::FixedUpdate()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		math::Vector3 position = tr->GetWorldPosition();
@@ -34,7 +34,7 @@ namespace dru
 		renderer::PushLightAttribute(mAttribute);
 	}
 
-	void Light::render()
+	void Light::Render()
 	{
 	}
 

@@ -130,7 +130,7 @@ Index of this file:
 #pragma GCC diagnostic ignored "-Wmisleading-indentation"   // [__GNUC__ >= 6] warning: this 'if' clause does not guard this statement      // GCC 6.0+ only. See #883 on GitHub.
 #endif
 
-// Play it nice with Windows users (update: May 2018, Notepad now supports Unix-style carriage returns!)
+// Play it nice with Windows users (Update: May 2018, Notepad now supports Unix-style carriage returns!)
 #ifdef _WIN32
 #define IM_NEWLINE  "\r\n"
 #else
@@ -948,7 +948,7 @@ static void ShowDemoWindowWidgets()
             }
             if (node_clicked != -1)
             {
-                // update selection state
+                // Update selection state
                 // (process outside of tree loop to avoid visual inconsistencies during the clicking frame)
                 if (ImGui::GetIO().KeyCtrl)
                     selection_mask ^= (1 << node_clicked);          // CTRL+click to toggle
@@ -5404,7 +5404,7 @@ static void ShowDemoWindowTables()
             ImGui::TreePop();
         }
 
-        // update item list if we changed the number of items
+        // Update item list if we changed the number of items
         static ImVector<MyItem> items;
         static ImVector<int> selection;
         static bool items_need_sort = false;
@@ -7899,8 +7899,8 @@ void ShowExampleAppDockSpace(bool* p_open)
         dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
     }
 
-    // When using ImGuiDockNodeFlags_PassthruCentralNode, DockSpace() will render our background
-    // and handle the pass-thru hole, so we ask Begin() to not render a background.
+    // When using ImGuiDockNodeFlags_PassthruCentralNode, DockSpace() will Render our background
+    // and handle the pass-thru hole, so we ask Begin() to not Render a background.
     if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
         window_flags |= ImGuiWindowFlags_NoBackground;
 
@@ -7976,7 +7976,7 @@ struct MyDocument
 {
     const char* Name;       // Document title
     bool        Open;       // Set when open (we keep an array of all available documents to simplify demo code!)
-    bool        OpenPrev;   // Copy of Open from last update.
+    bool        OpenPrev;   // Copy of Open from last Update.
     bool        Dirty;      // Set when the document has been modified
     bool        WantClose;  // Set when the document
     ImVec4      Color;      // An arbitrary variable associated to the document
@@ -8240,7 +8240,7 @@ void ShowExampleAppDocuments(bool* p_open)
         return;
     }
 
-    // update closing queue
+    // Update closing queue
     static ImVector<MyDocument*> close_queue;
     if (close_queue.empty())
     {

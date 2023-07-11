@@ -2,7 +2,10 @@
 #include "InputMgr.h"
 #include "TimeMgr.h"
 #include "Transform.h"
+#include "PxFilter.h"
 #include "GameObj.h"
+#include "PhysXRigidBody.h"
+
 
 namespace dru
 {
@@ -18,8 +21,14 @@ namespace dru
 		mTransform = GetOwner()->GetComponent<Transform>();
 
 	}
-	void PlayerScript::update()
+	void PlayerScript::Update()
 	{
+
+	}
+	void PlayerScript::FixedUpdate()
+	{
+		Vector3 pos = {};
+		Vector3 velocity = {};
 		if (KEY_DOWN(A))
 		{
 			mTransform->AddRotationX(50.f * DT);
@@ -33,11 +42,16 @@ namespace dru
 			mTransform->AddRotationZ(50.f * DT);
 		}
 
+
+		if (KEY_DOWN(LEFT))
+		{
+			velocity = GetOwner()->GetComponent<Transform>()->Right() * - 5.f;
+			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
+		}
+
+
 	}
-	void PlayerScript::fixedUpdate()
-	{
-	}
-	void PlayerScript::render()
+	void PlayerScript::Render()
 	{
 	}
 	void PlayerScript::fontRender()

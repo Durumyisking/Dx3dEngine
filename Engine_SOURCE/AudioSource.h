@@ -11,9 +11,9 @@ namespace dru
 		~AudioSource();
 
 		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Update() override;
+		virtual void FixedUpdate() override;
+		virtual void Render() override;
 
 		void Play(const std::wstring& key, bool loop = false);
 		void Play_NoInterrupt(const std::wstring& key, bool loop = false);

@@ -266,7 +266,7 @@ namespace ImStb
 // Misc Macros
 #define IM_PI                           3.14159265358979323846f
 #ifdef _WIN32
-#define IM_NEWLINE                      "\r\n"   // Play it nice with Windows users (update: since 2018-05, Notepad finally appears to support Unix-style carriage returns!)
+#define IM_NEWLINE                      "\r\n"   // Play it nice with Windows users (Update: since 2018-05, Notepad finally appears to support Unix-style carriage returns!)
 #else
 #define IM_NEWLINE                      "\n"
 #endif
@@ -1060,7 +1060,7 @@ struct IMGUI_API ImGuiMenuColumns
     ImU32       NextTotalWidth;
     ImU16       Spacing;
     ImU16       OffsetIcon;         // Always zero for now
-    ImU16       OffsetLabel;        // Offsets are locked in update()
+    ImU16       OffsetLabel;        // Offsets are locked in Update()
     ImU16       OffsetShortcut;
     ImU16       OffsetMark;
     ImU16       Widths[4];          // Width of:   Icon, Label, Shortcut, Mark  (accumulators for current frame)
@@ -1096,7 +1096,7 @@ struct IMGUI_API ImGuiInputTextState
     ImStb::STB_TexteditState Stb;                   // state for stb_textedit.h
     float                   CursorAnim;             // timer for cursor blink, reset on every user action so the cursor reappears immediately
     bool                    CursorFollow;           // set when we want scrolling to follow the current cursor position (not always!)
-    bool                    SelectedAllMouseLock;   // after a double-click to select all, we ignore further mouse drags to update selection
+    bool                    SelectedAllMouseLock;   // after a double-click to select all, we ignore further mouse drags to Update selection
     bool                    Edited;                 // edited this frame
     ImGuiInputTextFlags     Flags;                  // copy of InputText() flags. may be used to check if e.g. ImGuiInputTextFlags_Password is set.
 
@@ -1515,10 +1515,10 @@ enum ImGuiNavLayer
 
 struct ImGuiNavItemData
 {
-    ImGuiWindow*        Window;         // Init,Move    // Best candidate window (result->ItemWindow->RootWindowForNav == request->Window)
-    ImGuiID             ID;             // Init,Move    // Best candidate item ID
-    ImGuiID             FocusScopeId;   // Init,Move    // Best candidate focus scope ID
-    ImRect              RectRel;        // Init,Move    // Best candidate bounding box in window relative space
+    ImGuiWindow*        Window;         // Initialize,Move    // Best candidate window (result->ItemWindow->RootWindowForNav == request->Window)
+    ImGuiID             ID;             // Initialize,Move    // Best candidate item ID
+    ImGuiID             FocusScopeId;   // Initialize,Move    // Best candidate focus scope ID
+    ImRect              RectRel;        // Initialize,Move    // Best candidate bounding box in window relative space
     ImGuiItemFlags      InFlags;        // ????,Move    // Best candidate item flags
     float               DistBox;        //      Move    // Best candidate box distance to current NavId
     float               DistCenter;     //      Move    // Best candidate center distance to current NavId
@@ -1773,7 +1773,7 @@ struct ImGuiViewportP : public ImGuiViewport
     // Calculate work rect pos/size given a set of offset (we have 1 pair of offset for rect locked from last frame data, and 1 pair for currently building rect)
     ImVec2  CalcWorkRectPos(const ImVec2& off_min) const                            { return ImVec2(Pos.x + off_min.x, Pos.y + off_min.y); }
     ImVec2  CalcWorkRectSize(const ImVec2& off_min, const ImVec2& off_max) const    { return ImVec2(ImMax(0.0f, Size.x - off_min.x + off_max.x), ImMax(0.0f, Size.y - off_min.y + off_max.y)); }
-    void    UpdateWorkRect()            { WorkPos = CalcWorkRectPos(WorkOffsetMin); WorkSize = CalcWorkRectSize(WorkOffsetMin, WorkOffsetMax); } // update public fields
+    void    UpdateWorkRect()            { WorkPos = CalcWorkRectPos(WorkOffsetMin); WorkSize = CalcWorkRectSize(WorkOffsetMin, WorkOffsetMax); } // Update public fields
 
     // Helpers to retrieve ImRect (we don't need to store BuildWorkRect as every access tend to change it, hence the code asymmetry)
     ImRect  GetMainRect() const         { return ImRect(Pos.x, Pos.y, Pos.x + Size.x, Pos.y + Size.y); }
@@ -2063,16 +2063,16 @@ struct ImGuiContext
     ImGuiInputSource        NavInputSource;                     // Keyboard or Gamepad mode? THIS CAN ONLY BE ImGuiInputSource_Keyboard or ImGuiInputSource_Mouse
     ImGuiNavLayer           NavLayer;                           // Layer we are navigating on. For now the system is hard-coded for 0=main contents and 1=menu/title bar, may expose layers later.
     bool                    NavIdIsAlive;                       // Nav widget has been seen this frame ~~ NavRectRel is valid
-    bool                    NavMousePosDirty;                   // When set we will update mouse position if (io.ConfigFlags & ImGuiConfigFlags_NavEnableSetMousePos) if set (NB: this not enabled by default)
+    bool                    NavMousePosDirty;                   // When set we will Update mouse position if (io.ConfigFlags & ImGuiConfigFlags_NavEnableSetMousePos) if set (NB: this not enabled by default)
     bool                    NavDisableHighlight;                // When user starts using mouse, we hide gamepad/keyboard highlight (NB: but they are still available, which is why NavDisableHighlight isn't always != NavDisableMouseHover)
     bool                    NavDisableMouseHover;               // When user starts using gamepad/keyboard, we hide mouse hovering highlight until mouse is touched again.
 
-    // Navigation: Init & Move Requests
+    // Navigation: Initialize & Move Requests
     bool                    NavAnyRequest;                      // ~~ NavMoveRequest || NavInitRequest this is to perform early out in ItemAdd()
-    bool                    NavInitRequest;                     // Init request for appearing window to select first item
+    bool                    NavInitRequest;                     // Initialize request for appearing window to select first item
     bool                    NavInitRequestFromMove;
-    ImGuiID                 NavInitResultId;                    // Init request result (first item of the window, or one for which SetItemDefaultFocus() was called)
-    ImRect                  NavInitResultRectRel;               // Init request result rectangle (relative to parent window)
+    ImGuiID                 NavInitResultId;                    // Initialize request result (first item of the window, or one for which SetItemDefaultFocus() was called)
+    ImRect                  NavInitResultRectRel;               // Initialize request result rectangle (relative to parent window)
     bool                    NavMoveSubmitted;                   // Move request submitted, will process result on next NewFrame()
     bool                    NavMoveScoringItems;                // Move request submitted, still scoring incoming items
     bool                    NavMoveForwardToNextFrame;
@@ -2104,7 +2104,7 @@ struct ImGuiContext
     ImVec2                  NavWindowingAccumDeltaPos;
     ImVec2                  NavWindowingAccumDeltaSize;
 
-    // render
+    // Render
     float                   DimBgRatio;                         // 0.0..1.0 animation when fading in a dimming background (for modal window and CTRL+TAB list)
     ImGuiMouseCursor        MouseCursor;
 
@@ -2537,7 +2537,7 @@ struct IMGUI_API ImGuiWindow
     ImGuiDir                AutoPosLastDirection;
     ImS8                    HiddenFramesCanSkipItems;           // Hide the window for N frames
     ImS8                    HiddenFramesCannotSkipItems;        // Hide the window for N frames while allowing items to be submitted so we can measure their size
-    ImS8                    HiddenFramesForRenderOnly;          // Hide the window until frame N at render() time only
+    ImS8                    HiddenFramesForRenderOnly;          // Hide the window until frame N at Render() time only
     ImS8                    DisableInputsFrames;                // Disable window interactions for N frames
     ImGuiCond               SetWindowPosAllowFlags : 8;         // store acceptable condition flags for SetNextWindowPos() use.
     ImGuiCond               SetWindowSizeAllowFlags : 8;        // store acceptable condition flags for SetNextWindowSize() use.
@@ -2977,7 +2977,7 @@ namespace ImGui
     // We should always have a CurrentWindow in the stack (there is an implicit "Debug" window)
     // If this ever crash because g.CurrentWindow is NULL it means that either
     // - ImGui::NewFrame() has never been called, which is illegal.
-    // - You are calling ImGui functions after ImGui::EndFrame()/ImGui::render() and before the next ImGui::NewFrame(), which is also illegal.
+    // - You are calling ImGui functions after ImGui::EndFrame()/ImGui::Render() and before the next ImGui::NewFrame(), which is also illegal.
     inline    ImGuiWindow*  GetCurrentWindowRead()      { ImGuiContext& g = *GImGui; return g.CurrentWindow; }
     inline    ImGuiWindow*  GetCurrentWindow()          { ImGuiContext& g = *GImGui; g.CurrentWindow->WriteAccessed = true; return g.CurrentWindow; }
     IMGUI_API ImGuiWindow*  FindWindowByID(ImGuiID id);
@@ -3011,7 +3011,7 @@ namespace ImGui
     inline ImFont*          GetDefaultFont() { ImGuiContext& g = *GImGui; return g.IO.FontDefault ? g.IO.FontDefault : g.IO.Fonts->Fonts[0]; }
     inline ImDrawList*      GetForegroundDrawList(ImGuiWindow* window) { return GetForegroundDrawList(window->Viewport); }
 
-    // Init
+    // Initialize
     IMGUI_API void          Initialize();
     IMGUI_API void          Shutdown();    // Since 1.60 this is a _private_ function. You can call DestroyContext() to destroy the context created by CreateContext().
 
@@ -3393,7 +3393,7 @@ namespace ImGui
     IMGUI_API void          TabItemBackground(ImDrawList* draw_list, const ImRect& bb, ImGuiTabItemFlags flags, ImU32 col);
     IMGUI_API void          TabItemLabelAndCloseButton(ImDrawList* draw_list, const ImRect& bb, ImGuiTabItemFlags flags, ImVec2 frame_padding, const char* label, ImGuiID tab_id, ImGuiID close_button_id, bool is_contents_visible, bool* out_just_closed, bool* out_text_clipped);
 
-    // render helpers
+    // Render helpers
     // AVOID USING OUTSIDE OF IMGUI.CPP! NOT FOR PUBLIC CONSUMPTION. THOSE FUNCTIONS ARE A MESS. THEIR SIGNATURE AND BEHAVIOR WILL CHANGE, THEY NEED TO BE REFACTORED INTO SOMETHING DECENT.
     // NB: All position are in absolute pixels coordinates (we are never using window coordinates internally)
     IMGUI_API void          RenderText(ImVec2 pos, const char* text, const char* text_end = NULL, bool hide_text_after_hash = true);
@@ -3408,7 +3408,7 @@ namespace ImGui
     IMGUI_API const char*   FindRenderedTextEnd(const char* text, const char* text_end = NULL); // Find the optional ## from which we stop displaying text.
     IMGUI_API void          RenderMouseCursor(ImVec2 pos, float scale, ImGuiMouseCursor mouse_cursor, ImU32 col_fill, ImU32 col_border, ImU32 col_shadow);
 
-    // render helpers (those functions don't access any ImGui state!)
+    // Render helpers (those functions don't access any ImGui state!)
     IMGUI_API void          RenderArrow(ImDrawList* draw_list, ImVec2 pos, ImU32 col, ImGuiDir dir, float scale = 1.0f);
     IMGUI_API void          RenderBullet(ImDrawList* draw_list, ImVec2 pos, ImU32 col);
     IMGUI_API void          RenderCheckMark(ImDrawList* draw_list, ImVec2 pos, ImU32 col, float sz);
