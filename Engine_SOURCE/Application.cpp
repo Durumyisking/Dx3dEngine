@@ -91,7 +91,7 @@ namespace dru
 
 	void Application::Release()
 	{
-		GETSINGLE(FileMgr)->FileLoad(L"..//Resources/test.txt");
+		GETSINGLE(FileMgr)->FileLoad(L"..//Resources/MarioHackStart.SMD");
 		GETSINGLE(Fmod)->Release();
 		GETSINGLE(SceneMgr)->release();
 		GETSINGLE(FontWrapper)->Release();
