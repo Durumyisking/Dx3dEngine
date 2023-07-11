@@ -15,20 +15,20 @@ struct VSOut
 
 
 
-VSOut main(VSIn In)
+VSOut main(VSIn vsIn)
 {
-    VSOut Out = (VSOut) 0.f;
+    VSOut vsOut = (VSOut) 0.f;
         
-    float4 worldPosition = mul(In.Pos, world);
+    float4 worldPosition = mul(vsIn.Pos, world);
     float4 viewPosition = mul(worldPosition, view);
     float4 projectionPosition = mul(viewPosition, projection);
        
-    float2 Resolution = cbxy1;
-    float3 Camera_position = cbxyz1;
+    float2 resolution = cbxy1;
+    float3 cameraPosition = cbxyz1;
     
-    Out.Pos = projectionPosition;
-    Out.UV = In.UV;
-    Out.WorldPos = In.Pos.xy * Resolution.xy + Camera_position.xy;
+    vsOut.Pos = projectionPosition;
+    vsOut.UV = vsIn.UV;
+    vsOut.WorldPos = vsIn.Pos.xy * resolution.xy + cameraPosition.xy;
     
-    return Out;
+    return vsOut;
 }

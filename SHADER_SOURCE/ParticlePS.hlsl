@@ -8,17 +8,17 @@ struct GSOutput
 };
 
 
-float4 main(GSOutput In) : SV_TARGET
+float4 main(GSOutput vsIn) : SV_TARGET
 {      
     float4 outColor = (float4) 0.0f;
     
-    float fElapsedTime = particleBuffer[In.Instance].elapsedTime;
-    float fLifeTime= particleBuffer[In.Instance].lifeTime;
+    float fElapsedTime = particleBuffer[vsIn.Instance].elapsedTime;
+    float fLifeTime= particleBuffer[vsIn.Instance].lifeTime;
 
     
     float alpharatio = 1.f - fElapsedTime / fLifeTime;
 
-    outColor = particleBuffer[In.Instance].startColor;
+    outColor = particleBuffer[vsIn.Instance].startColor;
 
     outColor.a = alpharatio;
     

@@ -17,14 +17,14 @@ void main(uint3 DTid : SV_DispatchThreadID) // 쓰레드 그룹 xyz를 인자로 받음
 
             // 랜덤값으로 위치와 방향을 설정해준다.
             // 샘플링을 시도할 UV 계산해준다.
-            float4 Random = (float4) 0.0f;
+            float4 random = (float4) 0.0f;
             float2 UV = float2((float) DTid.x / maxParticles, 0.5f); // elementcount는 buffer의 stride 그러니까 stride번째 친구라는뜻
          
-            Random = GetRandomFromBlur(UV);
+            random = GetRandomFromBlur(UV);
           
               //// radius 원형 범위로 스폰
-            float2 Theta = Random.xy * 3.141592f * 2.0f;
-            ParticleBufferUAV[DTid.x].position.xy = float2(cos(Theta.x), sin(Theta.y)) * Random.y * radius;
+            float2 Theta = random.xy * 3.141592f * 2.0f;
+            ParticleBufferUAV[DTid.x].position.xy = float2(cos(Theta.x), sin(Theta.y)) * random.y * radius;
 //            ParticleBufferUAV[DTid.x].position.x += 200.f;
             ParticleBufferUAV[DTid.x].position.z = 1.0f; // z값은 고정
             

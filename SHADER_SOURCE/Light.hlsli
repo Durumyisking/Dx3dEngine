@@ -27,21 +27,21 @@ StructuredBuffer<LightAttribute> lightAttributes : register(t13);
 //StructuredBuffer<LightAttribute> lightAttributes3D : register(t14);
 
 
-void CalculateLight(in out LightColor _lightColor, float3 _position, int _idx) // in out 키워드는 참조/포인터로 쓸거임
+void CalculateLight(in out LightColor lightColor, float3 position, int idx) // in out 키워드는 참조/포인터로 쓸거임
 {
-    if (0 == lightAttributes[_idx].type)
+    if (0 == lightAttributes[idx].type)
     {
-        _lightColor.diffuse += lightAttributes[_idx].color.diffuse;
+        lightColor.diffuse += lightAttributes[idx].color.diffuse;
         
     }
-    else if (1 == lightAttributes[_idx].type)
+    else if (1 == lightAttributes[idx].type)
     {
-        float dist = distance(lightAttributes[_idx].position.xy, _position.xy); // z값을 연산해주자.
+        float dist = distance(lightAttributes[idx].position.xy, position.xy); // z값을 연산해주자.
         
-        if (dist < lightAttributes[_idx].radius)
+        if (dist < lightAttributes[idx].radius)
         {
-            float ratio = 1.f - (dist / lightAttributes[_idx].radius);
-            _lightColor.diffuse += lightAttributes[_idx].color.diffuse * ratio;
+            float ratio = 1.f - (dist / lightAttributes[idx].radius);
+            lightColor.diffuse += lightAttributes[idx].color.diffuse * ratio;
         }
 
     }

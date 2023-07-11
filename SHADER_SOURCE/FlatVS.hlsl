@@ -18,19 +18,19 @@ struct VSOut
     float intensity : FOG;
 };
 
-VSOut main(VSIn In)
+VSOut main(VSIn vsIn)
 {
     VSOut OUT = (VSOut) 0.0f;
     
-    float4 worldPosition = mul(In.Position, world);
+    float4 worldPosition = mul(vsIn.Position, world);
     float4 viewPosition = mul(worldPosition, view);
-    float4 ProjPosition = mul(viewPosition, projection);
+    float4 projPosition = mul(viewPosition, projection);
     
-    OUT.Position = ProjPosition;
-    OUT.UV = In.UV;
+    OUT.Position = projPosition;
+    OUT.UV = vsIn.UV;
     
     // 로컬 노말을 뷰변환
-    float3 vViewNormal = normalize(mul(float4(In.Normal.xyz, 0.0f), world).xyz);
+    float3 vViewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.0f), world).xyz);
     vViewNormal = normalize(mul(float4(vViewNormal, 0.0f), view).xyz);
     
     OUT.ViewPos = viewPosition.xyz;
