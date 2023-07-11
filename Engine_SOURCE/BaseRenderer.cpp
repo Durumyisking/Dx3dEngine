@@ -25,10 +25,10 @@ namespace dru
 	void BaseRenderer::Initialize()
 	{
 	}
-	void BaseRenderer::update()
+	void BaseRenderer::Update()
 	{
 	}
-	void BaseRenderer::fixedUpdate()
+	void BaseRenderer::FixedUpdate()
 	{
 		if (mbIsChanged)
 		{
@@ -53,7 +53,7 @@ namespace dru
 		}
 	}
 
-	void BaseRenderer::render()
+	void BaseRenderer::Render()
 	{
 		if(mbUseLOD)
 			LOD();	

@@ -25,11 +25,11 @@ namespace dru
 		mPhysical = GetOwner()->GetComponent<Physical>();
 	}
 
-	void PhysXRigidBody::update()
+	void PhysXRigidBody::Update()
 	{
 	}
 
-	void PhysXRigidBody::fixedUpdate()
+	void PhysXRigidBody::FixedUpdate()
 	{
 		if (mGravityApplied)
 		{
@@ -51,7 +51,7 @@ namespace dru
 		}
 	}
 
-	void PhysXRigidBody::render()
+	void PhysXRigidBody::Render()
 	{
 	}
 

@@ -27,10 +27,7 @@ namespace dru
 	}
 	Application::~Application()
 	{
-		GETSINGLE(Fmod)->Release();
-		GETSINGLE(SceneMgr)->Release();
-		GETSINGLE(FontWrapper)->Release();
-		PhysicsMgr::DestroyInstance();
+
 	}
 
 	void Application::Initialize()
@@ -98,11 +95,11 @@ namespace dru
 
 	void Application::Release()
 	{
-		GETSINGLE(FileMgr)->FileLoad(L"..//Resources/MarioHackStart.SMD");
+		//GETSINGLE(FileMgr)->FileLoad(L"..//Resources/MarioHackStart.SMD");
+		GETSINGLE(ResourceMgr)->Release();
 		GETSINGLE(Fmod)->Release();
 		GETSINGLE(SceneMgr)->Release();
 		GETSINGLE(FontWrapper)->Release();
-		GETSINGLE(ResourceMgr)->Release();
 	}
 
 	void Application::DestroySingle()
@@ -114,6 +111,7 @@ namespace dru
 		GETSINGLE(InputMgr)->DestroyInstance();
 		GETSINGLE(TimeMgr)->DestroyInstance();
 		GETSINGLE(ResourceMgr)->DestroyInstance();
+		GETSINGLE(PhysicsMgr)->DestroyInstance();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

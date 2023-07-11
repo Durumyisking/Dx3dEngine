@@ -21,13 +21,13 @@ namespace dru
 		mTransform = GetOwner()->GetComponent<Transform>();
 	}
 
-	void CursorScript::update()
+	void CursorScript::Update()
 	{
 	
 
 	}
 
-	void CursorScript::fixedUpdate()
+	void CursorScript::FixedUpdate()
 	{
 		mPos = GETSINGLE(InputMgr)->GetMousePosition();
 		Vector3 newpos = mPos / 100.f;
@@ -35,7 +35,7 @@ namespace dru
 		mTransform->SetPosition(newpos);
 	}
 
-	void CursorScript::render()
+	void CursorScript::Render()
 	{
 	}
 

@@ -31,7 +31,7 @@ namespace dru
 	{
 	}
 
-	void Animator::update()
+	void Animator::Update()
 	{
 		if (!mCurrentAnimation)
 			return;
@@ -66,11 +66,11 @@ namespace dru
 		}
 	}
 
-	void Animator::fixedUpdate()
+	void Animator::FixedUpdate()
 	{
 	}
 
-	void Animator::render()
+	void Animator::Render()
 	{
 	}
 

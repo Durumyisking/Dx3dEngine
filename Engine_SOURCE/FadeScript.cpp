@@ -29,15 +29,15 @@ namespace dru
 	{
 	}
 
-	void FadeScript::update()
+	void FadeScript::Update()
 	{
 	}
 
-	void FadeScript::fixedUpdate()
+	void FadeScript::FixedUpdate()
 	{
 	}
 
-	void FadeScript::render()
+	void FadeScript::Render()
 	{
 		if (1 == mStart)
 		{

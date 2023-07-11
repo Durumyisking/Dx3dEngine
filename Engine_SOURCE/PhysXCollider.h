@@ -12,10 +12,10 @@ namespace dru
         PhysXCollider();
         virtual ~PhysXCollider();
 
-        virtual void Initialize();
-        virtual void update();
-        virtual void fixedUpdate();
-        virtual void render();
+        virtual void Initialize() override;
+        virtual void Update() override;
+        virtual void FixedUpdate() override;
+        virtual void Render() override;
 
 
         virtual void OnCollision();

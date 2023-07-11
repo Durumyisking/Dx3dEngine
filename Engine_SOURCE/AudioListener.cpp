@@ -18,11 +18,11 @@ namespace dru
 	{
 	}
 
-	void AudioListener::update()
+	void AudioListener::Update()
 	{
 	}
 
-	void AudioListener::fixedUpdate()
+	void AudioListener::FixedUpdate()
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		Vector3 pos = tr->GetWorldPosition();
@@ -34,7 +34,7 @@ namespace dru
 		GETSINGLE(Fmod)->Set3DListenerAttributes(&pos, &vel, &foward, &up);
 	}
 
-	void AudioListener::render()
+	void AudioListener::Render()
 	{
 	}
 

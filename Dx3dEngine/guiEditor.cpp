@@ -216,7 +216,7 @@ namespace gui
 
 		dru::Material* material = renderer->GetMaterial();
 		material->SetData(dru::eGPUParam::Int_1, &mesh.state);
-		tr->fixedUpdate();
+		tr->FixedUpdate();
 
 		dru::Camera::SetGpuViewMatrix(dru::renderer::mainCamera->GetViewMatrix());
 		dru::Camera::SetGpuProjectionMatrix(dru::renderer::mainCamera->GetProjectionMatrix());

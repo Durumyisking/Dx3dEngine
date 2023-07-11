@@ -161,6 +161,9 @@
     <Filter Include="Common\Component\Collider\PhysX">
       <UniqueIdentifier>{7a7234c4-dd75-45c7-80d1-7d1902ecdf8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Component\Movement">
+      <UniqueIdentifier>{92b997d7-fbfb-4ec2-802e-5c583ea87d78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -355,6 +358,9 @@
     <ClInclude Include="PxFilter.h" />
     <ClInclude Include="PxInitialization.h" />
     <ClInclude Include="PxEventCallback.h" />
+    <ClInclude Include="PhysicalMovement.h">
+      <Filter>Common\Component\Movement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -533,6 +539,9 @@
     <ClCompile Include="PxEventCallback.cpp" />
     <ClCompile Include="PxFilter.cpp" />
     <ClCompile Include="PxInitialization.cpp" />
+    <ClCompile Include="PhysicalMovement.cpp">
+      <Filter>Common\Component\Movement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

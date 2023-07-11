@@ -34,7 +34,7 @@ namespace dru
 		//mbRenderOn = true;
 	}
 
-	void Collider2D::update()
+	void Collider2D::Update()
 	{
 		if (!mbRenderOn)
 		{
@@ -42,7 +42,7 @@ namespace dru
 		}
 	}
 
-	void Collider2D::fixedUpdate()
+	void Collider2D::FixedUpdate()
 	{
 		if (nullptr == mTransform)
 			return;
@@ -67,7 +67,7 @@ namespace dru
 		renderer::debugMeshes.push_back(meshAttribute);
 	}
 
-	void Collider2D::render()
+	void Collider2D::Render()
 	{
 
 	}

@@ -40,16 +40,16 @@ namespace dru
 		createUniversalShape();
 	}
 
-	void Physical::update()
+	void Physical::Update()
 	{
 
 	}
 
-	void Physical::fixedUpdate()
+	void Physical::FixedUpdate()
 	{
 	}
 
-	void Physical::render()
+	void Physical::Render()
 	{
 	}
 

@@ -22,7 +22,6 @@ namespace dru
 
 			delete iter.second;
 			iter.second = nullptr;
-
 		}
 	}
 }

@@ -83,13 +83,13 @@ namespace dru
 				}
 			}
 
-			comp->update();
+			comp->Update();
 		}
 		for (Component* script : mScripts)
 		{
 			if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause )
 				continue;
-			script->update();
+			script->Update();
 		}
 	}
 
@@ -106,14 +106,14 @@ namespace dru
 					continue;
 				}
 			}
-			comp->fixedUpdate();
+			comp->FixedUpdate();
 		}
 
 		for (Component* script : mScripts)
 		{
 			if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause)
 				continue;
-			script->fixedUpdate();
+			script->FixedUpdate();
 		}
 	}
 
@@ -123,14 +123,14 @@ namespace dru
 		{
 			if (nullptr == comp)
 				continue;
-			comp->render();
+			comp->Render();
 		}
 		
 		for (Component* script : mScripts)
 		{
 			if (nullptr == script)
 				continue;
-			script->render();
+			script->Render();
 		}
 	}
 

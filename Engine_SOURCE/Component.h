@@ -13,9 +13,9 @@ namespace dru
 		virtual ~Component();
 
 		virtual void Initialize()	= 0;
-		virtual void update()		= 0;
-		virtual void fixedUpdate()	= 0;
-		virtual void render()		= 0;
+		virtual void Update()		= 0;
+		virtual void FixedUpdate()	= 0;
+		virtual void Render()		= 0;
 
 		eComponentType GetOrder() { return mType; }
 

@@ -11,10 +11,10 @@ public:
     PhysXRigidBody();
     virtual ~PhysXRigidBody();
 
-    virtual void Initialize();
-    virtual void update();
-    virtual void fixedUpdate();
-    virtual void render();
+    virtual void Initialize() override;
+    virtual void Update() override;
+    virtual void FixedUpdate() override;
+    virtual void Render() override;
 
     public:
         // for kinematic actors

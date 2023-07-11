@@ -67,11 +67,11 @@ namespace dru
 		mSharedBuffer->Create(sizeof(ParticleShared), 1, eSRVType::UAV, nullptr, true);
 	}
 
-	void ParticleSystem::update()
+	void ParticleSystem::Update()
 	{
 	}
 
-	void ParticleSystem::fixedUpdate()
+	void ParticleSystem::FixedUpdate()
 	{
 		float aliveTime = 0.1f / mFrequency;  // 프리퀀시가 높을수록 빨리생성 한번에 생성하는거
 		//누적시간
@@ -132,7 +132,7 @@ namespace dru
 		
 	}
 
-	void ParticleSystem::render() 
+	void ParticleSystem::Render() 
 	{
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 		mBuffer->BindSRV(eShaderStage::GS, 15);

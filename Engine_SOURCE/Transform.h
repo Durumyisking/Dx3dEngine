@@ -16,9 +16,9 @@ namespace dru
 		virtual ~Transform();
 
 		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Update() override;
+		virtual void FixedUpdate() override;
+		virtual void Render() override;
 
 
 		void SetConstantBuffer();
@@ -127,6 +127,7 @@ namespace dru
 		Vector3 GetPhysicalPosition();
 		void SetPhysicalPosition(const Vector3& vPosition);
 
+		PxTransform GetPxTransform() const { return mPxTransform; }
 
 	private:
 		Transform* mParent;

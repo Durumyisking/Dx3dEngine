@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "PxFilter.h"
 #include "GameObj.h"
+#include "PhysXRigidBody.h"
 
 
 namespace dru
@@ -20,14 +21,14 @@ namespace dru
 		mTransform = GetOwner()->GetComponent<Transform>();
 
 	}
-	void PlayerScript::update()
+	void PlayerScript::Update()
 	{
 
 	}
-	void PlayerScript::fixedUpdate()
+	void PlayerScript::FixedUpdate()
 	{
-		Vector3 Pos = {};
-
+		Vector3 pos = {};
+		Vector3 velocity = {};
 		if (KEY_DOWN(A))
 		{
 			mTransform->AddRotationX(50.f * DT);
@@ -41,34 +42,16 @@ namespace dru
 			mTransform->AddRotationZ(50.f * DT);
 		}
 
-		if (KEY_DOWN(UP))
-		{
-			Pos = mTransform->Forward() * 5.f * DT;
-		}
-
-		if (KEY_DOWN(DOWN))
-		{
-			Pos = mTransform->Forward() * -5.f * DT;
-		}
 
 		if (KEY_DOWN(LEFT))
 		{
-			Pos = mTransform->Right() * -5.f * DT;
+			velocity = GetOwner()->GetComponent<Transform>()->Right() * - 5.f;
+			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
 		}
 
-		if (KEY_DOWN(RIGHT))
-		{
-			Pos = mTransform->Right() * 5.f * DT;
-		}
-
-		PxFilter filter = PxFilter();
-
-		PxFilterData filterData = {};
-		filterData.word0 = 1 << 0;
-		filterData.word1 = 1 << 1;
 
 	}
-	void PlayerScript::render()
+	void PlayerScript::Render()
 	{
 	}
 	void PlayerScript::fontRender()

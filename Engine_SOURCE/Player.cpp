@@ -14,8 +14,6 @@ namespace dru
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
 
 		MeshRenderer* spriteRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
-
-		PlayerScript* script = AddComponent<PlayerScript>(eComponentType::Script);
 	}
 
 	Player::~Player()

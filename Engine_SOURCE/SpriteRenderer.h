@@ -13,9 +13,9 @@ namespace dru
 		virtual ~SpriteRenderer();
 
 		virtual void Initialize() final;
-		virtual void update() final;
-		virtual void fixedUpdate() final;
-		virtual void render() final;
+		virtual void Update() final;
+		virtual void FixedUpdate() final;
+		virtual void Render() final;
 
 	};
 

@@ -1003,7 +1003,7 @@ namespace dru::renderer
 			if (nullptr == cam)
 				continue;
 
-			cam->render();
+			cam->Render();
 		}
 		Cameras[type].clear();
 		renderer::lights.clear();

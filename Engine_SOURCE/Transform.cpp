@@ -37,11 +37,11 @@ namespace dru
 		mPxTransform.q = PxQuat(PxIdentity);
 	}
 
-	void Transform::update()
+	void Transform::Update()
 	{
 	}
 
-	void Transform::fixedUpdate()
+	void Transform::FixedUpdate()
 	{
 
 		if (GetOwner()->GetComponent<Physical>())
@@ -129,7 +129,7 @@ namespace dru
 		}
 	}
 
-	void Transform::render()
+	void Transform::Render()
 	{
 	}
 

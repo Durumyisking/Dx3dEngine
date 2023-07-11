@@ -12,9 +12,9 @@ namespace dru
 		virtual ~Light();
 
 		virtual void Initialize();
-		virtual void update();
-		virtual void fixedUpdate();
-		virtual void render();
+		virtual void Update();
+		virtual void FixedUpdate();
+		virtual void Render();
 
 		LightAttribute& GetAttribute() { return mAttribute; }
 

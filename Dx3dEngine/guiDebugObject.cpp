@@ -19,7 +19,7 @@ namespace gui
 			if (comp == nullptr)
 				continue;
 
-			comp->fixedUpdate();
+			comp->FixedUpdate();
 		}
 	}
 }

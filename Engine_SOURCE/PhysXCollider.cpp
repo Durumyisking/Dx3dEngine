@@ -25,13 +25,13 @@ namespace dru
 
 		mCallback = PhysicsMgr::GetInstance()->GetDispatcher()->GetSimulationCallback();
 	}
-	void PhysXCollider::update()
+	void PhysXCollider::Update()
 	{
 	}
-	void PhysXCollider::fixedUpdate()
+	void PhysXCollider::FixedUpdate()
 	{
 	}
-	void PhysXCollider::render()
+	void PhysXCollider::Render()
 	{
 	}
 	void PhysXCollider::OnCollision()

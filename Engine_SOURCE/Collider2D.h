@@ -12,9 +12,9 @@ namespace dru
         ~Collider2D();
 
         virtual void Initialize();
-        virtual void update();
-        virtual void fixedUpdate();
-        virtual void render();
+        virtual void Update();
+        virtual void FixedUpdate();
+        virtual void Render();
 
         virtual void OnCollisionEnter(Collider2D* oppo);
         virtual void OnCollision(Collider2D* oppo);
