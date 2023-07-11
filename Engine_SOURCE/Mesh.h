@@ -1,5 +1,5 @@
 #pragma once
-#include "Resource.h"
+#include "EngineResource.h"
 #include "Graphics.h"
 
 namespace dru
@@ -22,7 +22,7 @@ namespace dru
 		void RenderInstanced(UINT count);
 
 
-//		Microsoft::WRL::ComPtr<ID3D11Buffer> GetBuffer(graphics::eBufferStage _eStage);
+//		Microsoft::WRL::ComPtr<ID3D11Buffer> GetBuffer(dru::eBufferStage _eStage);
 
 	private:
 		// 메시 그릴때는 정점정보 인덱스 정보만 있으면 됨

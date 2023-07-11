@@ -1,6 +1,6 @@
 #include "Material.h"
 
-namespace dru::graphics
+namespace dru
 {
 	Material::Material()
 		:Resource(eResourceType::Material)
@@ -38,76 +38,76 @@ namespace dru::graphics
 	{
 		switch (param)
 		{
-		case graphics::eGPUParam::Int_1:
+		case dru::eGPUParam::Int_1:
 			mConstantBuffer.iData1 = *static_cast<int*>(data);
 			break;
-		case graphics::eGPUParam::Int_2:
+		case dru::eGPUParam::Int_2:
 			mConstantBuffer.iData2 = *static_cast<int*>(data);
 			break;
-		case graphics::eGPUParam::Int_3:
+		case dru::eGPUParam::Int_3:
 			mConstantBuffer.iData3 = *static_cast<int*>(data);
 			break;
-		case graphics::eGPUParam::Int_4:
+		case dru::eGPUParam::Int_4:
 			mConstantBuffer.iData4 = *static_cast<int*>(data);
 			break;
-		case graphics::eGPUParam::Float_1:
+		case dru::eGPUParam::Float_1:
 			mConstantBuffer.fData1 = *static_cast<float*>(data);
 			break;
-		case graphics::eGPUParam::Float_2:
+		case dru::eGPUParam::Float_2:
 			mConstantBuffer.fData2 = *static_cast<float*>(data);
 			break;
-		case graphics::eGPUParam::Float_3:
+		case dru::eGPUParam::Float_3:
 			mConstantBuffer.fData3 = *static_cast<float*>(data);
 			break;
-		case graphics::eGPUParam::Float_4:
+		case dru::eGPUParam::Float_4:
 			mConstantBuffer.fData4 = *static_cast<float*>(data);
 			break;
-		case graphics::eGPUParam::Vector2_1:
+		case dru::eGPUParam::Vector2_1:
 			mConstantBuffer.xy1 = *static_cast<Vector2*>(data);
 			break;
-		case graphics::eGPUParam::Vector2_2:
+		case dru::eGPUParam::Vector2_2:
 			mConstantBuffer.xy2 = *static_cast<Vector2*>(data);
 			break;
-		case graphics::eGPUParam::Vector2_3:
+		case dru::eGPUParam::Vector2_3:
 			mConstantBuffer.xy3 = *static_cast<Vector2*>(data);
 			break;
-		case graphics::eGPUParam::Vector2_4:
+		case dru::eGPUParam::Vector2_4:
 			mConstantBuffer.xy4 = *static_cast<Vector2*>(data);
 			break;
-		case graphics::eGPUParam::Vector3_1:
+		case dru::eGPUParam::Vector3_1:
 			mConstantBuffer.xyz1 = *static_cast<Vector3*>(data);
 			break;
-		case graphics::eGPUParam::Vector3_2:
+		case dru::eGPUParam::Vector3_2:
 			mConstantBuffer.xyz2 = *static_cast<Vector3*>(data);
 			break;
-		case graphics::eGPUParam::Vector3_3:
+		case dru::eGPUParam::Vector3_3:
 			mConstantBuffer.xyz3 = *static_cast<Vector3*>(data);
 			break;
-		case graphics::eGPUParam::Vector3_4:
+		case dru::eGPUParam::Vector3_4:
 			mConstantBuffer.xyz4 = *static_cast<Vector3*>(data);
 			break;
-		case graphics::eGPUParam::Vector4_1:
+		case dru::eGPUParam::Vector4_1:
 			mConstantBuffer.xyzw1 = *static_cast<Vector4*>(data);
 			break;
-		case graphics::eGPUParam::Vector4_2:
+		case dru::eGPUParam::Vector4_2:
 			mConstantBuffer.xyzw2 = *static_cast<Vector4*>(data);
 			break;
-		case graphics::eGPUParam::Vector4_3:
+		case dru::eGPUParam::Vector4_3:
 			mConstantBuffer.xyzw3 = *static_cast<Vector4*>(data);
 			break;
-		case graphics::eGPUParam::Vector4_4:
+		case dru::eGPUParam::Vector4_4:
 			mConstantBuffer.xyzw4 = *static_cast<Vector4*>(data);
 			break;
-		case graphics::eGPUParam::Matrix_1:
+		case dru::eGPUParam::Matrix_1:
 			mConstantBuffer.matrix1 = *static_cast<Matrix*>(data);
 			break;
-		case graphics::eGPUParam::Matrix_2:
+		case dru::eGPUParam::Matrix_2:
 			mConstantBuffer.matrix2 = *static_cast<Matrix*>(data);
 			break;
-		case graphics::eGPUParam::Matrix_3:
+		case dru::eGPUParam::Matrix_3:
 			mConstantBuffer.matrix3 = *static_cast<Matrix*>(data);
 			break;
-		case graphics::eGPUParam::Matrix_4:
+		case dru::eGPUParam::Matrix_4:
 			mConstantBuffer.matrix4 = *static_cast<Matrix*>(data);
 			break;
 		default:

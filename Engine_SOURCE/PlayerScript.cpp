@@ -1,7 +1,8 @@
 #include "PlayerScript.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "TimeMgr.h"
 #include "Transform.h"
+#include "GameObj.h"
 
 namespace dru
 {

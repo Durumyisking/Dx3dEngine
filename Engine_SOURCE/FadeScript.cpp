@@ -4,7 +4,7 @@
 #include "Application.h"
 #include "ConstantBuffer.h"
 #include "TimeMgr.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "Material.h"
 #include "BaseRenderer.h"
 

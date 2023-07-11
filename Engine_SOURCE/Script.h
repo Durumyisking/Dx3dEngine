@@ -1,9 +1,12 @@
 #pragma once
 #include "Component.h"
-#include "Collider2D.h"
 
 namespace dru
 {
+	using namespace math;
+
+	class Transform;
+	class Collider2D;
 	class Script : public Component
 	{
 	public:

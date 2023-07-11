@@ -1,12 +1,12 @@
 #pragma once
-#include "Resource.h"
+#include "EngineResource.h"
 #include "Shader.h"
 #include "Renderer.h"
 #include "Texture.h"
 
 using namespace dru::renderer;
 
-namespace dru::graphics
+namespace dru
 {
 	class Material : public Resource
 	{

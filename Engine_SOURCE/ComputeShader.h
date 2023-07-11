@@ -1,8 +1,8 @@
 #pragma once
-#include "Graphics.h"
-#include "Resource.h"
+#include "EngineResource.h"
+#include "GraphicDevice.h"
 
-namespace dru::graphics
+namespace dru
 {
 	class ComputeShader : public Resource
 	{

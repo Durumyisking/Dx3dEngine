@@ -1,10 +1,11 @@
 #pragma once
 #include "Component.h"
-#include "Mesh.h"
-#include "Material.h"
 
 namespace dru
 {
+	using namespace math;
+	class Mesh;
+	class Material;
 	class BaseRenderer : public Component
 	{
 

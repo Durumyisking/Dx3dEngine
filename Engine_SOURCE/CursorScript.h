@@ -18,11 +18,9 @@ namespace dru
 
 
 	private:
-		Transform* mTrans;
+		Transform* mTransform;
 		Vector3 mPos;
 		Vector3 mRot;
 
 	};
-
-
 }

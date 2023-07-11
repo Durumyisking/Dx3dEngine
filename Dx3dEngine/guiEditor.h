@@ -1,7 +1,12 @@
 #pragma once
+#include "Engine.h"
+#include "Graphics.h"
 
 namespace gui
 {
+	class Widget;
+	class EditorObject;
+	class DebugObject;
 	class Editor
 	{
 	public:
@@ -15,7 +20,7 @@ namespace gui
 		void FixedUpdate();
 		void Render();
 		void Release();
-		void DebugRender(dru::graphics::DebugMesh& mesh);
+		void DebugRender(dru::DebugMesh& mesh);
 
 		void ImGui_Initialize();
 		void ImGui_Run();
@@ -32,9 +37,9 @@ namespace gui
 		}
 
 	private:
-		std::map<std::string, class Widget*> mWidgets;
-		std::vector<class EditorObject*> mEditorObjects;
-		std::vector<class DebugObject*> mDebugObjects;
+		std::map<std::string, Widget*> mWidgets;
+		std::vector<EditorObject*> mEditorObjects;
+		std::vector<DebugObject*> mDebugObjects;
 
 		class VisualEditor* mVisualEditor;
 		bool mEnable;

@@ -1,7 +1,6 @@
 #pragma once
 #include "def.h"
-#include "TimeMgr.h"
-#include "Input.h"
+
 
 #define DT GETSINGLE(TimeMgr)->DeltaTime()
 

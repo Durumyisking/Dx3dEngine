@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine.h"
+#include "CommonInclude.h"
 
 
 
@@ -20,6 +20,7 @@ using namespace DirectX::PackedVector;
 namespace dru::math
 {
     struct Vector2;
+    struct Vector3;
     struct Vector4;
     struct Matrix;
     struct Quaternion;

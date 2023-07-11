@@ -1,7 +1,7 @@
 #include "Layer.h"
 #include "Renderer.h"
 #include "Transform.h"
-
+#include "GameObj.h"
 
 namespace dru
 {

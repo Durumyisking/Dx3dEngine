@@ -3,7 +3,7 @@
 #include "guiEditor.h"
 #include "guiListWidget.h"
 #include "ResourceMgr.h"
-#include "Resource.h"
+#include "EngineResource.h"
 #include "guiInspector.h"
 #include "SpriteRenderer.h"
 

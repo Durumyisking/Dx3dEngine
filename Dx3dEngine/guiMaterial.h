@@ -1,5 +1,9 @@
 #pragma once
-class Material
+
+namespace gui
 {
-};
+	class Material
+	{
+	};
+}
 

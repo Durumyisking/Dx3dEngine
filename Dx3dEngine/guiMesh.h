@@ -1,5 +1,7 @@
 #pragma once
-class Mesh
+namespace gui
 {
-};
-
+	class Mesh
+	{
+	};
+}

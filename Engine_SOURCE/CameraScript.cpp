@@ -1,12 +1,13 @@
 #include "CameraScript.h"
 #include "Transform.h"
 #include "GameObj.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "TimeMgr.h"
 #include "Camera.h"
 
 #include "Scene.h"
 #include "SceneMgr.h"
+#include "SimpleMath.h"
 
 namespace dru
 {
@@ -39,8 +40,8 @@ namespace dru
 	{
 		mLookAt = mTransform->GetPosition();
 
-		mTarget = mCameraObject->mTargetObj;
-		mSpeed = mCameraObject->mCamSpeed;
+		mTarget = mCameraObject->GetTarget();
+		mSpeed = mCameraObject->GetCamSpeed();
 		mCamStep = 0.f;
 
 		mCamStep = mSpeed * GETSINGLE(TimeMgr)->DeltaTimeConstant();
@@ -128,16 +129,16 @@ namespace dru
 				mTarget = nullptr;
 			else
 			{
-				if (mCamStep > mCameraObject->mFarDist)
+				if (mCamStep > mCameraObject->GetFarDistFromTarget())
 				{
-					mLookAt.x = mCameraObject->mTargetObj->GetPos().x;
-					mLookAt.y = mCameraObject->mTargetObj->GetPos().y;
+					mLookAt.x = mCameraObject->GetTarget()->GetPos().x;
+					mLookAt.y = mCameraObject->GetTarget()->GetPos().y;
 
-					mCameraObject->mTargetObj = nullptr;
+					mCameraObject->SetTarget(nullptr);
 				}
 				else
 				{
-					mLookAt += mCameraObject->mCamDir * mCamStep;
+					mLookAt += mCameraObject->GetCamDir() * mCamStep;
 				}
 			}
 		}
@@ -148,7 +149,7 @@ namespace dru
 		ShakeParams sp = {};
 		sp.duration = _duration;
 		sp.magnitude = _Magnitude;
-		renderer::mainCamera->GetCamScript()->Shake(sp);
+		Shake(sp);
 	}
 
 	void CameraScript::Shake(const ShakeParams& params)

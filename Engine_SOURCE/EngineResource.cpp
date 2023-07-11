@@ -1,4 +1,4 @@
-#include "Resource.h"
+#include "EngineResource.h"
 
 namespace dru
 {

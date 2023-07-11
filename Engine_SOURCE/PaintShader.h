@@ -2,7 +2,7 @@
 #include "ComputeShader.h"
 #include "Texture.h"
 
-namespace dru::graphics
+namespace dru
 {
     class PaintShader :
         public ComputeShader

@@ -1,21 +1,13 @@
 #pragma once
+#include "Entity.h"
 #include "SceneMgr.h"
-//
-//#include "Layer.h"
-//#include "Transform.h"
-//#include "MeshRenderer.h"
-//#include "SpriteRenderer.h"
-//#include "Renderer.h"
-//#include "Texture.h"
-//#include "Camera.h"
-//#include "CameraScript.h"
-//
-//#include "FontWrapper.h"
+#include "Layer.h"
 
 namespace dru
 {
 	using namespace enums;
-	class SceneMgr;
+	class Layer;
+
 	class Scene : public DruEntity // 이름과 고유 id를 가진 class
 	{
 	public:
@@ -38,7 +30,7 @@ namespace dru
 		void SetType(SceneMgr::eSceneType _eType) { mType = _eType; }
 		SceneMgr::eSceneType GetType() const { return mType; }
 
-		class Layer& GetLayer(eLayerType _Type)  { return mLayers[static_cast<UINT>(_Type)]; }
+		Layer& GetLayer(eLayerType _Type)  { return mLayers[static_cast<UINT>(_Type)]; }
 
 		std::vector<GameObj*> GetDontDestroyObjects();
 

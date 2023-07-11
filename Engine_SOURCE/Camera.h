@@ -4,7 +4,6 @@
 namespace dru
 {
 	using namespace math;
-	class CameraScript;
 
 	enum class eProjectionType
 	{
@@ -16,7 +15,6 @@ namespace dru
 
 	class Camera : public Component
 	{
-		friend class CameraScript;
 	public:
 
 		__forceinline static Matrix& GetGpuViewMatrix() { return View; }
@@ -53,10 +51,13 @@ namespace dru
 		void SetTarget(GameObj* _Target);
 		GameObj* GetTarget() const { return mTargetObj; }
 
+		float GetCamSpeed() const { return mCamSpeed; }
+
+		float GetFarDistFromTarget() const { return mFarDist; }
+		Vector3 GetCamDir() const { return mCamDir; }
+
 		void SmoothOn() { mSmooth = true; }
 		void SmoothOff() { mSmooth = false; }
-
-		CameraScript* GetCamScript();
 
 	private:
 		void sortGameObjects();

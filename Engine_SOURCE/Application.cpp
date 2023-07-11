@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "Renderer.h"
 #include "TimeMgr.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "SceneMgr.h"
 #include "ResourceMgr.h"
 #include "CollisionMgr.h"
@@ -11,7 +11,7 @@
 
 namespace dru
 {
-	using namespace graphics;
+	;
 
 	Application::Application()
 		: initalized(false)
@@ -121,7 +121,7 @@ namespace dru
 
 			eValidationMode vaildationMode = eValidationMode::Disabled;
 			graphicDevice = std::make_unique<GraphicDevice>();
-			//graphics::GetDevice() = graphicDevice.get();
+			//dru::GetDevice() = graphicDevice.get();
 		}
 
 		RECT rt = { 0, 0, (LONG)_width , (LONG)_height };

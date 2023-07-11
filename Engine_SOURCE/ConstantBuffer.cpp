@@ -4,7 +4,7 @@
 
 using namespace dru::math;
 
-namespace dru::graphics
+namespace dru
 {
 	ConstantBuffer::ConstantBuffer()
 		: mType(eCBType::End)

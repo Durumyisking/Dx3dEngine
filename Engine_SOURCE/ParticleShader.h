@@ -2,7 +2,7 @@
 #include "ComputeShader.h"
 #include "StructedBuffer.h"
 
-namespace dru::graphics
+namespace dru
 {
     class ParticleShader :
         public ComputeShader

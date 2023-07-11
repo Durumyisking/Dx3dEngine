@@ -24,7 +24,7 @@ namespace dru
 
 
 
-	void Shader::Create(graphics::eShaderStage eStage, const std::wstring& path, const std::string& funcName)
+	void Shader::Create(dru::eShaderStage _eStage, const std::wstring& _Path, const std::string& _funcName)
 	{
 		mErrorBlob = nullptr;
 
@@ -37,24 +37,24 @@ namespace dru
 
 		switch (eStage)
 		{
-		case dru::graphics::eShaderStage::VS:
+		case dru::eShaderStage::VS:
 			CreateVS(shaderPath, funcName);
 			break;
-		case dru::graphics::eShaderStage::HS:
+		case dru::eShaderStage::HS:
 			CreateHS(shaderPath, funcName);
 			break;
-		case dru::graphics::eShaderStage::DS:
+		case dru::eShaderStage::DS:
 			CreateDS(shaderPath, funcName);
 			break;
-		case dru::graphics::eShaderStage::GS:	
+		case dru::eShaderStage::GS:	
 			CreateGS(shaderPath, funcName);
 			break;
 		case dru::graphics::eShaderStage::PS:
 			CreatePS(shaderPath, funcName);
 			break;
-		case dru::graphics::eShaderStage::CS:
+		case dru::eShaderStage::CS:
 			break;
-		case dru::graphics::eShaderStage::End:
+		case dru::eShaderStage::End:
 			break;
 		default:
 			break;
@@ -74,7 +74,7 @@ namespace dru
 			mErrorBlob = nullptr;
 		}
 		
-		graphics::GetDevice()->CreateVertexShader(mVSBlob->GetBufferPointer()
+		dru::GetDevice()->CreateVertexShader(mVSBlob->GetBufferPointer()
 			, mVSBlob->GetBufferSize()
 			, nullptr
 			, mVS.GetAddressOf());
@@ -122,7 +122,7 @@ namespace dru
 			mErrorBlob = nullptr;
 		}
 
-		graphics::GetDevice()->CreatePixelShader(mPSBlob->GetBufferPointer()
+		dru::GetDevice()->CreatePixelShader(mPSBlob->GetBufferPointer()
 			, mPSBlob->GetBufferSize()
 			, nullptr
 			, mPS.GetAddressOf());
@@ -131,14 +131,14 @@ namespace dru
 
 	void Shader::Bind()
 	{
-		graphics::GetDevice()->BindPrimitiveTopology(mTopology);
-		graphics::GetDevice()->BindInputLayout(mInputLayout.Get());
+		dru::GetDevice()->BindPrimitiveTopology(mTopology);
+		dru::GetDevice()->BindInputLayout(mInputLayout.Get());
 
-		graphics::GetDevice()->BindVS(mVS.Get(), nullptr, 0);
-		graphics::GetDevice()->BindHS(mHS.Get(), nullptr, 0);
-		graphics::GetDevice()->BindDS(mDS.Get(), nullptr, 0);
-		graphics::GetDevice()->BindGS(mGS.Get(), nullptr, 0);
-		graphics::GetDevice()->BindPS(mPS.Get(), nullptr, 0);
+		dru::GetDevice()->BindVS(mVS.Get(), nullptr, 0);
+		dru::GetDevice()->BindHS(mHS.Get(), nullptr, 0);
+		dru::GetDevice()->BindDS(mDS.Get(), nullptr, 0);
+		dru::GetDevice()->BindGS(mGS.Get(), nullptr, 0);
+		dru::GetDevice()->BindPS(mPS.Get(), nullptr, 0);
 
 		Microsoft::WRL::ComPtr<ID3D11RasterizerState>	rs = renderer::rasterizerState	[static_cast<UINT>(mRSType)];
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilState>	ds = renderer::depthStencilState[static_cast<UINT>(mDSType)];
