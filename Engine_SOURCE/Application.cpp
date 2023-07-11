@@ -109,21 +109,21 @@ namespace dru
 		GETSINGLE(ResourceMgr)->DestroyInstance();
 	}
 
-	void Application::SetWindow(HWND _hwnd, UINT _width, UINT _height)
+	void Application::SetWindow(HWND hwnd, UINT width, UINT height)
 	{
 		if (graphicDevice == nullptr)
 		{
-			mHwnd = _hwnd;
+			mHwnd = hwnd;
 			mHdc = GetDC(mHwnd);
-			mWidth = _width;
-			mHeight = _height;
+			mWidth = width;
+			mHeight = height;
 
 			eValidationMode vaildationMode = eValidationMode::Disabled;
 			graphicDevice = std::make_unique<GraphicDevice>();
 			//dru::GetDevice() = graphicDevice.get();
 		}
 
-		RECT rt = { 0, 0, (LONG)_width , (LONG)_height };
+		RECT rt = { 0, 0, (LONG)width , (LONG)height };
 		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
 		SetWindowPos(mHwnd, nullptr, 0, 0, rt.right - rt.left, rt.bottom - rt.top, 0);
 		ShowWindow(mHwnd, true);

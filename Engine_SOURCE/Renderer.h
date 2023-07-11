@@ -200,7 +200,7 @@ namespace dru::renderer
 	
 	void Render();
 
-	void PushLightAttribute(LightAttribute _attribute);
+	void PushLightAttribute(LightAttribute attribute);
 	void BindLight();
 	void BindNoiseTexture();
 	void CopyRenderTarget();
