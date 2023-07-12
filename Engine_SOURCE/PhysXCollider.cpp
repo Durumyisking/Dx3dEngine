@@ -42,6 +42,7 @@ namespace dru
 	}
 	void PhysXCollider::FixedUpdate()
 	{
+		int i = 0;
 	}
 	void PhysXCollider::Render()
 	{
