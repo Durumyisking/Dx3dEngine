@@ -43,7 +43,6 @@ namespace dru
 	}
 	void PhysXCollider::FixedUpdate()
 	{
-		int i = 0;
 	}
 	void PhysXCollider::Render()
 	{
@@ -70,7 +69,7 @@ namespace dru
 	{
 		switch (geometries->eGeomType)
 		{
-		case eGeometryType::BOX:
+		case eGeometryType::Box:
 		{
 			const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(geometries->boxGeom);
 			Vector3 HalfSize = convert::PxVec3ToVector3(boxGeom.halfExtents);
@@ -78,7 +77,7 @@ namespace dru
 		}
 		break;
 
-		case eGeometryType::CAPSULE:
+		case eGeometryType::Capsule:
 		{
 			const PxCapsuleGeometry& capsuleGeom = static_cast<const PxCapsuleGeometry&>(geometries->capsuleGeom);
 			float Radius = capsuleGeom.radius;
@@ -87,7 +86,7 @@ namespace dru
 		}
 		break;
 
-		case eGeometryType::SPHERE:
+		case eGeometryType::Sphere:
 		{
 			const PxSphereGeometry& sphereGeom = static_cast<const PxSphereGeometry&>(geometries->sphereGeom);
 			float Radius = sphereGeom.radius;
@@ -95,7 +94,7 @@ namespace dru
 		}
 		break;
 
-		case eGeometryType::PLANE:
+		case eGeometryType::Plane:
 			break;
 		}
 	}

@@ -137,7 +137,7 @@ namespace dru
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 			player->AddComponent<PlayerScript>(eComponentType::Script);
 
-			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::KINEMATIC, eGeometryType::SPHERE, Vector3(30.f, 30.f, 1.f));
+			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::Kinematic, eGeometryType::Sphere, Vector3(5.f, 5.f, 5.f));
 			
 			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 			//rigid->RemoveGravity();
@@ -151,12 +151,13 @@ namespace dru
 			plane->SetPos(Vector3(0.f, -10.f, 0.f));
 			plane->SetName(L"Plane");
 			plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
-			plane->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::KINEMATIC, eGeometryType::PLANE, Vector3(30.f, 30.f, 1.f));
+			plane->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::Static, eGeometryType::Box, Vector3(100.f, 0.5f, 100.f));
 
 			PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 			rigid->RemoveGravity();
+
 			plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-			plane->AddComponent<PhysicalMovement>(eComponentType::Movement);
+
 			plane->SetScale({ 100.f, 0.5f, 100.f });
 		}
 

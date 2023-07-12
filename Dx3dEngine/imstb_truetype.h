@@ -745,7 +745,7 @@ STBTT_DEF int stbtt_InitFont(stbtt_fontinfo *info, const unsigned char *data, in
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// CHARACTER TO GLYPH-INDEX CONVERSIOn
+// Character TO GLYPH-INDEX CONVERSIOn
 
 STBTT_DEF int stbtt_FindGlyphIndex(const stbtt_fontinfo *info, int unicode_codepoint);
 // If you're going to perform multiple operations on the same character
@@ -757,7 +757,7 @@ STBTT_DEF int stbtt_FindGlyphIndex(const stbtt_fontinfo *info, int unicode_codep
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// CHARACTER PROPERTIES
+// Character PROPERTIES
 //
 
 STBTT_DEF float stbtt_ScaleForPixelHeight(const stbtt_fontinfo *info, float pixels);
