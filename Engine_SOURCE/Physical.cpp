@@ -91,7 +91,7 @@ namespace dru
 	{
 		assert(eGeometryType::SPHERE == geometryType);
 		assert(nullptr == mGeometry);
-		mGeometry = std::make_shared<Geometry>(geometryType);
+		mGeometry = std::make_shared<Geometry>(geometryType, fRadius);
 	}
 
 	void Physical::createPhysicsProperties(const MassProperties& massProperties)
@@ -151,6 +151,15 @@ namespace dru
 
 	void Physical::createShape()
 	{
+		/*
+			PxShape* shape = physics.createShape(PxSphereGeometry(1.0f), myMaterial, true);
+			myActor.attachShape(*shape);
+			shape->release();
+			이 코드는
+
+			PxRigidActorExt::createExclusiveShape() 이것과 같다.
+		*/
+
 		switch (mGeometryType)
 		{
 		case eGeometryType::BOX:

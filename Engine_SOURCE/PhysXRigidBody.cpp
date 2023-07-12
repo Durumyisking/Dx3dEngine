@@ -10,8 +10,8 @@ namespace dru
 		: Component(eComponentType::RigidBody)
 		, mPhysical(nullptr)
 		, mGravityApplied(true)
-		, mGravityAccel(Vector3(0.f, -4500.f, 0.f))
-		, mMaxVelocity( Vector3(1000.f, -1500.f, 1.f))
+		, mGravityAccel(Vector3(0.f, -1.f, 0.f))
+		, mMaxVelocity( Vector3(10.f, -10.f, 10.f))
 		, mReserveTimer(0.f)
 	{
 	}

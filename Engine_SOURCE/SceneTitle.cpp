@@ -23,6 +23,8 @@
 #include "PlayerScript.h"
 #include "PhysicalMovement.h"
 
+
+
 extern dru::Application application;
 
 
@@ -41,7 +43,7 @@ namespace dru
 
 	void SceneTitle::Initialize()
 	{
-		
+		GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
 		
 		Scene::Initialize();
 	}
@@ -75,7 +77,7 @@ namespace dru
 			mCamera->AddComponent<CameraScript>(eComponentType::Script);
 			renderer::mainCamera = cameraComp;
 			cameraComp->SetProjectionType(eProjectionType::Perspective);
-			mCamera->SetPos(Vector3(0.f, 0.f, -5.f));
+			mCamera->SetPos(Vector3(0.f, 0.f, -15.f));
 
 		}
 
@@ -135,13 +137,27 @@ namespace dru
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 			player->AddComponent<PlayerScript>(eComponentType::Script);
 
-			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::KINEMATIC, eGeometryType::BOX, Vector3(30.f, 30.f, 1.f));
+			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::KINEMATIC, eGeometryType::SPHERE, Vector3(30.f, 30.f, 1.f));
 			
 			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			rigid->RemoveGravity();
+			//rigid->RemoveGravity();
 			player->AddComponent<PhysXCollider>(eComponentType::Collider);
 			player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 			player->SetScale({ 5.f, 5.f, 5.f });
+		}
+
+		{
+			GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
+			plane->SetPos(Vector3(0.f, -10.f, 0.f));
+			plane->SetName(L"Plane");
+			plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
+			plane->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::KINEMATIC, eGeometryType::PLANE, Vector3(30.f, 30.f, 1.f));
+
+			PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+			rigid->RemoveGravity();
+			plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+			plane->AddComponent<PhysicalMovement>(eComponentType::Movement);
+			plane->SetScale({ 100.f, 0.5f, 100.f });
 		}
 
 		Scene::Enter();

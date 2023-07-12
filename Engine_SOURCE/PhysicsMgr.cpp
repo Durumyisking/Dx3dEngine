@@ -27,6 +27,7 @@ void PhysicsMgr::Initialize()
 	mPhysX->Init();
 
 	mDispatcher->CreateCpuDispatcher(1);
+
 	PxSceneDesc sceneDesc(mPhysX->GetPhysics()->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
 	sceneDesc.cpuDispatcher = mDispatcher->GetCpuDispatcher();

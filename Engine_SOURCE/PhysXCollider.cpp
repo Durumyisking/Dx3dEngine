@@ -1,6 +1,7 @@
 #include "PhysXCollider.h"
 #include "GameObj.h"
 #include "PhysicsMgr.h"
+#include "MeshRenderer.h"
 
 namespace dru
 {
@@ -72,17 +73,25 @@ namespace dru
 		case eGeometryType::BOX:
 		{
 			const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(geometries->boxGeom);
-			Vector3 vHalfSize = convert::PxVec3ToVector3(boxGeom.halfExtents);
-			createDebugBox(vHalfSize);
+			Vector3 HalfSize = convert::PxVec3ToVector3(boxGeom.halfExtents);
+			createDebugBox(HalfSize);
 		}
 		break;
 
 		case eGeometryType::CAPSULE:
 		{
 			const PxCapsuleGeometry& capsuleGeom = static_cast<const PxCapsuleGeometry&>(geometries->capsuleGeom);
-			float fRadius = capsuleGeom.radius;
-			float fHalfHeight = capsuleGeom.halfHeight;
-			createDebugCapsule(fRadius, fHalfHeight);
+			float Radius = capsuleGeom.radius;
+			float HalfHeight = capsuleGeom.halfHeight;
+			createDebugCapsule(Radius, HalfHeight);
+		}
+		break;
+
+		case eGeometryType::SPHERE:
+		{
+			const PxSphereGeometry& sphereGeom = static_cast<const PxSphereGeometry&>(geometries->sphereGeom);
+			float Radius = sphereGeom.radius;
+			createDebugSphere(Radius);
 		}
 		break;
 
@@ -92,12 +101,12 @@ namespace dru
 	}
 	void PhysXCollider::createDebugBox(math::Vector3 halfSize)
 	{
-		//std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"Cubemesh");
+		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
-		//std::shared_ptr<Material> material = Resources::Find<Material>(L"DebugGeometryMaterial");
+		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugGeometryMaterial");
 
-		//GetDebugRenderer()->SetMaterial(material);
-		//GetDebugRenderer()->SetMesh(mesh);
+		GetOwner()->GetComponent<MeshRenderer>()->SetMaterial(material);
+		GetOwner()->GetComponent<MeshRenderer>()->SetMesh(mesh);
 	}
 	void PhysXCollider::createDebugCapsule(float radius, float halfHeight)
 	{
@@ -108,5 +117,14 @@ namespace dru
 
 		//GetDebugRenderer()->SetMaterial(pMaterial);
 		//GetDebugRenderer()->SetMesh(pMesh);	
+	}
+	void PhysXCollider::createDebugSphere(float radius)
+	{
+		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Spheremesh");
+
+		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugGeometryMaterial");
+
+		GetOwner()->GetComponent<MeshRenderer>()->SetMaterial(material);
+		GetOwner()->GetComponent<MeshRenderer>()->SetMesh(mesh);
 	}
 }

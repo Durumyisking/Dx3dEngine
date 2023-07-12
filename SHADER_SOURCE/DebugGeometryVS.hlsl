@@ -1,27 +1,32 @@
 #include "global.hlsli"
 
-struct VS_IN
+
+struct VSIn
 {
-    float4 vPos : POSITION;
-    float2 vUV : TEXCOORD;
+    float4 Pos : POSITION;
+    float2 Uv : TEXCOORD;
 };
 
-struct VS_OUT
+struct VSOut
 {
-    float4 vPos : SV_Position;
-    float2 vUV : TEXCOORD;
+    float4 Pos : SV_Position;
+    float2 Uv : TEXCOORD;
+    float3 ViewPos : POSITION;
 };
 
-VS_OUT main(VS_IN _in)
+
+
+VSOut main(VSIn vsIn) 
 {
-    VS_OUT output = (VS_OUT) 0.f; // √ ±‚»≠
-  
-    float4 worldPosition = mul(_in.vPos, world);
-    float4 viewPosition = mul(worldPosition, view);
-    float4 projectionPosition = mul(viewPosition, projection);
+    VSOut output = (VSOut) 0.f;
     
-    output.vPos = projectionPosition;
-    output.vUV = _in.vUV;
+    float4 worldPosition = mul(vsIn.Pos, world);
+    float4 viewPosition = mul(worldPosition, view);
+    float4 projPosition = mul(viewPosition, projection);
+    
+    output.Pos = projPosition;
+    output.Uv = vsIn.Uv;
+    output.ViewPos = viewPosition;
     
     return output;
 }

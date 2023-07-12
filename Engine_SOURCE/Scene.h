@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "SceneMgr.h"
 #include "Layer.h"
+#include "PhysXCollisionMgr.h"
 
 namespace dru
 {

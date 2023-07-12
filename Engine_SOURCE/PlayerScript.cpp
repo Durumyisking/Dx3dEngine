@@ -46,6 +46,7 @@ namespace dru
 		if (KEY_DOWN(LEFT))
 		{
 			velocity = GetOwner()->GetComponent<Transform>()->Right() * - 5.f;
+			//GetOwner()->GetComponent<PhysXRigidBody>()->SetAngularVelocityForDynamic(PxVec3(-1000.f, 0.f, 0.f));
 			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
 		}
 
