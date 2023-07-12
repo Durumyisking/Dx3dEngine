@@ -18,15 +18,29 @@ namespace dru
         virtual void Render() override;
 
 
-        virtual void OnCollision();
+//        virtual void OnCollision();
+
+        void OnCollisionEnter(PhysXCollider* otherCollider);
+        void OnCollisionExit(PhysXCollider* otherCollider);
+
+        void OnTriggerEnter(PhysXCollider* otherCollider);
+        void OnTriggerStay(PhysXCollider* otherCollider);
+        void OnTriggerExit(PhysXCollider* otherCollider);
 
     private:
-        void createDebugGeometry(std::shared_ptr<Geometries> geometries);
+        void createDebugGeometry(std::shared_ptr<Geometry> geometries);
         void createDebugBox(math::Vector3 halfSize);
         void createDebugCapsule(float radius, float halfHeight);
 
     public:
         PxEventCallback* mCallback;
         Physical* mPhysical;
+
+        PxRaycastHit     mRaycastHit;
+        PxSweepHit       mSweepHit;
+        PxOverlapHit     mOverlapHit;
+        PxFilterData     mFilterData;
+
     };
+
 }

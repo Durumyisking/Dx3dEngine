@@ -107,7 +107,7 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
     // 시점에서 표면을 향하는 벡터
     eye = normalize(viewPos);
     
-        //시선 벡터랑 반사벡터를 내적해서 반사광의 세기를 구한다.
+     //시선 벡터랑 반사벡터를 내적해서 반사광의 세기를 구한다.
     specularIntensity = saturate(dot(-eye, viewReflect));
     specularIntensity = pow(specularIntensity, 30);
     

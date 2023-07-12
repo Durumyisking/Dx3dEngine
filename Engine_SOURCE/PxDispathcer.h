@@ -13,7 +13,7 @@ public:
 public:
 	PxDefaultCpuDispatcher* GetCpuDispatcher() { return mCpuDispatcher; }
 	PxEventCallback* GetSimulationCallback() { return mCallback; }
-	void	CreateCpuDispatcher();
+	void	CreateCpuDispatcher(UINT numThreads);
 
 private:
 	PxDefaultCpuDispatcher* mCpuDispatcher;

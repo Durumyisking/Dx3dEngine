@@ -763,7 +763,7 @@ namespace dru::renderer
 		Shader* debugGeometryShader = new Shader();
 		debugGeometryShader->Create(dru::eShaderStage::VS, L"DebugGeometryVS.hlsl", "main");
 		debugGeometryShader->Create(dru::eShaderStage::PS, L"DebugGeometryPS.hlsl", "main");
-		GETSINGLE(ResourceMgr)->Insert<Shader>(L"DebugGeometryShader", MeshShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"DebugGeometryShader", debugGeometryShader);
 
 		Shader* phongShader = new Shader();
 		phongShader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");

@@ -14,7 +14,7 @@ namespace dru
 		, mActor(nullptr)
 		, mShape(nullptr)
 		, mProperties(nullptr)
-		, mGeometries(nullptr)
+		, mGeometry(nullptr)
 	{
 	}
 
@@ -37,7 +37,9 @@ namespace dru
 		createPhysicsProperties(massProperties);
 		createGeometry(mGeometryType, mSize);
 		createActor();
-		createUniversalShape();
+		createShape();
+		AddActorToPxScene();
+//		createUniversalShape();
 	}
 
 	void Physical::Update()
@@ -56,40 +58,40 @@ namespace dru
 
 	void Physical::AddActorToPxScene()
 	{
-		GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysScene()->AddActor(mActor);
+		GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysicsScene()->AddActor(mActor);
 	}
 
 	void Physical::RemoveActorToPxScene()
 	{
-		GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysScene()->RemoveActor(mActor);
+		GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysicsScene()->RemoveActor(mActor);
 	}
 
 	void Physical::createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize)
 	{
 		assert(eGeometryType::BOX == geometryType);
-		assert(nullptr == mGeometries);
-		mGeometries = std::make_shared<Geometries>(geometryType, boxSize);
+		assert(nullptr == mGeometry);
+		mGeometry = std::make_shared<Geometry>(geometryType, boxSize);
 	}
 
 	void Physical::createCapsuleGeometry(eGeometryType geometryType, float radius, float halfHeight)
 	{
 		assert(eGeometryType::CAPSULE == geometryType);
-		assert(nullptr == mGeometries);
-		mGeometries = std::make_shared<Geometries>(geometryType, radius, halfHeight);
+		assert(nullptr == mGeometry);
+		mGeometry = std::make_shared<Geometry>(geometryType, radius, halfHeight);
 	}
 
 	void Physical::createPlaneGeometry(eGeometryType geometryType)
 	{
 		assert(eGeometryType::PLANE == geometryType);
-		assert(nullptr == mGeometries);
-		mGeometries = std::make_shared<Geometries>(geometryType);
+		assert(nullptr == mGeometry);
+		mGeometry = std::make_shared<Geometry>(geometryType);
 	}
 
 	void Physical::createSphereGeometry(eGeometryType geometryType, float fRadius)
 	{
 		assert(eGeometryType::SPHERE == geometryType);
-		assert(nullptr == mGeometries);
-		mGeometries = std::make_shared<Geometries>(geometryType);
+		assert(nullptr == mGeometry);
+		mGeometry = std::make_shared<Geometry>(geometryType);
 	}
 
 	void Physical::createPhysicsProperties(const MassProperties& massProperties)
@@ -134,16 +136,17 @@ namespace dru
 			switch (mGeometryType)
 			{
 			case eGeometryType::BOX:
-				mShape = physics->createShape(mGeometries->boxGeom, *mProperties->GetMaterial());
+				mShape = physics->createShape(mGeometry->boxGeom, *mProperties->GetMaterial());
 				break;
 			case eGeometryType::CAPSULE:
-				mShape = physics->createShape(mGeometries->capsuleGeom, *mProperties->GetMaterial());
+				mShape = physics->createShape(mGeometry->capsuleGeom, *mProperties->GetMaterial());
 				break;
 			case eGeometryType::PLANE:
-				mShape = physics->createShape(mGeometries->planeGeom, *mProperties->GetMaterial());
+				mShape = physics->createShape(mGeometry->planeGeom, *mProperties->GetMaterial());
 				break;
 			}
 		}
+
 	}
 
 	void Physical::createShape()
@@ -151,16 +154,16 @@ namespace dru
 		switch (mGeometryType)
 		{
 		case eGeometryType::BOX:
-			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometries->boxGeom, *mProperties->GetMaterial());
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->boxGeom, *mProperties->GetMaterial());
 			break;
 		case eGeometryType::CAPSULE:
-			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometries->capsuleGeom, *mProperties->GetMaterial());
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->capsuleGeom, *mProperties->GetMaterial());
 			break;
 		case eGeometryType::SPHERE:
-			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometries->sphereGeom, *mProperties->GetMaterial());
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->sphereGeom, *mProperties->GetMaterial());
 			break;
 		case eGeometryType::PLANE:
-			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometries->planeGeom, *mProperties->GetMaterial());
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial());
 			break;
 		}
 	}

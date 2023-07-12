@@ -45,6 +45,6 @@ namespace dru
 		else
 			physical->GetActor<PxRigidDynamic>()->setGlobalPose(transform);
 
-		//GetOwner()->GetComponent<Transform>()->SetPhysicalPosition(velocity);
+		//GetOwner()->GetComponent<Transform>()->SetPhysicalPosition(convert::PxVec3ToVector3(transform.p));
 	}
 }

@@ -42,4 +42,8 @@ private:
 
 private:
     PxMaterial* mMaterial;
+    // 피직스 머티리얼은 static/dynamic friction, restituion(반발력 ex- 벽에 튕겼을때 튀어나가는거) 을 가지는 정보이다.
+    // 이 머티리얼을 pxShape에 적용시킬 수 있다.
+
+
 };

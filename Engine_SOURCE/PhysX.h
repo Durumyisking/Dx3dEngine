@@ -17,7 +17,7 @@ public:
 	PxPhysics*				GetPhysics() const { return mInitialization->GetPhysics(); }
 	PxControllerManager*	GetControllerManager() const { return mControllerMgr; }
 
-	std::shared_ptr<PhysicsScene>	GetPhysScene() const { return mPhysicsScene; }
+	std::shared_ptr<PhysicsScene>	GetPhysicsScene() const { return mPhysicsScene; }
 
 	void CreatePhysicsScene(const PxSceneDesc& sceneDesc);
 

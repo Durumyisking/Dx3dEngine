@@ -8,6 +8,11 @@ namespace dru
 		: Component(eComponentType::Collider)
 		, mCallback(nullptr)
 		, mPhysical(nullptr)
+		, mRaycastHit{}
+		, mSweepHit	 {}
+		, mOverlapHit{}
+		, mFilterData{}
+
 	{
 	}
 	PhysXCollider::~PhysXCollider()
@@ -15,18 +20,25 @@ namespace dru
 	}
 	void PhysXCollider::Initialize()
 	{
+
+		mFilterData.word0 = 1 << static_cast<unsigned __int32>(GetOwner()->GetLayerType()); // 충돌 레이어 정해주는듯
+
 		// 렌더링할 물체의 모양을 가진 콜라이더
 		mPhysical = GetOwner()->GetComponent<Physical>();
 
 		if (mPhysical)
 		{
 			createDebugGeometry(mPhysical->GetGeometries());
+			mPhysical->GetShape()->setSimulationFilterData(mFilterData);
 		}
-
-		mCallback = PhysicsMgr::GetInstance()->GetDispatcher()->GetSimulationCallback();
+		//mCallback = PhysicsMgr::GetInstance()->GetDispatcher()->GetSimulationCallback();
 	}
 	void PhysXCollider::Update()
 	{
+		if (mPhysical)
+		{
+			mPhysical->GetShape()->setSimulationFilterData(mFilterData);
+		}
 	}
 	void PhysXCollider::FixedUpdate()
 	{
@@ -34,10 +46,25 @@ namespace dru
 	void PhysXCollider::Render()
 	{
 	}
-	void PhysXCollider::OnCollision()
+	void PhysXCollider::OnCollisionEnter(PhysXCollider* otherCollider)
 	{
 	}
-	void PhysXCollider::createDebugGeometry(std::shared_ptr<Geometries> geometries)
+	void PhysXCollider::OnCollisionExit(PhysXCollider* otherCollider)
+	{
+	}
+	void PhysXCollider::OnTriggerEnter(PhysXCollider* otherCollider)
+	{
+	}
+	void PhysXCollider::OnTriggerStay(PhysXCollider* otherCollider)
+	{
+	}
+	void PhysXCollider::OnTriggerExit(PhysXCollider* otherCollider)
+	{
+	}
+	//void PhysXCollider::OnCollision()
+	//{
+	//}
+	void PhysXCollider::createDebugGeometry(std::shared_ptr<Geometry> geometries)
 	{
 		switch (geometries->eGeomType)
 		{

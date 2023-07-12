@@ -21,8 +21,8 @@ PxDispatcher::~PxDispatcher()
 	}
 }
 
-void PxDispatcher::CreateCpuDispatcher()
+void PxDispatcher::CreateCpuDispatcher(UINT numThreads)
 {
-	mCpuDispatcher = PxDefaultCpuDispatcherCreate(1);
+	mCpuDispatcher = PxDefaultCpuDispatcherCreate(numThreads); // 인자로 쓰레드 개수가 들어간다.
 }
 
