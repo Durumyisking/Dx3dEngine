@@ -1,7 +1,8 @@
 #include "guiEditor.h"
 #include "Mesh.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "Material.h"
+#include "guiMaterial.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "GridScript.h"
@@ -27,6 +28,9 @@
 #include "guiEditorObject.h"
 #include "guiWidget.h"
 #include "Graphics.h"
+
+#include "ResourceMgr.h"
+
 
 
 extern dru::Application application;
@@ -57,8 +61,8 @@ namespace gui
 		// 충돌체의 종류 갯수만큼만 있으면 된다.
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
-		std::shared_ptr<dru::Mesh> rectMesh = GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"DebugRectmesh");
-		std::shared_ptr<dru::Material> material = GETSINGLE(dru::Resources)->Find<Material>(L"DebugMaterial");
+		dru::Mesh* rectMesh = GETSINGLE(dru::ResourceMgr)->Find<dru::Mesh>(L"DebugRectmesh");
+		dru::Material* material = GETSINGLE(dru::ResourceMgr)->Find<dru::Material>(L"DebugMaterial");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Rect)] = new DebugObject();
 		dru::MeshRenderer* renderer
@@ -67,7 +71,7 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(rectMesh);
 
-		std::shared_ptr<dru::Mesh> circleMesh = GETSINGLE(dru::Resources)->Find<dru::Mesh>(L"Circlemesh");
+		dru::Mesh* circleMesh = GETSINGLE(dru::ResourceMgr)->Find<dru::Mesh>(L"Circlemesh");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Circle)] = new DebugObject();
 		renderer
@@ -85,7 +89,7 @@ namespace gui
 		mVisualEditor = new VisualEditor();
 		//mWidgets.push_back(mVisualEditor);
 
-		// Init Widget 
+		// Initialize Widget 
 		Inspector* inspector = new Inspector();
 		mWidgets.insert(std::make_pair("Inspector", inspector));
 
@@ -144,7 +148,7 @@ namespace gui
 			obj->render();
 		}
 
-		for ( DebugMesh& mesh : dru::renderer::debugMeshes)
+		for (dru::DebugMesh & mesh : dru::renderer::debugMeshes)
 		{
 			DebugRender(mesh);
 		}
@@ -179,7 +183,7 @@ namespace gui
 		ImGui_Release();
 	}
 
-	void Editor::DebugRender(dru::graphics::DebugMesh& mesh)
+	void Editor::DebugRender(dru::DebugMesh& mesh)
 	{
 		DebugObject* debugObj = mDebugObjects[static_cast<UINT>(mesh.type)];
 
@@ -210,9 +214,9 @@ namespace gui
 
 		dru::BaseRenderer* renderer = debugObj->GetComponent<dru::BaseRenderer>();
 
-		std::shared_ptr<Material> material = renderer->GetMaterial();
-		material->SetData(eGPUParam::Int_1, &mesh.state);
-		tr->fixedUpdate();
+		dru::Material* material = renderer->GetMaterial();
+		material->SetData(dru::eGPUParam::Int_1, &mesh.state);
+		tr->FixedUpdate();
 
 		dru::Camera::SetGpuViewMatrix(dru::renderer::mainCamera->GetViewMatrix());
 		dru::Camera::SetGpuProjectionMatrix(dru::renderer::mainCamera->GetProjectionMatrix());
@@ -253,8 +257,8 @@ namespace gui
 
 		// Setup Platform/Renderer backends
 		ImGui_ImplWin32_Init(application.GetHwnd());
-		ImGui_ImplDX11_Init(dru::graphics::GetDevice()->GetID3D11Device()
-			, dru::graphics::GetDevice()->GetDeviceContext().Get());
+		ImGui_ImplDX11_Init(dru::GetDevice()->GetID3D11Device()
+			, dru::GetDevice()->GetDeviceContext().Get());
 
 		// Load Fonts
 		// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
@@ -295,7 +299,7 @@ namespace gui
 
 		//for (Widget* widget : mWidgets) 
 		//{
-		//	widget->update();
+		//	widget->Update();
 		//}
 
 		mVisualEditor->Render();
@@ -344,7 +348,7 @@ namespace gui
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 		
-		// update and render additional Platform Windows
+		// Update and Render additional Platform Windows
 		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
 			ImGui::UpdatePlatformWindows();

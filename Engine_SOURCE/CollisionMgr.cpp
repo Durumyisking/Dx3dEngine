@@ -1,6 +1,7 @@
 #include "CollisionMgr.h"
 #include "Scene.h"
 #include "SceneMgr.h"
+#include "GameObj.h"
 
 namespace dru
 {
@@ -43,30 +44,30 @@ namespace dru
 	{
 	}
 
-	void CollisionMgr::CollisionLayerCheck(eLayerType _left, eLayerType _right, bool _benable)
+	void CollisionMgr::CollisionLayerCheck(eLayerType left, eLayerType right, bool benable)
 	{
 		int row = 0;
 		int col = 0;
 
 		// Matrix 절반만 사용
-		if (static_cast<UINT>(_left) <= static_cast<UINT>(_right))
+		if (static_cast<UINT>(left) <= static_cast<UINT>(right))
 		{
-			row = static_cast<UINT>(_left);
-			col = static_cast<UINT>(_right);
+			row = static_cast<UINT>(left);
+			col = static_cast<UINT>(right);
 		}
 		else
 		{
-			row = static_cast<UINT>(_right);
-			col = static_cast<UINT>(_left);
+			row = static_cast<UINT>(right);
+			col = static_cast<UINT>(left);
 		}
 
-		mLayerCollisionMatrix[row][col] = _benable;
+		mLayerCollisionMatrix[row][col] = benable;
 	}
 
-	void CollisionMgr::LayerCollision(Scene* _scene, eLayerType _left, eLayerType _right)
+	void CollisionMgr::LayerCollision(Scene* scene, eLayerType _left, eLayerType right)
 	{
-		const std::vector<GameObj*>& lefts = _scene->GetGameObj(_left);
-		const std::vector<GameObj*>& rights = _scene->GetGameObj(_right);
+		const std::vector<GameObj*>& lefts = scene->GetGameObj(_left);
+		const std::vector<GameObj*>& rights = scene->GetGameObj(right);
 
 		for (GameObj* left : lefts)
 		{
@@ -95,11 +96,11 @@ namespace dru
 		}
 	}
 
-	void CollisionMgr::ColliderCollision(Collider2D* _left, Collider2D* _right)
+	void CollisionMgr::ColliderCollision(Collider2D* left, Collider2D* right)
 	{
 		ColliderID colliderID;
-		colliderID.left = static_cast<UINT>(_left->GetColliderID());
-		colliderID.right = static_cast<UINT>(_right->GetColliderID());
+		colliderID.left = static_cast<UINT>(left->GetColliderID());
+		colliderID.right = static_cast<UINT>(right->GetColliderID());
 
 		std::map<UINT64, bool>::iterator iter = mCollisionMap.find(colliderID.id);
 
@@ -110,55 +111,55 @@ namespace dru
 		}
 
 		// 충돌체크
-		if (Intersect(_left, _right)) // 충돌을 한 상태
+		if (Intersect(left, right)) // 충돌을 한 상태
 		{
 			// 첫 충돌
 			if (iter->second == false)
 			{
-				if (!_left->IsOn() || !_right->IsOn())
+				if (!left->IsOn() || !right->IsOn())
 				{
 					return;
 				}
 
-				if (_left->IsTrigger())
-					_left->OnTriggerEnter(_right);
+				if (left->IsTrigger())
+					left->OnTriggerEnter(right);
 				else
-					_left->OnCollisionEnter(_right);
+					left->OnCollisionEnter(right);
 
-				if (_right->IsTrigger())
-					_right->OnTriggerEnter(_left);
+				if (right->IsTrigger())
+					right->OnTriggerEnter(left);
 				else
-					_right->OnCollisionEnter(_left);
+					right->OnCollisionEnter(left);
 
 				iter->second = true;
-				_left->SetState(eCollisionState::CollisionEnter);
-				_right->SetState(eCollisionState::CollisionEnter);
+				left->SetState(eCollisionState::CollisionEnter);
+				right->SetState(eCollisionState::CollisionEnter);
 
 			}
 			else // 충돌 중
 			{
-				if (!_left->IsOn() || !_right->IsOn())
+				if (!left->IsOn() || !right->IsOn())
 				{
-					_left->OnCollisionExit(_right);				
-					_right->OnCollisionExit(_left);
-					_left->SetState(eCollisionState::CollisionExit);
-					_right->SetState(eCollisionState::CollisionExit);
+					left->OnCollisionExit(right);				
+					right->OnCollisionExit(left);
+					left->SetState(eCollisionState::CollisionExit);
+					right->SetState(eCollisionState::CollisionExit);
 
 					return;
 				}
 
-				if (_left->IsTrigger())
-					_left->OnTrigger(_right);
+				if (left->IsTrigger())
+					left->OnTrigger(right);
 				else
-					_left->OnCollision(_right);
+					left->OnCollision(right);
 
-				if (_right->IsTrigger())
-					_right->OnTrigger(_left);
+				if (right->IsTrigger())
+					right->OnTrigger(left);
 				else
-					_right->OnCollision(_left);
+					right->OnCollision(left);
 
-				_left->SetState(eCollisionState::CollisionStay);
-				_right->SetState(eCollisionState::CollisionStay);
+				left->SetState(eCollisionState::CollisionStay);
+				right->SetState(eCollisionState::CollisionStay);
 
 			}
 		}
@@ -166,38 +167,38 @@ namespace dru
 		{
 			if (iter->second) // 충돌 빠져나감
 			{
-				if (_left->IsTrigger())
-					_left->OnTriggerExit(_right);
+				if (left->IsTrigger())
+					left->OnTriggerExit(right);
 				else
-					_left->OnCollisionExit(_right);
+					left->OnCollisionExit(right);
 
-				if (_right->IsTrigger())
-					_right->OnTriggerExit(_left);
+				if (right->IsTrigger())
+					right->OnTriggerExit(left);
 				else
-					_right->OnCollisionExit(_left);
+					right->OnCollisionExit(left);
 
 				iter->second = false;
 
-				_left->SetState(eCollisionState::CollisionExit);
-				_right->SetState(eCollisionState::CollisionExit);
+				left->SetState(eCollisionState::CollisionExit);
+				right->SetState(eCollisionState::CollisionExit);
 
 			}
 			else
 			{
-				_left->SetState(eCollisionState::CollisionNot);
-				_right->SetState(eCollisionState::CollisionNot);
+				left->SetState(eCollisionState::CollisionNot);
+				right->SetState(eCollisionState::CollisionNot);
 
 				mCollisionMap.erase(iter);
 			}
 		}
 	}
 
-	bool CollisionMgr::Intersect(Collider2D* _left, Collider2D* _right)
+	bool CollisionMgr::Intersect(Collider2D* left, Collider2D* right)
 	{
 
 	#pragma region RectVsRect
 
-		if (eColliderType::Rect == _left->GetType() && eColliderType::Rect == _right->GetType())
+		if (eColliderType::Rect == left->GetType() && eColliderType::Rect == right->GetType())
 		{
 			Vector3 arrLocalPos[4] =
 			{
@@ -207,8 +208,8 @@ namespace dru
 				Vector3{-0.5f, -0.5f, 0.0f}
 			};
 
-			Transform* leftTr = _left->GetOwner()->GetComponent<Transform>();
-			Transform* rightTr = _right->GetOwner()->GetComponent<Transform>();
+			Transform* leftTr = left->GetOwner()->GetComponent<Transform>();
+			Transform* rightTr = right->GetOwner()->GetComponent<Transform>();
 
 			Matrix leftMatrix = leftTr->GetWorldMatrix();
 			Matrix rightMatrix = rightTr->GetWorldMatrix();
@@ -216,11 +217,11 @@ namespace dru
 			// 분리축 벡터 (투영벡터)
 			Vector3 Axis[4] = {};
 		
-			Vector3 leftScale = Vector3(_left->GetScale().x, _left->GetScale().y, 1.0f);
+			Vector3 leftScale = Vector3(left->GetScale().x, left->GetScale().y, 1.0f);
 			Matrix finalLeft = Matrix::CreateScale(leftScale);
 			finalLeft *= leftMatrix;
 
-			Vector3 rightScale = Vector3(_right->GetScale().x, _right->GetScale().y, 1.0f);
+			Vector3 rightScale = Vector3(right->GetScale().x, right->GetScale().y, 1.0f);
 			Matrix finalRight = Matrix::CreateScale(rightScale);
 			finalRight *= rightMatrix;
 
@@ -264,15 +265,15 @@ namespace dru
 
 	#pragma region CircleVsCircle
 		
-		else if (eColliderType::Circle == _left->GetType() && eColliderType::Circle == _right->GetType())
+		else if (eColliderType::Circle == left->GetType() && eColliderType::Circle == right->GetType())
 		{
-			Vector2 leftPos = { _left->GetColliderPos().x, _left->GetColliderPos().y };
-			Vector2 rightPos = { _right->GetColliderPos().x, _right->GetColliderPos().y };
+			Vector2 leftPos = { left->GetColliderPos().x, left->GetColliderPos().y };
+			Vector2 rightPos = { right->GetColliderPos().x, right->GetColliderPos().y };
 
 			float Gap = (leftPos - rightPos).Length();
 
-			float leftScale = _left->GetRadius() * 0.5f;
-			float rightScale = _right->GetRadius() * 0.5f;
+			float leftScale = left->GetRadius() * 0.5f;
+			float rightScale = right->GetRadius() * 0.5f;
 
 			if ((leftScale + rightScale) < Gap)
 			{
@@ -286,9 +287,9 @@ namespace dru
 
 
 	#pragma region RectVsLine
-		else if (eColliderType::Line == _left->GetType() && eColliderType::Rect == _right->GetType())
+		else if (eColliderType::Line == left->GetType() && eColliderType::Rect == right->GetType())
 		{
-			return lineRect(_left, _right);
+			return lineRect(left, right);
 		}
 
 	#pragma endregion
@@ -296,7 +297,7 @@ namespace dru
 
 		return true;
 	}
-	bool CollisionMgr::lineLine(Vector2 _lineA_p1, Vector2 _lineA_p2, Vector2 _lineB_p1, Vector2 _lineB_p2)
+	bool CollisionMgr::lineLine(Vector2 lineA_p1, Vector2 lineA_p2, Vector2 lineB_p1, Vector2 lineB_p2)
 	{
 		// calculate the distance to intersection point
 		  // uA의 분모는 직선의 기울기
@@ -304,24 +305,24 @@ namespace dru
 		  // (uA가 0.5면 선분 B는 A의 중간지점에서 겹치고 0이면 A의 시작지점에서 겹친다)
 
 		float uA =
-			((_lineB_p2.x - _lineB_p1.x) 
-				* (_lineA_p1.y - _lineB_p1.y)
-				- (_lineB_p2.y - _lineB_p1.y)
-				* (_lineA_p1.x - _lineB_p1.x))
-				/ ((_lineB_p2.y - _lineB_p1.y)
-				* (_lineA_p2.x - _lineA_p1.x)
-				- (_lineB_p2.x - _lineB_p1.x) 
-				* (_lineA_p2.y - _lineA_p1.y));
+			((lineB_p2.x - lineB_p1.x) 
+				* (lineA_p1.y - lineB_p1.y)
+				- (lineB_p2.y - lineB_p1.y)
+				* (lineA_p1.x - lineB_p1.x))
+				/ ((lineB_p2.y - lineB_p1.y)
+				* (lineA_p2.x - lineA_p1.x)
+				- (lineB_p2.x - lineB_p1.x) 
+				* (lineA_p2.y - lineA_p1.y));
 
 		float uB =
-			((_lineA_p2.x - _lineA_p1.x)
-				* (_lineA_p1.y - _lineB_p1.y)
-				- (_lineA_p2.y - _lineA_p1.y) 
-				* (_lineA_p1.x - _lineB_p1.x))
-				/ ((_lineB_p2.y - _lineB_p1.y) 
-				* (_lineA_p2.x - _lineA_p1.x)
-				- (_lineB_p2.x - _lineB_p1.x)
-				* (_lineA_p2.y - _lineA_p1.y));
+			((lineA_p2.x - lineA_p1.x)
+				* (lineA_p1.y - lineB_p1.y)
+				- (lineA_p2.y - lineA_p1.y) 
+				* (lineA_p1.x - lineB_p1.x))
+				/ ((lineB_p2.y - lineB_p1.y) 
+				* (lineA_p2.x - lineA_p1.x)
+				- (lineB_p2.x - lineB_p1.x)
+				* (lineA_p2.y - lineA_p1.y));
 
 		// uA와 uB가 둘 다 0~1사이면 충돌중이다! 
 		if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1)
@@ -332,10 +333,10 @@ namespace dru
 
 	}
 
-	bool CollisionMgr::lineRect(Collider2D* _left, Collider2D* _right)
+	bool CollisionMgr::lineRect(Collider2D* left, Collider2D* right)
 	{
-		Vector3 leftPos = _left->GetColliderPos();
-		Vector2 leftScale = _left->GetScale() / 2.f;
+		Vector3 leftPos = left->GetColliderPos();
+		Vector2 leftScale = left->GetScale() / 2.f;
 
 		Vector2 lineP1 = {};
 		Vector2 lineP2 = {};
@@ -350,8 +351,8 @@ namespace dru
 		//lineP1.
 
 
-		Vector3 rightPos = _right->GetColliderPos();
-		Vector2 rightScale = _right->GetScale() / 2.f;
+		Vector3 rightPos = right->GetColliderPos();
+		Vector2 rightScale = right->GetScale() / 2.f;
 
 		Vector2 rectlineP1 = {};
 		Vector2 rectlineP2 = {};

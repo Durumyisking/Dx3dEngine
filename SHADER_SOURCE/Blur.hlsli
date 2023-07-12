@@ -20,7 +20,7 @@ static float GaussianFilter[5][5] =
 
 float4 GaussianBlur(float2 UV)
 {
-    float4 Out = (float4) 0.0f;
+    float4 output = (float4) 0.0f;
     
     if (1.f < UV.x)
         UV.x = frac(UV.x);
@@ -40,9 +40,9 @@ float4 GaussianBlur(float2 UV)
         for (int j = 0; j < 5; j++)
         {
             int2 idx = int2(iUV.y + i, iUV.x + j);
-            Out += NoiseTexture[idx] * GaussianFilter[i][j];
+            output += NoiseTexture[idx] * GaussianFilter[i][j];
         }
     }
     
-    return Out;
+    return output;
 }

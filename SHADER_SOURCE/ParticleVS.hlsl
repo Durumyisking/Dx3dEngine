@@ -12,13 +12,13 @@ struct VSOut
     uint Instance : SV_InstanceID;
 };
 
-VSOut main(VSIn In)
+VSOut main(VSIn vsIn)
 {
-    VSOut Out = (VSOut) 0.0f;
+    VSOut vsOut = (VSOut) 0.0f;
     
-    Out.Pos = In.Pos;
-    Out.Instance = In.Instance;
+    vsOut.Pos = vsIn.Pos;
+    vsOut.Instance = vsIn.Instance;
     
-    return Out;
+    return vsOut;
 }
 

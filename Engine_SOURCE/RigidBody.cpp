@@ -29,7 +29,7 @@ namespace dru
 	{
 	}
 
-	void RigidBody::update()
+	void RigidBody::Update()
 	{
 		if (mbSwitch)
 		{
@@ -55,11 +55,11 @@ namespace dru
 		}
 	}
 
-	void RigidBody::fixedUpdate()
+	void RigidBody::FixedUpdate()
 	{
 	}
 
-	void RigidBody::render()
+	void RigidBody::Render()
 	{
 	}
 

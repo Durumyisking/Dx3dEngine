@@ -18,19 +18,19 @@ namespace dru
 		BaseRenderer::Initialize();
 	}
 
-	void MeshRenderer::update()
+	void MeshRenderer::Update()
 	{
-		BaseRenderer::update();
+		BaseRenderer::Update();
 	}
 
-	void MeshRenderer::fixedUpdate()
+	void MeshRenderer::FixedUpdate()
 	{
-		BaseRenderer::fixedUpdate();
+		BaseRenderer::FixedUpdate();
 	}
 
-	void MeshRenderer::render()
+	void MeshRenderer::Render()
 	{
-		BaseRenderer::render();
+		BaseRenderer::Render();
 
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 

@@ -6,6 +6,29 @@
 #include <cstdint>
 #include <type_traits>
 
+#include <string>
+#include <iostream>
+#include <filesystem>
+#include <fstream>
+#include <Windows.h>
+
+#include <vector>
+#include <queue>
+#include <stack>
+
+#include <list>
+#include <map>
+#include <bitset>
+#include <set>
+
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <limits>
+#include <memory>
+#include <thread>
+#include <future>
+
 #define CAMTYPEGAP 2.785f
 #define BACKGROUNDZ 5.f
 

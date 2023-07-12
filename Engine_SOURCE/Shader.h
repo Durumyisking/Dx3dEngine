@@ -1,10 +1,10 @@
 #pragma once
-#include "Resource.h"
+#include "EngineResource.h"
 #include "Graphics.h"
 
 namespace dru
 {
-	using namespace graphics;
+	;
 	class Shader : public Resource
 	{
 	public:
@@ -14,7 +14,7 @@ namespace dru
 		virtual HRESULT Load(const std::wstring& path) override;
 
 
-		void Create(graphics::eShaderStage _eStage, const std::wstring& _Path, const std::string& _funcName);
+		void Create(dru::eShaderStage eStage, const std::wstring& path, const std::string& funcName);
 		void Bind();
 		ID3D11InputLayout* GetInputLayOut() { return mInputLayout.Get(); }
 		ID3D11InputLayout** GetInputLayoutAddr()  { return mInputLayout.GetAddressOf(); }
@@ -22,18 +22,18 @@ namespace dru
 		void* GetVSBlobBufferPointer() { return mVSBlob->GetBufferPointer(); }
 		SIZE_T GetVSBlobBufferSize() { return mVSBlob->GetBufferSize(); }
 
-		void SetTopology(D3D11_PRIMITIVE_TOPOLOGY _Topology) { mTopology = _Topology; }
+		void SetTopology(D3D11_PRIMITIVE_TOPOLOGY topology) { mTopology = topology; }
 
-		void SetRSState(eRasterizerType _state) { mRSType = _state; }
-		void SetDSState(eDepthStencilType _state) { mDSType = _state; }
-		void SetBSState(eBlendStateType _state) { mBSType = _state; }
+		void SetRSState(eRasterizerType state) { mRSType = state; }
+		void SetDSState(eDepthStencilType state) { mDSType = state; }
+		void SetBSState(eBlendStateType state) { mBSType = state; }
 
 	private:
-		void CreateVS(const std::wstring& _Path, const std::string& _funcName);
-		void CreateHS(const std::wstring& _Path, const std::string& _funcName);
-		void CreateDS(const std::wstring& _Path, const std::string& _funcName);
-		void CreateGS(const std::wstring& _Path, const std::string& _funcName);
-		void CreatePS(const std::wstring& _Path, const std::string& _funcName);
+		void CreateVS(const std::wstring& path, const std::string& funcName);
+		void CreateHS(const std::wstring& path, const std::string& funcName);
+		void CreateDS(const std::wstring& path, const std::string& funcName);
+		void CreateGS(const std::wstring& path, const std::string& funcName);
+		void CreatePS(const std::wstring& path, const std::string& funcName);
 		
 
 
@@ -41,7 +41,7 @@ namespace dru
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> mInputLayout;
 
 		D3D11_PRIMITIVE_TOPOLOGY mTopology;
-		graphics::eShaderStage mCurrentStage;
+		dru::eShaderStage mCurrentStage;
 
 
 		Microsoft::WRL::ComPtr<ID3DBlob> mErrorBlob;

@@ -4,7 +4,9 @@
 #include "Application.h"
 #include "ConstantBuffer.h"
 #include "TimeMgr.h"
-#include "Input.h"
+#include "InputMgr.h"
+#include "Material.h"
+#include "BaseRenderer.h"
 
 
 namespace dru
@@ -27,22 +29,22 @@ namespace dru
 	{
 	}
 
-	void FadeScript::update()
+	void FadeScript::Update()
 	{
 	}
 
-	void FadeScript::fixedUpdate()
+	void FadeScript::FixedUpdate()
 	{
 	}
 
-	void FadeScript::render()
+	void FadeScript::Render()
 	{
 		if (1 == mStart)
 		{
 			mElapsedTime += DT;
 
 			BaseRenderer* renderer = GetOwner()->GetComponent<BaseRenderer>();
-			std::shared_ptr<Material> material = renderer->GetMaterial();
+			dru::Material* material = renderer->GetMaterial();
 
 			renderer::MaterialCB data = {};
 
@@ -58,9 +60,9 @@ namespace dru
 
 	}
 
-	void FadeScript::restart(int _fadeType)
+	void FadeScript::restart(int fadeType)
 	{
-		mFadeType = _fadeType;
+		mFadeType = fadeType;
 		mTime = 0;
 	}
 

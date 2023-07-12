@@ -1,6 +1,5 @@
 #pragma once
 #include "Engine.h"
-#include "Graphics.h"
 #include "GraphicDevice.h"
 
 
@@ -28,9 +27,9 @@ namespace dru
 		void DestroySingle();// 프로그램 종료 시점에 호출하여 싱글톤 인스턴스 해제
 
 
-		void SetWindow(HWND _hwnd, UINT _width, UINT _height);
+		void SetWindow(HWND hwnd, UINT width, UINT height);
 
-		void SetHwnd(HWND _hwnd) { mHwnd = _hwnd; }
+		void SetHwnd(HWND hwnd) { mHwnd = hwnd; }
 		HWND GetHwnd() const { return mHwnd; }
 
 		UINT GetWidth() const { return mWidth; }
@@ -39,15 +38,15 @@ namespace dru
 
 		void DockingMenu();
 		void DivideMenu();
-		void ChangeWindowSize(bool _bMenu);
+		void ChangeWindowSize(bool bMenu);
 
-		void SetResolution(math::Vector2 _Resolution) { mResolution = _Resolution; };
+		void SetResolution(math::Vector2 resolution) { mResolution = resolution; };
 		math::Vector2 WinResolution() const { return mResolution; }
 
 
 	private:
-		bool initalized = false;
-		std::unique_ptr<graphics::GraphicDevice> graphicDevice;
+		bool mbInitalized = false;
+		std::unique_ptr<dru::GraphicDevice> mGraphicDevice;
 
 		HWND mHwnd;
 		HDC	 mHdc;

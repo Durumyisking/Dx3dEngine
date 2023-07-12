@@ -1,7 +1,6 @@
 #include "ComputeShader.h"
-#include "GraphicDevice.h"
 
-namespace dru::graphics
+namespace dru
 {
 	ComputeShader::ComputeShader(UINT threadGroupX, UINT threadGroupY, UINT threadGroupZ)
 		: Resource(eResourceType::ComputeShader)
@@ -41,20 +40,20 @@ namespace dru::graphics
 		return E_NOTIMPL;
 	}
 
-	void ComputeShader::Create(const std::wstring& _Path, const std::string& _funcName)
+	void ComputeShader::Create(const std::wstring& path, const std::string& funcName)
 	{
 
 		mErrorBlob = nullptr;
 
-		std::filesystem::path path = std::filesystem::current_path().parent_path();
-		path += "\\..\\SHADER_SOURCE\\";
+		std::filesystem::path filepath = std::filesystem::current_path().parent_path();
+		filepath += "\\..\\SHADER_SOURCE\\";
 
-		std::wstring shaderPath(path.c_str());
-		shaderPath += _Path;
+		std::wstring shaderPath(filepath.c_str());
+		shaderPath += path;
 
 
 		D3DCompileFromFile(shaderPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-			, _funcName.c_str(), "cs_5_0", 0, 0, mCSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
+			, funcName.c_str(), "cs_5_0", 0, 0, mCSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
 
 		if (mErrorBlob)
 		{
@@ -64,7 +63,7 @@ namespace dru::graphics
 		}
 
 
-		graphics::GetDevice()->CreateComputeShader(mCSBlob->GetBufferPointer()
+		dru::GetDevice()->CreateComputeShader(mCSBlob->GetBufferPointer()
 			, mCSBlob->GetBufferSize()
 			, nullptr
 			, mCS.GetAddressOf());

@@ -12,6 +12,5 @@ namespace gui
 
 		virtual void fixedUpdate() override;
 	
-	private:
 	};
 }

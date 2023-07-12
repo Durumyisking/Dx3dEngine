@@ -74,14 +74,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_DX2DENGINE, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     //_CrtDumpMemoryLeaks();
 
+
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    //CrtSetBreakAlloc(233);
 
     if (!InitInstance (hInstance, nCmdShow))
     {

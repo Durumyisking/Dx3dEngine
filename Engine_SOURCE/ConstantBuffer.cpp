@@ -4,15 +4,15 @@
 
 using namespace dru::math;
 
-namespace dru::graphics
+namespace dru
 {
 	ConstantBuffer::ConstantBuffer()
 		: mType(eCBType::End)
 	{
 	}
 
-	ConstantBuffer::ConstantBuffer(eCBType _Type)
-		: mType(_Type)
+	ConstantBuffer::ConstantBuffer(eCBType type)
+		: mType(type)
 	{
 	}
 
@@ -20,9 +20,9 @@ namespace dru::graphics
 	{
 	}
 
-	bool ConstantBuffer::Create(UINT _Size)
+	bool ConstantBuffer::Create(UINT size)
 	{
-		desc.ByteWidth = _Size; // 들고있을 데이터 크기만큼 (일단은 위치 정보만)
+		desc.ByteWidth = size; // 들고있을 데이터 크기만큼 (일단은 위치 정보만)
 		desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
 		desc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
@@ -35,14 +35,14 @@ namespace dru::graphics
 		return true;
 	}
 
-	void ConstantBuffer::SetData(void* _Data)
+	void ConstantBuffer::SetData(void* data)
 	{
-		GetDevice()->BindBuffer(buffer.Get(), _Data, desc.ByteWidth);
+		GetDevice()->BindBuffer(buffer.Get(), data, desc.ByteWidth);
 	}
 
-	void ConstantBuffer::Bind(eShaderStage _Stage)
+	void ConstantBuffer::Bind(eShaderStage stage)
 	{
-		if (_Stage == eShaderStage::All)
+		if (stage == eShaderStage::All)
 		{
 			GetDevice()->BindConstantBuffer(eShaderStage::VS, mType, buffer.Get());
 			GetDevice()->BindConstantBuffer(eShaderStage::HS, mType, buffer.Get());
@@ -53,7 +53,7 @@ namespace dru::graphics
 		}
 		else
 		{
-			GetDevice()->BindConstantBuffer(_Stage, mType, buffer.Get());
+			GetDevice()->BindConstantBuffer(stage, mType, buffer.Get());
 		}
 	}
 

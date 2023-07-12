@@ -6,6 +6,7 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 #include "Application.h"
+#include "MeshRenderer.h"
 
 extern dru::Application application;
 
@@ -30,12 +31,12 @@ namespace dru
 		mCamera = renderer::Cameras[type][0];
 	}
 
-	void GridScript::update()
+	void GridScript::Update()
 	{
 
 	}
 
-	void GridScript::fixedUpdate()
+	void GridScript::FixedUpdate()
 	{
 		if (nullptr == mCamera)
 			return;
@@ -56,7 +57,7 @@ namespace dru
 		mr->GetMaterial()->SetData(eGPUParam::Float_1, &mThickness);
 	}
 
-	void GridScript::render()
+	void GridScript::Render()
 	{
 	}
 

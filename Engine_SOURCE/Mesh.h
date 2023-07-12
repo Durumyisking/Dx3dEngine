@@ -1,5 +1,5 @@
 #pragma once
-#include "Resource.h"
+#include "EngineResource.h"
 #include "Graphics.h"
 
 namespace dru
@@ -12,17 +12,17 @@ namespace dru
 
 		virtual HRESULT Load(const std::wstring& path) override;
 
-		bool CreateVertexBuffer(void* _Data, UINT _Count);
-		bool CreateIndexBuffer(void* _Data, UINT _Count);
+		bool CreateVertexBuffer(void* data, UINT count);
+		bool CreateIndexBuffer(void* data, UINT count);
 
 		void BindBuffer();
 
 		void Render();
 
-		void RenderInstanced(UINT _Count);
+		void RenderInstanced(UINT count);
 
 
-//		Microsoft::WRL::ComPtr<ID3D11Buffer> GetBuffer(graphics::eBufferStage _eStage);
+//		Microsoft::WRL::ComPtr<ID3D11Buffer> GetBuffer(dru::eBufferStage _eStage);
 
 	private:
 		// 메시 그릴때는 정점정보 인덱스 정보만 있으면 됨

@@ -11,10 +11,10 @@ namespace dru
 		MeshRenderer();
 		virtual ~MeshRenderer();
 
-		virtual void Initialize() override ;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Initialize() final ;
+		virtual void Update() final;
+		virtual void FixedUpdate() final;
+		virtual void Render() final;
 
 	};
 }

@@ -7,126 +7,126 @@
 namespace dru::object
 {
 	template <typename T>
-	static T* LateInstantiate(enums::eLayerType _LayerType)
+	static T* LateInstantiate(enums::eLayerType layerType)
 	{
 		T* gameObj = new T();
 		Scene* scene = GETSINGLE(SceneMgr)->AddEvent(gameObj);
 		gameObj->Initialize();
-		gameObj->SetLayerType(_LayerType);
+		gameObj->SetLayerType(layerType);
 
 		return gameObj;
 	}
 
 	template <typename T>
-	static T* Instantiate(enums::eLayerType _LayerType)
+	static T* Instantiate(enums::eLayerType layerType)
 	{
 		T* gameObj = new T();
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
-		Layer& layer = scene->GetLayer(_LayerType);
-		layer.AddGameObject(gameObj, _LayerType);
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
 
 		return gameObj;
 	}
 
 	template <typename T>
-	static T* Instantiate(enums::eLayerType _LayerType, Scene* _Scene)
+	static T* Instantiate(enums::eLayerType layerType, Scene* scene)
 	{
 		T* gameObj = new T();
-		Layer& layer = _Scene->GetLayer(_LayerType);
-		layer.AddGameObject(gameObj, _LayerType);
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
 
 		return gameObj;
 	}
 
 	template <typename T>
-	static T* Instantiate(enums::eLayerType _LayerType, Scene* _Scene, std::wstring _Name)
+	static T* Instantiate(enums::eLayerType layerType, Scene* scene, std::wstring name)
 	{
 		T* gameObj = new T();
-		Layer& layer = _Scene->GetLayer(_LayerType);
-		layer.AddGameObject(gameObj, _LayerType);
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
 
-		gameObj->SetName(_Name);
+		gameObj->SetName(name);
 
 		return gameObj;
 	}
 
 
 	template <typename T>
-	static T* Instantiate(enums::eLayerType _LayerType, std::wstring _Name)
-	{
-		T* gameObj = new T();
-		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
-		Layer& layer = scene->GetLayer(_LayerType);
-		layer.AddGameObject(gameObj, _LayerType);
-
-		gameObj->SetName(_Name);
-
-		return gameObj;
-	}
-
-	template <typename T>
-	static T* Instantiate_pooling(enums::eLayerType _LayerType, std::wstring _Name)
-	{
-		T* gameObj = new T();
-
-		gameObj->SetName(_Name);
-
-		return gameObj;
-	}
-
-	template <typename T>
-	static T* Instantiate(enums::eLayerType _LayerType, GameObj* _Parent, std::wstring _Name)
+	static T* Instantiate(enums::eLayerType layerType, std::wstring name)
 	{
 		T* gameObj = new T();
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
-		Layer& layer = scene->GetLayer(_LayerType);
-		layer.AddGameObject(gameObj, _LayerType);
-		gameObj->SetName(_Name);
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
+
+		gameObj->SetName(name);
+
+		return gameObj;
+	}
+
+	template <typename T>
+	static T* Instantiate_pooling(enums::eLayerType layerType, std::wstring name)
+	{
+		T* gameObj = new T();
+
+		gameObj->SetName(name);
+
+		return gameObj;
+	}
+
+	template <typename T>
+	static T* Instantiate(enums::eLayerType layerType, GameObj* parent, std::wstring name)
+	{
+		T* gameObj = new T();
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
+		gameObj->SetName(name);
 		Transform* tr = gameObj->GetComponent<Transform>();
-		tr->SetParent(_Parent);
+		tr->SetParent(parent);
 
 		return gameObj;
 	}
 
 	template <typename T>
-	static T* Instantiate(enums::eLayerType _LayerType, Vector3 _Pos, Vector3 _Rotation, std::wstring _Name)
+	static T* Instantiate(enums::eLayerType layerType, Vector3 pos, Vector3 rotation, std::wstring name)
 	{
 		T* gameObj = new T();
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer();
-		layer.AddGameObject(gameObj, _LayerType);
-		gameObj->SetName(_Name);
+		layer.AddGameObject(gameObj, layerType);
+		gameObj->SetName(name);
 		Transform* tr = gameObj->GetComponent<Transform>();
-		tr->SetPosition(_Pos);
-		tr->SetRotation(_Rotation);
+		tr->SetPosition(pos);
+		tr->SetRotation(rotation);
 
 		return gameObj;
 	}
 
 	template <typename T>
-	static T* Instantiate(enums::eLayerType _LayerType, Vector3 _Pos, Vector3 _Rotation, GameObj* _Parent, std::wstring _Name)
+	static T* Instantiate(enums::eLayerType layerType, Vector3 pos, Vector3 rotation, GameObj* parent, std::wstring name)
 	{
 		T* gameObj = new T();
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer();
-		layer.AddGameObject(gameObj, _LayerType);
-		gameObj->SetName(_Name);
+		layer.AddGameObject(gameObj, layerType);
+		gameObj->SetName(name);
 		Transform* tr = gameObj->GetComponent<Transform>();
-		tr->SetPosition(_Pos);
-		tr->SetRotation(_Rotation);
+		tr->SetPosition(pos);
+		tr->SetRotation(rotation);
 
-		tr->SetParent(_Parent);
+		tr->SetParent(parent);
 
 		return gameObj;
 	}
 
 
 
-	static void DontDestroyOnLoad(GameObj* _Gameobj)
+	static void DontDestroyOnLoad(GameObj* gameobj)
 	{
-		if (_Gameobj == nullptr)
+		if (gameobj == nullptr)
 			return;
 
-		_Gameobj->DontDestroy();
+		gameobj->DontDestroy();
 	}
 }

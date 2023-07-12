@@ -42,7 +42,7 @@ namespace dru
 		RegisterCameraInRenderer();
 	}
 
-	void Camera::update()
+	void Camera::Update()
 	{
 		if (mTargetObj)
 		{
@@ -65,7 +65,7 @@ namespace dru
 
 	}
 
-	void Camera::fixedUpdate()
+	void Camera::FixedUpdate()
 	{
 		CreateViewMatrix();
 		CreateProjectionMatrix();
@@ -73,7 +73,7 @@ namespace dru
 		RegisterCameraInRenderer();
 	}
 
-	void Camera::render()
+	void Camera::Render()
 	{
 		View = mView;
 		Projection = mProjection;
@@ -137,24 +137,19 @@ namespace dru
 		renderer::	Cameras[type].push_back(this);
 	}
 
-	void Camera::TurnLayerMask(eLayerType _layer, bool _enable)
+	void Camera::TurnLayerMask(eLayerType layer, bool enable)
 	{
-		mLayerMask.set(static_cast<UINT>(_layer, _enable));
+		mLayerMask.set(static_cast<UINT>(layer, enable));
 	}
 
-	void Camera::SetTarget(GameObj* _Target)
+	void Camera::SetTarget(GameObj* target)
 	{
-		mTargetObj = _Target;
+		mTargetObj = target;
 
 		Vector3 Dir = mTargetObj->GetPos() - GetOwner()->GetPos();
 		Dir.z = GetOwner()->GetPos().z;
 
 		(Dir).Normalize(mCamDir);
-	}
-
-	CameraScript* Camera::GetCamScript()
-	{
-		return GetOwner()->GetScript<CameraScript>();
 	}
 
 	void Camera::sortGameObjects()
@@ -226,22 +221,22 @@ namespace dru
 		if (nullptr == renderer)
 			return;
 
-		std::shared_ptr<Material> material = renderer->GetMaterial();
+		Material* material = renderer->GetMaterial();
 
-		dru::graphics::eRenderingMode mode = material->GetRenderingMode();
+		dru::eRenderingMode mode = material->GetRenderingMode();
 
 		switch (mode)
 		{
-		case dru::graphics::eRenderingMode::Opaque:
+		case dru::eRenderingMode::Opaque:
 			mOpaqueGameObjects.push_back(obj);
 			break;
-		case dru::graphics::eRenderingMode::Cutout:
+		case dru::eRenderingMode::Cutout:
 			mCutoutGameObjects.push_back(obj);
 			break;
-		case dru::graphics::eRenderingMode::Transparent:
+		case dru::eRenderingMode::Transparent:
 			mTransparentGameObjects.push_back(obj);
 			break;
-		case dru::graphics::eRenderingMode::PostProcess:
+		case dru::eRenderingMode::PostProcess:
 			mPostProcessGameObjects.push_back(obj);
 			break;
 		default:
@@ -249,19 +244,19 @@ namespace dru
 		}
 	}
 
-	bool Camera::renderPassCheck(GameObj* _obj)
+	bool Camera::renderPassCheck(GameObj* obj)
 	{
-		if (nullptr == _obj)
+		if (nullptr == obj)
 		{
 			return false;
 		}
-		if (_obj->IsRenderingBlock())
+		if (obj->IsRenderingBlock())
 		{
 			return false;
 		}
-		if (nullptr != _obj->GetParent())
+		if (nullptr != obj->GetParent())
 		{
-			if (_obj->GetParent()->IsRenderingBlock())
+			if (obj->GetParent()->IsRenderingBlock())
 			{
 				return false;
 			}

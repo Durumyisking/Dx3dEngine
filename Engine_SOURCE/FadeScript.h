@@ -3,28 +3,27 @@
 
 namespace dru
 {
-    class FadeScript :
-        public Script
+    class FadeScript : public Script
     {
     public:
         FadeScript();
         virtual ~FadeScript();
 
-        virtual void Initialize() override;
-        virtual void update() override;
-        virtual void fixedUpdate() override;
-        virtual void render() override;
+        virtual void Initialize() final;
+        virtual void Update() final;
+        virtual void FixedUpdate() final;
+        virtual void Render() final;
 
         //  */
-        void SetFadeType(int _Type) { mFadeType = _Type; }
+        void SetFadeType(int type) { mFadeType = type; }
 
-        void SetFadeValue(float _Value) { mFadeValue = _Value; }
-        void SetFadeTextureType(int _Value) { mFadeTextureType = _Value; }
-        void SetFadeTime(float _Value) { mTime = _Value; }
+        void SetFadeValue(float value) { mFadeValue = value; }
+        void SetFadeTextureType(int value) { mFadeTextureType = value; }
+        void SetFadeTime(float value) { mTime = value; }
 
         float GetElapsedTime() const { return mElapsedTime; }
 
-        void restart(int _fadeType);
+        void restart(int fadeType);
 
 
     private:

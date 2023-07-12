@@ -10,19 +10,19 @@ namespace dru
 		PlayerScript();
 		virtual ~PlayerScript();
 
-		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
-		virtual void fontRender();
+		virtual void Initialize() final;
+		virtual void Update() final;
+		virtual void FixedUpdate() final;
+		virtual void Render() final;
+		virtual void fontRender() final;
 
-		virtual void OnCollisionEnter(Collider2D* _oppo);
-		virtual void OnCollision(Collider2D* _oppo);
-		virtual void OnCollisionExit(Collider2D* _oppo);
+		virtual void OnCollisionEnter(Collider2D* oppo);
+		virtual void OnCollision(Collider2D* oppo);
+		virtual void OnCollisionExit(Collider2D* oppo);
 
-		virtual void OnTriggerEnter(Collider2D* _oppo);
-		virtual void OnTrigger(Collider2D* _oppo);
-		virtual void OnTriggerExit(Collider2D* _oppo);
+		virtual void OnTriggerEnter(Collider2D* oppo);
+		virtual void OnTrigger(Collider2D* oppo);
+		virtual void OnTriggerExit(Collider2D* oppo);
 
 	private:
 		Transform* mTransform;

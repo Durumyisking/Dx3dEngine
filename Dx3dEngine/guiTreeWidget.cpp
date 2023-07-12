@@ -78,7 +78,7 @@ namespace gui
 		if (mRoot == nullptr)
 			return;
 
-		//mRoot->update();
+		//mRoot->Update();
 
 		if (!mbDummyRootUse)
 		{

@@ -11,30 +11,30 @@ namespace dru
 		~AudioSource();
 
 		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Update() override;
+		virtual void FixedUpdate() override;
+		virtual void Render() override;
 
-		void Play(const std::wstring& _key, bool _loop = false);
-		void Play_NoInterrupt(const std::wstring& _key, bool _loop = false);
-		void Stop(const std::wstring& _key);
-		void SetLoop(const std::wstring& _key, bool loop);
+		void Play(const std::wstring& key, bool loop = false);
+		void Play_NoInterrupt(const std::wstring& key, bool loop = false);
+		void Stop(const std::wstring& key);
+		void SetLoop(const std::wstring& key, bool loop);
 
 //		void AddClip(std::shared_ptr<AudioClip> clip) { mAudioClip = clip; }
-		void AddClipByKey(const std::wstring& _key);
-		AudioClip* GetClip(const std::wstring& _key);
+		void AddClipByKey(const std::wstring& key);
+		AudioClip* GetClip(const std::wstring& key);
 
-		void SetWholeVolume(float _Volume);
-		void SetWholePitch(float _Pitch);
+		void SetWholeVolume(float volume);
+		void SetWholePitch(float pitch);
 
-		void SetWholeVolume_Ratio(float _Volume);
-		void SetWholePitch_Ratio(float _Pitch);
+		void SetWholeVolume_Ratio(float volume);
+		void SetWholePitch_Ratio(float pitch);
 
-		void SetVolume(const std::wstring& _key, float _Volume);
-		void SetPitch(const std::wstring& _key, float _Pitch);
+		void SetVolume(const std::wstring& key, float volume);
+		void SetPitch(const std::wstring& key, float pitch);
 
-		float GetVolume(const std::wstring& _key);
-		float GetPitch(const std::wstring& _key);
+		float GetVolume(const std::wstring& key);
+		float GetPitch(const std::wstring& key);
 
 		
 

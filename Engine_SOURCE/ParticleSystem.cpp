@@ -4,11 +4,11 @@
 #include "GameObj.h"
 #include "Transform.h"
 #include "Mesh.h"
-#include "Resources.h"
+#include "ResourceMgr.h"
 #include "StructedBuffer.h"
 #include "Texture.h"
 #include "TimeMgr.h"
-
+#include "Renderer.h"
 
 namespace dru
 {
@@ -55,7 +55,7 @@ namespace dru
 
 	void ParticleSystem::Initialize()
 	{
-		std::shared_ptr<Mesh> point = GETSINGLE(Resources)->Find<Mesh>(L"Pointmesh");
+		Mesh* point = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Pointmesh");
 
 		SetMesh(point);
 
@@ -67,11 +67,11 @@ namespace dru
 		mSharedBuffer->Create(sizeof(ParticleShared), 1, eSRVType::UAV, nullptr, true);
 	}
 
-	void ParticleSystem::update()
+	void ParticleSystem::Update()
 	{
 	}
 
-	void ParticleSystem::fixedUpdate()
+	void ParticleSystem::FixedUpdate()
 	{
 		float aliveTime = 0.1f / mFrequency;  // 프리퀀시가 높을수록 빨리생성 한번에 생성하는거
 		//누적시간
@@ -132,7 +132,7 @@ namespace dru
 		
 	}
 
-	void ParticleSystem::render() 
+	void ParticleSystem::Render() 
 	{
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 		mBuffer->BindSRV(eShaderStage::GS, 15);
@@ -150,21 +150,28 @@ namespace dru
 					, sin((float)i * -(XM_PI / (float)mMaxParticles)), 0.f, 1.f);
 	*/
 
-	void ParticleSystem::MakeParticleBufferData(Vector4 _StartPosition, UINT _MaxParticleCount, float _MinLifeTime, float _MaxLifeTime, float _Speed, float _Radian, UINT _Active)
+	void ParticleSystem::MakeParticleBufferData(Vector4 startPosition, UINT maxParticleCount, float minLifeTime, float maxLifeTime, float speed, float radian, UINT active)
 	{
-		mParticle = new Particle[_MaxParticleCount];
-		mStartPosition = _StartPosition;
-		mMaxParticles = _MaxParticleCount;
+		mParticle = new Particle[maxParticleCount];
+		mStartPosition = startPosition;
+		mMaxParticles = maxParticleCount;
 		for (size_t i = 0; i < mMaxParticles; i++)
 		{
-			mParticle[i].position = _StartPosition;
+			mParticle[i].position = startPosition;
 			mParticle[i].direction.Normalize();
-			mParticle[i].lifeTime = _MaxLifeTime;
-			mParticle[i].speed = _Speed;
-			mParticle[i].radian = _Radian;
+			mParticle[i].lifeTime = maxLifeTime;
+			mParticle[i].speed = speed;
+			mParticle[i].radian = radian;
 			mParticle[i].active = 0;
 		}
 	}
+
+	void ParticleSystem::MakeConstantBufferData(std::wstring shaderName, renderer::ParticleSystemCB CB)
+	{
+		mCS = GETSINGLE(ResourceMgr)->Find<ParticleShader>(shaderName);
+		mCBData = CB;
+	}
+
 
 
 	void ParticleSystem::SetParticleDirection(const Vector3& _Dir)

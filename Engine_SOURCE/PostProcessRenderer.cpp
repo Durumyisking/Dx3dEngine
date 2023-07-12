@@ -17,17 +17,17 @@ namespace dru
 		BaseRenderer::Initialize();
 	}
 
-	void PostProcessRenderer::update()
+	void PostProcessRenderer::Update()
 	{
-		BaseRenderer::update();
+		BaseRenderer::Update();
 	}
 
-	void PostProcessRenderer::fixedUpdate()
+	void PostProcessRenderer::FixedUpdate()
 	{
-		BaseRenderer::fixedUpdate();
+		BaseRenderer::FixedUpdate();
 	}
 
-	void PostProcessRenderer::render()
+	void PostProcessRenderer::Render()
 	{
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
@@ -41,13 +41,11 @@ namespace dru
 		mPostProcess->Clear();
 		GetMaterial()->Clear();
 
-		BaseRenderer::render();
+		BaseRenderer::Render();
 	}
 
-	void PostProcessRenderer::SetPostProcessOwner(PostProcess* _PostProcess)
+	void PostProcessRenderer::SetPostProcessOwner(PostProcess* postProcess)
 	{
-		mPostProcess = _PostProcess;
+		mPostProcess = postProcess;
 	}
-
-
 }

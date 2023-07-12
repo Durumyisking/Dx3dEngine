@@ -34,7 +34,7 @@ namespace dru
 		//mbRenderOn = true;
 	}
 
-	void Collider2D::update()
+	void Collider2D::Update()
 	{
 		if (!mbRenderOn)
 		{
@@ -42,7 +42,7 @@ namespace dru
 		}
 	}
 
-	void Collider2D::fixedUpdate()
+	void Collider2D::FixedUpdate()
 	{
 		if (nullptr == mTransform)
 			return;
@@ -67,62 +67,62 @@ namespace dru
 		renderer::debugMeshes.push_back(meshAttribute);
 	}
 
-	void Collider2D::render()
+	void Collider2D::Render()
 	{
 
 	}
 
-	void Collider2D::OnCollisionEnter(Collider2D* _oppo)
+	void Collider2D::OnCollisionEnter(Collider2D* oppo)
 	{
 		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
 		for (Script* script : scripts)
 		{
-			script->OnCollisionEnter(_oppo);
+			script->OnCollisionEnter(oppo);
 		}
 	}
 
-	void Collider2D::OnCollision(Collider2D* _oppo)
+	void Collider2D::OnCollision(Collider2D* oppo)
 	{
 		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
 		for (Script* script : scripts)
 		{
-			script->OnCollision(_oppo);
+			script->OnCollision(oppo);
 		}
 	}
 
-	void Collider2D::OnCollisionExit(Collider2D* _oppo)
+	void Collider2D::OnCollisionExit(Collider2D* oppo)
 	{
 		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
 		for (Script* script : scripts)
 		{
-			script->OnCollisionExit(_oppo);
+			script->OnCollisionExit(oppo);
 		}
 	}
 
-	void Collider2D::OnTriggerEnter(Collider2D* _oppo)
+	void Collider2D::OnTriggerEnter(Collider2D* oppo)
 	{
 		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
 		for (Script* script : scripts)
 		{
-			script->OnTriggerEnter(_oppo);
+			script->OnTriggerEnter(oppo);
 		}
 	}
 
-	void Collider2D::OnTrigger(Collider2D* _oppo)
+	void Collider2D::OnTrigger(Collider2D* oppo)
 	{
 		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
 		for (Script* script : scripts)
 		{
-			script->OnTrigger(_oppo);
+			script->OnTrigger(oppo);
 		}
 	}
 
-	void Collider2D::OnTriggerExit(Collider2D* _oppo)
+	void Collider2D::OnTriggerExit(Collider2D* oppo)
 	{
 		const std::vector<Script*>& scripts = GetOwner()->GetScripts();
 		for (Script* script : scripts)
 		{
-			script->OnTriggerExit(_oppo);
+			script->OnTriggerExit(oppo);
 		}
 	}
 

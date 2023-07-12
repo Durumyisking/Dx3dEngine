@@ -11,12 +11,12 @@ namespace dru
         GridScript();
         virtual ~GridScript();
 
-        virtual void Initialize() override;
-        virtual void update() override;
-        virtual void fixedUpdate() override;
-        virtual void render() override;
+        virtual void Initialize() final;
+        virtual void Update() final;
+        virtual void FixedUpdate() final;
+        virtual void Render() final;
 
-        void SetCamera(Camera* _Camera) { mCamera = _Camera; }
+        void SetCamera(Camera* camera) { mCamera = camera; }
 
     private:
         Camera* mCamera;

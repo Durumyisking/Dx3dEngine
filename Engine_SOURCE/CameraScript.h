@@ -1,6 +1,5 @@
 #pragma once
 #include "Script.h"
-#include "Player.h"
 
 namespace dru
 {
@@ -10,6 +9,7 @@ namespace dru
         float duration;   // 흔들림 지속 시간
     };
 
+    class Camera;
     class CameraScript :
         public Script
     {
@@ -18,13 +18,13 @@ namespace dru
         virtual ~CameraScript();
 
         virtual void Initialize() override;
-        virtual void update() override;
-        virtual void fixedUpdate() override;
-        virtual void render() override;
+        virtual void Update() override;
+        virtual void FixedUpdate() override;
+        virtual void Render() override;
 
-        virtual void OnCollisionEnter(Collider2D* _oppo);
-        virtual void OnCollision(Collider2D* _oppo);
-        virtual void OnCollisionExit(Collider2D* _oppo);
+        virtual void OnCollisionEnter(Collider2D* _oppo)override;
+        virtual void OnCollision(Collider2D* _oppo) override;
+        virtual void OnCollisionExit(Collider2D* _oppo)override;
 
         void KeyBoardMove();
         void TargetMove();

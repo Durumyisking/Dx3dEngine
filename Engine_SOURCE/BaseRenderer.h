@@ -1,36 +1,37 @@
 #pragma once
 #include "Component.h"
-#include "Mesh.h"
-#include "Material.h"
 
 namespace dru
 {
+	using namespace math;
+	class Mesh;
+	class Material;
 	class BaseRenderer : public Component
 	{
 
 	public:
-		BaseRenderer(eComponentType _Type);
+		BaseRenderer(eComponentType type);
 		virtual ~BaseRenderer();
 
 		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Update() override;
+		virtual void FixedUpdate() override;
+		virtual void Render() override;
 
-		void SetMesh(std::shared_ptr <Mesh> _Mesh) { mMesh = _Mesh; }
-		void SetMeshByKey(std::wstring _Key);
-		void SetMaterial(std::shared_ptr <Material> _Material);
-		void SetMaterialByKey(std::wstring _Key);
-		void SetAnimMaterial(std::shared_ptr <Material> _Material, Vector2 _SpriteSize);
+		void SetMesh(Mesh* mesh) { mMesh = mesh; }
+		void SetMeshByKey(std::wstring key);
+		void SetMaterial(Material* material);
+		void SetMaterialByKey(std::wstring key);
+		void SetAnimMaterial(Material* material, Vector2 spriteSize);
 
 
-		std::shared_ptr<Mesh> GetMesh() { return mMesh; }
-		std::shared_ptr<Material> GetMaterial() { return mMaterial; }
+		Mesh* GetMesh() const { return mMesh; }
+		Material* GetMaterial() const { return mMaterial; }
 
 		void ChangeSize() { mbIsChanged = true; }
-		void ChangeColor(Vector4 _color);
-		void MulColor(Vector4 _color);
-		void AddColor(Vector4 _color);
+		void ChangeColor(Vector4 color);
+		void MulColor(Vector4 color);
+		void AddColor(Vector4 color);
 
 		void LOD();
 		void LODOn() { mbUseLOD = true; }
@@ -41,8 +42,8 @@ namespace dru
 
 
 	private:
-		std::shared_ptr <Mesh> mMesh;
-		std::shared_ptr <Material> mMaterial;
+		Mesh* mMesh;
+		Material* mMaterial;
 
 		float mWidthRatio;
 		float mHeightRatio;

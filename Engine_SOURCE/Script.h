@@ -1,9 +1,12 @@
 #pragma once
 #include "Component.h"
-#include "Collider2D.h"
 
 namespace dru
 {
+	using namespace math;
+
+	class Transform;
+	class Collider2D;
 	class Script : public Component
 	{
 	public:
@@ -11,18 +14,18 @@ namespace dru
 		virtual ~Script();
 
 		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Update() override;
+		virtual void FixedUpdate() override;
+		virtual void Render() override;
 		virtual void fontRender();
 
-		virtual void OnCollisionEnter(Collider2D* _oppo) {};
-		virtual void OnCollision(Collider2D* _oppo) {};
-		virtual void OnCollisionExit(Collider2D* _oppo) {};
+		virtual void OnCollisionEnter(Collider2D* oppo) {};
+		virtual void OnCollision(Collider2D* oppo) {};
+		virtual void OnCollisionExit(Collider2D* oppo) {};
 
-		virtual void OnTriggerEnter(Collider2D* _oppo) {};
-		virtual void OnTrigger(Collider2D* _oppo) {};
-		virtual void OnTriggerExit(Collider2D* _oppo) {};
+		virtual void OnTriggerEnter(Collider2D* oppo) {};
+		virtual void OnTrigger(Collider2D* oppo) {};
+		virtual void OnTriggerExit(Collider2D* oppo) {};
 
 
 

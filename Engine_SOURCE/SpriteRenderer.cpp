@@ -19,19 +19,19 @@ namespace dru
 		BaseRenderer::Initialize();
 	}
 
-	void SpriteRenderer::update()
+	void SpriteRenderer::Update()
 	{
-		BaseRenderer::update();
+		BaseRenderer::Update();
 	}
 
-	void SpriteRenderer::fixedUpdate()
+	void SpriteRenderer::FixedUpdate()
 	{
-		BaseRenderer::fixedUpdate();
+		BaseRenderer::FixedUpdate();
 	}
 
-	void SpriteRenderer::render()
+	void SpriteRenderer::Render()
 	{
-//		BaseRenderer::render();
+//		BaseRenderer::Render();
 
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 

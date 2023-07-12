@@ -16,7 +16,7 @@ namespace gui
 		virtual void LateUpdate() override;
 
 		void SetTarget(dru::GameObj* target) { mTarget = target; }
-		dru::GameObj* GetTarget() { return mTarget; }
+		dru::GameObj* GetTarget() const { return mTarget; }
 
 	private:
 		dru::enums::eComponentType mType;

@@ -2,7 +2,7 @@
 #include "ComputeShader.h"
 #include "Texture.h"
 
-namespace dru::graphics
+namespace dru
 {
     class PaintShader :
         public ComputeShader
@@ -14,11 +14,11 @@ namespace dru::graphics
 		virtual void Bind();
 		virtual void Clear();
 
-		void SetTarget(std::shared_ptr<Texture> _target) { mTarget = _target; }
-		std::shared_ptr<Texture> GetTarget() { return mTarget; }
+		void SetTarget(Texture* target) { mTarget = target; }
+		Texture* GetTarget() const { return mTarget; }
 
 	private:
-		std::shared_ptr<Texture> mTarget;
+		Texture* mTarget;
     };
 
 }

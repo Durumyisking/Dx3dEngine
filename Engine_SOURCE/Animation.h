@@ -6,7 +6,7 @@
 
 
 using namespace dru::math;
-using namespace dru::graphics;
+;
 
 namespace dru
 {
@@ -40,16 +40,16 @@ namespace dru
 		void fixedUpdate();
 		void render();
 
-		void Create(const std::wstring& _name, std::shared_ptr<Texture> _atlas, Vector2 _leftTop, Vector2 _size, Vector2 _offset, UINT _spriteLength, Vector2 _Ratio, float _duration, bool _Reverse);
+		void Create(const std::wstring& name, Texture* atlas, Vector2 leftTop, Vector2 size, Vector2 offset, UINT spriteLength, Vector2 ratio, float duration, bool reverse);
 		void BindShader();
-		void BindSpriteToShader(renderer::AnimationCB _Sprite);
+		void BindSpriteToShader(renderer::AnimationCB sprite);
 		void Clear();
 		void Reset();
-		void SetDuration(float _Value);
+		void SetDuration(float value);
 		 
 		bool IsCompleted() const { return mbComplete; }
 		bool IsCompleteEventPlayed() const { return mbCompleteEventPlayed; }
-		void SetCompleteEventPlayed(bool _bFlag) { mbCompleteEventPlayed = _bFlag; }
+		void SetCompleteEventPlayed(bool bFlag) { mbCompleteEventPlayed = bFlag; }
 
 		int GetIndex() const { return mIndex; }
 
@@ -61,7 +61,7 @@ namespace dru
 		class Animator* mAnimator;
 		std::wstring mAnimationName;
 
-		std::shared_ptr<Texture> mAtlas;
+		Texture* mAtlas;
 		std::vector<Sprite> mSpriteSheet;
 		int mIndex;
 		float mTime;

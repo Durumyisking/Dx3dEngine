@@ -1,7 +1,7 @@
 #include "Texture.h"
 
 
-namespace dru::graphics
+namespace dru
 {
 	Texture::Texture()
 		: Resource(eResourceType::Texture)
@@ -27,14 +27,14 @@ namespace dru::graphics
 		GetDevice()->BindShaderResource(eShaderStage::PS, startSlot, &srv);
 	}
 
-	bool Texture::Create(UINT _width, UINT _height, DXGI_FORMAT _format, UINT _bindflag)
+	bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 	{
-		mDesc.BindFlags = _bindflag;
+		mDesc.BindFlags = bindflag;
 		mDesc.Usage = D3D11_USAGE_DEFAULT;
 		mDesc.CPUAccessFlags = 0;
-		mDesc.Format = _format;
-		mDesc.Width = _width;
-		mDesc.Height = _height;
+		mDesc.Format = format;
+		mDesc.Width = width;
+		mDesc.Height = height;
 		mDesc.ArraySize = 1;
 
 		mDesc.SampleDesc.Count = 1;
@@ -47,17 +47,17 @@ namespace dru::graphics
 		{
 			return false;
 		}
-		if (_bindflag & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
+		if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
 		{
 			if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), nullptr, mDSV.GetAddressOf()))
 			{
 				return false;
 			}
 		}
-		if (_bindflag & D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE)
+		if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE)
 		{
 			D3D11_SHADER_RESOURCE_VIEW_DESC tSRVdesc = {};
-			tSRVdesc.Format = _format;
+			tSRVdesc.Format = format;
 			tSRVdesc.Texture2D.MipLevels = 0;
 			tSRVdesc.Texture2D.MostDetailedMip = 0;
 			tSRVdesc.ViewDimension = D3D11_SRV_DIMENSION::D3D_SRV_DIMENSION_TEXTURE2D;
@@ -67,10 +67,10 @@ namespace dru::graphics
 				return false;
 			}
 		}
-		if (_bindflag & D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS)
+		if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS)
 		{
 			D3D11_UNORDERED_ACCESS_VIEW_DESC tUAVdesc = {};
-			tUAVdesc.Format = _format;
+			tUAVdesc.Format = format;
 			tUAVdesc.Texture2D.MipSlice = 0;
 			tUAVdesc.ViewDimension = D3D11_UAV_DIMENSION::D3D11_UAV_DIMENSION_TEXTURE2D;
 
@@ -83,9 +83,9 @@ namespace dru::graphics
 		return true;
 	}
 
-	bool Texture::Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> _texture)
+	bool Texture::Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture)
 	{
-		mTexture = _texture;
+		mTexture = texture;
 		mTexture->GetDesc(&mDesc);
 
 		if (mDesc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
@@ -176,22 +176,22 @@ namespace dru::graphics
 		return S_OK;
 	}
 
-	void Texture::BindShaderResource(eShaderStage _Stage, UINT _Slot)
+	void Texture::BindShaderResource(eShaderStage stage, UINT slot)
 	{
-		GetDevice()->BindShaderResource(_Stage, _Slot, mSRV.GetAddressOf());
+		GetDevice()->BindShaderResource(stage, slot, mSRV.GetAddressOf());
 	}
 
-	void Texture::BindUnorderedAccessview(UINT _Slot)
+	void Texture::BindUnorderedAccessview(UINT slot)
 	{
 		UINT i = -1; 
-		GetDevice()->BindUnorderedAccessView(_Slot, 1, mUAV.GetAddressOf(), &i);
+		GetDevice()->BindUnorderedAccessView(slot, 1, mUAV.GetAddressOf(), &i);
 	}
 
-	void Texture::ClearUnorderedAccessview(UINT _Slot)
+	void Texture::ClearUnorderedAccessview(UINT slot)
 	{
 		ID3D11UnorderedAccessView* p = nullptr;
 		UINT i = -1;
-		GetDevice()->BindUnorderedAccessView(_Slot, 1, &p, &i);
+		GetDevice()->BindUnorderedAccessView(slot, 1, &p, &i);
 	}
 
 

@@ -3,10 +3,10 @@
 
 namespace dru
 {
-	void SetRandIndex(std::wstring& _String, UINT _Range)
+	void SetRandIndex(std::wstring& string, UINT range)
 	{
-		std::wstring idx =  std::to_wstring(math::GetRandomNumber(1, _Range));
-		_String += idx;
+		std::wstring idx =  std::to_wstring(math::GetRandomNumber(1, range));
+		string += idx;
 	}
 	
 

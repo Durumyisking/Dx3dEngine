@@ -1,5 +1,5 @@
 #include "guiDebugObject.h"
-
+#include "Component.h"
 
 namespace gui
 {
@@ -19,7 +19,7 @@ namespace gui
 			if (comp == nullptr)
 				continue;
 
-			comp->fixedUpdate();
+			comp->FixedUpdate();
 		}
 	}
 }

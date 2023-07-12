@@ -1,16 +1,8 @@
 #include "SceneTitle.h"
 #include "TimeMgr.h"
 
-#include "FadeScript.h"
 #include "Object.h"
 #include "Camera.h"
-#include "Input.h"
-#include "Collider2D.h"
-#include "Animator.h"
-
-#include "AudioSource.h"
-
-#include "Layer.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "SpriteRenderer.h"
@@ -23,8 +15,16 @@
 #include "GridScript.h"
 
 #include "Application.h"
+#include "Player.h"
 
-extern dru::Application appliaction;
+#include "Physical.h"
+#include "PhysXRigidBody.h"
+#include "PhysXCollider.h"
+#include "PlayerScript.h"
+#include "PhysicalMovement.h"
+
+extern dru::Application application;
+
 
 namespace dru
 {
@@ -85,8 +85,8 @@ namespace dru
 		
 			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
 
-			gridMr->SetMesh(dru::GETSINGLE(Resources)->Find<dru::Mesh>(L"Gridmesh"));
-			gridMr->SetMaterial(dru::GETSINGLE(Resources)->Find<Material>(L"GridMaterial"));
+			gridMr->SetMesh(dru::GETSINGLE(ResourceMgr)->Find<dru::Mesh>(L"Gridmesh"));
+			gridMr->SetMaterial(dru::GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
 			gridMr->LODOff();
 
 			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
@@ -108,6 +108,14 @@ namespace dru
 			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
 		}
 
+		{
+			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
+			pointLight->GetComponent<Transform>()->SetPosition(Vector3(2.5f, 0.f, 0.f));
+			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
+			lightComp->SetRadius(10.f);
+		}
 
 		{
 			Player* player = object::Instantiate<Player>(eLayerType::Player);
@@ -125,18 +133,16 @@ namespace dru
 			player->SetName(L"Player");
 			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player->AddComponent<PlayerScript>(eComponentType::Script);
+
+			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::KINEMATIC, eGeometryType::BOX, Vector3(30.f, 30.f, 1.f));
+			
+			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+			rigid->RemoveGravity();
+			player->AddComponent<PhysXCollider>(eComponentType::Collider);
+			player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 			player->SetScale({ 5.f, 5.f, 5.f });
 		}
-
-		{
-			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(5.f, 0.f, 5.f));
-	  	player->SetName(L"Player");
-			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
-			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player->SetScale({ 5.f, 5.f, 5.f });
-		}
-
 
 		Scene::Enter();
 	}

@@ -1,8 +1,8 @@
 #pragma once
-#include "Graphics.h"
-#include "Resource.h"
+#include "EngineResource.h"
+#include "GraphicDevice.h"
 
-namespace dru::graphics
+namespace dru
 {
 	class ComputeShader : public Resource
 	{
@@ -12,7 +12,7 @@ namespace dru::graphics
 		virtual ~ComputeShader();
 
 		virtual HRESULT Load(const std::wstring& path);
-		void Create(const std::wstring& _Path, const std::string& _funcName);
+		void Create(const std::wstring& path, const std::string& funcName);
 		void OnExcute();
 
 		virtual void Bind();

@@ -4,7 +4,6 @@
 namespace dru
 {
 	using namespace math;
-	class CameraScript;
 
 	enum class eProjectionType
 	{
@@ -16,7 +15,6 @@ namespace dru
 
 	class Camera : public Component
 	{
-		friend class CameraScript;
 	public:
 
 		__forceinline static Matrix& GetGpuViewMatrix() { return View; }
@@ -28,20 +26,20 @@ namespace dru
 		virtual ~Camera();
 
 		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		virtual void Update() override;
+		virtual void FixedUpdate() override;
+		virtual void Render() override;
 
 		void CreateViewMatrix();
 		void CreateProjectionMatrix();
 		
 		void RegisterCameraInRenderer();
 
-		void TurnLayerMask(eLayerType _layer, bool _enable = true);
+		void TurnLayerMask(eLayerType layer, bool enable = true);
 		void EnableLayerMasks() { mLayerMask.set(); } // 전부다 true로 }
 		void DisableLayerMasks() { mLayerMask.reset(); }
 
-		void SetProjectionType(eProjectionType _Type) { mType = _Type; }
+		void SetProjectionType(eProjectionType type) { mType = type; }
 		eProjectionType GetProjectionType() { return mType; }
 
 		float GetScale() const { return mScale; }
@@ -50,13 +48,16 @@ namespace dru
 		Matrix& GetProjectionMatrix() { return mProjection; }
 
 
-		void SetTarget(GameObj* _Target);
+		void SetTarget(GameObj* target);
 		GameObj* GetTarget() const { return mTargetObj; }
+
+		float GetCamSpeed() const { return mCamSpeed; }
+
+		float GetFarDistFromTarget() const { return mFarDist; }
+		Vector3 GetCamDir() const { return mCamDir; }
 
 		void SmoothOn() { mSmooth = true; }
 		void SmoothOff() { mSmooth = false; }
-
-		CameraScript* GetCamScript();
 
 	private:
 		void sortGameObjects();
@@ -65,7 +66,7 @@ namespace dru
 		void renderTransparent();
 		
 		void pushGameObjectToRenderingModes(GameObj* obj);
-		bool renderPassCheck(GameObj* _obj);
+		bool renderPassCheck(GameObj* obj);
 
 
 	private:

@@ -143,6 +143,27 @@
     <Filter Include="Common\Font">
       <UniqueIdentifier>{00f7409f-6c39-4951-b9ab-a5158a532e47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PhysX">
+      <UniqueIdentifier>{79216596-84bd-4162-9178-37eed40f0926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysX\Manager">
+      <UniqueIdentifier>{1d9727da-458d-4c71-9094-868de38323b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Physical">
+      <UniqueIdentifier>{447191a7-6235-4f9a-845e-321c7946b8d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Physics">
+      <UniqueIdentifier>{c8d076f8-c697-4213-b101-b4cfd19830ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\RigidBody\PhysX">
+      <UniqueIdentifier>{39bc9a29-686d-42ce-a072-eac726290252}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Collider\PhysX">
+      <UniqueIdentifier>{7a7234c4-dd75-45c7-80d1-7d1902ecdf8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Movement">
+      <UniqueIdentifier>{92b997d7-fbfb-4ec2-802e-5c583ea87d78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -160,7 +181,7 @@
     <ClInclude Include="Graphics.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
+    <ClInclude Include="EngineResource.h">
       <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
@@ -181,7 +202,7 @@
     <ClInclude Include="GameObj.h">
       <Filter>Common\GameObj</Filter>
     </ClInclude>
-    <ClInclude Include="Resources.h">
+    <ClInclude Include="ResourceMgr.h">
       <Filter>Resource\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
@@ -315,15 +336,52 @@
     <ClInclude Include="FontWrapper.h">
       <Filter>Common\Font</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Input</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerScript.h">
       <Filter>Common\GameObj\Player</Filter>
     </ClInclude>
     <ClInclude Include="Macro.h" />
     <ClInclude Include="def.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="InputMgr.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="FileMgr.h" />
+    <ClInclude Include="PhysicalMovement.h">
+      <Filter>Common\Component\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXCollider.h">
+      <Filter>Common\Component\Collider\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysXRigidBody.h">
+      <Filter>Common\Component\RigidBody\PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysX.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PxInitialization.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicalProperties.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsScene.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PxDispathcer.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PxEventCallback.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PxFilter.h">
+      <Filter>PhysX</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsMgr.h">
+      <Filter>PhysX\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Physical.h">
+      <Filter>Common\Component\Physical</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -336,14 +394,11 @@
     <ClCompile Include="GraphicDevice.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Resource.cpp">
+    <ClCompile Include="EngineResource.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Common\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="TimeMgr.cpp">
       <Filter>Time</Filter>
@@ -354,7 +409,7 @@
     <ClCompile Include="GameObj.cpp">
       <Filter>Common\GameObj</Filter>
     </ClCompile>
-    <ClCompile Include="Resources.cpp">
+    <ClCompile Include="ResourceMgr.cpp">
       <Filter>Resource\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
@@ -490,6 +545,46 @@
     </ClCompile>
     <ClCompile Include="druEnums.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="InputMgr.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="FileMgr.cpp" />
+    <ClCompile Include="PhysicalMovement.cpp">
+      <Filter>Common\Component\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXCollider.cpp">
+      <Filter>Common\Component\Collider\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXRigidBody.cpp">
+      <Filter>Common\Component\RigidBody\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysX.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicalProperties.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsScene.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PxDispathcer.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PxEventCallback.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PxFilter.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PxInitialization.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsMgr.cpp">
+      <Filter>PhysX\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Physical.cpp">
+      <Filter>Common\Component\Physical</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

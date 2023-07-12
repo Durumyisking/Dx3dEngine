@@ -2,18 +2,20 @@
 #include "Texture.h"
 #include "Transform.h"
 #include "GameObj.h"
+#include "Material.h"
+#include "Mesh.h"
 
 namespace dru
 {
-	BaseRenderer::BaseRenderer(eComponentType _Type)
-		:Component(_Type)
+	BaseRenderer::BaseRenderer(eComponentType type)
+		:Component(type)
 		, mbIsChanged(false)
 		, mbIsAnim(false)
 		, mbUseLOD(true)
 		, mSpriteSize(Vector2::Zero)
 	{
 		// 디폴트 매시 지정
-		std::shared_ptr<Mesh> mesh = GETSINGLE(Resources)->Find<Mesh>(L"Cubemesh");
+		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
 		SetMesh(mesh);
 	}
@@ -23,10 +25,10 @@ namespace dru
 	void BaseRenderer::Initialize()
 	{
 	}
-	void BaseRenderer::update()
+	void BaseRenderer::Update()
 	{
 	}
-	void BaseRenderer::fixedUpdate()
+	void BaseRenderer::FixedUpdate()
 	{
 		if (mbIsChanged)
 		{
@@ -51,53 +53,53 @@ namespace dru
 		}
 	}
 
-	void BaseRenderer::render()
+	void BaseRenderer::Render()
 	{
 		if(mbUseLOD)
 			LOD();	
 	}
 
-	void BaseRenderer::SetMeshByKey(std::wstring _Key)
+	void BaseRenderer::SetMeshByKey(std::wstring key)
 	{
-		mMesh = GETSINGLE(Resources)->Find<Mesh>(_Key);
+		mMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(key);
 	}
 
-	void BaseRenderer::SetMaterial(std::shared_ptr<Material> _Material)
+	void BaseRenderer::SetMaterial(Material* material)
 	{
-		mMaterial = _Material;
+		mMaterial = material;
 
 		// adjustTexture();
 	}
 
-	void BaseRenderer::SetMaterialByKey(std::wstring _Key)
+	void BaseRenderer::SetMaterialByKey(std::wstring key)
 	{
-		mMaterial = GETSINGLE(Resources)->Find<Material>(_Key);
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
 
 		// adjustTexture();
 	}
 
-	void BaseRenderer::SetAnimMaterial(std::shared_ptr<Material> _Material, Vector2 _SpriteSize)
+	void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
 	{
-		mMaterial = _Material;
+		mMaterial = material;
 		mbIsAnim = true;
-		mSpriteSize = _SpriteSize;
+		mSpriteSize = spriteSize;
 		// adjustTexture();
 	}
 
-	void BaseRenderer::ChangeColor(Vector4 _color)
+	void BaseRenderer::ChangeColor(Vector4 color)
 	{
 		MulColor(Vector4::Zero);
-		AddColor(_color);
+		AddColor(color);
 	}
 
-	void BaseRenderer::MulColor(Vector4 _color)
+	void BaseRenderer::MulColor(Vector4 color)
 	{
-		mMaterial->SetData(eGPUParam::Vector4_1, &_color);
+		mMaterial->SetData(eGPUParam::Vector4_1, &color);
 	}
 
-	void BaseRenderer::AddColor(Vector4 _color)
+	void BaseRenderer::AddColor(Vector4 color)
 	{
-		mMaterial->SetData(eGPUParam::Vector4_2, &_color);
+		mMaterial->SetData(eGPUParam::Vector4_2, &color);
 	}
 
 	void BaseRenderer::LOD()
@@ -111,18 +113,18 @@ namespace dru
 		{
 			if (distance > 20.f)
 			{
-				mMaterial.get()->SetShaderByKey(L"FlatShader");
+				mMaterial->SetShaderByKey(L"FlatShader");
 			}
 			else
 			{
-				mMaterial.get()->SetShaderByKey(L"PhongShader");
+				mMaterial->SetShaderByKey(L"PhongShader");
 			}
 		}
 	}
 
 	void BaseRenderer::adjustTexture()
 	{
-		std::shared_ptr<Texture> texture = GetMaterial()->GetTexture(eTextureSlot::T0);
+		Texture* texture = GetMaterial()->GetTexture(eTextureSlot::T0);
 
 		if (nullptr == texture)
 			return;

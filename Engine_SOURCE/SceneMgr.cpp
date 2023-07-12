@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "SceneTitle.h"
 #include "Layer.h"
+#include "GameObj.h"
 
 namespace dru
 {
@@ -33,32 +34,32 @@ namespace dru
 
 	}
 
-	void SceneMgr::update()
+	void SceneMgr::Update()
 	{
 		mActiveScene->update();
 	}
 
-	void SceneMgr::fixedUpdate()
+	void SceneMgr::FixedUpdate()
 	{
 		mActiveScene->fixedUpdate();
 	}
 
-	void SceneMgr::render()
+	void SceneMgr::Render()
 	{
 		mActiveScene->render();
 	}
 
-	void SceneMgr::fontRender()
+	void SceneMgr::FontRender()
 	{
 		mActiveScene->fontRender();
 	}
 
-	void SceneMgr::destory()
+	void SceneMgr::Destory()
 	{
 		mActiveScene->destroy();
 	}
 
-	void SceneMgr::release()
+	void SceneMgr::Release()
 	{
 		for (Scene* scene : mScenes)
 		{
@@ -67,14 +68,14 @@ namespace dru
 		}
 	}
 
-	void SceneMgr::LoadScene(eSceneType _Type)
+	void SceneMgr::LoadScene(eSceneType type)
 	{
 		if (mActiveScene)
 			mActiveScene->Exit();
 
 		std::vector<GameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
 
-		mActiveScene = mScenes[static_cast<UINT>(_Type)];
+		mActiveScene = mScenes[static_cast<UINT>(type)];
 
 		for (GameObj* obj : gameObjs)
 		{
@@ -99,12 +100,12 @@ namespace dru
 		mLateEvent.clear();
 	}
 
-	void SceneMgr::DontDestroyOnLoad(GameObj* _GameObj)
+	void SceneMgr::DontDestroyOnLoad(GameObj* gameObj)
 	{
-		if (nullptr == _GameObj)
+		if (nullptr == gameObj)
 			return;
 
-		_GameObj->DontDestroy();
+		gameObj->DontDestroy();
 	}
 
 }

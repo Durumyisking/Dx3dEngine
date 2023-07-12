@@ -34,7 +34,7 @@ namespace gui
 
 		//for ( Widget* child : mChilds )
 		//{
-		//	child->update();
+		//	child->Update();
 		//}
 	}
 

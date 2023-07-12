@@ -1,8 +1,9 @@
 #pragma once
-#include "GameObj.h"
+#include "Entity.h"
 
 namespace dru
 {
+	class GameObj;
 	class Layer : public DruEntity
 	{
 	public:
@@ -18,7 +19,7 @@ namespace dru
 		void DeleteObject ();
 
 
-		void AddGameObject(GameObj* _GameObj, eLayerType _Type);
+		void AddGameObject(GameObj* gameObj, enums::eLayerType type);
 		const std::vector<GameObj*>& GetGameObjects() { return mGameObjs; }
 		std::vector<GameObj*> GetDontDestroyObjects();
 

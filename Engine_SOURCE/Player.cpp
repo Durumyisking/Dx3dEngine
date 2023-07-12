@@ -1,10 +1,9 @@
 #include "Player.h"
-#include "CameraScript.h"
-#include "GameObj.h"
 #include "RigidBody.h"
-#include "Input.h"
+#include "InputMgr.h"
 #include "TimeMgr.h"
 #include "PlayerScript.h"
+#include "MeshRenderer.h"
 
 namespace dru
 {
@@ -15,8 +14,6 @@ namespace dru
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
 
 		MeshRenderer* spriteRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
-
-		PlayerScript* script = AddComponent<PlayerScript>(eComponentType::Script);
 	}
 
 	Player::~Player()

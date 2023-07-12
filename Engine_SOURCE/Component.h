@@ -1,7 +1,5 @@
 #pragma once
 #include "Entity.h"
-#include "druMath.h"
-
 
 namespace dru
 {
@@ -11,17 +9,17 @@ namespace dru
 	class Component : public DruEntity
 	{
 	public:
-		Component(eComponentType _Type);
+		Component(eComponentType type);
 		virtual ~Component();
 
 		virtual void Initialize()	= 0;
-		virtual void update()		= 0;
-		virtual void fixedUpdate()	= 0;
-		virtual void render()		= 0;
+		virtual void Update()		= 0;
+		virtual void FixedUpdate()	= 0;
+		virtual void Render()		= 0;
 
 		eComponentType GetOrder() { return mType; }
 
-		void SetOwner(GameObj* _Owner) { mOwner = _Owner; }
+		void SetOwner(GameObj* owner) { mOwner = owner; }
 		GameObj* GetOwner() { return mOwner; }
 
 		template <typename T>

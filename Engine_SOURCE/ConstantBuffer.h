@@ -3,7 +3,7 @@
 
 using namespace dru::enums;
 
-namespace dru::graphics
+namespace dru
 {
 	class ConstantBuffer : GpuBuffer
 	{
@@ -11,12 +11,12 @@ namespace dru::graphics
 
 	public:
 		ConstantBuffer();
-		ConstantBuffer(eCBType _Type);
+		ConstantBuffer(eCBType type);
 		virtual ~ConstantBuffer();	
 
-		bool Create(UINT _Size);
-		void SetData(void* _Data);
-		void Bind(eShaderStage _Stage);
+		bool Create(UINT size);
+		void SetData(void* data);
+		void Bind(eShaderStage stage);
 		void Clear();
 
 

@@ -2,7 +2,7 @@
 #include "Light.hlsli"
 #include "Particle.hlsli"
 #include "Sampler.hlsli"
-#include "Random.hlsli"
+
 
 struct VTX_IN
 {
@@ -34,17 +34,17 @@ struct VTX_OUT
 #define ALPHA(target, value) float4(target.r, target.g, target.b, (float)value)
 
 
-float3 RotatePointZ(float3 _point, float _radian, float3 _rotationCenter)
+float3 RotatePointZ(float3 pointVal, float radian, float3 rotationCenter)
 {
-    float cosTheta = cos(_radian);
-    float sinTheta = sin(_radian);
+    float cosTheta = cos(radian);
+    float sinTheta = sin(radian);
     float3 rotatedPoint;
     
-    float3 translatedPoint = _point - _rotationCenter;
+    float3 translatedPoint = pointVal - rotationCenter;
 
     rotatedPoint.x = translatedPoint.x * cosTheta - translatedPoint.y * sinTheta;
     rotatedPoint.y = translatedPoint.x * sinTheta + translatedPoint.y * cosTheta;
     rotatedPoint.z = translatedPoint.z;
     
-    return rotatedPoint + _rotationCenter;
+    return rotatedPoint + rotationCenter;
 }

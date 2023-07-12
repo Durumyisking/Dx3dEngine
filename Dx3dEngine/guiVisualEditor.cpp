@@ -38,8 +38,8 @@ namespace gui
             mDockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
         }
 
-        // When using ImGuiDockNodeFlags_PassthruCentralNode, DockSpace() will render our background
-        // and handle the pass-thru hole, so we ask Begin() to not render a background.
+        // When using ImGuiDockNodeFlags_PassthruCentralNode, DockSpace() will Render our background
+        // and handle the pass-thru hole, so we ask Begin() to not Render a background.
         if (mDockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
             mWindow_flags |= ImGuiWindowFlags_NoBackground;
 

@@ -12,6 +12,7 @@
 #include "SpriteRenderer.h"
 #include "MeshRenderer.h"
 
+
 namespace dru
 {
 	
@@ -82,13 +83,13 @@ namespace dru
 				}
 			}
 
-			comp->update();
+			comp->Update();
 		}
 		for (Component* script : mScripts)
 		{
 			if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause )
 				continue;
-			script->update();
+			script->Update();
 		}
 	}
 
@@ -105,14 +106,14 @@ namespace dru
 					continue;
 				}
 			}
-			comp->fixedUpdate();
+			comp->FixedUpdate();
 		}
 
 		for (Component* script : mScripts)
 		{
 			if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause)
 				continue;
-			script->fixedUpdate();
+			script->FixedUpdate();
 		}
 	}
 
@@ -122,14 +123,14 @@ namespace dru
 		{
 			if (nullptr == comp)
 				continue;
-			comp->render();
+			comp->Render();
 		}
 		
 		for (Component* script : mScripts)
 		{
 			if (nullptr == script)
 				continue;
-			script->render();
+			script->Render();
 		}
 	}
 
@@ -143,41 +144,41 @@ namespace dru
 		}
 	}
 
-	void GameObj::AddComponent(Component* _Component)
+	void GameObj::AddComponent(Component* component)
 	{
-		eComponentType order = _Component->GetOrder();
+		eComponentType order = component->GetOrder();
 
 
 		if (order != eComponentType::Script)
 		{
-			mComponents[static_cast<UINT>(order)] = _Component;
+			mComponents[static_cast<UINT>(order)] = component;
 			mComponents[static_cast<UINT>(order)]->SetOwner(this);
 		}
 		else
 		{
-			mScripts.push_back(dynamic_cast<Script*>(_Component));
-			_Component->SetOwner(this);
+			mScripts.push_back(dynamic_cast<Script*>(component));
+			component->SetOwner(this);
 		}
 	}
 
-	void GameObj::SetPos(Vector3 _Value)
+	void GameObj::SetPos(Vector3 value)
 	{
 		Transform* tr = GetComponent<Transform>();
 
-		tr->SetPosition(_Value);		
+		tr->SetPosition(value);		
 	}
 
-	void GameObj::SetPosAbs(Vector3 _Value)
+	void GameObj::SetPosAbs(Vector3 value)
 	{
 		Transform* tr = GetComponent<Transform>();
-		tr->SetPosition(_Value);
+		tr->SetPosition(value);
 	}
 
-	void GameObj::SetScale(Vector3 _Value)
+	void GameObj::SetScale(Vector3 value)
 	{
 		if (nullptr != GetComponent<Transform>())
 		{
-			GetComponent<Transform>()->SetScale(_Value);
+			GetComponent<Transform>()->SetScale(value);
 		}
 		if (nullptr != GetComponent<SpriteRenderer>())
 		{
@@ -189,11 +190,11 @@ namespace dru
 		}
 	}
 
-	void GameObj::SetRotation(Vector3 _Value)
+	void GameObj::SetRotation(Vector3 value)
 	{
 		if (nullptr != GetComponent<Transform>())
 		{
-			GetComponent<Transform>()->SetRotation(_Value);
+			GetComponent<Transform>()->SetRotation(value);
 		}
 	}
 
@@ -231,19 +232,19 @@ namespace dru
 		return GetComponent<Transform>()->GetRotation();
 	}
 
-	void GameObj::SetMaterial(std::shared_ptr<Material> _Material)
+	void GameObj::SetMaterial(Material* material)
 	{
 		if (nullptr != GetComponent<SpriteRenderer>())
 		{
-			GetComponent<SpriteRenderer>()->SetMaterial(_Material);
+			GetComponent<SpriteRenderer>()->SetMaterial(material);
 		}
 	}
 
-	void GameObj::SetMesh(std::shared_ptr<Mesh> _Mesh)
+	void GameObj::SetMesh(Mesh* mesh)
 	{
 		if (nullptr != GetComponent<SpriteRenderer>())
 		{
-			GetComponent<SpriteRenderer>()->SetMesh(_Mesh);
+			GetComponent<SpriteRenderer>()->SetMesh(mesh);
 		}
 	}
 
@@ -252,7 +253,7 @@ namespace dru
 		BaseRenderer* baseRenderer = GetComponent<BaseRenderer>();
 		if (baseRenderer)
 		{
-			std::shared_ptr<Material> mtrl = baseRenderer->GetMaterial();
+			Material* mtrl = baseRenderer->GetMaterial();
 			if (mtrl)
 			{
 
@@ -267,25 +268,25 @@ namespace dru
 		}
 
 	}
-	bool GameObj::MoveToTarget_Smooth_bool(GameObj* _target, float _speed, bool _zOn, eDir _dir)
+	bool GameObj::MoveToTarget_Smooth_bool(GameObj* target, float speed, bool zOn, eDir dir)
 	{
 
-		if (!_target)
+		if (!target)
 			return false;
 
 		Vector3 TargetPos;
 		Vector3 ObjPos;
 		Vector3 result;
 
-		if (_zOn)
+		if (zOn)
 		{
-			TargetPos = _target->GetPos();
+			TargetPos = target->GetPos();
 			ObjPos = GetPos();
 			result = TargetPos;
 		}
 		else
 		{
-			TargetPos = Vector3(_target->GetPos().x, _target->GetPos().y, 0.f);
+			TargetPos = Vector3(target->GetPos().x, target->GetPos().y, 0.f);
 			ObjPos = Vector3(GetPos().x, GetPos().y, 0.f);
 			result = Vector3(TargetPos.x, TargetPos.y, GetPos().z);
 		}
@@ -299,7 +300,7 @@ namespace dru
 		Vector3 Dir = (TargetPos - ObjPos);
 		Dir.Normalize();
 
-		switch (_dir)
+		switch (dir)
 		{
 		case dru::enums::eDir::UP:
 		case dru::enums::eDir::DOWN:
@@ -313,7 +314,7 @@ namespace dru
 			break;
 		}
 
-		Speed = Distance / _speed;
+		Speed = Distance / speed;
 
 		if (Distance < 0.01f)
 		{
@@ -336,12 +337,12 @@ namespace dru
 
 	}
 
-	Vector3 GameObj::MoveToTarget_Smooth_vector3(GameObj* _target, float _speed, bool _zOn, eDir _dir)
+	Vector3 GameObj::MoveToTarget_Smooth_vector3(GameObj* target, float speed, bool zOn, eDir dir)
 	{
-		if (!_target)
+		if (!target)
 			return Vector3::Zero;
 
-		Vector3 TargetPos = Vector3(_target->GetPos().x, _target->GetPos().y, 0.f);
+		Vector3 TargetPos = Vector3(target->GetPos().x, target->GetPos().y, 0.f);
 		Vector3 ObjPos = Vector3(GetPos().x, GetPos().y, 0.f);
 		Vector3 result = Vector3(TargetPos.x, TargetPos.y, GetPos().z);
 
@@ -353,7 +354,7 @@ namespace dru
 		Vector3 Dir = (TargetPos - ObjPos);
 		Dir.Normalize();
 
-		switch (_dir)
+		switch (dir)
 		{
 		case dru::enums::eDir::UP:
 		case dru::enums::eDir::DOWN:
@@ -371,7 +372,7 @@ namespace dru
 			break;
 		}
 
-		Speed = Distance / _speed;
+		Speed = Distance / speed;
 
 		if (Distance < 0.001f)
 		{

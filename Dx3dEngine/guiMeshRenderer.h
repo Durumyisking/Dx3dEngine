@@ -3,6 +3,8 @@
 
 namespace gui
 {
+	class Material;
+	class Mesh;
 	class MeshRenderer : public Component
 	{
 	public:
@@ -17,7 +19,7 @@ namespace gui
 		void SetMaterial(std::string key);
 
 	private:
-		std::shared_ptr<class dru::graphics::Material> mMaterial;
-		std::shared_ptr<class dru::Mesh> mMesh;
+		dru::Material* mMaterial;
+		dru::Mesh* mMesh;
 	};
 }
