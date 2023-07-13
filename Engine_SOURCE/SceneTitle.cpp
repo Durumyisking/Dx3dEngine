@@ -22,7 +22,9 @@
 #include "PhysXCollider.h"
 #include "PlayerScript.h"
 #include "PhysicalMovement.h"
-
+#include "PhysicsMgr.h"
+#include "PhysicsScene.h"
+#include "PhysX.h"
 
 
 extern dru::Application application;
@@ -50,6 +52,9 @@ namespace dru
 
 	void SceneTitle::update()
 	{
+		//PxMaterial* mat = GETSINGLE(PhysicsMgr)->GetEnvironment()->GetPhysics()->createMaterial(0.5f, 0.5f, 0.5f);
+
+		//GETSINGLE(PhysicsMgr)->GetEnvironment()->GetPhysicsScene()->CreateDynamic(PxTransform(PxVec3(rand() % 8, 4 * (rand() % 5), 20)), PxSphereGeometry(0.5f), *mat, PxVec3(0, -30, -60));
 
 	
 		Scene::update();
@@ -137,8 +142,12 @@ namespace dru
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 			player->AddComponent<PlayerScript>(eComponentType::Script);
 
-			player->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::Kinematic, eGeometryType::Sphere, Vector3(5.f, 5.f, 5.f));
-			
+			Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+			physical->InitialPhysics(eActorType::Kinematic, eGeometryType::Sphere, Vector3(5.f, 5.f, 5.f));
+			PxRigidDynamic* dy =  physical->GetActor<PxRigidDynamic>();
+			PxRigidBodyExt::updateMassAndInertia(*dy, 10.0f);
+
+
 			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 			//rigid->RemoveGravity();
 			player->AddComponent<PhysXCollider>(eComponentType::Collider);

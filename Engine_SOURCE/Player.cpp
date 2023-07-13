@@ -1,9 +1,9 @@
 #include "Player.h"
-#include "RigidBody.h"
 #include "InputMgr.h"
 #include "TimeMgr.h"
 #include "PlayerScript.h"
 #include "MeshRenderer.h"
+#include "PhysXRigidBody.h"
 
 namespace dru
 {
@@ -46,9 +46,21 @@ namespace dru
 
 	void Player::fontRender()
 	{
+	}
 
+	void Player::OnCollisionEnter(GameObj* gameObject)
+	{
+	}
 
+	void Player::OnTriggerEnter(GameObj* gameObject)
+	{
+		PhysXRigidBody* rigid = GetComponent<PhysXRigidBody>();
+		rigid->RemoveGravity();
+		rigid->SetVelocity(AXIS::Y, 0.f);
+	}
 
+	void Player::OnTriggerExit(GameObj* gameObject)
+	{
 	}
 
 

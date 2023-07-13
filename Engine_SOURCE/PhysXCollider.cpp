@@ -49,22 +49,24 @@ namespace dru
 	}
 	void PhysXCollider::OnCollisionEnter(PhysXCollider* otherCollider)
 	{
+		GetOwner()->OnCollisionEnter(otherCollider->GetOwner());
 	}
 	void PhysXCollider::OnCollisionExit(PhysXCollider* otherCollider)
 	{
 	}
+
 	void PhysXCollider::OnTriggerEnter(PhysXCollider* otherCollider)
 	{
+		GetOwner()->OnTriggerEnter(otherCollider->GetOwner());
 	}
 	void PhysXCollider::OnTriggerStay(PhysXCollider* otherCollider)
 	{
 	}
 	void PhysXCollider::OnTriggerExit(PhysXCollider* otherCollider)
 	{
+		GetOwner()->OnTriggerExit(otherCollider->GetOwner());
 	}
-	//void PhysXCollider::OnCollision()
-	//{
-	//}
+
 	void PhysXCollider::createDebugGeometry(std::shared_ptr<Geometry> geometries)
 	{
 		switch (geometries->eGeomType)

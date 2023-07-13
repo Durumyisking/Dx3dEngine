@@ -30,7 +30,6 @@ namespace dru
 			{
 				if (mLayerCollisionMatrix[i][j])
 				{
-					setCollisionFlag(i, j);
 				}
 			}
 		}

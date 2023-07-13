@@ -31,6 +31,11 @@ namespace dru
 		virtual void render();
 		virtual void fontRender();
 
+	public:
+		virtual void OnCollisionEnter(GameObj* gameObject) {};
+		virtual void OnTriggerEnter(GameObj* gameObject) {};
+		virtual void OnTriggerExit(GameObj* gameObject) {};
+
 		template <typename T>
 		T* AddComponent(eComponentType eType)
 		{			

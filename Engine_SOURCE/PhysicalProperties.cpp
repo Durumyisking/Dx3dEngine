@@ -9,7 +9,7 @@ PhysicalProperties::PhysicalProperties(const MassProperties& massProperties)
 	, mMaterial(nullptr)
 {
 	// 설정해준 속성으로 피직서 머티리얼 생성
-	mMaterial = PhysicsMgr::GetInstance()->GetEnvironment()->GetPhysics()->createMaterial(mStaticFriction, mDynamicFriction, mRestitution);
+	mMaterial = GETSINGLE(PhysicsMgr)->GetEnvironment()->GetPhysics()->createMaterial(mStaticFriction, mDynamicFriction, mRestitution);
 }
 
 PhysicalProperties::~PhysicalProperties()
