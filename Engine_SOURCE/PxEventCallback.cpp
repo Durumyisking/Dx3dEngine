@@ -86,7 +86,7 @@ void PxEventCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
                     PhysXCollider* otherColl = other->GetComponent<PhysXCollider>();
 
                     if (triggerColl)
-                        otherColl->OnTriggerEnter(otherColl);
+                        triggerColl->OnTriggerEnter(otherColl);
 
                     if (otherColl)
                         otherColl->OnTriggerEnter(triggerColl);
