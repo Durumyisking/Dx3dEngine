@@ -3,6 +3,7 @@
 
 
 // scene 쿼리는 콜백으로 client에게 도달하지 않는다
+// 하나 이상의 물리액터(static/dynamic)와 shade와의 충돌을 감지합니다.
 
 class PxEventCallback
 	: public physx::PxSimulationEventCallback

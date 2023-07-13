@@ -45,19 +45,24 @@ namespace dru
 
 		if (KEY_DOWN(LEFT))
 		{
-			velocity = GetOwner()->GetComponent<Transform>()->Right() * - 5.f;
+			velocity = mTransform->Right() * - 5.f;
 			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
 		}
 		if (KEY_DOWN(RIGHT))
 		{
-			velocity = GetOwner()->GetComponent<Transform>()->Right() * 5.f;
+			velocity = mTransform->Right() * 5.f;
 			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
 		}
 		if (KEY_DOWN(UP))
 		{
-			velocity = GetOwner()->GetComponent<Transform>()->Up() * 5.f;
+			velocity = mTransform->Up() * 5.f;
 			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::Y, velocity.y);
 		}
+		if (KEY_DOWN(R))
+		{
+			mTransform->SetPhysicalPosition(Vector3(-5.f, 0.f, 5.f));
+		}
+
 	}
 	void PlayerScript::Render()
 	{

@@ -46,12 +46,13 @@ namespace dru
 
 		if (GetOwner()->GetComponent<Physical>())
 		{
+
 			Physical* physical = GetOwner()->GetComponent<Physical>();
 			mPxTransform = physical->GetActor<PxRigidActor>()->getGlobalPose();
-
 			Matrix matPxScale = Matrix::CreateScale(physical->GetGeometrySize());
 			Matrix matPxRotation = Matrix::CreateFromQuaternion(convert::PxQuatToQuaternion(mPxTransform.q));
 			Matrix matPxTranslation = Matrix::CreateTranslation(convert::PxVec3ToVector3(mPxTransform.p));
+			mRelativePosition = convert::PxVec3ToVector3(mPxTransform.p);
 			mPxWorld = matPxScale * matPxRotation * matPxTranslation;
 
 			//Vector3 vLocalTranslation = Vector3(

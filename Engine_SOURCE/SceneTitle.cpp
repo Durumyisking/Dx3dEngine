@@ -146,7 +146,6 @@ namespace dru
 			Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 			physical->InitialPhysics(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
 			PxRigidDynamic* dy =  physical->GetActor<PxRigidDynamic>();
-			PxRigidBodyExt::updateMassAndInertia(*dy, 10.0f);
 
 			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 			//rigid->RemoveGravity();
@@ -174,7 +173,7 @@ namespace dru
 			PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 			rigid->RemoveGravity();
 
-//			plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+			plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 		}
 
 		Scene::Enter();

@@ -50,6 +50,8 @@ namespace dru
 
 	void Player::OnCollisionEnter(GameObj* gameObject)
 	{
+
+
 	}
 
 	void Player::OnTriggerEnter(GameObj* gameObject)
