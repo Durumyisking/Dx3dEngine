@@ -8,48 +8,48 @@ using namespace dru::enums;
 struct Geometry
 {
     Geometry(eGeometryType geometryType, dru::math::Vector3 boxHalfSize)
-        : eGeomType(eGeometryType::BOX)
+        : eGeomType(eGeometryType::Box)
     {
-        if (eGeometryType::BOX == geometryType)
+        if (eGeometryType::Box == geometryType)
         {
             boxGeom = PxBoxGeometry(dru::convert::Vector3ToPxVec3(boxHalfSize));
         }
     }
 
     Geometry(eGeometryType geometryType, float radius, float halfHeight)
-        : eGeomType(eGeometryType::CAPSULE)
+        : eGeomType(eGeometryType::Capsule)
     {
-        if (eGeometryType::CAPSULE == geometryType)
+        if (eGeometryType::Capsule == geometryType)
         {
             capsuleGeom = PxCapsuleGeometry(radius, halfHeight);
         }
     }
 
     Geometry(eGeometryType geometryType, float radius)
-        : eGeomType(eGeometryType::SPHERE)
+        : eGeomType(eGeometryType::Sphere)
     {
-        if (eGeometryType::SPHERE == geometryType)
+        if (eGeometryType::Sphere == geometryType)
         {
             sphereGeom = PxSphereGeometry(radius);
         }
     }
 
-
-    Geometry(eGeometryType geometryType)
-        : eGeomType(eGeometryType::PLANE)
-    {
-        // RigidStatic¿œ ãö,
-        if (eGeometryType::PLANE == geometryType)
+        Geometry(eGeometryType geometryType)
+            : eGeomType(eGeometryType::Plane)
         {
-            planeGeom = PxPlaneGeometry();
+            // RigidStatic¿œ ãö,
+            if (eGeometryType::Plane == geometryType)
+            {
+                planeGeom = PxPlaneGeometry();
+            }
         }
-    }
 
-    PxBoxGeometry boxGeom;
-    PxCapsuleGeometry capsuleGeom;
-    PxSphereGeometry sphereGeom;
-    PxPlaneGeometry planeGeom;
-    eGeometryType eGeomType;
+        PxBoxGeometry boxGeom;
+        PxCapsuleGeometry capsuleGeom;
+        PxSphereGeometry sphereGeom;
+        PxPlaneGeometry planeGeom;
+        eGeometryType eGeomType;
+
 };
 
 namespace dru

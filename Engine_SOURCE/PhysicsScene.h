@@ -14,6 +14,8 @@ public:
 public:
 	void AddActor(PxActor* actor);
 	void RemoveActor(PxActor* actor);
+	
+	void CreateDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity);
 
 private:
 	// 물리 시뮬레이션 컨테이너

@@ -16,7 +16,7 @@ struct VSOut
     float3 ViewPos : POSITION;
     float3 ViewNormal : NORMAL;
 
-    float intensity : FOG;
+    float Intensity : FOG;
 };
 
 VSOut main(VSIn vsIn)

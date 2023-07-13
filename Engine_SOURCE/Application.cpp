@@ -5,6 +5,7 @@
 #include "SceneMgr.h"
 #include "ResourceMgr.h"
 #include "CollisionMgr.h"
+#include "PhysXCollisionMgr.h"
 #include "FMod.h"
 #include "FontWrapper.h"
 #include "FileMgr.h"
@@ -35,9 +36,9 @@ namespace dru
 		GETSINGLE(TimeMgr)->Initialize();
 		GETSINGLE(InputMgr)->Initialize();
 		GETSINGLE(Fmod)->Initialize();
-		GETSINGLE(CollisionMgr)->Initialize();
+		// GETSINGLE(CollisionMgr)->Initialize();
 		renderer::Initialize();
-		GETSINGLE(PhysicsMgr)->GetInstance()->Initialize();
+		GETSINGLE(PhysicsMgr)->Initialize();
 		GETSINGLE(FontWrapper)->Initialize();
 		GETSINGLE(SceneMgr)->Initialize();
 	}
@@ -45,13 +46,14 @@ namespace dru
 	{
 		GETSINGLE(TimeMgr)->update();
 		GETSINGLE(InputMgr)->update();
-		GETSINGLE(PhysicsMgr)->Update();
-		GETSINGLE(CollisionMgr)->update();
+//		GETSINGLE(CollisionMgr)->update();
 		GETSINGLE(SceneMgr)->Update();
+		GETSINGLE(PhysXCollisionMgr)->Update();
+		GETSINGLE(PhysicsMgr)->Update();
 	}
 	void Application::fixedUpdate()
 	{
-		GETSINGLE(CollisionMgr)->fixedUpdate();
+		//GETSINGLE(CollisionMgr)->fixedUpdate();
 		GETSINGLE(SceneMgr)->FixedUpdate();
 	}
 	void Application::render()
@@ -106,7 +108,8 @@ namespace dru
 	{
 		GETSINGLE(SceneMgr)->DestroyInstance();
 		GETSINGLE(FontWrapper)->DestroyInstance();
-		GETSINGLE(CollisionMgr)->DestroyInstance();
+//		GETSINGLE(CollisionMgr)->DestroyInstance();
+		GETSINGLE(PhysXCollisionMgr)->DestroyInstance();
 		GETSINGLE(Fmod)->DestroyInstance();
 		GETSINGLE(InputMgr)->DestroyInstance();
 		GETSINGLE(TimeMgr)->DestroyInstance();

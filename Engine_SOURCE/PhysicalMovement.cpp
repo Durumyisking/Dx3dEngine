@@ -22,13 +22,13 @@ namespace dru
 	}
 	void PhysicalMovement::FixedUpdate()
 	{
-		Vector3 vVelocity = GetOwner()->GetComponent<PhysXRigidBody>()->GetVelocity();
+		Vector3 velocity = GetOwner()->GetComponent<PhysXRigidBody>()->GetVelocity();
 
 		if (eLayerType::Player== GetOwner()->GetLayerType())
 		{
 		}
 
-		Move(vVelocity);
+		Move(velocity);
 	}
 	void PhysicalMovement::Render()
 	{
@@ -40,11 +40,10 @@ namespace dru
 
 		Physical* physical = GetOwner()->GetComponent<Physical>();
 
-		if (eActorType::KINEMATIC == physical->GetActorType())
+		if (eActorType::Kinematic == physical->GetActorType())
 			physical->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
 		else
 			physical->GetActor<PxRigidDynamic>()->setGlobalPose(transform);
 
-		//GetOwner()->GetComponent<Transform>()->SetPhysicalPosition(convert::PxVec3ToVector3(transform.p));
 	}
 }

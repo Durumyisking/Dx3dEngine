@@ -154,9 +154,9 @@
 //    STB_TEXTEDIT_K_PGUP        keyboard input to move cursor up a page
 //    STB_TEXTEDIT_K_PGDOWN      keyboard input to move cursor down a page
 //    STB_TEXTEDIT_K_LINESTART   keyboard input to move cursor to start of line  // e.g. HOME
-//    STB_TEXTEDIT_K_LINEEND     keyboard input to move cursor to end of line    // e.g. END
+//    STB_TEXTEDIT_K_LINEEND     keyboard input to move cursor to end of line    // e.g. End
 //    STB_TEXTEDIT_K_TEXTSTART   keyboard input to move cursor to start of text  // e.g. ctrl-HOME
-//    STB_TEXTEDIT_K_TEXTEND     keyboard input to move cursor to end of text    // e.g. ctrl-END
+//    STB_TEXTEDIT_K_TEXTEND     keyboard input to move cursor to end of text    // e.g. ctrl-End
 //    STB_TEXTEDIT_K_DELETE      keyboard input to delete selection or character under cursor
 //    STB_TEXTEDIT_K_BACKSPACE   keyboard input to delete selection or character left of cursor
 //    STB_TEXTEDIT_K_UNDO        keyboard input to perform undo

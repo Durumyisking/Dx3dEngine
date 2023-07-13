@@ -27,10 +27,13 @@ namespace dru
         void OnTriggerStay(PhysXCollider* otherCollider);
         void OnTriggerExit(PhysXCollider* otherCollider);
 
+        PxFilterData& GetFilterData()  { return mFilterData; }
+
     private:
         void createDebugGeometry(std::shared_ptr<Geometry> geometries);
         void createDebugBox(math::Vector3 halfSize);
         void createDebugCapsule(float radius, float halfHeight);
+        void createDebugSphere(float radius);
 
     public:
         PxEventCallback* mCallback;

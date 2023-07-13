@@ -247,6 +247,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     <ClInclude Include="PhysicsScene.h" />
     <ClInclude Include="PhysX.h" />
     <ClInclude Include="PhysXCollider.h" />
+    <ClInclude Include="PhysXCollisionMgr.h" />
     <ClInclude Include="PhysXRigidBody.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
@@ -318,6 +319,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     <ClCompile Include="PhysicsScene.cpp" />
     <ClCompile Include="PhysX.cpp" />
     <ClCompile Include="PhysXCollider.cpp" />
+    <ClCompile Include="PhysXCollisionMgr.cpp" />
     <ClCompile Include="PhysXRigidBody.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />

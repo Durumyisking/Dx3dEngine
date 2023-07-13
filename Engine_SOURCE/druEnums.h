@@ -117,20 +117,29 @@ namespace dru::enums
 
 	enum class eActorType
 	{
-		STATIC,
-		DYNAMIC,
-		KINEMATIC,
-		CHARACTER,
-		END,
+		Static,
+		Dynamic,
+		Kinematic,
+		Character,
+		End,
 	};
 
 	enum class eGeometryType
 	{
-		BOX,
-		CAPSULE,
-		SPHERE,
-		PLANE,
-		END,
+		Box,
+		Capsule,
+		Sphere,
+		Plane,
+		End,
+	};
+
+	enum class ePxRigidType
+	{
+		Dynamic,
+		Static,
+		Articulation,
+		ParticleFluid,
+		End,
 	};
 
 	enum class AXIS

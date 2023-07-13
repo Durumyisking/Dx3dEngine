@@ -10,7 +10,7 @@ struct VSOut
 
 float4 main(VSOut vsIn) : SV_TARGET
 {
-    float4 vsOut = float4(1.f, 1.f, 1.f, 1.f);
+    float4 vsOut = float4(1.f, 1.f, 1.f, 0.5f);
         
     float thickness = cbfData1;
     float2 gridOffset = cbxy1;
@@ -24,11 +24,11 @@ float4 main(VSOut vsIn) : SV_TARGET
     {
         if (-2.f <= vsIn.WorldPos.y && 2.f >= vsIn.WorldPos.y)
         {
-            vsOut = float4(0.f, 1.f, 0.f, 1.f);
+            vsOut = float4(0.f, 1.f, 0.f, 0.5f);
         }
         else if (-2.f <= vsIn.WorldPos.x && 2.f >= vsIn.WorldPos.x)
         {
-            vsOut = float4(1.f, 0.f, 0.f, 1.f);
+            vsOut = float4(1.f, 0.f, 0.f, 0.5f);
         }
         
         return vsOut;
@@ -36,7 +36,7 @@ float4 main(VSOut vsIn) : SV_TARGET
     else
         discard;
     
-    vsOut = float4(1.f, 0.f, 0.f, 1.f);
+    vsOut = float4(1.f, 0.f, 0.f, 0.5f);
     
     return vsOut;
 }

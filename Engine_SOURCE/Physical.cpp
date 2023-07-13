@@ -8,8 +8,8 @@ namespace dru
 {
 	Physical::Physical()
 		: Component(eComponentType::Physical)
-		, mActorType(eActorType::END)
-		, mGeometryType(eGeometryType::END)
+		, mActorType(eActorType::End)
+		, mGeometryType(eGeometryType::End)
 		, mSize(dru::math::Vector3::Zero)
 		, mActor(nullptr)
 		, mShape(nullptr)
@@ -68,30 +68,30 @@ namespace dru
 
 	void Physical::createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize)
 	{
-		assert(eGeometryType::BOX == geometryType);
+		assert(eGeometryType::Box == geometryType);
 		assert(nullptr == mGeometry);
 		mGeometry = std::make_shared<Geometry>(geometryType, boxSize);
 	}
 
 	void Physical::createCapsuleGeometry(eGeometryType geometryType, float radius, float halfHeight)
 	{
-		assert(eGeometryType::CAPSULE == geometryType);
+		assert(eGeometryType::Capsule == geometryType);
 		assert(nullptr == mGeometry);
 		mGeometry = std::make_shared<Geometry>(geometryType, radius, halfHeight);
 	}
 
 	void Physical::createPlaneGeometry(eGeometryType geometryType)
 	{
-		assert(eGeometryType::PLANE == geometryType);
+		assert(eGeometryType::Plane == geometryType);
 		assert(nullptr == mGeometry);
 		mGeometry = std::make_shared<Geometry>(geometryType);
 	}
 
-	void Physical::createSphereGeometry(eGeometryType geometryType, float fRadius)
+	void Physical::createSphereGeometry(eGeometryType geometryType, float radius)
 	{
-		assert(eGeometryType::SPHERE == geometryType);
+		assert(eGeometryType::Sphere == geometryType);
 		assert(nullptr == mGeometry);
-		mGeometry = std::make_shared<Geometry>(geometryType);
+		mGeometry = std::make_shared<Geometry>(geometryType, radius);
 	}
 
 	void Physical::createPhysicsProperties(const MassProperties& massProperties)
@@ -105,19 +105,19 @@ namespace dru
 
 		switch (geometryType)
 		{
-		case eGeometryType::BOX:
+		case eGeometryType::Box:
 			createBoxGeometry(geometryType, mSize);
 			break;
 
-		case eGeometryType::CAPSULE:
+		case eGeometryType::Capsule:
 			createCapsuleGeometry(geometryType, mSize.x, mSize.y);
 			break;
 
-		case eGeometryType::SPHERE:
+		case eGeometryType::Sphere:
 			createSphereGeometry(geometryType, mSize.x);
 			break;
 
-		case eGeometryType::PLANE:
+		case eGeometryType::Plane:
 			createPlaneGeometry(geometryType);
 			break;
 
@@ -135,13 +135,13 @@ namespace dru
 		{
 			switch (mGeometryType)
 			{
-			case eGeometryType::BOX:
+			case eGeometryType::Box:
 				mShape = physics->createShape(mGeometry->boxGeom, *mProperties->GetMaterial());
 				break;
-			case eGeometryType::CAPSULE:
+			case eGeometryType::Capsule:
 				mShape = physics->createShape(mGeometry->capsuleGeom, *mProperties->GetMaterial());
 				break;
-			case eGeometryType::PLANE:
+			case eGeometryType::Plane:
 				mShape = physics->createShape(mGeometry->planeGeom, *mProperties->GetMaterial());
 				break;
 			}
@@ -151,18 +151,27 @@ namespace dru
 
 	void Physical::createShape()
 	{
+		/*
+			PxShape* shape = physics.createShape(PxSphereGeometry(1.0f), myMaterial, true);
+			myActor.attachShape(*shape);
+			shape->release();
+			이 코드는
+
+			PxRigidActorExt::createExclusiveShape() 이것과 같다.
+		*/
+
 		switch (mGeometryType)
 		{
-		case eGeometryType::BOX:
+		case eGeometryType::Box:
 			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->boxGeom, *mProperties->GetMaterial());
 			break;
-		case eGeometryType::CAPSULE:
+		case eGeometryType::Capsule:
 			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->capsuleGeom, *mProperties->GetMaterial());
 			break;
-		case eGeometryType::SPHERE:
+		case eGeometryType::Sphere:
 			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->sphereGeom, *mProperties->GetMaterial());
 			break;
-		case eGeometryType::PLANE:
+		case eGeometryType::Plane:
 			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial());
 			break;
 		}
@@ -176,20 +185,20 @@ namespace dru
 		{
 			switch (mActorType)
 			{
-			case eActorType::DYNAMIC:
+			case eActorType::Dynamic:
 				mActor = physics->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 				break;
-			case eActorType::STATIC:
+			case eActorType::Static:
 				mActor = physics->createRigidStatic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 				break;
-			case eActorType::KINEMATIC:
+			case eActorType::Kinematic:
 			{
 				mActor = physics->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 				mActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
 			}
 			break;
 
-			case eActorType::CHARACTER:
+			case eActorType::Character:
 			{
 			}
 			break;
@@ -207,17 +216,19 @@ namespace dru
 
 		switch (mActorType)
 		{
-		case eActorType::STATIC:
+		case eActorType::Static:
 			break;
 		//case eActorType::MONSTER_DYNAMIC:
 		//case eActorType::PROJECTILE_DYNAMIC:
-		case eActorType::DYNAMIC:
-			//PhysXRigidBody rigidBody = GetOwner()->GetComponent<PhysXRigidBody>();
-			//rigidBody->SetLinearDamping(0.5f);
-			//rigidBody->SetLinearMaxVelocityForDynamic(1000.f);
-			//rigidBody->SetAngularMaxVelocityForDynamic(500.f);
+		case eActorType::Dynamic:
+		{
+			PhysXRigidBody* rigidBody = GetOwner()->GetComponent<PhysXRigidBody>();
+			rigidBody->SetLinearDamping(0.5f);
+			rigidBody->SetLinearMaxVelocityForDynamic(1000.f);
+			rigidBody->SetAngularMaxVelocityForDynamic(500.f);
+		}
 			break;
-		case eActorType::KINEMATIC:
+		case eActorType::Kinematic:
 			mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
 			mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 			break;

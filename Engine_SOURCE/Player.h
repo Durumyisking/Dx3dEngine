@@ -17,6 +17,11 @@ namespace dru
 		virtual void render() override;
 		virtual void fontRender() override;
 
+	public:
+		virtual void OnCollisionEnter(GameObj* gameObject) override;
+		virtual void OnTriggerEnter(GameObj* gameObject) override;
+		virtual void OnTriggerExit(GameObj* gameObject) override;
+
 
 	private:
 

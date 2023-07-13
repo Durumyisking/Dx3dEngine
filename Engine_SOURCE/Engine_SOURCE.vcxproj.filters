@@ -164,6 +164,9 @@
     <Filter Include="Common\Component\Movement">
       <UniqueIdentifier>{92b997d7-fbfb-4ec2-802e-5c583ea87d78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Component\Collider\Manager\PhysX">
+      <UniqueIdentifier>{1a31cd64-03cf-47e2-81dc-e514c35f2e46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -383,6 +386,9 @@
     <ClInclude Include="Physical.h">
       <Filter>Common\Component\Physical</Filter>
     </ClInclude>
+    <ClInclude Include="PhysXCollisionMgr.h">
+      <Filter>Common\Component\Collider\Manager\PhysX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -585,6 +591,9 @@
     </ClCompile>
     <ClCompile Include="Physical.cpp">
       <Filter>Common\Component\Physical</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXCollisionMgr.cpp">
+      <Filter>Common\Component\Collider\Manager\PhysX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

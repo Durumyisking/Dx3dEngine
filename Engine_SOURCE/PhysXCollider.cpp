@@ -1,6 +1,7 @@
 #include "PhysXCollider.h"
 #include "GameObj.h"
 #include "PhysicsMgr.h"
+#include "MeshRenderer.h"
 
 namespace dru
 {
@@ -42,62 +43,71 @@ namespace dru
 	}
 	void PhysXCollider::FixedUpdate()
 	{
-		int i = 0;
 	}
 	void PhysXCollider::Render()
 	{
 	}
 	void PhysXCollider::OnCollisionEnter(PhysXCollider* otherCollider)
 	{
+		GetOwner()->OnCollisionEnter(otherCollider->GetOwner());
 	}
 	void PhysXCollider::OnCollisionExit(PhysXCollider* otherCollider)
 	{
 	}
+
 	void PhysXCollider::OnTriggerEnter(PhysXCollider* otherCollider)
 	{
+		GetOwner()->OnTriggerEnter(otherCollider->GetOwner());
 	}
 	void PhysXCollider::OnTriggerStay(PhysXCollider* otherCollider)
 	{
 	}
 	void PhysXCollider::OnTriggerExit(PhysXCollider* otherCollider)
 	{
+		GetOwner()->OnTriggerExit(otherCollider->GetOwner());
 	}
-	//void PhysXCollider::OnCollision()
-	//{
-	//}
+
 	void PhysXCollider::createDebugGeometry(std::shared_ptr<Geometry> geometries)
 	{
 		switch (geometries->eGeomType)
 		{
-		case eGeometryType::BOX:
+		case eGeometryType::Box:
 		{
 			const PxBoxGeometry& boxGeom = static_cast<const PxBoxGeometry&>(geometries->boxGeom);
-			Vector3 vHalfSize = convert::PxVec3ToVector3(boxGeom.halfExtents);
-			createDebugBox(vHalfSize);
+			Vector3 HalfSize = convert::PxVec3ToVector3(boxGeom.halfExtents);
+			createDebugBox(HalfSize);
 		}
 		break;
 
-		case eGeometryType::CAPSULE:
+		case eGeometryType::Capsule:
 		{
 			const PxCapsuleGeometry& capsuleGeom = static_cast<const PxCapsuleGeometry&>(geometries->capsuleGeom);
-			float fRadius = capsuleGeom.radius;
-			float fHalfHeight = capsuleGeom.halfHeight;
-			createDebugCapsule(fRadius, fHalfHeight);
+			float Radius = capsuleGeom.radius;
+			float HalfHeight = capsuleGeom.halfHeight;
+			createDebugCapsule(Radius, HalfHeight);
 		}
 		break;
 
-		case eGeometryType::PLANE:
+		case eGeometryType::Sphere:
+		{
+			const PxSphereGeometry& sphereGeom = static_cast<const PxSphereGeometry&>(geometries->sphereGeom);
+			float Radius = sphereGeom.radius;
+			createDebugSphere(Radius);
+		}
+		break;
+
+		case eGeometryType::Plane:
 			break;
 		}
 	}
 	void PhysXCollider::createDebugBox(math::Vector3 halfSize)
 	{
-		//std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"Cubemesh");
+		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
-		//std::shared_ptr<Material> material = Resources::Find<Material>(L"DebugGeometryMaterial");
+		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugGeometryMaterial");
 
-		//GetDebugRenderer()->SetMaterial(material);
-		//GetDebugRenderer()->SetMesh(mesh);
+		GetOwner()->GetComponent<MeshRenderer>()->SetMaterial(material);
+		GetOwner()->GetComponent<MeshRenderer>()->SetMesh(mesh);
 	}
 	void PhysXCollider::createDebugCapsule(float radius, float halfHeight)
 	{
@@ -108,5 +118,14 @@ namespace dru
 
 		//GetDebugRenderer()->SetMaterial(pMaterial);
 		//GetDebugRenderer()->SetMesh(pMesh);	
+	}
+	void PhysXCollider::createDebugSphere(float radius)
+	{
+		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Spheremesh");
+
+		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugGeometryMaterial");
+
+		GetOwner()->GetComponent<MeshRenderer>()->SetMaterial(material);
+		GetOwner()->GetComponent<MeshRenderer>()->SetMesh(mesh);
 	}
 }
