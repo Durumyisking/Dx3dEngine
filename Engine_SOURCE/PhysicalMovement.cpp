@@ -33,6 +33,8 @@ namespace dru
 	void PhysicalMovement::Render()
 	{
 	}
+
+	// 이동은 여기서 수행
 	void PhysicalMovement::Move(const Vector3& velocity)
 	{
 		PxTransform transform = GetOwner()->GetComponent<Transform>()->GetPxTransform();
@@ -43,7 +45,7 @@ namespace dru
 		if (eActorType::Kinematic == physical->GetActorType())
 			physical->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
 		else
-			physical->GetActor<PxRigidDynamic>()->setGlobalPose(transform);
+			physical->GetActor<PxRigidDynamic>()->setAngularVelocity(transform.p);
 
 	}
 }

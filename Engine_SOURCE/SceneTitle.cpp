@@ -144,15 +144,23 @@ namespace dru
 			player->AddComponent<PlayerScript>(eComponentType::Script);
 
 			Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-			physical->InitialPhysics(eActorType::Kinematic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+			physical->InitialPhysics(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
 			PxRigidDynamic* dy =  physical->GetActor<PxRigidDynamic>();
 			PxRigidBodyExt::updateMassAndInertia(*dy, 10.0f);
-
 
 			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 			//rigid->RemoveGravity();
 			player->AddComponent<PhysXCollider>(eComponentType::Collider);
 			player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+		}
+
+		{
+			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
+			pointLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1.f, 5.f));
+			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
+			lightComp->SetRadius(20.f);
 		}
 
 		{
@@ -166,8 +174,7 @@ namespace dru
 			PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 			rigid->RemoveGravity();
 
-			plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-
+//			plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 		}
 
 		Scene::Enter();

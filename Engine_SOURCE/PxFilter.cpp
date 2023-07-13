@@ -10,10 +10,6 @@ PxFilter::~PxFilter()
 
 PxQueryHitType::Enum PxFilter::preFilter(const PxFilterData& filterData, const PxShape* pShape, const PxRigidActor* pActor, PxHitFlags& queryFlags)
 {
-
-	// 히트 발생 시 처리
-	MessageBox(NULL, L"", L"", MB_OK);
-
 	return PxQueryHitType::eTOUCH;
 }
 

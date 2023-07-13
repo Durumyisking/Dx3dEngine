@@ -58,12 +58,6 @@ namespace dru
 			velocity = GetOwner()->GetComponent<Transform>()->Up() * 5.f;
 			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::Y, velocity.y);
 		}
-		if (KEY_DOWN(DOWN))
-		{
-			velocity = GetOwner()->GetComponent<Transform>()->Up() * -5.f;
-			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::Y, velocity.y);
-		}
-
 	}
 	void PlayerScript::Render()
 	{
