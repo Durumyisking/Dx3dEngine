@@ -33,7 +33,10 @@ namespace dru
 	InputMgr::InputMgr()
 		: mKeys{}
 		, mMousePosition(Vector3::Zero)
+		, mPrevMousePosition(Vector3::Zero)
 		, mWorldMousePosition(Vector3::Zero)
+		, mMouseLClickPosition(Vector3::Zero)
+		, mMouseRClickPosition(Vector3::Zero)
 		, mWinWidthCenter(0.0f)
 		, mWinHeightCenter(0.0f)
 	{
@@ -74,9 +77,13 @@ namespace dru
 				{
 					// 이전 프레임에도 눌려 있었다.
 					if (mKeys[i].bPressed)
+					{
 						mKeys[i].eState = eKeyState::DOWN;
+					}
 					else
+					{
 						mKeys[i].eState = eKeyState::TAP;
+					}
 
 					mKeys[i].bPressed = true;
 				}
@@ -84,9 +91,13 @@ namespace dru
 				{
 					// 이전 프레임에는 눌려 있었다.
 					if (mKeys[i].bPressed)
+					{
 						mKeys[i].eState = eKeyState::UP;
+					}
 					else // 이전 프레임에도 안눌려 있었다.
+					{
 						mKeys[i].eState = eKeyState::NONE;
+					}
 
 					mKeys[i].bPressed = false;
 				}
@@ -120,6 +131,7 @@ namespace dru
 	}
 	void InputMgr::ComputeMousePos()
 	{
+		mPrevMousePosition = mMousePosition;
 		POINT ptMouse = {};
 		GetCursorPos(&ptMouse);
 		ScreenToClient(application.GetHwnd(), &ptMouse);
@@ -143,6 +155,15 @@ namespace dru
 
 			mWorldMousePosition.x = (mMousePosition.x / 100.f) + camPos.x;
 			mWorldMousePosition.y = (mMousePosition.y / 100.f) + camPos.y;
+		}
+
+		if (mKeys[static_cast<UINT>(eKeyCode::LBTN)].eState == eKeyState::TAP)
+		{
+			mMouseLClickPosition = mMousePosition;
+		}
+		if (mKeys[static_cast<UINT>(eKeyCode::RBTN)].eState == eKeyState::TAP)
+		{
+			mMouseRClickPosition = mMousePosition;
 		}
 	}
 }

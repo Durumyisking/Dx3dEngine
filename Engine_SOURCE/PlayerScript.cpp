@@ -29,15 +29,15 @@ namespace dru
 	{
 		Vector3 pos = {};
 		Vector3 velocity = {};
-		if (KEY_DOWN(A))
+		if (KEY_DOWN(I))
 		{
 			mTransform->AddRotationX(50.f * DT);
 		}
-		if (KEY_DOWN(S))
+		if (KEY_DOWN(O))
 		{
 			mTransform->AddRotationY(50.f * DT);
 		}
-		if (KEY_DOWN(D))
+		if (KEY_DOWN(P))
 		{
 			mTransform->AddRotationZ(50.f * DT);
 		}

@@ -13,6 +13,8 @@ namespace dru
 		//Special Key
 		ENTER, ESC, LSHIFT, LALT, LCTRL,
 		SPACE, LEFT, RIGHT, UP, DOWN,
+
+		// mouse
 		LBTN, RBTN,
 
 		//Num Pad
@@ -61,12 +63,23 @@ namespace dru
 		{
 			return mMousePosition;
 		}
-
+		__forceinline math::Vector3 GetPrevMousePosition()
+		{
+			return mPrevMousePosition;
+		}
 		__forceinline math::Vector3 GetMousePosition_world()
 		{
 			return mWorldMousePosition;
 		}
 
+		__forceinline math::Vector3 GetMouseLTapPosition()
+		{
+			return mMouseLClickPosition;
+		}
+		__forceinline math::Vector3 GetMouseRTapPosition()
+		{
+			return mMouseRClickPosition;
+		}
 
 
 		__forceinline bool GetKeyDown(eKeyCode keyCode)
@@ -92,7 +105,12 @@ namespace dru
 	private:
 		std::vector<Key> mKeys;
 		math::Vector3 mMousePosition;
+		math::Vector3 mPrevMousePosition;
+
 		math::Vector3 mWorldMousePosition;
+		math::Vector3 mMouseLClickPosition;
+		math::Vector3 mMouseRClickPosition;
+
 		float mWinWidthCenter;
 		float mWinHeightCenter;
 	};

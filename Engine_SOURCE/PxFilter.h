@@ -45,14 +45,14 @@ static PxFilterFlags PlayerFilter (
 	pairFlags = PxPairFlag::eCONTACT_DEFAULT;
 	return PxFilterFlag::eDEFAULT;
 
-	// 두 필터가 서로 충돌플래그일 경우
-	if ((filterData0.word0 & filterData1.word1) || (filterData1.word0 & filterData0.word1))
-	{
-		pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
-		return PxFilterFlag::eDEFAULT;
-	}
+	//// 두 필터가 서로 충돌플래그일 경우
+	//if ((filterData0.word0 & filterData1.word1) || (filterData1.word0 & filterData0.word1))
+	//{
+	//	pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
+	//	return PxFilterFlag::eDEFAULT;
+	//}
 
-	return PxFilterFlag::eKILL;
+	//return PxFilterFlag::eKILL;
 }
 
 

@@ -82,7 +82,7 @@ namespace dru
 			mCamera->AddComponent<CameraScript>(eComponentType::Script);
 			renderer::mainCamera = cameraComp;
 			cameraComp->SetProjectionType(eProjectionType::Perspective);
-			mCamera->SetPos(Vector3(0.f, 0.f, -15.f));
+			mCamera->SetPos(Vector3(0.f, 15.f, 0.f));
 
 		}
 
@@ -101,13 +101,13 @@ namespace dru
 
 			float w = static_cast<float>(application.GetWidth());
 			float h = static_cast<float>(application.GetHeight());
-			gridObject->SetPos({ 0.f, 0.f, 5.f });
+			gridObject->SetPos({ 0.f, 0.f, 0.f });
 			gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
 		}
 		
 		{
 			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 0.f, -10.f));
+			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 10.f, 0.f));
 			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 			lightComp->SetType(eLightType::Directional);
 			lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
@@ -117,7 +117,7 @@ namespace dru
 
 		{
 			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
-			pointLight->GetComponent<Transform>()->SetPosition(Vector3(2.5f, 0.f, 0.f));
+			pointLight->GetComponent<Transform>()->SetPosition(Vector3(2.5f, 10.f, 0.f));
 			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
 			lightComp->SetType(eLightType::Point);
 			lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
@@ -126,7 +126,7 @@ namespace dru
 
 		{
 			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(5.f, 0.f, 5.f));
+			player->SetPos(Vector3(5.f, 5.f, 5.f));
 			player->SetName(L"Player");
 			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
@@ -136,7 +136,7 @@ namespace dru
 		{
 			
 			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(-5.f, 0.f, 5.f));
+			player->SetPos(Vector3(-5.f, 5.f, 5.f));
 			player->SetScale({ 5.f, 5.f, 5.f });
 			player->SetName(L"Player");
 			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
@@ -164,7 +164,7 @@ namespace dru
 
 		{
 			GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
-			plane->SetPos(Vector3(0.f, -10.f, 0.f));
+			plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 			plane->SetScale({ 100.f, 0.5f, 100.f });
 			plane->SetName(L"Plane");
 			plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");

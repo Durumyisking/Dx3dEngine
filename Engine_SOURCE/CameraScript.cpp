@@ -80,42 +80,41 @@ namespace dru
 	{
 		// Keyboard Move
 
-		if (KEY_DOWN(U))
-		{
-			mLookAt += 10.f * mTransform->Up() * DT;
-		}
-		if (KEY_DOWN(J))
-		{
-			mLookAt += 10.f * -mTransform->Up() * DT;
-		}
-		if (KEY_DOWN(H))
-		{
-			mLookAt += 10.f * -mTransform->Right() * DT;
-		}
-		if (KEY_DOWN(K))
-		{
-			mLookAt += 10.f * mTransform->Right() * DT;
-		}
-		if (KEY_DOWN(P))
-		{
-			mLookAt -= 10.f * mTransform->Forward() * DT;
-		}
-		if (KEY_DOWN(O))
-		{
-			mLookAt += 10.f * mTransform->Forward() * DT;
-		}
-
-		if (KEY_DOWN(Q))
-		{
-			mTransform->AddRotationX(30.f * DT);
-		}
 		if (KEY_DOWN(W))
 		{
-			mTransform->AddRotationY(30.f * DT);
+			mLookAt += 20.f * mTransform->Up() * DT;
+		}
+		if (KEY_DOWN(S))
+		{
+			mLookAt += 20.f * -mTransform->Up() * DT;
+		}
+		if (KEY_DOWN(A))
+		{
+			mLookAt += 20.f * -mTransform->Right() * DT;
+		}
+		if (KEY_DOWN(D))
+		{
+			mLookAt += 20.f * mTransform->Right() * DT;
+		}
+		if (KEY_DOWN(Q))
+		{
+			mLookAt -= 20.f * mTransform->Forward() * DT;
 		}
 		if (KEY_DOWN(E))
 		{
-			mTransform->AddRotationZ(30.f * DT);
+			mLookAt += 20.f * mTransform->Forward() * DT;
+		}
+
+		if (KEY_DOWN(RBTN))
+		{
+			Vector3 rTapPos = GETSINGLE(InputMgr)->GetPrevMousePosition();
+			Vector3 rCurPos = GETSINGLE(InputMgr)->GetMousePosition();
+
+			float xAxisRotRatio = rCurPos.y - rTapPos.y;
+			mTransform->AddRotationX(xAxisRotRatio * -100.f * DT);
+
+			float yAxisRotRatio = rCurPos.x - rTapPos.x;
+			mTransform->AddRotationY(yAxisRotRatio * 100.f * DT);
 		}
 
 	}
