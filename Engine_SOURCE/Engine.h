@@ -123,5 +123,6 @@ private:
 	float mEndTime;
 	bool  mbRunning;
 	bool  mbFinished;
+
 };
 

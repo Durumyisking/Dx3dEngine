@@ -131,6 +131,8 @@ namespace dru
 			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 			player->SetScale({ 5.f, 5.f, 5.f });
+
+
 		}
 
 		{

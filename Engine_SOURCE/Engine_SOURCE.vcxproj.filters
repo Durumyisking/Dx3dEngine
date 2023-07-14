@@ -392,6 +392,9 @@
     <ClInclude Include="PhysXCollisionMgr.h">
       <Filter>Common\Component\Collider\Manager\PhysX</Filter>
     </ClInclude>
+    <ClInclude Include="TimerMgr.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -597,6 +600,9 @@
     </ClCompile>
     <ClCompile Include="PhysXCollisionMgr.cpp">
       <Filter>Common\Component\Collider\Manager\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerMgr.cpp">
+      <Filter>Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
