@@ -5,6 +5,7 @@
 
 namespace dru
 {
+	class Material;
 	class ResourceMgr
 	{
 		SINGLE(ResourceMgr)
@@ -82,6 +83,9 @@ namespace dru
 				mResources.insert(std::make_pair(key, resource));
 			}
 		}
+
+		Material* CreateMaterial(std::wstring textureName, std::wstring shaderName, std::wstring materialName);
+		Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName, std::wstring materialName);
 
 		void Release();
 	private:

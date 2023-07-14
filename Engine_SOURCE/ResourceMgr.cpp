@@ -1,4 +1,5 @@
 #include "ResourceMgr.h"
+#include "Material.h"
 
 namespace dru
 {
@@ -11,6 +12,20 @@ namespace dru
 	ResourceMgr::~ResourceMgr()
 	{
 
+	}
+
+	Material* ResourceMgr::CreateMaterial(std::wstring textureName, std::wstring shaderName, std::wstring materialName)
+	{
+		Material* mat = new Material(textureName, shaderName);
+		Insert<Material>(materialName, mat);
+		return mat;
+	}
+
+	Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName, std::wstring materialName)
+	{
+		Material* mat = new Material(textureColor, textureNormal, shaderName);
+		Insert<Material>(materialName, mat);
+		return mat;
 	}
 
 	void ResourceMgr::Release()

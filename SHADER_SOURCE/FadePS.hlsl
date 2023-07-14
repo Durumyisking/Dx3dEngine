@@ -8,7 +8,7 @@ float4 main(VTX_OUT vtxIn) : SV_TARGET
    
     // 1이면 텍스처를 fadeinout할거임
     if (cbiData2 == 1)
-        color = defaultTexture.Sample(pointSampler, vtxIn.vUV);
+        color = colorTexture.Sample(pointSampler, vtxIn.vUV);
     
 //    float alpha = color.w;
     float alpha;

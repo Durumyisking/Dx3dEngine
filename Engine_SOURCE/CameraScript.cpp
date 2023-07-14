@@ -82,28 +82,28 @@ namespace dru
 
 		if (KEY_DOWN(W))
 		{
-			mLookAt += 20.f * mTransform->Up() * DT;
+			mLookAt += 20.f * mTransform->Forward() * DT;
 		}
 		if (KEY_DOWN(S))
 		{
-			mLookAt += 20.f * -mTransform->Up() * DT;
+			mLookAt -= 20.f * mTransform->Forward() * DT;
 		}
 		if (KEY_DOWN(A))
 		{
-			mLookAt += 20.f * -mTransform->Right() * DT;
+			mLookAt -= 20.f * mTransform->Right() * DT;
 		}
 		if (KEY_DOWN(D))
 		{
 			mLookAt += 20.f * mTransform->Right() * DT;
 		}
-		if (KEY_DOWN(Q))
-		{
-			mLookAt -= 20.f * mTransform->Forward() * DT;
-		}
-		if (KEY_DOWN(E))
-		{
-			mLookAt += 20.f * mTransform->Forward() * DT;
-		}
+		//if (KEY_DOWN(Q))
+		//{
+		//	mLookAt -= 20.f * mTransform->Forward() * DT;
+		//}
+		//if (KEY_DOWN(E))
+		//{
+		//	mLookAt += 20.f * mTransform->Forward() * DT;
+		//}
 
 		if (KEY_DOWN(RBTN))
 		{

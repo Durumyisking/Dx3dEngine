@@ -139,7 +139,8 @@ namespace dru
 			player->SetPos(Vector3(-5.f, 5.f, 5.f));
 			player->SetScale({ 5.f, 5.f, 5.f });
 			player->SetName(L"Player");
-			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+			player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 			player->AddComponent<PlayerScript>(eComponentType::Script);
 

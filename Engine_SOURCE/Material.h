@@ -13,6 +13,7 @@ namespace dru
 	public:
 		Material();
 		Material(std::wstring textureName, std::wstring shaderName);
+		Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName);
 		Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName);
 		virtual ~Material();
 

@@ -167,6 +167,9 @@
     <Filter Include="Common\Component\Collider\Manager\PhysX">
       <UniqueIdentifier>{1a31cd64-03cf-47e2-81dc-e514c35f2e46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{e7cc1677-ecf4-4ddb-af23-34f289515d37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
