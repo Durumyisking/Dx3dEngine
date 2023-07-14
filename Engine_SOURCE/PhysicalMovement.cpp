@@ -39,13 +39,13 @@ namespace dru
 	{
 		PxTransform transform = GetOwner()->GetComponent<Transform>()->GetPxTransform();
 		transform.p += convert::Vector3ToPxVec3(velocity * DT);
-
+		
 		Physical* physical = GetOwner()->GetComponent<Physical>();
 
 		if (eActorType::Kinematic == physical->GetActorType())
 			physical->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
 		else
-			physical->GetActor<PxRigidDynamic>()->setAngularVelocity(transform.p);
+			physical->GetActor<PxRigidDynamic>()->setAngularVelocity(physical->GetActor<PxRigidDynamic>()->getAngularVelocity());
 
 	}
 }
