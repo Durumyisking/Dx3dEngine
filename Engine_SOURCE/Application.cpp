@@ -10,7 +10,7 @@
 #include "FontWrapper.h"
 #include "FileMgr.h"
 #include "PhysicsMgr.h"
-
+#include "TimerMgr.h"
 
 namespace dru
 {
@@ -42,21 +42,22 @@ namespace dru
 		GETSINGLE(FontWrapper)->Initialize();
 		GETSINGLE(SceneMgr)->Initialize();
 	}
-	void Application::update()
+	void Application::Update()
 	{
-		GETSINGLE(TimeMgr)->update();
-		GETSINGLE(InputMgr)->update();
-//		GETSINGLE(CollisionMgr)->update();
+		GETSINGLE(TimerMgr)->Update();
+		GETSINGLE(TimeMgr)->Update();
+		GETSINGLE(InputMgr)->Update();
+//		GETSINGLE(CollisionMgr)->Update();
 		GETSINGLE(SceneMgr)->Update();
 		GETSINGLE(PhysXCollisionMgr)->Update();
 		GETSINGLE(PhysicsMgr)->Update();
 	}
-	void Application::fixedUpdate()
+	void Application::FixedUpdate()
 	{
-		//GETSINGLE(CollisionMgr)->fixedUpdate();
+		//GETSINGLE(CollisionMgr)->FixedUpdate();
 		GETSINGLE(SceneMgr)->FixedUpdate();
 	}
-	void Application::render()
+	void Application::Render()
 	{
 		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
@@ -69,25 +70,25 @@ namespace dru
 		GETSINGLE(SceneMgr)->FontRender();
 	}
 
-	void Application::destroy()
+	void Application::Destroy()
 	{
 		GETSINGLE(SceneMgr)->Destory();
 	}
 
-	void Application::lateEvent()
+	void Application::LateEvent()
 	{
 		GETSINGLE(SceneMgr)->LateEvent();
 	}
 
 	void Application::Run()
 	{
-		update();
-		fixedUpdate();
-		render();
+		Update();
+		FixedUpdate();
+		Render();
 
 		// 프레임 종료 후 오브젝트 삭제 및 추가
-		destroy();
-		lateEvent();
+		Destroy();
+		LateEvent();
 	}
 
 	void Application::Present()
@@ -106,6 +107,7 @@ namespace dru
 
 	void Application::DestroySingle()
 	{
+
 		GETSINGLE(SceneMgr)->DestroyInstance();
 		GETSINGLE(FontWrapper)->DestroyInstance();
 //		GETSINGLE(CollisionMgr)->DestroyInstance();
@@ -115,6 +117,7 @@ namespace dru
 		GETSINGLE(TimeMgr)->DestroyInstance();
 		GETSINGLE(ResourceMgr)->DestroyInstance();
 		GETSINGLE(PhysicsMgr)->DestroyInstance();
+		GETSINGLE(TimerMgr)->DestroyInstance();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

@@ -30,27 +30,15 @@
 
 #define MAX_LOADSTRING 100
 
-//#ifdef _DEBUG
-//#define new new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-//#endif
 
-//#ifdef _DEBUG
-//void D3DMemLeak()
-//{
-//    HMODULE dll = GetModuleHandleW(L"dxgidebug.dll");
-//    decltype(&DXGIGetDebugInterface) GetDebugInterface = reinterpret_cast<decltype (&DXGIGetDebugInterface)> (GetProcAddress(dll, "DXGIGetDebugInterface"));
-//    IDXGIDebug* debug;
-//
-//    GetDebugInterface(IID_PPV_ARGS(&debug));
-//
-//    OutputDebugStringW(L"------------------------------------------------------------------------");
-//    debug->ReportLiveObjects(DXGI_DEBUG_D3D11, DXGI_DEBUG_RLO_DETAIL);
-//    OutputDebugStringW(L"------------------------------------------------------------------------");
-//
-//    debug->Release();
-//}
-//
-//#endif
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
+
+#ifdef _DEBUG
+#define new new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#endif
+
 
 
 // 전역 변수:
@@ -78,11 +66,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     LoadStringW(hInstance, IDC_DX2DENGINE, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
-    //_CrtDumpMemoryLeaks();
-
+ 
 
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //CrtSetBreakAlloc(233);
+//    _CrtSetBreakAlloc(2105);
 
     if (!InitInstance (hInstance, nCmdShow))
     {
@@ -121,7 +108,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
     application.DestroySingle();
-  //  D3DMemLeak();
+
     return (int)msg.wParam;
 }
 

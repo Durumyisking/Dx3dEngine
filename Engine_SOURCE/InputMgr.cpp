@@ -65,7 +65,7 @@ namespace dru
 		mWinHeightCenter = ((float)winRect.bottom - (float)winRect.top) / 2.0f;
 	}
 
-	void InputMgr::update()
+	void InputMgr::Update()
 	{
 		if (GetFocus())
 		{

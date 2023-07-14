@@ -5,7 +5,7 @@
 #include "PxFilter.h"
 #include "GameObj.h"
 #include "PhysXRigidBody.h"
-
+#include "TimerMgr.h"
 
 namespace dru
 {
@@ -20,6 +20,12 @@ namespace dru
 	{
 		mTransform = GetOwner()->GetComponent<Transform>();
 
+		Timer* timer = new Timer(3.f);
+		timer->SetEvent() = [this] 
+		{
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3((mTransform->Up() * 1000.f)), PxForceMode::Enum::eFORCE); 
+		};
+		GETSINGLE(TimerMgr)->AddTimer(timer);
 	}
 	void PlayerScript::Update()
 	{
@@ -89,4 +95,5 @@ namespace dru
 	void PlayerScript::OnTriggerExit(Collider2D* oppo)
 	{
 	}
+
 }

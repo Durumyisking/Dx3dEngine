@@ -51,7 +51,13 @@ public:
 		, mEndTime(endTime)
 		, mbRunning(false)
 		, mbFinished(true)
+		, function (nullptr)
 	{}
+
+	~Timer()
+	{
+		
+	}
 
 	void Reset()
 	{
@@ -86,6 +92,11 @@ public:
 			{
 				mElapsedTime = mEndTime;
 				mbFinished = true;
+
+				if (function)
+				{
+					function();
+				}
 			}
 		}
 	}
@@ -118,11 +129,20 @@ public:
 		mElapsedTime = mEndTime * progress;
 	}
 
+	void SetFunction(void(*func)())
+	{
+		function = func;
+	}
+	std::function<void()>& SetEvent() { return function; }
+
 private:
 	float mElapsedTime;
 	float mEndTime;
 	bool  mbRunning;
 	bool  mbFinished;
 
+	std::function<void()> function;
+
+	
 };
 

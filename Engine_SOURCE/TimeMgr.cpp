@@ -37,7 +37,7 @@ namespace dru
         QueryPerformanceCounter(&mPrevFrequency);
     }
 
-    void TimeMgr::update()
+    void TimeMgr::Update()
     {
         QueryPerformanceCounter(&mCurFrequency);
 

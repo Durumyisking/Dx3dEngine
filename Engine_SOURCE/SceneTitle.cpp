@@ -132,7 +132,14 @@ namespace dru
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 			player->SetScale({ 5.f, 5.f, 5.f });
 
+			Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+			physical->InitialPhysics(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+			PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
 
+			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+			//rigid->RemoveGravity();
+			player->AddComponent<PhysXCollider>(eComponentType::Collider);
+			player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 		}
 
 		{

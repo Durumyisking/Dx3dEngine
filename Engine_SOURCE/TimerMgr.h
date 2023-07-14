@@ -11,7 +11,7 @@ namespace dru
 	public:
 		void Update();
 
-//		void AddTimer(Timer* timer, std::function<void> func);
+		void AddTimer(Timer* timer);
 
 	private:
 		std::vector<Timer*> mTimers;

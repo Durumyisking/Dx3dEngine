@@ -20,21 +20,21 @@ namespace dru
 		{
 			if ((*iter)->IsFinished())
 			{
+				delete (*iter);
+				(*iter) = nullptr;
 				iter = mTimers.erase(iter);
 			}
 			else
 			{
+				(*iter)->Update(DT);
 				++iter;
 			}
-
-			(*iter)->Update(DT);
 		}
 	}
 
-	//void TimerMgr::AddTimer(Timer* timer, std::function<void> func)
-	//{
-	//	mTimers.push_back(timer);
-
-	//}
-
+	void TimerMgr::AddTimer(Timer* timer)
+	{
+		mTimers.push_back(timer);
+		timer->Start();
+	}
 }

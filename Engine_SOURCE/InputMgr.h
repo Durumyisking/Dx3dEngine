@@ -50,7 +50,7 @@ namespace dru
 		};
 
 		void Initialize();
-		void update();
+		void Update();
 		void Render(HDC hdc);
 		void ComputeMousePos();
 
