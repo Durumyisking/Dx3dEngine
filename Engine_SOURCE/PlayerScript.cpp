@@ -62,10 +62,9 @@ namespace dru
 			velocity = GetOwner()->GetComponent<Transform>()->Right() * -5.f;
 			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
 		}
-		if (KEY_DOWN(SPACE))
+		if (KEY_TAP(SPACE))
 		{
-			velocity = GetOwner()->GetComponent<Transform>()->Right() * -5.f;
-			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(Vector3(0.f, 1000.f, 0.f)), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(R))
 		{

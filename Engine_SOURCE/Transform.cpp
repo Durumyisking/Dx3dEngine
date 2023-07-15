@@ -21,7 +21,6 @@ namespace dru
 		, mWorldPosition(Vector3::Zero)
 		, mWorldRotation(Vector3::Zero)
 		, mWorldScale(Vector3::One)
-		, mbIsScaleChanged(false)
 		, mPxWorld(Matrix::Identity)
 		, mPxTransform{}
 	{

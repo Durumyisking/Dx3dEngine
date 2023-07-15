@@ -10,7 +10,6 @@ namespace dru
 
 		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, GetScale() * 0.5f);
-
 	}
 
 	Sphere::~Sphere()
@@ -29,6 +28,7 @@ namespace dru
 
 	void Sphere::FixedUpdate()
 	{
+
 		PhysicalGameObj::FixedUpdate();
 	}
 

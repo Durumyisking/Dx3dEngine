@@ -11,6 +11,7 @@
 #include "AudioSource.h"
 #include "SpriteRenderer.h"
 #include "MeshRenderer.h"
+#include "Physical.h"
 
 
 namespace dru
@@ -180,13 +181,9 @@ namespace dru
 		{
 			GetComponent<Transform>()->SetScale(value);
 		}
-		if (nullptr != GetComponent<SpriteRenderer>())
+		if (nullptr != GetComponent<Physical>())
 		{
-			GetComponent<SpriteRenderer>()->ChangeSize();
-		}
-		if (nullptr != GetComponent<MeshRenderer>())
-		{
-			GetComponent<MeshRenderer>()->ChangeSize();
+			GetComponent<Physical>()->SetGeometrySize(value);	
 		}
 	}
 

@@ -9,8 +9,7 @@ namespace dru
 		GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 
 		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, GetScale() * 0.5f);
-
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, GetScale() * 0.5f);
 	}
 
 	Box::~Box()
