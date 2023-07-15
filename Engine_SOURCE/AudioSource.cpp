@@ -36,14 +36,8 @@ namespace dru
 			AudioClip* audioClip = clip.second;
 			if (audioClip->IsPlaying())
 			{
-				if (GETSINGLE(TimeMgr)->IsPlayerBulletTimeOn())
-				{
-					audioClip->SetPitch(0.333f);
-				}
-				else
-				{
-					audioClip->SetPitch(1.f);
-				}
+				audioClip->SetPitch(1.f);
+			
 				audioClip->Set3DAttributes(pos, forward);
 			}
 		}

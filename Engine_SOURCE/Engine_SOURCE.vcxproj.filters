@@ -170,6 +170,12 @@
     <Filter Include="Timer">
       <UniqueIdentifier>{e7cc1677-ecf4-4ddb-af23-34f289515d37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\GameObj\Sphere">
+      <UniqueIdentifier>{ca2e3122-20b3-4dd7-a35c-e8c437dcfd15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Box">
+      <UniqueIdentifier>{13fc7fe0-a1db-4724-b9dd-0b678144e6a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">

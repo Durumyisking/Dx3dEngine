@@ -44,40 +44,57 @@ namespace dru
 	}
 	void Application::Update()
 	{
-		GETSINGLE(TimerMgr)->Update();
 		GETSINGLE(TimeMgr)->Update();
-		GETSINGLE(InputMgr)->Update();
-//		GETSINGLE(CollisionMgr)->Update();
-		GETSINGLE(SceneMgr)->Update();
-		GETSINGLE(PhysXCollisionMgr)->Update();
-		GETSINGLE(PhysicsMgr)->Update();
+
+		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
+		{
+			GETSINGLE(TimerMgr)->Update();
+			GETSINGLE(InputMgr)->Update();
+			//		GETSINGLE(CollisionMgr)->Update();
+			GETSINGLE(SceneMgr)->Update();
+			GETSINGLE(PhysXCollisionMgr)->Update();
+			GETSINGLE(PhysicsMgr)->Update();
+		}
 	}
 	void Application::FixedUpdate()
 	{
-		//GETSINGLE(CollisionMgr)->FixedUpdate();
-		GETSINGLE(SceneMgr)->FixedUpdate();
+		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
+		{
+			//GETSINGLE(CollisionMgr)->FixedUpdate();
+			GETSINGLE(SceneMgr)->FixedUpdate();
+		}
 	}
 	void Application::Render()
 	{
-		GETSINGLE(TimeMgr)->Render(mHdc);
-		GETSINGLE(InputMgr)->Render(mHdc);
-		//		CollisionMgr::Render();
-		mGraphicDevice->Clear();
-		mGraphicDevice->AdjustViewPorts();
+		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
+		{
+			GETSINGLE(TimeMgr)->Render(mHdc);
+			GETSINGLE(InputMgr)->Render(mHdc);
+			//		CollisionMgr::Render();
+			mGraphicDevice->Clear();
+			mGraphicDevice->AdjustViewPorts();
 
-		renderer::Render();
-		GETSINGLE(SceneMgr)->Render();
-		GETSINGLE(SceneMgr)->FontRender();
+			renderer::Render();
+			GETSINGLE(SceneMgr)->Render();
+			GETSINGLE(SceneMgr)->FontRender();
+		}
 	}
 
 	void Application::Destroy()
 	{
-		GETSINGLE(SceneMgr)->Destory();
+		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
+		{
+			GETSINGLE(SceneMgr)->Destory();
+		}
+
 	}
 
 	void Application::LateEvent()
 	{
-		GETSINGLE(SceneMgr)->LateEvent();
+		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
+		{
+			GETSINGLE(SceneMgr)->LateEvent();
+		}
 	}
 
 	void Application::Run()

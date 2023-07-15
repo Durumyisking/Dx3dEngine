@@ -12,14 +12,12 @@ namespace dru
         , mDeltaTime(0.0f)
         , mDeltaTimeConstant(0.0f)
         , mOneSecond(0.0f)
-        , mAccumulatedTime(0.0f)
         , mbBulletTimeTimer(0.0f)
         , mbBulletTimeTimerMax(0.0f)
-        , mbBulletTime(false)
-        , mbPlayerBulletTime(false)
-        , mFramePass(0)
-        , mFramePassCount(0)
-        , mbFramePassCheck(0)
+        , mMaxFrameRate(1.f / 144.f)
+        , mFrameRateStack(0.f)
+        , mbUpdatePass(false)
+
     {
     }
 
@@ -47,58 +45,11 @@ namespace dru
         mDeltaTime = differenceInFrequancy / static_cast<float>(mCpuFrequency.QuadPart);
         mDeltaTimeConstant = mDeltaTime;
 
-        if (mbBulletTime)
-        {
-            if (mbFramePassCheck)
-            {
-                mFramePassCount = 0;
-                mbFramePassCheck = false;
-            }
-
-            mbBulletTimeTimer += mDeltaTime;
-            mDeltaTime /= 3.f;
-
-
-            if (0 != mbBulletTimeTimerMax)
-            {
-                if (mbBulletTimeTimer > mbBulletTimeTimerMax)
-                {
-                    mbPlayerBulletTime = false;
-                    mbBulletTime = false;
-                    mbBulletTimeTimerMax = 0.f;
-                    mbBulletTimeTimer = 0.f;
-                }
-            }
-        }
-        else
-        {
-            if (0 != mFramePassCount && mbFramePassCheck)
-            {
-                mFramePassCount = 0;
-                mbFramePassCheck = false;
-            }
-        }
-
+        
         mPrevFrequency.QuadPart = mCurFrequency.QuadPart;
 
-        mAccumulatedTime += mDeltaTime;
-
-        if (mFramePass == mFramePassCount)
-        {
-            mbFramePassCheck = true;
-        }
-        if (mFramePass > 0)
-        {
-            ++mFramePassCount;
-        }
-
-
-#ifdef _DEBUG
-        if (mDeltaTime > (1.f / 60.f))
-            mDeltaTime = (1.f / 60.f);
-        if (mDeltaTimeConstant > (1.f / 60.f))
-            mDeltaTimeConstant = (1.f / 60.f);
-#endif
+        frameRateLock();
+        frameRateLock_Debugging();
     }
 
     void TimeMgr::Render(HDC hdc)
@@ -128,10 +79,40 @@ namespace dru
 
     }
 
-    void TimeMgr::BulletTime(float time)
+    void TimeMgr::frameRateLock()
     {
-        mbBulletTime = true;
-        mbBulletTimeTimerMax = time;
+        // 프레임 고정
+        if (mMaxFrameRate > mDeltaTime)
+        {
+            if (mMaxFrameRate > mFrameRateStack)
+            {
+                mFrameRateStack += mDeltaTime;
+                mbUpdatePass = true;
+            }
+            else
+            {
+                mDeltaTime = mMaxFrameRate;
+
+                mbUpdatePass = false;
+                mFrameRateStack = 0.f;
+            }
+        }
+        else
+        {
+            mbUpdatePass = false;
+            mFrameRateStack = 0.f;
+        }
+    }
+
+    void TimeMgr::frameRateLock_Debugging()
+    {
+
+//#ifdef _DEBUG
+//        if (mDeltaTime > (1.f / 60.f))
+//            mDeltaTime = (1.f / 60.f);
+//        if (mDeltaTimeConstant > (1.f / 60.f))
+//            mDeltaTimeConstant = (1.f / 60.f);
+//#endif
     }
 
 }

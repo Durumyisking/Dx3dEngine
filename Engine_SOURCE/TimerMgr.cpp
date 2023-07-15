@@ -11,7 +11,11 @@ namespace dru
 
 	TimerMgr::~TimerMgr()
 	{
-
+		for (Timer* timer : mTimers)
+		{
+			delete timer;
+			timer = nullptr;
+		}
 	}
 
 	void TimerMgr::Update()

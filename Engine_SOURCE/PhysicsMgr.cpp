@@ -6,6 +6,7 @@
 #include "Engine.h"
 #include "PxFilter.h"
 #include "PhysicsScene.h"
+#include "TimeMgr.h"
 
 using namespace dru;
 
@@ -43,7 +44,7 @@ void PhysicsMgr::Initialize()
 
 void PhysicsMgr::Update()
 {
-	GetScene()->simulate(DT);
+	GetScene()->simulate(GETSINGLE(TimeMgr)->GetMaxFrameRate());
 	GetScene()->fetchResults(true);
 }
 
