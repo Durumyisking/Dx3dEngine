@@ -28,7 +28,7 @@ namespace dru
 		initializeActor();
 	}
 
-	void Physical::InitialPhysics(eActorType actorType, eGeometryType geometryType, dru::math::Vector3 geometrySize, MassProperties massProperties)
+	void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, dru::math::Vector3 geometrySize, MassProperties massProperties)
 	{
 		mActorType = actorType;
 		mGeometryType = geometryType;

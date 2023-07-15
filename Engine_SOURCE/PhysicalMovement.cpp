@@ -43,9 +43,9 @@ namespace dru
 		Physical* physical = GetOwner()->GetComponent<Physical>();
 
 		if (eActorType::Kinematic == physical->GetActorType())
+		{
 			physical->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
-		else
-			physical->GetActor<PxRigidDynamic>()->setAngularVelocity(physical->GetActor<PxRigidDynamic>()->getAngularVelocity());
+		}
 
 	}
 }

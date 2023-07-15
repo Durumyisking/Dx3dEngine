@@ -64,7 +64,7 @@ namespace dru
 
     public:
         virtual void Initialize();
-        virtual void InitialPhysics(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, MassProperties massProperties = MassProperties());
+        virtual void InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, MassProperties massProperties = MassProperties());
         virtual void Update();
         virtual void FixedUpdate();
         virtual void Render();

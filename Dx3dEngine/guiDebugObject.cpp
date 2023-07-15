@@ -12,7 +12,7 @@ namespace gui
 
 	}
 
-	void DebugObject::fixedUpdate()
+	void DebugObject::FixedUpdate()
 	{
 		for (dru::Component* comp : mComponents)
 		{

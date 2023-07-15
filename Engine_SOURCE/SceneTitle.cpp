@@ -26,6 +26,9 @@
 #include "PhysicsScene.h"
 #include "PhysX.h"
 
+#include "Sphere.h"
+#include "Box.h"
+
 
 extern dru::Application application;
 
@@ -127,40 +130,32 @@ namespace dru
 		{
 			Player* player = object::Instantiate<Player>(eLayerType::Player);
 			player->SetPos(Vector3(5.f, 5.f, 5.f));
+			player->SetScale({ 5.f, 5.f, 5.f });
 			player->SetName(L"Player");
 			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player->SetScale({ 5.f, 5.f, 5.f });
+			player->AddComponent<PlayerScript>(eComponentType::Script);
 
 			Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-			physical->InitialPhysics(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+			physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
 			PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
 
 			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 			//rigid->RemoveGravity();
+
 			player->AddComponent<PhysXCollider>(eComponentType::Collider);
 			player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 		}
 
 		{
 			
-			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(-5.f, 5.f, 5.f));
-			player->SetScale({ 5.f, 5.f, 5.f });
-			player->SetName(L"Player");
+			Sphere* sphere = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
+			sphere->SetPos(Vector3(-5.f, 5.f, 5.f));
+			sphere->SetScale({ 5.f, 5.f, 5.f });
+			sphere->SetName(L"Sphere");
 			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-			player->GetComponent<MeshRenderer>()->SetMaterial(mat);
-			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player->AddComponent<PlayerScript>(eComponentType::Script);
+			// sphere->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-			Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-			physical->InitialPhysics(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
-			PxRigidDynamic* dy =  physical->GetActor<PxRigidDynamic>();
-
-			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			//rigid->RemoveGravity();
-			player->AddComponent<PhysXCollider>(eComponentType::Collider);
-			player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 		}
 
 		{
@@ -178,10 +173,9 @@ namespace dru
 			plane->SetScale({ 100.f, 0.5f, 100.f });
 			plane->SetName(L"Plane");
 			plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
-			plane->AddComponent<Physical>(eComponentType::Physical)->InitialPhysics(eActorType::Static, eGeometryType::Box, Vector3(50.f, 0.25f, 50.f));
+			plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(50.f, 0.25f, 50.f));
 
 			PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			rigid->RemoveGravity();
 
 			plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 		}

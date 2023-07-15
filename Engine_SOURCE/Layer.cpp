@@ -54,7 +54,7 @@ namespace dru
 				continue;
 
 			if(GameObj::eState::Active == Obj->GetState())
-				Obj->update();
+				Obj->Update();
 		}
 	}
 
@@ -66,7 +66,7 @@ namespace dru
 				continue;
 
 			if (GameObj::eState::Active == Obj->GetState())
-				Obj->fixedUpdate();
+				Obj->FixedUpdate();
 		}
 
 		//// sort z axis
@@ -82,7 +82,7 @@ namespace dru
 				continue;
 
 			if (GameObj::eState::Active == Obj->GetState())
-				Obj->render();
+				Obj->Render();
 
 		}
 	}
@@ -95,7 +95,7 @@ namespace dru
 				continue;
 
 			if (GameObj::eState::Active == Obj->GetState())
-				Obj->fontRender();
+				Obj->FontRender();
 
 		}
 	}

@@ -10,20 +10,18 @@ namespace dru::enums
 		Grid,
 		BackGround,
 		Objects,
+		PhysicalObject,
 		Bullet,
 		Monster,
-		MonsterGun,
 		Boss,
 		Player,
 		AfterImage,
 		Platforms,
-		Ray,
 		Particle,
 		FX,
 		UI,
 		PostProcess,
-		MainMenu,
-		End = 18,
+		End = 16,
 	};
 
 

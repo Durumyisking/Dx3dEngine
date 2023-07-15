@@ -69,7 +69,7 @@ namespace dru
 		}
 	}
 
-	void GameObj::update()
+	void GameObj::Update()
 	{
 		for (Component* comp : mComponents)
 		{
@@ -93,7 +93,7 @@ namespace dru
 		}
 	}
 
-	void GameObj::fixedUpdate()
+	void GameObj::FixedUpdate()
 	{
 		for (Component* comp : mComponents)
 		{
@@ -117,7 +117,7 @@ namespace dru
 		}
 	}
 
-	void GameObj::render()
+	void GameObj::Render()
 	{
 		for (Component* comp : mComponents)
 		{
@@ -134,7 +134,7 @@ namespace dru
 		}
 	}
 
-	void GameObj::fontRender()
+	void GameObj::FontRender()
 	{
 		for (Script* script : mScripts)
 		{
