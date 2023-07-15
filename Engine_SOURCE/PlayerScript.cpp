@@ -44,23 +44,19 @@ namespace dru
 
 		if (KEY_DOWN(LEFT))
 		{
-			velocity = GetOwner()->GetComponent<Transform>()->Right() * -5.f;
-			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(Vector3(-10.f, 0.f, 0.f)), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(RIGHT))
 		{
-			velocity = GetOwner()->GetComponent<Transform>()->Right() * -5.f;
-			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(Vector3(10.f, 0.f, 0.f)), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(UP))
 		{
-			velocity = GetOwner()->GetComponent<Transform>()->Right() * -5.f;
-			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(Vector3(0.f, 0.f, 10.f)), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(DOWN))
 		{
-			velocity = GetOwner()->GetComponent<Transform>()->Right() * -5.f;
-			GetOwner()->GetComponent<PhysXRigidBody>()->SetVelocity(AXIS::X, velocity.x);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(Vector3(0.f, 0.f, -10.f)), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_TAP(SPACE))
 		{
