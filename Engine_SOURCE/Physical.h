@@ -64,7 +64,7 @@ namespace dru
 
     public:
         virtual void Initialize();
-        virtual void InitialPhysics(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, MassProperties massProperties = MassProperties());
+        virtual void InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, MassProperties massProperties = MassProperties());
         virtual void Update();
         virtual void FixedUpdate();
         virtual void Render();
@@ -74,7 +74,7 @@ namespace dru
         eGeometryType               GetGeometryType()  const { return mGeometryType; }
         PxShape*                    GetShape()         const { return mShape; }
         const Vector3&              GetGeometrySize()  const { return mSize; }
-        std::shared_ptr<Geometry> GetGeometries()    const { return mGeometry; }
+        std::shared_ptr<Geometry>   GetGeometries()    const { return mGeometry; }
         PxActor*                    GetActor()         const { return mActor; }
 
         template<typename T>
@@ -87,6 +87,8 @@ namespace dru
 
         void AddActorToPxScene();
         void RemoveActorToPxScene();
+
+        void SetGeometrySize(const Vector3& newSize);
 
     private:
         void createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize);

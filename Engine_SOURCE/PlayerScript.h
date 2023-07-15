@@ -24,6 +24,7 @@ namespace dru
 		virtual void OnTrigger(Collider2D* oppo);
 		virtual void OnTriggerExit(Collider2D* oppo);
 
+
 	private:
 		Transform* mTransform;
     };

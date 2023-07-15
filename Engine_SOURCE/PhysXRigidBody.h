@@ -33,6 +33,7 @@ public:
         float GetVelocity(AXIS eAxis);
         void  SetVelocity(AXIS eAxis, float velocity);
         void  AddVelocity(AXIS eAxis, float velocity);
+        void  AddForce(const math::Vector3& force, PxForceMode::Enum eForceMode);
         void  ReserveSpeedForSeconds(const math::Vector3& velocity, float duration);
 
     public:
@@ -55,6 +56,7 @@ public:
 
         bool mGravityApplied;
         math::Vector3 mGravityAccel;
+        math::Vector3 mForce;
         math::Vector3 mVelocity;
         math::Vector3 mMaxVelocity;
 

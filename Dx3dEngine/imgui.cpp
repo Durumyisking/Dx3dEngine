@@ -14449,7 +14449,7 @@ void ImGui::UpdatePlatformWindows()
     if (!(g.ConfigFlagsCurrFrame & ImGuiConfigFlags_ViewportsEnable))
         return;
 
-    // Create/resize/destroy platform windows to match each active viewport.
+    // Create/resize/Destroy platform windows to match each active viewport.
     // Skip the main viewport (index 0), which is always fully handled by the application!
     for (int i = 1; i < g.Viewports.Size; i++)
     {
@@ -14662,7 +14662,7 @@ void ImGui::DestroyPlatformWindow(ImGuiViewportP* viewport)
 
 void ImGui::DestroyPlatformWindows()
 {
-    // We call the destroy window on every viewport (including the main viewport, index 0) to give a chance to the backend
+    // We call the Destroy window on every viewport (including the main viewport, index 0) to give a chance to the backend
     // to clear any data they may have stored in e.g. PlatformUserData, RendererUserData.
     // It is convenient for the platform backend code to store something in the main viewport, in order for e.g. the mouse handling
     // code to operator a consistent manner.
@@ -14703,7 +14703,7 @@ void ImGui::DestroyPlatformWindows()
 //    |   - DockNodeUpdateForRootNode()
 //    |     - DockNodeUpdateFlagsAndCollapse()
 //    |     - DockNodeFindInfo()
-//    |   - destroy unused node or tab bar
+//    |   - Destroy unused node or tab bar
 //    |   - create dock node host window
 //    |      - Begin() etc.
 //    |   - DockNodeStartMouseMovingWindow()
@@ -17795,7 +17795,7 @@ void ImGui::DockBuilderRemoveNodeChildNodes(ImGuiID root_id)
                     break;
                 }
 
-    // Not really efficient, but easier to destroy a whole hierarchy considering DockContextRemoveNode is attempting to merge nodes
+    // Not really efficient, but easier to Destroy a whole hierarchy considering DockContextRemoveNode is attempting to merge nodes
     if (nodes_to_remove.Size > 1)
         ImQsort(nodes_to_remove.Data, nodes_to_remove.Size, sizeof(ImGuiDockNode*), DockNodeComparerDepthMostFirst);
     for (int n = 0; n < nodes_to_remove.Size; n++)

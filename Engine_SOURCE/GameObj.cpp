@@ -11,6 +11,7 @@
 #include "AudioSource.h"
 #include "SpriteRenderer.h"
 #include "MeshRenderer.h"
+#include "Physical.h"
 
 
 namespace dru
@@ -69,7 +70,7 @@ namespace dru
 		}
 	}
 
-	void GameObj::update()
+	void GameObj::Update()
 	{
 		for (Component* comp : mComponents)
 		{
@@ -93,7 +94,7 @@ namespace dru
 		}
 	}
 
-	void GameObj::fixedUpdate()
+	void GameObj::FixedUpdate()
 	{
 		for (Component* comp : mComponents)
 		{
@@ -117,7 +118,7 @@ namespace dru
 		}
 	}
 
-	void GameObj::render()
+	void GameObj::Render()
 	{
 		for (Component* comp : mComponents)
 		{
@@ -134,7 +135,7 @@ namespace dru
 		}
 	}
 
-	void GameObj::fontRender()
+	void GameObj::FontRender()
 	{
 		for (Script* script : mScripts)
 		{
@@ -180,13 +181,9 @@ namespace dru
 		{
 			GetComponent<Transform>()->SetScale(value);
 		}
-		if (nullptr != GetComponent<SpriteRenderer>())
+		if (nullptr != GetComponent<Physical>())
 		{
-			GetComponent<SpriteRenderer>()->ChangeSize();
-		}
-		if (nullptr != GetComponent<MeshRenderer>())
-		{
-			GetComponent<MeshRenderer>()->ChangeSize();
+			GetComponent<Physical>()->SetGeometrySize(value);	
 		}
 	}
 

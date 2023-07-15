@@ -28,7 +28,7 @@ VSOut main(VSIn vsIn)
     
     vsOut.Pos = projectionPosition;
     vsOut.UV = vsIn.UV;
-    vsOut.WorldPos = vsIn.Pos.xy * resolution.xy + cameraPosition.xy;
+    vsOut.WorldPos = vsIn.Pos.xz * resolution.xy + cameraPosition.xz;
     
     return vsOut;
 }

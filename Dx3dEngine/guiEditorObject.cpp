@@ -17,14 +17,14 @@ namespace gui
 	}
 	void EditorObject::update()
 	{
-		GameObj::update();
+		GameObj::Update();
 	}
 	void EditorObject::fixedUpdate()
 	{
-		GameObj::fixedUpdate();
+		GameObj::FixedUpdate();
 	}
 	void EditorObject::render()
 	{
-		GameObj::render();
+		GameObj::Render();
 	}
 }

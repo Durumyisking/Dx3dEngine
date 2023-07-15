@@ -3,6 +3,7 @@
 #include "Layer.h"
 #include "Transform.h"
 #include "GameObj.h"
+#include "PhysicalGameObj.h"
 
 namespace dru::object
 {

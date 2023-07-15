@@ -44,7 +44,8 @@ namespace dru
 		float GetScaleZ() const { return mRelativeScale.z; }
 		Vector2 GetScaleXY() const { return Vector2(mRelativeScale.x, mRelativeScale.y); }
 
-		void SetPosition(const Vector3& position) { mRelativePosition = position; mWorldPosition = position; }
+		void SetPosition(const Vector3& position) { mRelativePosition = position; }
+//		void SetPosition(const Vector3& position) { mRelativePosition = position; mWorldPosition = position; }
 		void SetPositionX(const float posX) { mRelativePosition.x = posX; }
 		void SetPositionY(const float posY) { mRelativePosition.y = posY; }
 		void SetPositionZ(const float posZ) { mRelativePosition.z = posZ; }
@@ -56,11 +57,11 @@ namespace dru
 		void SetRotationZ(const float rotZ) { mRelativeRotation.z = rotZ; }
 		void SetRotationXY(const Vector2& rotation) { mRelativeRotation.x = rotation.x; mRelativeRotation.y = rotation.y; }
 
-		void SetScale(const Vector3& scale) { mRelativeScale = scale;   mbIsScaleChanged = true;}
-		void SetScaleX(const float scaleX) { mRelativeScale.x = scaleX; mbIsScaleChanged = true;}
-		void SetScaleY(const float scaleY) { mRelativeScale.y = scaleY; mbIsScaleChanged = true;}
-		void SetScaleZ(const float scaleZ) { mRelativeScale.z = scaleZ; mbIsScaleChanged = true;}
-		void SetScaleXY(const Vector2& scale) { mRelativeScale.x = scale.x; mRelativeScale.y = scale.y; mbIsScaleChanged = true; }
+		void SetScale(const Vector3& scale) { mRelativeScale = scale;  }
+		void SetScaleX(const float scaleX) { mRelativeScale.x = scaleX;}
+		void SetScaleY(const float scaleY) { mRelativeScale.y = scaleY;}
+		void SetScaleZ(const float scaleZ) { mRelativeScale.z = scaleZ;}
+		void SetScaleXY(const Vector2& scale) { mRelativeScale.x = scale.x; mRelativeScale.y = scale.y; }
 
 		void AddPosition(const Vector3& position) { mRelativePosition += position; }
 		void AddPositionX(const float posX) { mRelativePosition.x += posX; }
@@ -77,10 +78,10 @@ namespace dru
 		void AddRotationY(const float rotY) { mRelativeRotation.y += rotY; }
 		void AddRotationZ(const float rotZ) { mRelativeRotation.z += rotZ; }
 
-		void AddScale(const Vector3& scale) { mRelativeScale += scale; mbIsScaleChanged = true; }
-		void AddScaleX(const float scaleX) { mRelativeScale.x += scaleX; mbIsScaleChanged = true; }
-		void AddScaleY(const float scaleY) { mRelativeScale.y += scaleY; mbIsScaleChanged = true; }
-		void AddScaleZ(const float scaleZ) { mRelativeScale.z += scaleZ; mbIsScaleChanged = true; }
+		void AddScale(const Vector3& scale) { mRelativeScale += scale; }
+		void AddScaleX(const float scaleX) { mRelativeScale.x += scaleX;  }
+		void AddScaleY(const float scaleY) { mRelativeScale.y += scaleY;  }
+		void AddScaleZ(const float scaleZ) { mRelativeScale.z += scaleZ;  }
 
 		const Vector3& Forward() const { return mRelativeForward; }
 		const Vector3& Right() const { return mRelativeRight; }
@@ -121,9 +122,6 @@ namespace dru
 				, mWorldPosition.x + mWorldScale.x * 0.5f, mWorldPosition.y - mWorldScale.y * 0.5f);
 		}
 
-		bool IsScaleChanged() { return mbIsScaleChanged; }
-		void ScaleChangedOff() { mbIsScaleChanged = false; }
-
 		Vector3 GetPhysicalPosition();
 		void SetPhysicalPosition(const Vector3& vPosition);
 
@@ -150,8 +148,6 @@ namespace dru
 		Vector3 mWorldPosition;
 		Vector3 mWorldRotation;
 		Vector3 mWorldScale;
-
-		bool mbIsScaleChanged;
 
 
 		Matrix  mPxWorld = {};

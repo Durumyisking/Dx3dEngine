@@ -221,7 +221,7 @@ namespace gui
 		dru::Camera::SetGpuViewMatrix(dru::renderer::mainCamera->GetViewMatrix());
 		dru::Camera::SetGpuProjectionMatrix(dru::renderer::mainCamera->GetProjectionMatrix());
 
-		debugObj->render();
+		debugObj->Render();
 
 	}
 

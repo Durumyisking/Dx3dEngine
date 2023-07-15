@@ -10,8 +10,9 @@ namespace dru
 		: Component(eComponentType::RigidBody)
 		, mPhysical(nullptr)
 		, mGravityApplied(true)
-		, mGravityAccel(Vector3(0.f, -1.f, 0.f))
-		, mMaxVelocity( Vector3(10.f, -10.f, 10.f))
+		, mForce(Vector3::Zero)
+		, mGravityAccel(Vector3(0.f, -9.81f, 0.f))
+		, mMaxVelocity(Vector3(20.f, -20.f, 20.f))
 		, mReserveTimer(0.f)
 	{
 	}
@@ -23,6 +24,13 @@ namespace dru
 	void PhysXRigidBody::Initialize()
 	{
 		mPhysical = GetOwner()->GetComponent<Physical>();
+
+
+		if (eActorType::Dynamic == mPhysical->GetActorType())
+		{
+			SetAngularMaxVelocityForDynamic(10.f);
+			SetLinearMaxVelocityForDynamic(10.f);
+		}
 	}
 
 	void PhysXRigidBody::Update()
@@ -97,6 +105,16 @@ namespace dru
 			mVelocity.y += velocity;
 			break;
 		}
+	}
+
+	void PhysXRigidBody::AddForce(const math::Vector3& force, PxForceMode::Enum eForceMode)
+	{
+		PxRigidBodyExt::addForceAtPos(
+			*mPhysical->GetActor<PxRigidBody>(),
+			convert::Vector3ToPxVec3(force),
+			convert::Vector3ToPxVec3(GetOwner()->GetComponent<Transform>()->GetPhysicalPosition()),
+			eForceMode);
+
 	}
 
 	void PhysXRigidBody::ReserveSpeedForSeconds(const Vector3& velocity, float duration)

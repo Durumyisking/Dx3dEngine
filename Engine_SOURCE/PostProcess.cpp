@@ -36,17 +36,17 @@ namespace dru
 	{
 		mConstantBuffer.ElapsedTime += DT;
 
-		GameObj::update();
+		GameObj::Update();
 	}
 
 	void PostProcess::fixedUpdate()
 	{
-		GameObj::fixedUpdate();
+		GameObj::FixedUpdate();
 	}
 
 	void PostProcess::render()
 	{
-		GameObj::render();
+		GameObj::Render();
 	}
 
 	void PostProcess::Bind()

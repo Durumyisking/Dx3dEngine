@@ -167,6 +167,18 @@
     <Filter Include="Common\Component\Collider\Manager\PhysX">
       <UniqueIdentifier>{1a31cd64-03cf-47e2-81dc-e514c35f2e46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{e7cc1677-ecf4-4ddb-af23-34f289515d37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\PhysicalGameObj">
+      <UniqueIdentifier>{55efa532-1171-44c2-8830-5143bdc9feef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\PhysicalGameObj\Sphere">
+      <UniqueIdentifier>{ca2e3122-20b3-4dd7-a35c-e8c437dcfd15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\PhysicalGameObj\Box">
+      <UniqueIdentifier>{13fc7fe0-a1db-4724-b9dd-0b678144e6a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -389,6 +401,18 @@
     <ClInclude Include="PhysXCollisionMgr.h">
       <Filter>Common\Component\Collider\Manager\PhysX</Filter>
     </ClInclude>
+    <ClInclude Include="TimerMgr.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicalGameObj.h">
+      <Filter>Common\GameObj\PhysicalGameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Common\GameObj\PhysicalGameObj\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Common\GameObj\PhysicalGameObj\Box</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -594,6 +618,18 @@
     </ClCompile>
     <ClCompile Include="PhysXCollisionMgr.cpp">
       <Filter>Common\Component\Collider\Manager\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerMgr.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicalGameObj.cpp">
+      <Filter>Common\GameObj\PhysicalGameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Common\GameObj\PhysicalGameObj\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Common\GameObj\PhysicalGameObj\Box</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

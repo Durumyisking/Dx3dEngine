@@ -4,7 +4,7 @@ float4 main(VTX_OUT vsIn) : SV_Target
 {
     float4 color = RED;
     
-    color = defaultTexture.Sample(pointSampler, vsIn.vUV);
+    color = colorTexture.Sample(pointSampler, vsIn.vUV);
     
     color *= cbxyzw1; // 곱할 색
     color += cbxyzw2; // 더할 색

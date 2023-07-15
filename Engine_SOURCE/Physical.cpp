@@ -28,7 +28,7 @@ namespace dru
 		initializeActor();
 	}
 
-	void Physical::InitialPhysics(eActorType actorType, eGeometryType geometryType, dru::math::Vector3 geometrySize, MassProperties massProperties)
+	void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, dru::math::Vector3 geometrySize, MassProperties massProperties)
 	{
 		mActorType = actorType;
 		mGeometryType = geometryType;
@@ -64,6 +64,32 @@ namespace dru
 	void Physical::RemoveActorToPxScene()
 	{
 		GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysicsScene()->RemoveActor(mActor);
+	}
+
+	void Physical::SetGeometrySize(const Vector3& newSize)
+	{
+		switch (mGeometryType)
+		{
+		case dru::enums::eGeometryType::Box:
+			mGeometry->boxGeom.halfExtents = convert::Vector3ToPxVec3(newSize * 0.5f);
+			mShape->setGeometry(mGeometry->boxGeom);
+			break;
+		case dru::enums::eGeometryType::Capsule:
+			mGeometry->capsuleGeom.halfHeight = newSize.y * 0.5f;
+			mGeometry->capsuleGeom.radius = newSize.x * 0.5f;
+			mShape->setGeometry(mGeometry->capsuleGeom);
+			break;
+		case dru::enums::eGeometryType::Sphere:
+			mGeometry->sphereGeom.radius = newSize.x * 0.5f;
+			mShape->setGeometry(mGeometry->sphereGeom);
+			break;
+		case dru::enums::eGeometryType::Plane:
+			break;
+		case dru::enums::eGeometryType::End:
+			break;
+		default:
+			break;
+		}
 	}
 
 	void Physical::createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize)
@@ -146,7 +172,6 @@ namespace dru
 				break;
 			}
 		}
-
 	}
 
 	void Physical::createShape()
@@ -175,6 +200,7 @@ namespace dru
 			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial());
 			break;
 		}
+		
 	}
 
 	void Physical::createActor()

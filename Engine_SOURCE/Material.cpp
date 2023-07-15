@@ -18,6 +18,16 @@ namespace dru
 		mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
 	}
+	Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName)
+		: Resource(eResourceType::Material)
+		, mMode(eRenderingMode::Transparent)
+	{
+
+		mTexture[static_cast<UINT>(eTextureSlot::T0)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
+		mTexture[static_cast<UINT>(eTextureSlot::T1)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
+		mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+		mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
+	}
 	Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName)
 		: Resource(eResourceType::Material)
 		, mMode(eRenderingMode::Transparent)

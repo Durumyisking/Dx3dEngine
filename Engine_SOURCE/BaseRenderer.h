@@ -28,7 +28,6 @@ namespace dru
 		Mesh* GetMesh() const { return mMesh; }
 		Material* GetMaterial() const { return mMaterial; }
 
-		void ChangeSize() { mbIsChanged = true; }
 		void ChangeColor(Vector4 color);
 		void MulColor(Vector4 color);
 		void AddColor(Vector4 color);
@@ -38,17 +37,10 @@ namespace dru
 		void LODOff() { mbUseLOD = false; }
 
 	private:
-		void adjustTexture();
-
-
-	private:
 		Mesh* mMesh;
 		Material* mMaterial;
 
-		float mWidthRatio;
-		float mHeightRatio;
 
-		bool mbIsChanged;
 		bool mbIsAnim;
 		bool mbUseLOD;
 

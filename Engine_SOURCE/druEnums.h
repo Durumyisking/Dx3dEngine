@@ -10,20 +10,18 @@ namespace dru::enums
 		Grid,
 		BackGround,
 		Objects,
+		PhysicalObject,
 		Bullet,
 		Monster,
-		MonsterGun,
 		Boss,
 		Player,
 		AfterImage,
 		Platforms,
-		Ray,
 		Particle,
 		FX,
 		UI,
 		PostProcess,
-		MainMenu,
-		End = 18,
+		End = 16,
 	};
 
 
@@ -117,10 +115,10 @@ namespace dru::enums
 
 	enum class eActorType
 	{
-		Static,
-		Dynamic,
-		Kinematic,
-		Character,
+		Static, // 정적인 물체 (물리적으로 움직이지 않을 물체)
+		Dynamic, // 동적인 물체 (물리엔진에 직접적인 영향을 받는다)
+		Kinematic, // 프로그래밍 운동제어 물리 시뮬레이션 영향을 받지 않고 스크립트로 움직인다.
+		Character, // 일반적인 액터들과 다른 움직임을 처리하기 위해 사용한다. (컨트롤러를 붙여줘야한다)
 		End,
 	};
 

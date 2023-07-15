@@ -27,29 +27,31 @@ namespace dru
 		GameObj::Initialize();
 	}
 
-	void Player::update()
+	void Player::Update()
 	{
 
-		GameObj::update();
+		GameObj::Update();
 	}
 
-	void Player::fixedUpdate()
+	void Player::FixedUpdate()
 	{
-		GameObj::fixedUpdate();
+		GameObj::FixedUpdate();
 	}
 
-	void Player::render()
+	void Player::Render()
 	{
 		
-		GameObj::render();
+		GameObj::Render();
 	}
 
-	void Player::fontRender()
+	void Player::FontRender()
 	{
 	}
 
 	void Player::OnCollisionEnter(GameObj* gameObject)
 	{
+
+
 	}
 
 	void Player::OnTriggerEnter(GameObj* gameObject)

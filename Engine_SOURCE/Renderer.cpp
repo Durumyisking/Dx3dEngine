@@ -105,19 +105,19 @@ namespace dru::renderer
 
 		Vertex	GridVertexes[4] = {};
 
-		GridVertexes[0].pos = Vector4(-200.f, 200.f, 0.f, 1.f);
+		GridVertexes[0].pos = Vector4(-200.f, 0.f, 200.f, 1.f);
 		GridVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		GridVertexes[0].uv = Vector2(0.f, 0.f);
 
-		GridVertexes[1].pos = Vector4(200.f, 200.f, 0.f, 1.f);
+		GridVertexes[1].pos = Vector4(200.f, 0.f, 200.f, 1.f);
 		GridVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		GridVertexes[1].uv = Vector2(1.f, 0.f);
 
-		GridVertexes[2].pos = Vector4(200.f, -200.f, 0.f, 1.f);
+		GridVertexes[2].pos = Vector4(200.f, 0.f, -200.f, 1.f);
 		GridVertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		GridVertexes[2].uv = Vector2(1.f, 1.f);
 
-		GridVertexes[3].pos = Vector4(-200.f, -200.f, 0.f, 1.f);
+		GridVertexes[3].pos = Vector4(-200.f, 0.f, -200.f, 1.f);
 		GridVertexes[3].color = Vector4(0.f, 0.f, 0.f, 1.f);
 		GridVertexes[3].uv = Vector2(0.f, 1.f);
 
@@ -386,8 +386,8 @@ namespace dru::renderer
 		sphereVtx.push_back(v);
 
 		// Body
-		UINT iStackCount = 40; // ���� ���� ����
-		UINT iSliceCount = 40; // ���� ���� ����
+		UINT iStackCount = 40; 
+		UINT iSliceCount = 40; 
 
 		float fStackAngle = XM_PI / iStackCount;
 		float fSliceAngle = XM_2PI / iSliceCount;
@@ -434,9 +434,9 @@ namespace dru::renderer
 		v.biNormal = Vector3(0.f, 0.f, -1.f);
 		sphereVtx.push_back(v);
 
-		// �ε���
-		// �ϱ���
 		indexes.clear();
+
+		// North
 		for (UINT i = 0; i < iSliceCount; ++i)
 		{
 			indexes.push_back(0);
@@ -444,7 +444,7 @@ namespace dru::renderer
 			indexes.push_back(i + 1);
 		}
 
-		// ����
+		// Middle
 		for (UINT i = 0; i < iStackCount - 2; ++i)
 		{
 			for (UINT j = 0; j < iSliceCount; ++j)
@@ -465,7 +465,7 @@ namespace dru::renderer
 			}
 		}
 
-		// ������
+		// South
 		UINT iBottomIdx = static_cast<UINT>(sphereVtx.size()) - 1;
 
 		for (UINT i = 0; i < iSliceCount; ++i)
@@ -840,7 +840,7 @@ namespace dru::renderer
 
 	}
 
-	void LoadTexture()
+	void LoadDefaultTexture()
 	{		
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise1", L"noise/noise_01.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise2", L"noise/noise_02.png");
@@ -849,6 +849,10 @@ namespace dru::renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"default", L"default.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_color", L"Dirt/dirt_color.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_normal", L"Dirt/dirt_normal.png");
+
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
@@ -863,7 +867,7 @@ namespace dru::renderer
 	}
 
 
-	void LoadMaterial()
+	void LoadDefaultMaterial()
 	{
 
 		Texture* Meshtexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"default");
@@ -974,8 +978,8 @@ namespace dru::renderer
 		LoadShader();
 		SetUpState();
 		LoadBuffer();
-		LoadTexture();
-		LoadMaterial();
+		LoadDefaultTexture();
+		LoadDefaultMaterial();
 	}
 
 	void release()

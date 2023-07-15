@@ -12,10 +12,10 @@ namespace dru
 		virtual ~Player();
 
 		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
-		virtual void fontRender() override;
+		virtual void Update() override;
+		virtual void FixedUpdate() override;
+		virtual void Render() override;
+		virtual void FontRender() override;
 
 	public:
 		virtual void OnCollisionEnter(GameObj* gameObject) override;

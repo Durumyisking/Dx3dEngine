@@ -10,7 +10,7 @@ namespace gui
 		DebugObject();
 		virtual ~DebugObject();
 
-		virtual void fixedUpdate() override;
+		virtual void FixedUpdate() override;
 	
 	};
 }

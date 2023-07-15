@@ -186,7 +186,7 @@ namespace dru
 		{
 			if (renderPassCheck(obj))
 			{
-				obj->render();
+				obj->Render();
 			}
 		}
 	}
@@ -197,7 +197,7 @@ namespace dru
 		{
 			if (renderPassCheck(obj))
 			{
-				obj->render();
+				obj->Render();
 			}
 		}
 	}
@@ -208,7 +208,7 @@ namespace dru
 		{
 			if (renderPassCheck(obj))
 			{
-				obj->render();				
+				obj->Render();				
 			}
 		}
 	}

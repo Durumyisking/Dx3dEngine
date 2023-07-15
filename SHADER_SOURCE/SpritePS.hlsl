@@ -12,7 +12,7 @@ float4 main(VTX_OUT vsIn) : SV_Target
     
     if (0 == animationType)
     {
-        color = defaultTexture.SampleLevel(pointSampler, vsIn.vUV, 0.f);
+        color = colorTexture.SampleLevel(anisotropicSampler, vsIn.vUV, 0.f);
     }
     else if (1 == animationType)
     {

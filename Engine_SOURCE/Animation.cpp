@@ -118,7 +118,6 @@ namespace dru
 		ConstantBuffer* cb =  renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 
 		renderer::AnimationCB data = {};
-
 		data.type = static_cast<UINT>(eAnimationType::SecondDimension);
 		data.LT = mSpriteSheet[mIndex].LT;
 		data.offset = mSpriteSheet[mIndex].offset;

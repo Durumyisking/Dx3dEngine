@@ -13,12 +13,12 @@ namespace dru
 
 		virtual void Initialize();
 		// 캐릭터 / 로직 업데이트
-		virtual void update();
+		virtual void Update();
 		// gpu 업데이트
-		virtual void fixedUpdate();
-		virtual void render();
-		virtual void destroy();
-		virtual void lateEvent();
+		virtual void FixedUpdate();
+		virtual void Render();
+		virtual void Destroy();
+		virtual void LateEvent();
 		// engine loop
 		void Run();
 		void Present();

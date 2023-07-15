@@ -10,7 +10,7 @@
 #include "FontWrapper.h"
 #include "FileMgr.h"
 #include "PhysicsMgr.h"
-
+#include "TimerMgr.h"
 
 namespace dru
 {
@@ -42,52 +42,70 @@ namespace dru
 		GETSINGLE(FontWrapper)->Initialize();
 		GETSINGLE(SceneMgr)->Initialize();
 	}
-	void Application::update()
+	void Application::Update()
 	{
-		GETSINGLE(TimeMgr)->update();
-		GETSINGLE(InputMgr)->update();
-//		GETSINGLE(CollisionMgr)->update();
-		GETSINGLE(SceneMgr)->Update();
-		GETSINGLE(PhysXCollisionMgr)->Update();
-		GETSINGLE(PhysicsMgr)->Update();
-	}
-	void Application::fixedUpdate()
-	{
-		//GETSINGLE(CollisionMgr)->fixedUpdate();
-		GETSINGLE(SceneMgr)->FixedUpdate();
-	}
-	void Application::render()
-	{
-		GETSINGLE(TimeMgr)->Render(mHdc);
-		GETSINGLE(InputMgr)->Render(mHdc);
-		//		CollisionMgr::Render();
-		mGraphicDevice->Clear();
-		mGraphicDevice->AdjustViewPorts();
+		GETSINGLE(TimeMgr)->Update();
 
-		renderer::Render();
-		GETSINGLE(SceneMgr)->Render();
-		GETSINGLE(SceneMgr)->FontRender();
+		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
+		{
+			GETSINGLE(TimerMgr)->Update();
+			GETSINGLE(InputMgr)->Update();
+			//		GETSINGLE(CollisionMgr)->Update();
+			GETSINGLE(SceneMgr)->Update();
+			GETSINGLE(PhysXCollisionMgr)->Update();
+			GETSINGLE(PhysicsMgr)->Update();
+		}
+	}
+	void Application::FixedUpdate()
+	{
+		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
+		{
+			//GETSINGLE(CollisionMgr)->FixedUpdate();
+			GETSINGLE(SceneMgr)->FixedUpdate();
+		}
+	}
+	void Application::Render()
+	{
+		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
+		{
+			GETSINGLE(TimeMgr)->Render(mHdc);
+			GETSINGLE(InputMgr)->Render(mHdc);
+			//		CollisionMgr::Render();
+			mGraphicDevice->Clear();
+			mGraphicDevice->AdjustViewPorts();
+
+			renderer::Render();
+			GETSINGLE(SceneMgr)->Render();
+			GETSINGLE(SceneMgr)->FontRender();
+		}
 	}
 
-	void Application::destroy()
+	void Application::Destroy()
 	{
-		GETSINGLE(SceneMgr)->Destory();
+		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
+		{
+			GETSINGLE(SceneMgr)->Destory();
+		}
+
 	}
 
-	void Application::lateEvent()
+	void Application::LateEvent()
 	{
-		GETSINGLE(SceneMgr)->LateEvent();
+		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
+		{
+			GETSINGLE(SceneMgr)->LateEvent();
+		}
 	}
 
 	void Application::Run()
 	{
-		update();
-		fixedUpdate();
-		render();
+		Update();
+		FixedUpdate();
+		Render();
 
 		// 프레임 종료 후 오브젝트 삭제 및 추가
-		destroy();
-		lateEvent();
+		Destroy();
+		LateEvent();
 	}
 
 	void Application::Present()
@@ -106,6 +124,7 @@ namespace dru
 
 	void Application::DestroySingle()
 	{
+
 		GETSINGLE(SceneMgr)->DestroyInstance();
 		GETSINGLE(FontWrapper)->DestroyInstance();
 //		GETSINGLE(CollisionMgr)->DestroyInstance();
@@ -115,6 +134,7 @@ namespace dru
 		GETSINGLE(TimeMgr)->DestroyInstance();
 		GETSINGLE(ResourceMgr)->DestroyInstance();
 		GETSINGLE(PhysicsMgr)->DestroyInstance();
+		GETSINGLE(TimerMgr)->DestroyInstance();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

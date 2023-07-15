@@ -26,10 +26,10 @@ namespace dru
 		virtual ~GameObj();
 
 		virtual void Initialize();
-		virtual void update();
-		virtual void fixedUpdate();
-		virtual void render();
-		virtual void fontRender();
+		virtual void Update();
+		virtual void FixedUpdate();
+		virtual void Render();
+		virtual void FontRender();
 
 	public:
 		virtual void OnCollisionEnter(GameObj* gameObject) {};
