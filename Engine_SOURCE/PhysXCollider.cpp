@@ -101,13 +101,19 @@ namespace dru
 		}
 	}
 	void PhysXCollider::createDebugBox(math::Vector3 halfSize)
-	{
-		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
+	{		
+		if (!GetOwner()->GetComponent<MeshRenderer>()->GetMesh())
+		{
+			Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
+			GetOwner()->GetComponent<MeshRenderer>()->SetMesh(mesh);
+		}
 
-		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugGeometryMaterial");
+		if (!GetOwner()->GetComponent<MeshRenderer>()->GetMaterial())
+		{
+			Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugGeometryMaterial");
+			GetOwner()->GetComponent<MeshRenderer>()->SetMaterial(material);
+		}
 
-		GetOwner()->GetComponent<MeshRenderer>()->SetMaterial(material);
-		GetOwner()->GetComponent<MeshRenderer>()->SetMesh(mesh);
 	}
 	void PhysXCollider::createDebugCapsule(float radius, float halfHeight)
 	{
@@ -121,11 +127,16 @@ namespace dru
 	}
 	void PhysXCollider::createDebugSphere(float radius)
 	{
-		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Spheremesh");
+		if (!GetOwner()->GetComponent<MeshRenderer>()->GetMesh())
+		{
+			Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Spheremesh");
+			GetOwner()->GetComponent<MeshRenderer>()->SetMesh(mesh);
+		}
 
-		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugGeometryMaterial");
-
-		GetOwner()->GetComponent<MeshRenderer>()->SetMaterial(material);
-		GetOwner()->GetComponent<MeshRenderer>()->SetMesh(mesh);
+		if (!GetOwner()->GetComponent<MeshRenderer>()->GetMaterial())
+		{
+			Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugGeometryMaterial");
+			GetOwner()->GetComponent<MeshRenderer>()->SetMaterial(material);
+		}
 	}
 }

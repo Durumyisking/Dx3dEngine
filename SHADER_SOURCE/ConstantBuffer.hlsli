@@ -44,6 +44,11 @@ cbuffer Material : register(b1)
     matrix cbmat2;
     matrix cbmat3;
     matrix cbmat4;
+    
+    int cbtextureExistence;
+    int cbbool1;
+    int cbbool2;
+    int cbbool3;
 }
 
 cbuffer Grid : register(b2)

@@ -132,7 +132,9 @@ namespace dru
 			player->SetPos(Vector3(5.f, 5.f, 5.f));
 			player->SetScale({ 5.f, 5.f, 5.f });
 			player->SetName(L"Player");
-			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+			player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+			//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 			player->AddComponent<PlayerScript>(eComponentType::Script);
 
@@ -153,8 +155,7 @@ namespace dru
 			sphere->SetPos(Vector3(-5.f, 20.f, 5.f));
 			sphere->SetScale({ 2.5f, 2.5f, 2.5f });
 			sphere->SetName(L"Sphere");
-			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-			// sphere->GetComponent<MeshRenderer>()->SetMaterial(mat);
+			sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 
 		}
 

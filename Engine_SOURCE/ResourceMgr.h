@@ -76,11 +76,13 @@ namespace dru
 				std::wstring newKey = key;
 				std::wstring idx = std::to_wstring(math::GetRandomNumber(65535));
 				newKey += idx;
-				mResources.insert(std::make_pair(key, resource));
+				mResources.insert(std::make_pair(newKey, resource));
+				dynamic_cast<DruEntity*>(resource)->SetName(newKey);
 			}
 			else
 			{
 				mResources.insert(std::make_pair(key, resource));
+				dynamic_cast<DruEntity*>(resource)->SetName(key);
 			}
 		}
 

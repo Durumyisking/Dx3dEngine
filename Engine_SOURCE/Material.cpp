@@ -120,6 +120,18 @@ namespace dru
 		case dru::eGPUParam::Matrix_4:
 			mConstantBuffer.matrix4 = *static_cast<Matrix*>(data);
 			break;
+		case dru::eGPUParam::TextureExistence:
+			mConstantBuffer.textureExistence = *static_cast<int*>(data);
+			break;
+		case dru::eGPUParam::Bool_1:
+			mConstantBuffer.bool1 = *static_cast<int*>(data);
+			break;
+		case dru::eGPUParam::Bool_2:
+			mConstantBuffer.bool2 = *static_cast<int*>(data);
+			break;
+		case dru::eGPUParam::Bool_3:
+			mConstantBuffer.bool3 = *static_cast<int*>(data);
+			break;
 		default:
 			break;
 		}
@@ -141,6 +153,17 @@ namespace dru
         }
 		ConstantBuffer* pCB = renderer::constantBuffers[static_cast<UINT>(eCBType::Material)];
 
+		// 텍스처 개수
+		mConstantBuffer.textureExistence = 0;
+
+		if (mTexture[0]) // color가 있습니다.
+		{
+			++mConstantBuffer.textureExistence;
+		}
+		if (mTexture[1]) // normal이 있습니다.
+		{
+			++mConstantBuffer.textureExistence;
+		}
 
 		pCB->SetData(&mConstantBuffer);	
 		pCB->Bind(eShaderStage::VS);
