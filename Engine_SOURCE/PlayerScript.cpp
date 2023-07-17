@@ -28,6 +28,11 @@ namespace dru
 	{
 		Vector3 pos = {};
 		Vector3 velocity = {};
+		Transform* camTransform = renderer::mainCamera->GetOwner()->GetComponent<Transform>();
+		Vector3 camUp = camTransform->Up();
+		Vector3 camForward = camTransform->Forward();
+		Vector3 camRight = camTransform->Right();
+
 		if (KEY_DOWN(I))
 		{
 			mTransform->AddRotationX(50.f * DT);
@@ -44,23 +49,23 @@ namespace dru
 
 		if (KEY_DOWN(LEFT))
 		{
-			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(Vector3(-10.f, 0.f, 0.f)), PxForceMode::Enum::eFORCE);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(camRight * -1000.f * DT), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(RIGHT))
 		{
-			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(Vector3(10.f, 0.f, 0.f)), PxForceMode::Enum::eFORCE);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(camRight * 1000.f * DT), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(UP))
 		{
-			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(Vector3(0.f, 0.f, 10.f)), PxForceMode::Enum::eFORCE);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(camForward * 1000.f * DT), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(DOWN))
 		{
-			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(Vector3(0.f, 0.f, -10.f)), PxForceMode::Enum::eFORCE);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(camForward * -1000.f * DT), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_TAP(SPACE))
 		{
-			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(Vector3(0.f, 1000.f, 0.f)), PxForceMode::Enum::eFORCE);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(camUp * 100000.f * DT), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(R))
 		{
