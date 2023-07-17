@@ -32,7 +32,7 @@ float4 main(VSOut vsIn) : SV_Target
         
         // 노말을 새로 받아와서 뷰변환 되어있지 않다.
         normal.xyz = normalize((normal.xyz * 2.f) - 1.f);
-        //normal.xyz = normalize(mul(float4(normal.xyz, 0.0f), world).xyz);
+//        normal.xyz = normalize(mul(float4(normal.xyz, 0.0f), world).xyz);
         normal.xyz = normalize(mul(float4(normal.xyz, 0.0f), view).xyz);
     }
     else

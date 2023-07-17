@@ -110,21 +110,13 @@ namespace dru
 		
 		{
 			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 100.f, 0.f));
+			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 100.f, -50.f));
+			directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
 			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 			lightComp->SetType(eLightType::Directional);
 			lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 			lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
 			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
-		}
-
-		{
-			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
-			pointLight->GetComponent<Transform>()->SetPosition(Vector3(2.5f, 10.f, 0.f));
-			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
-			lightComp->SetRadius(10.f);
 		}
 
 		{
@@ -158,14 +150,6 @@ namespace dru
 
 		}
 
-		{
-			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
-			pointLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1.f, 5.f));
-			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
-			lightComp->SetRadius(20.f);
-		}
 
 		{
 			GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
