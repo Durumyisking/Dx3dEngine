@@ -133,12 +133,12 @@ namespace dru
 		dynamicActor->setMass(mass);
 	}
 	// for dynamic actors
-	void PhysXRigidBody::SetLinearVelocityForDynamic(const PxVec3& linearVelocity)
+	void PhysXRigidBody::SetLinearVelocityForDynamic(const math::Vector3& linearVelocity)
 	{
 		assert(mPhysical);
 		PxRigidDynamic* dynamicActor = mPhysical->GetActor<PxRigidDynamic>();
 		assert(dynamicActor);
-		dynamicActor->setLinearVelocity(linearVelocity);
+		dynamicActor->setLinearVelocity(convert::Vector3ToPxVec3(linearVelocity));
 	}
 
 	void PhysXRigidBody::SetLinearVelocityForDynamic(AXIS eAxis, float valVelocity)
@@ -163,22 +163,22 @@ namespace dru
 	}
 
 	// for dynamic actors
-	void PhysXRigidBody::SetAngularVelocityForDynamic(const PxVec3& angularVelocity)
+	void PhysXRigidBody::SetAngularVelocityForDynamic(const math::Vector3& angularVelocity)
 	{
 		assert(mPhysical);
 		PxRigidDynamic* dynamicActor = mPhysical->GetActor<PxRigidDynamic>();
 		assert(dynamicActor);
-		dynamicActor->setAngularVelocity(angularVelocity);
+		dynamicActor->setAngularVelocity(convert::Vector3ToPxVec3(angularVelocity));
 	}
 
 	// for dynamic actors
-	void PhysXRigidBody::AddForceForDynamic(const PxVec3& force, PxForceMode::Enum eForceMode)
+	void PhysXRigidBody::AddForceForDynamic(const math::Vector3& force, PxForceMode::Enum eForceMode)
 	{
 		assert(mPhysical);
 		assert(mPhysical->GetActor<PxRigidDynamic>());
 		PxRigidBodyExt::addForceAtPos(
 			*mPhysical->GetActor<PxRigidDynamic>(),
-			force,
+			convert::Vector3ToPxVec3(force),
 			convert::Vector3ToPxVec3(GetOwner()->GetComponent<Transform>()->GetPhysicalPosition()),
 			eForceMode);
 	}
@@ -237,15 +237,37 @@ namespace dru
 		dynamicActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 	}
 
-	void PhysXRigidBody::SetRotationZForDynamic(float rotationZ)
+	void PhysXRigidBody::AddTorqueForDynamic(const math::Vector3& torque)
 	{
 		assert(mPhysical);
 		PxRigidDynamic* dynamicActor = mPhysical->GetActor<PxRigidDynamic>();
 		assert(dynamicActor);
-
-		auto transform = dynamicActor->getGlobalPose();
-		transform.q.z = rotationZ;
-		dynamicActor->setGlobalPose(transform);
+		dynamicActor->addTorque(convert::Vector3ToPxVec3(torque), PxForceMode::Enum::eFORCE);
 	}
+
+	void PhysXRigidBody::AddTorqueXForDynamic(const float& torque)
+	{
+		assert(mPhysical);
+		PxRigidDynamic* dynamicActor = mPhysical->GetActor<PxRigidDynamic>();
+		assert(dynamicActor);
+		dynamicActor->addTorque(convert::Vector3ToPxVec3(Vector3(torque, 0.f, 0.f)), PxForceMode::Enum::eFORCE);
+	}
+
+	void PhysXRigidBody::AddTorqueYForDynamic(const float& torque)
+	{
+		assert(mPhysical);
+		PxRigidDynamic* dynamicActor = mPhysical->GetActor<PxRigidDynamic>();
+		assert(dynamicActor);
+		dynamicActor->addTorque(convert::Vector3ToPxVec3(Vector3(0.f, torque, 0.f)), PxForceMode::Enum::eFORCE);
+	}
+
+	void PhysXRigidBody::AddTorqueZForDynamic(const float& torque)
+	{
+		assert(mPhysical);
+		PxRigidDynamic* dynamicActor = mPhysical->GetActor<PxRigidDynamic>();
+		assert(dynamicActor);
+		dynamicActor->addTorque(convert::Vector3ToPxVec3(Vector3(0.f, 0.f, torque)), PxForceMode::Enum::eFORCE);
+	}
+
 
 }

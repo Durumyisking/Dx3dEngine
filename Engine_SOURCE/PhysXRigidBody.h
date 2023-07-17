@@ -39,17 +39,21 @@ public:
     public:
         // for dynamic actors
         void SetMassForDynamic(float mass);
-        void SetLinearVelocityForDynamic(const PxVec3& linearVelocity);
+        void SetLinearVelocityForDynamic(const math::Vector3& linearVelocity);
         void SetLinearVelocityForDynamic(AXIS eAxis, float valVelocity);
-        void SetAngularVelocityForDynamic(const PxVec3& angularVelocity);
-        void AddForceForDynamic(const PxVec3& force, PxForceMode::Enum eForceMode);
+        void SetAngularVelocityForDynamic(const math::Vector3& angularVelocity);
+        void AddForceForDynamic(const math::Vector3& force, PxForceMode::Enum eForceMode);
         void SetLinearDamping(float damping);
         void SetAngularDamping(float damping);
         void SetLinearMaxVelocityForDynamic(float maxVelocity);
         void SetAngularMaxVelocityForDynamic(float maxVelocity);
         void ApplyGravityForDynamic();
         void RemoveGravityForDynamic();
-        void SetRotationZForDynamic(float rotationZ);
+
+        void AddTorqueForDynamic(const math::Vector3& torque);
+        void AddTorqueXForDynamic(const float& torque);
+        void AddTorqueYForDynamic(const float& torque);
+        void AddTorqueZForDynamic(const float& torque);
 
     private:
         Physical* mPhysical;

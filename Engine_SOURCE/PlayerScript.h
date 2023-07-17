@@ -27,6 +27,7 @@ namespace dru
 
 	private:
 		Transform* mTransform;
+		PhysXRigidBody* mPhyXRigidBody;
     };
 }
 

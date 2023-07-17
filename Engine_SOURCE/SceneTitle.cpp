@@ -143,7 +143,6 @@ namespace dru
 			PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
 
 			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			//rigid->RemoveGravity();
 
 			player->AddComponent<PhysXCollider>(eComponentType::Collider);
 			player->AddComponent<PhysicalMovement>(eComponentType::Movement);

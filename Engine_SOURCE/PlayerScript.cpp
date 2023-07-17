@@ -11,6 +11,7 @@ namespace dru
 {
 	PlayerScript::PlayerScript()
 		: mTransform(nullptr)
+		, mPhyXRigidBody(nullptr)
 	{
 	}
 	PlayerScript::~PlayerScript()
@@ -19,6 +20,7 @@ namespace dru
 	void PlayerScript::Initialize()
 	{
 		mTransform = GetOwner()->GetComponent<Transform>();
+		mPhyXRigidBody = GetOwner()->GetComponent<PhysXRigidBody>();
 	}
 	void PlayerScript::Update()
 	{
@@ -35,37 +37,37 @@ namespace dru
 
 		if (KEY_DOWN(I))
 		{
-			mTransform->AddRotationX(50.f * DT);
+			mPhyXRigidBody->AddTorqueXForDynamic(100.f * DT);
 		}
 		if (KEY_DOWN(O))
 		{
-			mTransform->AddRotationY(50.f * DT);
+			mPhyXRigidBody->AddTorqueYForDynamic(100.f * DT);
 		}
 		if (KEY_DOWN(P))
 		{
-			mTransform->AddRotationZ(50.f * DT);
+			mPhyXRigidBody->AddTorqueZForDynamic(100.f * DT);
 		}
 
 
 		if (KEY_DOWN(LEFT))
 		{
-			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(camRight * -1000.f * DT), PxForceMode::Enum::eFORCE);
+			mPhyXRigidBody->AddForceForDynamic((camRight * -1000.f * DT), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(RIGHT))
 		{
-			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(camRight * 1000.f * DT), PxForceMode::Enum::eFORCE);
+			mPhyXRigidBody->AddForceForDynamic((camRight * 1000.f * DT), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(UP))
 		{
-			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(camForward * 1000.f * DT), PxForceMode::Enum::eFORCE);
+			mPhyXRigidBody->AddForceForDynamic((camForward * 1000.f * DT), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(DOWN))
 		{
-			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(camForward * -1000.f * DT), PxForceMode::Enum::eFORCE);
+			mPhyXRigidBody->AddForceForDynamic((camForward * -1000.f * DT), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_TAP(SPACE))
 		{
-			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic(convert::Vector3ToPxVec3(camUp * 100000.f * DT), PxForceMode::Enum::eFORCE);
+			GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((camUp * 100000.f * DT), PxForceMode::Enum::eFORCE);
 		}
 		if (KEY_DOWN(R))
 		{

@@ -36,7 +36,7 @@ namespace dru
 	{
 		if (mbUseLOD)
 		{
-			//LOD();
+			LOD();
 		}
 	}
 

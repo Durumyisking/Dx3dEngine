@@ -10,8 +10,7 @@ struct VSIn
 struct VSOut
 {
     float4 Position : SV_Position;
-    float2 UV : TEXCOORD;
-    
+    float2 UV : TEXCOORD; 
     float3 ViewPos : POSITION;
     float3 ViewNormal : NORMAL;
     float  Intensity : FOG;
@@ -22,7 +21,7 @@ float4 main(VSOut vsIn) : SV_Target
     float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
     float4 normal = (float4) 0.f;
     
-    if(1 == cbtextureExistence)
+    if (1 == cbtextureExistence)
     {
         outColor = colorTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);        
     }
@@ -32,15 +31,14 @@ float4 main(VSOut vsIn) : SV_Target
         normal = normalTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);
         
         // 노말을 새로 받아와서 뷰변환 되어있지 않다.
-        normal.xyz = (normal.xyz * 2.f) - 1.f;
-        normal.xyz = normalize(mul(float4(normal.xyz, 0.0f), world).xyz);
+        normal.xyz = normalize((normal.xyz * 2.f) - 1.f);
+        //normal.xyz = normalize(mul(float4(normal.xyz, 0.0f), world).xyz);
         normal.xyz = normalize(mul(float4(normal.xyz, 0.0f), view).xyz);
     }
     else
     {
         normal.xyz = vsIn.ViewNormal;
     }
-    
 
     LightColor lightColor = (LightColor) 0.0f;
     
