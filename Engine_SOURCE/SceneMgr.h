@@ -24,7 +24,6 @@ namespace dru
 
 
 	public:
-		// 클래스 내부에 있는것 처럼 보이지만 전역함수임 따라서 멤버변수를 알 수가 없음
 		void Initialize();
 		void Update();
 		void FixedUpdate();

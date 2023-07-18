@@ -28,7 +28,6 @@ namespace dru
 	{
 		mComponents.resize(static_cast<UINT>(eComponentType::End));
 		this->AddComponent<Transform>(eComponentType::Transform);
-
 	}
 
 	GameObj::~GameObj()

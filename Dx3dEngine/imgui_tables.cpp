@@ -91,7 +91,7 @@ Index of this file:
 // Outer size is also affected by the NoHostExtendX/NoHostExtendY flags.
 // Important to that note how the two flags have slightly different behaviors!
 //   - ImGuiTableFlags_NoHostExtendX -> Make outer width auto-fit to columns (overriding outer_size.x value). Only available when ScrollX/ScrollY are disabled and Stretch columns are not used.
-//   - ImGuiTableFlags_NoHostExtendY -> Make outer height stop exactly at outer_size.y (prevent auto-extending table past the limit). Only available when ScrollX/ScrollY is disabled. Data below the limit will be clipped and not visible.
+//   - ImGuiTableFlags_NoHostExtendY -> Make outer height stop exactly at outer_size.y (prevent auto-extending table past the limit). Only available when ScrollX/ScrollY is disabled. mData below the limit will be clipped and not visible.
 // In theory ImGuiTableFlags_NoHostExtendY could be the default and any non-scrolling tables with outer_size.y != 0.0f would use exact height.
 // This would be consistent but perhaps less useful and more confusing (as vertically clipped items are not easily noticeable)
 //-----------------------------------------------------------------------------
@@ -3518,7 +3518,7 @@ void ImGui::TableRemove(ImGuiTable* table)
     //IMGUI_DEBUG_PRINT("TableRemove() id=0x%08X\n", table->ID);
     ImGuiContext& g = *GImGui;
     int table_idx = g.Tables.GetIndex(table);
-    //memset(table->RawData.Data, 0, table->RawData.size_in_bytes());
+    //memset(table->RawData.mData, 0, table->RawData.size_in_bytes());
     //memset(table, 0, sizeof(ImGuiTable));
     g.Tables.Remove(table->ID, table);
     g.TablesLastTimeActive[table_idx] = -1.0f;

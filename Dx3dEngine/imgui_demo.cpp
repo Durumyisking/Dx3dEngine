@@ -1143,7 +1143,7 @@ static void ShowDemoWindowWidgets()
             ImGui::PushID(i);
             if (i > 0)
                 ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(i - 1.0f, i - 1.0f));
-            ImVec2 size = ImVec2(32.0f, 32.0f);                         // Size of the image we want to make visible
+            ImVec2 size = ImVec2(32.0f, 32.0f);                         // mSize of the image we want to make visible
             ImVec2 uv0 = ImVec2(0.0f, 0.0f);                            // UV coordinates for lower-left
             ImVec2 uv1 = ImVec2(32.0f / my_tex_w, 32.0f / my_tex_h);    // UV coordinates for (32,32) in our texture
             ImVec4 bg_col = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);             // Black background
@@ -6633,7 +6633,7 @@ struct ExampleAppConsole
     ImVector<char*>       Items;
     ImVector<const char*> Commands;
     ImVector<char*>       History;
-    int                   HistoryPos;    // -1: new line, 0..History.Size-1 browsing history.
+    int                   HistoryPos;    // -1: new line, 0..History.mSize-1 browsing history.
     ImGuiTextFilter       Filter;
     bool                  AutoScroll;
     bool                  ScrollToBottom;
@@ -6753,10 +6753,10 @@ struct ExampleAppConsole
             // to only process visible items. The clipper will automatically measure the height of your first item and then
             // "seek" to display only items in the visible area.
             // To use the clipper we can replace your standard loop:
-            //      for (int i = 0; i < Items.Size; i++)
+            //      for (int i = 0; i < Items.mSize; i++)
             //   With:
             //      ImGuiListClipper clipper;
-            //      clipper.Begin(Items.Size);
+            //      clipper.Begin(Items.mSize);
             //      while (clipper.Step())
             //         for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
             // - That your items are evenly spaced (same height)

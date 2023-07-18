@@ -1,10 +1,14 @@
 #pragma once
+//#include "GameNetObject.h"
 #include "Script.h"
+
 
 namespace dru
 {
+	class PhysXRigidBody;
+	class Transform;
     class PlayerScript :
-        public Script
+        public Script//, public server::GameNetObject
     {
     public:
 		PlayerScript();

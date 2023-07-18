@@ -1,5 +1,4 @@
 #pragma once
-
 #include "def.h"
 #include "CommonInclude.h"
 #include "druEnums.h"
@@ -41,6 +40,7 @@ using namespace physx;
 #endif
 
 using namespace dru::enums;
+
 
 
 struct Timer

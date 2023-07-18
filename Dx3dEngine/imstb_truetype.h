@@ -177,7 +177,7 @@
 //         The vertical qualities of the font, used to vertically position
 //         and space the characters. See docs for stbtt_GetFontVMetrics.
 //
-//      Font Size in Pixels or Points
+//      Font mSize in Pixels or Points
 //         The preferred interface for specifying font sizes in stb_truetype
 //         is to specify how tall the font's vertical extent should be in pixels.
 //         If that sounds good enough, skip the next paragraph.
@@ -611,7 +611,7 @@ STBTT_DEF int  stbtt_PackFontRange(stbtt_pack_context *spc, const unsigned char 
 // Creates character bitmaps from the font_index'th font found in fontdata (use
 // font_index=0 if you don't know what that is). It creates num_chars_in_range
 // bitmaps for characters with unicode values starting at first_unicode_char_in_range
-// and increasing. Data for how to Render them is stored in chardata_for_range;
+// and increasing. mData for how to Render them is stored in chardata_for_range;
 // pass these to stbtt_GetPackedQuad to get back renderable quads.
 //
 // font_size is the full height of the character from ascender to descender,
