@@ -8,6 +8,7 @@ namespace dru
 
 	FileMgr::FileMgr()
 	{
+		
 	}
 
 	FileMgr::~FileMgr()
