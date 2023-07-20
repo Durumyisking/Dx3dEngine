@@ -70,9 +70,9 @@ namespace dru::server
 					otherObj->SetName(L"Sphere");
 					otherObj->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 
+					ApplyPacketScript* Other = otherObj->AddComponent<ApplyPacketScript>(eComponentType::Script);
 					int ObjectID = packet->GetObjectID();
-
-					otherObj->ClientObjectInit(packet->GetObjectID());
+					Other->ClientObjectInit(packet->GetObjectID());
 				}
 
 				GameNetObject::PushObjectPacket(packet);
