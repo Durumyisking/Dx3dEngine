@@ -152,6 +152,7 @@
 copy "$(SolutionDir)fmodL.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)\x64\Debug\"
 
 copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)FW1FontWrapperL.dll" "$(SolutionDir)\x64\Debug\"
@@ -190,6 +191,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
 copy "$(SolutionDir)fmodL.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)\x64\Debug\"
 
 copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)FW1FontWrapperL.dll" "$(SolutionDir)\x64\Debug\"
@@ -285,7 +287,10 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animator.cpp" />
-    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Application.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)External\assimp\bin\Debug\assimp-vc143-mtd.dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)External\assimp\bin\Debug\assimp-vc143-mtd.dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="AudioClip.cpp" />
     <ClCompile Include="AudioListener.cpp" />
     <ClCompile Include="AudioSource.cpp" />

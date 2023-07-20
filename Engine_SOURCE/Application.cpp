@@ -33,6 +33,8 @@ namespace dru
 
 	void Application::Initialize()
 	{
+		GETSINGLE(FileMgr)->TestLoad(L"..//Resources/CityMan.dae");
+
 		GETSINGLE(TimeMgr)->Initialize();
 		GETSINGLE(InputMgr)->Initialize();
 		GETSINGLE(Fmod)->Initialize();
@@ -41,6 +43,7 @@ namespace dru
 		GETSINGLE(PhysicsMgr)->Initialize();
 		GETSINGLE(FontWrapper)->Initialize();
 		GETSINGLE(SceneMgr)->Initialize();
+
 	}
 	void Application::Update()
 	{
@@ -135,6 +138,7 @@ namespace dru
 		GETSINGLE(ResourceMgr)->DestroyInstance();
 		GETSINGLE(PhysicsMgr)->DestroyInstance();
 		GETSINGLE(TimerMgr)->DestroyInstance();
+		GETSINGLE(FileMgr)->DestroyInstance();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

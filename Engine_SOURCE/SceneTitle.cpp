@@ -129,22 +129,42 @@ namespace dru
 
 		{
 			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(5.f, 5.f, 5.f));
-			player->SetScale({ 5.f, 5.f, 5.f });
+			player->SetPos(Vector3(0.f, 0.f, 0.f));
+			player->SetScale({ 1, 1.f, 1.f });
 			player->SetName(L"Player");
 			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
-			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player->AddComponent<PlayerScript>(eComponentType::Script);
+			//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"test3");
 
-			Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-			physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
-			PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
+			Player* player1 = object::Instantiate<Player>(eLayerType::Player);
+			player1->SetPos(Vector3(0.f, 0.f, 0.f));
+			player1->SetScale({ 1, 1.f, 1.f });
+			player1->SetName(L"Player");
+			player1->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+			//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player1->GetComponent<MeshRenderer>()->SetMeshByKey(L"test1");
+			player1->GetComponent<Transform>()->SetParent(player);
 
-			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			//rigid->RemoveGravity();
+			Player* player2 = object::Instantiate<Player>(eLayerType::Player);
+			player2->SetPos(Vector3(0.f, 0.f, 0.f));
+			player2->SetScale({ 1, 1.f, 1.f });
+			player2->SetName(L"Player");
+			player2->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+			//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			player2->GetComponent<MeshRenderer>()->SetMeshByKey(L"test2");
+			player2->GetComponent<Transform>()->SetParent(player);
+			
+			//player->AddComponent<PlayerScript>(eComponentType::Script);
 
-			player->AddComponent<PhysXCollider>(eComponentType::Collider);
-			player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+			//Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+			//physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+			//PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
+
+			//PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+			////rigid->RemoveGravity();
+
+			//player->AddComponent<PhysXCollider>(eComponentType::Collider);
+			//player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 		}
 
 		{

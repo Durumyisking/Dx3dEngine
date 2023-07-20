@@ -1,5 +1,6 @@
 #include "FileMgr.h"
 #include "Application.h"
+#include "Texture.h"
 
 extern dru::Application application;
 namespace fs = std::filesystem;
@@ -7,8 +8,9 @@ namespace dru
 {
 
 	FileMgr::FileMgr()
+		: mAssimpImporter{}
 	{
-		
+
 	}
 
 	FileMgr::~FileMgr()
@@ -98,6 +100,23 @@ namespace dru
 		}
 
 		file.close();
+	}
+
+	void FileMgr::TestLoad(const std::wstring& path)
+	{
+		std::string sPath = "..//" + std::string(path.begin(), path.end());
+		const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES);
+
+		if (aiscene == nullptr || aiscene->mRootNode == nullptr)
+		{
+			// 파일 로드 실패
+			return;
+		}
+
+		std::vector<renderer::Vertex> meshes;
+		processNode(aiscene->mRootNode, aiscene, meshes);
+		int a = 0;
+
 	}
 
 	const std::string FileMgr::parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const
@@ -192,5 +211,103 @@ namespace dru
 		data.Value = temp;
 
 		return data;
+	}
+	void FileMgr::loadModel(const aiScene* scene)
+	{
+
+	}
+	void FileMgr::processNode(const aiNode* node, const aiScene* scene, std::vector<renderer::Vertex>& meshes)
+	{
+		// 현제 노드 메쉬 정보 저장
+		for (UINT i = 0; i < node->mNumMeshes; ++i)
+		{
+			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+			processMesh(mesh, scene);
+			//meshes.emplace_back(processMesh(mesh, scene));
+		}
+
+		// 재귀적으로 메쉬 호출
+		for (UINT i = 0; i < node->mNumChildren; ++i)
+		{
+			processNode(node->mChildren[i], scene, meshes);
+		}
+	}
+
+	void FileMgr::processMesh(const aiMesh* mesh, const aiScene* scene)
+	{
+		std::vector<renderer::Vertex> vertexes;
+		std::vector<UINT> indexes;
+		std::vector<Texture> textures;
+
+		// 정점 정보 로드
+		for (UINT i = 0; i < mesh->mNumVertices; ++i)
+		{
+			renderer::Vertex vertex= {};
+			math::Vector3 pos = {};
+			pos.x = mesh->mVertices[i].x;
+			pos.y = mesh->mVertices[i].y;
+			pos.z = mesh->mVertices[i].z;
+			vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
+
+			math::Vector3 normal = {};
+			normal.x = mesh->mNormals[i].x;
+			normal.y = mesh->mNormals[i].y;
+			normal.z = mesh->mNormals[i].z;
+			vertex.normal = normal;
+
+			math::Vector3 tangent = {};
+			tangent .x = mesh->mTangents[i].x;
+			tangent .y = mesh->mTangents[i].y;
+			tangent .z = mesh->mTangents[i].z;
+			vertex.tangent = tangent;
+
+			/*math::Vector3 bitangent = {};
+			bitangent .x = mesh->mBitangents[i].x;
+			bitangent .y = mesh->mBitangents[i].y;
+			bitangent .z = mesh->mBitangents[i].z;
+			vertex.biNormal = bitangent;*/
+
+			if (mesh->mTextureCoords[0] != nullptr)
+			{
+				math::Vector2 uv = {};
+				uv.x = mesh->mTextureCoords[0][i].x;
+				uv.y = mesh->mTextureCoords[0][i].y;
+
+				vertex.uv = uv;
+			}
+			else
+			{
+				vertex.uv = math::Vector2::Zero;
+			}
+
+			vertexes.emplace_back(vertex);
+		}
+
+		for (UINT i = 0; i < mesh->mNumFaces; ++i)
+		{
+			aiFace face = mesh->mFaces[i];
+			for (UINT j = 0; j < face.mNumIndices; ++j)
+			{
+				indexes.emplace_back(face.mIndices[j]);
+			}
+		}
+
+		Mesh* myMesh = new Mesh();
+		myMesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
+		myMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+
+		static int a = 0;
+		std::string sName(mesh->mName.C_Str());
+		//std::wstring name = std::wstring(sName.begin(), sName.end());
+		std::wstring name = L"test" + std::to_wstring(a);
+		a++;
+
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(name, myMesh);
+
+		std::cout << a << std::endl;
+	}
+
+	void FileMgr::processMaterial()
+	{
 	}
 }
