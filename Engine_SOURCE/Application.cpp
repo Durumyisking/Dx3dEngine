@@ -33,7 +33,7 @@ namespace dru
 
 	void Application::Initialize()
 	{
-		GETSINGLE(FileMgr)->TestLoad(L"..//Resources/CityMan.dae");
+		GETSINGLE(FileMgr)->TestLoad(L"..//Resources/mario/Mario.dae");
 
 		GETSINGLE(TimeMgr)->Initialize();
 		GETSINGLE(InputMgr)->Initialize();

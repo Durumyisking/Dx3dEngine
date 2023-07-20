@@ -134,25 +134,25 @@ namespace dru
 			player->SetName(L"Player");
 			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
 			//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"test3");
+			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"test0");
 
-			Player* player1 = object::Instantiate<Player>(eLayerType::Player);
-			player1->SetPos(Vector3(0.f, 0.f, 0.f));
-			player1->SetScale({ 1, 1.f, 1.f });
-			player1->SetName(L"Player");
-			player1->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
-			//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player1->GetComponent<MeshRenderer>()->SetMeshByKey(L"test1");
-			player1->GetComponent<Transform>()->SetParent(player);
+			//Player* player1 = object::Instantiate<Player>(eLayerType::Player);
+			//player1->SetPos(Vector3(0.f, 0.f, 0.f));
+			//player1->SetScale({ 1, 1.f, 1.f });
+			//player1->SetName(L"Player");
+			//player1->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+			////player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			//player1->GetComponent<MeshRenderer>()->SetMeshByKey(L"test1");
+			//player1->GetComponent<Transform>()->SetParent(player);
 
-			Player* player2 = object::Instantiate<Player>(eLayerType::Player);
-			player2->SetPos(Vector3(0.f, 0.f, 0.f));
-			player2->SetScale({ 1, 1.f, 1.f });
-			player2->SetName(L"Player");
-			player2->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
-			//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player2->GetComponent<MeshRenderer>()->SetMeshByKey(L"test2");
-			player2->GetComponent<Transform>()->SetParent(player);
+			//Player* player2 = object::Instantiate<Player>(eLayerType::Player);
+			//player2->SetPos(Vector3(0.f, 0.f, 0.f));
+			//player2->SetScale({ 1, 1.f, 1.f });
+			//player2->SetName(L"Player");
+			//player2->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+			////player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+			//player2->GetComponent<MeshRenderer>()->SetMeshByKey(L"test2");
+			//player2->GetComponent<Transform>()->SetParent(player);
 			
 			//player->AddComponent<PlayerScript>(eComponentType::Script);
 

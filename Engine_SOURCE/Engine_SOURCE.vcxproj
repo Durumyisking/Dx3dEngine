@@ -140,7 +140,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
-      <AdditionalIncludeDirectories>C:\Users\user\Desktop\github\github\3DTeamProject\External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -148,14 +148,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>copy "$(SolutionDir)fmod.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)fmodL.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)\x64\Debug\"
+      <Command>copy "$(SolutionDir)fmod.dll" "$(SolutionDir)x64\Debug\"
+copy "$(SolutionDir)fmodL.dll" "$(SolutionDir)x64\Debug\"
+copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)x64\Debug\"
+copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)x64\Debug\"
+copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
 
-copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)FW1FontWrapperL.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)x64\Debug\"
+copy "$(SolutionDir)FW1FontWrapperL.dll" "$(SolutionDir)x64\Debug\"
 
 copy "$(SolutionDir)PhysX_64.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)PhysXCommon_64.dll" "$(SolutionDir)\x64\Debug\"
@@ -177,7 +177,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
-      <AdditionalIncludeDirectories>C:\Users\user\Desktop\github\github\3DTeamProject\External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -187,14 +187,14 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>copy "$(SolutionDir)fmod.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)fmodL.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)\x64\Debug\"
+      <Command>copy "$(SolutionDir)fmod.dll" "$(SolutionDir)x64\Debug\"
+copy "$(SolutionDir)fmodL.dll" "$(SolutionDir)x64\Debug\"
+copy "$(SolutionDir)fmodstudio.dll" "$(SolutionDir)x64\Debug\"
+copy "$(SolutionDir)fmodstudioL.dll" "$(SolutionDir)x64\Debug\"
+copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
 
-copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)\x64\Debug\"
-copy "$(SolutionDir)FW1FontWrapperL.dll" "$(SolutionDir)\x64\Debug\"
+copy "$(SolutionDir)FW1FontWrapper.dll" "$(SolutionDir)x64\Debug\"
+copy "$(SolutionDir)FW1FontWrapperL.dll" "$(SolutionDir)x64\Debug\"
 
 copy "$(SolutionDir)PhysX_64.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)PhysXCommon_64.dll" "$(SolutionDir)\x64\Debug\"
