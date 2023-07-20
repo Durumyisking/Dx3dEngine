@@ -10,8 +10,8 @@
 #include "Light.h"
 #include "StructedBuffer.h"
 
-using namespace dru::math;
-;
+using namespace math;
+
 
 #define RED		Vector4{1.f, 0.f, 0.f, 1.f}
 #define GREEN	Vector4{0.f, 1.f, 0.f, 1.f}
@@ -33,7 +33,7 @@ using namespace dru::math;
 #define LIGHT_ORANGE_YELLOW	Vector4{0.9569f, 0.6672f, 0.4588f, 1.f}
 
 
-namespace dru::renderer
+namespace renderer
 {
 
 	struct Vertex
@@ -195,7 +195,7 @@ namespace dru::renderer
 
 	extern StructedBuffer* lightBuffer;
 
-	extern dru::GameObj* inspectorGameObject;
+	extern GameObj* inspectorGameObject;
 
 
 	void Initialize();

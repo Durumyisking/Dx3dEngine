@@ -4,7 +4,7 @@
 #include "GameNet.h"
 #include <queue>
 
-namespace dru::server
+namespace server
 {
 	class GameNetServer
 		: public GameNet

@@ -1,6 +1,6 @@
 #include "GameNet.h"
 
-namespace dru::server
+namespace server
 {
 	GameNet::GameNet()
 	{

@@ -5,7 +5,7 @@
 #include "GameObj.h"
 #include "PhysicalGameObj.h"
 
-namespace dru::object
+namespace object
 {
 	template <typename T>
 	static T* LateInstantiate(enums::eLayerType layerType)

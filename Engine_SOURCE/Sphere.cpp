@@ -1,45 +1,43 @@
 #include "Sphere.h"
 #include "Physical.h"
 
-namespace dru
+
+
+Sphere::Sphere()
 {
-	Sphere::Sphere()
-	{
-		GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-		GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");	
+	GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+	GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");	
 
-		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, GetScale() * 0.5f);
-	}
+	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, GetScale() * 0.5f);
+}
 
-	Sphere::~Sphere()
-	{
-	}
+Sphere::~Sphere()
+{
+}
 
-	void Sphere::Initialize()
-	{
-		PhysicalGameObj::Initialize();
-	}
+void Sphere::Initialize()
+{
+	PhysicalGameObj::Initialize();
+}
 
-	void Sphere::Update()
-	{
-		PhysicalGameObj::Update();
-	}
+void Sphere::Update()
+{
+	PhysicalGameObj::Update();
+}
 
-	void Sphere::FixedUpdate()
-	{
+void Sphere::FixedUpdate()
+{
 
-		PhysicalGameObj::FixedUpdate();
-	}
+	PhysicalGameObj::FixedUpdate();
+}
 
-	void Sphere::Render()
-	{
-		PhysicalGameObj::Render();
-	}
+void Sphere::Render()
+{
+	PhysicalGameObj::Render();
+}
 
-	void Sphere::FontRender()
-	{
-		PhysicalGameObj::FontRender();
-	}
-
+void Sphere::FontRender()
+{
+	PhysicalGameObj::FontRender();
 }

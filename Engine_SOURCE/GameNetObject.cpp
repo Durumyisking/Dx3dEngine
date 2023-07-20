@@ -1,7 +1,7 @@
 #include "GameNetObject.h"
 #include "ServerMgr.h"
 
-namespace dru::server
+namespace server
 {
 	std::atomic<int> GameNetObject::mAtomicObjectID = 0;
 	std::mutex GameNetObject::mObjectLock;

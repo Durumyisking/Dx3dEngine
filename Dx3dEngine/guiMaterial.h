@@ -2,7 +2,7 @@
 
 namespace gui
 {
-	class Material
+	class GUIMaterial
 	{
 	};
 }

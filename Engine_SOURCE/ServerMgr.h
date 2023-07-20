@@ -5,7 +5,7 @@
 #include "GameNetClient.h"
 
 
-namespace dru::server
+namespace server
 {
 	class ServerMgr
 	{

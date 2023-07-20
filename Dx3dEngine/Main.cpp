@@ -46,7 +46,7 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
-dru::Application   application;
+Application   application;
 gui::Editor        editor;
 
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -69,7 +69,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
  
 
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-//    _CrtSetBreakAlloc(2105);
+   // _CrtSetBreakAlloc(2093);
 
     if (!InitInstance (hInstance, nCmdShow))
     {
@@ -154,7 +154,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   dru::math::Vector2 Resolution = { 1600, 900 };
+   math::Vector2 Resolution = { 1600, 900 };
    application.SetResolution(Resolution);
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,

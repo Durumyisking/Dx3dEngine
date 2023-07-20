@@ -1,5 +1,5 @@
 #include "GameNetPacket.h"
-namespace dru::server
+namespace server
 {
 	GameNetPacket::GameNetPacket()
 		: mPacketID(GameNetPacketError)

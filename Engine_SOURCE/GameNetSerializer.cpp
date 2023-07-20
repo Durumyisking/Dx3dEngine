@@ -1,14 +1,19 @@
 #include "GameNetSerializer.h"
 
-namespace dru::server
+namespace server
 {
 
 	GameNetSerializer::GameNetSerializer()
+		: mWriteOffset(0)
+		, mReadOffset(0)
+
 	{
 		mData.resize(1024);
 	}
 
 	GameNetSerializer::GameNetSerializer(const char* data, unsigned int size)
+		: mWriteOffset(0)
+		, mReadOffset(0)
 	{
 		mData.resize(size);
 		memcpy_s(&mData[0], size, data, size);

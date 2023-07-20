@@ -3,11 +3,11 @@
 
 namespace gui
 {
-	class Texture : public gui::Resource
+	class GUITexture : public gui::GUIResource
 	{
 	public:
-		Texture();
-		~Texture();
+		GUITexture();
+		~GUITexture();
 
 		virtual void Update() override;
 

@@ -5,18 +5,18 @@
 
 namespace gui
 {
-	class Resource : public Widget
+	class GUIResource : public Widget
 	{
 	public:
-		Resource();
-		~Resource();
+		GUIResource();
+		~GUIResource();
 
 		virtual void FixedUpdate() override;
 
-		void SetTarget(dru::Resource* target) { mTarget = target; }
-		dru::Resource* GetTarget() { return mTarget; }
+		void SetTarget(Resource* target) { mTarget = target; }
+		Resource* GetTarget() { return mTarget; }
 
 	private:
-		dru::Resource* mTarget;
+		Resource* mTarget;
 	};
 }

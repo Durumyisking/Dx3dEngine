@@ -9,60 +9,59 @@
 
 //#include "..\External\Include\\DirectXTex\DirectXTex.h"
 
-namespace dru
+
+
+using namespace math;
+
+class AudioClip : public Resource
 {
-	using namespace math;
+public:
+	AudioClip();
+	~AudioClip();
 
-	class AudioClip : public Resource
+	virtual HRESULT Load(const std::wstring& path) override;
+
+	void Play();
+	void Stop();
+	void Set3DAttributes(const Vector3 pos, const Vector3 vel);
+	void SetLoop(bool loop) { mbLoop = loop; }
+
+	bool IsPlaying() const 
 	{
-	public:
-		AudioClip();
-		~AudioClip();
+		bool playing = false;
+		mChannel->isPlaying(&playing);
+		return playing;
+	}
 
-		virtual HRESULT Load(const std::wstring& path) override;
+	void SetVolume(float volume)
+	{
+		mVolume = volume;
+		mChannel->setVolume(mVolume);
+	}
+	float GetVolume()  
+	{
+		mChannel->getVolume(&mVolume);
+		return mVolume;
+	}
+	void SetPitch(float pitch)
+	{
+		mPitch = pitch;
+		mChannel->setPitch(mPitch);
+	}
+	float GetPitch()
+	{
+		mChannel->getPitch(&mPitch);
+		return mPitch;
+	}
 
-		void Play();
-		void Stop();
-		void Set3DAttributes(const Vector3 pos, const Vector3 vel);
-		void SetLoop(bool loop) { mbLoop = loop; }
-
-		bool IsPlaying() const 
-		{
-			bool playing = false;
-			mChannel->isPlaying(&playing);
-			return playing;
-		}
-
-		void SetVolume(float volume)
-		{
-			mVolume = volume;
-			mChannel->setVolume(mVolume);
-		}
-		float GetVolume()  
-		{
-			mChannel->getVolume(&mVolume);
-			return mVolume;
-		}
-		void SetPitch(float pitch)
-		{
-			mPitch = pitch;
-			mChannel->setPitch(mPitch);
-		}
-		float GetPitch()
-		{
-			mChannel->getPitch(&mPitch);
-			return mPitch;
-		}
-
-	private:
-		FMOD::Sound* mSound;
-		FMOD::Channel* mChannel;
-		float mMinDistance;
-		float mMaxDistance;
-		float mVolume;
-		float mVolumeRatio;
-		float mPitch;
-		float mPitchRatio;
-		bool mbLoop;
-	};
-}
+private:
+	FMOD::Sound* mSound;
+	FMOD::Channel* mChannel;
+	float mMinDistance;
+	float mMaxDistance;
+	float mVolume;
+	float mVolumeRatio;
+	float mPitch;
+	float mPitchRatio;
+	bool mbLoop;
+};

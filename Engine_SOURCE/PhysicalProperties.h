@@ -15,7 +15,7 @@ struct MassProperties
     float mRestitution;
 };
 
-class PhysicalProperties : public dru::Entity
+class PhysicalProperties : public Entity
 {
 public:
     PhysicalProperties(const MassProperties& massProperties);

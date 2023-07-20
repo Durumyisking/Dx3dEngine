@@ -4,7 +4,7 @@
 #include <thread>
 #include <functional>
 
-namespace dru::server
+namespace server
 {
 	class GameNetThread
 	{

@@ -2,35 +2,33 @@
 #include "Script.h"
 
 
-namespace dru
+
+
+class PhysXRigidBody;
+class Transform;
+class PlayerScript :
+    public Script
 {
-	class PhysXRigidBody;
-	class Transform;
-    class PlayerScript :
-        public Script
-    {
-    public:
-		PlayerScript();
-		virtual ~PlayerScript();
+public:
+	PlayerScript();
+	virtual ~PlayerScript();
 
-		virtual void Initialize() final;
-		virtual void Update() final;
-		virtual void FixedUpdate() final;
-		virtual void Render() final;
-		virtual void fontRender() final;
+	virtual void Initialize() final;
+	virtual void Update() final;
+	virtual void FixedUpdate() final;
+	virtual void Render() final;
+	virtual void fontRender() final;
 
-		virtual void OnCollisionEnter(Collider2D* oppo);
-		virtual void OnCollision(Collider2D* oppo);
-		virtual void OnCollisionExit(Collider2D* oppo);
+	virtual void OnCollisionEnter(Collider2D* oppo);
+	virtual void OnCollision(Collider2D* oppo);
+	virtual void OnCollisionExit(Collider2D* oppo);
 
-		virtual void OnTriggerEnter(Collider2D* oppo);
-		virtual void OnTrigger(Collider2D* oppo);
-		virtual void OnTriggerExit(Collider2D* oppo);
+	virtual void OnTriggerEnter(Collider2D* oppo);
+	virtual void OnTrigger(Collider2D* oppo);
+	virtual void OnTriggerExit(Collider2D* oppo);
 
 
-	private:
-		Transform* mTransform;
-		PhysXRigidBody* mPhyXRigidBody;
-    };
-}
-
+private:
+	Transform* mTransform;
+	PhysXRigidBody* mPhyXRigidBody;
+};

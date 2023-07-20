@@ -17,7 +17,7 @@
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 
-namespace dru::math
+namespace math
 {
     struct Vector2;
     struct Vector3;

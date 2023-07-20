@@ -3,7 +3,7 @@
 #include <functional>
 #include <map>
 
-namespace dru::server
+namespace server
 {
 	class GameNetDispatcher
 	{

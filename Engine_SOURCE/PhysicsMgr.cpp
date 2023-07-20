@@ -8,7 +8,6 @@
 #include "PhysicsScene.h"
 #include "TimeMgr.h"
 
-using namespace dru;
 
 PhysicsMgr::PhysicsMgr()
 	: mPhysX(nullptr)

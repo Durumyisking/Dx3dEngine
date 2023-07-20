@@ -19,7 +19,7 @@
 #include "PacketSendScript.h"
 #include "ApplyPacketScript.h"
 
-namespace dru::server
+namespace server
 {
 	ServerMgr::ServerMgr()
 		: mServer{}
@@ -92,8 +92,8 @@ namespace dru::server
 				player->SetPos(Vector3(5.f, 5.f, 5.f));
 				player->SetScale({ 5.f, 5.f, 5.f });
 				player->SetName(L"Player");
-				//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-				//player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+				//GUIMaterial* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+				//player->GetComponent<GUIMeshRenderer>()->SetMaterial(mat);
 				player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 				player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 				player->AddComponent<PlayerScript>(eComponentType::Script);
@@ -165,8 +165,8 @@ namespace dru::server
 		player->SetPos(Vector3(5.f, 5.f, 5.f));
 		player->SetScale({ 5.f, 5.f, 5.f });
 		player->SetName(L"Player");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-		//player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		//GUIMaterial* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+		//player->GetComponent<GUIMeshRenderer>()->SetMaterial(mat);
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);

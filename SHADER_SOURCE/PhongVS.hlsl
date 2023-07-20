@@ -10,13 +10,12 @@ struct VSIn
 struct VSOut
 {
     float4 Position : SV_Position;
-    float2 UV : TEXCOORD;
-    
-    
+    float2 UV : TEXCOORD;     
     float3 ViewPos : POSITION;
-    float3 ViewNormal : NORMAL;
 
-    float Intensity : FOG;
+    float3 ViewTangent : TANGENT;
+    float3 ViewNormal : NORMAL;
+    float3 ViewBiNormal : BINORMAL;
 };
 
 VSOut main(VSIn vsIn)

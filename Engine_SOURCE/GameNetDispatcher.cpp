@@ -1,5 +1,5 @@
 #include "GameNetDispatcher.h"
-namespace dru::server
+namespace server
 {
 	GameNetDispatcher::GameNetDispatcher()
 	{

@@ -1,5 +1,5 @@
 #include "GameNetServer.h"
-namespace dru::server
+namespace server
 {
 	GameNetServer::GameNetServer()
         : mSendSer{}

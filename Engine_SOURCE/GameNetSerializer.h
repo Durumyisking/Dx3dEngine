@@ -1,7 +1,7 @@
 #pragma once
 #include "ServerHeader.h"
 
-namespace dru::server
+namespace server
 {
 	class GameNetSerializer
 	{

@@ -3,57 +3,55 @@
 #include "Transform.h"
 #include "Animator.h"
 
-namespace dru
+
+
+SpriteRenderer::SpriteRenderer()
+	: BaseRenderer(eComponentType::Renderer)
 {
-	SpriteRenderer::SpriteRenderer()
-		: BaseRenderer(eComponentType::Renderer)
-	{
-	}
+}
 
-	SpriteRenderer::~SpriteRenderer()
-	{
-	}
+SpriteRenderer::~SpriteRenderer()
+{
+}
 
-	void SpriteRenderer::Initialize()
-	{
-		BaseRenderer::Initialize();
-	}
+void SpriteRenderer::Initialize()
+{
+	BaseRenderer::Initialize();
+}
 
-	void SpriteRenderer::Update()
-	{
-		BaseRenderer::Update();
-	}
+void SpriteRenderer::Update()
+{
+	BaseRenderer::Update();
+}
 
-	void SpriteRenderer::FixedUpdate()
-	{
-		BaseRenderer::FixedUpdate();
-	}
+void SpriteRenderer::FixedUpdate()
+{
+	BaseRenderer::FixedUpdate();
+}
 
-	void SpriteRenderer::Render()
-	{
+void SpriteRenderer::Render()
+{
 //		BaseRenderer::Render();
 
-		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
+	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-		GetMesh()->BindBuffer();
-		GetMaterial()->Bind();
+	GetMesh()->BindBuffer();
+	GetMaterial()->Bind();
 
 
-		Animator* animator = GetOwner()->GetComponent<Animator>();
+	Animator* animator = GetOwner()->GetComponent<Animator>();
 
-		if (animator)
-		{
-			animator->Binds();
-		}	
+	if (animator)
+	{
+		animator->Binds();
+	}	
 
-		GetMesh()->Render();
+	GetMesh()->Render();
 
-		GetMaterial()->Clear();
+	GetMaterial()->Clear();
 			
-		if (animator)
-			animator->Clear();
-
-	}
-
+	if (animator)
+		animator->Clear();
 
 }
+

@@ -4,7 +4,7 @@
 
 namespace gui
 {
-	class DebugObject : public dru::GameObj
+	class DebugObject : public GameObj
 	{
 	public:
 		DebugObject();

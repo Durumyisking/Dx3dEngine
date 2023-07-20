@@ -3,7 +3,7 @@
 #include "GameNetThread.h"
 #include "GameNet.h"
 
-namespace dru::server
+namespace server
 {
 	class GameNetClient
 		: public GameNet

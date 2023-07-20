@@ -1,51 +1,50 @@
 #include "TimerMgr.h"
 #include "TimeMgr.h"
 
-namespace dru
+
+
+TimerMgr::TimerMgr()
+	: mTimers{}
 {
-	TimerMgr::TimerMgr()
-		: mTimers{}
-	{
 
+}
+
+TimerMgr::~TimerMgr()
+{
+	for (Timer* timer : mTimers)
+	{
+		delete timer;
+		timer = nullptr;
 	}
+}
 
-	TimerMgr::~TimerMgr()
+void TimerMgr::Update()
+{
+	for (std::vector<Timer*>::iterator iter = mTimers.begin(); iter != mTimers.end(); )
 	{
-		for (Timer* timer : mTimers)
+		if ((*iter)->IsFinished())
 		{
-			delete timer;
-			timer = nullptr;
-		}
-	}
-
-	void TimerMgr::Update()
-	{
-		for (std::vector<Timer*>::iterator iter = mTimers.begin(); iter != mTimers.end(); )
-		{
-			if ((*iter)->IsFinished())
+			if ((*iter)->IsDestroy())
 			{
-				if ((*iter)->IsDestroy())
-				{
-					delete (*iter);
-					(*iter) = nullptr;
-					iter = mTimers.erase(iter);
-				}
-				else
-				{
-					(*iter)->Restart();
-				}
+				delete (*iter);
+				(*iter) = nullptr;
+				iter = mTimers.erase(iter);
 			}
 			else
 			{
-				(*iter)->Update(DT);
-				++iter;
+				(*iter)->Restart();
 			}
 		}
+		else
+		{
+			(*iter)->Update(DT);
+			++iter;
+		}
 	}
+}
 
-	void TimerMgr::AddTimer(Timer* timer)
-	{
-		mTimers.push_back(timer);
-		timer->Start();
-	}
+void TimerMgr::AddTimer(Timer* timer)
+{
+	mTimers.push_back(timer);
+	timer->Start();
 }

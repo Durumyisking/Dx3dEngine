@@ -5,7 +5,7 @@
 
 #define	GameNetPacketError -1
 
-namespace dru::server
+namespace server
 {
 	class GameNetPacket : public std::enable_shared_from_this<GameNetPacket>
 	{

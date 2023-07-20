@@ -3,9 +3,9 @@
 #include "Renderer.h"
 #include "GameObj.h"
 
-extern dru::Application application;
+extern Application application;
 
-namespace dru::math
+namespace math
 {
 	static unsigned long int seed = 1;
 	/* rand: return pseudo-random integer on 0..32767 */

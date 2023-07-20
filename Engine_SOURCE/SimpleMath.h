@@ -27,7 +27,7 @@
 using namespace physx;
 
 
-namespace dru::math
+namespace math
 {
 	int SM_rand();
 	void SM_srand(unsigned int seedValue);
@@ -63,9 +63,9 @@ namespace dru::math
 	}
 }
 
-namespace dru::convert
+namespace convert
 {
-	using namespace dru::math;
+	using namespace math;
 
 	static PxVec3 Vector3ToPxVec3(Vector3 vector3)
 	{

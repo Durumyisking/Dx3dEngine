@@ -1,6 +1,6 @@
 #pragma once
 
-namespace dru::enums
+namespace enums
 {
 
 	enum class eLayerType

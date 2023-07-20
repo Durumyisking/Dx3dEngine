@@ -1,7 +1,7 @@
 #include "GameNetThread.h"
 #include "StringFunctions.h"
 
-namespace dru::server
+namespace server
 {
 	GameNetThread::GameNetThread()
 	{

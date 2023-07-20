@@ -5,7 +5,7 @@
 #include <mutex>
 #include "GameNetPacket.h"
 
-namespace dru::server
+namespace server
 {
 	class GameNetObject
 	{

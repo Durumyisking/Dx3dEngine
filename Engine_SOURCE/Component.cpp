@@ -1,27 +1,26 @@
 #include "Component.h"
 #include "GameObj.h"
 
-namespace dru
+
+
+Component::Component(eComponentType type)
+    : mType(type)
+    , mOwner(nullptr)
 {
-    Component::Component(eComponentType type)
-        : mType(type)
-        , mOwner(nullptr)
-    {
-    }
+}
 
-    Component::~Component()
-    {
-    }
+Component::~Component()
+{
+}
 
 
-    math::Vector3 Component::GetOwnerPos() const
-    {
-        return mOwner->GetPos();
-    }
+math::Vector3 Component::GetOwnerPos() const
+{
+    return mOwner->GetPos();
+}
 
-    math::Vector3 Component::GetOwnerWorldPos() const
-    {
-        return mOwner->GetWorldPos();
-    }
+math::Vector3 Component::GetOwnerWorldPos() const
+{
+    return mOwner->GetWorldPos();
+}
 
-} 

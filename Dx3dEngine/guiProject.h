@@ -22,7 +22,7 @@ namespace gui
 		void AddResources(TreeWidget::Node* rootNode, const char* name)
 		{
 			const std::vector<T*> resources
-				= GETSINGLE(dru::ResourceMgr)->Finds<T>();
+				= GETSINGLE(ResourceMgr)->Finds<T>();
 
 			TreeWidget::Node* stemNode
 				= mTreeWidget->AddNode(rootNode, name, 0, true);

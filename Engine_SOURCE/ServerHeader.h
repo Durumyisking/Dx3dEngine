@@ -17,7 +17,7 @@
 #include <thread>
 #include <assert.h>
 
-namespace dru::server
+namespace server
 {
 	enum class PacketEnumType
 	{

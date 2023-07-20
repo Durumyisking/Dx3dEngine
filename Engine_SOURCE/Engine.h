@@ -33,6 +33,7 @@
 #endif
 
 using namespace physx;
+using namespace enums;
 
 
 // ImGui_internal.h
@@ -41,7 +42,6 @@ using namespace physx;
 #define IMGUI_DEFINE_MATH_OPERATORS
 #endif
 
-using namespace dru::enums;
 
 
 

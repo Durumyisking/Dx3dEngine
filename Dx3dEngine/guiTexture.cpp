@@ -3,20 +3,20 @@
 
 namespace gui
 {
-	Texture::Texture()
+	GUITexture::GUITexture()
 	{
 
 	}
 
-	Texture::~Texture()
+	GUITexture::~GUITexture()
 	{
 
 	}
 
-	void Texture::Update()
+	void GUITexture::Update()
 	{
-		dru::Texture* targetTex 
-			= dynamic_cast<dru::Texture*>(GetTarget());
+		Texture* targetTex 
+			= dynamic_cast<Texture*>(GetTarget());
 
 		if (targetTex == nullptr)
 			return;

@@ -17,23 +17,22 @@
 #endif
 
 
-namespace dru
+
+
+using namespace math;
+
+class Fmod
 {
-	using namespace math;
+	SINGLE(Fmod)
 
-	class Fmod
-	{
-		SINGLE(Fmod)
+public:
+	void Initialize();
+	bool CreateSound(const std::string& path, FMOD::Sound** sound);
+	void SoundPlay(FMOD::Sound* sound, FMOD::Channel** channel);
+	void Set3DListenerAttributes(const Vector3* pos, const Vector3* vel, const Vector3* forward, const Vector3* up);
+	void Release();
 
-	public:
-		void Initialize();
-		bool CreateSound(const std::string& path, FMOD::Sound** sound);
-		void SoundPlay(FMOD::Sound* sound, FMOD::Channel** channel);
-		void Set3DListenerAttributes(const Vector3* pos, const Vector3* vel, const Vector3* forward, const Vector3* up);
-		void Release();
-
-	private:
-		FMOD::Studio::System* mSystem;
-		FMOD::System* mCoreSystem;
-	};
-}
+private:
+	FMOD::Studio::System* mSystem;
+	FMOD::System* mCoreSystem;
+};

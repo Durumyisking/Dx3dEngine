@@ -1,7 +1,7 @@
 #pragma once
 #include "GameNetPacket.h"
 
-namespace dru::server
+namespace server
 {
 	class UserIDPacket : public GameNetPacket
 	{

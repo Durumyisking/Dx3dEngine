@@ -3,13 +3,13 @@
 #include "ServerHeader.h"
 #include "druMath.h"
 
-namespace dru::server
+namespace server
 {
 	class ObjectUpdatePacket : public GameNetPacket
 	{
 	public:
 		int ObjectType = -1;
-		dru::math::Vector3 Pos;
+		math::Vector3 Pos;
 
 		ObjectUpdatePacket()
 			//: GameNetPacket(static_cast<int>(PacketEnumType::UserIDPacket))

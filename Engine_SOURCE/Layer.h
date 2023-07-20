@@ -1,40 +1,39 @@
 #pragma once
 #include "Entity.h"
 
-namespace dru
+
+
+class GameObj;
+class Layer : public DruEntity
 {
-	class GameObj;
-	class Layer : public DruEntity
-	{
-	public:
-		Layer();
-		virtual ~Layer();
+public:
+	Layer();
+	virtual ~Layer();
 
-		virtual void Initialize();
-		virtual void update();
-		virtual void fixedUpdate();
-		virtual void render();
-		virtual void fontRender();
-		virtual void destroy();
-		void DeleteObject ();
+	virtual void Initialize();
+	virtual void update();
+	virtual void fixedUpdate();
+	virtual void render();
+	virtual void fontRender();
+	virtual void destroy();
+	void DeleteObject ();
 
 
-		void AddGameObject(GameObj* gameObj, enums::eLayerType type);
-		const std::vector<GameObj*>& GetGameObjects() { return mGameObjs; }
-		std::vector<GameObj*>& GetAddedGameObjects() { return mAddedObjects; }
-		std::vector<GameObj*> GetDontDestroyObjects();
+	void AddGameObject(GameObj* gameObj, enums::eLayerType type);
+	const std::vector<GameObj*>& GetGameObjects() { return mGameObjs; }
+	std::vector<GameObj*>& GetAddedGameObjects() { return mAddedObjects; }
+	std::vector<GameObj*> GetDontDestroyObjects();
 
-		void PushAddedObject(GameObj* gameObj);
+	void PushAddedObject(GameObj* gameObj);
 
 
 
 
-	private:
-		std::vector<GameObj*>	mGameObjs;
-		std::vector<GameObj*>	mAddedObjects;
+private:
+	std::vector<GameObj*>	mGameObjs;
+	std::vector<GameObj*>	mAddedObjects;
 
-	};
+};
 
-	typedef const std::vector<GameObj*>& GameObjects;
-	typedef std::vector<GameObj*>::iterator GameObjectIter;
-}
+typedef const std::vector<GameObj*>& GameObjects;
+typedef std::vector<GameObj*>::iterator GameObjectIter;

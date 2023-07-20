@@ -68,9 +68,9 @@ namespace gui
 
 		//enum class eResourceType
 		//{
-		//	Mesh,
-		//	Texture,
-		//	Material,
+		//	GUIMesh,
+		//	GUITexture,
+		//	GUIMaterial,
 		//	Sound,
 		//	Prefab,
 		//	MeshData,
@@ -78,15 +78,15 @@ namespace gui
 		//	ComputeShader,
 		//	End,
 		//};
-		AddResources<dru::Mesh>(pRootNode, "Mesh");
-		AddResources<dru::Texture>(pRootNode, "Texture");
-		AddResources<dru::Material>(pRootNode, "Materials");
-		AddResources<dru::Shader>(pRootNode, "Shaders");
+		AddResources<Mesh>(pRootNode, "Mesh");
+		AddResources<Texture>(pRootNode, "Texture");
+		AddResources<Material>(pRootNode, "Materials");
+		AddResources<Shader>(pRootNode, "Shaders");
 	}
 
 	void Project::toInspector(void* data)
 	{
-		dru::Resource* resource = static_cast<dru::Resource*>(data);
+		Resource* resource = static_cast<Resource*>(data);
 
 		Inspector* inspector = editor.GetWidget<Inspector>("Inspector");
 		inspector->SetTargetResource(resource);

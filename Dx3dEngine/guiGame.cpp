@@ -20,20 +20,20 @@ namespace gui
 
 	void Game::Update()
 	{
-		dru::Texture* renderTarget
-			= GETSINGLE(dru::ResourceMgr)->Find<dru::Texture>(L"RenderTargetTexture");
+		Texture* renderTarget
+			= GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
 
-		dru::Texture* gameTex
-			= new dru::Texture();
+		Texture* gameTex
+			= new Texture();
 		gameTex->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		
 		//61 번 셰이더 리소스 뷰 null초기화
 		ID3D11ShaderResourceView* gameSRV = nullptr;
-		dru::GetDevice()->BindShaderResource(dru::eShaderStage::PS, 61, &gameSRV);
-		dru::GetDevice()->CopyResource(gameTex->GetTexture().Get()
+		GetDevice()->BindShaderResource(eShaderStage::PS, 61, &gameSRV);
+		GetDevice()->CopyResource(gameTex->GetTexture().Get()
 			, renderTarget->GetTexture().Get());
 
-		gameTex->BindShaderResource(dru::eShaderStage::PS, 61);
+		gameTex->BindShaderResource(eShaderStage::PS, 61);
 
 		ImGuiIO io = ImGui::GetIO();
 		ImVec2 panelSize = ImGui::GetWindowSize();

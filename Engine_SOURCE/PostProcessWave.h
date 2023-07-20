@@ -1,33 +1,32 @@
 #pragma once
 #include "PostProcess.h"
 
-namespace dru
+
+
+class PostProcessWave :
+    public PostProcess
 {
-    class PostProcessWave :
-        public PostProcess
-    {
-	public:
-		PostProcessWave();
-		virtual ~PostProcessWave();
+public:
+	PostProcessWave();
+	virtual ~PostProcessWave();
 
-		virtual void Initialize();
-		virtual void update();
-		virtual void fixedUpdate();
-		virtual void render();
+	virtual void Initialize();
+	virtual void update();
+	virtual void fixedUpdate();
+	virtual void render();
 
-		virtual void Bind();
+	virtual void Bind();
 
-		void SetWaveInfo(float amout, float speed, float distortion)
-		{
-			mAmount = amout;
-			mSpeed = speed;
-			mDistortion = distortion;
-		}
+	void SetWaveInfo(float amout, float speed, float distortion)
+	{
+		mAmount = amout;
+		mSpeed = speed;
+		mDistortion = distortion;
+	}
 
-	private:
-		float mAmount;
-		float mSpeed;
-		float mDistortion;
-    };
+private:
+	float mAmount;
+	float mSpeed;
+	float mDistortion;
+};
 
-}

@@ -4,7 +4,7 @@
 #include "GameNetDispatcher.h"
 #include "GameNetPacket.h"
 
-namespace dru::server
+namespace server
 {
 	class GameNet
 	{

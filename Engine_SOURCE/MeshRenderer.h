@@ -3,18 +3,17 @@
 #include "Mesh.h"
 #include "Material.h"
 
-namespace dru
+
+
+class MeshRenderer : public BaseRenderer
 {
-	class MeshRenderer : public BaseRenderer
-	{
-	public:
-		MeshRenderer();
-		virtual ~MeshRenderer();
+public:
+	MeshRenderer();
+	virtual ~MeshRenderer();
 
-		virtual void Initialize() final ;
-		virtual void Update() final;
-		virtual void FixedUpdate() final;
-		virtual void Render() final;
+	virtual void Initialize() final ;
+	virtual void Update() final;
+	virtual void FixedUpdate() final;
+	virtual void Render() final;
 
-	};
-}
+};
