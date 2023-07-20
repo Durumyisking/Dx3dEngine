@@ -16,7 +16,7 @@ namespace dru::server
 		static void PushObjectPacket(std::shared_ptr<GameNetPacket> packet);
 		static bool IsNetObject(int object);
 
-		int GetNetObjectId()
+		int GetObjectID()
 		{
 			return mObjectID;
 		}

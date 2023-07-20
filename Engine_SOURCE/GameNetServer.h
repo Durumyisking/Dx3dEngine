@@ -1,4 +1,5 @@
 #pragma once
+#include "ServerHeader.h"
 #include "GameNetThread.h"
 #include "GameNet.h"
 #include <queue>
@@ -21,7 +22,7 @@ namespace dru::server
 
 		void SetNewUserAccpetFunction(std::function<void(SOCKET)> newUserAccpetFunction)
 		{
-			newUserAccpetFunction = NewUserAccpetFunction;
+			newUserAccpetFunction = mNewUserAccpetFunction;
 		}
 
 		void OpenHost(short port, std::function<void(SOCKET)> accpet, int backLog = 512);
@@ -32,30 +33,30 @@ namespace dru::server
 
 		void PacketProcess() override
 		{
-			AcceptLock.lock();
-			while (0 != NewUserWorks.size())
+			mAcceptLock.lock();
+			while (0 != mNewUserWorks.size())
 			{
-				std::function<void()> Work = NewUserWorks.front();
-				NewUserWorks.pop();
+				std::function<void()> Work = mNewUserWorks.front();
+				mNewUserWorks.pop();
 				Work();
 			}
-			AcceptLock.unlock();
+			mAcceptLock.unlock();
 
 			GameNet::PacketProcess();
 		}
 
 	private:
-		GameNetSerializer SendSer;
-		GameNetThread AccpetThread;
-		SOCKET AcceptSocket;
+		GameNetSerializer	mSendSer;
+		GameNetThread		mAccpetThread;
+		SOCKET				mAcceptSocket;
 
-		std::mutex UserLock;
-		std::vector<SOCKET> Users;
-		std::vector<std::shared_ptr<GameNetThread>> RecvThreads;
-		std::function<void(SOCKET)> NewUserAccpetFunction;
+		std::mutex									mUserLock;
+		std::vector<SOCKET>							mAllUsers;
+		std::vector<std::shared_ptr<GameNetThread>> mRecvThreads;
+		std::function<void(SOCKET)>					mNewUserAccpetFunction;
 
-		std::mutex AcceptLock;
-		std::queue<std::function<void()>> NewUserWorks;
+		std::mutex									mAcceptLock;
+		std::queue<std::function<void()>>			mNewUserWorks;
 
 		static void AcceptThread(SOCKET acceptSocket, GameNetServer* net);
 	};

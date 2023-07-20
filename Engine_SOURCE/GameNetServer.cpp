@@ -2,6 +2,15 @@
 namespace dru::server
 {
 	GameNetServer::GameNetServer()
+        : mSendSer{}
+        , mAccpetThread{}
+        , mAcceptSocket{}
+        , mUserLock{}
+        , mAllUsers{}
+        , mRecvThreads{}
+        , mNewUserAccpetFunction{}
+        , mAcceptLock{}
+        , mNewUserWorks{}
 	{
 	}
 
@@ -30,40 +39,65 @@ namespace dru::server
             return;
         }
 
-        AcceptSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        mAcceptSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
-        if (INVALID_SOCKET == AcceptSocket)
+        if (INVALID_SOCKET == mAcceptSocket)
         {
             return;
         }
 
-        if (SOCKET_ERROR == bind(AcceptSocket, (const sockaddr*)&Add, sizeof(SOCKADDR_IN)))
+        if (SOCKET_ERROR == bind(mAcceptSocket, (const sockaddr*)&Add, sizeof(SOCKADDR_IN)))
         {
             return;
         }
 
         // 클라이언트 받기 시작
-        if (SOCKET_ERROR == listen(AcceptSocket, backLog))
+        if (SOCKET_ERROR == listen(mAcceptSocket, backLog))
         {
             return;
         }
 
-        NewUserAccpetFunction = accpet;
+        mNewUserAccpetFunction = accpet;
 
-        AccpetThread.Start("AccpetThread", std::bind(AcceptThread, AcceptSocket, this));
+        mAccpetThread.Start("AccpetThread", std::bind(AcceptThread, mAcceptSocket, this));
     }
 
 	void GameNetServer::Send(void* data, unsigned int size)
 	{
-	}
+        mUserLock.lock();
+
+        for (size_t i = 0; i < mAllUsers.size(); i++)
+        {
+            send(mAllUsers[i], reinterpret_cast<const char*>(data), size, 0);
+        }
+
+        mUserLock.unlock();
+    }
 
 	void GameNetServer::PacketSend(std::shared_ptr<GameNetPacket> packet)
 	{
-	}
+        if (true == mAllUsers.empty())
+        {
+            return;
+        }
+
+        mUserLock.lock();
+
+        GameNetSerializer Ser;
+        packet->SerializePacket(Ser);
+        for (size_t i = 0; i < mAllUsers.size(); i++)
+        {
+            // 보낸 당사자에게는 보내면 안되요.
+
+            send(mAllUsers[i], reinterpret_cast<const char*>(Ser.GetDataPtr()), Ser.GetWriteOffSet(), 0);
+        }
+        mUserLock.unlock();
+    }
+
 
 	void GameNetServer::AcceptThread(SOCKET acceptSocket, GameNetServer* net)
 	{
-        if (nullptr == net->NewUserAccpetFunction)
+        if (nullptr == net->mNewUserAccpetFunction)
         {
             MsgBoxAssert("접속자 처리 로직을 입력해주지 않았습니다.");
             return;
@@ -88,24 +122,24 @@ namespace dru::server
                 return;
             }
 
-            net->UserLock.lock();
+            net->mUserLock.lock();
             std::shared_ptr<GameNetThread> Thread = std::make_shared<GameNetThread>();
-            net->RecvThreads.push_back(Thread);
-            net->Users.push_back(CientSocket);
+            net->mRecvThreads.push_back(Thread);
+            net->mAllUsers.push_back(CientSocket);
 
-            net->AcceptLock.lock();
-            net->NewUserWorks.push(
+            net->mAcceptLock.lock();
+            net->mNewUserWorks.push(
                 [=]()
             {
-                net->NewUserAccpetFunction(CientSocket);
+                net->mNewUserAccpetFunction(CientSocket);
             }
             );
-            net->AcceptLock.unlock();
+            net->mAcceptLock.unlock();
 
             std::string ThreadName = std::to_string(CientSocket);
             ThreadName += "ServerRecvThread";
             Thread->Start(ThreadName, std::bind(RecvThreadFunction, CientSocket, net));
-            net->UserLock.unlock();
+            net->mUserLock.unlock();
         }
     }
 

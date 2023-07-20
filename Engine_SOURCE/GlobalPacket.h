@@ -1,4 +1,5 @@
 #pragma once
+#include "GameNetPacket.h"
 #include "ServerHeader.h"
 #include "druMath.h"
 
@@ -7,6 +8,7 @@ namespace dru::server
 	class ObjectUpdatePacket : public GameNetPacket
 	{
 	public:
+		int ObjectType = -1;
 		dru::math::Vector3 Pos;
 
 		ObjectUpdatePacket()
@@ -16,16 +18,16 @@ namespace dru::server
 		}
 
 	public:
-		void Serialize(GameNetSerializer& ser) override
+		virtual void Serialize(GameNetSerializer& ser) override
 		{
 			GameNetPacket::Serialize(ser);
-
+			ser << ObjectType;
 			ser.Write(&Pos, sizeof(Pos));
 		}
-		void DeSerialize(GameNetSerializer& ser) override
+		virtual void DeSerialize(GameNetSerializer& ser) override
 		{
 			GameNetPacket::DeSerialize(ser);
-
+			ser >> ObjectType;
 			ser.Read(&Pos, sizeof(Pos));
 		}
 

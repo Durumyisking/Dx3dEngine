@@ -2,6 +2,7 @@
 #include "GameObj.h"
 #include "Physical.h"
 #include "TimeMgr.h"
+#include "Transform.h"
 
 namespace dru
 {
@@ -11,7 +12,7 @@ namespace dru
 		, mPhysical(nullptr)
 		, mGravityApplied(true)
 		, mForce(Vector3::Zero)
-		, mGravityAccel(Vector3(0.f, -9.81f, 0.f))
+		, mGravityAccel(Vector3(0.f, -19.8f * 2.f, 0.f))
 		, mMaxVelocity(Vector3(20.f, -20.f, 20.f))
 		, mReserveTimer(0.f)
 	{

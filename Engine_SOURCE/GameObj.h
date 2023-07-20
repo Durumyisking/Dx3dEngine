@@ -1,14 +1,15 @@
 #pragma once
+#include "Entity.h"
 #include "Transform.h"
-#include "Material.h"
 #include "Script.h"
 
 namespace dru
 {
 	using namespace math;
-	;
 
-	class Script;
+	class Material;
+	class Mesh;
+	class Component;
 
 	class GameObj : public DruEntity
 	{
@@ -93,7 +94,7 @@ namespace dru
 		T* GetScript()
 		{
 			T* returnScript;
-			for (Script* script : mScripts)
+			for (auto* script : mScripts)
 			{
 				returnScript = dynamic_cast<T*>(script);
 
@@ -102,12 +103,8 @@ namespace dru
 			}
 			return nullptr;
 		}
-		Vector3 Forward() { return GetComponent<Transform>()->Forward(); }
-		Vector3 Right() { return GetComponent<Transform>()->Right(); }
-		Vector3 Up() { return GetComponent<Transform>()->Up(); }
 
 		void Flip();
-
 		
 		bool IsRenderingBlock() const { return mbBlockRendering; }
 		void RenderingBlockOn() { mbBlockRendering = true; }
@@ -116,15 +113,6 @@ namespace dru
 		bool MoveToTarget_Smooth_bool(GameObj* target, float speed, bool zOn, eDir dir = eDir::END);
 		Vector3 MoveToTarget_Smooth_vector3(GameObj* target, float speed, bool zOn, eDir dir = eDir::END);
 
-		GameObj* GetParent() 
-		{
-			Transform* tr = GetComponent<Transform>()->GetParent();
-			if (nullptr != tr)
-			{
-				return tr->GetOwner();
-			}
-			return nullptr; 
-		}
 
 	protected:
 		std::vector<Component*> mComponents;
@@ -144,12 +132,6 @@ namespace dru
 		void SetPos(Vector3 value);
 		void SetPosAbs(Vector3 value);
 
-		void SetPosZ(float z) 
-		{
-			Vector3 pos = GetPos();
-			pos.z = z;
-			GetComponent<Transform>()->SetPosition(pos);
-		};
 		void SetScale(Vector3 value);
 		void SetRotation(Vector3 value);
 

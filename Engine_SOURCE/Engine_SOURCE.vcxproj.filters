@@ -197,6 +197,9 @@
     <Filter Include="Server\SubHeaders">
       <UniqueIdentifier>{fbdec033-2b4e-4b1d-ad7a-e848ddf7a449}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Component\Script\Server">
+      <UniqueIdentifier>{ed03df75-dd17-44d3-9c47-fbeb3c8e88af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -472,6 +475,12 @@
     <ClInclude Include="ClientToServer.h">
       <Filter>Server\SubHeaders</Filter>
     </ClInclude>
+    <ClInclude Include="PacketSendScript.h">
+      <Filter>Common\Component\Script\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="ApplyPacketScript.h">
+      <Filter>Common\Component\Script\Server</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -718,6 +727,12 @@
     </ClCompile>
     <ClCompile Include="GameNetObject.cpp">
       <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketSendScript.cpp">
+      <Filter>Common\Component\Script\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="ApplyPacketScript.cpp">
+      <Filter>Common\Component\Script\Server</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

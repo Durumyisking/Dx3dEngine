@@ -18,19 +18,18 @@ namespace dru::server
 
 		void NetPacketProcessInit(GameNet* net);
 
-		void OpenServer(SOCKET socket); // 서버가 될 컴퓨터에서 사용
+		void OpenServer(); // 서버가 될 컴퓨터에서 사용
 		void ConnectAsClient(); // 클라로 들어갈 때 사용
 
-
-
+		bool IsNetworkOn() const { return mbNetworkOn; }
 
 	public:
 		GameNetServer mServer;
 		GameNetClient mClient;
 		GameNet*	  mNet;
 		
-		
-
+		bool		  mbIsServer;
+		bool		  mbNetworkOn;
 	};
 }
 

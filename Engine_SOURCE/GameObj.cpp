@@ -12,6 +12,7 @@
 #include "SpriteRenderer.h"
 #include "MeshRenderer.h"
 #include "Physical.h"
+#include "Transform.h"
 
 
 namespace dru

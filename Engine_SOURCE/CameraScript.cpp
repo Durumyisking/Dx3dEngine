@@ -109,11 +109,10 @@ namespace dru
 		{
 			Vector3 rTapPos = GETSINGLE(InputMgr)->GetPrevMousePosition();
 			Vector3 rCurPos = GETSINGLE(InputMgr)->GetMousePosition();
-
 			float xAxisRotRatio = rCurPos.y - rTapPos.y;
-			mTransform->AddRotationX(xAxisRotRatio * -50.f * DT);
-
 			float yAxisRotRatio = rCurPos.x - rTapPos.x;
+
+			mTransform->AddRotationX(xAxisRotRatio * -50.f * DT);
 			mTransform->AddRotationY(yAxisRotRatio * 50.f * DT);
 		}
 

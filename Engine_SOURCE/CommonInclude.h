@@ -1,4 +1,5 @@
 #pragma once
+#include <winsock2.h>
 #include <cstdlib>
 #include <cstring>
 #include <cstdlib>
@@ -10,8 +11,6 @@
 #include <iostream>
 #include <filesystem>
 #include <fstream>
-
-#include <Windows.h>
 
 #include <vector>
 #include <queue>

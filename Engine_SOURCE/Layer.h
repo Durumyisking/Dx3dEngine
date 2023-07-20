@@ -21,11 +21,17 @@ namespace dru
 
 		void AddGameObject(GameObj* gameObj, enums::eLayerType type);
 		const std::vector<GameObj*>& GetGameObjects() { return mGameObjs; }
+		std::vector<GameObj*>& GetAddedGameObjects() { return mAddedObjects; }
 		std::vector<GameObj*> GetDontDestroyObjects();
+
+		void PushAddedObject(GameObj* gameObj);
+
+
 
 
 	private:
 		std::vector<GameObj*>	mGameObjs;
+		std::vector<GameObj*>	mAddedObjects;
 
 	};
 

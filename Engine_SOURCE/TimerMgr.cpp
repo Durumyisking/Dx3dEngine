@@ -24,9 +24,16 @@ namespace dru
 		{
 			if ((*iter)->IsFinished())
 			{
-				delete (*iter);
-				(*iter) = nullptr;
-				iter = mTimers.erase(iter);
+				if ((*iter)->IsDestroy())
+				{
+					delete (*iter);
+					(*iter) = nullptr;
+					iter = mTimers.erase(iter);
+				}
+				else
+				{
+					(*iter)->Restart();
+				}
 			}
 			else
 			{

@@ -29,6 +29,9 @@
 #include "Sphere.h"
 #include "Box.h"
 
+#include "ServerMgr.h"
+
+#include "InputMgr.h"
 
 extern dru::Application application;
 
@@ -55,9 +58,14 @@ namespace dru
 
 	void SceneTitle::update()
 	{
-		//PxMaterial* mat = GETSINGLE(PhysicsMgr)->GetEnvironment()->GetPhysics()->createMaterial(0.5f, 0.5f, 0.5f);
-
-		//GETSINGLE(PhysicsMgr)->GetEnvironment()->GetPhysicsScene()->CreateDynamic(PxTransform(PxVec3(rand() % 8, 4 * (rand() % 5), 20)), PxSphereGeometry(0.5f), *mat, PxVec3(0, -30, -60));
+		if (KEY_TAP(N_9))
+		{
+			GETSINGLE(dru::server::ServerMgr)->OpenServer();
+		}
+		if (KEY_TAP(N_0))
+		{
+			GETSINGLE(dru::server::ServerMgr)->ConnectAsClient();
+		}
 
 	
 		Scene::update();
@@ -119,36 +127,37 @@ namespace dru
 			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
 		}
 
-		{
-			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(5.f, 5.f, 5.f));
-			player->SetScale({ 5.f, 5.f, 5.f });
-			player->SetName(L"Player");
-			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-			player->GetComponent<MeshRenderer>()->SetMaterial(mat);
-			//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player->AddComponent<PlayerScript>(eComponentType::Script);
 
-			Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-			physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
-			PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
+		//{
+		//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//	player->SetPos(Vector3(5.f, 5.f, 5.f));
+		//	player->SetScale({ 5.f, 5.f, 5.f });
+		//	player->SetName(L"Player");
+		//	Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+		//	player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		//	//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		//	player->AddComponent<PlayerScript>(eComponentType::Script);
 
-			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		//	Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+		//	PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
 
-			player->AddComponent<PhysXCollider>(eComponentType::Collider);
-			player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-		}
+		//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		{
-			
-			Sphere* sphere = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
-			sphere->SetPos(Vector3(-5.f, 20.f, 5.f));
-			sphere->SetScale({ 2.5f, 2.5f, 2.5f });
-			sphere->SetName(L"Sphere");
-			sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+		//}
 
-		}
+		//{
+		//	
+		//	Sphere* sphere = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
+		//	sphere->SetPos(Vector3(-5.f, 20.f, 5.f));
+		//	sphere->SetScale({ 2.5f, 2.5f, 2.5f });
+		//	sphere->SetName(L"Sphere");
+		//	sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+
+		//}
 
 
 		{

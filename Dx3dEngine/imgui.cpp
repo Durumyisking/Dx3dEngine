@@ -14011,7 +14011,7 @@ static void ImGui::UpdateViewportsNewFrame()
         viewport->BuildWorkOffsetMin = viewport->BuildWorkOffsetMax = ImVec2(0.0f, 0.0f);
         viewport->UpdateWorkRect();
 
-        // Reset alpha every frame. Users of transparency (docking) needs to request a lower alpha back.
+        // Reset alpha every frame. mAllUsers of transparency (docking) needs to request a lower alpha back.
         viewport->Alpha = 1.0f;
 
         // Translate Dear ImGui windows when a Host Viewport has been moved

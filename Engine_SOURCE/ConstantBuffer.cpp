@@ -1,6 +1,6 @@
+#include "druMath.h"
 #include "ConstantBuffer.h"
 #include "GraphicDevice.h"
-#include "druMath.h"
 
 using namespace dru::math;
 

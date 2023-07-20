@@ -27,14 +27,13 @@ namespace dru::server
 		template<typename PacketType>
 		void AddHandler(int type, std::function<void(std::shared_ptr<PacketType>)> callBack)
 		{
-			mReturnFunctionMap[type] = [=](GameNetSerializer& ser)
+			mConvertFunctionMap[type] = [=](GameNetSerializer& ser)
 			{
 				std::shared_ptr<GameNetPacket> Pakcet = std::make_shared<PacketType>();
 				Pakcet->DeSerializePacket(ser);
 				return Pakcet;
 			};
-
-
+			
 			mPacketProcessMap[type] = [=](std::shared_ptr<GameNetPacket> packet)
 			{
 				std::shared_ptr<PacketType> ConvertPacket = std::dynamic_pointer_cast<PacketType>(packet);
@@ -50,27 +49,28 @@ namespace dru::server
 
 		std::shared_ptr<GameNetPacket> ConvertPacket(int type, GameNetSerializer& ser)
 		{
-			if (false == mReturnFunctionMap.contains(type))
+			if (false == mConvertFunctionMap.contains(type))
 			{
-				MsgBoxAssert("존재하지 않는 리시브 패킷 타입입니다.");
+				MsgBoxAssert("AddHandler를 등록하지 않은 패킷입니다");
 				return nullptr;
 			}
 
-			return mReturnFunctionMap[type](ser);
+			return mConvertFunctionMap[type](ser);
 		}
 
 		void ProcessPacket(std::shared_ptr<GameNetPacket> packet)
 		{
 			if (false == mPacketProcessMap.contains(packet->GetPacketID()))
 			{
-				MsgBoxAssert("처리 방식을 결정하지 않은 패킷입니다");
+				MsgBoxAssert("AddHandler를 등록하지 않은 패킷입니다");
+				return;
 			}
 
 			mPacketProcessMap[packet->GetPacketID()](packet);
 		}
 
 	private:
-		std::map<int, std::function<std::shared_ptr<GameNetPacket>(GameNetSerializer& ser)>> mReturnFunctionMap;
+		std::map<int, std::function<std::shared_ptr<GameNetPacket>(GameNetSerializer& ser)>> mConvertFunctionMap;
 		std::map<int, std::function<void(std::shared_ptr<GameNetPacket>)>> mPacketProcessMap;
 	};
 

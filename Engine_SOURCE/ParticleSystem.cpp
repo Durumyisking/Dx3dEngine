@@ -9,6 +9,7 @@
 #include "Texture.h"
 #include "TimeMgr.h"
 #include "Renderer.h"
+#include "Material.h"
 
 namespace dru
 {

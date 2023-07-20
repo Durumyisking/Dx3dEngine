@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObj.h"
-
+#include "Renderer.h"
 
 namespace dru
 {
@@ -24,7 +24,7 @@ namespace dru
 
 	protected:
 		Material* mPostProcessMaterial;
-		PostProcessCB mConstantBuffer;
+		renderer::PostProcessCB mConstantBuffer;
 		PostProcessRenderer* mRenderer;
 	};
 

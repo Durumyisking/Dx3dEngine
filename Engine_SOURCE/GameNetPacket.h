@@ -1,4 +1,5 @@
 #pragma once
+#include "ServerHeader.h"
 #include "GameNetSerializer.h"
 #include "StringFunctions.h"
 
@@ -9,18 +10,22 @@ namespace dru::server
 	class GameNetPacket : public std::enable_shared_from_this<GameNetPacket>
 	{
 	public:
+		// constrcuter destructer
+		GameNetPacket();
+		~GameNetPacket();
 
 		// delete Function
-		GameNetPacket(const GameNetPacket& _Other) = delete;
-		GameNetPacket(GameNetPacket&& _Other) noexcept = delete;
-		GameNetPacket& operator=(const GameNetPacket& _Other) = delete;
-		GameNetPacket& operator=(GameNetPacket&& _Other) noexcept = delete;
+		//GameNetPacket(const GameNetPacket& _Other) = delete;
+		//GameNetPacket(GameNetPacket&& _Other) noexcept = delete;
+		//GameNetPacket& operator=(const GameNetPacket& _Other) = delete;
+		//GameNetPacket& operator=(GameNetPacket&& _Other) noexcept = delete;
 
 
 		template<typename ConvertType>
 		std::shared_ptr<ConvertType> DynamicConvert()
-		{
-			return std::dynamic_pointer_cast<ConvertType>(shared_from_this());
+		{			
+			//return std::static_pointer_cast<ConvertType>(shared_from_this());
+			return std::dynamic_pointer_cast<ConvertType>(shared_from_this()); // this포인터를 sharedptr로 얻습니다.
 		}
 
 
@@ -41,12 +46,12 @@ namespace dru::server
 			mPacketID = static_cast<int>(type);
 		}
 
-		void SetObjectId(unsigned int object)
+		void SetObjectID(unsigned int object)
 		{
 			mObjectID = object;
 		}
 
-		unsigned int GetObjectId()
+		unsigned int GetObjectID()
 		{
 			return mObjectID;
 		}
@@ -79,26 +84,6 @@ namespace dru::server
 			DeSerialize(ser);
 		}
 
-
-		GameNetPacket()
-			: mPacketID(GameNetPacketError)
-			, mMaster(-1)
-		{
-
-		}
-
-		GameNetPacket(int packetType)
-			: mPacketID(packetType)
-			, mMaster(-1)
-		{
-
-		}
-
-		~GameNetPacket()
-		{
-
-		}
-
 	protected:
 
 		virtual void Serialize(GameNetSerializer& ser) = 0
@@ -106,14 +91,14 @@ namespace dru::server
 			ser << mPacketID;
 			ser << mSize;
 			ser << mObjectID;
-			ser << mMaster;
+			//ser << mMaster;
 		}
 		virtual void DeSerialize(GameNetSerializer& ser) = 0
 		{
 			ser >> mPacketID;
 			ser >> mSize;
 			ser >> mObjectID;
-			ser >> mMaster;
+			//ser >> mMaster;
 		}
 
 
@@ -128,7 +113,7 @@ namespace dru::server
 		{
 			mSize = ser.GetWriteOffSet();
 
-			if (mSize == 0)
+			if (mSize <= 0)
 			{
 				MsgBoxAssert("0바이트 패킷이 감지되었습니다.");
 			}

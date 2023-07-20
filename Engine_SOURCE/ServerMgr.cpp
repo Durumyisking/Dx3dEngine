@@ -16,12 +16,17 @@
 #include "PhysicalMovement.h"
 #include "MeshRenderer.h"
 
+#include "PacketSendScript.h"
+#include "ApplyPacketScript.h"
+
 namespace dru::server
 {
 	ServerMgr::ServerMgr()
 		: mServer{}
 		, mClient{}
 		, mNet(nullptr)
+		, mbIsServer(false)
+		, mbNetworkOn(false)
 	{
 
 	}
@@ -47,98 +52,122 @@ namespace dru::server
 
 	void ServerMgr::NetPacketProcessInit(GameNet* net)
 	{
-		net->mDispatcher.AddHandler<ObjectUpdatePacket>(PacketEnumType::ObjectUpdatePacket,
-			[this](std::shared_ptr<ObjectUpdatePacket> packet)
+		if (mbIsServer)
 		{
-			if (nullptr == mNet)
+			net->mDispatcher.AddHandler<ObjectUpdatePacket>(PacketEnumType::ObjectUpdatePacket,
+				[this](std::shared_ptr<ObjectUpdatePacket> packet)
 			{
-				MsgBoxAssert("서버 모드도 안켰는데 어케 받음?");
-			}
+				if (nullptr == mNet)
+				{
+					MsgBoxAssert("서버 모드도 안켰는데 어케 받음?");
+				}
 
-			if (false == GameNetObject::IsNetObject(packet->GetObjectId()))
-			{
-				/*Sphere* otherObj = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
-				otherObj->SetPos(Vector3(-5.f, 20.f, 5.f));
-				otherObj->SetScale({ 2.5f, 2.5f, 2.5f });
-				otherObj->SetName(L"Sphere");
-				otherObj->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+				if (false == GameNetObject::IsNetObject(packet->GetObjectID()))
+				{
+					Box* otherObj = object::Instantiate<Box>(eLayerType::PhysicalObject);
+					otherObj->SetPos(Vector3(-5.f, 20.f, 5.f));
+					otherObj->SetScale({ 2.5f, 2.5f, 2.5f });
+					otherObj->SetName(L"Sphere");
+					otherObj->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 
-				int ObjectID = packet->GetObjectId();
+					int ObjectID = packet->GetObjectID();
 
-				otherObj->ClientObjectInit(packet->GetObjectId());*/
-			}
+					otherObj->ClientObjectInit(packet->GetObjectID());
+				}
 
-			GameNetObject::PushObjectPacket(packet);
-		});
+				GameNetObject::PushObjectPacket(packet);
 
+				// 다른 모든애들에게도 보낸다.
+				mNet->PacketSend(packet);
 
-		net->mDispatcher.AddHandler<UserIDPacket>(PacketEnumType::UserIDPacket,
-			[](std::shared_ptr<UserIDPacket> packet)
-		{
-			//PacketEnumType Enum = packet->GetPacketIDToEnum<PacketEnumType>();
+			});
 
-			//Player* player = object::Instantiate<Player>(eLayerType::Player);
-			//player->SetPos(Vector3(5.f, 5.f, 5.f));
-			//player->SetScale({ 5.f, 5.f, 5.f });
-			//player->SetName(L"Player");
-			//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-			//player->GetComponent<MeshRenderer>()->SetMaterial(mat);
-			////player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-			//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			//player->AddComponent<PlayerScript>(eComponentType::Script);
-
-			//Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-			//physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
-			//PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
-
-			//PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-			//player->AddComponent<PhysXCollider>(eComponentType::Collider);
-			//player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-
-			//PlayerScript* Other = player->GetComponent<PlayerScript>();
-
-			//int ObjectId = packet->GetObjectId();
-
-			//Other->ClientObjectInit(packet->GetObjectId());
 		}
-		);
+		else
+		{
+			net->mDispatcher.AddHandler<UserIDPacket>(PacketEnumType::UserIDPacket,
+				[=](std::shared_ptr<UserIDPacket> packet)
+			{
+				Player* player = object::Instantiate<Player>(eLayerType::Player);
+				player->SetPos(Vector3(5.f, 5.f, 5.f));
+				player->SetScale({ 5.f, 5.f, 5.f });
+				player->SetName(L"Player");
+				//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+				//player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+				player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+				player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+				player->AddComponent<PlayerScript>(eComponentType::Script);
+
+				Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+				physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+				PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
+
+				PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+				player->AddComponent<PhysXCollider>(eComponentType::Collider);
+				player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+
+				PacketSendScript* SendToServerScript = player->AddComponent<PacketSendScript>(eComponentType::Script);
+				int ObjectId = packet->GetObjectID();
+				SendToServerScript->ClientObjectInit(packet->GetObjectID());
+			});
+
+			net->mDispatcher.AddHandler<ObjectUpdatePacket>(PacketEnumType::ObjectUpdatePacket,
+				[=](std::shared_ptr<ObjectUpdatePacket> packet)
+			{
+				if (false == GameNetObject::IsNetObject(packet->GetObjectID()))
+				{
+					Box* otherObj = object::Instantiate<Box>(eLayerType::PhysicalObject);
+					otherObj->SetPos(Vector3(-5.f, 20.f, 5.f));
+					otherObj->SetScale({ 2.5f, 2.5f, 2.5f });
+					otherObj->SetName(L"Box");
+					otherObj->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+
+					ApplyPacketScript* Other = otherObj->AddComponent<ApplyPacketScript>(eComponentType::Script);
+					int ObjectID = packet->GetObjectID();
+					Other->ClientObjectInit(packet->GetObjectID());
+				}
+				GameNetObject::PushObjectPacket(packet);
+			});
+		}
 	}
 
-	void ServerMgr::OpenServer(SOCKET socket)
+	void ServerMgr::OpenServer()
 	{
 		// 유저를 Accept했을때 실행할 함수
 		mServer.OpenHost(30000, 
 			[this](SOCKET socket)
 			{
-				/*Sphere* hostObj = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
-				hostObj->SetPos(Vector3(-5.f, 20.f, 5.f));
-				hostObj->SetScale({ 2.5f, 2.5f, 2.5f });
-				hostObj->SetName(L"Sphere");
-				hostObj->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+				Box* otherObj = object::Instantiate<Box>(eLayerType::PhysicalObject);
+				otherObj->SetPos(Vector3(-5.f, 20.f, 5.f));
+				otherObj->SetScale({ 2.5f, 2.5f, 2.5f });
+				otherObj->SetName(L"Box");
+				otherObj->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 
-				hostObj->ServerObjectInit();
+				ApplyPacketScript* Other = otherObj->AddComponent<ApplyPacketScript>(eComponentType::Script);
+				Other->ServerObjectInit();
+				std::shared_ptr<UserIDPacket> otherPacket = std::make_shared<UserIDPacket>();
 
-				std::shared_ptr<UserIDPacket> hostPacket = std::make_shared<UserIDPacket>();
+				int ObjectId = Other->GetObjectID();
+				otherPacket->SetObjectID(ObjectId);
 
-				int ObjectId = hostObj->GetNetObjectId();
-
-				hostPacket->SetObjectId(hostObj->GetNetObjectId());
 				GameNetSerializer Ser;
-				hostPacket->SerializePacket(Ser);
+				otherPacket->SerializePacket(Ser);
 
-				send(socket, Ser.GetDataConstPtr(), Ser.GetWriteOffSet(), 0);*/
+				send(socket, Ser.GetDataConstPtr(), Ser.GetWriteOffSet(), 0);
 			});
 		mNet = &mServer;
+		mbIsServer = true;
+		mbNetworkOn = true;
 
 		// 서버 키면서 플레이어 생성
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(5.f, 5.f, 5.f));
 		player->SetScale({ 5.f, 5.f, 5.f });
 		player->SetName(L"Player");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
-		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+		//player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
@@ -151,6 +180,9 @@ namespace dru::server
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 
+		PacketSendScript* SendToServerScript = player->AddComponent<PacketSendScript>(eComponentType::Script);
+		SendToServerScript->ServerObjectInit();
+
 		NetPacketProcessInit(mNet);
 	}
 
@@ -158,6 +190,8 @@ namespace dru::server
 	{
 		mClient.Connect("127.0.0.1", 30000);
 		mNet = &mClient;
+		mbNetworkOn = true;
+
 		NetPacketProcessInit(mNet);
 	}
 

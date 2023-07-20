@@ -1,4 +1,5 @@
 #pragma once
+#include "ServerHeader.h"
 #include "GameNetThread.h"
 #include "GameNet.h"
 

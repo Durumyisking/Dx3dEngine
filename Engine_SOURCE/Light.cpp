@@ -17,6 +17,7 @@ namespace dru
 
 	void Light::Initialize()
 	{
+
 	}
 
 	void Light::Update()

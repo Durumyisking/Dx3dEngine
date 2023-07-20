@@ -2,6 +2,10 @@
 namespace dru::server
 {
 	GameNetClient::GameNetClient()
+        : mSendSer{}
+        , mClientSocket{}
+        , mRecvThread{}
+
 	{
 		
 	}
@@ -58,17 +62,19 @@ namespace dru::server
 
         // 서버에 연결 되는 순간 Recv쓰레드 작동   //bind      함수 이름          인     자     들
         mRecvThread.Start("ClientRecvThread", std::bind(RecvThreadFunction, mClientSocket, this));
-
-        std::cout << "Hello World!\n";
     }
 
 	void GameNetClient::Send(void* data, unsigned int size)
 	{
-	}
+        send(mClientSocket, reinterpret_cast<const char*>(data), size, 0);
+    }
 
 	void GameNetClient::PacketSend(std::shared_ptr<GameNetPacket> packet)
 	{
-	}
+        GameNetSerializer Ser;
+        packet->SerializePacket(Ser);
+        send(mClientSocket, reinterpret_cast<const char*>(Ser.GetDataPtr()), Ser.GetWriteOffSet(), 0);
+    }
 
 
 }

@@ -11,6 +11,7 @@
 #include "FileMgr.h"
 #include "PhysicsMgr.h"
 #include "TimerMgr.h"
+#include "ServerMgr.h"
 
 namespace dru
 {
@@ -61,6 +62,7 @@ namespace dru
 		if (!GETSINGLE(TimeMgr)->IsUpdatePass())
 		{
 			//GETSINGLE(CollisionMgr)->FixedUpdate();
+			GETSINGLE(server::ServerMgr)->FixedUpdate();
 			GETSINGLE(SceneMgr)->FixedUpdate();
 		}
 	}

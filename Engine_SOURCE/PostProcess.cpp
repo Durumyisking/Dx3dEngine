@@ -2,6 +2,7 @@
 #include "TimeMgr.h"
 #include "Application.h"
 #include "PostProcessRenderer.h"
+#include "Material.h"
 
 extern dru::Application application;
 

@@ -8,6 +8,8 @@ namespace dru
 		: mDeleteObj(false)
 		, mType(SceneMgr::eSceneType::End)
 		, mbPause(false)
+		, mDeadObjects{}
+
 	{
 		mLayers.resize(static_cast<UINT>(eLayerType::End));
 	}
@@ -16,7 +18,6 @@ namespace dru
 	}
 	void Scene::Initialize()
 	{
-//		mLayers.resize(static_cast<UINT>(eLayerType::None);
 
 	}
 
@@ -54,6 +55,7 @@ namespace dru
 		{
 			layer.destroy();
 		}
+
 	}
 
 	void Scene::Enter()
@@ -62,6 +64,7 @@ namespace dru
 		for (Layer& layer : mLayers)
 		{
 			layer.Initialize();
+			layer.GetAddedGameObjects().clear();
 		}
 	}
 

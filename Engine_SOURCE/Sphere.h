@@ -1,11 +1,10 @@
 #pragma once
-//#include "GameNetObject.h"
 #include "PhysicalGameObj.h"
 
 namespace dru
 {
     class Sphere :
-		public PhysicalGameObj//, public server::GameNetObject
+		public PhysicalGameObj
     {
 
 	public:

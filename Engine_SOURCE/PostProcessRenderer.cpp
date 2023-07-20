@@ -1,5 +1,6 @@
 #include "PostProcessRenderer.h"
 #include "PostProcess.h"
+#include "Material.h"
 
 namespace dru
 {

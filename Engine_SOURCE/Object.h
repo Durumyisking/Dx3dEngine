@@ -25,6 +25,7 @@ namespace dru::object
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
 
 		return gameObj;
 	}
@@ -35,6 +36,7 @@ namespace dru::object
 		T* gameObj = new T();
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
 
 		return gameObj;
 	}
@@ -45,6 +47,7 @@ namespace dru::object
 		T* gameObj = new T();
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
 
 		gameObj->SetName(name);
 
@@ -59,6 +62,7 @@ namespace dru::object
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
 
 		gameObj->SetName(name);
 
@@ -82,6 +86,7 @@ namespace dru::object
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
 		gameObj->SetName(name);
 		Transform* tr = gameObj->GetComponent<Transform>();
 		tr->SetParent(parent);
@@ -96,10 +101,13 @@ namespace dru::object
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer();
 		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
+
 		gameObj->SetName(name);
 		Transform* tr = gameObj->GetComponent<Transform>();
 		tr->SetPosition(pos);
 		tr->SetRotation(rotation);
+		
 
 		return gameObj;
 	}
@@ -111,12 +119,14 @@ namespace dru::object
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer();
 		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
 		gameObj->SetName(name);
 		Transform* tr = gameObj->GetComponent<Transform>();
 		tr->SetPosition(pos);
 		tr->SetRotation(rotation);
 
 		tr->SetParent(parent);
+		
 
 		return gameObj;
 	}
