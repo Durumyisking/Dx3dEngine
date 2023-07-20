@@ -187,6 +187,10 @@ namespace dru
 		Matrix_2,
 		Matrix_3,
 		Matrix_4,
+		TextureExistence,
+		Bool_1,
+		Bool_2,
+		Bool_3,
 	};
 	
 

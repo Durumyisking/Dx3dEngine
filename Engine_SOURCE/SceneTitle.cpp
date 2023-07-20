@@ -29,6 +29,9 @@
 #include "Sphere.h"
 #include "Box.h"
 
+#include "ServerMgr.h"
+
+#include "InputMgr.h"
 
 extern dru::Application application;
 
@@ -55,9 +58,14 @@ namespace dru
 
 	void SceneTitle::update()
 	{
-		//PxMaterial* mat = GETSINGLE(PhysicsMgr)->GetEnvironment()->GetPhysics()->createMaterial(0.5f, 0.5f, 0.5f);
-
-		//GETSINGLE(PhysicsMgr)->GetEnvironment()->GetPhysicsScene()->CreateDynamic(PxTransform(PxVec3(rand() % 8, 4 * (rand() % 5), 20)), PxSphereGeometry(0.5f), *mat, PxVec3(0, -30, -60));
+		if (KEY_TAP(N_9))
+		{
+			GETSINGLE(dru::server::ServerMgr)->OpenServer();
+		}
+		if (KEY_TAP(N_0))
+		{
+			GETSINGLE(dru::server::ServerMgr)->ConnectAsClient();
+		}
 
 	
 		Scene::update();
@@ -110,7 +118,8 @@ namespace dru
 		
 		{
 			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 100.f, 0.f));
+			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 100.f, -50.f));
+			directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
 			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 			lightComp->SetType(eLightType::Directional);
 			lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
@@ -118,54 +127,38 @@ namespace dru
 			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
 		}
 
-		{
-			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
-			pointLight->GetComponent<Transform>()->SetPosition(Vector3(2.5f, 10.f, 0.f));
-			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
-			lightComp->SetRadius(10.f);
-		}
 
-		{
-			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(5.f, 5.f, 5.f));
-			player->SetScale({ 5.f, 5.f, 5.f });
-			player->SetName(L"Player");
-			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
-			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player->AddComponent<PlayerScript>(eComponentType::Script);
+		//{
+		//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//	player->SetPos(Vector3(5.f, 5.f, 5.f));
+		//	player->SetScale({ 5.f, 5.f, 5.f });
+		//	player->SetName(L"Player");
+		//	Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+		//	player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		//	//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		//	player->AddComponent<PlayerScript>(eComponentType::Script);
 
-			Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-			physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
-			PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
+		//	Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+		//	PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
 
-			PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			//rigid->RemoveGravity();
+		//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-			player->AddComponent<PhysXCollider>(eComponentType::Collider);
-			player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-		}
+		//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+		//}
 
-		{
-			
-			Sphere* sphere = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
-			sphere->SetPos(Vector3(-5.f, 20.f, 5.f));
-			sphere->SetScale({ 2.5f, 2.5f, 2.5f });
-			sphere->SetName(L"Sphere");
-			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-			// sphere->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		//{
+		//	
+		//	Sphere* sphere = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
+		//	sphere->SetPos(Vector3(-5.f, 20.f, 5.f));
+		//	sphere->SetScale({ 2.5f, 2.5f, 2.5f });
+		//	sphere->SetName(L"Sphere");
+		//	sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 
-		}
+		//}
 
-		{
-			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
-			pointLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1.f, 5.f));
-			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
-			lightComp->SetRadius(20.f);
-		}
 
 		{
 			GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <winsock2.h>
 #include "def.h"
 #include "CommonInclude.h"
 #include "druEnums.h"
@@ -43,6 +44,7 @@ using namespace physx;
 using namespace dru::enums;
 
 
+
 struct Timer
 {
 public:
@@ -51,6 +53,7 @@ public:
 		, mEndTime(endTime)
 		, mbRunning(false)
 		, mbFinished(true)
+		, mbDestroy(true)
 		, function (nullptr)
 	{}
 
@@ -63,6 +66,12 @@ public:
 	{
 		mElapsedTime = 0.f;
 		mbRunning = false;
+		mbFinished = false;
+	}
+
+	void Restart()
+	{
+		mElapsedTime = 0.f;
 		mbFinished = false;
 	}
 
@@ -93,7 +102,7 @@ public:
 				mElapsedTime = mEndTime;
 				mbFinished = true;
 
-				if (function)
+				if (function) // Todo : 각 오브젝트들의 Update부분에서 실행해야함
 				{
 					function();
 				}
@@ -106,14 +115,28 @@ public:
 		mEndTime = endTime;
 	}
 
-	bool IsRunning()
+	bool IsRunning() const 
 	{
 		return mbRunning;
 	}
 
-	bool IsFinished()
+	bool IsFinished() const
 	{
 		return mbFinished;
+	}
+	void SetFinish(bool flag)
+	{
+		mbFinished = flag;
+	}
+
+	bool IsDestroy() const
+	{
+		return mbDestroy;
+	}
+
+	void SetDestroy(bool flag)
+	{
+		mbDestroy = flag;
 	}
 
 	float GetProgress() const
@@ -133,13 +156,14 @@ public:
 	{
 		function = func;
 	}
-	std::function<void()>& SetEvent() { return function; }
+	std::function<void()>& Event() { return function; }
 
 private:
 	float mElapsedTime;
 	float mEndTime;
 	bool  mbRunning;
 	bool  mbFinished;
+	bool  mbDestroy;
 
 	std::function<void()> function;
 

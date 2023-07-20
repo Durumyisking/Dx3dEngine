@@ -178,6 +178,10 @@ namespace dru::math
 		return angle;
 	}
 
-
+	void SetRandIndex(std::wstring& string, UINT range)
+	{
+		std::wstring idx = std::to_wstring(math::GetRandomNumber(1, range));
+		string += idx;
+	}
 
 }

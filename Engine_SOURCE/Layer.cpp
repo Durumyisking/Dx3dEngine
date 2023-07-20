@@ -20,6 +20,9 @@ namespace dru
 
 
 	Layer::Layer()
+		: mGameObjs{}
+		, mAddedObjects{}
+
 	{
 	}
 
@@ -44,6 +47,7 @@ namespace dru
 				continue;
 			Obj->Initialize();
 		}
+
 	}
 
 	void Layer::update()
@@ -129,6 +133,14 @@ namespace dru
 			Obj = nullptr;
 		}
 
+		for (GameObj* Obj : mAddedObjects)
+		{
+			Obj->Initialize();
+		}
+		if (!mAddedObjects.empty())
+		{
+			mAddedObjects.clear();
+		}
 	}
 
 	void Layer::DeleteObject()
@@ -170,6 +182,11 @@ namespace dru
 		}
 
 		return donts;
+	}
+
+	void Layer::PushAddedObject(GameObj* gameObj)
+	{
+		mAddedObjects.push_back(gameObj);
 	}
 
 }

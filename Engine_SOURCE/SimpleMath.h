@@ -140,4 +140,6 @@ namespace dru::convert
 	{
 		return Quaternion(pxQuat.x, pxQuat.y, pxQuat.z, pxQuat.w);
 	}
+
+	void SetRandIndex(std::wstring& string, UINT range);
 }

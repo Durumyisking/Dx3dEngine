@@ -2,6 +2,7 @@
 #include "druMath.h"
 #include "GameObj.h"
 #include "Application.h"
+#include "Renderer.h"
 
 extern dru::Application application;
 

@@ -12,6 +12,7 @@
 #include "SpriteRenderer.h"
 #include "MeshRenderer.h"
 #include "Physical.h"
+#include "Transform.h"
 
 
 namespace dru
@@ -28,7 +29,6 @@ namespace dru
 	{
 		mComponents.resize(static_cast<UINT>(eComponentType::End));
 		this->AddComponent<Transform>(eComponentType::Transform);
-
 	}
 
 	GameObj::~GameObj()

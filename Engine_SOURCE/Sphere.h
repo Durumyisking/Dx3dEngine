@@ -4,7 +4,7 @@
 namespace dru
 {
     class Sphere :
-        public PhysicalGameObj
+		public PhysicalGameObj
     {
 
 	public:

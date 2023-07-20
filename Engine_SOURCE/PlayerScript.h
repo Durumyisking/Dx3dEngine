@@ -1,8 +1,11 @@
 #pragma once
 #include "Script.h"
 
+
 namespace dru
 {
+	class PhysXRigidBody;
+	class Transform;
     class PlayerScript :
         public Script
     {
@@ -27,6 +30,7 @@ namespace dru
 
 	private:
 		Transform* mTransform;
+		PhysXRigidBody* mPhyXRigidBody;
     };
 }
 

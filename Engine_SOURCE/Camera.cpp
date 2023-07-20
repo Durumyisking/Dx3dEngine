@@ -254,9 +254,9 @@ namespace dru
 		{
 			return false;
 		}
-		if (nullptr != obj->GetParent())
+		if (nullptr != obj->GetComponent<Transform>()->GetParent())
 		{
-			if (obj->GetParent()->IsRenderingBlock())
+			if (obj->GetComponent<Transform>()->GetParent()->GetOwner()->IsRenderingBlock())
 			{
 				return false;
 			}

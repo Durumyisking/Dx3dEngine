@@ -92,6 +92,11 @@ namespace dru::renderer
 		Matrix matrix2;
 		Matrix matrix3;
 		Matrix matrix4;
+
+		int textureExistence;
+		int bool1;
+		int bool2;
+		int bool3;
 	};
 
 	CBUFFER(GridCB, CBSLOT_GRID)	
