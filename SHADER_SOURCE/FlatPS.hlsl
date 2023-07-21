@@ -5,8 +5,10 @@ struct VSOut
     float4 Position : SV_Position;
     float2 UV : TEXCOORD;
     float3 ViewPos : POSITION;
+  
+    nointerpolation float3 ViewTangent : TANGENT;
     nointerpolation float3 ViewNormal : NORMAL;
-    float intensity : FOG;
+    nointerpolation float3 ViewBiNormal : BINORMAL;
 
 };
 
@@ -27,8 +29,16 @@ float4 main(VSOut vsIn) : SV_Target
         
         // 노말을 새로 받아와서 뷰변환 되어있지 않다.
         normal.xyz = normalize((normal.xyz * 2.f) - 1.f);
-//        normal.xyz = normalize(mul(float4(normal.xyz, 0.0f), world).xyz);
-        normal.xyz = normalize(mul(float4(normal.xyz, 0.0f), view).xyz);
+        
+        
+        float3x3 matTBN =
+        {
+            vsIn.ViewTangent,
+          vsIn.ViewBiNormal,
+          vsIn.ViewNormal,
+        };
+
+        normal = normalize(float4(mul(normal.xyz, matTBN), 0.f));
     }
     else
     {
