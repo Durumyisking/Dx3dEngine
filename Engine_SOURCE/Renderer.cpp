@@ -9,6 +9,8 @@
 #include "Application.h"
 #include "AudioClip.h"
 
+extern Application application;
+
 namespace renderer
 {
 
@@ -26,6 +28,8 @@ namespace renderer
 
 	Texture* postProcessTexture = nullptr;
 	GameObj* inspectorGameObject = nullptr;
+
+	MultiRenderTarget* renderTargets[(UINT)eRenderTargetType::End] = {};
 
 	void LoadMesh()
 	{
@@ -1027,7 +1031,7 @@ namespace renderer
 
 	void Initialize()
 	{
-
+		CreateRenderTargets();
 		LoadMesh();
 		LoadShader();
 		SetUpState();
@@ -1065,6 +1069,52 @@ namespace renderer
 		}
 		Cameras[type].clear();
 		renderer::lights.clear();
+	}
+
+	void CreateRenderTargets()
+	{
+		UINT width = application.GetWidth();
+		UINT height = application.GetHeight();
+
+		//SwapChain MultiRenderTargets
+		{
+			Texture* arrRTTex[8] = {};
+			Texture* dsTex = nullptr;
+
+			arrRTTex[0] = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
+			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilTexture");
+
+			renderTargets[(UINT)eRenderTargetType::Swapchain] = new MultiRenderTarget();
+			renderTargets[(UINT)eRenderTargetType::Swapchain]->Create(arrRTTex, dsTex);
+		}
+		// Deferred MultiRenderTargets
+		{
+			Texture* arrRTTex[8] = { };
+			Texture* pos = new Texture();
+			Texture* normal = new Texture();;
+			Texture* albedo = new Texture();;
+			Texture* specular = new Texture();;
+
+			arrRTTex[0] = pos;
+			arrRTTex[1] = normal;
+			arrRTTex[2] = albedo;
+			arrRTTex[3] = specular;
+
+			arrRTTex[0]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			arrRTTex[1]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			arrRTTex[2]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			arrRTTex[3]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+
+			Texture* dsTex = nullptr;
+			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilTexture");
+
+			renderTargets[(UINT)eRenderTargetType::Deferred] = new MultiRenderTarget();
+			renderTargets[(UINT)eRenderTargetType::Deferred]->Create(arrRTTex, dsTex);
+		}
 	}
 
 	void PushLightAttribute(LightAttribute attribute)

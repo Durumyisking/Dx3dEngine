@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "Light.h"
 #include "StructedBuffer.h"
+#include "MultiRenderTarget.h"
 
 using namespace math;
 
@@ -196,7 +197,8 @@ namespace renderer
 	extern StructedBuffer* lightBuffer;
 
 	extern GameObj* inspectorGameObject;
-
+	
+	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
 
 	void Initialize();
 	void release(); // 그리는 방식이 여러개일때 여러개를 할당하는게 아니라
@@ -205,6 +207,7 @@ namespace renderer
 	
 	void Render();
 
+	void CreateRenderTargets(); //MultiRenderTargets
 	void PushLightAttribute(LightAttribute attribute);
 	void BindLight();
 	void BindNoiseTexture();

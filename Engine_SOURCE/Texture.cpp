@@ -79,6 +79,12 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 			return false;
 		}
 	}
+	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET)
+	{
+		if (!GetDevice()->CreateRenderTargetView(mTexture.Get(), nullptr, mRTV.GetAddressOf()))
+			return false;
+	}
+
 
 	return true;
 }

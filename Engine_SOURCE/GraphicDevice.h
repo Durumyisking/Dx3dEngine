@@ -66,6 +66,7 @@ public:
 	void Clear();
 	void AdjustViewPorts();
 	void OMSetRenderTarget();
+	void OMSetRenderTarget(UINT numViews, ID3D11RenderTargetView** renderTargetViews, ID3D11DepthStencilView* depthStencilView);
 
 	void Draw();
 	void DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation);
