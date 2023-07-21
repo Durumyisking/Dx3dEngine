@@ -48,8 +48,8 @@ namespace server
 		}
 
 		std::shared_ptr<GameNetPacket> ConvertPacket(int type, GameNetSerializer& ser)
-		{
-			if (false == mConvertFunctionMap.contains(type))
+		{			
+			if (!mConvertFunctionMap.find(type)->second)
 			{
 				MsgBoxAssert("AddHandler를 등록하지 않은 패킷입니다");
 				return nullptr;
@@ -60,7 +60,7 @@ namespace server
 
 		void ProcessPacket(std::shared_ptr<GameNetPacket> packet)
 		{
-			if (false == mPacketProcessMap.contains(packet->GetPacketID()))
+			if (!mPacketProcessMap.find(packet->GetPacketID())->second)
 			{
 				MsgBoxAssert("AddHandler를 등록하지 않은 패킷입니다");
 				return;
