@@ -12,8 +12,11 @@ class Material : public Resource
 {
 public:
 	Material();
-	Material(std::wstring textureName, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring shaderName);
 	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName);
 	Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName);
 	virtual ~Material();
 
@@ -23,7 +26,7 @@ public:
 	void Bind();
 	void Clear();
 
-	void SetShader(Shader*	shader) { mShader = shader; }
+	void SetShader(Shader* shader) { mShader = shader; }
 	void SetShaderByKey(std::wstring key);
 	Shader* GetShader() const { return mShader; }
 
@@ -36,8 +39,8 @@ public:
 	void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 
 private:
-	Shader*				mShader;
-	Texture*			mTexture[static_cast<UINT>(eTextureSlot::End)];
+	Shader* mShader;
+	Texture* mTexture[static_cast<UINT>(eTextureSlot::End)];
 	MaterialCB			mConstantBuffer;
 	eRenderingMode		mMode;
 

@@ -45,9 +45,9 @@ namespace renderer
 
 		Vertex LineVertex[2] = {};
 
-		LineVertex[0].pos = Vector4(-0.5f, 0.25f, 0.f, 1.f); 
-		LineVertex[0].color = Vector4(0.f, 1.f, 0.f, 1.f); 
-		LineVertex[0].uv = Vector2(0.f, 0.f); 
+		LineVertex[0].pos = Vector4(-0.5f, 0.25f, 0.f, 1.f);
+		LineVertex[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		LineVertex[0].uv = Vector2(0.f, 0.f);
 
 		LineVertex[1].pos = Vector4(0.5f, 0.25f, 0.f, 1.f);
 		LineVertex[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -68,9 +68,9 @@ namespace renderer
 
 		Vertex	RectVertexes[4] = {};
 
-		RectVertexes[0].pos = Vector4(-0.5f, 0.5f, 0.f, 1.f); 
-		RectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f); 
-		RectVertexes[0].uv = Vector2(0.f, 0.f); 
+		RectVertexes[0].pos = Vector4(-0.5f, 0.5f, 0.f, 1.f);
+		RectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		RectVertexes[0].uv = Vector2(0.f, 0.f);
 
 		RectVertexes[1].pos = Vector4(0.5f, 0.5f, 0.f, 1.f);
 		RectVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -141,9 +141,9 @@ namespace renderer
 
 		Vertex	DebugRectVertexes[4] = {};
 
-		DebugRectVertexes[0].pos = Vector4(-0.5f, 0.5f, -0.00001f, 1.f); 
-		DebugRectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f); 
-		DebugRectVertexes[0].uv = Vector2(0.f, 0.f); 
+		DebugRectVertexes[0].pos = Vector4(-0.5f, 0.5f, -0.00001f, 1.f);
+		DebugRectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		DebugRectVertexes[0].uv = Vector2(0.f, 0.f);
 
 		DebugRectVertexes[1].pos = Vector4(0.5f, 0.5f, -0.00001f, 1.f);
 		DebugRectVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -197,7 +197,7 @@ namespace renderer
 			CircleVertexes.push_back(vtx);
 		}
 		indexes.clear();
-		for (int i = 1; i <= slice; i++) 
+		for (int i = 1; i <= slice; i++)
 		{
 			indexes.push_back(i);
 		}
@@ -221,126 +221,181 @@ namespace renderer
 		//	Vector2 uv;
 		//};
 
+		// À­¸é
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
+		arrCube[0].tangent = Vector3(1.0f, 0.0f, 0.0f);
 		arrCube[0].normal = Vector3(0.f, 1.f, 0.f);
+		arrCube[0].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[1].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		arrCube[1].uv = Vector2(0.f, 0.f);
+		arrCube[1].uv = Vector2(1.f, 0.f);
+
+		arrCube[1].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[1].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 		arrCube[1].normal = Vector3(0.f, 1.f, 0.f);
 
 		arrCube[2].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[2].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		arrCube[2].uv = Vector2(0.f, 0.f);
+		arrCube[2].uv = Vector2(0.f, 1.f);
 		arrCube[2].normal = Vector3(0.f, 1.f, 0.f);
+		arrCube[2].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[2].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[3].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[3].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		arrCube[3].uv = Vector2(0.f, 0.f);
+		arrCube[3].uv = Vector2(1.f, 1.f);
 		arrCube[3].normal = Vector3(0.f, 1.f, 0.f);
+		arrCube[3].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[3].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 
+		// ¾Æ·§ ¸é	
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
 		arrCube[4].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[4].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[4].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[5].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[5].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		arrCube[5].uv = Vector2(0.f, 0.f);
+		arrCube[5].uv = Vector2(1.f, 0.f);
 		arrCube[5].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[5].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[5].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[6].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[6].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		arrCube[6].uv = Vector2(0.f, 0.f);
+		arrCube[6].uv = Vector2(0.f, 1.f);
 		arrCube[6].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[6].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[6].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[7].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[7].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		arrCube[7].uv = Vector2(0.f, 0.f);
+		arrCube[7].uv = Vector2(1.f, 1.f);
 		arrCube[7].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[7].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
+		// ¿ÞÂÊ ¸é
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
 		arrCube[8].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[8].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[8].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[9].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[9].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		arrCube[9].uv = Vector2(0.f, 0.f);
+		arrCube[9].uv = Vector2(1.f, 0.f);
 		arrCube[9].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[9].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[9].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[10].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[10].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		arrCube[10].uv = Vector2(0.f, 0.f);
+		arrCube[10].uv = Vector2(0.f, 1.f);
 		arrCube[10].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[10].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[10].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[11].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[11].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		arrCube[11].uv = Vector2(0.f, 0.f);
+		arrCube[11].uv = Vector2(1.f, 1.f);
 		arrCube[11].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[11].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
+		// ¿À¸¥ÂÊ ¸é
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].color = Vector4(0.f, 0.f, 1.f, 1.f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
 		arrCube[12].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[12].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[12].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[13].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[13].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		arrCube[13].uv = Vector2(0.f, 0.f);
+		arrCube[13].uv = Vector2(1.f, 0.f);
 		arrCube[13].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[13].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[13].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[14].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[14].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		arrCube[14].uv = Vector2(0.f, 0.f);
+		arrCube[14].uv = Vector2(0.f, 1.f);
 		arrCube[14].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[14].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[14].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[15].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[15].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		arrCube[15].uv = Vector2(0.f, 0.f);
+		arrCube[15].uv = Vector2(1.f, 1.f);
 		arrCube[15].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[15].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
+		// µÞ ¸é
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].color = Vector4(1.f, 1.f, 0.f, 1.f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
 		arrCube[16].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[16].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[16].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
 		arrCube[17].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[17].color = Vector4(1.f, 1.f, 0.f, 1.f);
-		arrCube[17].uv = Vector2(0.f, 0.f);
+		arrCube[17].uv = Vector2(1.f, 0.f);
 		arrCube[17].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[17].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[17].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
 		arrCube[18].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[18].color = Vector4(1.f, 1.f, 0.f, 1.f);
-		arrCube[18].uv = Vector2(0.f, 0.f);
+		arrCube[18].uv = Vector2(0.f, 1.f);
 		arrCube[18].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[18].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[18].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
 		arrCube[19].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[19].color = Vector4(1.f, 1.f, 0.f, 1.f);
-		arrCube[19].uv = Vector2(0.f, 0.f);
+		arrCube[19].uv = Vector2(1.f, 1.f);
 		arrCube[19].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[19].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
+		// ¾Õ ¸é
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].color = Vector4(1.f, 0.f, 1.f, 1.f);
 		arrCube[20].uv = Vector2(0.f, 0.f);
 		arrCube[20].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[20].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[20].biNormal = Vector3(0.0f, 1.0f, 1.0f);
 
 		arrCube[21].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[21].color = Vector4(1.f, 0.f, 1.f, 1.f);
-		arrCube[21].uv = Vector2(0.f, 0.f);
+		arrCube[21].uv = Vector2(1.f, 0.f);
 		arrCube[21].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[21].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[21].biNormal = Vector3(0.0f, 1.0f, 1.0f);
 
 		arrCube[22].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[22].color = Vector4(1.f, 0.f, 1.f, 1.f);
-		arrCube[22].uv = Vector2(0.f, 0.f);
+		arrCube[22].uv = Vector2(0.f, 1.f);
 		arrCube[22].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[22].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[22].biNormal = Vector3(0.0f, 1.0f, 1.0f);
 
 		arrCube[23].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[23].color = Vector4(1.f, 0.f, 1.f, 1.f);
-		arrCube[23].uv = Vector2(0.f, 0.f);
+		arrCube[23].uv = Vector2(1.f, 1.f);
 		arrCube[23].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[23].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[23].biNormal = Vector3(0.0f, 1.0f, 1.0f);
 
 		indexes.clear();
 		for (int i = 0; i < 6; i++)
@@ -379,8 +434,8 @@ namespace renderer
 		sphereVtx.push_back(v);
 
 		// Body
-		UINT iStackCount = 40; 
-		UINT iSliceCount = 40; 
+		UINT iStackCount = 40;
+		UINT iSliceCount = 40;
 
 		float fStackAngle = XM_PI / iStackCount;
 		float fSliceAngle = XM_2PI / iSliceCount;
@@ -482,17 +537,17 @@ namespace renderer
 	{
 
 #pragma region InputLayout
-		D3D11_INPUT_ELEMENT_DESC arrLayout[6] = {}; 
+		D3D11_INPUT_ELEMENT_DESC arrLayout[6] = {};
 
-		arrLayout[0].AlignedByteOffset = 0; 
-		arrLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
-		arrLayout[0].InputSlot = 0; 
+		arrLayout[0].AlignedByteOffset = 0;
+		arrLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[0].InputSlot = 0;
 		arrLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[0].SemanticName = "POSITION";
 		arrLayout[0].SemanticIndex = 0;
 
-		arrLayout[1].AlignedByteOffset = 16; 
-		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
+		arrLayout[1].AlignedByteOffset = 16;
+		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 		arrLayout[1].InputSlot = 0;
 		arrLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[1].SemanticName = "COLOR";
@@ -710,7 +765,7 @@ namespace renderer
 
 	void LoadBuffer()
 	{
-		
+
 		constantBuffers[static_cast<UINT>(eCBType::Transform)] = new ConstantBuffer(eCBType::Transform);
 		constantBuffers[static_cast<UINT>(eCBType::Transform)]->Create(sizeof(TransformCB));
 
@@ -741,7 +796,7 @@ namespace renderer
 		constantBuffers[static_cast<UINT>(eCBType::LaserHit)] = new ConstantBuffer(eCBType::LaserHit);
 		constantBuffers[static_cast<UINT>(eCBType::LaserHit)]->Create(sizeof(LaserHitCB));
 
-		
+
 		lightBuffer = new StructedBuffer();
 		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
 	}
@@ -771,7 +826,7 @@ namespace renderer
 
 		Shader* SpriteShader = new Shader();
 		SpriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		SpriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");		
+		SpriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"SpriteShader", SpriteShader);
 
 		Shader* GridShader = new Shader();
@@ -834,17 +889,23 @@ namespace renderer
 	}
 
 	void LoadDefaultTexture()
-	{		
+	{
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise1", L"noise/noise_01.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise2", L"noise/noise_02.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise3", L"noise/noise_03.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"default", L"default.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");	
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_color", L"Dirt/dirt_color.jpg");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_normal", L"Dirt/dirt_normal.jpg");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"Textures/BrickBlockBody/BrickBlockBody_alb.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"Textures/BrickBlockBody/BrickBlockBody_emm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"Textures/BrickBlockBody/BrickBlockBody_nrm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"Textures/BrickBlockBody/BrickBlockBody_mtl.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"Textures/BrickBlockBody/BrickBlockBody_rgh.png");
 
 
 		Texture* uavTexture = new Texture();
@@ -853,7 +914,7 @@ namespace renderer
 			D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PaintTexture", uavTexture);
 
-		postProcessTexture =  new Texture();
+		postProcessTexture = new Texture();
 		postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PostProcessTexture", postProcessTexture);
@@ -953,8 +1014,8 @@ namespace renderer
 		flatMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		flatMaterial->SetShader(flatShader);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"FlatMaterial", flatMaterial);
-			
-			
+
+
 		{
 			Material* material = new Material(L"texCursor", L"UIShader");
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"CursorMat", material);
@@ -966,7 +1027,7 @@ namespace renderer
 
 	void Initialize()
 	{
-		
+
 		LoadMesh();
 		LoadShader();
 		SetUpState();

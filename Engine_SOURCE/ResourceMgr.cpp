@@ -13,9 +13,9 @@ ResourceMgr::~ResourceMgr()
 
 }
 
-Material* ResourceMgr::CreateMaterial(std::wstring textureName, std::wstring shaderName, std::wstring materialName)
+Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring shaderName, std::wstring materialName)
 {
-	Material* mat = new Material(textureName, shaderName);
+	Material* mat = new Material(textureColor, shaderName);
 	Insert<Material>(materialName, mat);
 	return mat;
 }
@@ -23,6 +23,27 @@ Material* ResourceMgr::CreateMaterial(std::wstring textureName, std::wstring sha
 Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName, std::wstring materialName)
 {
 	Material* mat = new Material(textureColor, textureNormal, shaderName);
+	Insert<Material>(materialName, mat);
+	return mat;
+}
+
+Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring shaderName, std::wstring materialName)
+{
+	Material* mat = new Material(textureColor, textureNormal, textureEmissive, shaderName);
+	Insert<Material>(materialName, mat);
+	return mat;
+}
+
+Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring shaderName, std::wstring materialName)
+{
+	Material* mat = new Material(textureColor, textureNormal, textureEmissive, textureMetal, shaderName);
+	Insert<Material>(materialName, mat);
+	return mat;
+}
+
+Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName, std::wstring materialName)
+{
+	Material* mat = new Material(textureColor, textureNormal, textureEmissive, textureMetal, textureRoughness, shaderName);
 	Insert<Material>(materialName, mat);
 	return mat;
 }

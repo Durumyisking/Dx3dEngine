@@ -8,12 +8,12 @@ Material::Material()
 
 {
 }
-Material::Material(std::wstring textureName, std::wstring shaderName)
-	: Resource(eResourceType::Material) 
-	, mMode(eRenderingMode::Transparent) 
+Material::Material(std::wstring textureColor, std::wstring shaderName)
+	: Resource(eResourceType::Material)
+	, mMode(eRenderingMode::Transparent)
 {
 
-	mTexture[static_cast<UINT>(eTextureSlot::T0)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureName);
+	mTexture[static_cast<UINT>(eTextureSlot::T0)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 	mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
 }
@@ -27,6 +27,49 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 	mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
 }
+
+Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring shaderName)
+	: Resource(eResourceType::Material)
+	, mMode(eRenderingMode::Transparent)
+{
+
+	mTexture[static_cast<UINT>(eTextureSlot::T0)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
+	mTexture[static_cast<UINT>(eTextureSlot::T1)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
+	mTexture[static_cast<UINT>(eTextureSlot::T2)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureEmissive);
+	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
+}
+
+Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring shaderName)
+	: Resource(eResourceType::Material)
+	, mMode(eRenderingMode::Transparent)
+{
+
+	mTexture[static_cast<UINT>(eTextureSlot::T0)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
+	mTexture[static_cast<UINT>(eTextureSlot::T1)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
+	mTexture[static_cast<UINT>(eTextureSlot::T2)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureEmissive);
+	mTexture[static_cast<UINT>(eTextureSlot::T3)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureMetal);
+	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
+}
+
+Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName)
+	: Resource(eResourceType::Material)
+	, mMode(eRenderingMode::Transparent)
+{
+
+	mTexture[static_cast<UINT>(eTextureSlot::T0)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
+	mTexture[static_cast<UINT>(eTextureSlot::T1)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
+	mTexture[static_cast<UINT>(eTextureSlot::T2)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureEmissive);
+	mTexture[static_cast<UINT>(eTextureSlot::T3)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureMetal);
+	mTexture[static_cast<UINT>(eTextureSlot::T4)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureRoughness);
+
+	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	mConstantBuffer.xyzw1 = Vector4{ 1.f, 1.f, 1.f, 1.f };
+}
+
+
+
 Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName)
 	: Resource(eResourceType::Material)
 	, mMode(eRenderingMode::Transparent)
@@ -139,17 +182,17 @@ void Material::SetData(eGPUParam param, void* data)
 void Material::Bind()
 {
 	for (UINT i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
-    {
-        if (mTexture[i] == nullptr)
-            continue;
+	{
+		if (mTexture[i] == nullptr)
+			continue;
 
-        mTexture[i]->BindShaderResource(eShaderStage::VS, i);
-        mTexture[i]->BindShaderResource(eShaderStage::HS, i);
-        mTexture[i]->BindShaderResource(eShaderStage::DS, i);
-        mTexture[i]->BindShaderResource(eShaderStage::GS, i);
-        mTexture[i]->BindShaderResource(eShaderStage::PS, i);
-        mTexture[i]->BindShaderResource(eShaderStage::CS, i);
-    }
+		mTexture[i]->BindShaderResource(eShaderStage::VS, i);
+		mTexture[i]->BindShaderResource(eShaderStage::HS, i);
+		mTexture[i]->BindShaderResource(eShaderStage::DS, i);
+		mTexture[i]->BindShaderResource(eShaderStage::GS, i);
+		mTexture[i]->BindShaderResource(eShaderStage::PS, i);
+		mTexture[i]->BindShaderResource(eShaderStage::CS, i);
+	}
 	ConstantBuffer* pCB = renderer::constantBuffers[static_cast<UINT>(eCBType::Material)];
 
 	// 텍스처 개수
@@ -163,8 +206,21 @@ void Material::Bind()
 	{
 		++mConstantBuffer.textureExistence;
 	}
+	if (mTexture[2]) // Emissive가 있습니다.
+	{
+		++mConstantBuffer.textureExistence;
+	}
+	if (mTexture[3]) // Metal가 있습니다.
+	{
+		++mConstantBuffer.textureExistence;
+	}
+	if (mTexture[4]) // Roughness가 있습니다.
+	{
+		++mConstantBuffer.textureExistence;
+	}
 
-	pCB->SetData(&mConstantBuffer);	
+
+	pCB->SetData(&mConstantBuffer);
 	pCB->Bind(eShaderStage::VS);
 	pCB->Bind(eShaderStage::GS);
 	pCB->Bind(eShaderStage::PS);
