@@ -27,18 +27,19 @@ float4 main(VSOut vsIn) : SV_Target
     float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
     float4 normal = (float4) 0.f;
     
-    if (1 == cbtextureExistence) // ¾Ëº£µµ¸¸ Ã³¸®
+    if (1 == cbtextureExistence) // ì•Œë² ë„ë§Œ ì²˜ë¦¬
     {
         outColor = colorTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);
     }
-    else if (2 == cbtextureExistence) // ¾Ëº£µµ ³ë¸»¸Ê Ã³¸®
+    else if (2 == cbtextureExistence) // ì•Œë² ë„ ë…¸ë§ë§µ ì²˜ë¦¬
     {
         outColor = colorTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);
         normal = normalTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);
         
-        // ³ë¸»À» »õ·Î ¹Ş¾Æ¿Í¼­ ºäº¯È¯ µÇ¾îÀÖÁö ¾Ê´Ù.
+        // ë…¸ë§ì„ ìƒˆë¡œ ë°›ì•„ì™€ì„œ ë·°ë³€í™˜ ë˜ì–´ìˆì§€ ì•Šë‹¤.
         normal.xyz = normalize((normal.xyz * 2.f) - 1.f);
         
+
         float3x3 matTBN =
         {
             vsIn.ViewTangent,
@@ -48,7 +49,7 @@ float4 main(VSOut vsIn) : SV_Target
 
         normal = normalize(float4(mul(normal.xyz, matTBN), 0.f));
     }
-    else if (0 == cbtextureExistence) // ÅØ½ºÃ³°¡ ¾ø¾î¿ä
+    else if (0 == cbtextureExistence) // í…ìŠ¤ì²˜ê°€ ì—†ì–´ìš”
     {
         normal.xyz = vsIn.ViewNormal;
     }

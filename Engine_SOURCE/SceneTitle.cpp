@@ -173,7 +173,6 @@ void SceneTitle::Enter()
 	}
 
 
-
 	Scene::Enter();
 }
 

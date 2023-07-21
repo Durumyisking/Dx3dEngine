@@ -4,7 +4,9 @@ struct VSIn
 {
     float4 Position : POSITION;
     float2 UV : TEXCOORD;
+    float3 Tangent : TANGENT;
     float3 Normal : NORMAL;
+    float3 BiNormal : BINORMAL;
 };
 
 struct VSOut
@@ -33,8 +35,16 @@ VSOut main(VSIn vsIn)
     float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.0f), world).xyz);
     viewNormal = normalize(mul(float4(viewNormal, 0.0f), view).xyz);
     
+    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.0f), world).xyz);
+    viewTangent = normalize(mul(float4(viewTangent, 0.0f), view).xyz);
+    
+    float3 viewBiNormal = normalize(mul(float4(vsIn.BiNormal.xyz, 0.0f), world).xyz);
+    viewBiNormal = normalize(mul(float4(viewBiNormal, 0.0f), view).xyz);
+    
     vsOut.ViewPos = viewPosition.xyz;
     vsOut.ViewNormal = viewNormal.xyz;
+    vsOut.ViewTangent = viewTangent.xyz;
+    vsOut.ViewBiNormal = viewBiNormal.xyz;
     
     return vsOut;
 }
