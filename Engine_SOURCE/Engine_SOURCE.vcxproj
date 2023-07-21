@@ -137,7 +137,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
     </ClCompile>
@@ -172,7 +172,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
     </ClCompile>

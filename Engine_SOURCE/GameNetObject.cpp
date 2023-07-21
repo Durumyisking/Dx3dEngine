@@ -33,11 +33,14 @@ namespace server
 	void GameNetObject::PushObjectPacket(std::shared_ptr<GameNetPacket> packet)
 	{
 		if (GETSINGLE(ServerMgr)->IsNetworkOn())
-		{
-			if (false == mAllNetObjects.contains(packet->GetObjectID()))
+		{			
+			if (mAllNetObjects.end() != mAllNetObjects.find(packet->GetObjectID()))
 			{
-				MsgBoxAssert("존재하지 않는 오브젝트에게 패킷을 보냈습니다.");
-				return;
+				if (!mAllNetObjects.find(packet->GetObjectID())->second)
+				{
+					MsgBoxAssert("존재하지 않는 오브젝트에게 패킷을 보냈습니다.");
+					return;
+				}
 			}
 
 			mAllNetObjects[packet->GetObjectID()]->mPackets.push_back(packet);
@@ -53,7 +56,7 @@ namespace server
 	{
 		if (GETSINGLE(ServerMgr)->IsNetworkOn())
 		{
-			return mAllNetObjects.contains(object);
+			return mAllNetObjects.find(object)->second;
 		}
 		else
 		{
@@ -69,11 +72,14 @@ namespace server
 			mObjectID = ++mAtomicObjectID;
 			mObjectLock.lock();
 
-			if (true == mAllNetObjects.contains(mObjectID))
+			if (mAllNetObjects.end() != mAllNetObjects.find(mObjectID))
 			{
-				mObjectLock.unlock();
-				MsgBoxAssert("이미 존재하는 오브젝트ID에 또 등록하려고 했습니다.");
-				return;
+				if (mAllNetObjects.find(mObjectID)->second)
+				{
+					mObjectLock.unlock();
+					MsgBoxAssert("이미 존재하는 오브젝트ID에 또 등록하려고 했습니다.");
+					return;
+				}
 			}
 
 			mAllNetObjects.insert(std::pair<int, GameNetObject*>(mObjectID, this));
@@ -93,12 +99,15 @@ namespace server
 
 			mObjectID = object;
 			mObjectLock.lock();
-
-			if (true == mAllNetObjects.contains(mObjectID))
+			
+			if (mAllNetObjects.end() != mAllNetObjects.find(mObjectID))
 			{
-				mObjectLock.unlock();
-				MsgBoxAssert("이미 존재하는 오브젝트ID에 또 등록하려고 했습니다.");
-				return;
+				if (mAllNetObjects.find(mObjectID)->second)
+				{
+					mObjectLock.unlock();
+					MsgBoxAssert("이미 존재하는 오브젝트ID에 또 등록하려고 했습니다.");
+					return;
+				}
 			}
 
 			mAllNetObjects.insert(std::pair<int, GameNetObject*>(mObjectID, this));
