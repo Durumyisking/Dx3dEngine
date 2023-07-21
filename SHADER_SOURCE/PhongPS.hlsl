@@ -40,6 +40,15 @@ float4 main(VSOut vsIn) : SV_Target
         normal.xyz = normalize((normal.xyz * 2.f) - 1.f);
 //        normal.xyz = normalize(mul(float4(normal.xyz, 0.0f), world).xyz);
         normal.xyz = normalize(mul(float4(normal.xyz, 0.0f), view).xyz);
+        
+        float3x3 matTBN =
+        {
+          vsIn.ViewTangent,
+          vsIn.ViewBiNormal,
+          vsIn.ViewNormal,
+        };
+
+        normal = normalize(float4(mul(normal.xyz, matTBN), 0.f));
     }
     else if (0 == cbtextureExistence) // 텍스처가 없어요
     {

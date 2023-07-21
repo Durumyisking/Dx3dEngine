@@ -171,6 +171,34 @@ void SceneTitle::Enter()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
+	//0720 normal map Test
+	{
+		// Test Material Init
+		{
+			Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
+			Material* testCubeMaterial = new Material();
+			testCubeMaterial->SetRenderingMode(eRenderingMode::Transparent);
+			testCubeMaterial->SetShader(phongShader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"TestCubeMaterial", testCubeMaterial);
+		}
+
+
+		GameObj* player = object::Instantiate<GameObj>(eLayerType::Player);
+		player->SetPos(Vector3(0.f, 5.f, 0.f));
+		player->SetScale({ 1.f, 1.f, 1.f });
+		//player->GetComponent<Transform>()->SetRotation(Vector3(15.0f, 45.0f, 0.0f));
+		player->SetName(L"Player");
+
+		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		meshRenderer->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh"));
+
+		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"TestCubeMaterial");
+		material->SetTexture(eTextureSlot::T0, GETSINGLE(ResourceMgr)->Find<Texture>(L"dirt_color"));
+		material->SetTexture(eTextureSlot::T1, GETSINGLE(ResourceMgr)->Find<Texture>(L"dirt_normal"));
+
+		meshRenderer->SetMaterialByKey(L"TestCubeMaterial");
+	}
+
 	Scene::Enter();
 }
 
