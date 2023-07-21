@@ -57,7 +57,7 @@ namespace dru
 		const ParsingTriangleData readTriangles(std::string& buf) const;
 	private:
 		void loadModel(const aiScene* scene);
-		void processNode(const aiNode* node, const aiScene* scene, std::vector<renderer::Vertex>& meshes);
+		void processNode(aiNode* node, const aiScene* scene, std::vector<renderer::Vertex>& meshes);
 		void processMesh(const aiMesh* mesh, const aiScene* scene);
 		void processMaterial();
 

@@ -132,9 +132,20 @@ namespace dru
 			player->SetPos(Vector3(0.f, 0.f, 0.f));
 			player->SetScale({ 1, 1.f, 1.f });
 			player->SetName(L"Player");
-			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
+			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 			//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"test0");
+
+			for (int i = 1; i < 21; ++i)
+			{
+				Player* player = object::Instantiate<Player>(eLayerType::Player);
+				player->SetPos(Vector3(0.f, 0.f, 0.f));
+				player->SetScale({ 1, 1.f, 1.f });
+				player->SetName(L"Player");
+				player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+				//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+				player->GetComponent<MeshRenderer>()->SetMeshByKey(L"test" + std::to_wstring(i));
+			}
 
 			//Player* player1 = object::Instantiate<Player>(eLayerType::Player);
 			//player1->SetPos(Vector3(0.f, 0.f, 0.f));

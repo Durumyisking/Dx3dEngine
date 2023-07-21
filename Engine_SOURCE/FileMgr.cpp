@@ -216,7 +216,7 @@ namespace dru
 	{
 
 	}
-	void FileMgr::processNode(const aiNode* node, const aiScene* scene, std::vector<renderer::Vertex>& meshes)
+	void FileMgr::processNode(aiNode* node, const aiScene* scene, std::vector<renderer::Vertex>& meshes)
 	{
 		// 현제 노드 메쉬 정보 저장
 		for (UINT i = 0; i < node->mNumMeshes; ++i)
