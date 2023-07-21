@@ -56,7 +56,10 @@ namespace server
 	{
 		if (GETSINGLE(ServerMgr)->IsNetworkOn())
 		{
-			return mAllNetObjects.find(object)->second;
+			if (mAllNetObjects.end() != mAllNetObjects.find(object))
+			{
+				return mAllNetObjects.find(object)->second;
+			}
 		}
 		else
 		{
