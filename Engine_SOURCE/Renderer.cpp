@@ -901,11 +901,11 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_color", L"Dirt/dirt_color.jpg");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_normal", L"Dirt/dirt_normal.jpg");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"Textures/BrickBlockBody/BrickBlockBody_alb.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"Textures/BrickBlockBody/BrickBlockBody_emm.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"Textures/BrickBlockBody/BrickBlockBody_nrm.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"Textures/BrickBlockBody/BrickBlockBody_mtl.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"Textures/BrickBlockBody/BrickBlockBody_rgh.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"Textures/BlockBrickBody/BlockBrickBody_alb.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"Textures/BlockBrickBody/BlockBrickBody_emm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"Textures/BlockBrickBody/BlockBrickBody_nrm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"Textures/BlockBrickBody/BlockBrickBody_mtl.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"Textures/BlockBrickBody/BlockBrickBody_rgh.png");
 
 
 		Texture* uavTexture = new Texture();
@@ -1002,6 +1002,12 @@ namespace renderer
 		debugGeometryMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		debugGeometryMaterial->SetShader(debugGeometryShader);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"DebugGeometryMaterial", debugGeometryMaterial);
+
+		Shader* sunShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
+		Material* sunMaterial = new Material();
+		sunMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		sunMaterial->SetShader(sunShader);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"SunMaterial", sunMaterial);
 
 		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
 		Material* phongMaterial = new Material();

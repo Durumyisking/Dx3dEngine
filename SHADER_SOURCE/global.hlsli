@@ -48,3 +48,30 @@ float3 RotatePointZ(float3 pointVal, float radian, float3 rotationCenter)
     
     return rotatedPoint + rotationCenter;
 }
+
+
+float4 TextureMapping_albedo(float2 uv)
+{
+    return colorTexture.SampleLevel(anisotropicSampler, uv, 0.f);
+}
+
+
+float4 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, float3 viewBiNormal)
+{
+    float4 result = normalTexture.SampleLevel(anisotropicSampler, uv, 0.f);
+    
+    result.xyz = normalize((result.brg * 2.f) - 1.f);
+        
+
+    float3x3 matTBN =
+    {
+        viewTangent,
+        viewBiNormal,
+        viewNormal,
+    };
+
+    result = normalize(float4(mul(result.xyz, matTBN), 0.f));
+    
+    return result;
+}
+

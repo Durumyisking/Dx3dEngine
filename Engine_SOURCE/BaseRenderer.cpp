@@ -36,7 +36,7 @@ void BaseRenderer::Render()
 {
 	if (mbUseLOD)
 	{
-		LOD();
+		//LOD();
 	}
 }
 
