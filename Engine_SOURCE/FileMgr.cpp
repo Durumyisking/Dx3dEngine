@@ -4,6 +4,7 @@
 
 extern dru::Application application;
 namespace fs = std::filesystem;
+
 namespace dru
 {
 
