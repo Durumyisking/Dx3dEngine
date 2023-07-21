@@ -29,7 +29,7 @@ void BaseRenderer::Update()
 }
 void BaseRenderer::FixedUpdate()
 {
-		
+
 }
 
 void BaseRenderer::Render()
@@ -92,7 +92,7 @@ void BaseRenderer::LOD()
 
 	if (mMaterial)
 	{
-		if (distance > 20.f)
+		if (distance > 200.f)
 		{
 			mMaterial->SetShaderByKey(L"FlatShader");
 		}

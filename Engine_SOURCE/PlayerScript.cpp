@@ -21,6 +21,10 @@ void PlayerScript::Initialize()
 {
 	mTransform = GetOwner()->GetComponent<Transform>();
 	mPhyXRigidBody = GetOwner()->GetComponent<PhysXRigidBody>();
+
+	mPhyXRigidBody->SetAngularMaxVelocityForDynamic(5555.f);
+	mPhyXRigidBody->SetLinearMaxVelocityForDynamic(5555.f);
+
 }
 void PlayerScript::Update()
 {
@@ -34,6 +38,9 @@ void PlayerScript::FixedUpdate()
 	Vector3 camUp = camTransform->Up();
 	Vector3 camForward = camTransform->Forward();
 	Vector3 camRight = camTransform->Right();
+
+	camRight.y = 0.f;
+	camForward.y = 0.f;
 
 	if (KEY_DOWN(I))
 	{
@@ -67,7 +74,7 @@ void PlayerScript::FixedUpdate()
 	}
 	if (KEY_TAP(SPACE))
 	{
-		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((camUp * 100000.f * DT), PxForceMode::Enum::eFORCE);
+		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((mTransform->Up() * 100000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(R))
 	{

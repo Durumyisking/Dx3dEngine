@@ -42,7 +42,7 @@ public:
 	}
 
 	template <typename T>
-	T*  Load(const std::wstring& key, const std::wstring& path)
+	T* Load(const std::wstring& key, const std::wstring& path)
 	{
 		// 키값으로 탐색
 		T* resource = GETSINGLE(ResourceMgr)->Find<T>(key);
@@ -86,8 +86,11 @@ public:
 		}
 	}
 
-	Material* CreateMaterial(std::wstring textureName, std::wstring shaderName, std::wstring materialName);
+	Material* CreateMaterial(std::wstring textureColor, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName, std::wstring materialName);
+	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring shaderName, std::wstring materialName);
+	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring shaderName, std::wstring materialName);
+	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName, std::wstring materialName);
 
 	void Release();
 private:

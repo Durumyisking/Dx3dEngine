@@ -12,7 +12,7 @@ PhysXRigidBody::PhysXRigidBody()
 	, mGravityApplied(true)
 	, mForce(Vector3::Zero)
 	, mGravityAccel(Vector3(0.f, -19.8f * 2.f, 0.f))
-	, mMaxVelocity(Vector3(20.f, -20.f, 20.f))
+	, mMaxVelocity(Vector3(40.f, -40.f, 40.f))
 	, mReserveTimer(0.f)
 {
 }
@@ -28,8 +28,8 @@ void PhysXRigidBody::Initialize()
 
 	if (eActorType::Dynamic == mPhysical->GetActorType())
 	{
-		SetAngularMaxVelocityForDynamic(10.f);
-		SetLinearMaxVelocityForDynamic(10.f);
+		SetAngularMaxVelocityForDynamic(40.f);
+		SetLinearMaxVelocityForDynamic(40.f);
 	}
 }
 

@@ -45,9 +45,9 @@ namespace renderer
 
 		Vertex LineVertex[2] = {};
 
-		LineVertex[0].pos = Vector4(-0.5f, 0.25f, 0.f, 1.f); 
-		LineVertex[0].color = Vector4(0.f, 1.f, 0.f, 1.f); 
-		LineVertex[0].uv = Vector2(0.f, 0.f); 
+		LineVertex[0].pos = Vector4(-0.5f, 0.25f, 0.f, 1.f);
+		LineVertex[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		LineVertex[0].uv = Vector2(0.f, 0.f);
 
 		LineVertex[1].pos = Vector4(0.5f, 0.25f, 0.f, 1.f);
 		LineVertex[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -68,9 +68,9 @@ namespace renderer
 
 		Vertex	RectVertexes[4] = {};
 
-		RectVertexes[0].pos = Vector4(-0.5f, 0.5f, 0.f, 1.f); 
-		RectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f); 
-		RectVertexes[0].uv = Vector2(0.f, 0.f); 
+		RectVertexes[0].pos = Vector4(-0.5f, 0.5f, 0.f, 1.f);
+		RectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		RectVertexes[0].uv = Vector2(0.f, 0.f);
 
 		RectVertexes[1].pos = Vector4(0.5f, 0.5f, 0.f, 1.f);
 		RectVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -141,9 +141,9 @@ namespace renderer
 
 		Vertex	DebugRectVertexes[4] = {};
 
-		DebugRectVertexes[0].pos = Vector4(-0.5f, 0.5f, -0.00001f, 1.f); 
-		DebugRectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f); 
-		DebugRectVertexes[0].uv = Vector2(0.f, 0.f); 
+		DebugRectVertexes[0].pos = Vector4(-0.5f, 0.5f, -0.00001f, 1.f);
+		DebugRectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		DebugRectVertexes[0].uv = Vector2(0.f, 0.f);
 
 		DebugRectVertexes[1].pos = Vector4(0.5f, 0.5f, -0.00001f, 1.f);
 		DebugRectVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -197,7 +197,7 @@ namespace renderer
 			CircleVertexes.push_back(vtx);
 		}
 		indexes.clear();
-		for (int i = 1; i <= slice; i++) 
+		for (int i = 1; i <= slice; i++)
 		{
 			indexes.push_back(i);
 		}
@@ -434,8 +434,8 @@ namespace renderer
 		sphereVtx.push_back(v);
 
 		// Body
-		UINT iStackCount = 40; 
-		UINT iSliceCount = 40; 
+		UINT iStackCount = 40;
+		UINT iSliceCount = 40;
 
 		float fStackAngle = XM_PI / iStackCount;
 		float fSliceAngle = XM_2PI / iSliceCount;
@@ -537,17 +537,17 @@ namespace renderer
 	{
 
 #pragma region InputLayout
-		D3D11_INPUT_ELEMENT_DESC arrLayout[6] = {}; 
+		D3D11_INPUT_ELEMENT_DESC arrLayout[6] = {};
 
-		arrLayout[0].AlignedByteOffset = 0; 
-		arrLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
-		arrLayout[0].InputSlot = 0; 
+		arrLayout[0].AlignedByteOffset = 0;
+		arrLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[0].InputSlot = 0;
 		arrLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[0].SemanticName = "POSITION";
 		arrLayout[0].SemanticIndex = 0;
 
-		arrLayout[1].AlignedByteOffset = 16; 
-		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
+		arrLayout[1].AlignedByteOffset = 16;
+		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 		arrLayout[1].InputSlot = 0;
 		arrLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[1].SemanticName = "COLOR";
@@ -765,7 +765,7 @@ namespace renderer
 
 	void LoadBuffer()
 	{
-		
+
 		constantBuffers[static_cast<UINT>(eCBType::Transform)] = new ConstantBuffer(eCBType::Transform);
 		constantBuffers[static_cast<UINT>(eCBType::Transform)]->Create(sizeof(TransformCB));
 
@@ -796,7 +796,7 @@ namespace renderer
 		constantBuffers[static_cast<UINT>(eCBType::LaserHit)] = new ConstantBuffer(eCBType::LaserHit);
 		constantBuffers[static_cast<UINT>(eCBType::LaserHit)]->Create(sizeof(LaserHitCB));
 
-		
+
 		lightBuffer = new StructedBuffer();
 		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
 	}
@@ -826,7 +826,7 @@ namespace renderer
 
 		Shader* SpriteShader = new Shader();
 		SpriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		SpriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");		
+		SpriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"SpriteShader", SpriteShader);
 
 		Shader* GridShader = new Shader();
@@ -889,17 +889,23 @@ namespace renderer
 	}
 
 	void LoadDefaultTexture()
-	{		
+	{
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise1", L"noise/noise_01.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise2", L"noise/noise_02.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise3", L"noise/noise_03.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"default", L"default.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");	
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_color", L"Dirt/dirt_color.jpg");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_normal", L"Dirt/dirt_normal.jpg");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"Textures/BrickBlockBody/BrickBlockBody_alb.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"Textures/BrickBlockBody/BrickBlockBody_emm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"Textures/BrickBlockBody/BrickBlockBody_nrm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"Textures/BrickBlockBody/BrickBlockBody_mtl.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"Textures/BrickBlockBody/BrickBlockBody_rgh.png");
 
 
 		Texture* uavTexture = new Texture();
@@ -908,7 +914,7 @@ namespace renderer
 			D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PaintTexture", uavTexture);
 
-		postProcessTexture =  new Texture();
+		postProcessTexture = new Texture();
 		postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PostProcessTexture", postProcessTexture);
@@ -1008,8 +1014,8 @@ namespace renderer
 		flatMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		flatMaterial->SetShader(flatShader);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"FlatMaterial", flatMaterial);
-			
-			
+
+
 		{
 			Material* material = new Material(L"texCursor", L"UIShader");
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"CursorMat", material);
@@ -1021,7 +1027,7 @@ namespace renderer
 
 	void Initialize()
 	{
-		
+
 		LoadMesh();
 		LoadShader();
 		SetUpState();
