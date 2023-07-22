@@ -30,7 +30,6 @@
 #define CBSLOT_LASERHIT			9
 
 
-
 enum class eValidationMode
 {
 	Disabled,
@@ -94,8 +93,20 @@ enum class eBlendStateType
 	End,
 };
 
+enum class eRenderTargetType
+{
+	Swapchain,
+	Deferred,
+	Light,
+	Shadow,
+	End,
+};
+
 enum class eRenderingMode
 {
+	DeferredOpaque, // 불투명
+	DeferredMask,
+	Light, // 광원 처리
 	Opaque, // 불투명
 	Cutout, // 일부만 투명
 	Transparent,

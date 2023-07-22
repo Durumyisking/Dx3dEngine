@@ -82,8 +82,8 @@ GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 
 	mDepthStencilBufferTexture =  new Texture();
 	mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
-	
 	GETSINGLE(ResourceMgr)->Insert<Texture>(L"DepthStencilBufferTexture", mDepthStencilBufferTexture);
+	
 	// Setting Viewport		
 	RECT winRect;
 	GetClientRect(application.GetHwnd(), &winRect);
@@ -481,6 +481,11 @@ void GraphicDevice::OMSetRenderTarget()
 	mContext->OMSetRenderTargets(1
 		, mRenderTargetTexture->GetRTV().GetAddressOf()
 		, mDepthStencilBufferTexture->GetDSV().Get());
+}
+
+void GraphicDevice::OMSetRenderTarget(UINT numViews, ID3D11RenderTargetView** renderTargetViews, ID3D11DepthStencilView* depthStencilView)
+{
+	mContext->OMSetRenderTargets(numViews, renderTargetViews, depthStencilView);
 }
 
 void GraphicDevice::Draw()
