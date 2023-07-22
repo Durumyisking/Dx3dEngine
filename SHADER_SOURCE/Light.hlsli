@@ -121,6 +121,19 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
     lightColor.ambient = lightInfo.color.ambient;
 }
 
+
+float4 CombineLights(float4 color, LightColor lightColor)
+{
+    color.rgb *= lightColor.diffuse.rgb;
+
+    color.rgb += lightColor.specular.rgb;
+    
+    color.rgb += color.rgb * lightColor.ambient.rgb;
+
+    return color;
+}
+
+
 //3D
 static float3 globalLightPos = float3(0.0f, 0.0f, 0.0f);
 static float3 globalLightDir = float3(1.0f, -1.0f, 1.0f);

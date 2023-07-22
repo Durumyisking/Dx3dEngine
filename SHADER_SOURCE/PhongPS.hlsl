@@ -26,34 +26,38 @@ float4 main(VSOut vsIn) : SV_Target
 {
     float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
     float4 normal = (float4) 0.f;
-    
-    if (1 == cbtextureExistence) // 알베도만 처리
-    {
-        outColor = colorTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);
-    }
-    else if (2 == cbtextureExistence) // 알베도 노말맵 처리
-    {
-        outColor = colorTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);
-        normal = normalTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);
-        
-        // 노말을 새로 받아와서 뷰변환 되어있지 않다.
-        normal.xyz = normalize((normal.xyz * 2.f) - 1.f);
-        
-
-        float3x3 matTBN =
-        {
-            vsIn.ViewTangent,
-            vsIn.ViewBiNormal,
-            vsIn.ViewNormal,
-        };
-
-        normal = normalize(float4(mul(normal.xyz, matTBN), 0.f));
-    }
-    else if (0 == cbtextureExistence) // 텍스처가 없어요
+         
+    if (0 == cbtextureExistence)
     {
         normal.xyz = vsIn.ViewNormal;
     }
+    else if (1 == cbtextureExistence) 
+    {              
+        outColor = TextureMapping_albedo(vsIn.UV);
+        normal.xyz = vsIn.ViewNormal;
+    }
+    else if (2 == cbtextureExistence) 
+    {
+        outColor = TextureMapping_albedo(vsIn.UV);
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+    }
+    else if (3 == cbtextureExistence) 
+    {
+        outColor = TextureMapping_albedo(vsIn.UV);
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+    }
+    else if (4 == cbtextureExistence) 
+    {
+        outColor = TextureMapping_albedo(vsIn.UV);
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+    }
+    else if (5 == cbtextureExistence) 
+    {
+        outColor = TextureMapping_albedo(vsIn.UV);
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+    }
 
+    
     LightColor lightColor = (LightColor) 0.0f;
     
     for (int i = 0; i < lightCount; i++)
@@ -61,11 +65,21 @@ float4 main(VSOut vsIn) : SV_Target
         CalculateLight3D(vsIn.ViewPos, normal.xyz, i, lightColor);
     }
     
-    outColor.rgb *= lightColor.diffuse.rgb;
-
-    outColor.rgb += lightColor.specular.rgb;
+    outColor = CombineLights(outColor, lightColor);
     
-    outColor.rgb += outColor.rgb * lightColor.ambient.rgb;
+    if (outColor.w == 0)
+        discard;
+    
+    if (cbxyzw1.w != 0)
+    {
+        outColor *= cbxyzw1; // 곱할 색        
+    }
+    
+    if (cbxyzw2.w != 0)
+    {
+        outColor += cbxyzw2; // 더할 색    
+    }
+        
     
     return outColor;
         

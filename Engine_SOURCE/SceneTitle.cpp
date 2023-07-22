@@ -116,13 +116,17 @@ void SceneTitle::Enter()
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 100.f, -50.f));
+		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 500.f, -1000.f));
 		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
+		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
+		MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		mr->SetMaterialByKey(L"SunMaterial");
+		mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
 
 
@@ -131,15 +135,16 @@ void SceneTitle::Enter()
 		player->SetPos(Vector3(5.f, 5.f, 5.f));
 		player->SetScale({ 5.f, 5.f, 5.f });
 		player->SetName(L"Player");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"BrickBlockBody_nrm", L"PhongShader", L"mat_BrickBlockBody");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"BrickBlockBody_nrm", L"PhongShader", L"mat_BrickBlockBody");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"PhongShader", L"mat_BrickBlockBody");
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(2.5f, 2.5f, 2.5f));
 		PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);

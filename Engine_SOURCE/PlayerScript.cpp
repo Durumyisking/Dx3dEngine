@@ -78,7 +78,7 @@ void PlayerScript::FixedUpdate()
 	}
 	if (KEY_DOWN(R))
 	{
-		mTransform->SetPhysicalPosition(Vector3(-5.f, 0.f, 5.f));
+		mTransform->SetPhysicalPosition(Vector3(-5.f, 5.f, 5.f));
 	}
 
 }
