@@ -29,7 +29,7 @@ namespace renderer
 	Texture* postProcessTexture = nullptr;
 	GameObj* inspectorGameObject = nullptr;
 
-	MultiRenderTarget* renderTargets[(UINT)eRenderTargetType::End] = {};
+	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
 
 	void LoadMesh()
 	{
@@ -1055,6 +1055,17 @@ namespace renderer
 		}
 		delete lightBuffer;
 		lightBuffer = nullptr;
+
+		for (size_t i = 0; i < static_cast<UINT>(eRenderTargetType::End); i++)
+		{
+			if (renderTargets[i] == nullptr)
+			{
+				continue;
+			}
+
+			delete renderTargets[i];
+			renderTargets[i] = nullptr;
+		}
 	}
 
 	void Render()
@@ -1090,8 +1101,8 @@ namespace renderer
 			arrRTTex[0] = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
 			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilTexture");
 
-			renderTargets[(UINT)eRenderTargetType::Swapchain] = new MultiRenderTarget();
-			renderTargets[(UINT)eRenderTargetType::Swapchain]->Create(arrRTTex, dsTex);
+			renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)] = new MultiRenderTarget();
+			renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->Create(arrRTTex, dsTex);
 		}
 		// Deferred MultiRenderTargets
 		{
@@ -1118,8 +1129,18 @@ namespace renderer
 			Texture* dsTex = nullptr;
 			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilTexture");
 
-			renderTargets[(UINT)eRenderTargetType::Deferred] = new MultiRenderTarget();
-			renderTargets[(UINT)eRenderTargetType::Deferred]->Create(arrRTTex, dsTex);
+			renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)] = new MultiRenderTarget();
+			renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->Create(arrRTTex, dsTex);
+
+			delete pos;
+			delete normal;
+			delete albedo;
+			delete specular;
+
+			pos = nullptr;
+			normal = nullptr;
+			albedo = nullptr;
+			specular = nullptr;
 		}
 	}
 
