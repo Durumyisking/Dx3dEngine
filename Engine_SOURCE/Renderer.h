@@ -94,8 +94,8 @@ namespace renderer
 		Matrix matrix3;
 		Matrix matrix4;
 
-		int textureExistence;
-		int bool1;
+		int bTextureExistence;
+		int bMetalic;
 		int bool2;
 		int bool3;
 	};
@@ -169,11 +169,11 @@ namespace renderer
 		float wave_speed;
 		float wave_distortion;
 	};
-	CBUFFER(LaserHitCB, CBSLOT_LASERHIT)
+	CBUFFER(PBRCB, CBSLOT_PBR)
 	{
-		float ElapsedTimeX;
-		float ElapsedTimeY;
-		float PrevElapsedTimeY;
+		float metallic;
+		float roughness;
+		float ao;
 	};
 
 

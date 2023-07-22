@@ -136,11 +136,11 @@ void SceneTitle::Enter()
 		player->SetScale({ 5.f, 5.f, 5.f });
 		player->SetName(L"Player");
 		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"BrickBlockBody_nrm", L"PhongShader", L"mat_BrickBlockBody");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"BrickBlockBody_nrm", L"PhongShader", L"mat_BrickBlockBody");
 		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"PhongShader", L"mat_BrickBlockBody");
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
-		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
+		//player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);

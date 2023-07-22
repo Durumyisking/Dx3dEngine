@@ -27,23 +27,23 @@ Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring te
 	return mat;
 }
 
-Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring shaderName, std::wstring materialName)
+Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName, std::wstring materialName)
 {
-	Material* mat = new Material(textureColor, textureNormal, textureEmissive, shaderName);
+	Material* mat = new Material(textureColor, textureNormal, textureMetal, shaderName);
 	Insert<Material>(materialName, mat);
 	return mat;
 }
 
-Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring shaderName, std::wstring materialName)
+Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName, std::wstring materialName)
 {
-	Material* mat = new Material(textureColor, textureNormal, textureEmissive, textureMetal, shaderName);
+	Material* mat = new Material(textureColor, textureNormal, textureMetal, textureRoughness, shaderName);
 	Insert<Material>(materialName, mat);
 	return mat;
 }
 
-Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName, std::wstring materialName)
+Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring textureEmissive, std::wstring shaderName, std::wstring materialName)
 {
-	Material* mat = new Material(textureColor, textureNormal, textureEmissive, textureMetal, textureRoughness, shaderName);
+	Material* mat = new Material(textureColor, textureNormal, textureMetal, textureRoughness, textureEmissive, shaderName);
 	Insert<Material>(materialName, mat);
 	return mat;
 }

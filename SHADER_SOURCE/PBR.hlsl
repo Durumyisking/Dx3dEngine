@@ -1,5 +1,7 @@
 #include "global.hlsli"
 
+
+
 struct VSIn
 {
     float4 Position : POSITION;
@@ -26,32 +28,34 @@ float4 main(VSOut vsIn) : SV_Target
 {
     float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
     float4 normal = (float4) 0.f;
-
+    float metalic = 0.f;
+    float roughness = 0.f;
+         
     if (0 == cbtextureExistence)
     {
         normal.xyz = vsIn.ViewNormal;
     }
-    else if (1 == cbtextureExistence) 
-    {              
+    else if (1 == cbtextureExistence)
+    {
         outColor = TextureMapping_albedo(vsIn.UV);
         normal.xyz = vsIn.ViewNormal;
     }
-    else if (2 == cbtextureExistence) 
+    else if (2 == cbtextureExistence)
     {
         outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    else if (3 == cbtextureExistence) 
+    else if (3 == cbtextureExistence) // metal √ﬂ∞°« ø‰
     {
         outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    else if (4 == cbtextureExistence) 
+    else if (4 == cbtextureExistence)// roughness √ﬂ∞°« ø‰
     {
         outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    else if (5 == cbtextureExistence) 
+    else if (5 == cbtextureExistence)// emissive √ﬂ∞°« ø‰
     {
         outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
@@ -72,12 +76,12 @@ float4 main(VSOut vsIn) : SV_Target
     
     if (cbxyzw1.w != 0)
     {
-        outColor *= cbxyzw1; // Í≥±Ìï† ÏÉâ        
+        outColor *= cbxyzw1; // ∞ˆ«“ ªˆ        
     }
     
     if (cbxyzw2.w != 0)
     {
-        outColor += cbxyzw2; // ÎçîÌï† ÏÉâ    
+        outColor += cbxyzw2; // ¥ı«“ ªˆ    
     }
         
     

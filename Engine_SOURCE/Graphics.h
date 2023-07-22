@@ -27,7 +27,7 @@
 #define CBSLOT_PARTICLESYSTEM 6
 #define CBSLOT_NOISE			7
 #define CBSLOT_POSTPROCESS		8
-#define CBSLOT_LASERHIT			9
+#define CBSLOT_PBR			9
 
 
 enum class eValidationMode
@@ -99,6 +99,10 @@ enum class eRenderTargetType
 	Deferred,
 	Light,
 	Shadow,
+	Default1,
+	Default2,
+	Default3,
+	Default4,
 	End,
 };
 
@@ -163,7 +167,7 @@ enum class eCBType
 	ParticleSystem,
 	Noise, 
 	PostProcess,
-	LaserHit,
+	PBR,
 	End,
 };
 
@@ -198,8 +202,8 @@ enum class eGPUParam
 	Matrix_2,
 	Matrix_3,
 	Matrix_4,
-	TextureExistence,
-	Bool_1,
+	bTextureExistence,
+	bMetalic,
 	Bool_2,
 	Bool_3,
 };
