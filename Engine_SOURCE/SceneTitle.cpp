@@ -116,72 +116,17 @@ void SceneTitle::Enter()
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 500.f, -1000.f));
+		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 100.f, -50.f));
 		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
-		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
-		MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		mr->SetMaterialByKey(L"SunMaterial");
-		mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
 
 
 	{
-		{
-			Player* player = object::Instantiate<Player>(eLayerType::Player);
-			player->SetPos(Vector3(0.f, 0.f, 0.f));
-			player->SetScale({ 1, 1.f, 1.f });
-			player->SetName(L"Player");
-			player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-			//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"test0");
-
-			for (int i = 1; i < 21; ++i)
-			{
-				Player* player = object::Instantiate<Player>(eLayerType::Player);
-				player->SetPos(Vector3(0.f, 0.f, 0.f));
-				player->SetScale({ 1, 1.f, 1.f });
-				player->SetName(L"Player");
-				player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-				//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-				player->GetComponent<MeshRenderer>()->SetMeshByKey(L"test" + std::to_wstring(i));
-			}
-
-			//Player* player1 = object::Instantiate<Player>(eLayerType::Player);
-			//player1->SetPos(Vector3(0.f, 0.f, 0.f));
-			//player1->SetScale({ 1, 1.f, 1.f });
-			//player1->SetName(L"Player");
-			//player1->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
-			////player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			//player1->GetComponent<MeshRenderer>()->SetMeshByKey(L"test1");
-			//player1->GetComponent<Transform>()->SetParent(player);
-
-			//Player* player2 = object::Instantiate<Player>(eLayerType::Player);
-			//player2->SetPos(Vector3(0.f, 0.f, 0.f));
-			//player2->SetScale({ 1, 1.f, 1.f });
-			//player2->SetName(L"Player");
-			//player2->GetComponent<MeshRenderer>()->SetMaterialByKey(L"FlatMaterial");
-			////player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-			//player2->GetComponent<MeshRenderer>()->SetMeshByKey(L"test2");
-			//player2->GetComponent<Transform>()->SetParent(player);
-			
-			//player->AddComponent<PlayerScript>(eComponentType::Script);
-
-			//Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-			//physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
-			//PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
-
-			//PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			////rigid->RemoveGravity();
-
-			//player->AddComponent<PhysXCollider>(eComponentType::Collider);
-			//player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-		}
-
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(5.f, 5.f, 5.f));
 		player->SetScale({ 5.f, 5.f, 5.f });
@@ -202,6 +147,17 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
+
+	//{
+	//	
+	//	Sphere* sphere = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
+	//	sphere->SetPos(Vector3(-5.f, 20.f, 5.f));
+	//	sphere->SetScale({ 2.5f, 2.5f, 2.5f });
+	//	sphere->SetName(L"Sphere");
+	//	sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+
+	//}
+
 
 	{
 		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
