@@ -13,6 +13,7 @@ BaseRenderer::BaseRenderer(eComponentType type)
 	, mbUseLOD(true)
 	, mSpriteSize(Vector2::Zero)
 {
+	// 디폴트 매시 지정
 	Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
 	SetMesh(mesh);
@@ -29,15 +30,7 @@ void BaseRenderer::Update()
 void BaseRenderer::FixedUpdate()
 {
 
-
-	void BaseRenderer::Render()
-	{
-		if (mbUseLOD)
-		{
-			//LOD();
-		}
-	}
-
+}
 
 void BaseRenderer::Render()
 {
