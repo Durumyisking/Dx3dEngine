@@ -1113,48 +1113,16 @@ namespace renderer
 
 		//SwapChain MultiRenderTargets
 		{
-		//	Texture* arrRTTex[8] = {};
-		//	Texture* dsTex = nullptr;
+			Texture* arrRTTex[8] = {};
+			Texture* dsTex = nullptr;
 
-		//	arrRTTex[0] = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
-		//	dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilBufferTexture");
+			arrRTTex[0] = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
+			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilBufferTexture");
 
-		//	renderTargets[(UINT)eRenderTargetType::Swapchain] = new MultiRenderTarget();
-		//	renderTargets[(UINT)eRenderTargetType::Swapchain]->Create(arrRTTex, dsTex);
-		//}
-		//// Deferred MultiRenderTargets
-		//{
-		//	Texture* arrRTTex[8] = { };
-		//	Texture* pos = new Texture();
-		//	Texture* normal = new Texture();;
-		//	Texture* albedo = new Texture();;
-		//	Texture* specular = new Texture();;
-
-		//	arrRTTex[0] = pos;
-		//	arrRTTex[1] = normal;
-		//	arrRTTex[2] = albedo;
-		//	arrRTTex[3] = specular;
-
-		//	arrRTTex[0]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
-		//		, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-		//	arrRTTex[1]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
-		//		, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-		//	arrRTTex[2]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
-		//		, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-		//	arrRTTex[3]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
-		//		, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-
-		//	Texture* dsTex = nullptr;
-		//	dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilBufferTexture");
-
-		//	renderTargets[(UINT)eRenderTargetType::Deferred] = new MultiRenderTarget();
-		//	renderTargets[(UINT)eRenderTargetType::Deferred]->Create(arrRTTex, dsTex);
-
-
-
-			renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)] = new MultiRenderTarget();
-			renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->Create(arrRTTex, dsTex);
+			renderTargets[(UINT)eRenderTargetType::Swapchain] = new MultiRenderTarget();
+			renderTargets[(UINT)eRenderTargetType::Swapchain]->Create(arrRTTex, dsTex);
 		}
+
 		// Deferred MultiRenderTargets
 		{
 			Texture* arrRTTex[8] = { };
