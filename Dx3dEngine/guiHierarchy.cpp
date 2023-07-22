@@ -10,7 +10,7 @@
 
 #include "guiTreeWidget.h"
 
-extern dru::Application application;
+extern Application application;
 extern gui::Editor editor;
 
 namespace gui
@@ -53,11 +53,11 @@ namespace gui
 
 	void Hierarchy::InitializeInspector(void* data)
 	{
-		dru::renderer::inspectorGameObject 
-			= static_cast<dru::GameObj*>(data);
+		renderer::inspectorGameObject 
+			= static_cast<GameObj*>(data);
 
 		Inspector* inspector = editor.GetWidget<Inspector>("Inspector");
-		inspector->SetTargetGameObject(dru::renderer::inspectorGameObject);
+		inspector->SetTargetGameObject(renderer::inspectorGameObject);
 		inspector->InitializeTargetGameObject();
 
 
@@ -67,18 +67,18 @@ namespace gui
 	{
 		mTreeWidget->Clear();
 
-		dru::Scene* scene = GETSINGLE(dru::SceneMgr)->GetActiveScene();
+		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		std::string sceneName(scene->GetName().begin(), scene->GetName().end());
 
 		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, sceneName, 0, true);
 
-		for (size_t i = 0; i < static_cast<UINT>(dru::enums::eLayerType::End); i++)
+		for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
 		{
-			dru::Layer& layer = scene->GetLayer((dru::enums::eLayerType)i);
-			const std::vector<dru::GameObj*>& gameObjs
+			Layer& layer = scene->GetLayer((enums::eLayerType)i);
+			const std::vector<GameObj*>& gameObjs
 				= layer.GetGameObjects();
 
-			for (dru::GameObj* obj : gameObjs)
+			for (GameObj* obj : gameObjs)
 			{
 				AddGameObject(root, obj);
 			}
@@ -86,7 +86,7 @@ namespace gui
 
 	}
 
-	void Hierarchy::AddGameObject(TreeWidget::Node* parent, dru::GameObj* gameObject)
+	void Hierarchy::AddGameObject(TreeWidget::Node* parent, GameObj* gameObject)
 	{
 		std::string name(gameObject->GetName().begin(), gameObject->GetName().end());
 

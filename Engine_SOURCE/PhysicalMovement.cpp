@@ -5,47 +5,46 @@
 #include "PhysXRigidBody.h"
 #include "Physical.h"
 
-namespace dru
+
+
+PhysicalMovement::PhysicalMovement()
+	:Component(eComponentType::Movement)
 {
-	PhysicalMovement::PhysicalMovement()
-		:Component(eComponentType::Movement)
-	{
-	}
-	PhysicalMovement::~PhysicalMovement()
-	{
-	}
-	void PhysicalMovement::Initialize()
-	{
-	}
-	void PhysicalMovement::Update()
-	{
-	}
-	void PhysicalMovement::FixedUpdate()
-	{
-		Vector3 velocity = GetOwner()->GetComponent<PhysXRigidBody>()->GetVelocity();
+}
+PhysicalMovement::~PhysicalMovement()
+{
+}
+void PhysicalMovement::Initialize()
+{
+}
+void PhysicalMovement::Update()
+{
+}
+void PhysicalMovement::FixedUpdate()
+{
+	Vector3 velocity = GetOwner()->GetComponent<PhysXRigidBody>()->GetVelocity();
 
-		if (eLayerType::Player== GetOwner()->GetLayerType())
-		{
-		}
-
-		Move(velocity);
-	}
-	void PhysicalMovement::Render()
+	if (eLayerType::Player== GetOwner()->GetLayerType())
 	{
 	}
 
-	// 이동은 여기서 수행
-	void PhysicalMovement::Move(const Vector3& velocity)
-	{
-		PxTransform transform = GetOwner()->GetComponent<Transform>()->GetPxTransform();
-		transform.p += convert::Vector3ToPxVec3(velocity * DT);
+	Move(velocity);
+}
+void PhysicalMovement::Render()
+{
+}
+
+// 이동은 여기서 수행
+void PhysicalMovement::Move(const Vector3& velocity)
+{
+	PxTransform transform = GetOwner()->GetComponent<Transform>()->GetPxTransform();
+	transform.p += convert::Vector3ToPxVec3(velocity * DT);
 		
-		Physical* physical = GetOwner()->GetComponent<Physical>();
+	Physical* physical = GetOwner()->GetComponent<Physical>();
 
-		if (eActorType::Kinematic == physical->GetActorType())
-		{
-			physical->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
-		}
-
+	if (eActorType::Kinematic == physical->GetActorType())
+	{
+		physical->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
 	}
+
 }

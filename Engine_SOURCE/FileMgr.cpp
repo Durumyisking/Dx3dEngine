@@ -2,106 +2,78 @@
 #include "Application.h"
 #include "Texture.h"
 
-extern dru::Application application;
+extern Application application;
 namespace fs = std::filesystem;
 
-namespace dru
+
+
+FileMgr::FileMgr()
+  : mAssimpImporter{}
 {
 
-	FileMgr::FileMgr()
-		: mAssimpImporter{}
-	{
+}
 
+FileMgr::~FileMgr()
+{
+
+
+}
+
+void FileMgr::FileLoad(const std::wstring& path)
+{
+	// ÌååÏùº Í≤ΩÎ°ú ÏÑ§Ï†ï
+	std::ifstream file(L"..//" + path, std::ios::in);
+
+	std::string buf = "";
+	// ÌååÏùºÏù¥ Ïó¥Î¶¨ÏßÄ ÏïäÏúºÎ©¥ Window Ï¢ÖÎ£å
+	if (!file.is_open())
+	{
+		std::cout << "ÌååÏùºÏù¥ ÏóÜÏäµÎãàÎã§" << std::endl;
+		DestroyWindow(application.GetHwnd());
 	}
 
-	FileMgr::~FileMgr()
+	// Nodes
+	while (1)
 	{
+		getline(file, buf);
+		if ((buf.find("nodes") != std::string::npos)
+			|| (buf.find("version") != std::string::npos))
+		{
+			continue;;
+		}
 
+		if (buf.find("end") != std::string::npos)
+		{
+			break;
+		}
+
+		ParsingNodeData data = {};
+		data = readNodes(buf);
+		mNodeData.emplace_back(data);
 	}
 
-	void FileMgr::FileLoad(const std::wstring& path)
+	// Skeleton
+	while (1)
 	{
-		// ∆ƒ¿œ ∞Ê∑Œ º≥¡§
-		std::ifstream file(L"..//" + path, std::ios::in);
-
-		std::string buf = "";
-		// ∆ƒ¿œ¿Ã ø≠∏Æ¡ˆ æ ¿∏∏È Window ¡æ∑·
-		if (!file.is_open())
+		getline(file, buf);
+		if (buf.find("skeleton") != std::string::npos)
 		{
-			std::cout << "∆ƒ¿œ¿Ã æ¯Ω¿¥œ¥Ÿ" << std::endl;
-			DestroyWindow(application.GetHwnd());
+			continue;
+		}
+		else if (buf.find("end") != std::string::npos)
+		{
+			break;
+		}
+		else if (buf.find("time") != std::string::npos)
+		{
+			continue;
 		}
 
-		// Nodes
-		while (1)
-		{
-			getline(file, buf);
-			if ((buf.find("nodes") != std::string::npos)
-				|| (buf.find("version") != std::string::npos))
-			{
-				continue;;
-			}
-
-			if (buf.find("end") != std::string::npos)
-			{
-				break;
-			}
-
-			ParsingNodeData data = {};
-			data = readNodes(buf);
-			mNodeData.emplace_back(data);
-		}
-
-		// Skeleton
-		while (1)
-		{
-			getline(file, buf);
-			if (buf.find("skeleton") != std::string::npos)
-			{
-				continue;
-			}
-			else if (buf.find("end") != std::string::npos)
-			{
-				break;
-			}
-			else if (buf.find("time") != std::string::npos)
-			{
-				continue;
-			}
-
-			ParsingSkeletonData data = {};
-			data = readSkeleton(buf);
-			mSkeletonData.emplace_back(data);
-		}
-
-		// Triangles
-		std::string texName = "";
-		while (1)
-		{
-			getline(file, buf);
-			if (buf.find("triangles") != std::string::npos)
-			{
-				continue;
-			}
-			else if (buf.find("end") != std::string::npos)
-			{
-				break;
-			}
-			else if (buf.find("png") != std::string::npos)
-			{
-				texName = buf;
-				continue;
-			}
-
-			ParsingTriangleData data = {};
-			data = readTriangles(buf);
-			data.TexName = texName;
-
-			mTriangleData.emplace_back(data);
-		}
-
-		file.close();
+		ParsingSkeletonData data = {};
+		data = readSkeleton(buf);
+		mSkeletonData.emplace_back(data);
 	}
+
 
 	void FileMgr::TestLoad(const std::wstring& path)
 	{
@@ -110,7 +82,7 @@ namespace dru
 
 		if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 		{
-			// ∆ƒ¿œ ∑ŒµÂ Ω«∆–
+			// ÌååÏùº Î°úÎìú Ïã§Ìå®
 			return;
 		}
 
@@ -122,104 +94,128 @@ namespace dru
 
 	const std::string FileMgr::parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const
 	{
-		std::string::size_type fPos = buf.find_first_of(delValue, startPos);
-		std::string::size_type lPos = buf.find_first_of(delValue, fPos + 1);
-		if (fPos >= buf.size())
+		getline(file, buf);
+		if (buf.find("triangles") != std::string::npos)
 		{
-			return std::string("fail");
+			continue;
+		}
+		else if (buf.find("end") != std::string::npos)
+		{
+			break;
+		}
+		else if (buf.find("png") != std::string::npos)
+		{
+			texName = buf;
+			continue;
 		}
 
-		startPos = fPos + 1;
-
-		std::string str = buf.substr((fPos + 1), lPos - (fPos + 1));
-
-		return str;
-	}
-
-	const std::string::size_type FileMgr::startStringPos(std::string& buf, const std::string& delValue) const
-	{
-		std::string::size_type pos = 0;
-		pos = buf.find_first_not_of(delValue, 0);
-
-		return pos;
-	}
-
-	const FileMgr::ParsingNodeData FileMgr::readNodes(std::string& buf) const
-	{
-		ParsingNodeData Data = {};
-		std::string str = "";
-		std::string::size_type fPos = buf.find_first_of('"', 1);
-		std::string::size_type lPos = buf.find_last_of('"', buf.size() - 1);
-		fPos += 1;
-
-		str = buf.substr(fPos, lPos - fPos);
-		Data.Name = str;
-
-
-		fPos = buf.find_last_of(' ', buf.size() - 1);
-		str = buf.substr(fPos, buf.size() - 1);
-		Data.ParentsIDX = std::atoi(str.c_str());
-
-		return Data;
-	}
-
-	const FileMgr::ParsingSkeletonData FileMgr::readSkeleton(std::string& buf) const
-	{
-		ParsingSkeletonData data = {};
-		std::string str = "";
-		std::string::size_type pos = 0;
-		pos = startStringPos(buf, " ");
-
-		std::vector<float> temp = {};
-		for (int i = 0; i < 3; ++i)
-		{
-			str = parsingString(buf, " ", pos);
-			temp.emplace_back((std::stof(str.c_str())));
-		}
-
-		data.Translation = dru::math::Vector3(temp[0], temp[1], temp[2]);
-		temp.clear();
-
-		for (int i = 0; i < 3; ++i)
-		{
-			str = parsingString(buf, " ", pos);
-			temp.emplace_back(std::stof(str.c_str()));
-		}
-
-		data.Rotaion = dru::math::Vector3(temp[0], temp[1], temp[2]);
-
-		return data;
-	}
-
-	const FileMgr::ParsingTriangleData FileMgr::readTriangles(std::string& buf) const
-	{
 		ParsingTriangleData data = {};
-		std::string::size_type pos = startStringPos(buf, " ");
+		data = readTriangles(buf);
+		data.TexName = texName;
 
-
-		std::string str = buf.substr(pos, pos + 1);
-		data.IDX = std::atoi(str.c_str());
-		std::vector<float> temp = {};
-		while (1)
-		{
-			str = parsingString(buf, " ", pos);
-			if (str.find("fail") != std::string::npos)
-			{
-				break;
-			}
-			temp.emplace_back(std::stof(str.c_str()));
-		}
-		data.Value = temp;
-
-		return data;
+		mTriangleData.emplace_back(data);
 	}
+
+	file.close();
+}
+
+const std::string FileMgr::parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const
+{
+	std::string::size_type fPos = buf.find_first_of(delValue, startPos);
+	std::string::size_type lPos = buf.find_first_of(delValue, fPos + 1);
+	if (fPos >= buf.size())
+	{
+		return std::string("fail");
+	}
+
+	startPos = fPos + 1;
+
+	std::string str = buf.substr((fPos + 1), lPos - (fPos + 1));
+
+	return str;
+}
+
+const std::string::size_type FileMgr::startStringPos(std::string& buf, const std::string& delValue) const
+{
+	std::string::size_type pos = 0;
+	pos = buf.find_first_not_of(delValue, 0);
+
+	return pos;
+}
+
+const FileMgr::ParsingNodeData FileMgr::readNodes(std::string& buf) const
+{
+	ParsingNodeData Data = {};
+	std::string str = "";
+	std::string::size_type fPos = buf.find_first_of('"', 1);
+	std::string::size_type lPos = buf.find_last_of('"', buf.size() - 1);
+	fPos += 1;
+
+	str = buf.substr(fPos, lPos - fPos);
+	Data.Name = str;
+
+
+	fPos = buf.find_last_of(' ', buf.size() - 1);
+	str = buf.substr(fPos, buf.size() - 1);
+	Data.ParentsIDX = std::atoi(str.c_str());
+
+	return Data;
+}
+
+const FileMgr::ParsingSkeletonData FileMgr::readSkeleton(std::string& buf) const
+{
+	ParsingSkeletonData data = {};
+	std::string str = "";
+	std::string::size_type pos = 0;
+	pos = startStringPos(buf, " ");
+
+	std::vector<float> temp = {};
+	for (int i = 0; i < 3; ++i)
+	{
+		str = parsingString(buf, " ", pos);
+		temp.emplace_back((std::stof(str.c_str())));
+	}
+
+	data.Translation = math::Vector3(temp[0], temp[1], temp[2]);
+	temp.clear();
+
+	for (int i = 0; i < 3; ++i)
+	{
+		str = parsingString(buf, " ", pos);
+		temp.emplace_back(std::stof(str.c_str()));
+	}
+
+	data.Rotaion = math::Vector3(temp[0], temp[1], temp[2]);
+
+	return data;
+}
+
+const FileMgr::ParsingTriangleData FileMgr::readTriangles(std::string& buf) const
+{
+	ParsingTriangleData data = {};
+	std::string::size_type pos = startStringPos(buf, " ");
+
+
+	std::string str = buf.substr(pos, pos + 1);
+	data.IDX = std::atoi(str.c_str());
+	std::vector<float> temp = {};
+	while (1)
+	{
+		str = parsingString(buf, " ", pos);
+		if (str.find("fail") != std::string::npos)
+		{
+			break;
+		}
+		temp.emplace_back(std::stof(str.c_str()));
+	}
+
 	void FileMgr::loadModel(const aiScene* scene)
 	{
 
 	}
 	void FileMgr::processNode(aiNode* node, const aiScene* scene, std::vector<renderer::Vertex>& meshes)
 	{
-		// «ˆ¡¶ ≥ÎµÂ ∏ﬁΩ¨ ¡§∫∏ ¿˙¿Â
+		// ÌòÑÏ†ú ÎÖ∏Îìú Î©îÏâ¨ Ï†ïÎ≥¥ Ï†ÄÏû•
 		for (UINT i = 0; i < node->mNumMeshes; ++i)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -227,7 +223,7 @@ namespace dru
 			//meshes.emplace_back(processMesh(mesh, scene));
 		}
 
-		// ¿Á±Õ¿˚¿∏∑Œ ∏ﬁΩ¨ »£√‚
+		// Ïû¨Í∑ÄÏ†ÅÏúºÎ°ú Î©îÏâ¨ Ìò∏Ï∂ú
 		for (UINT i = 0; i < node->mNumChildren; ++i)
 		{
 			processNode(node->mChildren[i], scene, meshes);
@@ -240,7 +236,7 @@ namespace dru
 		std::vector<UINT> indexes;
 		std::vector<Texture> textures;
 
-		// ¡§¡° ¡§∫∏ ∑ŒµÂ
+		// Ï†ïÏ†ê Ï†ïÎ≥¥ Î°úÎìú
 		for (UINT i = 0; i < mesh->mNumVertices; ++i)
 		{
 			renderer::Vertex vertex= {};
@@ -312,3 +308,4 @@ namespace dru
 	{
 	}
 }
+

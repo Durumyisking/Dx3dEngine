@@ -2,43 +2,42 @@
 #include "GameObj.h"
 #include "Transform.h"
 
-namespace dru
+
+
+MeshRenderer::MeshRenderer()
+	: BaseRenderer(eComponentType::MeshRenderer)
 {
-	MeshRenderer::MeshRenderer()
-		: BaseRenderer(eComponentType::MeshRenderer)
-	{
-	}
+}
 
-	MeshRenderer::~MeshRenderer()
-	{
-	}
+MeshRenderer::~MeshRenderer()
+{
+}
 
-	void MeshRenderer::Initialize()
-	{
-		BaseRenderer::Initialize();
-	}
+void MeshRenderer::Initialize()
+{
+	BaseRenderer::Initialize();
+}
 
-	void MeshRenderer::Update()
-	{
-		BaseRenderer::Update();
-	}
+void MeshRenderer::Update()
+{
+	BaseRenderer::Update();
+}
 
-	void MeshRenderer::FixedUpdate()
-	{
-		BaseRenderer::FixedUpdate();
-	}
+void MeshRenderer::FixedUpdate()
+{
+	BaseRenderer::FixedUpdate();
+}
 
-	void MeshRenderer::Render()
-	{
-		BaseRenderer::Render();
+void MeshRenderer::Render()
+{
+	BaseRenderer::Render();
 
-		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
+	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-		GetMaterial()->Bind();
-		GetMesh()->BindBuffer();
+	GetMaterial()->Bind();
+	GetMesh()->BindBuffer();
 
-		GetMesh()->Render();
+	GetMesh()->Render();
 
-		GetMaterial()->Clear();
-	}
+	GetMaterial()->Clear();
 }

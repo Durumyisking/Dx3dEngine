@@ -1,47 +1,45 @@
 #include "PostProcessWave.h"
 
-namespace dru
+
+
+PostProcessWave::PostProcessWave()
+	: mAmount(35.f)
+	, mSpeed(10.f)
+	, mDistortion(40.f)
+
 {
-	PostProcessWave::PostProcessWave()
-		: mAmount(35.f)
-		, mSpeed(10.f)
-		, mDistortion(40.f)
+}
 
-	{
-	}
+PostProcessWave::~PostProcessWave()
+{
+}
 
-	PostProcessWave::~PostProcessWave()
-	{
-	}
+void PostProcessWave::Initialize()
+{
+	PostProcess::Initialize();
+}
 
-	void PostProcessWave::Initialize()
-	{
-		PostProcess::Initialize();
-	}
+void PostProcessWave::update()
+{
+	PostProcess::update();
+}
 
-	void PostProcessWave::update()
-	{
-		PostProcess::update();
-	}
+void PostProcessWave::fixedUpdate()
+{
+	PostProcess::fixedUpdate();
+}
 
-	void PostProcessWave::fixedUpdate()
-	{
-		PostProcess::fixedUpdate();
-	}
+void PostProcessWave::render()
+{
+	PostProcess::render();
+}
 
-	void PostProcessWave::render()
-	{
-		PostProcess::render();
-	}
+void PostProcessWave::Bind()
+{
+	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::PostProcess)];
+	mConstantBuffer.wave_amount = mAmount;
+	mConstantBuffer.wave_speed = mSpeed;
+	mConstantBuffer.wave_distortion = mDistortion;
 
-	void PostProcessWave::Bind()
-	{
-		ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::PostProcess)];
-		mConstantBuffer.wave_amount = mAmount;
-		mConstantBuffer.wave_speed = mSpeed;
-		mConstantBuffer.wave_distortion = mDistortion;
-
-		PostProcess::Bind();
-	}
-
+	PostProcess::Bind();
 }

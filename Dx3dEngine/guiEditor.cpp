@@ -33,7 +33,7 @@
 
 
 
-extern dru::Application application;
+extern Application application;
 
 namespace gui
 {
@@ -61,21 +61,21 @@ namespace gui
 		// 충돌체의 종류 갯수만큼만 있으면 된다.
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
-		dru::Mesh* rectMesh = GETSINGLE(dru::ResourceMgr)->Find<dru::Mesh>(L"DebugRectmesh");
-		dru::Material* material = GETSINGLE(dru::ResourceMgr)->Find<dru::Material>(L"DebugMaterial");
+		Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"DebugRectmesh");
+		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugMaterial");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Rect)] = new DebugObject();
-		dru::MeshRenderer* renderer
-			= mDebugObjects[static_cast<UINT>(eColliderType::Rect)]->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
+		MeshRenderer* renderer
+			= mDebugObjects[static_cast<UINT>(eColliderType::Rect)]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 		renderer->SetMaterial(material);
 		renderer->SetMesh(rectMesh);
 
-		dru::Mesh* circleMesh = GETSINGLE(dru::ResourceMgr)->Find<dru::Mesh>(L"Circlemesh");
+		Mesh* circleMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Circlemesh");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Circle)] = new DebugObject();
 		renderer
-			= mDebugObjects[static_cast<UINT>(eColliderType::Circle)]->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
+			= mDebugObjects[static_cast<UINT>(eColliderType::Circle)]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 		renderer->SetMaterial(material);
 		renderer->SetMesh(circleMesh);
@@ -148,11 +148,11 @@ namespace gui
 			obj->render();
 		}
 
-		for (dru::DebugMesh & mesh : dru::renderer::debugMeshes)
+		for (DebugMesh & mesh : renderer::debugMeshes)
 		{
 			DebugRender(mesh);
 		}
-		dru::renderer::debugMeshes.clear();
+		renderer::debugMeshes.clear();
 	}
 
 	void Editor::Release()
@@ -183,43 +183,43 @@ namespace gui
 		ImGui_Release();
 	}
 
-	void Editor::DebugRender(dru::DebugMesh& mesh)
+	void Editor::DebugRender(DebugMesh& mesh)
 	{
 		DebugObject* debugObj = mDebugObjects[static_cast<UINT>(mesh.type)];
 
-		dru::Transform* tr = debugObj->GetComponent<dru::Transform>();
+		Transform* tr = debugObj->GetComponent<Transform>();
 		tr->SetPosition(mesh.position);
 		tr->SetRotation(mesh.rotation);
 
 		switch (mesh.type)
 		{
-		case dru::enums::eColliderType::Rect:
+		case enums::eColliderType::Rect:
 			tr->SetScale(mesh.scale);
 			break;
-		case dru::enums::eColliderType::Circle:
+		case enums::eColliderType::Circle:
 			tr->SetScale(Vector3(mesh.radius));
 			break;
-		case dru::enums::eColliderType::Line:
+		case enums::eColliderType::Line:
 			tr->SetScale(Vector3(mesh.scale.x, 1.f, 0.f));
 			break;
-		case dru::enums::eColliderType::Box:
+		case enums::eColliderType::Box:
 			break;
-		case dru::enums::eColliderType::Sphere:
+		case enums::eColliderType::Sphere:
 			break;
-		case dru::enums::eColliderType::End:
+		case enums::eColliderType::End:
 			break;
 		default:
 			break;
 		}
 
-		dru::BaseRenderer* renderer = debugObj->GetComponent<dru::BaseRenderer>();
+		BaseRenderer* renderer = debugObj->GetComponent<BaseRenderer>();
 
-		dru::Material* material = renderer->GetMaterial();
-		material->SetData(dru::eGPUParam::Int_1, &mesh.state);
+		Material* material = renderer->GetMaterial();
+		material->SetData(eGPUParam::Int_1, &mesh.state);
 		tr->FixedUpdate();
 
-		dru::Camera::SetGpuViewMatrix(dru::renderer::mainCamera->GetViewMatrix());
-		dru::Camera::SetGpuProjectionMatrix(dru::renderer::mainCamera->GetProjectionMatrix());
+		Camera::SetGpuViewMatrix(renderer::mainCamera->GetViewMatrix());
+		Camera::SetGpuProjectionMatrix(renderer::mainCamera->GetProjectionMatrix());
 
 		debugObj->Render();
 
@@ -257,8 +257,8 @@ namespace gui
 
 		// Setup Platform/Renderer backends
 		ImGui_ImplWin32_Init(application.GetHwnd());
-		ImGui_ImplDX11_Init(dru::GetDevice()->GetID3D11Device()
-			, dru::GetDevice()->GetDeviceContext().Get());
+		ImGui_ImplDX11_Init(GetDevice()->GetID3D11Device()
+			, GetDevice()->GetDeviceContext().Get());
 
 		// Load Fonts
 		// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.

@@ -8,7 +8,6 @@
 #include "PhysicsScene.h"
 #include "TimeMgr.h"
 
-using namespace dru;
 
 PhysicsMgr::PhysicsMgr()
 	: mPhysX(nullptr)
@@ -30,14 +29,14 @@ void PhysicsMgr::Initialize()
 	mDispatcher->CreateCpuDispatcher(1);
 
 	PxSceneDesc sceneDesc(mPhysX->GetPhysics()->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, -39.24f, 0.0f);
 	sceneDesc.cpuDispatcher = mDispatcher->GetCpuDispatcher();
-//	sceneDesc.filterShader = PlayerFilter;
+	//	sceneDesc.filterShader = PlayerFilter;
 	sceneDesc.filterShader = PlayerFilter;
 	sceneDesc.simulationEventCallback = mDispatcher->GetSimulationCallback();
 
 	mPhysX->CreatePhysicsScene(sceneDesc);
-//	mPhysX->ConnectDebuggerToScene();
+	//	mPhysX->ConnectDebuggerToScene();
 
 	assert(mPhysX->GetPhysicsScene());
 }

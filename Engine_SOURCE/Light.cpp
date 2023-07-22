@@ -3,40 +3,38 @@
 #include "GameObj.h"
 #include "Renderer.h"
 
-namespace dru
+
+
+Light::Light()
+	: Component(eComponentType::Light)
 {
-	Light::Light()
-		: Component(eComponentType::Light)
-	{
 
-	}
+}
 
-	Light::~Light()
-	{
-	}
+Light::~Light()
+{
+}
 
-	void Light::Initialize()
-	{
-	}
+void Light::Initialize()
+{
 
-	void Light::Update()
-	{
-	}
+}
 
-	void Light::FixedUpdate()
-	{
-		Transform* tr = GetOwner()->GetComponent<Transform>();
-		math::Vector3 position = tr->GetWorldPosition();
+void Light::Update()
+{
+}
 
-		mAttribute.position = Vector4(position.x, position.y, position.z, 1.f);
-		mAttribute.direction = Vector4(tr->Forward().x, tr->Forward().y, tr->Forward().z, 0.0f);
+void Light::FixedUpdate()
+{
+	Transform* tr = GetOwner()->GetComponent<Transform>();
+	math::Vector3 position = tr->GetWorldPosition();
 
-		renderer::PushLightAttribute(mAttribute);
-	}
+	mAttribute.position = Vector4(position.x, position.y, position.z, 1.f);
+	mAttribute.direction = Vector4(tr->Forward().x, tr->Forward().y, tr->Forward().z, 0.0f);
 
-	void Light::Render()
-	{
-	}
+	renderer::PushLightAttribute(mAttribute);
+}
 
-
+void Light::Render()
+{
 }

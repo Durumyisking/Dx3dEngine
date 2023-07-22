@@ -1,15 +1,16 @@
 #pragma once
 #include "guiComponent.h"
+#include "Material.h"
+#include "Mesh.h"
+
 
 namespace gui
 {
-	class Material;
-	class Mesh;
-	class MeshRenderer : public Component
+	class GUIMeshRenderer : public GUIComponent
 	{
 	public:
-		MeshRenderer();
-		~MeshRenderer();
+		GUIMeshRenderer();
+		~GUIMeshRenderer();
 
 		virtual void FixedUpdate() override;
 		virtual void Update() override;
@@ -19,7 +20,7 @@ namespace gui
 		void SetMaterial(std::string key);
 
 	private:
-		dru::Material* mMaterial;
-		dru::Mesh* mMesh;
+		Material*	mMaterial;
+		Mesh*		mMesh;
 	};
 }

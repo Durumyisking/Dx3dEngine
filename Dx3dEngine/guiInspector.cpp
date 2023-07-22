@@ -17,7 +17,7 @@
 
 namespace gui
 {
-	using namespace dru::enums;
+	using namespace enums;
 	Inspector::Inspector()
 		:mTargetResource(nullptr)
 	{
@@ -25,33 +25,33 @@ namespace gui
 		SetSize(ImVec2(300.0f, 100.0f));
 		
 		mComponents.resize(static_cast<UINT>(eComponentType::End));
-		mTargetGameObject = dru::renderer::inspectorGameObject;
+		mTargetGameObject = renderer::inspectorGameObject;
 
-		mComponents[static_cast<UINT>(eComponentType::Transform)] = new gui::Transform();
+		mComponents[static_cast<UINT>(eComponentType::Transform)] = new gui::GUITransform();
 		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetName("InspectorTransform");
 		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetTarget(mTargetGameObject);
 		AddWidget(mComponents[static_cast<UINT>(eComponentType::Transform)]);
 		
-		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)] = new gui::MeshRenderer();
+		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)] = new gui::GUIMeshRenderer();
 		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetName("InspectorMeshRenderer");
 		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetTarget(mTargetGameObject);
 		AddWidget(mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]);
 
 		mResources.resize(static_cast<UINT>(eResourceType::End));
-		mResources[static_cast<UINT>(eResourceType::Texture)] = new gui::Texture();
+		mResources[static_cast<UINT>(eResourceType::Texture)] = new gui::GUITexture();
 		mResources[static_cast<UINT>(eResourceType::Texture)]->SetName("InspectorTexture");
 		AddWidget(mResources[static_cast<UINT>(eResourceType::Texture)]);
 	}
 
 	Inspector::~Inspector()
 	{
-		for (gui::Component* comp : mComponents)
+		for (gui::GUIComponent* comp : mComponents)
 		{
 			delete comp;
 			comp = nullptr;
 		}
 
-		for (gui::Resource* res : mResources)
+		for (gui::GUIResource* res : mResources)
 		{
 			delete res;
 			res = nullptr;
@@ -60,8 +60,8 @@ namespace gui
 
 	void Inspector::FixedUpdate()
 	{
-		//mComponents[static_cast<UINT>(eComponentType::Transform]->SetTarget(mTarget);
-		//mComponents[static_cast<UINT>(eComponentType::MeshRenderer]->SetTarget(mTarget);
+		//mComponents[static_cast<UINT>(eComponentType::GUITransform]->SetTarget(mTarget);
+		//mComponents[static_cast<UINT>(eComponentType::GUIMeshRenderer]->SetTarget(mTarget);
 	}
 
 	void Inspector::Update()
@@ -75,7 +75,7 @@ namespace gui
 
 	void Inspector::ClearTarget()
 	{
-		for (gui::Component* comp : mComponents)
+		for (gui::GUIComponent* comp : mComponents)
 		{
 			if (comp == nullptr)
 				continue;
@@ -84,7 +84,7 @@ namespace gui
 			comp->SetTarget(nullptr);
 		}
 
-		for (gui::Resource* res : mResources)
+		for (gui::GUIResource* res : mResources)
 		{
 			if (res == nullptr)
 				continue;

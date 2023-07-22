@@ -5,7 +5,6 @@
 
 namespace gui
 {
-	class GameObj;
 	class Hierarchy : public Widget
 	{
 	public:
@@ -18,7 +17,7 @@ namespace gui
 
 		void InitializeInspector(void* data);
 		void InitializeScene();
-		void AddGameObject(TreeWidget::Node* parent, dru::GameObj* gameObject);
+		void AddGameObject(TreeWidget::Node* parent, GameObj* gameObject);
 
 	private:
 		TreeWidget* mTreeWidget;

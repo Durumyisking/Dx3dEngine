@@ -1,10 +1,10 @@
 #pragma once
-#include "..\Engine_SOURCE\GameObj.h"
+#include "GameObj.h"
 
 
 namespace gui
 {
-	class EditorObject : public dru::GameObj
+	class EditorObject : public GameObj
 	{
 	public:
 		EditorObject();

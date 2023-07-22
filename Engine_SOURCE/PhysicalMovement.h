@@ -2,25 +2,24 @@
 
 #include "Component.h"
 
-using namespace dru::math;
+using namespace math;
 
-namespace dru
+
+
+class PhysicalMovement :
+    public Component
 {
-    class PhysicalMovement :
-        public Component
-    {
-    public:
-        PhysicalMovement();
-        virtual ~PhysicalMovement();
+public:
+    PhysicalMovement();
+    virtual ~PhysicalMovement();
 
-        virtual void Initialize();
-        virtual void Update();
-        virtual void FixedUpdate();
-        virtual void Render();
+    virtual void Initialize();
+    virtual void Update();
+    virtual void FixedUpdate();
+    virtual void Render();
 
-    public:
-        void Move(const Vector3& velocity);
+public:
+    void Move(const Vector3& velocity);
 
-    private:
-    };
-}
+private:
+};

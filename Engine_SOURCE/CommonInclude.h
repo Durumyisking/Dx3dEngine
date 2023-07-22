@@ -1,4 +1,5 @@
 #pragma once
+#include <winsock2.h>
 #include <cstdlib>
 #include <cstring>
 #include <cstdlib>
@@ -10,7 +11,6 @@
 #include <iostream>
 #include <filesystem>
 #include <fstream>
-#include <Windows.h>
 
 #include <vector>
 #include <queue>
@@ -18,6 +18,7 @@
 
 #include <list>
 #include <map>
+#include <xtree>
 #include <bitset>
 #include <set>
 
@@ -28,11 +29,11 @@
 #include <memory>
 #include <thread>
 #include <future>
+#include <mutex>
+
 
 #define CAMTYPEGAP 2.785f
 #define BACKGROUNDZ 5.f
-
-#define DEFAULT_VELOCITY Vector3(5.f, 7.f, 0.f)
 
 #define arraysize(a) (sizeof(a) / sizeof(a[0]))
 

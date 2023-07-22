@@ -5,21 +5,21 @@
 
 namespace gui
 {
-	class Component : public Widget
+	class GUIComponent : public Widget
 	{
 	public:
-		Component(dru::enums::eComponentType type);
-		~Component();
+		GUIComponent(enums::eComponentType type);
+		~GUIComponent();
 
 		virtual void FixedUpdate() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		void SetTarget(dru::GameObj* target) { mTarget = target; }
-		dru::GameObj* GetTarget() const { return mTarget; }
+		void SetTarget(GameObj* target) { mTarget = target; }
+		GameObj* GetTarget() const { return mTarget; }
 
 	private:
-		dru::enums::eComponentType mType;
-		dru::GameObj* mTarget;
+		enums::eComponentType mType;
+		GameObj* mTarget;
 	};
 }

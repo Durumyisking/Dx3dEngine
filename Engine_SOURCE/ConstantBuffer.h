@@ -1,27 +1,25 @@
 #pragma once
 #include "Graphics.h"
 
-using namespace dru::enums;
+using namespace enums;
 
-namespace dru
+
+
+class ConstantBuffer : GpuBuffer
 {
-	class ConstantBuffer : GpuBuffer
-	{
-		friend class Material;
+	friend class Material;
 
-	public:
-		ConstantBuffer();
-		ConstantBuffer(eCBType type);
-		virtual ~ConstantBuffer();	
+public:
+	ConstantBuffer();
+	ConstantBuffer(eCBType type);
+	virtual ~ConstantBuffer();	
 
-		bool Create(UINT size);
-		void SetData(void* data);
-		void Bind(eShaderStage stage);
-		void Clear();
+	bool Create(UINT size);
+	void SetData(void* data);
+	void Bind(eShaderStage stage);
+	void Clear();
 
 
-	private:
-		const eCBType mType;
-	};
-
-}
+private:
+	const eCBType mType;
+};

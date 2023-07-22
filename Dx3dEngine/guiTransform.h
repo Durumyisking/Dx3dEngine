@@ -3,20 +3,20 @@
 
 namespace gui
 {
-	class Transform : public Component
+	class GUITransform : public GUIComponent
 	{
 	public:
-		Transform();
-		~Transform();
+		GUITransform();
+		~GUITransform();
 
 		virtual void FixedUpdate() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
 	private:
-		dru::math::Vector3 mPosisition;
-		dru::math::Vector3 mRotation;
-		dru::math::Vector3 mScale;
+		math::Vector3 mPosisition;
+		math::Vector3 mRotation;
+		math::Vector3 mScale;
 	};
 
 }

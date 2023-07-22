@@ -174,7 +174,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
       <AdditionalIncludeDirectories>$(SolutionDir)\External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -206,6 +206,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="ApplyPacketScript.h" />
     <ClInclude Include="AudioClip.h" />
     <ClInclude Include="AudioListener.h" />
     <ClInclude Include="AudioSource.h" />
@@ -213,6 +214,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraScript.h" />
+    <ClInclude Include="ClientToServer.h" />
     <ClInclude Include="Collider2D.h" />
     <ClInclude Include="Collider3D.h" />
     <ClInclude Include="CollisionMgr.h" />
@@ -230,7 +232,16 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     <ClInclude Include="FileMgr.h" />
     <ClInclude Include="FMod.h" />
     <ClInclude Include="FontWrapper.h" />
+    <ClInclude Include="GameNet.h" />
+    <ClInclude Include="GameNetClient.h" />
+    <ClInclude Include="GameNetDispatcher.h" />
+    <ClInclude Include="GameNetObject.h" />
+    <ClInclude Include="GameNetPacket.h" />
+    <ClInclude Include="GameNetSerializer.h" />
+    <ClInclude Include="GameNetServer.h" />
+    <ClInclude Include="GameNetThread.h" />
     <ClInclude Include="GameObj.h" />
+    <ClInclude Include="GlobalPacket.h" />
     <ClInclude Include="GraphicDevice.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GridScript.h" />
@@ -241,6 +252,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PaintShader.h" />
     <ClInclude Include="ParticleShader.h" />
@@ -273,6 +285,10 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Script.h" />
+    <ClInclude Include="ServerHeader.h" />
+    <ClInclude Include="ServerMgr.h" />
+    <ClInclude Include="PacketSendScript.h" />
+    <ClInclude Include="ServerToClient.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="Sphere.h" />
@@ -287,10 +303,14 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animator.cpp" />
+
     <ClCompile Include="Application.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)External\assimp\bin\Debug\assimp-vc143-mtd.dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)External\assimp\bin\Debug\assimp-vc143-mtd.dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="ApplyPacketScript.cpp" />
     <ClCompile Include="AudioClip.cpp" />
     <ClCompile Include="AudioListener.cpp" />
     <ClCompile Include="AudioSource.cpp" />
@@ -312,6 +332,14 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     <ClCompile Include="FileMgr.cpp" />
     <ClCompile Include="FMod.cpp" />
     <ClCompile Include="FontWrapper.cpp" />
+    <ClCompile Include="GameNet.cpp" />
+    <ClCompile Include="GameNetClient.cpp" />
+    <ClCompile Include="GameNetDispatcher.cpp" />
+    <ClCompile Include="GameNetObject.cpp" />
+    <ClCompile Include="GameNetPacket.cpp" />
+    <ClCompile Include="GameNetSerializer.cpp" />
+    <ClCompile Include="GameNetServer.cpp" />
+    <ClCompile Include="GameNetThread.cpp" />
     <ClCompile Include="GameObj.cpp" />
     <ClCompile Include="GraphicDevice.cpp" />
     <ClCompile Include="GridScript.cpp" />
@@ -321,6 +349,7 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="PaintShader.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -352,6 +381,8 @@ copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"</Command
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Script.cpp" />
+    <ClCompile Include="ServerMgr.cpp" />
+    <ClCompile Include="PacketSendScript.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
     <ClCompile Include="Sphere.cpp" />

@@ -4,51 +4,49 @@
 #include "Layer.h"
 #include "PhysXCollisionMgr.h"
 
-namespace dru
+
+
+using namespace enums;
+class Layer;
+
+class Scene : public DruEntity // 이름과 고유 id를 가진 class
 {
-	using namespace enums;
-	class Layer;
+public:
+	Scene();
+	virtual ~Scene();
 
-	class Scene : public DruEntity // 이름과 고유 id를 가진 class
-	{
-	public:
-		Scene();
-		virtual ~Scene();
+	virtual void Initialize();
+	virtual void update();
+	virtual void fixedUpdate();
+	virtual void render();
+	virtual void fontRender();
+	virtual void destroy();
 
-		virtual void Initialize();
-		virtual void update();
-		virtual void fixedUpdate();
-		virtual void render();
-		virtual void fontRender();
-		virtual void destroy();
-
-		virtual void Enter();
-		virtual void Exit();
+	virtual void Enter();
+	virtual void Exit();
 
 
-		void AddGameObject(GameObj* gameObj, const eLayerType eLayer);
+	void AddGameObject(GameObj* gameObj, const eLayerType eLayer);
 
-		void SetType(SceneMgr::eSceneType eType) { mType = eType; }
-		SceneMgr::eSceneType GetType() const { return mType; }
+	void SetType(SceneMgr::eSceneType eType) { mType = eType; }
+	SceneMgr::eSceneType GetType() const { return mType; }
 
-		Layer& GetLayer(eLayerType type)  { return mLayers[static_cast<UINT>(type)]; }
+	Layer& GetLayer(eLayerType type)  { return mLayers[static_cast<UINT>(type)]; }
 
-		std::vector<GameObj*> GetDontDestroyObjects();
+	std::vector<GameObj*> GetDontDestroyObjects();
 
-		const std::vector<GameObj*>& GetGameObj(eLayerType eLayer);
+	const std::vector<GameObj*>& GetGameObj(eLayerType eLayer);
 
-	protected :
-		std::vector<Layer> mLayers;
-		SceneMgr::eSceneType mType;
+protected :
+	std::vector<Layer> mLayers;
+	SceneMgr::eSceneType mType;
 
-		std::vector<GameObj*> mDeadObjects;
+	std::vector<GameObj*> mDeadObjects;
 
-		bool mDeleteObj;
+	bool mDeleteObj;
 
-	public:
-		bool mbPause;
+public:
+	bool mbPause;
 
-	};
-
-}
+};
 

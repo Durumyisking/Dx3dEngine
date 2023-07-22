@@ -3,36 +3,36 @@
 
 namespace gui
 {
-	Transform::Transform()
-		: Component(eComponentType::Transform)
+	GUITransform::GUITransform()
+		: GUIComponent(eComponentType::Transform)
 	{
 		SetName("Transform");
 		SetSize(ImVec2(200.0f, 120.0f));
 	}
 
-	Transform::~Transform()
+	GUITransform::~GUITransform()
 	{
 
 	}
 
-	void Transform::FixedUpdate()
+	void GUITransform::FixedUpdate()
 	{
-		Component::FixedUpdate();
+		GUIComponent::FixedUpdate();
 
 
 		if (GetTarget() == nullptr)
 			return;
 
-		dru::Transform* tr = GetTarget()->GetComponent<dru::Transform>();
+		Transform* tr = GetTarget()->GetComponent<Transform>();
 
 		mPosisition = tr->GetPosition();
 		mRotation = tr->GetRotation();
 		mScale = tr->GetScale();
 	}
 
-	void Transform::Update()
+	void GUITransform::Update()
 	{
-		Component::Update();
+		GUIComponent::Update();
 
 		ImGui::Text("Position"); ImGui::SameLine();
 		ImGui::InputFloat3("##Position", (float*)&mPosisition);
@@ -45,7 +45,7 @@ namespace gui
 
 		if (GetTarget())
 		{
-			dru::Transform* tr = GetTarget()->GetComponent<dru::Transform>();
+			Transform* tr = GetTarget()->GetComponent<Transform>();
 
 			tr->SetPosition(mPosisition);
 			tr->SetRotation(mRotation);
@@ -53,9 +53,9 @@ namespace gui
 		}
 	}
 
-	void Transform::LateUpdate()
+	void GUITransform::LateUpdate()
 	{
-		Component::LateUpdate();
+		GUIComponent::LateUpdate();
 
 	}
 }

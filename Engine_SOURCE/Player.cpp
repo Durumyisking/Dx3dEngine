@@ -5,66 +5,63 @@
 #include "MeshRenderer.h"
 #include "PhysXRigidBody.h"
 
-namespace dru
+
+
+Player::Player()
 {
-	Player::Player()
-	{
-		SetLayerType(eLayerType::Player);
+	SetLayerType(eLayerType::Player);
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
 
-		MeshRenderer* spriteRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
-	}
+	MeshRenderer* spriteRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
+}
 
-	Player::~Player()
-	{
+Player::~Player()
+{
 
-	}
+}
 
-	void Player::Initialize()
-	{
+void Player::Initialize()
+{
 
-		GameObj::Initialize();
-	}
+	GameObj::Initialize();
+}
 
-	void Player::Update()
-	{
+void Player::Update()
+{
 
-		GameObj::Update();
-	}
+	GameObj::Update();
+}
 
-	void Player::FixedUpdate()
-	{
-		GameObj::FixedUpdate();
-	}
+void Player::FixedUpdate()
+{
+	GameObj::FixedUpdate();
+}
 
-	void Player::Render()
-	{
+void Player::Render()
+{
 		
-		GameObj::Render();
-	}
+	GameObj::Render();
+}
 
-	void Player::FontRender()
-	{
-	}
+void Player::FontRender()
+{
+}
 
-	void Player::OnCollisionEnter(GameObj* gameObject)
-	{
-
-
-	}
-
-	void Player::OnTriggerEnter(GameObj* gameObject)
-	{
-		PhysXRigidBody* rigid = GetComponent<PhysXRigidBody>();
-		rigid->RemoveGravity();
-		rigid->SetVelocity(AXIS::Y, 0.f);
-	}
-
-	void Player::OnTriggerExit(GameObj* gameObject)
-	{
-	}
-
+void Player::OnCollisionEnter(GameObj* gameObject)
+{
 
 
 }
+
+void Player::OnTriggerEnter(GameObj* gameObject)
+{
+	PhysXRigidBody* rigid = GetComponent<PhysXRigidBody>();
+	rigid->RemoveGravity();
+	rigid->SetVelocity(AXIS::Y, 0.f);
+}
+
+void Player::OnTriggerExit(GameObj* gameObject)
+{
+}
+

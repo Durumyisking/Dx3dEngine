@@ -5,35 +5,34 @@
 #include "Object.h"
 #include "InputMgr.h"
 
-namespace dru
+
+
+Script::Script()
+	: Component(eComponentType::Script)
 {
-	Script::Script()
-		: Component(eComponentType::Script)
-	{
-	}
+}
 
-	Script::~Script()
-	{
-	}
+Script::~Script()
+{
+}
 
-	void Script::Initialize()
-	{
-	}
+void Script::Initialize()
+{
+}
 
-	void Script::Update()
-	{
-	}
+void Script::Update()
+{
+}
 
-	void Script::FixedUpdate()
-	{
-	}
+void Script::FixedUpdate()
+{
+}
 
-	void Script::Render()
-	{
-
-	}
-	void Script::fontRender()
-	{
-	}
+void Script::Render()
+{
 
 }
+void Script::fontRender()
+{
+}
+

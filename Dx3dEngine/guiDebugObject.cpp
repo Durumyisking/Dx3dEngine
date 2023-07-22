@@ -14,7 +14,7 @@ namespace gui
 
 	void DebugObject::FixedUpdate()
 	{
-		for (dru::Component* comp : mComponents)
+		for (Component* comp : mComponents)
 		{
 			if (comp == nullptr)
 				continue;

@@ -15,7 +15,7 @@
  * Constants
  *
  ****************************************************************************/
-namespace dru::math
+namespace math
 {
 	const Vector2 Vector2::Zero = { 0.f, 0.f };
 	const Vector2 Vector2::One = { 1.f, 1.f };
@@ -34,7 +34,7 @@ namespace dru::math
 	const Vector3 Vector3::Forward = { 0.f, 0.f, 1.f };
 	const Vector3 Vector3::Backward = { 0.f, 0.f, -1.f };
 
-	const Vector4 dru::math::Vector4::Zero = { 0.f, 0.f, 0.f, 0.f };
+	const Vector4 math::Vector4::Zero = { 0.f, 0.f, 0.f, 0.f };
 	const Vector4 Vector4::One = { 1.f, 1.f, 1.f, 1.f };
 	const Vector4 Vector4::UnitX = { 1.f, 0.f, 0.f, 0.f };
 	const Vector4 Vector4::UnitY = { 0.f, 1.f, 0.f, 0.f };
@@ -51,7 +51,7 @@ namespace dru::math
 
 
 	using namespace DirectX;
-	//using namespace dru::math;
+	//using namespace math;
 
 	/****************************************************************************
 	 *
@@ -147,7 +147,7 @@ namespace dru::math
 	****************************************************************************/
 
 //#if defined(__d3d11_h__) || defined(__d3d11_x_h__)
-//	static_assert(sizeof(DirectX::SimpleMath::Viewport) == sizeof(D3D11_VIEWPORT), "Size mismatch");
+//	static_assert(sizeof(DirectX::SimpleMath::Viewport) == sizeof(D3D11_VIEWPORT), "mSize mismatch");
 //	static_assert(offsetof(DirectX::SimpleMath::Viewport, x) == offsetof(D3D11_VIEWPORT, TopLeftX), "Layout mismatch");
 //	static_assert(offsetof(DirectX::SimpleMath::Viewport, y) == offsetof(D3D11_VIEWPORT, TopLeftY), "Layout mismatch");
 //	static_assert(offsetof(DirectX::SimpleMath::Viewport, width) == offsetof(D3D11_VIEWPORT, Width), "Layout mismatch");
@@ -157,7 +157,7 @@ namespace dru::math
 //#endif
 //
 //#if defined(__d3d12_h__) || defined(__d3d12_x_h__) || defined(__XBOX_D3D12_X__)
-//	static_assert(sizeof(DirectX::SimpleMath::Viewport) == sizeof(D3D12_VIEWPORT), "Size mismatch");
+//	static_assert(sizeof(DirectX::SimpleMath::Viewport) == sizeof(D3D12_VIEWPORT), "mSize mismatch");
 //	static_assert(offsetof(DirectX::SimpleMath::Viewport, x) == offsetof(D3D12_VIEWPORT, TopLeftX), "Layout mismatch");
 //	static_assert(offsetof(DirectX::SimpleMath::Viewport, y) == offsetof(D3D12_VIEWPORT, TopLeftY), "Layout mismatch");
 //	static_assert(offsetof(DirectX::SimpleMath::Viewport, width) == offsetof(D3D12_VIEWPORT, Width), "Layout mismatch");

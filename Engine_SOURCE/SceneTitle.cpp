@@ -29,104 +29,108 @@
 #include "Sphere.h"
 #include "Box.h"
 
+#include "ServerMgr.h"
 
-extern dru::Application application;
+#include "InputMgr.h"
+
+extern Application application;
 
 
-namespace dru
+SceneTitle::SceneTitle()
+	: mCamera(nullptr)
+
 {
-	SceneTitle::SceneTitle()
-		:  mCamera(nullptr)
+}
 
+SceneTitle::~SceneTitle()
+{
+
+}
+
+void SceneTitle::Initialize()
+{
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
+
+	Scene::Initialize();
+}
+
+void SceneTitle::update()
+{
+	if (KEY_TAP(N_9))
 	{
+		GETSINGLE(server::ServerMgr)->OpenServer();
+	}
+	if (KEY_TAP(N_0))
+	{
+		GETSINGLE(server::ServerMgr)->ConnectAsClient();
 	}
 
-	SceneTitle::~SceneTitle()
+
+	Scene::update();
+}
+
+void SceneTitle::fixedUpdate()
+{
+	Scene::fixedUpdate();
+}
+
+void SceneTitle::render()
+{
+
+}
+
+void SceneTitle::Enter()
+{
+	//mDeleteObj = true;
+
 	{
+		mCamera = object::Instantiate<GameObj>(eLayerType::Camera, L"MainCam");
+		Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
+		cameraComp->TurnLayerMask(eLayerType::UI, false);
+		cameraComp->SmoothOn();
+		mCamera->AddComponent<CameraScript>(eComponentType::Script);
+		renderer::mainCamera = cameraComp;
+		cameraComp->SetProjectionType(eProjectionType::Perspective);
+		mCamera->SetPos(Vector3(0.f, 15.f, 0.f));
 
 	}
 
-	void SceneTitle::Initialize()
+
 	{
-		GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
-		
-		Scene::Initialize();
+		GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
+
+		MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+
+		gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
+		gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
+		gridMr->LODOff();
+
+		GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
+		gridScript->SetCamera(mainCamera);
+
+		float w = static_cast<float>(application.GetWidth());
+		float h = static_cast<float>(application.GetHeight());
+		gridObject->SetPos({ 0.f, 0.f, 0.f });
+		gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
 	}
 
-	void SceneTitle::update()
 	{
-		//PxMaterial* mat = GETSINGLE(PhysicsMgr)->GetEnvironment()->GetPhysics()->createMaterial(0.5f, 0.5f, 0.5f);
-
-		//GETSINGLE(PhysicsMgr)->GetEnvironment()->GetPhysicsScene()->CreateDynamic(PxTransform(PxVec3(rand() % 8, 4 * (rand() % 5), 20)), PxSphereGeometry(0.5f), *mat, PxVec3(0, -30, -60));
-
-	
-		Scene::update();
+		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
+		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 500.f, -1000.f));
+		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
+		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
+		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+		lightComp->SetType(eLightType::Directional);
+		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
+		MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		mr->SetMaterialByKey(L"SunMaterial");
+		mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
 
-	void SceneTitle::fixedUpdate()
+
 	{
-		Scene::fixedUpdate();
-	}
-
-	void SceneTitle::render()
-	{
-		
-	}
-
-	void SceneTitle::Enter()
-	{
-		//mDeleteObj = true;
-
-		{
-			mCamera = object::Instantiate<GameObj>(eLayerType::Camera, L"MainCam");
-			Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
-			cameraComp->TurnLayerMask(eLayerType::UI, false);
-			cameraComp->SmoothOn();
-			mCamera->AddComponent<CameraScript>(eComponentType::Script);
-			renderer::mainCamera = cameraComp;
-			cameraComp->SetProjectionType(eProjectionType::Perspective);
-			mCamera->SetPos(Vector3(0.f, 15.f, 0.f));
-
-		}
-
-
-		{
-			GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
-		
-			dru::MeshRenderer* gridMr = gridObject->AddComponent<dru::MeshRenderer>(eComponentType::MeshRenderer);
-
-			gridMr->SetMesh(dru::GETSINGLE(ResourceMgr)->Find<dru::Mesh>(L"Gridmesh"));
-			gridMr->SetMaterial(dru::GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
-			gridMr->LODOff();
-
-			dru::GridScript* gridScript = gridObject->AddComponent<dru::GridScript>(eComponentType::Script);
-			gridScript->SetCamera(mainCamera);
-
-			float w = static_cast<float>(application.GetWidth());
-			float h = static_cast<float>(application.GetHeight());
-			gridObject->SetPos({ 0.f, 0.f, 0.f });
-			gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
-		}
-		
-		{
-			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 100.f, 0.f));
-			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Directional);
-			lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
-			lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
-			lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
-		}
-
-		{
-			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
-			pointLight->GetComponent<Transform>()->SetPosition(Vector3(2.5f, 10.f, 0.f));
-			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
-			lightComp->SetRadius(10.f);
-		}
-
 		{
 			Player* player = object::Instantiate<Player>(eLayerType::Player);
 			player->SetPos(Vector3(0.f, 0.f, 0.f));
@@ -178,46 +182,45 @@ namespace dru
 			//player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 		}
 
-		{
-			
-			Sphere* sphere = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
-			sphere->SetPos(Vector3(-5.f, 20.f, 5.f));
-			sphere->SetScale({ 2.5f, 2.5f, 2.5f });
-			sphere->SetName(L"Sphere");
-			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-			// sphere->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(5.f, 5.f, 5.f));
+		player->SetScale({ 5.f, 5.f, 5.f });
+		player->SetName(L"Player");
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"BrickBlockBody_nrm", L"PhongShader", L"mat_BrickBlockBody");
+		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->AddComponent<PlayerScript>(eComponentType::Script);
 
-		}
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+		PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
 
-		{
-			GameObj* pointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLightTitleScene");
-			pointLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1.f, 5.f));
-			Light* lightComp = pointLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
-			lightComp->SetRadius(20.f);
-		}
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		{
-			GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
-			plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-			plane->SetScale({ 100.f, 0.5f, 100.f });
-			plane->SetName(L"Plane");
-			plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
-			plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(50.f, 0.25f, 50.f));
-
-			PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-			plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-		}
-
-		Scene::Enter();
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
-	void SceneTitle::Exit()
 	{
-		Scene::Exit();
+		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
+		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+		plane->SetScale({ 1000.f, 0.5f, 1000.f });
+		plane->SetName(L"Plane");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
+		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+
+		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
 
+	Scene::Enter();
+}
+
+void SceneTitle::Exit()
+{
+	Scene::Exit();
 }

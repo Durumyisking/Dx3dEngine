@@ -3,20 +3,19 @@
 #include "Mesh.h"
 #include "Material.h"
 
-namespace dru
-{
+
+
 	 
-	class SpriteRenderer : public BaseRenderer
-	{
-	public:
-		SpriteRenderer();
-		virtual ~SpriteRenderer();
+class SpriteRenderer : public BaseRenderer
+{
+public:
+	SpriteRenderer();
+	virtual ~SpriteRenderer();
 
-		virtual void Initialize() final;
-		virtual void Update() final;
-		virtual void FixedUpdate() final;
-		virtual void Render() final;
+	virtual void Initialize() final;
+	virtual void Update() final;
+	virtual void FixedUpdate() final;
+	virtual void Render() final;
 
-	};
+};
 
-}

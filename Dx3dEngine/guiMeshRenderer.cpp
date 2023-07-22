@@ -7,39 +7,38 @@
 #include "guiInspector.h"
 #include "SpriteRenderer.h"
 
-#include "Material.h"
-#include "Mesh.h"
 
 extern gui::Editor editor;
 
+
 namespace gui
 {
-	MeshRenderer::MeshRenderer()
-		: Component(eComponentType::MeshRenderer)
+	GUIMeshRenderer::GUIMeshRenderer()
+		: GUIComponent(eComponentType::MeshRenderer)
 	{
 		SetName("MeshRenderer");
 		SetSize(ImVec2(200.0f, 120.0f));
 	}
 
-	MeshRenderer::~MeshRenderer()
+	GUIMeshRenderer::~GUIMeshRenderer()
 	{
 
 	}
 
-	void MeshRenderer::FixedUpdate()
+	void GUIMeshRenderer::FixedUpdate()
 	{
-		Component::FixedUpdate();
+		GUIComponent::FixedUpdate();
 
 		if (GetTarget())
 		{
-			dru::MeshRenderer* meshRenderer
-				= GetTarget()->GetComponent<dru::MeshRenderer>();
+			MeshRenderer* meshRenderer
+				= GetTarget()->GetComponent<MeshRenderer>();
 
 			if (meshRenderer == nullptr)
 				return;
 
-			//dru::SpriteRenderer* spriteRenderer
-			//	= GetTarget()->GetComponent<dru::SpriteRenderer>();
+			//SpriteRenderer* spriteRenderer
+			//	= GetTarget()->GetComponent<SpriteRenderer>();
 
 			//if (spriteRenderer == nullptr)
 			//	return;
@@ -50,9 +49,9 @@ namespace gui
 		}
 	}
 
-	void MeshRenderer::Update()
+	void GUIMeshRenderer::Update()
 	{
-		Component::Update();
+		GUIComponent::Update();
 
 		if (mMesh == nullptr
 			|| mMaterial == nullptr)
@@ -74,8 +73,8 @@ namespace gui
 			
 
 			//모든 메쉬의 리소스를 가져와야한다.
-			std::vector<dru::Mesh*> meshes 
-				= GETSINGLE(dru::ResourceMgr)->Finds<dru::Mesh>();
+			std::vector<Mesh*> meshes 
+				= GETSINGLE(ResourceMgr)->Finds<Mesh>();
 
 			std::vector<std::wstring> wName;
 			for (auto mesh : meshes)
@@ -85,7 +84,7 @@ namespace gui
 
 
 			listUI->SetItemList(wName);
-			listUI->SetEvent(this, std::bind(&MeshRenderer::SetMesh
+			listUI->SetEvent(this, std::bind(&GUIMeshRenderer::SetMesh
 				, this, std::placeholders::_1));
 		}
 
@@ -100,8 +99,8 @@ namespace gui
 			ListWidget* listUI = editor.GetWidget<ListWidget>("ListWidget");
 			listUI->SetState(eState::Active);
 			//모든 메쉬의 리소스를 가져와야한다.
-			std::vector<dru::Material*> materials
-				= GETSINGLE(dru::ResourceMgr)->Finds<dru::Material>();
+			std::vector<Material*> materials
+				= GETSINGLE(ResourceMgr)->Finds<Material>();
 
 			std::vector<std::wstring> wName;
 			for (auto material : materials)
@@ -110,31 +109,31 @@ namespace gui
 			}
 
 			listUI->SetItemList(wName);
-			listUI->SetEvent(this, std::bind(&MeshRenderer::SetMaterial
+			listUI->SetEvent(this, std::bind(&GUIMeshRenderer::SetMaterial
 				, this, std::placeholders::_1));
 		}
 	}
 
-	void MeshRenderer::LateUpdate()
+	void GUIMeshRenderer::LateUpdate()
 	{
-		Component::LateUpdate();
+		GUIComponent::LateUpdate();
 	}
 
-	void MeshRenderer::SetMesh(std::string key)
+	void GUIMeshRenderer::SetMesh(std::string key)
 	{
 		std::wstring wKey(key.begin(), key.end());
-		dru::Mesh* mesh = GETSINGLE(dru::ResourceMgr)->Find<dru::Mesh>(wKey);
+		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(wKey);
 
 		Inspector* inspector = editor.GetWidget<Inspector>("Inspector");
-		inspector->GetTargetGameObject()->GetComponent<dru::MeshRenderer>()->SetMesh(mesh);
+		inspector->GetTargetGameObject()->GetComponent<MeshRenderer>()->SetMesh(mesh);
 	}
 
-	void MeshRenderer::SetMaterial(std::string key)
+	void GUIMeshRenderer::SetMaterial(std::string key)
 	{
 		std::wstring wKey(key.begin(), key.end());
-		dru::Material* material = GETSINGLE(dru::ResourceMgr)->Find<dru::Material>(wKey);
+		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(wKey);
 
 		Inspector* inspector = editor.GetWidget<Inspector>("Inspector");
-		inspector->GetTargetGameObject()->GetComponent<dru::MeshRenderer>()->SetMaterial(material);
+		inspector->GetTargetGameObject()->GetComponent<MeshRenderer>()->SetMaterial(material);
 	}
 }

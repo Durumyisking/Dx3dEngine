@@ -9,15 +9,16 @@
 #include "Application.h"
 #include "AudioClip.h"
 
-namespace dru::renderer
+extern Application application;
+
+namespace renderer
 {
-	
 
 	ConstantBuffer* constantBuffers[static_cast<UINT>(eCBType::End)] = {};
-	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[static_cast<UINT>(dru::eSamplerType::End)];
-	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerState[static_cast<UINT>(dru::eRasterizerType::End)];
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState[static_cast<UINT>(dru::eDepthStencilType::End)];
-	Microsoft::WRL::ComPtr<ID3D11BlendState> blendState[static_cast<UINT>(dru::eBlendStateType::End)];
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState[static_cast<UINT>(eSamplerType::End)];
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerState[static_cast<UINT>(eRasterizerType::End)];
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState[static_cast<UINT>(eDepthStencilType::End)];
+	Microsoft::WRL::ComPtr<ID3D11BlendState> blendState[static_cast<UINT>(eBlendStateType::End)];
 
 	Camera* mainCamera = nullptr;
 	std::vector<Camera*> Cameras[static_cast<UINT>(SceneMgr::eSceneType::End)];
@@ -26,7 +27,9 @@ namespace dru::renderer
 	StructedBuffer* lightBuffer = nullptr;
 
 	Texture* postProcessTexture = nullptr;
-	dru::GameObj* inspectorGameObject = nullptr;
+	GameObj* inspectorGameObject = nullptr;
+
+	MultiRenderTarget* renderTargets[(UINT)eRenderTargetType::End] = {};
 
 	void LoadMesh()
 	{
@@ -46,9 +49,9 @@ namespace dru::renderer
 
 		Vertex LineVertex[2] = {};
 
-		LineVertex[0].pos = Vector4(-0.5f, 0.25f, 0.f, 1.f); 
-		LineVertex[0].color = Vector4(0.f, 1.f, 0.f, 1.f); 
-		LineVertex[0].uv = Vector2(0.f, 0.f); 
+		LineVertex[0].pos = Vector4(-0.5f, 0.25f, 0.f, 1.f);
+		LineVertex[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		LineVertex[0].uv = Vector2(0.f, 0.f);
 
 		LineVertex[1].pos = Vector4(0.5f, 0.25f, 0.f, 1.f);
 		LineVertex[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -69,9 +72,9 @@ namespace dru::renderer
 
 		Vertex	RectVertexes[4] = {};
 
-		RectVertexes[0].pos = Vector4(-0.5f, 0.5f, 0.f, 1.f); 
-		RectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f); 
-		RectVertexes[0].uv = Vector2(0.f, 0.f); 
+		RectVertexes[0].pos = Vector4(-0.5f, 0.5f, 0.f, 1.f);
+		RectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		RectVertexes[0].uv = Vector2(0.f, 0.f);
 
 		RectVertexes[1].pos = Vector4(0.5f, 0.5f, 0.f, 1.f);
 		RectVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -122,7 +125,7 @@ namespace dru::renderer
 		GridVertexes[3].uv = Vector2(0.f, 1.f);
 
 		Mesh* Gridmesh = new Mesh();
-		dru::GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Gridmesh", Gridmesh);
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Gridmesh", Gridmesh);
 		Gridmesh->CreateVertexBuffer(GridVertexes, 4);
 
 		indexes.clear();
@@ -142,9 +145,9 @@ namespace dru::renderer
 
 		Vertex	DebugRectVertexes[4] = {};
 
-		DebugRectVertexes[0].pos = Vector4(-0.5f, 0.5f, -0.00001f, 1.f); 
-		DebugRectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f); 
-		DebugRectVertexes[0].uv = Vector2(0.f, 0.f); 
+		DebugRectVertexes[0].pos = Vector4(-0.5f, 0.5f, -0.00001f, 1.f);
+		DebugRectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		DebugRectVertexes[0].uv = Vector2(0.f, 0.f);
 
 		DebugRectVertexes[1].pos = Vector4(0.5f, 0.5f, -0.00001f, 1.f);
 		DebugRectVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -198,7 +201,7 @@ namespace dru::renderer
 			CircleVertexes.push_back(vtx);
 		}
 		indexes.clear();
-		for (int i = 1; i <= slice; i++) 
+		for (int i = 1; i <= slice; i++)
 		{
 			indexes.push_back(i);
 		}
@@ -222,132 +225,181 @@ namespace dru::renderer
 		//	Vector2 uv;
 		//};
 
-		// ï¿½ï¿½ï¿½ï¿½
+		// À­¸é
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
+		arrCube[0].tangent = Vector3(1.0f, 0.0f, 0.0f);
 		arrCube[0].normal = Vector3(0.f, 1.f, 0.f);
+		arrCube[0].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[1].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		arrCube[1].uv = Vector2(0.f, 0.f);
+		arrCube[1].uv = Vector2(1.f, 0.f);
+
+		arrCube[1].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[1].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 		arrCube[1].normal = Vector3(0.f, 1.f, 0.f);
 
 		arrCube[2].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[2].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		arrCube[2].uv = Vector2(0.f, 0.f);
+		arrCube[2].uv = Vector2(0.f, 1.f);
 		arrCube[2].normal = Vector3(0.f, 1.f, 0.f);
+		arrCube[2].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[2].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[3].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[3].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		arrCube[3].uv = Vector2(0.f, 0.f);
+		arrCube[3].uv = Vector2(1.f, 1.f);
 		arrCube[3].normal = Vector3(0.f, 1.f, 0.f);
+		arrCube[3].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[3].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 
-		// ï¿½Æ·ï¿½ ï¿½ï¿½	
+		// ¾Æ·§ ¸é	
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
 		arrCube[4].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[4].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[4].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[5].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[5].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		arrCube[5].uv = Vector2(0.f, 0.f);
+		arrCube[5].uv = Vector2(1.f, 0.f);
 		arrCube[5].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[5].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[5].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[6].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[6].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		arrCube[6].uv = Vector2(0.f, 0.f);
+		arrCube[6].uv = Vector2(0.f, 1.f);
 		arrCube[6].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[6].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[6].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[7].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[7].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		arrCube[7].uv = Vector2(0.f, 0.f);
+		arrCube[7].uv = Vector2(1.f, 1.f);
 		arrCube[7].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[7].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		// ¿ÞÂÊ ¸é
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
 		arrCube[8].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[8].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[8].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[9].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[9].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		arrCube[9].uv = Vector2(0.f, 0.f);
+		arrCube[9].uv = Vector2(1.f, 0.f);
 		arrCube[9].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[9].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[9].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[10].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[10].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		arrCube[10].uv = Vector2(0.f, 0.f);
+		arrCube[10].uv = Vector2(0.f, 1.f);
 		arrCube[10].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[10].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[10].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[11].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[11].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		arrCube[11].uv = Vector2(0.f, 0.f);
+		arrCube[11].uv = Vector2(1.f, 1.f);
 		arrCube[11].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[11].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		// ¿À¸¥ÂÊ ¸é
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].color = Vector4(0.f, 0.f, 1.f, 1.f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
 		arrCube[12].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[12].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[12].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[13].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[13].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		arrCube[13].uv = Vector2(0.f, 0.f);
+		arrCube[13].uv = Vector2(1.f, 0.f);
 		arrCube[13].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[13].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[13].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[14].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[14].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		arrCube[14].uv = Vector2(0.f, 0.f);
+		arrCube[14].uv = Vector2(0.f, 1.f);
 		arrCube[14].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[14].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[14].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 		arrCube[15].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[15].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		arrCube[15].uv = Vector2(0.f, 0.f);
+		arrCube[15].uv = Vector2(1.f, 1.f);
 		arrCube[15].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[15].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// ï¿½ï¿½ ï¿½ï¿½
+		// µÞ ¸é
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].color = Vector4(1.f, 1.f, 0.f, 1.f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
 		arrCube[16].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[16].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[16].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
 		arrCube[17].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[17].color = Vector4(1.f, 1.f, 0.f, 1.f);
-		arrCube[17].uv = Vector2(0.f, 0.f);
+		arrCube[17].uv = Vector2(1.f, 0.f);
 		arrCube[17].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[17].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[17].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
 		arrCube[18].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[18].color = Vector4(1.f, 1.f, 0.f, 1.f);
-		arrCube[18].uv = Vector2(0.f, 0.f);
+		arrCube[18].uv = Vector2(0.f, 1.f);
 		arrCube[18].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[18].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[18].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
 		arrCube[19].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
 		arrCube[19].color = Vector4(1.f, 1.f, 0.f, 1.f);
-		arrCube[19].uv = Vector2(0.f, 0.f);
+		arrCube[19].uv = Vector2(1.f, 1.f);
 		arrCube[19].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[19].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
-		// ï¿½ï¿½ ï¿½ï¿½
+		// ¾Õ ¸é
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].color = Vector4(1.f, 0.f, 1.f, 1.f);
 		arrCube[20].uv = Vector2(0.f, 0.f);
 		arrCube[20].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[20].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[20].biNormal = Vector3(0.0f, 1.0f, 1.0f);
 
 		arrCube[21].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[21].color = Vector4(1.f, 0.f, 1.f, 1.f);
-		arrCube[21].uv = Vector2(0.f, 0.f);
+		arrCube[21].uv = Vector2(1.f, 0.f);
 		arrCube[21].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[21].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[21].biNormal = Vector3(0.0f, 1.0f, 1.0f);
 
 		arrCube[22].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[22].color = Vector4(1.f, 0.f, 1.f, 1.f);
-		arrCube[22].uv = Vector2(0.f, 0.f);
+		arrCube[22].uv = Vector2(0.f, 1.f);
 		arrCube[22].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[22].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[22].biNormal = Vector3(0.0f, 1.0f, 1.0f);
 
 		arrCube[23].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[23].color = Vector4(1.f, 0.f, 1.f, 1.f);
-		arrCube[23].uv = Vector2(0.f, 0.f);
+		arrCube[23].uv = Vector2(1.f, 1.f);
 		arrCube[23].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[23].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[23].biNormal = Vector3(0.0f, 1.0f, 1.0f);
 
 		indexes.clear();
 		for (int i = 0; i < 6; i++)
@@ -361,7 +413,7 @@ namespace dru::renderer
 			indexes.push_back(i * 4 + 3);
 		}
 
-		// Crate Mesh
+		// Crate GUIMesh
 		Mesh* cubMesh = new Mesh();
 		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Cubemesh", cubMesh);
 		cubMesh->CreateVertexBuffer(arrCube, 24);
@@ -386,8 +438,8 @@ namespace dru::renderer
 		sphereVtx.push_back(v);
 
 		// Body
-		UINT iStackCount = 40; 
-		UINT iSliceCount = 40; 
+		UINT iStackCount = 40;
+		UINT iSliceCount = 40;
 
 		float fStackAngle = XM_PI / iStackCount;
 		float fSliceAngle = XM_2PI / iSliceCount;
@@ -489,17 +541,17 @@ namespace dru::renderer
 	{
 
 #pragma region InputLayout
-		D3D11_INPUT_ELEMENT_DESC arrLayout[6] = {}; 
+		D3D11_INPUT_ELEMENT_DESC arrLayout[6] = {};
 
-		arrLayout[0].AlignedByteOffset = 0; 
-		arrLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
-		arrLayout[0].InputSlot = 0; 
+		arrLayout[0].AlignedByteOffset = 0;
+		arrLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[0].InputSlot = 0;
 		arrLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[0].SemanticName = "POSITION";
 		arrLayout[0].SemanticIndex = 0;
 
-		arrLayout[1].AlignedByteOffset = 16; 
-		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
+		arrLayout[1].AlignedByteOffset = 16;
+		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 		arrLayout[1].InputSlot = 0;
 		arrLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[1].SemanticName = "COLOR";
@@ -538,46 +590,46 @@ namespace dru::renderer
 		//Vector3 normal;
 
 		Shader* Meshshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
-		dru::GetDevice()->CreateInputLayout(arrLayout, 3
+		GetDevice()->CreateInputLayout(arrLayout, 3
 			, Meshshader->GetVSBlobBufferPointer()
 			, Meshshader->GetVSBlobBufferSize()
 			, Meshshader->GetInputLayoutAddr());
 
 
 		Shader* Spriteshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
-		dru::GetDevice()->CreateInputLayout(arrLayout, 3
+		GetDevice()->CreateInputLayout(arrLayout, 3
 			, Spriteshader->GetVSBlobBufferPointer()
 			, Spriteshader->GetVSBlobBufferSize()
 			, Spriteshader->GetInputLayoutAddr());
 
 
 		Shader* UIshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UIShader");
-		dru::GetDevice()->CreateInputLayout(arrLayout, 3
+		GetDevice()->CreateInputLayout(arrLayout, 3
 			, UIshader->GetVSBlobBufferPointer()
 			, UIshader->GetVSBlobBufferSize()
 			, UIshader->GetInputLayoutAddr());
 
 		Shader* Fadeshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FadeShader");
-		dru::GetDevice()->CreateInputLayout(arrLayout, 3
+		GetDevice()->CreateInputLayout(arrLayout, 3
 			, Fadeshader->GetVSBlobBufferPointer()
 			, Fadeshader->GetVSBlobBufferSize()
 			, Fadeshader->GetInputLayoutAddr());
 
 		Shader* Colorshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ColorShader");
-		dru::GetDevice()->CreateInputLayout(arrLayout, 3
+		GetDevice()->CreateInputLayout(arrLayout, 3
 			, Colorshader->GetVSBlobBufferPointer()
 			, Colorshader->GetVSBlobBufferSize()
 			, Colorshader->GetInputLayoutAddr());
 
 		Shader* Gridshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"GridShader");
-		dru::GetDevice()->CreateInputLayout(arrLayout, 3
+		GetDevice()->CreateInputLayout(arrLayout, 3
 			, Gridshader->GetVSBlobBufferPointer()
 			, Gridshader->GetVSBlobBufferSize()
 			, Gridshader->GetInputLayoutAddr());
 
 		Shader* Debugshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugShader");
 
-		dru::GetDevice()->CreateInputLayout(arrLayout, 3
+		GetDevice()->CreateInputLayout(arrLayout, 3
 			, Debugshader->GetVSBlobBufferPointer()
 			, Debugshader->GetVSBlobBufferSize()
 			, Debugshader->GetInputLayoutAddr());
@@ -638,19 +690,19 @@ namespace dru::renderer
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(dru::eRasterizerType::SolidBack)].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(eRasterizerType::SolidBack)].GetAddressOf());
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_FRONT;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(dru::eRasterizerType::SolidFront)].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(eRasterizerType::SolidFront)].GetAddressOf());
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(dru::eRasterizerType::SolidNone)].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(eRasterizerType::SolidNone)].GetAddressOf());
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
-		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(dru::eRasterizerType::WireframeNone)].GetAddressOf());
+		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(eRasterizerType::WireframeNone)].GetAddressOf());
 
 #pragma endregion
 
@@ -661,31 +713,31 @@ namespace dru::renderer
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(dru::eDepthStencilType::Less)].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Less)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(dru::eDepthStencilType::Greater)].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Greater)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(dru::eDepthStencilType::NoWrite)].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::NoWrite)].GetAddressOf());
 
 		dsDesc.DepthEnable = false;
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		dsDesc.StencilEnable = false;
-		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(dru::eDepthStencilType::None)].GetAddressOf());
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::None)].GetAddressOf());
 
 #pragma endregion
 
 #pragma region BlendState
 
-		blendState[static_cast<UINT>(dru::eBlendStateType::Default)] = nullptr;
+		blendState[static_cast<UINT>(eBlendStateType::Default)] = nullptr;
 
 		D3D11_BLEND_DESC bsDesc = {};
 		bsDesc.AlphaToCoverageEnable = false;
@@ -698,7 +750,7 @@ namespace dru::renderer
 		bsDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE::D3D11_COLOR_WRITE_ENABLE_ALL;
 		bsDesc.RenderTarget[0].SrcBlend = D3D11_BLEND::D3D11_BLEND_SRC_ALPHA;
 		bsDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND::D3D11_BLEND_ONE;
-		GetDevice()->CreateBlendState(&bsDesc, blendState[static_cast<UINT>(dru::eBlendStateType::AlphaBlend)].GetAddressOf());
+		GetDevice()->CreateBlendState(&bsDesc, blendState[static_cast<UINT>(eBlendStateType::AlphaBlend)].GetAddressOf());
 
 		bsDesc.AlphaToCoverageEnable = false;
 		bsDesc.IndependentBlendEnable = false;
@@ -707,7 +759,7 @@ namespace dru::renderer
 		bsDesc.RenderTarget[0].DestBlend = D3D11_BLEND::D3D11_BLEND_ONE;
 		bsDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE::D3D11_COLOR_WRITE_ENABLE_ALL;
 		bsDesc.RenderTarget[0].SrcBlend = D3D11_BLEND::D3D11_BLEND_ONE;
-		GetDevice()->CreateBlendState(&bsDesc, blendState[static_cast<UINT>(dru::eBlendStateType::OneOne)].GetAddressOf());
+		GetDevice()->CreateBlendState(&bsDesc, blendState[static_cast<UINT>(eBlendStateType::OneOne)].GetAddressOf());
 
 
 #pragma endregion
@@ -717,7 +769,7 @@ namespace dru::renderer
 
 	void LoadBuffer()
 	{
-		
+
 		constantBuffers[static_cast<UINT>(eCBType::Transform)] = new ConstantBuffer(eCBType::Transform);
 		constantBuffers[static_cast<UINT>(eCBType::Transform)]->Create(sizeof(TransformCB));
 
@@ -748,7 +800,7 @@ namespace dru::renderer
 		constantBuffers[static_cast<UINT>(eCBType::LaserHit)] = new ConstantBuffer(eCBType::LaserHit);
 		constantBuffers[static_cast<UINT>(eCBType::LaserHit)]->Create(sizeof(LaserHitCB));
 
-		
+
 		lightBuffer = new StructedBuffer();
 		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
 	}
@@ -756,13 +808,13 @@ namespace dru::renderer
 	void LoadShader()
 	{
 		Shader* MeshShader = new Shader();
-		MeshShader->Create(dru::eShaderStage::VS, L"PhongVS.hlsl", "main");
-		MeshShader->Create(dru::eShaderStage::PS, L"PhongPS.hlsl", "main");
+		MeshShader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
+		MeshShader->Create(eShaderStage::PS, L"PhongPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"MeshShader", MeshShader);
 
 		Shader* debugGeometryShader = new Shader();
-		debugGeometryShader->Create(dru::eShaderStage::VS, L"DebugGeometryVS.hlsl", "main");
-		debugGeometryShader->Create(dru::eShaderStage::PS, L"DebugGeometryPS.hlsl", "main");
+		debugGeometryShader->Create(eShaderStage::VS, L"DebugGeometryVS.hlsl", "main");
+		debugGeometryShader->Create(eShaderStage::PS, L"DebugGeometryPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"DebugGeometryShader", debugGeometryShader);
 
 		Shader* phongShader = new Shader();
@@ -777,33 +829,33 @@ namespace dru::renderer
 
 
 		Shader* SpriteShader = new Shader();
-		SpriteShader->Create(dru::eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		SpriteShader->Create(dru::eShaderStage::PS, L"SpritePS.hlsl", "main");		
+		SpriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		SpriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"SpriteShader", SpriteShader);
 
 		Shader* GridShader = new Shader();
-		GridShader->Create(dru::eShaderStage::VS, L"GridVS.hlsl", "main");
-		GridShader->Create(dru::eShaderStage::PS, L"GridPS.hlsl", "main");
+		GridShader->Create(eShaderStage::VS, L"GridVS.hlsl", "main");
+		GridShader->Create(eShaderStage::PS, L"GridPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"GridShader", GridShader);
 
 		Shader* UIShader = new Shader();
-		UIShader->Create(dru::eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		UIShader->Create(dru::eShaderStage::PS, L"UIPS.hlsl", "main");
+		UIShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		UIShader->Create(eShaderStage::PS, L"UIPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UIShader", UIShader);
 
 		Shader* FadeShader = new Shader();
-		FadeShader->Create(dru::eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		FadeShader->Create(dru::eShaderStage::PS, L"FadePS.hlsl", "main");
+		FadeShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		FadeShader->Create(eShaderStage::PS, L"FadePS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"FadeShader", FadeShader);
 
 		Shader* ColorShader = new Shader();
-		ColorShader->Create(dru::eShaderStage::VS, L"SpriteVS.hlsl", "main");
-		ColorShader->Create(dru::eShaderStage::PS, L"ColorPS.hlsl", "main");
+		ColorShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		ColorShader->Create(eShaderStage::PS, L"ColorPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"ColorShader", ColorShader);
 
 		Shader* DebugShader = new Shader();
-		DebugShader->Create(dru::eShaderStage::VS, L"DebugVS.hlsl", "main");
-		DebugShader->Create(dru::eShaderStage::PS, L"DebugPS.hlsl", "main");
+		DebugShader->Create(eShaderStage::VS, L"DebugVS.hlsl", "main");
+		DebugShader->Create(eShaderStage::PS, L"DebugPS.hlsl", "main");
 		DebugShader->SetRSState(eRasterizerType::SolidNone);
 		DebugShader->SetDSState(eDepthStencilType::NoWrite);
 		DebugShader->SetBSState(eBlendStateType::AlphaBlend);
@@ -841,7 +893,7 @@ namespace dru::renderer
 	}
 
 	void LoadDefaultTexture()
-	{		
+	{
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise1", L"noise/noise_01.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise2", L"noise/noise_02.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise3", L"noise/noise_03.png");
@@ -850,8 +902,14 @@ namespace dru::renderer
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_color", L"Dirt/dirt_color.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_normal", L"Dirt/dirt_normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_color", L"Dirt/dirt_color.jpg");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_normal", L"Dirt/dirt_normal.jpg");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"Textures/BrickBlockBody/BrickBlockBody_alb.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"Textures/BrickBlockBody/BrickBlockBody_emm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"Textures/BrickBlockBody/BrickBlockBody_nrm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"Textures/BrickBlockBody/BrickBlockBody_mtl.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"Textures/BrickBlockBody/BrickBlockBody_rgh.png");
 
 
 		Texture* uavTexture = new Texture();
@@ -860,7 +918,7 @@ namespace dru::renderer
 			D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PaintTexture", uavTexture);
 
-		postProcessTexture =  new Texture();
+		postProcessTexture = new Texture();
 		postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PostProcessTexture", postProcessTexture);
@@ -960,8 +1018,8 @@ namespace dru::renderer
 		flatMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		flatMaterial->SetShader(flatShader);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"FlatMaterial", flatMaterial);
-			
-			
+
+
 		{
 			Material* material = new Material(L"texCursor", L"UIShader");
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"CursorMat", material);
@@ -973,7 +1031,7 @@ namespace dru::renderer
 
 	void Initialize()
 	{
-		
+		CreateRenderTargets();
 		LoadMesh();
 		LoadShader();
 		SetUpState();
@@ -1011,6 +1069,52 @@ namespace dru::renderer
 		}
 		Cameras[type].clear();
 		renderer::lights.clear();
+	}
+
+	void CreateRenderTargets()
+	{
+		UINT width = application.GetWidth();
+		UINT height = application.GetHeight();
+
+		//SwapChain MultiRenderTargets
+		{
+			Texture* arrRTTex[8] = {};
+			Texture* dsTex = nullptr;
+
+			arrRTTex[0] = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
+			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilTexture");
+
+			renderTargets[(UINT)eRenderTargetType::Swapchain] = new MultiRenderTarget();
+			renderTargets[(UINT)eRenderTargetType::Swapchain]->Create(arrRTTex, dsTex);
+		}
+		// Deferred MultiRenderTargets
+		{
+			Texture* arrRTTex[8] = { };
+			Texture* pos = new Texture();
+			Texture* normal = new Texture();;
+			Texture* albedo = new Texture();;
+			Texture* specular = new Texture();;
+
+			arrRTTex[0] = pos;
+			arrRTTex[1] = normal;
+			arrRTTex[2] = albedo;
+			arrRTTex[3] = specular;
+
+			arrRTTex[0]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			arrRTTex[1]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			arrRTTex[2]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			arrRTTex[3]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+
+			Texture* dsTex = nullptr;
+			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilTexture");
+
+			renderTargets[(UINT)eRenderTargetType::Deferred] = new MultiRenderTarget();
+			renderTargets[(UINT)eRenderTargetType::Deferred]->Create(arrRTTex, dsTex);
+		}
 	}
 
 	void PushLightAttribute(LightAttribute attribute)

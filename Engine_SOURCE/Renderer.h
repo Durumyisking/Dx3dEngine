@@ -9,9 +9,10 @@
 #include "Camera.h"
 #include "Light.h"
 #include "StructedBuffer.h"
+#include "MultiRenderTarget.h"
 
-using namespace dru::math;
-;
+using namespace math;
+
 
 #define RED		Vector4{1.f, 0.f, 0.f, 1.f}
 #define GREEN	Vector4{0.f, 1.f, 0.f, 1.f}
@@ -33,7 +34,7 @@ using namespace dru::math;
 #define LIGHT_ORANGE_YELLOW	Vector4{0.9569f, 0.6672f, 0.4588f, 1.f}
 
 
-namespace dru::renderer
+namespace renderer
 {
 
 	struct Vertex
@@ -92,6 +93,11 @@ namespace dru::renderer
 		Matrix matrix2;
 		Matrix matrix3;
 		Matrix matrix4;
+
+		int textureExistence;
+		int bool1;
+		int bool2;
+		int bool3;
 	};
 
 	CBUFFER(GridCB, CBSLOT_GRID)	
@@ -190,8 +196,9 @@ namespace dru::renderer
 
 	extern StructedBuffer* lightBuffer;
 
-	extern dru::GameObj* inspectorGameObject;
-
+	extern GameObj* inspectorGameObject;
+	
+	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
 
 	void Initialize();
 	void release(); // 그리는 방식이 여러개일때 여러개를 할당하는게 아니라
@@ -200,6 +207,7 @@ namespace dru::renderer
 	
 	void Render();
 
+	void CreateRenderTargets(); //MultiRenderTargets
 	void PushLightAttribute(LightAttribute attribute);
 	void BindLight();
 	void BindNoiseTexture();

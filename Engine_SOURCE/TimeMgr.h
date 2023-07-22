@@ -2,48 +2,45 @@
 #include "Engine.h"
 
 
-namespace dru
+class TimeMgr
 {
-	class TimeMgr
-	{
-		SINGLE(TimeMgr)
+	SINGLE(TimeMgr)
 
-	public:
-		__forceinline float DeltaTime() { return mDeltaTime; }
-		__forceinline float DeltaTimeConstant() { return mDeltaTimeConstant; }
+public:
+	__forceinline float DeltaTime() { return mDeltaTime; }
+	__forceinline float DeltaTimeConstant() { return mDeltaTimeConstant; }
 
 
 		 
-		void Initialize();
-		void Update();
-		void Render(HDC hdc);
+	void Initialize();
+	void Update();
+	void Render(HDC hdc);
 
 
-		bool IsUpdatePass() const { return mbUpdatePass; }
+	bool IsUpdatePass() const { return mbUpdatePass; }
 
-		float GetMaxFrameRate() const { return mMaxFrameRate; }
+	float GetMaxFrameRate() const { return mMaxFrameRate; }
 
 
-	private:
-		void frameRateLock();
-		void frameRateLock_Debugging();
+private:
+	void frameRateLock();
+	void frameRateLock_Debugging();
 
-	private:
-		LARGE_INTEGER	mCpuFrequency;
-		LARGE_INTEGER	mPrevFrequency;
-		LARGE_INTEGER	mCurFrequency;
+private:
+	LARGE_INTEGER	mCpuFrequency;
+	LARGE_INTEGER	mPrevFrequency;
+	LARGE_INTEGER	mCurFrequency;
 
-		float			mDeltaTime;
-		float			mDeltaTimeConstant;
-		float			mOneSecond;
+	float			mDeltaTime;
+	float			mDeltaTimeConstant;
+	float			mOneSecond;
 
-		float			mbBulletTimeTimer;
-		float			mbBulletTimeTimerMax;
+	float			mbBulletTimeTimer;
+	float			mbBulletTimeTimerMax;
 
-		float			mMaxFrameRate;
-		float			mFrameRateStack;
+	float			mMaxFrameRate;
+	float			mFrameRateStack;
 
-		bool			mbUpdatePass;
+	bool			mbUpdatePass;
 
-	};
-}
+};

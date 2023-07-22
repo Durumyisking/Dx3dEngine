@@ -4,46 +4,46 @@
 #include "Renderer.h"
 #include "Texture.h"
 
-using namespace dru::renderer;
+using namespace renderer;
 
-namespace dru
+
+
+class Material : public Resource
 {
-	class Material : public Resource
-	{
-	public:
-		Material();
-		Material(std::wstring textureName, std::wstring shaderName);
-		Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName);
-		Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName);
-		virtual ~Material();
+public:
+	Material();
+	Material(std::wstring textureColor, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName);
+	Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName);
+	virtual ~Material();
 
-		virtual HRESULT Load(const std::wstring& path) override;
+	virtual HRESULT Load(const std::wstring& path) override;
 
-		void SetData(eGPUParam param, void* data);
-		void Bind();
-		void Clear();
+	void SetData(eGPUParam param, void* data);
+	void Bind();
+	void Clear();
 
-		void SetShader(Shader*	shader) { mShader = shader; }
-		void SetShaderByKey(std::wstring key);
-		Shader* GetShader() const { return mShader; }
+	void SetShader(Shader* shader) { mShader = shader; }
+	void SetShaderByKey(std::wstring key);
+	Shader* GetShader() const { return mShader; }
 
-		void SetTexture(Texture* texture) { mTexture[static_cast<UINT>(eTextureSlot::T0)] = texture; }
-		void SetTexture(eTextureSlot slot, Texture* texture) { mTexture[static_cast<UINT>(slot)] = texture; }
-		Texture* GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::T0)]; }
-		Texture* GetTexture(eTextureSlot slot) const { return mTexture[static_cast<UINT>(slot)]; }
+	void SetTexture(Texture* texture) { mTexture[static_cast<UINT>(eTextureSlot::T0)] = texture; }
+	void SetTexture(eTextureSlot slot, Texture* texture) { mTexture[static_cast<UINT>(slot)] = texture; }
+	Texture* GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::T0)]; }
+	Texture* GetTexture(eTextureSlot slot) const { return mTexture[static_cast<UINT>(slot)]; }
 
-		eRenderingMode GetRenderingMode() const { return mMode; }
-		void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
+	eRenderingMode GetRenderingMode() const { return mMode; }
+	void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 
-	private:
-		Shader*				mShader;
-		Texture*			mTexture[static_cast<UINT>(eTextureSlot::End)];
-		MaterialCB			mConstantBuffer;
-		eRenderingMode		mMode;
+private:
+	Shader* mShader;
+	Texture* mTexture[static_cast<UINT>(eTextureSlot::End)];
+	MaterialCB			mConstantBuffer;
+	eRenderingMode		mMode;
 
 
-	};
-
-}
-
+};
 

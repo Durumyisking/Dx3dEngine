@@ -1,13 +1,13 @@
 #include "druEnums.h"
 
-namespace dru::enums
+namespace enums
 {
 	//enum class eComponentType
 	//{
 	//	None,
-	//	Transform, // 위치 데이터 수정하는 컴포넌트
+	//	GUITransform, // 위치 데이터 수정하는 컴포넌트
 	//	Camera,
-	//	Mesh,
+	//	GUIMesh,
 	//	Collider,
 	//	//Collider2,
 	//	MeshRenerer,

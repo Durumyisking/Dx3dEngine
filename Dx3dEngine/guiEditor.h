@@ -20,7 +20,7 @@ namespace gui
 		void FixedUpdate();
 		void Render();
 		void Release();
-		void DebugRender(dru::DebugMesh& mesh);
+		void DebugRender(DebugMesh& mesh);
 
 		void ImGui_Initialize();
 		void ImGui_Run();

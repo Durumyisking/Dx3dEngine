@@ -1,51 +1,50 @@
 #include "PostProcessRenderer.h"
 #include "PostProcess.h"
+#include "Material.h"
 
-namespace dru
+
+PostProcessRenderer::PostProcessRenderer()
+	: BaseRenderer(eComponentType::Renderer)
 {
-	PostProcessRenderer::PostProcessRenderer()
-		: BaseRenderer(eComponentType::Renderer)
-	{
-	}
+}
 
-	PostProcessRenderer::~PostProcessRenderer()
-	{
-	}
+PostProcessRenderer::~PostProcessRenderer()
+{
+}
 
-	void PostProcessRenderer::Initialize()
-	{
-		BaseRenderer::Initialize();
-	}
+void PostProcessRenderer::Initialize()
+{
+	BaseRenderer::Initialize();
+}
 
-	void PostProcessRenderer::Update()
-	{
-		BaseRenderer::Update();
-	}
+void PostProcessRenderer::Update()
+{
+	BaseRenderer::Update();
+}
 
-	void PostProcessRenderer::FixedUpdate()
-	{
-		BaseRenderer::FixedUpdate();
-	}
+void PostProcessRenderer::FixedUpdate()
+{
+	BaseRenderer::FixedUpdate();
+}
 
-	void PostProcessRenderer::Render()
-	{
-		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
+void PostProcessRenderer::Render()
+{
+	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-		GetMesh()->BindBuffer();
+	GetMesh()->BindBuffer();
 
-		mPostProcess->Bind();
-		GetMaterial()->Bind();
+	mPostProcess->Bind();
+	GetMaterial()->Bind();
 
-		GetMesh()->Render();
+	GetMesh()->Render();
 
-		mPostProcess->Clear();
-		GetMaterial()->Clear();
+	mPostProcess->Clear();
+	GetMaterial()->Clear();
 
-		BaseRenderer::Render();
-	}
+	BaseRenderer::Render();
+}
 
-	void PostProcessRenderer::SetPostProcessOwner(PostProcess* postProcess)
-	{
-		mPostProcess = postProcess;
-	}
+void PostProcessRenderer::SetPostProcessOwner(PostProcess* postProcess)
+{
+	mPostProcess = postProcess;
 }

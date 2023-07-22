@@ -11,10 +11,28 @@
 #define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace |  aiProcess_MakeLeftHanded | aiProcess_FlipWindingOrder)
 
 
-namespace dru
+
+
+class FileMgr
 {
-	class FileMgr
+	SINGLE(FileMgr)
+public:
+	struct ParsingNodeData
 	{
+		std::string Name;
+		int ParentsIDX;
+	};
+
+	struct ParsingSkeletonData
+	{
+		float Time;
+		math::Vector3 Translation;
+		math::Vector3 Rotaion;
+	};
+
+	struct ParsingTriangleData
+	{
+
 		SINGLE(FileMgr)
 	public:
 		struct ParsingNodeData

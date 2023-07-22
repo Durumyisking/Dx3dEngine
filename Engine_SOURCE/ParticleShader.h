@@ -2,26 +2,23 @@
 #include "ComputeShader.h"
 #include "StructedBuffer.h"
 
-namespace dru
+
+
+class ParticleShader :
+    public ComputeShader
 {
-    class ParticleShader :
-        public ComputeShader
-    {
 
-	public:
-		ParticleShader();
-		~ParticleShader();
+public:
+	ParticleShader();
+	~ParticleShader();
 
-		virtual void Bind() override;
-		virtual void Clear() override;
+	virtual void Bind() override;
+	virtual void Clear() override;
 
-		void SetStrcutedBuffer(StructedBuffer* buffer) { mBuffer = buffer; }
-		void SetSharedStrutedBuffer(StructedBuffer* buffer) { mSharedBuffer = buffer; }
+	void SetStrcutedBuffer(StructedBuffer* buffer) { mBuffer = buffer; }
+	void SetSharedStrutedBuffer(StructedBuffer* buffer) { mSharedBuffer = buffer; }
 
-	private:
-		StructedBuffer* mBuffer;
-		StructedBuffer* mSharedBuffer;
-	};
-}
-
-
+private:
+	StructedBuffer* mBuffer;
+	StructedBuffer* mSharedBuffer;
+};

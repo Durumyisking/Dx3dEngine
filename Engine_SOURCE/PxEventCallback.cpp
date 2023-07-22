@@ -3,7 +3,6 @@
 #include "GameObj.h"
 #include "PhysXCollider.h"
 
-using namespace dru;
 
 void PxEventCallback::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 nbPairs)
 {
