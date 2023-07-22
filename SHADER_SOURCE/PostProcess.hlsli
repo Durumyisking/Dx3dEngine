@@ -78,7 +78,7 @@ float stripesY(float2 uv, Texture2D<float4> noiseTexture)
     
     float yValue = uv.y * 4.f + ElapsedTime / 2.f + sin(ElapsedTime + sin(ElapsedTime * 0.63f));
     
-    return ramp((yValue, 1.f), 0.3f, 0.4f) * noi;
+    return ramp(yValue, 0.3f, 0.4f) * noi;
 }
 
 float snow(float2 uv, float scale)

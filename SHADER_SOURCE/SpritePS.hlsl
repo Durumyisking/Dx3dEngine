@@ -16,8 +16,8 @@ float4 main(VTX_OUT vsIn) : SV_Target
     }
     else if (1 == animationType)
     {
-        float diff = (atlasSize - spriteSize) / 2.f;
-            float2 UV = (LT - diff - offset) + (atlasSize * vsIn.vUV);
+        float2 diff = (atlasSize - spriteSize) / 2.f;
+        float2 UV = (LT - diff - offset) + (atlasSize * vsIn.vUV);
 
         if (UV.x < LT.x || UV.y < LT.y || UV.x > LT.x + spriteSize.x || UV.y > LT.y + spriteSize.y)
             discard;
@@ -42,7 +42,7 @@ float4 main(VTX_OUT vsIn) : SV_Target
     color += cbxyzw2; // ´õÇÒ »ö
      
     LightColor lightcolor = (LightColor) 0.f;
-    for (int i = 0; i < lightCount; i++)
+    for (uint i = 0; i < lightCount; i++)
     {
         CalculateLight(lightcolor, vsIn.vWorldPos.xyz, i);
     }

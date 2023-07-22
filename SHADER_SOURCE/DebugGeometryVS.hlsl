@@ -26,7 +26,7 @@ VSOut main(VSIn vsIn)
     
     output.Pos = projPosition;
     output.Uv = vsIn.Uv;
-    output.ViewPos = viewPosition;
+    output.ViewPos = viewPosition.xyz;
     
     return output;
 }
