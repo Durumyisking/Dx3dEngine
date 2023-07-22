@@ -64,7 +64,7 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
     {
         // 광원의 방향을 월드 좌표계에서 뷰 좌표계로 변환
         // direction은 lightObject의 transform의 forward 입니다.
-        viewLightDir = normalize(mul(float4(lightInfo.direction.xyz, 0.f), view));
+        viewLightDir = normalize(mul(float4(lightInfo.direction.xyz, 0.f), view)).xyz;
 
         // 방향에 음수를 취하는 이유
         // 빛을 표면에 표시하고 싶기때문 (내적은 방향이 같을수록 1에 가까워짐)
@@ -78,7 +78,7 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
         // 뷰 좌표계 상에서 광원의 위치를 알아낸다.
         // point light는 빛 object 주변에만 빛을 줘야하기 때문에 절대적인 direction으로 계산하지 않는다.
         // 표면까지의 방향을 따로 구해줘야한다.
-        float3 lightViewPos = mul(float4(lightInfo.position.xyz, 1.f), view);
+        float3 lightViewPos = mul(float4(lightInfo.position.xyz, 1.f), view).xyz;
         
         // 광원의 위치에서 표면을 향하는 벡터
         viewLightDir = viewPos - lightViewPos;
