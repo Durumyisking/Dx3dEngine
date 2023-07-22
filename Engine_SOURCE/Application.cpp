@@ -45,6 +45,24 @@ void Application::Update()
 {
 	GETSINGLE(TimeMgr)->Update();
 
+
+	void Application::Initialize()
+	{
+		GETSINGLE(FileMgr)->TestLoad(L"..//Resources/Mario.FBX");
+		//GETSINGLE(FileMgr)->TestLoad(L"..//Resources/mario/Mario.dae");
+
+		GETSINGLE(TimeMgr)->Initialize();
+		GETSINGLE(InputMgr)->Initialize();
+		GETSINGLE(Fmod)->Initialize();
+		// GETSINGLE(CollisionMgr)->Initialize();
+		renderer::Initialize();
+		GETSINGLE(PhysicsMgr)->Initialize();
+		GETSINGLE(FontWrapper)->Initialize();
+		GETSINGLE(SceneMgr)->Initialize();
+
+	}
+	void Application::Update()
+
 	if (!GETSINGLE(TimeMgr)->IsUpdatePass())
 	{
 		GETSINGLE(TimerMgr)->Update();
@@ -125,18 +143,20 @@ void Application::Release()
 void Application::DestroySingle()
 {
 
-	GETSINGLE(server::ServerMgr)->DestroyInstance();
-	GETSINGLE(SceneMgr)->DestroyInstance();
-	GETSINGLE(FontWrapper)->DestroyInstance();
-//		GETSINGLE(CollisionMgr)->DestroyInstance();
-	GETSINGLE(PhysXCollisionMgr)->DestroyInstance();
-	GETSINGLE(Fmod)->DestroyInstance();
-	GETSINGLE(InputMgr)->DestroyInstance();
-	GETSINGLE(TimeMgr)->DestroyInstance();
-	GETSINGLE(ResourceMgr)->DestroyInstance();
-	GETSINGLE(PhysicsMgr)->DestroyInstance();
-	GETSINGLE(TimerMgr)->DestroyInstance();
-}
+    GETSINGLE(server::ServerMgr)->DestroyInstance();
+    GETSINGLE(SceneMgr)->DestroyInstance();
+    GETSINGLE(FontWrapper)->DestroyInstance();
+    //		GETSINGLE(CollisionMgr)->DestroyInstance();
+
+		GETSINGLE(PhysXCollisionMgr)->DestroyInstance();
+		GETSINGLE(Fmod)->DestroyInstance();
+		GETSINGLE(InputMgr)->DestroyInstance();
+		GETSINGLE(TimeMgr)->DestroyInstance();
+		GETSINGLE(ResourceMgr)->DestroyInstance();
+		GETSINGLE(PhysicsMgr)->DestroyInstance();
+		GETSINGLE(TimerMgr)->DestroyInstance();
+		GETSINGLE(FileMgr)->DestroyInstance();
+	}
 
 void Application::SetWindow(HWND hwnd, UINT width, UINT height)
 {

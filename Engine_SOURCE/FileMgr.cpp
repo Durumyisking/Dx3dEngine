@@ -1,5 +1,6 @@
 #include "FileMgr.h"
 #include "Application.h"
+#include "Texture.h"
 
 extern Application application;
 namespace fs = std::filesystem;
@@ -7,24 +8,27 @@ namespace fs = std::filesystem;
 
 
 FileMgr::FileMgr()
+  : mAssimpImporter{}
 {
+
 }
 
 FileMgr::~FileMgr()
 {
 
+
 }
 
 void FileMgr::FileLoad(const std::wstring& path)
 {
-	// ÆÄÀÏ °æ·Î ¼³Á¤
+	// íŒŒì¼ ê²½ë¡œ ì„¤ì •
 	std::ifstream file(L"..//" + path, std::ios::in);
 
 	std::string buf = "";
-	// ÆÄÀÏÀÌ ¿­¸®Áö ¾ÊÀ¸¸é Window Á¾·á
+	// íŒŒì¼ì´ ì—´ë¦¬ì§€ ì•Šìœ¼ë©´ Window ì¢…ë£Œ
 	if (!file.is_open())
 	{
-		std::cout << "ÆÄÀÏÀÌ ¾ø½À´Ï´Ù" << std::endl;
+		std::cout << "íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤" << std::endl;
 		DestroyWindow(application.GetHwnd());
 	}
 
@@ -70,9 +74,25 @@ void FileMgr::FileLoad(const std::wstring& path)
 		mSkeletonData.emplace_back(data);
 	}
 
-	// Triangles
-	std::string texName = "";
-	while (1)
+
+	void FileMgr::TestLoad(const std::wstring& path)
+	{
+		std::string sPath = "..//" + std::string(path.begin(), path.end());
+		const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES);
+
+		if (aiscene == nullptr || aiscene->mRootNode == nullptr)
+		{
+			// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
+			return;
+		}
+
+		std::vector<renderer::Vertex> meshes;
+		processNode(aiscene->mRootNode, aiscene, meshes);
+		int a = 0;
+
+	}
+
+	const std::string FileMgr::parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const
 	{
 		getline(file, buf);
 		if (buf.find("triangles") != std::string::npos)
@@ -188,7 +208,104 @@ const FileMgr::ParsingTriangleData FileMgr::readTriangles(std::string& buf) cons
 		}
 		temp.emplace_back(std::stof(str.c_str()));
 	}
-	data.Value = temp;
 
-	return data;
+	void FileMgr::loadModel(const aiScene* scene)
+	{
+
+	}
+	void FileMgr::processNode(aiNode* node, const aiScene* scene, std::vector<renderer::Vertex>& meshes)
+	{
+		// í˜„ì œ ë…¸ë“œ ë©”ì‰¬ ì •ë³´ ì €ì¥
+		for (UINT i = 0; i < node->mNumMeshes; ++i)
+		{
+			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+			processMesh(mesh, scene);
+			//meshes.emplace_back(processMesh(mesh, scene));
+		}
+
+		// ì¬ê·€ì ìœ¼ë¡œ ë©”ì‰¬ í˜¸ì¶œ
+		for (UINT i = 0; i < node->mNumChildren; ++i)
+		{
+			processNode(node->mChildren[i], scene, meshes);
+		}
+	}
+
+	void FileMgr::processMesh(const aiMesh* mesh, const aiScene* scene)
+	{
+		std::vector<renderer::Vertex> vertexes;
+		std::vector<UINT> indexes;
+		std::vector<Texture> textures;
+
+		// ì •ì  ì •ë³´ ë¡œë“œ
+		for (UINT i = 0; i < mesh->mNumVertices; ++i)
+		{
+			renderer::Vertex vertex= {};
+			math::Vector3 pos = {};
+			pos.x = mesh->mVertices[i].x;
+			pos.y = mesh->mVertices[i].y;
+			pos.z = mesh->mVertices[i].z;
+			vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
+
+			math::Vector3 normal = {};
+			normal.x = mesh->mNormals[i].x;
+			normal.y = mesh->mNormals[i].y;
+			normal.z = mesh->mNormals[i].z;
+			vertex.normal = normal;
+
+			math::Vector3 tangent = {};
+			tangent .x = mesh->mTangents[i].x;
+			tangent .y = mesh->mTangents[i].y;
+			tangent .z = mesh->mTangents[i].z;
+			vertex.tangent = tangent;
+
+			/*math::Vector3 bitangent = {};
+			bitangent .x = mesh->mBitangents[i].x;
+			bitangent .y = mesh->mBitangents[i].y;
+			bitangent .z = mesh->mBitangents[i].z;
+			vertex.biNormal = bitangent;*/
+
+			if (mesh->mTextureCoords[0] != nullptr)
+			{
+				math::Vector2 uv = {};
+				uv.x = mesh->mTextureCoords[0][i].x;
+				uv.y = mesh->mTextureCoords[0][i].y;
+
+				vertex.uv = uv;
+			}
+			else
+			{
+				vertex.uv = math::Vector2::Zero;
+			}
+
+			vertexes.emplace_back(vertex);
+		}
+
+		for (UINT i = 0; i < mesh->mNumFaces; ++i)
+		{
+			aiFace face = mesh->mFaces[i];
+			for (UINT j = 0; j < face.mNumIndices; ++j)
+			{
+				indexes.emplace_back(face.mIndices[j]);
+			}
+		}
+
+		Mesh* myMesh = new Mesh();
+		myMesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
+		myMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+
+		static int a = 0;
+		std::string sName(mesh->mName.C_Str());
+		//std::wstring name = std::wstring(sName.begin(), sName.end());
+		std::wstring name = L"test" + std::to_wstring(a);
+		a++;
+
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(name, myMesh);
+
+		std::cout << a << std::endl;
+	}
+
+	void FileMgr::processMaterial()
+	{
+	}
 }
+
