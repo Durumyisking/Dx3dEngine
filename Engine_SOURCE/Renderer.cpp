@@ -225,7 +225,7 @@ namespace renderer
 		//	Vector2 uv;
 		//};
 
-		// À­¸é
+		// ìœ—ë©´
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
@@ -256,7 +256,7 @@ namespace renderer
 		arrCube[3].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 
-		// ¾Æ·§ ¸é	
+		// ì•„ëž« ë©´	
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
@@ -285,7 +285,7 @@ namespace renderer
 		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
 		arrCube[7].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// ¿ÞÂÊ ¸é
+		// ì™¼ìª½ ë©´
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
@@ -314,7 +314,7 @@ namespace renderer
 		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
 		arrCube[11].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// ¿À¸¥ÂÊ ¸é
+		// ì˜¤ë¥¸ìª½ ë©´
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].color = Vector4(0.f, 0.f, 1.f, 1.f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
@@ -343,7 +343,7 @@ namespace renderer
 		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
 		arrCube[15].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// µÞ ¸é
+		// ë’· ë©´
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].color = Vector4(1.f, 1.f, 0.f, 1.f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
@@ -372,7 +372,7 @@ namespace renderer
 		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
 		arrCube[19].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
-		// ¾Õ ¸é
+		// ì•ž ë©´
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].color = Vector4(1.f, 0.f, 1.f, 1.f);
 		arrCube[20].uv = Vector2(0.f, 0.f);
@@ -664,6 +664,13 @@ namespace renderer
 			, flatShader->GetVSBlobBufferSize()
 			, flatShader->GetInputLayoutAddr());
 
+		Shader* PBRShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		GetDevice()->CreateInputLayout(arrLayout, 6
+			, PBRShader->GetVSBlobBufferPointer()
+			, PBRShader->GetVSBlobBufferSize()
+			, PBRShader->GetInputLayoutAddr());
+
+
 #pragma endregion
 
 #pragma region SamplerState
@@ -797,8 +804,8 @@ namespace renderer
 		constantBuffers[static_cast<UINT>(eCBType::PostProcess)] = new ConstantBuffer(eCBType::PostProcess);
 		constantBuffers[static_cast<UINT>(eCBType::PostProcess)]->Create(sizeof(PostProcessCB));
 
-		constantBuffers[static_cast<UINT>(eCBType::LaserHit)] = new ConstantBuffer(eCBType::LaserHit);
-		constantBuffers[static_cast<UINT>(eCBType::LaserHit)]->Create(sizeof(LaserHitCB));
+		constantBuffers[static_cast<UINT>(eCBType::PBR)] = new ConstantBuffer(eCBType::PBR);
+		constantBuffers[static_cast<UINT>(eCBType::PBR)]->Create(sizeof(PBRCB));
 
 
 		lightBuffer = new StructedBuffer();
@@ -826,6 +833,11 @@ namespace renderer
 		flatShader->Create(eShaderStage::VS, L"FlatVS.hlsl", "main");
 		flatShader->Create(eShaderStage::PS, L"FlatPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"FlatShader", flatShader);
+
+		Shader* PBRShader = new Shader();
+		PBRShader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
+		PBRShader->Create(eShaderStage::PS, L"PBR.hlsl", "main");
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"PBRShader", PBRShader);
 
 
 		Shader* SpriteShader = new Shader();
@@ -1025,6 +1037,11 @@ namespace renderer
 		flatMaterial->SetShader(flatShader);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"FlatMaterial", flatMaterial);
 
+		Shader* PBRShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Material* PBRMaterial = new Material();
+		PBRMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		PBRMaterial->SetShader(PBRShader);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"PBRMaterial", PBRMaterial);
 
 		{
 			Material* material = new Material(L"texCursor", L"UIShader");
@@ -1055,6 +1072,7 @@ namespace renderer
 		}
 		delete lightBuffer;
 		lightBuffer = nullptr;
+
 
 		for (size_t i = 0; i < static_cast<UINT>(eRenderTargetType::End); i++)
 		{
@@ -1095,11 +1113,44 @@ namespace renderer
 
 		//SwapChain MultiRenderTargets
 		{
-			Texture* arrRTTex[8] = {};
-			Texture* dsTex = nullptr;
+		//	Texture* arrRTTex[8] = {};
+		//	Texture* dsTex = nullptr;
 
-			arrRTTex[0] = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
-			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilTexture");
+		//	arrRTTex[0] = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
+		//	dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilBufferTexture");
+
+		//	renderTargets[(UINT)eRenderTargetType::Swapchain] = new MultiRenderTarget();
+		//	renderTargets[(UINT)eRenderTargetType::Swapchain]->Create(arrRTTex, dsTex);
+		//}
+		//// Deferred MultiRenderTargets
+		//{
+		//	Texture* arrRTTex[8] = { };
+		//	Texture* pos = new Texture();
+		//	Texture* normal = new Texture();;
+		//	Texture* albedo = new Texture();;
+		//	Texture* specular = new Texture();;
+
+		//	arrRTTex[0] = pos;
+		//	arrRTTex[1] = normal;
+		//	arrRTTex[2] = albedo;
+		//	arrRTTex[3] = specular;
+
+		//	arrRTTex[0]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+		//		, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+		//	arrRTTex[1]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+		//		, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+		//	arrRTTex[2]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+		//		, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+		//	arrRTTex[3]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+		//		, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+
+		//	Texture* dsTex = nullptr;
+		//	dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilBufferTexture");
+
+		//	renderTargets[(UINT)eRenderTargetType::Deferred] = new MultiRenderTarget();
+		//	renderTargets[(UINT)eRenderTargetType::Deferred]->Create(arrRTTex, dsTex);
+
+
 
 			renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)] = new MultiRenderTarget();
 			renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->Create(arrRTTex, dsTex);

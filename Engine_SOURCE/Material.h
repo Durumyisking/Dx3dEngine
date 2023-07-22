@@ -14,9 +14,11 @@ public:
 	Material();
 	Material(std::wstring textureColor, std::wstring shaderName);
 	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName);
-	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring shaderName);
-	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring shaderName);
-	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName);
+	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring textureEmissive, std::wstring shaderName);
+
+
 	Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName);
 	virtual ~Material();
 
@@ -38,12 +40,20 @@ public:
 	eRenderingMode GetRenderingMode() const { return mMode; }
 	void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 
+	void SetMetalic(float value) { mMetalic = value; }
+	void SetRoughness(float value) { mRoughness = value; }
+	void SetAO(float value) { mAO = value; }
+
 private:
 	Shader* mShader;
 	Texture* mTexture[static_cast<UINT>(eTextureSlot::End)];
-	MaterialCB			mConstantBuffer;
+	MaterialCB			mMaterialConstantBuffer;
+	PBRCB				mPBRConstantBuffer;
 	eRenderingMode		mMode;
 
+	float mMetalic;
+	float mRoughness;
+	float mAO;
 
 };
 

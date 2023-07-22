@@ -88,9 +88,9 @@ public:
 
 	Material* CreateMaterial(std::wstring textureColor, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName, std::wstring materialName);
-	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring shaderName, std::wstring materialName);
-	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring shaderName, std::wstring materialName);
-	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureEmissive, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName, std::wstring materialName);
+	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName, std::wstring materialName);
+	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName, std::wstring materialName);
+	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring textureEmissive, std::wstring shaderName, std::wstring materialName);
 
 	void Release();
 private:

@@ -107,9 +107,13 @@ cbuffer ParticleSystem : register(b6)
     int2 padding;    
 }
 
-cbuffer LaserHit : register(b9)
+// noise b7
+// postprocess b8
+
+
+cbuffer PBRconstant : register(b9)
 {
-    float laserhit_ElapsedX;
-    float laserhit_ElapsedY;
-    float laserhit_PrevElapsedY;
+    float metallic; 
+    float roughness; 
+    float ao; 
 }

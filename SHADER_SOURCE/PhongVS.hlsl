@@ -22,7 +22,7 @@ struct VSOut
 
 VSOut main(VSIn vsIn)
 {
-    VSOut vsOut = (VSOut) 0.0f;
+    VSOut vsOut = (VSOut) 0.f;
     
     float4 worldPosition = mul(vsIn.Position, world);
     float4 viewPosition = mul(worldPosition, view);
@@ -32,14 +32,14 @@ VSOut main(VSIn vsIn)
     vsOut.UV = vsIn.UV;
 
     // 로컬 노말을 뷰변환
-    float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.0f), world).xyz);
-    viewNormal = normalize(mul(float4(viewNormal, 0.0f), view).xyz);
+    float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), world).xyz);
+    viewNormal = normalize(mul(float4(viewNormal, 0.f), view).xyz);
     
-    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.0f), world).xyz);
-    viewTangent = normalize(mul(float4(viewTangent, 0.0f), view).xyz);
+    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), world).xyz);
+    viewTangent = normalize(mul(float4(viewTangent, 0.f), view).xyz);
     
-    float3 viewBiNormal = normalize(mul(float4(vsIn.BiNormal.xyz, 0.0f), world).xyz);
-    viewBiNormal = normalize(mul(float4(viewBiNormal, 0.0f), view).xyz);
+    float3 viewBiNormal = normalize(mul(float4(vsIn.BiNormal.xyz, 0.f), world).xyz);
+    viewBiNormal = normalize(mul(float4(viewBiNormal, 0.f), view).xyz);
     
     vsOut.ViewPos = viewPosition.xyz;
     vsOut.ViewNormal = viewNormal.xyz;
