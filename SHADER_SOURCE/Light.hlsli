@@ -213,15 +213,13 @@ float3 CalculateLight3D_PBR(float4 albedo, float3 viewNormal, float metallic, fl
         // 광원의 방향을 월드 좌표계에서 뷰 좌표계로 변환
         // direction은 lightObject의 transform의 forward 입니다.
         viewLightDir = normalize(mul(float4(lightDir, 0.f), view)).xyz;
-        
-
-        
+               
     	// Half-vector between Li and Lo.
         float3 Lh = normalize(-lightInfo.direction.xyz + eyeDir);
         
         // Calculate angles between surface normal and various light vectors.
         float cosLi = saturate(dot(viewNormal, -lightDir));
-        float cosLh = saturate(dot(viewNormal, Lh));
+        float cosLh = saturate(dot(viewNormal, eyeDir));
         
         float3 F = FresnelSchlick(albedo.xyz, metallic, eyeDir, viewReflectDir);
         float D = NormalDistributionGGXTR(viewNormal, viewReflectDir, roughness);
