@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "CameraScript.h"
 #include "FontWrapper.h"
+#include "Model.h"
 
 #include "GridScript.h"
 
@@ -76,6 +77,43 @@ namespace dru
 	void SceneTitle::Enter()
 	{
 		//mDeleteObj = true;
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
+		//model->Test();
+		const Model::ModelNode* node = model->FindNode(L"nw4f_root");
+		const Model::ModelNode* node1 = model->FindNode(L"JointRoot");
+		const Model::ModelNode* node2 = model->FindNode(L"Hip");
+		const Model::ModelNode* node3 = model->FindNode(L"LegL1");
+		const Model::ModelNode* node4 = model->FindNode(L"LegL2");
+		const Model::ModelNode* node5 = model->FindNode(L"FootL");
+
+		/*0 "nw4f_root" - 1
+			1 "AllRoot" 0
+			2 "JointRoot" 1
+			3 "Hip" 2
+			4 "LegL1" 3
+			5 "LegL2" 4
+			6 "FootL" 5
+			7 "ToeL" 6
+			8 "LegR1" 3
+			9 "LegR2" 8
+			10 "FootR" 9
+			11 "ToeR" 10
+			12 "Spine1" 2
+			13 "Spine2" 12
+			14 "Head" 13
+			15 "ShoulderL" 13
+			16 "ArmL1" 15
+			17 "ArmL1Sub" 16
+			18 "ArmL2" 16
+			19 "ArmL2Sub" 18
+			20 "HandL" 18
+			21 "ShoulderR" 13
+			22 "ArmR1" 21
+			23 "ArmR1Sub" 22
+			24 "ArmR2" 22
+			25 "ArmR2Sub" 24
+			26 "HandR" 24
+			27 "Mario" 0*/
 
 		{
 			mCamera = object::Instantiate<GameObj>(eLayerType::Camera, L"MainCam");
@@ -136,7 +174,7 @@ namespace dru
 			//player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 			player->GetComponent<MeshRenderer>()->SetMeshByKey(L"test0");
 
-			for (int i = 1; i < 21; ++i)
+			for (int i = 1; i < 14; ++i)
 			{
 				Player* player = object::Instantiate<Player>(eLayerType::Player);
 				player->SetPos(Vector3(0.f, 0.f, 0.f));

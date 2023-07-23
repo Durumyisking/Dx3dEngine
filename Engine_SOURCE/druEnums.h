@@ -53,6 +53,7 @@ namespace dru::enums
 		Mesh,
 		Texture,
 		Material,
+		Model,
 		Sound,
 		//Font,
 		Prefab,

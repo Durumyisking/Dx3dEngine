@@ -23,7 +23,8 @@ VSOut main(VSIn vsIn)
 {
     VSOut vsOut = (VSOut) 0.0f;
     
-    float4 worldPosition = mul(vsIn.Position, world);
+    float4 skeltonPostion = mul(vsIn.Position, cbmat4);
+    float4 worldPosition = mul(skeltonPostion, world);
     float4 viewPosition = mul(worldPosition, view);
     float4 projPosition = mul(viewPosition, projection);
     

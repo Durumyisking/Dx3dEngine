@@ -7,6 +7,13 @@ namespace dru
 	class Mesh : public Resource
 	{
 	public:
+		struct Bone
+		{
+			std::wstring mBoneName = L"not_found";
+			math::Matrix mOffsetMat = math::Matrix::Identity;
+		};
+
+	public:
 		Mesh();
 		virtual ~Mesh();
 
@@ -16,12 +23,12 @@ namespace dru
 		bool CreateIndexBuffer(void* data, UINT count);
 
 		void BindBuffer();
-
+		void BindBonMatrix();
 		void Render();
 
 		void RenderInstanced(UINT count);
 
-
+		GETSET(const Bone&, mBone, Bone)
 //		Microsoft::WRL::ComPtr<ID3D11Buffer> GetBuffer(dru::eBufferStage _eStage);
 
 	private:
@@ -33,7 +40,7 @@ namespace dru
 		D3D11_BUFFER_DESC mIBDesc;
 
 
-		UINT			mIndexCount;
-
+		UINT		mIndexCount;
+		Bone		mBone;
 	};
 }

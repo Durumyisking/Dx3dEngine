@@ -413,6 +413,7 @@
     <ClInclude Include="Box.h">
       <Filter>Common\GameObj\PhysicalGameObj\Box</Filter>
     </ClInclude>
+    <ClInclude Include="Model.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -631,6 +632,7 @@
     <ClCompile Include="Box.cpp">
       <Filter>Common\GameObj\PhysicalGameObj\Box</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

@@ -2,6 +2,9 @@
 #include "Renderer.h"
 #include "GraphicDevice.h"
 
+#include "ResourceMgr.h"
+#include "Model.h"
+#include "Renderer.h"
 namespace dru
 {
 	Mesh::Mesh()
@@ -59,6 +62,31 @@ namespace dru
 
 		GetDevice()->BindVertexBuffer(0, 1, mVertexBuffer.GetAddressOf(), &stride, &offset);
 		GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+		BindBonMatrix();
+	}
+
+	void Mesh::BindBonMatrix()
+	{
+		if (mBone.mBoneName != L"not_found")
+		{
+			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
+			math::Matrix mat = model->RecursiveGetBoneMatirx(mBone);
+
+			renderer::MaterialCB info = {};
+			info.matrix4 = mat;
+			ConstantBuffer* cb = renderer::constantBuffers[static_cast<unsigned int>(eCBType::Material)];
+			cb->SetData(&info);
+			cb->Bind(eShaderStage::All);
+		}
+		else
+		{
+			renderer::MaterialCB info = {};
+			info.matrix4 = math::Matrix::Identity;
+			ConstantBuffer* cb = renderer::constantBuffers[static_cast<unsigned int>(eCBType::Material)];
+			cb->SetData(&info);
+			cb->Bind(eShaderStage::All);
+		}
 	}
 
 

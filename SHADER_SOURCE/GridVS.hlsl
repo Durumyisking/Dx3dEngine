@@ -4,6 +4,7 @@ struct VSIn
 {
     float4 Pos : POSITION;
     float2 UV : TEXCOORD;
+    
 };
 
 struct VSOut

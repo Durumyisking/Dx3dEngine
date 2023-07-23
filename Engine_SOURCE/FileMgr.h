@@ -2,15 +2,6 @@
 #include "Engine.h"
 #include "Renderer.h"
 
-#include "..//External/assimp/include/assimp/Importer.hpp"
-#include "..//External/assimp/include/assimp/cimport.h"
-#include "..//External/assimp/include/assimp/postprocess.h"
-#include "..//External/assimp/include/assimp/scene.h"
-
-#pragma comment(lib, "..//External/assimp/lib/Debug/assimp-vc143-mtd.lib")
-#define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace |  aiProcess_MakeLeftHanded | aiProcess_FlipWindingOrder)
-
-
 namespace dru
 {
 	class FileMgr
@@ -44,8 +35,9 @@ namespace dru
 
 	public:
 		void FileLoad(const std::wstring& path);
-		void TestLoad(const std::wstring& path);
-		//std::string ParsingString(int startPos,std::string buf, std::string delValue){};
+
+		// 폴더명을 입력해주세요
+		bool ModelLoad(const std::wstring& path, const std::wstring& modelName);
 
 
 	private:
@@ -55,18 +47,11 @@ namespace dru
 		const ParsingNodeData readNodes(std::string& buf) const ;
 		const ParsingSkeletonData readSkeleton(std::string& buf) const;
 		const ParsingTriangleData readTriangles(std::string& buf) const;
-	private:
-		void loadModel(const aiScene* scene);
-		void processNode(aiNode* node, const aiScene* scene, std::vector<renderer::Vertex>& meshes);
-		void processMesh(const aiMesh* mesh, const aiScene* scene);
-		void processMaterial();
 
 	private:
 		ParsingVector<ParsingNodeData>					mNodeData;
 		ParsingVector<ParsingSkeletonData>				mSkeletonData;
 		ParsingVector<ParsingTriangleData>				mTriangleData;
-
-		Assimp::Importer mAssimpImporter;
 		
 	}; 
 }
