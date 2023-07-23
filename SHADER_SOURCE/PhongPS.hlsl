@@ -41,21 +41,6 @@ float4 main(VSOut vsIn) : SV_Target
         outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    else if (3 == cbtextureExistence) 
-    {
-        outColor = TextureMapping_albedo(vsIn.UV);
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-    }
-    else if (4 == cbtextureExistence) 
-    {
-        outColor = TextureMapping_albedo(vsIn.UV);
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-    }
-    else if (5 == cbtextureExistence) 
-    {
-        outColor = TextureMapping_albedo(vsIn.UV);
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-    }
 
     
     LightColor lightColor = (LightColor) 0.0f;

@@ -431,7 +431,7 @@ void GraphicDevice::BindSamplers(eShaderStage stage, UINT slot, UINT numSamplers
 		break;
 	default:
 		break;
-	}
+	}	
 }
 
 void GraphicDevice::BindSamplers(UINT slot, UINT numSamplers, ID3D11SamplerState* const* samplerState)

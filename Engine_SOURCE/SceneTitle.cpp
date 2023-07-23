@@ -135,16 +135,16 @@ void SceneTitle::Enter()
 		player->SetPos(Vector3(5.f, 5.f, 5.f));
 		player->SetScale({ 5.f, 5.f, 5.f });
 		player->SetName(L"Player");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"BrickBlockBody_nrm", L"PhongShader", L"mat_BrickBlockBody");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"PhongShader", L"mat_BrickBlockBody");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"BrickBlockBody_nrm", L"BrickBlockBody_mtl", L"PBRShader", L"mat_dirt");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"BrickBlockBody_nrm", L"BrickBlockBody_mtl", L"PBRShader", L"mat_BrickBlockBody");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
 		//player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(2.5f, 2.5f, 2.5f));
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
 		PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);

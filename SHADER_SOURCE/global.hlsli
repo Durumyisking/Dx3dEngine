@@ -56,11 +56,12 @@ float4 TextureMapping_albedo(float2 uv)
 }
 
 
+// 현재 픽셀의 normal을 얻고 viewspace로 변경한다.
 float4 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, float3 viewBiNormal)
 {
     float4 result = normalTexture.SampleLevel(anisotropicSampler, uv, 0.f);
     
-    result.xyz = normalize((result.brg * 2.f) - 1.f);
+    result.xyz = normalize((result.xyz * 2.f).xyz - 1.f);
         
 
     float3x3 matTBN =
@@ -75,3 +76,12 @@ float4 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, f
     return result;
 }
 
+float TextureMapping_metallic(float2 uv)
+{
+    return MetalTexture.SampleLevel(anisotropicSampler, uv, 0.f).r;
+}
+
+float TextureMapping_roughness(float2 uv)
+{
+    return RoughnessTexture.SampleLevel(anisotropicSampler, uv, 0.f).r;
+}

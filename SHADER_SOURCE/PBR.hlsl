@@ -24,12 +24,13 @@ struct VSOut
     
 };
 
+
 float4 main(VSOut vsIn) : SV_Target
 {
-    float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
-    float4 normal = (float4) 0.f;
-    float metalic = 0.f;
-    float roughness = 0.f;
+    float4  outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
+    float4  normal = (float4) 0.f;
+    float   metallic = 0.05f;
+    float   roughness = 0.f;
          
     if (0 == cbtextureExistence)
     {
@@ -49,27 +50,31 @@ float4 main(VSOut vsIn) : SV_Target
     {
         outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+        metallic = TextureMapping_metallic(vsIn.UV);
     }
     else if (4 == cbtextureExistence)// roughness 추가필요
     {
         outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+        metallic = TextureMapping_metallic(vsIn.UV);
+        roughness = TextureMapping_roughness(vsIn.UV);
     }
     else if (5 == cbtextureExistence)// emissive 추가필요
     {
         outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-
     
+  
     LightColor lightColor = (LightColor) 0.0f;
     
     for (int i = 0; i < lightCount; i++)
     {
-        CalculateLight3D(vsIn.ViewPos, normal.xyz, i, lightColor);
+        outColor.xyz = CalculateLight3D_PBR(outColor, normal.xyz, metallic, roughness, vsIn.ViewPos, i, lightColor);
     }
     
     outColor = CombineLights(outColor, lightColor);
+    
     
     if (outColor.w == 0)
         discard;
