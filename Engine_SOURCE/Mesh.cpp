@@ -63,7 +63,7 @@ namespace dru
 		GetDevice()->BindVertexBuffer(0, 1, mVertexBuffer.GetAddressOf(), &stride, &offset);
 		GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 
-		BindBonMatrix();
+		//BindBonMatrix();
 	}
 
 	void Mesh::BindBonMatrix()

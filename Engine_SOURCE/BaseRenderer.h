@@ -6,6 +6,7 @@ namespace dru
 	using namespace math;
 	class Mesh;
 	class Material;
+	class Model;
 	class BaseRenderer : public Component
 	{
 
@@ -36,9 +37,13 @@ namespace dru
 		void LODOn() { mbUseLOD = true; }
 		void LODOff() { mbUseLOD = false; }
 
+	public:
+		GETSET(Model*, mModel, Model)
+
 	private:
 		Mesh* mMesh;
 		Material* mMaterial;
+		Model* mModel;
 
 
 		bool mbIsAnim;

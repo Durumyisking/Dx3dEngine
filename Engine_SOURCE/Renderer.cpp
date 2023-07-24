@@ -489,7 +489,7 @@ namespace dru::renderer
 	{
 
 #pragma region InputLayout
-		D3D11_INPUT_ELEMENT_DESC arrLayout[6] = {}; 
+		D3D11_INPUT_ELEMENT_DESC arrLayout[8] = {}; 
 
 		arrLayout[0].AlignedByteOffset = 0; 
 		arrLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
@@ -533,6 +533,19 @@ namespace dru::renderer
 		arrLayout[5].SemanticName = "NORMAL";
 		arrLayout[5].SemanticIndex = 0;
 
+		arrLayout[6].AlignedByteOffset = 76;
+		arrLayout[6].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[6].InputSlot = 0;
+		arrLayout[6].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		arrLayout[6].SemanticName = "BLENDINDICES";
+		arrLayout[6].SemanticIndex = 0;
+
+		arrLayout[7].AlignedByteOffset = 92;
+		arrLayout[7].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[7].InputSlot = 0;
+		arrLayout[7].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		arrLayout[7].SemanticName = "BLENDWEIGHT";
+		arrLayout[7].SemanticIndex = 0;
 		//Vector3 tangent;
 		//Vector3 biNormal;
 		//Vector3 normal;
@@ -601,13 +614,13 @@ namespace dru::renderer
 			, debugGeometryShader->GetInputLayoutAddr());
 
 		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
-		GetDevice()->CreateInputLayout(arrLayout, 6
+		GetDevice()->CreateInputLayout(arrLayout, 8
 			, phongShader->GetVSBlobBufferPointer()
 			, phongShader->GetVSBlobBufferSize()
 			, phongShader->GetInputLayoutAddr());
 
 		Shader* flatShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FlatShader");
-		GetDevice()->CreateInputLayout(arrLayout, 6
+		GetDevice()->CreateInputLayout(arrLayout, 8
 			, flatShader->GetVSBlobBufferPointer()
 			, flatShader->GetVSBlobBufferSize()
 			, flatShader->GetInputLayoutAddr());

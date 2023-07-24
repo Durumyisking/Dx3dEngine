@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "Texture.h"
 #include "def.h"
+#include "StructedBuffer.h"
 
 namespace fs = std::filesystem;
 namespace dru {
@@ -11,10 +12,15 @@ namespace dru {
 	dru::Model::Model()
 		: Resource(eResourceType::Model)
 	{
+		mStructure = new StructedBuffer();
 	}
 
 	dru::Model::~Model()
 	{
+		if (mStructure)
+			delete mStructure;
+
+		mStructure = nullptr;
 	}
 
 	HRESULT dru::Model::Load(const std::wstring& path)
@@ -29,7 +35,10 @@ namespace dru {
 		}
 
 		std::wstring sceneName = ConvertToW_String(aiscene->mName.C_Str());
+		mRootNodeName = ConvertToW_String(aiscene->mRootNode->mName.C_Str());
 		recursiveProcessNode(aiscene->mRootNode, aiscene, sceneName);
+
+		mStructure->Create(sizeof(BoneMat), mBones.size(), eSRVType::SRV, nullptr, true);
 
 		return S_OK;
 	}
@@ -62,6 +71,43 @@ namespace dru {
 		return outMat;
 	}
 
+	void Model::Bind()
+	{
+
+		BoneMat boneInfo = {};
+		std::vector<BoneMat> boneMat;
+		for (Mesh::Bone bone : mBones)
+		{
+			boneInfo.mat = RecursiveGetBoneMatirx(bone);
+			boneMat.emplace_back(boneInfo);
+		}
+
+		mStructure->SetData(boneMat.data(), boneMat.size());
+		mStructure->BindSRV(eShaderStage::VS, 10);
+
+		for (Mesh* mesh : mMeshes)
+		{
+			if (mesh == nullptr)
+				continue;
+
+			mesh->BindBuffer();
+			mesh->Render();
+		}
+
+		mStructure->Clear();
+	}
+
+	void Model::Render()
+	{
+		for (Mesh* mesh : mMeshes)
+		{
+			if (mesh == nullptr)
+				continue;
+
+			//mesh->Render();
+		}
+	}
+
 	void dru::Model::recursiveProcessNode(aiNode* node, const aiScene* scene, std::wstring rootName)
 	{
 		std::wstring wNodeName = ConvertToW_String(node->mName.C_Str());
@@ -73,7 +119,7 @@ namespace dru {
 			modelnode.mName = wNodeName;
 			modelnode.mRootName = rootName;
 			modelnode.mTransformation = ConvertMatrixt(node->mTransformation);
-			
+
 			mNodes.insert(std::pair<std::wstring, ModelNode>(modelnode.mName, modelnode));
 		}
 
@@ -102,7 +148,7 @@ namespace dru {
 		{
 			renderer::Vertex vertex = {};
 			math::Vector3 pos = {};
-			
+
 			pos.x = mesh->mVertices[i].x;
 			pos.y = mesh->mVertices[i].y;
 			pos.z = mesh->mVertices[i].z;
@@ -151,32 +197,65 @@ namespace dru {
 			}
 		}
 
-		static int a = 0;
-		Mesh* inMesh = new Mesh();
-		inMesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
-		inMesh->CreateIndexBuffer(indexes.data(), indexes.size());
-		for (UINT i = 0; i < mesh->mNumBones; ++i)
+		int numBones = 0;
+		for (int i = 0; i < mesh->mNumBones; ++i)
 		{
 			Mesh::Bone bone = {};
 			aiBone* aiBone = mesh->mBones[i];
-
-			for (int i = 0; i < aiBone->mNumWeights; ++i)
-			{
-				aiVertexWeight* weight = aiBone->mWeights;
-			}
 			bone.mBoneName = ConvertToW_String(aiBone->mName.C_Str());
 			bone.mOffsetMat = ConvertMatrixt(aiBone->mOffsetMatrix);
-			inMesh->SetBone(bone);
 			mBones.emplace_back(bone);
+
+			UINT bonIndex = numBones++;
+			for (int j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
+			{
+				UINT vertexID = mesh->mBones[i]->mWeights[j].mVertexId;
+				float weight = mesh->mBones[i]->mWeights[j].mWeight;
+
+				if (vertexes[vertexID].mWeight.x == 0.0f)
+				{
+					vertexes[vertexID].mBones.x = mBones.size() - 1;
+					vertexes[vertexID].mWeight.x = weight;
+				}
+				else if (vertexes[vertexID].mWeight.y == 0.0f)
+				{
+					vertexes[vertexID].mBones.y = mBones.size() - 1;
+					vertexes[vertexID].mWeight.y = weight;
+				}
+				else if (vertexes[vertexID].mWeight.z == 0.0f)
+				{
+					vertexes[vertexID].mBones.z = mBones.size() - 1;
+					vertexes[vertexID].mWeight.z = weight;
+				}
+				else if (vertexes[vertexID].mWeight.w == 0.0f)
+				{
+					vertexes[vertexID].mBones.w = mBones.size() - 1;
+					vertexes[vertexID].mWeight.w = weight;
+				}
+			}
 		}
-		
+
+		Mesh* inMesh = new Mesh();
+		inMesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
+		inMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+
+		mMeshes.emplace_back(inMesh);
+
+		/*	for (UINT i = 0; i < mesh->mNumBones; ++i)
+			{
+				Mesh::Bone bone = {};
+				aiBone* aiBone = mesh->mBones[i];
+				bone.mBoneName = ConvertToW_String(aiBone->mName.C_Str());
+				bone.mOffsetMat = ConvertMatrixt(aiBone->mOffsetMatrix);
+				inMesh->SetBone(bone);
+				mBones.emplace_back(bone);
+			}*/
+
 
 		std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 		inMesh->SetName(wName);
 		iter->second.mMeshes.emplace_back(inMesh);
-		std::wstring testname = L"test" + std::to_wstring(a);
-		GETSINGLE(ResourceMgr)->Insert<Mesh>(testname, inMesh);
-		a++;
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(wName, inMesh);
 	}
 
 	void dru::Model::recursiveProcessMaterial()
@@ -187,9 +266,12 @@ namespace dru {
 	void Model::recursiveProcessBoneMatrix(math::Matrix& matrix, const std::wstring& nodeName)
 	{
 		const ModelNode* modelNode = FindNode(nodeName);
-		matrix *= modelNode->mTransformation;
-		if (modelNode->mRootName == L"")
+		matrix = matrix * modelNode->mTransformation;
+
+		if (L"" == modelNode->mRootName || L"Scene" == modelNode->mRootName)
+		{
 			return;
+		}
 
 		recursiveProcessBoneMatrix(matrix, modelNode->mRootName);
 	}

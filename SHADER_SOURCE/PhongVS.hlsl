@@ -1,10 +1,22 @@
 #include "global.hlsli"
 
+//struct BoneMatrix
+//{
+//    matrix bondemat;
+//};
+//StructuredBuffer<BoneMatrix> BoneArr : register(t10);
+
+
 struct VSIn
 {
     float4 Position : POSITION;
     float2 UV : TEXCOORD;
+    float3 Tangent : TANGENT;
+    float3 BiNormal : BINORMAL;
     float3 Normal : NORMAL;
+    
+    float4 BlendID : BLENDINDICES0;
+    float4 BlendWeight : BLENDWEIGHT0;
 };
 
 struct VSOut
@@ -23,9 +35,21 @@ VSOut main(VSIn vsIn)
 {
     VSOut vsOut = (VSOut) 0.0f;
     
-    float4 skeltonPostion = mul(vsIn.Position, cbmat4);
-    float4 worldPosition = mul(skeltonPostion, world);
-    float4 viewPosition = mul(worldPosition, view);
+    float4 pos = (float4)0.0f;
+    float BlendWeightsArr[4] = (float[4])vsIn.BlendWeight;
+    uint BlendIDX[4] = (uint[4]) vsIn.BlendID;
+    
+    for (int i = 0; i < 4; ++i)
+    {
+        if (BlendWeightsArr[i] == 0.0f)
+            break;
+        
+        pos += mul(vsIn.Position, world * BoneArr[BlendIDX[i]].bondemat) * BlendWeightsArr[i];
+    }
+    
+    //float4 skeltonPostion = mul(vsIn.Position, cbmat4);
+    //float4 worldPosition = mul(pos, world);
+    float4 viewPosition = mul(pos, view);
     float4 projPosition = mul(viewPosition, projection);
     
     vsOut.Position = projPosition;

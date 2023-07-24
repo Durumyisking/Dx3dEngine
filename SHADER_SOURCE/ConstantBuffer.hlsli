@@ -108,3 +108,9 @@ cbuffer LaserHit : register(b9)
     float laserhit_ElapsedY;
     float laserhit_PrevElapsedY;
 }
+
+struct BoneMatrix
+{
+    matrix bondemat;
+};
+StructuredBuffer<BoneMatrix> BoneArr : register(t10);

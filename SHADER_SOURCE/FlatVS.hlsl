@@ -5,6 +5,7 @@ struct VSIn
     float4 Position : POSITION;
     float2 UV : TEXCOORD;
     float3 Normal : NORMAL;
+    
 };
 
 struct VSOut

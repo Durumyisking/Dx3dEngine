@@ -1,5 +1,6 @@
 #pragma once
 #include "EngineResource.h"
+#include "StructedBuffer.h"
 
 
 #include "..//External/assimp/include/assimp/Importer.hpp"
@@ -28,9 +29,14 @@ namespace dru
 			std::wstring mRootName = L"";
 		};
 
+		struct BoneMat
+		{
+			math::Matrix mat;
+		};
 
 		typedef std::map<std::wstring, Model::ModelNode> NodeMap;
 		typedef std::vector<Mesh::Bone> BoneVector;
+		typedef std::vector<Mesh*> MeshVector;
 	public:
 		Model();
 		virtual ~Model();
@@ -39,6 +45,7 @@ namespace dru
 
 		const ModelNode* FindNode(const std::wstring& nodeName) const;
 		math::Matrix RecursiveGetBoneMatirx(Mesh::Bone& bone);
+
 	public:
 		std::wstring ConvertToW_String(const char* str);
 		std::string ConvertToString(const wchar_t* str);
@@ -50,10 +57,22 @@ namespace dru
 
 		void recursiveProcessBoneMatrix(math::Matrix& matrix, const std::wstring& nodeName);
 
+	public:
+		void Bind();
+		void Render();
+
+		GETSET(const std::wstring&, mRootNodeName, RootNodeName)
+
+
 	private:
 		Assimp::Importer mAssimpImporter;
+		std::wstring mRootNodeName;
+
 		NodeMap mNodes;
 		BoneVector mBones;
+		MeshVector mMeshes;
+
+		StructedBuffer* mStructure;
 	};
 }
 

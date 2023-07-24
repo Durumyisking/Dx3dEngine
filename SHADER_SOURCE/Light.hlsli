@@ -20,7 +20,7 @@ struct LightAttribute
     int type;
     
     int padding;
-
+    
 };
 
 

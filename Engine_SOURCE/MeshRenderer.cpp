@@ -1,6 +1,7 @@
 #include "MeshRenderer.h"
 #include "GameObj.h"
 #include "Transform.h"
+#include "Model.h"
 
 namespace dru
 {
@@ -35,9 +36,17 @@ namespace dru
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
 		GetMaterial()->Bind();
-		GetMesh()->BindBuffer();
 
-		GetMesh()->Render();
+		if (nullptr != GetModel())
+		{
+			GetModel()->Bind();
+			GetModel()->Render();
+		}
+		else
+		{
+			GetMesh()->BindBuffer();
+			GetMesh()->Render();
+		}
 
 		GetMaterial()->Clear();
 	}
