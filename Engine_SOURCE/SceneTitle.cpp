@@ -137,9 +137,9 @@ void SceneTitle::Enter()
 		player->SetName(L"Player");
 		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"BrickBlockBody_nrm", L"BrickBlockBody_mtl", L"PBRShader", L"mat_dirt");
 		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"BrickBlockBody_nrm", L"BrickBlockBody_mtl", L"PBRShader", L"mat_BrickBlockBody");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
-		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
+		//player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 

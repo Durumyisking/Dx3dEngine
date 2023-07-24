@@ -1,15 +1,5 @@
 #include "global.hlsli"
 
-struct VSIn
-{
-    float4 Position : POSITION;
-    float2 UV : TEXCOORD;
-    float3 Tangent : TANGENT;
-    float3 Normal : NORMAL;
-    float3 BiNormal : BINORMAL;
-
-};
-
 struct VSOut
 {
     float4 Position : SV_Position;
@@ -25,7 +15,7 @@ struct VSOut
 float4 main(VSOut vsIn) : SV_Target
 {
     float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
-    float4 normal = (float4) 0.f;
+    float3 normal = (float3) 0.f;
 
     if (0 == cbtextureExistence)
     {
