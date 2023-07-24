@@ -928,6 +928,20 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_mtl", L"Textures/WanWan/WanwanBig_Body_mtl.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_rgh", L"Textures/WanWan/WanwanBig_Body_rgh.png");
 
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"tablecloth_albedo", L"Textures/a/loose-tablecloth_albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"tablecloth_normal", L"Textures/a/loose-tablecloth_normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"tablecloth_metallic", L"Textures/a/loose-tablecloth_metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"tablecloth_roughness", L"Textures/a/loose-tablecloth_roughness.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_albedo", L"Textures/a/older-padded-leather_albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_normal", L"Textures/a/older-padded-leather_normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_metallic", L"Textures/a/older-padded-leather_metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_roughness", L"Textures/a/older-padded-leather_roughness.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_albedo", L"Textures/a/used-stainless-steel2_albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_normal", L"Textures/a/used-stainless-steel2_normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_metallic", L"Textures/a/used-stainless-steel2_metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_roughness", L"Textures/a/used-stainless-steel2_roughness.png");
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,

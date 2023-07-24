@@ -61,7 +61,7 @@ float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, f
 {
     float3 result = normalTexture.SampleLevel(anisotropicSampler, uv, 0.f).xyz;
     
-    result.xyz = normalize((result.xzy * 2.f).xyz - 1.f);
+    result.xyz = normalize((result.xyz * 2.f).xyz - 1.f);
         
 
     float3x3 matTBN =
