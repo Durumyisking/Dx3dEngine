@@ -670,6 +670,11 @@ namespace renderer
 			, PBRShader->GetVSBlobBufferSize()
 			, PBRShader->GetInputLayoutAddr());
 
+		Shader* deferredShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		GetDevice()->CreateInputLayout(arrLayout, 6
+			, deferredShader->GetVSBlobBufferPointer()
+			, deferredShader->GetVSBlobBufferSize()
+			, deferredShader->GetInputLayoutAddr());
 
 #pragma endregion
 
@@ -901,7 +906,10 @@ namespace renderer
 		postProcessShader->SetDSState(eDepthStencilType::NoWrite);
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"PostProcessShader", postProcessShader);
 
-
+		Shader* deferredShader = new Shader();
+		deferredShader->Create(eShaderStage::VS, L"DeferredVS.hlsl", "main");
+		deferredShader->Create(eShaderStage::PS, L"DeferredPS.hlsl", "main");
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"DeferredShader", deferredShader);
 	}
 
 	void LoadDefaultTexture()
@@ -1047,6 +1055,19 @@ namespace renderer
 			Material* material = new Material(L"texCursor", L"UIShader");
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"CursorMat", material);
 		};
+
+		// Deferred Materials
+		Shader* deferredShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* deferredMaterial = new Material();
+		deferredMaterial->SetRenderingMode(eRenderingMode::DeferredOpaque);
+		deferredMaterial->SetShader(deferredShader);
+
+		// specular map 추가 사용가능
+		Texture* albedo = GETSINGLE(ResourceMgr)->Find<Texture>(L"BrickBlockBody_alb");
+		deferredMaterial->SetTexture(eTextureSlot::T0, albedo); // albedo Texture
+		albedo = GETSINGLE(ResourceMgr)->Find<Texture>(L"BrickBlockBody_nrm");
+		deferredMaterial->SetTexture(eTextureSlot::T1, albedo); // normal Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", deferredMaterial);
 	}
 
 
@@ -1088,7 +1109,7 @@ namespace renderer
 
 	void Render()
 	{
-		GetDevice()->OMSetRenderTarget();
+		//GetDevice()->OMSetRenderTarget();
 
 		BindNoiseTexture();
 		BindLight();
@@ -1160,6 +1181,19 @@ namespace renderer
 			normal = nullptr;
 			albedo = nullptr;
 			specular = nullptr;
+		}
+	}
+
+	void ClearRenderTargets()
+	{
+		for (size_t i = 0; i < static_cast<UINT>(eRenderTargetType::End); i++)
+		{
+			if (renderTargets[i] == nullptr)
+			{
+				continue;
+			}
+
+			renderTargets[i]->Clear();
 		}
 	}
 

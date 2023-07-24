@@ -207,7 +207,11 @@ namespace renderer
 	
 	void Render();
 
-	void CreateRenderTargets(); //MultiRenderTargets
+	// MultiRenderTargets
+	void CreateRenderTargets(); 
+	void ClearRenderTargets();
+
+	// Renderer
 	void PushLightAttribute(LightAttribute attribute);
 	void BindLight();
 	void BindNoiseTexture();

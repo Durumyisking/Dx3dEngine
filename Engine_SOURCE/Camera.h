@@ -61,6 +61,7 @@ public:
 
 private:
 	void sortGameObjects();
+	void renderDeferred();
 	void renderOpaque();
 	void renderCutout();
 	void renderTransparent();
@@ -85,6 +86,7 @@ private:
 	float mScale;
 
 	std::bitset<static_cast<UINT>(eLayerType::End)> mLayerMask;
+	std::vector<GameObj*> mDeferredOpaqueGameObjects;
 	std::vector<GameObj*> mOpaqueGameObjects;
 	std::vector<GameObj*> mCutoutGameObjects;
 	std::vector<GameObj*> mTransparentGameObjects;

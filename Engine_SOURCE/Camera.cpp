@@ -80,6 +80,13 @@ void Camera::Render()
 
 	sortGameObjects();
 
+	// Deferred ·»´õ¸µ 
+	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
+	renderDeferred();
+
+
+	// SwapChain ·»´õ¸µ
+	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
 	renderOpaque();
 	renderCutout();
 	renderTransparent();
@@ -154,6 +161,7 @@ void Camera::SetTarget(GameObj* target)
 
 void Camera::sortGameObjects()
 {
+	mDeferredOpaqueGameObjects.clear();
 	mOpaqueGameObjects.clear();
 	mCutoutGameObjects.clear();
 	mTransparentGameObjects.clear();
@@ -178,6 +186,17 @@ void Camera::sortGameObjects()
 		}
 	}
 
+}
+
+void Camera::renderDeferred()
+{
+	for (GameObj* obj : mDeferredOpaqueGameObjects)
+	{
+		if (renderPassCheck(obj))
+		{
+			obj->Render();
+		}
+	}
 }
 
 void Camera::renderOpaque()
@@ -227,6 +246,10 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 
 	switch (mode)
 	{
+	case eRenderingMode::DeferredOpaque:
+	case eRenderingMode::DeferredMask:
+		mDeferredOpaqueGameObjects.push_back(obj);
+		break;
 	case eRenderingMode::Opaque:
 		mOpaqueGameObjects.push_back(obj);
 		break;
