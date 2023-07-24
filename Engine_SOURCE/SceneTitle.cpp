@@ -136,7 +136,7 @@ void SceneTitle::Enter()
 		player->SetScale({ 5.f, 5.f, 5.f });
 		player->SetName(L"Player");
 		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"BrickBlockBody_nrm", L"BrickBlockBody_mtl", L"PBRShader", L"mat_BrickBlockBody");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"stainless_steel2_albedo", L"stainless_steel2_normal", L"PhongShader", L"mat_BrickBlockBody");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"stainless_steel2_albedo", L"stainless_steel2_normal", L"stainless_steel2_metallic", L"stainless_steel2_roughness", L"PBRShader", L"mat_dirt");
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");

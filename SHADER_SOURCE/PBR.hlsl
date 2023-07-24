@@ -59,21 +59,20 @@ float4 main(VSOut vsIn) : SV_Target
 
     
     // PBR     
-    float3 V        = normalize(vsIn.ViewPos); // 눈
-    float3 N        = normal; // 정점/텍스처 노말
-    float NDotV     = saturate(dot(N, V)); // 노멀 to 눈 반사각
+    float3 V        = normalize(vsIn.ViewPos);      // 눈
+    float3 N        = normal;                       // 정점/텍스처 노말
+    float NDotV     = saturate(dot(N, V));          // 노멀 to 눈 반사각
     //float R = 2.0 * NDotV * N - V; // 
     
     for (uint i = 0; i < lightCount; ++i)
     {
-        //float3 L = -normalize(mul(float4(lightAttributes[i].direction.xyz, 0.f), view)).xyz; // 빛 각도
-        float3 L    = -lightAttributes[i].direction.xyz; // 빛 각도
+        float3 L = -normalize(mul(float4(lightAttributes[i].direction.xyz, 0.f), view)).xyz; // 빛 각도
 
-        float3 H    = normalize(L + V); // 하프벡터 : 눈, 빛 반사벡터
+        float3 H    = normalize(L + V);                  // 하프벡터 : 눈, 빛 반사벡터
   
-        float NDotL = saturate(dot(N, L)); // 표면 반사 각도
-        float NDotH = saturate(dot(N, H)); // 노멀 하프벡터 각도 (하프벡터와 일치할수록 1이 나온다는것에서 의미있는 값이다)
-        float VDotH = saturate(dot(V, H)); // 눈 하프벡터 각도
+        float NDotL = saturate(dot(N, L));               // 표면 반사 각도
+        float NDotH = saturate(dot(N, H));               // 노멀 하프벡터 각도 (하프벡터와 일치할수록 1이 나온다는것에서 의미있는 값이다)
+        float VDotH = saturate(dot(V, H));               // 눈 하프벡터 각도
         float3 F    = FresnelSchlick(albedo.xyz, metallic, V, N);
         float D     = NormalDistributionGGXTR(N, H, roughness);
         float G     = GeometrySmith(N, H, L, roughness);
@@ -88,7 +87,8 @@ float4 main(VSOut vsIn) : SV_Target
         // Cook-Torrance specular microfacet BRDF.
         float3 specularBRDF = (F * D * G) / max(0.00001f, 4.0f * NDotL * NDotV);
  
-        outColor.xyz += saturate((diffuseBRDF + specularBRDF) * NDotL);
+//        outColor.xyz += saturate((diffuseBRDF + specularBRDF) * NDotL);
+        outColor.xyz += saturate((diffuseBRDF) * NDotL);
  
     }
 
