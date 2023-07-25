@@ -15,7 +15,8 @@ struct VSOut
 
 float4 main(VSOut vsIn) : SV_Target
 {
-    float4  outColor = float4(0.5f, 0.5f, 0.5f, 1.f);
+    float4 outColor = (float4) 0.f;
+    outColor.w = 1.f;
     float4  albedo = float4(0.5f, 0.5f, 0.5f, 1.f);
     float3  normal = vsIn.ViewNormal;    
     float   metallic = 0.01f;
@@ -38,13 +39,13 @@ float4 main(VSOut vsIn) : SV_Target
         albedo = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    else if (3 == cbtextureExistence) // metal 추가필요
+    else if (3 == cbtextureExistence) 
     {
         albedo = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
         metallic = TextureMapping_metallic(vsIn.UV);
     }
-    else if (4 == cbtextureExistence)// roughness 추가필요
+    else if (4 == cbtextureExistence)
     {
         albedo = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
@@ -56,16 +57,20 @@ float4 main(VSOut vsIn) : SV_Target
         albedo = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-
     
     // PBR     
-    float3 V        = normalize(vsIn.ViewPos);      // 눈
-    float3 N        = normal;                       // 정점/텍스처 노말
+    float3 V        = normalize(vsIn.ViewPos);      // pinPoint 카메라부터 픽셀로 향하는 벡터
+    float3 N        = normal;                       // 정점/텍스처 노말 뷰변환 완료
     float NDotV     = saturate(dot(N, V));          // 노멀 to 눈 반사각
     //float R = 2.0 * NDotV * N - V; // 
+
+    float3 F0 = lerp(float3(0.04f, 0.04f, 0.04f), albedo.xyz, metallic); // 금속성이 강할수록 albedo를 사용하고 아니면 0.04사용 (재질 값)
+    //F0 = (float3) 0.04f;
+
     
     for (uint i = 0; i < lightCount; ++i)
     {
+        float3 radiance = lightAttributes[i].color.specular.xyz;
         float3 L = -normalize(mul(float4(lightAttributes[i].direction.xyz, 0.f), view)).xyz; // 빛 각도
 
         float3 H    = normalize(L + V);                  // 하프벡터 : 눈, 빛 반사벡터
@@ -73,22 +78,22 @@ float4 main(VSOut vsIn) : SV_Target
         float NDotL = saturate(dot(N, L));               // 표면 반사 각도
         float NDotH = saturate(dot(N, H));               // 노멀 하프벡터 각도 (하프벡터와 일치할수록 1이 나온다는것에서 의미있는 값이다)
         float VDotH = saturate(dot(V, H));               // 눈 하프벡터 각도
-        float3 F    = FresnelSchlick(albedo.xyz, metallic, V, N);
-        float D     = NormalDistributionGGXTR(N, H, roughness);
-        float G     = GeometrySmith(N, H, L, roughness);
+        float3 F    = FresnelSchlick(F0, VDotH);
+        float D     = NormalDistributionGGXTR(NDotH, roughness); // 표면의 거침 분포를 계산함, 미세표면의 거칠기는 우리가 정확히 알 수 없기때문에 추정치를 구한다.
+        float G     = GeometrySmith(NDotL, NDotV, roughness); // 테두리 반사에 기여하는 것으로 보임
  
  
-        float3 kd   = lerp(float3(1, 1, 1) - F, float3(0.0f, 0.0f, 0.0f), metallic);
- 
- 
+        // 빛은 물질에 닿으면 여러번 굴절되어 확산 산란이 일어난다.
+        // 금속성이 높을수록 에너지를 반사하거나 흡수하기때문에 확산기여는 낮다        
+        float3 kd = lerp(float3(1.f, 1.f, 1.f) , float3(0.f, 0.f, 0.f), metallic); // f를 sub 하면 가운데 점같은거 생김
+
         // Lambert diffuse BRDF.
         float3 diffuseBRDF = kd * albedo.xyz;
-
+        
         // Cook-Torrance specular microfacet BRDF.
-        float3 specularBRDF = (F * D * G) / max(0.00001f, 4.0f * NDotL * NDotV);
- 
-//        outColor.xyz += saturate((diffuseBRDF + specularBRDF) * NDotL);
-        outColor.xyz += saturate((diffuseBRDF) * NDotL);
+        float3 specularBRDF = ((F * D * G) / max(0.00001f, 4.0f * NDotL * NDotV));
+
+        outColor.xyz += saturate((specularBRDF) * NDotL); // NDotL을 곱해 빛이 비추는 방향만 렌더링한다.
  
     }
 

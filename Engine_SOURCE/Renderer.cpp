@@ -928,10 +928,10 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_mtl", L"Textures/WanWan/WanwanBig_Body_mtl.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_rgh", L"Textures/WanWan/WanwanBig_Body_rgh.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"tablecloth_albedo", L"Textures/a/loose-tablecloth_albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"tablecloth_normal", L"Textures/a/loose-tablecloth_normal.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"tablecloth_metallic", L"Textures/a/loose-tablecloth_metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"tablecloth_roughness", L"Textures/a/loose-tablecloth_roughness.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_albedo", L"Textures/a/dented-metal_albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_normal", L"Textures/a/dented-metal_normal-dx.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_metallic", L"Textures/a/dented-metal_metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_roughnes", L"Textures/a/dented-metal_roughness.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_albedo", L"Textures/a/older-padded-leather_albedo.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_normal", L"Textures/a/older-padded-leather_normal.png");
