@@ -128,6 +128,10 @@ namespace dru
 				{
 					model->Load(entry.path());
 				}
+				else if (L".FBX" == extension || L".Fbx" == extension || L"fbx" == extension)
+				{
+					//model->Load(entry.path());
+				}
 			}
 		}
 

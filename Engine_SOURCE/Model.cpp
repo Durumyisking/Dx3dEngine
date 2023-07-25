@@ -12,7 +12,7 @@ namespace dru {
 	dru::Model::Model()
 		: Resource(eResourceType::Model)
 	{
-		mStructure = new StructedBuffer();
+		mStructure = nullptr;
 	}
 
 	dru::Model::~Model()
@@ -41,8 +41,14 @@ namespace dru {
 		mRootNodeName = ConvertToW_String(aiscene->mRootNode->mName.C_Str());
 		recursiveProcessNode(aiscene->mRootNode, aiscene, sceneName);
 
-		mStructure->Create(sizeof(BoneMat), mBones.size(), eSRVType::SRV, nullptr, true);
+		if (mStructure == nullptr)
+		{
+			mStructure = new StructedBuffer();
+			mStructure->Create(sizeof(BoneMat), mBones.size(), eSRVType::SRV, nullptr, true);
+		}
 
+		mAssimpImporter.FreeScene();
+		
 		return S_OK;
 	}
 
@@ -68,7 +74,8 @@ namespace dru {
 
 	math::Matrix Model::RecursiveGetBoneMatirx(Mesh::Bone& bone)
 	{
-		math::Matrix outMat = FindNode(L"Scene")->mTransformation;
+		math::Matrix outMat = FindNode(mRootNodeName)->mTransformation;
+		//outMat = bone.mOffsetMat;
 		recursiveProcessBoneMatrix(outMat, bone.mBoneName);
 
 		return outMat;
@@ -125,6 +132,11 @@ namespace dru {
 			modelnode.mTransformation = ConvertMatrix(node->mTransformation);
 
 			mNodes.insert(std::pair<std::wstring, ModelNode>(modelnode.mName, modelnode));
+		}
+		else
+		{
+			ModelNode test = iter->second;
+			int a = 0;
 		}
 
 		for (UINT i = 0; i < node->mNumMeshes; ++i)
@@ -261,7 +273,7 @@ namespace dru {
 		const ModelNode* modelNode = FindNode(nodeName);
 		matrix = matrix * modelNode->mTransformation;
 
-		if (L"" == modelNode->mRootName || L"Scene" == modelNode->mRootName)
+		if (L"" == modelNode->mRootName || mRootNodeName == modelNode->mRootName)
 		{
 			return;
 		}

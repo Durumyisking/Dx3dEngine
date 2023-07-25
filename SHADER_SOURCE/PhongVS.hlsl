@@ -15,8 +15,8 @@ struct VSIn
     float3 BiNormal : BINORMAL;
     float3 Normal : NORMAL;
     
-    float4 BlendID : BLENDINDICES0;
-    float4 BlendWeight : BLENDWEIGHT0;
+    float4 BlendID : BLENDINDICES;
+    float4 BlendWeight : BLENDWEIGHT;
 };
 
 struct VSOut
@@ -41,8 +41,8 @@ VSOut main(VSIn vsIn)
    
     for (int i = 0; i < 4; ++i)
     {
-        float4 localPos = mul(vsIn.Position, transpose(BoneArr[BlendIDX[i]].bondeoffsetmat));
-        float4 transPomation = mul(localPos, transpose(BoneArr[BlendIDX[i]].bondemat));
+        float4 localPos = mul(vsIn.Position, BoneArr[BlendIDX[i]].bondeoffsetmat);
+        float4 transPomation = mul(vsIn.Position, BoneArr[BlendIDX[i]].bondemat);
         
         pos += transPomation * BlendWeightsArr[i];
 
