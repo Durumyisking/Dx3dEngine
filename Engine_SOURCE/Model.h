@@ -31,6 +31,7 @@ namespace dru
 
 		struct BoneMat
 		{
+			math::Matrix offsetmat;
 			math::Matrix mat;
 		};
 
@@ -49,7 +50,7 @@ namespace dru
 	public:
 		std::wstring ConvertToW_String(const char* str);
 		std::string ConvertToString(const wchar_t* str);
-		math::Matrix ConvertMatrixt(aiMatrix4x4 aimat);
+		math::Matrix ConvertMatrix(aiMatrix4x4 aimat);
 	private:
 		void recursiveProcessNode(aiNode* node, const aiScene* scene, std::wstring rootName);
 		void recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::wstring& nodeName);

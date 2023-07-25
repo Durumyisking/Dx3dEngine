@@ -18,7 +18,10 @@ namespace dru {
 	dru::Model::~Model()
 	{
 		if (mStructure)
+		{
+			mStructure->Clear();
 			delete mStructure;
+		}
 
 		mStructure = nullptr;
 	}
@@ -65,7 +68,7 @@ namespace dru {
 
 	math::Matrix Model::RecursiveGetBoneMatirx(Mesh::Bone& bone)
 	{
-		math::Matrix outMat = bone.mOffsetMat;
+		math::Matrix outMat = FindNode(L"Scene")->mTransformation;
 		recursiveProcessBoneMatrix(outMat, bone.mBoneName);
 
 		return outMat;
@@ -76,8 +79,9 @@ namespace dru {
 
 		BoneMat boneInfo = {};
 		std::vector<BoneMat> boneMat;
-		for (Mesh::Bone bone : mBones)
+		for (Mesh::Bone& bone : mBones)
 		{
+			boneInfo.offsetmat = bone.mOffsetMat;
 			boneInfo.mat = RecursiveGetBoneMatirx(bone);
 			boneMat.emplace_back(boneInfo);
 		}
@@ -118,7 +122,7 @@ namespace dru {
 			ModelNode modelnode = {};
 			modelnode.mName = wNodeName;
 			modelnode.mRootName = rootName;
-			modelnode.mTransformation = ConvertMatrixt(node->mTransformation);
+			modelnode.mTransformation = ConvertMatrix(node->mTransformation);
 
 			mNodes.insert(std::pair<std::wstring, ModelNode>(modelnode.mName, modelnode));
 		}
@@ -203,7 +207,7 @@ namespace dru {
 			Mesh::Bone bone = {};
 			aiBone* aiBone = mesh->mBones[i];
 			bone.mBoneName = ConvertToW_String(aiBone->mName.C_Str());
-			bone.mOffsetMat = ConvertMatrixt(aiBone->mOffsetMatrix);
+			bone.mOffsetMat =ConvertMatrix(aiBone->mOffsetMatrix);
 			mBones.emplace_back(bone);
 
 			UINT bonIndex = numBones++;
@@ -238,18 +242,7 @@ namespace dru {
 		Mesh* inMesh = new Mesh();
 		inMesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
 		inMesh->CreateIndexBuffer(indexes.data(), indexes.size());
-
 		mMeshes.emplace_back(inMesh);
-
-		/*	for (UINT i = 0; i < mesh->mNumBones; ++i)
-			{
-				Mesh::Bone bone = {};
-				aiBone* aiBone = mesh->mBones[i];
-				bone.mBoneName = ConvertToW_String(aiBone->mName.C_Str());
-				bone.mOffsetMat = ConvertMatrixt(aiBone->mOffsetMatrix);
-				inMesh->SetBone(bone);
-				mBones.emplace_back(bone);
-			}*/
 
 
 		std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
@@ -290,7 +283,7 @@ namespace dru {
 		return wName;
 	}
 
-	math::Matrix Model::ConvertMatrixt(aiMatrix4x4 aimat)
+	math::Matrix Model::ConvertMatrix(aiMatrix4x4 aimat)
 	{
 		dru::math::Matrix outMat = dru::math::Matrix::Identity;
 		outMat._11 = aimat.a1, outMat._12 = aimat.a2, outMat._13 = aimat.a3, outMat._14 = aimat.a4;

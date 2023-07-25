@@ -35,19 +35,19 @@ VSOut main(VSIn vsIn)
 {
     VSOut vsOut = (VSOut) 0.0f;
     
-    float4 pos = (float4)0.0f;
+    float4 pos = (float4) 0.0f;
     float BlendWeightsArr[4] = (float[4])vsIn.BlendWeight;
-    uint BlendIDX[4] = (uint[4]) vsIn.BlendID;
-    
+    float BlendIDX[4] = (float[4]) vsIn.BlendID;
+   
     for (int i = 0; i < 4; ++i)
     {
-        if (BlendWeightsArr[i] == 0.0f)
-            break;
+        float4 localPos = mul(vsIn.Position, transpose(BoneArr[BlendIDX[i]].bondeoffsetmat));
+        float4 transPomation = mul(localPos, transpose(BoneArr[BlendIDX[i]].bondemat));
         
-        pos += mul(vsIn.Position, world * BoneArr[BlendIDX[i]].bondemat) * BlendWeightsArr[i];
+        pos += transPomation * BlendWeightsArr[i];
+
     }
     
-    //float4 skeltonPostion = mul(vsIn.Position, cbmat4);
     //float4 worldPosition = mul(pos, world);
     float4 viewPosition = mul(pos, view);
     float4 projPosition = mul(viewPosition, projection);

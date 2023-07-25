@@ -88,7 +88,8 @@ namespace dru
 
 			// - 이동 변환 행렬
 			Matrix position;
-			position.Translation(mRelativePosition);
+			/*position.Translation(mRelativePosition);*/
+			position.Translation(Vector3(10.f,10.f,10.f)); 
 			mWorldPosition = mRelativePosition;
 
 			mWorld = scale * rotation * position;

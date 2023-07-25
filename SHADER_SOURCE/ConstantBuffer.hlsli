@@ -111,6 +111,7 @@ cbuffer LaserHit : register(b9)
 
 struct BoneMatrix
 {
+    matrix bondeoffsetmat;
     matrix bondemat;
 };
 StructuredBuffer<BoneMatrix> BoneArr : register(t10);
