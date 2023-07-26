@@ -164,8 +164,8 @@ void SceneTitle::Enter()
 		player->SetScale({ 5.f, 5.f, 5.f });
 		player->SetName(L"Player");
 		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dented_metal_roughnes", L"padded_leather_normal", L"PhongShader", L"mat_dirt");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"padded_leather_albedo", L"padded_leather_normal", L"padded_leather_metallic", L"padded_leather_roughness", L"PBRShader", L"mat_dirt");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dented_metal_albedo", L"dented_metal_normal", L"dented_metal_metallic", L"dented_metal_roughnes", L"PBRShader", L"mat_dirt");
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"padded_leather_albedo", L"padded_leather_normal", L"padded_leather_metallic", L"padded_leather_roughness", L"PBRShader", L"mat_dirt");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"albedo", L"normal", L"metallic", L"roughness", L"PBRShader", L"mat_dirt");
 		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");

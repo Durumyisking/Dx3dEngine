@@ -81,7 +81,7 @@ namespace renderer
 		float	xyzPadding2;
 		Vector3 xyz3;
 		float	xyzPadding3;
-		Vector3 xyz4;
+		Vector3 CamPosition;
 		float	xyzPadding4;
 
 		Vector4 xyzw1;

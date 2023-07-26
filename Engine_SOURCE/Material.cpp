@@ -1,4 +1,5 @@
 #include "Material.h"
+#include "GameObj.h"
 
 
 Material::Material()
@@ -182,8 +183,8 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::Vector3_3:
 		mMaterialConstantBuffer.xyz3 = *static_cast<Vector3*>(data);
 		break;
-	case eGPUParam::Vector3_4:
-		mMaterialConstantBuffer.xyz4 = *static_cast<Vector3*>(data);
+	case eGPUParam::CamPosition:
+		mMaterialConstantBuffer.CamPosition = *static_cast<Vector3*>(data);
 		break;
 	case eGPUParam::Vector4_1:
 		mMaterialConstantBuffer.xyzw1 = *static_cast<Vector4*>(data);
@@ -292,6 +293,8 @@ void Material::BindingTextures()
 	{
 		++mMaterialConstantBuffer.bTextureExistence;
 	}
+
+//	mMaterialConstantBuffer.CamPosition = renderer::mainCamera->GetOwner()->GetComponent<Transform>()->GetWorldPosition();
 
 	pMaterialCB->SetData(&mMaterialConstantBuffer);
 	pMaterialCB->Bind(eShaderStage::VS);

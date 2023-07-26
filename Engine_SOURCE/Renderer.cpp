@@ -541,7 +541,7 @@ namespace renderer
 	{
 
 #pragma region InputLayout
-		D3D11_INPUT_ELEMENT_DESC arrLayout[6] = {};
+		D3D11_INPUT_ELEMENT_DESC arrLayout[7] = {};
 
 		arrLayout[0].AlignedByteOffset = 0;
 		arrLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -942,6 +942,11 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_normal", L"Textures/a/used-stainless-steel2_normal.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_metallic", L"Textures/a/used-stainless-steel2_metallic.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_roughness", L"Textures/a/used-stainless-steel2_roughness.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"albedo", L"Textures/a/albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"normal", L"Textures/a/normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"metallic", L"Textures/a/metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"roughness", L"Textures/a/roughness.png");
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,

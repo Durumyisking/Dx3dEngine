@@ -193,7 +193,7 @@ enum class eGPUParam
 	Vector3_1,
 	Vector3_2,
 	Vector3_3,
-	Vector3_4,
+	CamPosition,
 	Vector4_1,
 	Vector4_2,
 	Vector4_3,
