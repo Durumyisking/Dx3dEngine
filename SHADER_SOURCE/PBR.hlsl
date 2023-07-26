@@ -60,14 +60,12 @@ float4 main(VSOut vsIn) : SV_Target
         albedo = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    metallic = 0.f;
-    roughness = 1.f;
+
  
     // PBR     
     float3 V = normalize(-vsIn.ViewPos); // 뷰공간 pinPoint(0,0,0)부터 픽셀로 향하는 벡터
     float3 N = normal; // 정점/텍스처 노말 뷰변환 완료
-    float NDotV = saturate(dot(N, V)); // 노멀 to 눈 반사각
-    //float R = 2.0 * NDotV * N - V; // 
+    float NDotV = saturate(dot(N, V)); // 노멀 to 눈 반사각 
 
     float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // 금속성이 강할수록 albedo를 사용하고 아니면 0.04사용 (재질 값)
 
@@ -96,7 +94,7 @@ float4 main(VSOut vsIn) : SV_Target
         float3 diffuseBRDF = kd * albedo.xyz;
         
         // Cook-Torrance specular microfacet BRDF.
-        float3 specularBRDF = ((F * D * G) / max(Epsilon, 4.0f * NDotL * NDotV));
+        float3 specularBRDF = ((F * G) / max(Epsilon, 4.0f * NDotL * NDotV));
 
         outColor.xyz += saturate((diffuseBRDF + specularBRDF) * Lradiance * NDotL); // NDotL을 곱하지 않으면 diffuse가 모든 면에 작용한다.
 
