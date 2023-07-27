@@ -40,9 +40,14 @@ public:
 	eRenderingMode GetRenderingMode() const { return mMode; }
 	void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 
-	void SetMetalic(float value) { mMetalic = value; }
+	void Setmetallic(float value) { mmetallic = value; }
 	void SetRoughness(float value) { mRoughness = value; }
 	void SetAO(float value) { mAO = value; }
+
+
+	void BindingTextures();
+	void BindingPBRProperties();
+
 
 private:
 	Shader* mShader;
@@ -51,7 +56,7 @@ private:
 	PBRCB				mPBRConstantBuffer;
 	eRenderingMode		mMode;
 
-	float mMetalic;
+	float mmetallic;
 	float mRoughness;
 	float mAO;
 

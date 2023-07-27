@@ -193,7 +193,7 @@ enum class eGPUParam
 	Vector3_1,
 	Vector3_2,
 	Vector3_3,
-	Vector3_4,
+	CamPosition,
 	Vector4_1,
 	Vector4_2,
 	Vector4_3,
@@ -203,7 +203,7 @@ enum class eGPUParam
 	Matrix_3,
 	Matrix_4,
 	bTextureExistence,
-	bMetalic,
+	bmetallic,
 	Bool_2,
 	Bool_3,
 };

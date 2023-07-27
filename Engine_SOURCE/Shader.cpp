@@ -118,7 +118,7 @@ void Shader::CreatePS(const std::wstring& path, const std::string& funcName)
 	{
 		OutputDebugStringA((char*)mErrorBlob->GetBufferPointer());
 		mErrorBlob->Release();
-		mErrorBlob = nullptr;
+		mErrorBlob = nullptr;	
 	}
 
 	GetDevice()->CreatePixelShader(mPSBlob->GetBufferPointer()

@@ -1,4 +1,5 @@
 #include "Material.h"
+#include "GameObj.h"
 
 
 Material::Material()
@@ -8,7 +9,7 @@ Material::Material()
 	, mPBRConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mMetalic(0.f)
+	, mmetallic(0.f)
 	, mRoughness(0.f)
 	, mAO(0.f)
 {
@@ -20,7 +21,7 @@ Material::Material(std::wstring textureColor, std::wstring shaderName)
 	, mPBRConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mMetalic(0.f)
+	, mmetallic(0.f)
 	, mRoughness(0.f)
 	, mAO(0.f)
 {
@@ -36,7 +37,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	, mPBRConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mMetalic(0.f)
+	, mmetallic(0.f)
 	, mRoughness(0.f)
 	, mAO(0.f)
 {
@@ -54,7 +55,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	, mPBRConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mMetalic(0.f)
+	, mmetallic(0.f)
 	, mRoughness(0.f)
 	, mAO(0.f)
 {
@@ -73,7 +74,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	, mPBRConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mMetalic(0.f)
+	, mmetallic(0.f)
 	, mRoughness(0.f)
 	, mAO(0.f)
 {
@@ -93,7 +94,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	, mPBRConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mMetalic(0.f)
+	, mmetallic(0.f)
 	, mRoughness(0.f)
 	, mAO(0.f)
 {
@@ -117,7 +118,7 @@ Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring sha
 	, mPBRConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mMetalic(0.f)
+	, mmetallic(0.f)
 	, mRoughness(0.f)
 	, mAO(0.f)
 {
@@ -182,8 +183,8 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::Vector3_3:
 		mMaterialConstantBuffer.xyz3 = *static_cast<Vector3*>(data);
 		break;
-	case eGPUParam::Vector3_4:
-		mMaterialConstantBuffer.xyz4 = *static_cast<Vector3*>(data);
+	case eGPUParam::CamPosition:
+		mMaterialConstantBuffer.CamPosition = *static_cast<Vector3*>(data);
 		break;
 	case eGPUParam::Vector4_1:
 		mMaterialConstantBuffer.xyzw1 = *static_cast<Vector4*>(data);
@@ -212,8 +213,8 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::bTextureExistence:
 		mMaterialConstantBuffer.bTextureExistence = *static_cast<int*>(data);
 		break;
-	case eGPUParam::bMetalic:
-		mMaterialConstantBuffer.bMetalic = *static_cast<int*>(data);
+	case eGPUParam::bmetallic:
+		mMaterialConstantBuffer.bmetallic = *static_cast<int*>(data);
 		break;
 	case eGPUParam::Bool_2:
 		mMaterialConstantBuffer.bool2 = *static_cast<int*>(data);
@@ -240,8 +241,34 @@ void Material::Bind()
 		mTexture[i]->BindShaderResource(eShaderStage::PS, i);
 		mTexture[i]->BindShaderResource(eShaderStage::CS, i);
 	}
+	BindingTextures();	
+	BindingPBRProperties();
+
+	mShader->Bind();
+}
+void Material::Clear()
+{
+	for (size_t i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
+	{
+		if (mTexture[i] == nullptr)
+			continue;
+
+		mTexture[i]->Clear();
+	}
+
+	ConstantBuffer* pCB = renderer::constantBuffers[static_cast<UINT>(eCBType::Material)];
+	pCB->Clear();
+
+}
+void Material::SetShaderByKey(std::wstring key)
+{
+	Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(key);
+	mShader = shader;
+}
+
+void Material::BindingTextures()
+{
 	ConstantBuffer* pMaterialCB = renderer::constantBuffers[static_cast<UINT>(eCBType::Material)];
-	ConstantBuffer* pPBRCB = renderer::constantBuffers[static_cast<UINT>(eCBType::PBR)];
 
 	// 텍스처 개수
 	mMaterialConstantBuffer.bTextureExistence = 0;
@@ -267,30 +294,24 @@ void Material::Bind()
 		++mMaterialConstantBuffer.bTextureExistence;
 	}
 
+//	mMaterialConstantBuffer.CamPosition = renderer::mainCamera->GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+
 	pMaterialCB->SetData(&mMaterialConstantBuffer);
 	pMaterialCB->Bind(eShaderStage::VS);
 	pMaterialCB->Bind(eShaderStage::GS);
 	pMaterialCB->Bind(eShaderStage::PS);
-
-	mShader->Bind();
 }
-void Material::Clear()
+
+void Material::BindingPBRProperties()
 {
-	for (size_t i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
-	{
-		if (mTexture[i] == nullptr)
-			continue;
+	ConstantBuffer* pPBRCB = renderer::constantBuffers[static_cast<UINT>(eCBType::PBR)];
 
-		mTexture[i]->Clear();
-	}
+	mPBRConstantBuffer.metallic = mmetallic;
+	mPBRConstantBuffer.roughness = mRoughness;
+	mPBRConstantBuffer.ao = mAO;
 
-	ConstantBuffer* pCB = renderer::constantBuffers[static_cast<UINT>(eCBType::Material)];
-	pCB->Clear();
-
-}
-void Material::SetShaderByKey(std::wstring key)
-{
-	Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(key);
-	mShader = shader;
+	pPBRCB->SetData(&mPBRConstantBuffer);
+	pPBRCB->Bind(eShaderStage::VS);
+	pPBRCB->Bind(eShaderStage::PS);
 }
 

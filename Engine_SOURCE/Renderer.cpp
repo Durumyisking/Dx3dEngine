@@ -541,7 +541,7 @@ namespace renderer
 	{
 
 #pragma region InputLayout
-		D3D11_INPUT_ELEMENT_DESC arrLayout[6] = {};
+		D3D11_INPUT_ELEMENT_DESC arrLayout[7] = {};
 
 		arrLayout[0].AlignedByteOffset = 0;
 		arrLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -918,11 +918,35 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_normal", L"Dirt/dirt_normal.jpg");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"Textures/BlockBrickBody/BlockBrickBody_alb.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"Textures/BlockBrickBody/BlockBrickBody_emm.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"Textures/BlockBrickBody/BlockBrickBody_nrm.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"Textures/BlockBrickBody/BlockBrickBody_mtl.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"Textures/BlockBrickBody/BlockBrickBody_rgh.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"Textures/BlockBrickBody/BlockBrickBody_emm.png");
 
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_alb", L"Textures/WanWan/WanwanBig_Body_alb.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_nrm", L"Textures/WanWan/WanwanBig_Body_nrm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_mtl", L"Textures/WanWan/WanwanBig_Body_mtl.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_rgh", L"Textures/WanWan/WanwanBig_Body_rgh.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_albedo", L"Textures/a/dented-metal_albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_normal", L"Textures/a/dented-metal_normal-dx.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_metallic", L"Textures/a/dented-metal_metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_roughnes", L"Textures/a/dented-metal_roughness.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_albedo", L"Textures/a/older-padded-leather_albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_normal", L"Textures/a/older-padded-leather_normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_metallic", L"Textures/a/older-padded-leather_metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_roughness", L"Textures/a/older-padded-leather_roughness.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_albedo", L"Textures/a/used-stainless-steel2_albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_normal", L"Textures/a/used-stainless-steel2_normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_metallic", L"Textures/a/used-stainless-steel2_metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_roughness", L"Textures/a/used-stainless-steel2_roughness.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"albedo", L"Textures/a/albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"normal", L"Textures/a/normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"metallic", L"Textures/a/metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"roughness", L"Textures/a/roughness.png");
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,

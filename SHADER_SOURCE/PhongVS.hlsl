@@ -18,6 +18,7 @@ struct VSOut
     float3 ViewTangent : TANGENT;
     float3 ViewNormal : NORMAL;
     float3 ViewBiNormal : BINORMAL;
+   
 };
 
 VSOut main(VSIn vsIn)

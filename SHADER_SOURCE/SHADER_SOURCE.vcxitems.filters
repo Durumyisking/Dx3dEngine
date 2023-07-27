@@ -109,5 +109,6 @@
       <Filter>CS</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Blur.hlsli" />
+    <None Include="$(MSBuildThisFileDirectory)BRDF.hlsli" />
   </ItemGroup>
 </Project>

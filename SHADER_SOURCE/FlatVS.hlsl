@@ -4,8 +4,8 @@ struct VSIn
 {
     float4 Position : POSITION;
     float2 UV : TEXCOORD;
-    float3 Tangent : TANGENT;
     float3 Normal : NORMAL;
+    float3 Tangent : TANGENT;
     float3 BiNormal : BINORMAL;
 };
 
@@ -15,8 +15,8 @@ struct VSOut
     float2 UV : TEXCOORD;
     float3 ViewPos : POSITION;
 
-    nointerpolation float3 ViewTangent : TANGENT;
     nointerpolation float3 ViewNormal : NORMAL;
+    nointerpolation float3 ViewTangent : TANGENT;
     nointerpolation float3 ViewBiNormal : BINORMAL;
 };
 

@@ -81,7 +81,7 @@ namespace renderer
 		float	xyzPadding2;
 		Vector3 xyz3;
 		float	xyzPadding3;
-		Vector3 xyz4;
+		Vector3 CamPosition;
 		float	xyzPadding4;
 
 		Vector4 xyzw1;
@@ -95,7 +95,7 @@ namespace renderer
 		Matrix matrix4;
 
 		int bTextureExistence;
-		int bMetalic;
+		int bmetallic;
 		int bool2;
 		int bool3;
 	};

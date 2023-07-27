@@ -121,6 +121,11 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
     lightColor.ambient = lightInfo.color.ambient;
 }
 
+float3 CalculateLight3D_PBR(float4 albedo, float3 viewNormal, float metallic, float roughness, float3 viewPos, int lightIdx, inout LightColor lightColor)
+{
+    return (float3) 0.f;
+}
+
 
 float4 CombineLights(float4 color, LightColor lightColor)
 {
@@ -132,6 +137,7 @@ float4 CombineLights(float4 color, LightColor lightColor)
 
     return color;
 }
+
 
 
 //3D
