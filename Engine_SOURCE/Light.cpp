@@ -2,13 +2,14 @@
 #include "Transform.h"
 #include "GameObj.h"
 #include "Renderer.h"
-
+#include "ResourceMgr.h"
 
 
 Light::Light()
 	: Component(eComponentType::Light)
+	, mVolumeMesh(nullptr)
 {
-
+	renderer::lights.push_back(this);
 }
 
 Light::~Light()
@@ -37,4 +38,16 @@ void Light::FixedUpdate()
 
 void Light::Render()
 {
+	if (mAttribute.type == eLightType::Directional)
+	{
+		mVolumeMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"RectMesh");
+	}
+	else if (mAttribute.type == eLightType::Point)
+	{
+		mVolumeMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"CircleMesh");
+	}
+	else if (mAttribute.type == eLightType::Spot)
+	{
+		//
+	}
 }

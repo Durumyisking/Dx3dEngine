@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Graphics.h"
-
+#include "Mesh.h"
 
 
 class Light :
@@ -35,4 +35,5 @@ public:
 
 private:
 	LightAttribute mAttribute;
+	Mesh* mVolumeMesh;
 };

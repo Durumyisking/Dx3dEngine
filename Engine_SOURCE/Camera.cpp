@@ -8,6 +8,7 @@
 #include "BaseRenderer.h"
 #include "TimeMgr.h"
 #include "Layer.h"
+#include "ResourceMgr.h"
 
 extern Application application;
 
@@ -80,13 +81,29 @@ void Camera::Render()
 
 	sortGameObjects();
 
-	// Deferred ·»´õ¸µ 
+	// Deferred Opaque Render 
 	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
 	renderDeferred();
 
+	//// Deferred light Render
+	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
+	for (Light* light : renderer::lights)
+	{
+		light->Render();
+	}
 
-	// SwapChain ·»´õ¸µ
+	//SwapChain Render
 	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+
+	//// Deferred + SwapChain Merge
+	Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
+	Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
+
+	rectMesh->BindBuffer();
+	mergeMaterial->Bind();
+	rectMesh->Render();
+
+	// Forward Render
 	renderOpaque();
 	renderCutout();
 	renderTransparent();

@@ -178,6 +178,56 @@ void SceneTitle::Enter()
 	}
 
 
+	//Test
+	{
+		{
+			GameObj* test1 = object::Instantiate<GameObj>(eLayerType::Objects);
+			test1->SetPos(Vector3(0.f, 5.f, 0.f));
+			test1->SetScale({ 5.f, 5.f, 5.f });
+			test1->SetName(L"Test1");
+			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"Brick_Color", L"Brick_Normal", L"PhongShader", L"Brick_Phong_Mat");
+			test1->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			test1->GetComponent<MeshRenderer>()->SetMaterial(mat);
+			test1->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
+			//player->AddComponent<PlayerScript>(eComponentType::Script);
+
+			//Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+			//physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(2.5f, 2.5f, 2.5f));
+			//PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
+
+			//PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+			//player->AddComponent<PhysXCollider>(eComponentType::Collider);
+			//player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+		}
+
+		// DebugTest
+		{
+			GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);
+			test2->SetPos(Vector3(10.f, 5.f, 0.f));
+			test2->SetScale({ 5.f, 5.f, 5.f });
+			test2->SetName(L"Test2");
+
+			test2->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			MeshRenderer* testRender = test2->GetComponent<MeshRenderer>();
+			Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"DeferredMaterial");
+
+			testRender->SetMaterial(testMaterial);
+			testRender->SetMeshByKey(L"Cubemesh");
+		}
+
+		{
+			GameObj* test3 = object::Instantiate<GameObj>(eLayerType::Objects);
+			test3->SetPos(Vector3(-10.f, 5.f, 0.f));
+			test3->SetScale({ 5.f, 5.f, 5.f });
+			test3->SetName(L"Test3");
+			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"Brick_Color", L"Brick_Normal", L"BasicShader", L"Basic_Test_Mat");
+			test3->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			test3->GetComponent<MeshRenderer>()->SetMaterial(mat);
+			test3->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
+		}
+	}
+
 	Scene::Enter();
 }
 

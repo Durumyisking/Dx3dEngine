@@ -115,6 +115,8 @@ enum class eRenderingMode
 	Cutout, // 일부만 투명
 	Transparent,
 	PostProcess,
+
+	None,
 	End,
 };
 
@@ -152,6 +154,11 @@ enum class eTextureSlot
 
 	Array2DT10,
 	Array2DT11,
+
+	PositionTarget = 14,
+	NormalTarget,
+	AlbedoTarget,
+	SpecularTarget,
 
 	End,
 };

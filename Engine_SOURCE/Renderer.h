@@ -192,7 +192,8 @@ namespace renderer
 
 	extern Camera* mainCamera;
 	extern std::vector<DebugMesh> debugMeshes;
-	extern std::vector<LightAttribute> lights;
+	extern std::vector<Light*> lights;
+	extern std::vector<LightAttribute> lightAttributes;
 
 	extern StructedBuffer* lightBuffer;
 

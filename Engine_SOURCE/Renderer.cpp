@@ -23,7 +23,8 @@ namespace renderer
 	Camera* mainCamera = nullptr;
 	std::vector<Camera*> Cameras[static_cast<UINT>(SceneMgr::eSceneType::End)];
 	std::vector<DebugMesh> debugMeshes;
-	std::vector<LightAttribute> lights;
+	std::vector<Light*> lights;
+	std::vector<LightAttribute> lightAttributes;
 	StructedBuffer* lightBuffer = nullptr;
 
 	Texture* postProcessTexture = nullptr;
@@ -676,6 +677,21 @@ namespace renderer
 			, deferredShader->GetVSBlobBufferSize()
 			, deferredShader->GetInputLayoutAddr());
 
+		Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
+		GetDevice()->CreateInputLayout(arrLayout, 6
+			, mergeShader->GetVSBlobBufferPointer()
+			, mergeShader->GetVSBlobBufferSize()
+			, mergeShader->GetInputLayoutAddr());
+
+		// DebugTest
+		{
+			Shader* basicShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"BasicShader");
+			GetDevice()->CreateInputLayout(arrLayout, 6
+				, basicShader->GetVSBlobBufferPointer()
+				, basicShader->GetVSBlobBufferSize()
+				, basicShader->GetInputLayoutAddr());
+		}
+
 #pragma endregion
 
 #pragma region SamplerState
@@ -910,6 +926,24 @@ namespace renderer
 		deferredShader->Create(eShaderStage::VS, L"DeferredVS.hlsl", "main");
 		deferredShader->Create(eShaderStage::PS, L"DeferredPS.hlsl", "main");
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"DeferredShader", deferredShader);
+
+		Shader* mergeShader = new Shader();
+		mergeShader->Create(eShaderStage::VS, L"MergeVS.hlsl", "main");
+		mergeShader->Create(eShaderStage::PS, L"MergePS.hlsl", "main");
+
+		mergeShader->SetRSState(eRasterizerType::SolidBack);
+		mergeShader->SetDSState(eDepthStencilType::None);
+		mergeShader->SetBSState(eBlendStateType::Default);
+
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"MergeShader", mergeShader);
+
+		// DebugTest
+		{
+			Shader* basicShader = new Shader();
+			basicShader->Create(eShaderStage::VS, L"BasicVS.hlsl", "main");
+			basicShader->Create(eShaderStage::PS, L"BasicPS.hlsl", "main");
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"BasicShader", basicShader);
+		}
 	}
 
 	void LoadDefaultTexture()
@@ -931,6 +965,8 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"Textures/BlockBrickBody/BlockBrickBody_mtl.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"Textures/BlockBrickBody/BlockBrickBody_rgh.png");
 
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Brick_Color", L"Cube/Brick.jpg");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Brick_Normal", L"Cube/Brick_N.jpg");
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
@@ -1063,11 +1099,45 @@ namespace renderer
 		deferredMaterial->SetShader(deferredShader);
 
 		// specular map 추가 사용가능
-		Texture* albedo = GETSINGLE(ResourceMgr)->Find<Texture>(L"BrickBlockBody_alb");
-		deferredMaterial->SetTexture(eTextureSlot::T0, albedo); // albedo Texture
-		albedo = GETSINGLE(ResourceMgr)->Find<Texture>(L"BrickBlockBody_nrm");
-		deferredMaterial->SetTexture(eTextureSlot::T1, albedo); // normal Texture
+		Texture* defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Color");
+		deferredMaterial->SetTexture(eTextureSlot::T0, defferdTex); // albedo Texture
+		defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Normal");
+		deferredMaterial->SetTexture(eTextureSlot::T1, defferdTex); // normal Texture
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", deferredMaterial);
+
+		// RenderTarget Merge 시에 사용할 머테리얼
+		Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
+		Material* mergeMaterial = new Material();
+		mergeMaterial->SetRenderingMode(eRenderingMode::None);
+		mergeMaterial->SetShader(mergeShader);
+
+		Texture* mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MergeMRT_Pos");
+		mergeMaterial->SetTexture(eTextureSlot::PositionTarget, mergeTex);
+
+		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MergeMRT_Normal");
+		mergeMaterial->SetTexture(eTextureSlot::NormalTarget, mergeTex);
+
+		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MergeMRT_Albedo");
+		mergeMaterial->SetTexture(eTextureSlot::AlbedoTarget, mergeTex);
+
+		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MergeMRT_Specular");
+		mergeMaterial->SetTexture(eTextureSlot::SpecularTarget, mergeTex);
+
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"MergeMRT_Material", mergeMaterial);
+
+		// DebugTest
+		{
+			Shader* basicShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"BasicShader");
+			Material* basicMaterial = new Material();
+			basicMaterial->SetRenderingMode(eRenderingMode::Transparent);
+			basicMaterial->SetShader(basicShader);
+
+			Texture* tex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Color");
+			basicMaterial->SetTexture(eTextureSlot::T0, tex);
+			tex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Normal");
+			basicMaterial->SetTexture(eTextureSlot::T1, tex);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"BasicMaterial", basicMaterial);
+		}
 	}
 
 
@@ -1124,7 +1194,7 @@ namespace renderer
 			cam->Render();
 		}
 		Cameras[type].clear();
-		renderer::lights.clear();
+		renderer::lightAttributes.clear();
 	}
 
 	void CreateRenderTargets()
@@ -1148,9 +1218,9 @@ namespace renderer
 		{
 			Texture* arrRTTex[8] = { };
 			Texture* pos = new Texture();
-			Texture* normal = new Texture();;
-			Texture* albedo = new Texture();;
-			Texture* specular = new Texture();;
+			Texture* normal = new Texture();
+			Texture* albedo = new Texture();
+			Texture* specular = new Texture();
 
 			arrRTTex[0] = pos;
 			arrRTTex[1] = normal;
@@ -1167,20 +1237,36 @@ namespace renderer
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			Texture* dsTex = nullptr;
-			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilTexture");
+			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilBufferTexture");
+			
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MergeMRT_Pos", pos);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MergeMRT_Normal", normal);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MergeMRT_Albedo", albedo);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MergeMRT_Specular", specular);
 
 			renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)] = new MultiRenderTarget();
 			renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->Create(arrRTTex, dsTex);
+		}
 
-			delete pos;
-			delete normal;
-			delete albedo;
-			delete specular;
+		// Light MultiRenderTargets
+		{
+			Texture* arrRTTex[8] = { };
+			Texture* diffuse = new Texture();
+			Texture* specular = new Texture();
 
-			pos = nullptr;
-			normal = nullptr;
-			albedo = nullptr;
-			specular = nullptr;
+			arrRTTex[0] = diffuse;
+			arrRTTex[1] = specular;
+
+			arrRTTex[0]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			arrRTTex[1]->Create(width, height, DXGI_FORMAT_R8G8B8A8_UNORM
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"LightMRT_Diffuse", diffuse);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"LightMRT_Specualr", specular);
+
+			renderTargets[(UINT)eRenderTargetType::Light] = new MultiRenderTarget();
+			renderTargets[(UINT)eRenderTargetType::Light]->Create(arrRTTex, nullptr);
 		}
 	}
 
@@ -1199,17 +1285,17 @@ namespace renderer
 
 	void PushLightAttribute(LightAttribute attribute)
 	{
-		lights.push_back(attribute);
+		lightAttributes.push_back(attribute);
 	}
 
 	void BindLight()
 	{
-		lightBuffer->SetData(lights.data(), static_cast<UINT>(lights.size()));
+		lightBuffer->SetData(lightAttributes.data(), static_cast<UINT>(lightAttributes.size()));
 		lightBuffer->BindSRV(eShaderStage::VS, 13);
 		lightBuffer->BindSRV(eShaderStage::PS, 13);
 
 		renderer::LightCB Lightcb = {};
-		Lightcb.lightCount = static_cast<UINT>(lights.size());
+		Lightcb.lightCount = static_cast<UINT>(lightAttributes.size());
 
 		ConstantBuffer* cb = constantBuffers[static_cast<UINT>(eCBType::Light)];
 		cb->SetData(&Lightcb);
