@@ -257,6 +257,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	mMeshes.emplace_back(inMesh);
 
 
+
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 	inMesh->SetName(wName);
 	iter->second.mMeshes.emplace_back(inMesh);

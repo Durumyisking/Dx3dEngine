@@ -31,7 +31,7 @@ float4 main(VSOut vsIn) : SV_Target
         outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-
+    normal.xyz = vsIn.ViewNormal;
     
     LightColor lightColor = (LightColor) 0.0f;
     

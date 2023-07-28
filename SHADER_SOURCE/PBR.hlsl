@@ -63,7 +63,8 @@ float4 main(VSOut vsIn) : SV_Target
         albedo = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    
+    normal.xyz = vsIn.ViewNormal;
+
     // PBR     
     float3 V = normalize(-vsIn.ViewPos); // 뷰공간 pinPoint(0,0,0)부터 픽셀로 향하는 벡터
     float3 N = normal; // 정점/텍스처 노말 뷰변환 완료
@@ -85,7 +86,6 @@ float4 main(VSOut vsIn) : SV_Target
 
     const float MAX_REFLECTION_LOD = 4.f;
     //float3 prefilteredColor = prefilteredMap.SampleLevel(splr, R, roughness * MAX_REFLECTION_LOD).rgb;
-    float3 prefilteredColor = colorTexture.SampleLevel(linearSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
     float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.f), roughness)).rg;
     float3 specular = (F * envBRDF.x + envBRDF.y);
         
