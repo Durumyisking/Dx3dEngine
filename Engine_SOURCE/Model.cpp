@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "def.h"
 #include "StructedBuffer.h"
+#include "Material.h"
 
 namespace fs = std::filesystem;
 
@@ -79,7 +80,7 @@ aiMatrix4x4 Model::RecursiveGetBoneMatirx(Bone& bone)
 	return outMat;
 }
 
-void Model::Bind()
+void Model::Bind_Render(Material* material)
 {
 
 	BoneMat boneInfo = {};
@@ -93,26 +94,26 @@ void Model::Bind()
 	mStructure->SetData(boneMat.data(), boneMat.size());
 	mStructure->BindSRV(eShaderStage::VS, 30);
 
-	for (Mesh* mesh : mMeshes)
+	for (size_t i = 0; i < mMeshes.size(); ++i)
 	{
-		if (mesh == nullptr)
+		if (mMeshes[i] == nullptr)
 			continue;
 
-		mesh->BindBuffer();
-	}
-}
+		std::vector<Texture*> Textures = GetTexture(i);
+		for (int slot = 0; slot < Textures.size(); ++slot)
+		{
+			
+			material->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+		}
 
-void Model::Render()
-{
-	for (Mesh* mesh : mMeshes)
-	{
-		if (mesh == nullptr)
-			continue;
 
-		mesh->Render();
+		mMeshes[i]->BindBuffer();
+		mMeshes[i]->Render();
 	}
+
 	mStructure->Clear();
 }
+
 
 void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode)
 {
@@ -251,6 +252,19 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		}
 	}
 
+	if (mesh->mMaterialIndex >= 0)
+	{
+		aiMaterial* aiMater = scene->mMaterials[mesh->mMaterialIndex];
+		Model::TextureVector textureBuff = {};
+		for (int type = static_cast<int>(aiTextureType_NONE); type < static_cast<int>(aiTextureType_UNKNOWN); ++type)
+		{
+			Model::TextureVector texInfo = processMaterial(aiMater, (aiTextureType)type);
+			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
+		}
+		mTextures.emplace_back(textureBuff);
+	}
+	
+
 	Mesh* inMesh = new Mesh();
 	inMesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
 	inMesh->CreateIndexBuffer(indexes.data(), indexes.size());
@@ -263,9 +277,69 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	GETSINGLE(ResourceMgr)->Insert<Mesh>(wName, inMesh);
 }
 
-void Model::recursiveProcessMaterial()
+Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType type, const std::wstring& typeName)
 {
+	Model::TextureVector outTexVector;
+	UINT texCount = mater->GetTextureCount(type);
+	for (UINT i = 0; i < texCount; ++i)
+	{
+		TextureInfo texInfo = {};
+		aiString aiStr;
+		mater->GetTexture(type, i, &aiStr);
+		texInfo.type = type;
+		texInfo.texName = typeName;
+		texInfo.texPath = GetCurDirectoryPath() + L"/" + ConvertToW_String(aiStr.C_Str());
+		outTexVector.emplace_back(texInfo);
+	}
 
+	return outTexVector;
+}
+
+Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType type)
+{
+	Model::TextureVector outTexVector;
+	UINT texCount = mater->GetTextureCount(type);
+	for (UINT i = 0; i < texCount; ++i)
+	{
+		TextureInfo texInfo = {};
+		aiString aiStr;
+		mater->GetTexture(type, i, &aiStr);
+		std::wstring texname = ConvertToW_String(aiStr.C_Str());
+		texInfo.texName = texname.substr(0,texname.find_last_of(L"."));
+		texInfo.texPath = GetCurDirectoryPath() + L"/" + texname;
+		texInfo.type = type;
+		outTexVector.emplace_back(texInfo);
+	}
+
+	return outTexVector;
+}
+
+void Model::CreateTexture()
+{
+	for (auto& textureVec : mTextures)
+	{
+		for (TextureInfo& texInfo : textureVec)
+		{
+			Texture* tex = new Texture();
+			tex->Load(texInfo.texPath, texInfo);
+
+			texInfo.texID = tex->GetID();
+			texInfo.pTex = tex;
+
+			GETSINGLE(ResourceMgr)->Insert<Texture>(texInfo.texName, texInfo.pTex);
+		}
+	}
+}
+
+std::vector<Texture*> Model::GetTexture(int index)
+{
+	std::vector<Texture*> outTex;
+	TextureVector& texVec = mTextures[index];
+	for (TextureInfo& tex : texVec)
+	{
+		outTex.emplace_back(tex.pTex);
+	}
+	return outTex;
 }
 
 void Model::recursiveProcessBoneMatrix(aiMatrix4x4& matrix, const std::wstring& nodeName)

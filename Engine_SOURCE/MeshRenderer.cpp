@@ -38,8 +38,7 @@ void MeshRenderer::Render()
 
 	GetMaterial()->Bind();
 
-	GetModel() != nullptr ? GetModel()->Bind() : GetMesh()->BindBuffer();
-	GetModel() != nullptr ? GetModel()->Render() : GetMesh()->Render();
+	GetModel() != nullptr ? GetModel()->Bind_Render(GetMaterial()) : GetMesh()->BindBuffer(), GetMesh()->Render();
 
 	GetMaterial()->Clear();
 }
