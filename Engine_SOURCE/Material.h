@@ -34,7 +34,6 @@ public:
 
 	void SetTexture(Texture* texture) { mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = texture; }
 	void SetTexture(eTextureSlot slot, Texture* texture) { mTexture[static_cast<UINT>(slot)] = texture; }
-	void SetIrradiance(const std::wstring& name);
 
 	Texture* GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::Albedo)]; }
 	Texture* GetTexture(eTextureSlot slot) const { return mTexture[static_cast<UINT>(slot)]; }
@@ -53,7 +52,7 @@ public:
 private:
 	Shader* mShader;
 	Texture* mTexture[static_cast<UINT>(eTextureSlot::End)];
-	Texture* mIrradianceTexture;
+	Texture* mBRDF;
 
 	MaterialCB			mMaterialConstantBuffer;
 	eRenderingMode		mMode;

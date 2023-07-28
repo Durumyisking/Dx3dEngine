@@ -52,14 +52,14 @@ float3 RotatePointZ(float3 pointVal, float radian, float3 rotationCenter)
 
 float4 TextureMapping_albedo(float2 uv)
 {
-    return colorTexture.SampleLevel(anisotropicSampler, uv, 0.f);
+    return colorTexture.SampleLevel(linearSampler, uv, 0.f);
 }
 
 
 // 현재 픽셀의 normal을 얻고 viewspace로 변경한다.
 float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, float3 viewBiNormal)
 {
-    float3 result = normalTexture.SampleLevel(anisotropicSampler, uv, 0.f).xyz;
+    float3 result = normalTexture.SampleLevel(linearSampler, uv, 0.f).xyz;
     
     result.xyz = normalize((result.xyz * 2.f).xyz - 1.f);
         
@@ -78,10 +78,10 @@ float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, f
 
 float TextureMapping_metallic(float2 uv)
 {
-    return saturate(MetalTexture.SampleLevel(anisotropicSampler, uv, 0.f).r);
+    return saturate(MetalTexture.SampleLevel(linearSampler, uv, 0.f).r);
 }
 
 float TextureMapping_roughness(float2 uv)
 {
-    return saturate(RoughnessTexture.SampleLevel(anisotropicSampler, uv, 0.f).r);
+    return saturate(RoughnessTexture.SampleLevel(linearSampler, uv, 0.f).r);
 }

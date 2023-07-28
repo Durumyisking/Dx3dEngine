@@ -49,11 +49,12 @@ float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
 // cosTheta (빛의 입사각) 
 float3 fresnelSchlick(float cosTheta, float3 F0)
 {
-    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
+    return F0 + (1.f - F0) * pow(1.f - cosTheta, 5.f);
 }
+// 러프니스까지 고려한 프레넬 계산함수라고한다.
 float3 fresnelSchlickRoughness(float cosTheta, float3 F0, float roughness)
 {
-    return F0 + (max(float3(1.0 - roughness, 1.0 - roughness, 1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+    return F0 + (max(float3(1.f - roughness, 1.f - roughness, 1.f - roughness), F0) - F0) * pow(clamp(1.f - cosTheta, 0.f, 1.f), 5.f);
 }
 
 // Single term for separable Schlick-GGX below.

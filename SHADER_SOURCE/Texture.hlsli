@@ -5,7 +5,7 @@ Texture2D MetalTexture      : register(t2);
 Texture2D RoughnessTexture  : register(t3);
 Texture2D EmissiveTexture   : register(t4);
 
-Texture2D irradianceTexture : register(t11);
+Texture2D BRDF : register(t11);
 
 //Atlas texture
 Texture2D atlasTexture : register(t12);
