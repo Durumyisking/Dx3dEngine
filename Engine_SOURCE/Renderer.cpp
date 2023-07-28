@@ -34,506 +34,14 @@ namespace renderer
 	void LoadMesh()
 	{
 
-#pragma region PointMesh
-
-		Vertex PointVertex = {};
-		Mesh* pointMesh = new Mesh();
-		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Pointmesh", pointMesh);
-		pointMesh->CreateVertexBuffer(&PointVertex, 1);
-		UINT pointIndex = 0;
-		pointMesh->CreateIndexBuffer(&pointIndex, 1);
-
-#pragma endregion
-
-#pragma region LineMesh
-
-		Vertex LineVertex[2] = {};
-
-		LineVertex[0].pos = Vector4(-0.5f, 0.25f, 0.f, 1.f);
-		LineVertex[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		LineVertex[0].uv = Vector2(0.f, 0.f);
-
-		LineVertex[1].pos = Vector4(0.5f, 0.25f, 0.f, 1.f);
-		LineVertex[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		LineVertex[1].uv = Vector2(1.f, 0.f);
-
-
-		Mesh* lineMesh = new Mesh();
-		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Linemesh", lineMesh);
-		lineMesh->CreateVertexBuffer(&LineVertex, 2);
-		std::vector<UINT> lineindexes;
-		lineindexes.push_back(0);
-		lineindexes.push_back(1);
-		lineMesh->CreateIndexBuffer(lineindexes.data(), static_cast<UINT>(lineindexes.size()));
-
-#pragma endregion
-
-#pragma region RectMesh
-
-		Vertex	RectVertexes[4] = {};
-
-		RectVertexes[0].pos = Vector4(-0.5f, 0.5f, 0.f, 1.f);
-		RectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		RectVertexes[0].uv = Vector2(0.f, 0.f);
-
-		RectVertexes[1].pos = Vector4(0.5f, 0.5f, 0.f, 1.f);
-		RectVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		RectVertexes[1].uv = Vector2(1.f, 0.f);
-
-		RectVertexes[2].pos = Vector4(0.5f, -0.5f, 0.f, 1.f);
-		RectVertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		RectVertexes[2].uv = Vector2(1.f, 1.f);
-
-		RectVertexes[3].pos = Vector4(-0.5f, -0.5f, 0.f, 1.f);
-		RectVertexes[3].color = Vector4(0.f, 0.f, 0.f, 1.f);
-		RectVertexes[3].uv = Vector2(0.f, 1.f);
-
-		Mesh* Rectmesh = new Mesh();
-		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Rectmesh", Rectmesh);
-		Rectmesh->CreateVertexBuffer(RectVertexes, 4);
-
-		std::vector<UINT> indexes;
-		indexes.push_back(0);
-		indexes.push_back(1);
-		indexes.push_back(2);
-		indexes.push_back(0);
-		indexes.push_back(2);
-		indexes.push_back(3);
-		indexes.push_back(0);
-		Rectmesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
-
-#pragma endregion
-
-#pragma region GridMesh
-
-		Vertex	GridVertexes[4] = {};
-
-		GridVertexes[0].pos = Vector4(-200.f, 0.f, 200.f, 1.f);
-		GridVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		GridVertexes[0].uv = Vector2(0.f, 0.f);
-
-		GridVertexes[1].pos = Vector4(200.f, 0.f, 200.f, 1.f);
-		GridVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		GridVertexes[1].uv = Vector2(1.f, 0.f);
-
-		GridVertexes[2].pos = Vector4(200.f, 0.f, -200.f, 1.f);
-		GridVertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		GridVertexes[2].uv = Vector2(1.f, 1.f);
-
-		GridVertexes[3].pos = Vector4(-200.f, 0.f, -200.f, 1.f);
-		GridVertexes[3].color = Vector4(0.f, 0.f, 0.f, 1.f);
-		GridVertexes[3].uv = Vector2(0.f, 1.f);
-
-		Mesh* Gridmesh = new Mesh();
-		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Gridmesh", Gridmesh);
-		Gridmesh->CreateVertexBuffer(GridVertexes, 4);
-
-		indexes.clear();
-
-		indexes.push_back(0);
-		indexes.push_back(1);
-		indexes.push_back(2);
-		indexes.push_back(0);
-		indexes.push_back(2);
-		indexes.push_back(3);
-		indexes.push_back(0);
-		Gridmesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
-
-#pragma endregion
-
-#pragma region RectMesh_Debug
-
-		Vertex	DebugRectVertexes[4] = {};
-
-		DebugRectVertexes[0].pos = Vector4(-0.5f, 0.5f, -0.00001f, 1.f);
-		DebugRectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		DebugRectVertexes[0].uv = Vector2(0.f, 0.f);
-
-		DebugRectVertexes[1].pos = Vector4(0.5f, 0.5f, -0.00001f, 1.f);
-		DebugRectVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		DebugRectVertexes[1].uv = Vector2(1.f, 0.f);
-
-		DebugRectVertexes[2].pos = Vector4(0.5f, -0.5f, -0.00001f, 1.f);
-		DebugRectVertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		DebugRectVertexes[2].uv = Vector2(1.f, 1.f);
-
-		DebugRectVertexes[3].pos = Vector4(-0.5f, -0.5f, -0.00001f, 1.f);
-		DebugRectVertexes[3].color = Vector4(0.f, 0.f, 0.f, 1.f);
-		DebugRectVertexes[3].uv = Vector2(0.f, 1.f);
-
-		indexes.clear();
-		indexes.push_back(0);
-		indexes.push_back(1);
-		indexes.push_back(2);
-		indexes.push_back(3);
-		indexes.push_back(0);
-
-		Mesh* DebugRectmesh = new Mesh();
-		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"DebugRectmesh", DebugRectmesh);
-		DebugRectmesh->CreateVertexBuffer(DebugRectVertexes, 4);
-		DebugRectmesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
-
-#pragma endregion
-
-#pragma region CircleMesh
-
-		std::vector<Vertex>	CircleVertexes;
-		Vertex center = {};
-		center.pos = Vector4(0.f, 0.f, -0.00001f, 1.f);
-		center.color = Vector4(0.f, 1.f, 0.f, 1.f);
-		center.uv = Vector2::Zero;
-
-		CircleVertexes.push_back(center);
-
-		int slice = 80;
-		float radius = 0.5f;
-		float theta = XM_2PI / (float)slice;
-
-		for (int i = 0; i < slice; i++)
-		{
-			Vertex vtx = {};
-			vtx.pos = Vector4(radius * cosf(theta * (float)i)
-				, radius * sinf(theta * (float)i)
-				, -0.00001f, 1.f
-			);
-			vtx.color = center.color;
-
-			CircleVertexes.push_back(vtx);
-		}
-		indexes.clear();
-		for (int i = 1; i <= slice; i++)
-		{
-			indexes.push_back(i);
-		}
-		indexes.push_back(1);
-
-		Mesh* Circlemesh = new Mesh();
-		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Circlemesh", Circlemesh);
-		Circlemesh->CreateVertexBuffer(CircleVertexes.data(), static_cast<UINT>(CircleVertexes.size()));
-		Circlemesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
-
-
-#pragma endregion
-
-#pragma region Cube Mesh
-		Vertex arrCube[24] = {};
-
-		//struct Vertex
-		//{
-		//	Vector4 pos;
-		//	Vector4 color;
-		//	Vector2 uv;
-		//};
-
-		// 윗면
-		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
-		arrCube[0].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		arrCube[0].uv = Vector2(0.f, 0.f);
-		arrCube[0].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[0].normal = Vector3(0.f, 1.f, 0.f);
-		arrCube[0].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[1].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-		arrCube[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		arrCube[1].uv = Vector2(1.f, 0.f);
-
-		arrCube[1].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[1].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-		arrCube[1].normal = Vector3(0.f, 1.f, 0.f);
-
-		arrCube[2].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
-		arrCube[2].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		arrCube[2].uv = Vector2(0.f, 1.f);
-		arrCube[2].normal = Vector3(0.f, 1.f, 0.f);
-		arrCube[2].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[2].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[3].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);
-		arrCube[3].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		arrCube[3].uv = Vector2(1.f, 1.f);
-		arrCube[3].normal = Vector3(0.f, 1.f, 0.f);
-		arrCube[3].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[3].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-
-		// 아랫 면	
-		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
-		arrCube[4].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		arrCube[4].uv = Vector2(0.f, 0.f);
-		arrCube[4].normal = Vector3(0.f, -1.f, 0.f);
-		arrCube[4].tangent = Vector3(-1.0f, 0.0f, 0.0f);
-		arrCube[4].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[5].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
-		arrCube[5].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		arrCube[5].uv = Vector2(1.f, 0.f);
-		arrCube[5].normal = Vector3(0.f, -1.f, 0.f);
-		arrCube[5].tangent = Vector3(-1.0f, 0.0f, 0.0f);
-		arrCube[5].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[6].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
-		arrCube[6].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		arrCube[6].uv = Vector2(0.f, 1.f);
-		arrCube[6].normal = Vector3(0.f, -1.f, 0.f);
-		arrCube[6].tangent = Vector3(-1.0f, 0.0f, 0.0f);
-		arrCube[6].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[7].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
-		arrCube[7].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		arrCube[7].uv = Vector2(1.f, 1.f);
-		arrCube[7].normal = Vector3(0.f, -1.f, 0.f);
-		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
-		arrCube[7].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		// 왼쪽 면
-		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
-		arrCube[8].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		arrCube[8].uv = Vector2(0.f, 0.f);
-		arrCube[8].normal = Vector3(-1.f, 0.f, 0.f);
-		arrCube[8].tangent = Vector3(0.0f, 1.0f, 0.0f);
-		arrCube[8].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[9].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);
-		arrCube[9].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		arrCube[9].uv = Vector2(1.f, 0.f);
-		arrCube[9].normal = Vector3(-1.f, 0.f, 0.f);
-		arrCube[9].tangent = Vector3(0.0f, 1.0f, 0.0f);
-		arrCube[9].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[10].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
-		arrCube[10].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		arrCube[10].uv = Vector2(0.f, 1.f);
-		arrCube[10].normal = Vector3(-1.f, 0.f, 0.f);
-		arrCube[10].tangent = Vector3(0.0f, 1.0f, 0.0f);
-		arrCube[10].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[11].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
-		arrCube[11].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		arrCube[11].uv = Vector2(1.f, 1.f);
-		arrCube[11].normal = Vector3(-1.f, 0.f, 0.f);
-		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
-		arrCube[11].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		// 오른쪽 면
-		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
-		arrCube[12].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		arrCube[12].uv = Vector2(0.f, 0.f);
-		arrCube[12].normal = Vector3(1.f, 0.f, 0.f);
-		arrCube[12].tangent = Vector3(0.0f, -1.0f, 0.0f);
-		arrCube[12].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[13].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-		arrCube[13].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		arrCube[13].uv = Vector2(1.f, 0.f);
-		arrCube[13].normal = Vector3(1.f, 0.f, 0.f);
-		arrCube[13].tangent = Vector3(0.0f, -1.0f, 0.0f);
-		arrCube[13].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[14].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
-		arrCube[14].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		arrCube[14].uv = Vector2(0.f, 1.f);
-		arrCube[14].normal = Vector3(1.f, 0.f, 0.f);
-		arrCube[14].tangent = Vector3(0.0f, -1.0f, 0.0f);
-		arrCube[14].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		arrCube[15].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
-		arrCube[15].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		arrCube[15].uv = Vector2(1.f, 1.f);
-		arrCube[15].normal = Vector3(1.f, 0.f, 0.f);
-		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
-		arrCube[15].biNormal = Vector3(0.0f, 0.0f, 1.0f);
-
-		// 뒷 면
-		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-		arrCube[16].color = Vector4(1.f, 1.f, 0.f, 1.f);
-		arrCube[16].uv = Vector2(0.f, 0.f);
-		arrCube[16].normal = Vector3(0.f, 0.f, 1.f);
-		arrCube[16].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[16].biNormal = Vector3(0.0f, -1.0f, 1.0f);
-
-		arrCube[17].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
-		arrCube[17].color = Vector4(1.f, 1.f, 0.f, 1.f);
-		arrCube[17].uv = Vector2(1.f, 0.f);
-		arrCube[17].normal = Vector3(0.f, 0.f, 1.f);
-		arrCube[17].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[17].biNormal = Vector3(0.0f, -1.0f, 1.0f);
-
-		arrCube[18].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
-		arrCube[18].color = Vector4(1.f, 1.f, 0.f, 1.f);
-		arrCube[18].uv = Vector2(0.f, 1.f);
-		arrCube[18].normal = Vector3(0.f, 0.f, 1.f);
-		arrCube[18].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[18].biNormal = Vector3(0.0f, -1.0f, 1.0f);
-
-		arrCube[19].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
-		arrCube[19].color = Vector4(1.f, 1.f, 0.f, 1.f);
-		arrCube[19].uv = Vector2(1.f, 1.f);
-		arrCube[19].normal = Vector3(0.f, 0.f, 1.f);
-		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[19].biNormal = Vector3(0.0f, -1.0f, 1.0f);
-
-		// 앞 면
-		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
-		arrCube[20].color = Vector4(1.f, 0.f, 1.f, 1.f);
-		arrCube[20].uv = Vector2(0.f, 0.f);
-		arrCube[20].normal = Vector3(0.f, 0.f, -1.f);
-		arrCube[20].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[20].biNormal = Vector3(0.0f, 1.0f, 1.0f);
-
-		arrCube[21].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
-		arrCube[21].color = Vector4(1.f, 0.f, 1.f, 1.f);
-		arrCube[21].uv = Vector2(1.f, 0.f);
-		arrCube[21].normal = Vector3(0.f, 0.f, -1.f);
-		arrCube[21].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[21].biNormal = Vector3(0.0f, 1.0f, 1.0f);
-
-		arrCube[22].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
-		arrCube[22].color = Vector4(1.f, 0.f, 1.f, 1.f);
-		arrCube[22].uv = Vector2(0.f, 1.f);
-		arrCube[22].normal = Vector3(0.f, 0.f, -1.f);
-		arrCube[22].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[22].biNormal = Vector3(0.0f, 1.0f, 1.0f);
-
-		arrCube[23].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
-		arrCube[23].color = Vector4(1.f, 0.f, 1.f, 1.f);
-		arrCube[23].uv = Vector2(1.f, 1.f);
-		arrCube[23].normal = Vector3(0.f, 0.f, -1.f);
-		arrCube[23].tangent = Vector3(1.0f, 0.0f, 0.0f);
-		arrCube[23].biNormal = Vector3(0.0f, 1.0f, 1.0f);
-
-		indexes.clear();
-		for (int i = 0; i < 6; i++)
-		{
-			indexes.push_back(i * 4);
-			indexes.push_back(i * 4 + 1);
-			indexes.push_back(i * 4 + 2);
-
-			indexes.push_back(i * 4);
-			indexes.push_back(i * 4 + 2);
-			indexes.push_back(i * 4 + 3);
-		}
-
-		// Crate GUIMesh
-		Mesh* cubMesh = new Mesh();
-		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Cubemesh", cubMesh);
-		cubMesh->CreateVertexBuffer(arrCube, 24);
-		cubMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
-#pragma endregion
-
-#pragma region Sphere Mesh
-
-		Vertex v = {};
-		float fRadius = 0.5f;
-		std::vector<Vertex> sphereVtx;
-
-		// Top
-		v.pos = Vector4(0.0f, fRadius, 0.0f, 1.0f);
-		v.uv = Vector2(0.5f, 0.f);
-		v.color = Vector4(1.f, 1.f, 1.f, 1.f);
-		v.normal = Vector3(0.0f, fRadius, 0.0f);
-		v.normal.Normalize();
-		v.tangent = Vector3(1.f, 0.f, 0.f);
-		v.biNormal = Vector3(0.f, 0.f, 1.f);
-
-		sphereVtx.push_back(v);
-
-		// Body
-		UINT iStackCount = 40;
-		UINT iSliceCount = 40;
-
-		float fStackAngle = XM_PI / iStackCount;
-		float fSliceAngle = XM_2PI / iSliceCount;
-
-		float fUVXStep = 1.f / (float)iSliceCount;
-		float fUVYStep = 1.f / (float)iStackCount;
-
-		for (UINT i = 1; i < iStackCount; ++i)
-		{
-			float phi = i * fStackAngle;
-
-			for (UINT j = 0; j <= iSliceCount; ++j)
-			{
-				float theta = j * fSliceAngle;
-
-				v.pos = Vector4(fRadius * sinf(i * fStackAngle) * cosf(j * fSliceAngle)
-					, fRadius * cosf(i * fStackAngle)
-					, fRadius * sinf(i * fStackAngle) * sinf(j * fSliceAngle), 1.0f);
-				v.uv = Vector2(fUVXStep * j, fUVYStep * i);
-				v.color = Vector4(1.f, 1.f, 1.f, 1.f);
-				v.normal = Vector3(v.pos.x, v.pos.y, v.pos.z);
-				//v.normal.Normalize();
-
-				v.tangent.x = -fRadius * sinf(phi) * sinf(theta);
-				v.tangent.y = 0.f;
-				v.tangent.z = fRadius * sinf(phi) * cosf(theta);
-				v.tangent.Normalize();
-
-				v.tangent.Cross(v.normal, v.biNormal);
-				v.biNormal.Normalize();
-
-				sphereVtx.push_back(v);
-			}
-		}
-
-		// Bottom
-		v.pos = Vector4(0.f, -fRadius, 0.f, 1.0f);
-		v.uv = Vector2(0.5f, 1.f);
-		v.color = Vector4(1.f, 1.f, 1.f, 1.f);
-		v.normal = Vector3(0.0f, -fRadius, 0.0f);
-		v.normal.Normalize();
-
-		v.tangent = Vector3(1.f, 0.f, 0.f);
-		v.biNormal = Vector3(0.f, 0.f, -1.f);
-		sphereVtx.push_back(v);
-
-		indexes.clear();
-
-		// North
-		for (UINT i = 0; i < iSliceCount; ++i)
-		{
-			indexes.push_back(0);
-			indexes.push_back(i + 2);
-			indexes.push_back(i + 1);
-		}
-
-		// Middle
-		for (UINT i = 0; i < iStackCount - 2; ++i)
-		{
-			for (UINT j = 0; j < iSliceCount; ++j)
-			{
-				// + 
-				// | \
-				// +--+
-				indexes.push_back((iSliceCount + 1) * (i)+(j)+1);
-				indexes.push_back((iSliceCount + 1) * (i + 1) + (j + 1) + 1);
-				indexes.push_back((iSliceCount + 1) * (i + 1) + (j)+1);
-
-				// +--+
-				//  \ |
-				//    +
-				indexes.push_back((iSliceCount + 1) * (i)+(j)+1);
-				indexes.push_back((iSliceCount + 1) * (i)+(j + 1) + 1);
-				indexes.push_back((iSliceCount + 1) * (i + 1) + (j + 1) + 1);
-			}
-		}
-
-		// South
-		UINT iBottomIdx = static_cast<UINT>(sphereVtx.size()) - 1;
-
-		for (UINT i = 0; i < iSliceCount; ++i)
-		{
-			indexes.push_back(iBottomIdx);
-			indexes.push_back(iBottomIdx - (i + 2));
-			indexes.push_back(iBottomIdx - (i + 1));
-		}
-
-		Mesh* sphereMesh = new Mesh();
-		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Spheremesh", sphereMesh);
-		sphereMesh->CreateVertexBuffer(sphereVtx.data(), static_cast<UINT>(sphereVtx.size()));
-		sphereMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
-
-#pragma endregion
-
+		CreatePointMesh();
+		CreateLineMesh();
+		CreateRectMesh();
+		CreateGridMesh();
+		CreateCircleMesh();
+		CreateCubeMesh();
+		CreateSphereMesh();
+		CreateCapsuleMesh();
 	}
 
 
@@ -804,9 +312,6 @@ namespace renderer
 		constantBuffers[static_cast<UINT>(eCBType::PostProcess)] = new ConstantBuffer(eCBType::PostProcess);
 		constantBuffers[static_cast<UINT>(eCBType::PostProcess)]->Create(sizeof(PostProcessCB));
 
-		constantBuffers[static_cast<UINT>(eCBType::PBR)] = new ConstantBuffer(eCBType::PBR);
-		constantBuffers[static_cast<UINT>(eCBType::PBR)]->Create(sizeof(PBRCB));
-
 
 		lightBuffer = new StructedBuffer();
 		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
@@ -943,10 +448,18 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_metallic", L"Textures/a/used-stainless-steel2_metallic.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_roughness", L"Textures/a/used-stainless-steel2_roughness.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"albedo", L"Textures/a/albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"normal", L"Textures/a/normal.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"metallic", L"Textures/a/metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"roughness", L"Textures/a/roughness.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_albedo", L"Textures/Gold/albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_normal", L"Textures/Gold/normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_metallic", L"Textures/Gold/metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_roughness", L"Textures/Gold/roughness.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_albedo", L"Textures/Wood/albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_normal", L"Textures/Wood/normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_metallic", L"Textures/Wood/metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_roughness", L"Textures/Wood/roughness.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"irradiance", L"Textures/irradiance.png");
+
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
@@ -1236,6 +749,7 @@ namespace renderer
 		cb->Bind(eShaderStage::PS);
 		cb->Bind(eShaderStage::CS);
 	}
+
 	void CopyRenderTarget()
 	{
 		Texture* renderTarget = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
@@ -1250,4 +764,569 @@ namespace renderer
 
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 	}
+
+	void CreatePointMesh()
+	{
+		Vertex PointVertex = {};
+		PointVertex.pos = Vector4(0.5f, 0.5f, 0.5f, 1.f);
+		PointVertex.color = Vector4(0.f, 1.f, 0.f, 1.f);
+		PointVertex.uv = Vector2(0.f, 0.f);
+		Mesh* pointMesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Pointmesh", pointMesh);
+		pointMesh->CreateVertexBuffer(&PointVertex, 1);
+		UINT pointIndex = 0;
+		pointMesh->CreateIndexBuffer(&pointIndex, 1);
+	}
+
+	void CreateLineMesh()
+	{
+		Vertex LineVertex[2] = {};
+
+		LineVertex[0].pos = Vector4(-0.5f, 0.25f, 0.f, 1.f);
+		LineVertex[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		LineVertex[0].uv = Vector2(0.f, 0.f);
+
+		LineVertex[1].pos = Vector4(0.5f, 0.25f, 0.f, 1.f);
+		LineVertex[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		LineVertex[1].uv = Vector2(1.f, 0.f);
+
+
+		Mesh* lineMesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Linemesh", lineMesh);
+		lineMesh->CreateVertexBuffer(&LineVertex, 2);
+		std::vector<UINT> indices;
+		indices.emplace_back(0);
+		indices.emplace_back(1);
+		lineMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
+	}
+
+	void CreateRectMesh()
+	{
+		Vertex	RectVertexes[4] = {};
+
+		RectVertexes[0].pos = Vector4(-0.5f, 0.5f, 0.f, 1.f);
+		RectVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		RectVertexes[0].uv = Vector2(0.f, 0.f);
+
+		RectVertexes[1].pos = Vector4(0.5f, 0.5f, 0.f, 1.f);
+		RectVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		RectVertexes[1].uv = Vector2(1.f, 0.f);
+
+		RectVertexes[2].pos = Vector4(0.5f, -0.5f, 0.f, 1.f);
+		RectVertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
+		RectVertexes[2].uv = Vector2(1.f, 1.f);
+
+		RectVertexes[3].pos = Vector4(-0.5f, -0.5f, 0.f, 1.f);
+		RectVertexes[3].color = Vector4(0.f, 0.f, 0.f, 1.f);
+		RectVertexes[3].uv = Vector2(0.f, 1.f);
+
+		Mesh* Rectmesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Rectmesh", Rectmesh);
+		Rectmesh->CreateVertexBuffer(RectVertexes, 4);
+
+		std::vector<UINT> indices = {};
+		indices.emplace_back(0);
+		indices.emplace_back(1);
+		indices.emplace_back(2);
+		indices.emplace_back(0);
+		indices.emplace_back(2);
+		indices.emplace_back(3);
+		indices.emplace_back(0);
+		Rectmesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
+	}
+
+	void CreateGridMesh()
+	{
+		Vertex	GridVertexes[4] = {};
+
+		GridVertexes[0].pos = Vector4(-200.f, 0.f, 200.f, 1.f);
+		GridVertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		GridVertexes[0].uv = Vector2(0.f, 0.f);
+
+		GridVertexes[1].pos = Vector4(200.f, 0.f, 200.f, 1.f);
+		GridVertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		GridVertexes[1].uv = Vector2(1.f, 0.f);
+
+		GridVertexes[2].pos = Vector4(200.f, 0.f, -200.f, 1.f);
+		GridVertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
+		GridVertexes[2].uv = Vector2(1.f, 1.f);
+
+		GridVertexes[3].pos = Vector4(-200.f, 0.f, -200.f, 1.f);
+		GridVertexes[3].color = Vector4(0.f, 0.f, 0.f, 1.f);
+		GridVertexes[3].uv = Vector2(0.f, 1.f);
+
+		Mesh* Gridmesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Gridmesh", Gridmesh);
+		Gridmesh->CreateVertexBuffer(GridVertexes, 4);
+
+		std::vector<UINT> indices = {};
+		indices.emplace_back(0);
+		indices.emplace_back(1);
+		indices.emplace_back(2);
+		indices.emplace_back(0);
+		indices.emplace_back(2);
+		indices.emplace_back(3);
+		indices.emplace_back(0);
+		Gridmesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
+	}
+
+	void CreateCircleMesh()
+	{
+		std::vector<Vertex>	CircleVertexes;
+		Vertex center = {};
+		center.pos = Vector4(0.f, 0.f, -0.00001f, 1.f);
+		center.color = Vector4(0.f, 1.f, 0.f, 1.f);
+		center.uv = Vector2::Zero;
+
+		CircleVertexes.emplace_back(center);
+
+		int slice = 80;
+		float radius = 0.5f;
+		float theta = XM_2PI / (float)slice;
+
+		for (int i = 0; i < slice; i++)
+		{
+			Vertex vtx = {};
+			vtx.pos = Vector4(radius * cosf(theta * (float)i)
+				, radius * sinf(theta * (float)i)
+				, -0.00001f, 1.f
+			);
+			vtx.color = center.color;
+
+			CircleVertexes.emplace_back(vtx);
+		}
+		std::vector<UINT> indices = {};
+
+		for (int i = 1; i <= slice; i++)
+		{
+			indices.emplace_back(i);
+		}
+		indices.emplace_back(1);
+
+		Mesh* Circlemesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Circlemesh", Circlemesh);
+		Circlemesh->CreateVertexBuffer(CircleVertexes.data(), static_cast<UINT>(CircleVertexes.size()));
+		Circlemesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
+	}
+
+	void CreateCubeMesh()
+	{
+		Vertex arrCube[24] = {};
+
+		// 윗면
+		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
+		arrCube[0].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		arrCube[0].uv = Vector2(0.f, 0.f);
+		arrCube[0].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[0].normal = Vector3(0.f, 1.f, 0.f);
+		arrCube[0].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[1].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+		arrCube[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		arrCube[1].uv = Vector2(1.f, 0.f);
+
+		arrCube[1].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[1].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+		arrCube[1].normal = Vector3(0.f, 1.f, 0.f);
+
+		arrCube[2].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
+		arrCube[2].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		arrCube[2].uv = Vector2(0.f, 1.f);
+		arrCube[2].normal = Vector3(0.f, 1.f, 0.f);
+		arrCube[2].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[2].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[3].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);
+		arrCube[3].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		arrCube[3].uv = Vector2(1.f, 1.f);
+		arrCube[3].normal = Vector3(0.f, 1.f, 0.f);
+		arrCube[3].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[3].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+
+		// 아랫 면	
+		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
+		arrCube[4].color = Vector4(1.f, 0.f, 0.f, 1.f);
+		arrCube[4].uv = Vector2(0.f, 0.f);
+		arrCube[4].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[4].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[4].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[5].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
+		arrCube[5].color = Vector4(1.f, 0.f, 0.f, 1.f);
+		arrCube[5].uv = Vector2(1.f, 0.f);
+		arrCube[5].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[5].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[5].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[6].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
+		arrCube[6].color = Vector4(1.f, 0.f, 0.f, 1.f);
+		arrCube[6].uv = Vector2(0.f, 1.f);
+		arrCube[6].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[6].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[6].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[7].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
+		arrCube[7].color = Vector4(1.f, 0.f, 0.f, 1.f);
+		arrCube[7].uv = Vector2(1.f, 1.f);
+		arrCube[7].normal = Vector3(0.f, -1.f, 0.f);
+		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
+		arrCube[7].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		// 왼쪽 면
+		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
+		arrCube[8].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		arrCube[8].uv = Vector2(0.f, 0.f);
+		arrCube[8].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[8].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[8].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[9].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);
+		arrCube[9].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		arrCube[9].uv = Vector2(1.f, 0.f);
+		arrCube[9].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[9].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[9].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[10].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
+		arrCube[10].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		arrCube[10].uv = Vector2(0.f, 1.f);
+		arrCube[10].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[10].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[10].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[11].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
+		arrCube[11].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		arrCube[11].uv = Vector2(1.f, 1.f);
+		arrCube[11].normal = Vector3(-1.f, 0.f, 0.f);
+		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
+		arrCube[11].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		// 오른쪽 면
+		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
+		arrCube[12].color = Vector4(0.f, 0.f, 1.f, 1.f);
+		arrCube[12].uv = Vector2(0.f, 0.f);
+		arrCube[12].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[12].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[12].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[13].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+		arrCube[13].color = Vector4(0.f, 0.f, 1.f, 1.f);
+		arrCube[13].uv = Vector2(1.f, 0.f);
+		arrCube[13].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[13].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[13].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[14].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
+		arrCube[14].color = Vector4(0.f, 0.f, 1.f, 1.f);
+		arrCube[14].uv = Vector2(0.f, 1.f);
+		arrCube[14].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[14].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[14].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		arrCube[15].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
+		arrCube[15].color = Vector4(0.f, 0.f, 1.f, 1.f);
+		arrCube[15].uv = Vector2(1.f, 1.f);
+		arrCube[15].normal = Vector3(1.f, 0.f, 0.f);
+		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
+		arrCube[15].biNormal = Vector3(0.0f, 0.0f, 1.0f);
+
+		// 뒷 면
+		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+		arrCube[16].color = Vector4(1.f, 1.f, 0.f, 1.f);
+		arrCube[16].uv = Vector2(0.f, 0.f);
+		arrCube[16].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[16].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[16].biNormal = Vector3(0.0f, -1.0f, 1.0f);
+
+		arrCube[17].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
+		arrCube[17].color = Vector4(1.f, 1.f, 0.f, 1.f);
+		arrCube[17].uv = Vector2(1.f, 0.f);
+		arrCube[17].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[17].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[17].biNormal = Vector3(0.0f, -1.0f, 1.0f);
+
+		arrCube[18].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
+		arrCube[18].color = Vector4(1.f, 1.f, 0.f, 1.f);
+		arrCube[18].uv = Vector2(0.f, 1.f);
+		arrCube[18].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[18].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[18].biNormal = Vector3(0.0f, -1.0f, 1.0f);
+
+		arrCube[19].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
+		arrCube[19].color = Vector4(1.f, 1.f, 0.f, 1.f);
+		arrCube[19].uv = Vector2(1.f, 1.f);
+		arrCube[19].normal = Vector3(0.f, 0.f, 1.f);
+		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[19].biNormal = Vector3(0.0f, -1.0f, 1.0f);
+
+		// 앞 면
+		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
+		arrCube[20].color = Vector4(1.f, 0.f, 1.f, 1.f);
+		arrCube[20].uv = Vector2(0.f, 0.f);
+		arrCube[20].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[20].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[20].biNormal = Vector3(0.0f, 1.0f, 1.0f);
+
+		arrCube[21].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
+		arrCube[21].color = Vector4(1.f, 0.f, 1.f, 1.f);
+		arrCube[21].uv = Vector2(1.f, 0.f);
+		arrCube[21].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[21].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[21].biNormal = Vector3(0.0f, 1.0f, 1.0f);
+
+		arrCube[22].pos = Vector4(0.5f, -0.5f, -0.5f, 1.0f);
+		arrCube[22].color = Vector4(1.f, 0.f, 1.f, 1.f);
+		arrCube[22].uv = Vector2(0.f, 1.f);
+		arrCube[22].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[22].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[22].biNormal = Vector3(0.0f, 1.0f, 1.0f);
+
+		arrCube[23].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
+		arrCube[23].color = Vector4(1.f, 0.f, 1.f, 1.f);
+		arrCube[23].uv = Vector2(1.f, 1.f);
+		arrCube[23].normal = Vector3(0.f, 0.f, -1.f);
+		arrCube[23].tangent = Vector3(1.0f, 0.0f, 0.0f);
+		arrCube[23].biNormal = Vector3(0.0f, 1.0f, 1.0f);
+
+		std::vector<UINT> indices = {};
+		for (int i = 0; i < 6; i++)
+		{
+			indices.emplace_back(i * 4);
+			indices.emplace_back(i * 4 + 1);
+			indices.emplace_back(i * 4 + 2);
+
+			indices.emplace_back(i * 4);
+			indices.emplace_back(i * 4 + 2);
+			indices.emplace_back(i * 4 + 3);
+		}
+
+		// Crate GUIMesh
+		Mesh* cubMesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Cubemesh", cubMesh);
+		cubMesh->CreateVertexBuffer(arrCube, 24);
+		cubMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
+	}
+
+	void CreateSphereMesh()
+	{
+		Vertex v = {};
+		float fRadius = 0.5f;
+		std::vector<Vertex> sphereVtx;
+
+		// Top
+		v.pos = Vector4(0.0f, fRadius, 0.0f, 1.0f);
+		v.uv = Vector2(0.5f, 0.f);
+		v.color = Vector4(1.f, 1.f, 1.f, 1.f);
+		v.normal = Vector3(0.0f, 1.f, 0.0f);
+		v.normal.Normalize();
+		v.tangent = Vector3(1.f, 0.f, 0.f);
+		v.biNormal = Vector3(0.f, 0.f, 1.f);
+
+		sphereVtx.emplace_back(v);
+
+		// Body
+		UINT iStackCount = 40;
+		UINT iSliceCount = 40;
+
+		float fStackAngle = XM_PI / iStackCount;
+		float fSliceAngle = XM_2PI / iSliceCount;
+
+		float fUVXStep = 1.f / (float)iSliceCount;
+		float fUVYStep = 1.f / (float)iStackCount;
+
+		for (UINT i = 1; i < iStackCount; ++i)
+		{
+			float phi = i * fStackAngle;
+
+			for (UINT j = 0; j <= iSliceCount; ++j)
+			{
+				float theta = j * fSliceAngle;
+
+				v.pos = Vector4(fRadius * sinf(i * fStackAngle) * cosf(j * fSliceAngle)
+					, fRadius * cosf(i * fStackAngle)
+					, fRadius * sinf(i * fStackAngle) * sinf(j * fSliceAngle), 1.0f);
+				v.uv = Vector2(fUVXStep * j, fUVYStep * i);
+				v.color = Vector4(1.f, 1.f, 1.f, 1.f);
+				v.normal = Vector3(v.pos.x, v.pos.y, v.pos.z);
+				//v.normal.Normalize();
+
+				v.tangent.x = -fRadius * sinf(phi) * sinf(theta);
+				v.tangent.y = 0.f;
+				v.tangent.z = fRadius * sinf(phi) * cosf(theta);
+				v.tangent.Normalize();
+
+				v.tangent.Cross(v.normal, v.biNormal);
+				v.biNormal.Normalize();
+
+				sphereVtx.emplace_back(v);
+			}
+		}
+
+		// Bottom
+		v.pos = Vector4(0.f, -fRadius, 0.f, 1.0f);
+		v.uv = Vector2(0.5f, 1.f);
+		v.color = Vector4(1.f, 1.f, 1.f, 1.f);
+		v.normal = Vector3(0.0f, -1.f, 0.0f);
+		v.normal.Normalize();
+
+		v.tangent = Vector3(1.f, 0.f, 0.f);
+		v.biNormal = Vector3(0.f, 0.f, -1.f);
+		sphereVtx.emplace_back(v);
+
+		std::vector<UINT> indices = {};
+
+		// North
+		for (UINT i = 0; i < iSliceCount; ++i)
+		{
+			indices.emplace_back(0);
+			indices.emplace_back(i + 2);
+			indices.emplace_back(i + 1);
+		}
+
+		// Middle
+		for (UINT i = 0; i < iStackCount - 2; ++i)
+		{
+			for (UINT j = 0; j < iSliceCount; ++j)
+			{
+				// + 
+				// | \
+				// +--+
+				indices.emplace_back((iSliceCount + 1) * (i)+(j)+1);
+				indices.emplace_back((iSliceCount + 1) * (i + 1) + (j + 1) + 1);
+				indices.emplace_back((iSliceCount + 1) * (i + 1) + (j)+1);
+
+				// +--+
+				//  \ |
+				//    +
+				indices.emplace_back((iSliceCount + 1) * (i)+(j)+1);
+				indices.emplace_back((iSliceCount + 1) * (i)+(j + 1) + 1);
+				indices.emplace_back((iSliceCount + 1) * (i + 1) + (j + 1) + 1);
+			}
+		}
+
+		// South
+		UINT iBottomIdx = static_cast<UINT>(sphereVtx.size()) - 1;
+
+		for (UINT i = 0; i < iSliceCount; ++i)
+		{
+			indices.emplace_back(iBottomIdx);
+			indices.emplace_back(iBottomIdx - (i + 2));
+			indices.emplace_back(iBottomIdx - (i + 1));
+		}
+
+		Mesh* sphereMesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Spheremesh", sphereMesh);
+		sphereMesh->CreateVertexBuffer(sphereVtx.data(), static_cast<UINT>(sphereVtx.size()));
+		sphereMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
+	}
+
+	void CreateCapsuleMesh()
+	{
+		Vertex v = {};
+		float fRadius = 0.5f;
+		float fHeight = 1.0f; // Total height of the capsule
+		float fHalfHeight = fHeight * 0.5f; // Half of the capsule height
+		UINT iStackCount = 40;
+		UINT iSliceCount = 40;
+		std::vector<Vertex> capsuleVtx;
+		std::vector<UINT> indices;
+
+
+		// Top
+		v.pos = Vector4(0.0f, fRadius, 0.0f, 1.0f);
+		v.uv = Vector2(0.5f, 0.f);
+		v.color = Vector4(1.f, 1.f, 1.f, 1.f);
+		v.normal = Vector3(0.0f, 1.f, 0.0f);
+		v.normal.Normalize();
+		v.tangent = Vector3(1.f, 0.f, 0.f);
+		v.biNormal = Vector3(0.f, 0.f, 1.f);
+		capsuleVtx.emplace_back(v);
+
+		// Bottom
+		v.pos = Vector4(0.f, -fRadius, 0.f, 1.0f);
+		v.uv = Vector2(0.5f, 1.f);
+		v.color = Vector4(1.f, 1.f, 1.f, 1.f);
+		v.normal = Vector3(0.0f, -1.f, 0.0f);
+		v.normal.Normalize();
+
+		v.tangent = Vector3(1.f, 0.f, 0.f);
+		v.biNormal = Vector3(0.f, 0.f, -1.f);
+		capsuleVtx.emplace_back(v);
+
+		// Create the cylindrical middle part of the capsule
+		float fStackStep = fHeight / static_cast<float>(iStackCount); // Height step for each stack
+		float fUVYStep = 1.0f / static_cast<float>(iStackCount); // UV step for each stack
+
+		for (UINT i = 0; i < iStackCount; ++i)
+		{
+			float phi = i * fStackStep - XM_PIDIV2; // Start from the bottom hemisphere's pole
+
+			for (UINT j = 0; j <= iSliceCount; ++j)
+			{
+				float theta = j * XM_2PI / iSliceCount;
+
+				v.pos = Vector4(fRadius * cosf(phi) * cosf(theta),
+					fRadius * sinf(phi) + fHalfHeight,
+					fRadius * cosf(phi) * sinf(theta), 1.0f);
+
+				v.uv = Vector2(static_cast<float>(j) / static_cast<float>(iSliceCount),
+					static_cast<float>(i) / static_cast<float>(iStackCount));
+
+				v.color = Vector4(1.f, 1.f, 1.f, 1.f);
+				v.normal = Vector3(fRadius * cosf(phi) * cosf(theta),
+					fRadius * sinf(phi),
+					fRadius * cosf(phi) * sinf(theta));
+
+				v.tangent.x = -fRadius * sinf(phi) * sinf(theta);
+				v.tangent.y = 0.f;
+				v.tangent.z = fRadius * sinf(phi) * cosf(theta);
+				v.tangent.Normalize();
+
+				v.tangent.Cross(v.normal, v.biNormal);
+				v.biNormal.Normalize();
+
+				capsuleVtx.emplace_back(v);
+			}
+		}
+
+		// Connect the top hemisphere with the cylindrical middle part
+		for (UINT i = 0; i < iSliceCount; ++i)
+		{
+			indices.emplace_back(0);
+			indices.emplace_back(i + 2);
+			indices.emplace_back(i + 1);
+		}
+
+		// Connect the bottom hemisphere with the cylindrical middle part
+		UINT iBottomIdx = static_cast<UINT>(capsuleVtx.size()) - iSliceCount - 2;
+
+		for (UINT i = 0; i < iSliceCount; ++i)
+		{
+			indices.emplace_back(iBottomIdx);
+			indices.emplace_back(iBottomIdx + (i + 1));
+			indices.emplace_back(iBottomIdx + (i + 2));
+		}
+
+		// Create the cylindrical middle part of the capsule
+		for (UINT i = 0; i < iStackCount - 1; ++i)
+		{
+			for (UINT j = 0; j < iSliceCount; ++j)
+			{
+				indices.emplace_back((iSliceCount + 1) * i + j + 1);
+				indices.emplace_back((iSliceCount + 1) * i + j + 2);
+				indices.emplace_back((iSliceCount + 1) * (i + 1) + j + 2);
+
+				indices.emplace_back((iSliceCount + 1) * i + j + 1);
+				indices.emplace_back((iSliceCount + 1) * (i + 1) + j + 2);
+				indices.emplace_back((iSliceCount + 1) * (i + 1) + j + 1);
+			}
+		}
+
+		// Create the capsule mesh
+		Mesh* capsuleMesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Capsulemesh", capsuleMesh);
+		capsuleMesh->CreateVertexBuffer(capsuleVtx.data(), static_cast<UINT>(capsuleVtx.size()));
+		capsuleMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
+	}	
 }

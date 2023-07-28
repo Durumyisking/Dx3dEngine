@@ -43,9 +43,9 @@ VSOut main(VSIn vsIn)
     viewBiNormal = normalize(mul(float4(viewBiNormal, 0.f), view).xyz);
     
     vsOut.ViewPos = viewPosition.xyz;
-    vsOut.ViewNormal = viewNormal.xyz;
-    vsOut.ViewTangent = viewTangent.xyz;
-    vsOut.ViewBiNormal = viewBiNormal.xyz;
+    vsOut.ViewNormal     = viewNormal.xyz;
+    vsOut.ViewTangent    = viewTangent.xyz;
+    vsOut.ViewBiNormal   = viewBiNormal.xyz;
     
     return vsOut;
 }

@@ -50,7 +50,9 @@ namespace renderer
 	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 	{
 		Matrix world;
+		Matrix inverseWorld;
 		Matrix view;
+		Matrix inverseView;
 		Matrix projection;
 	};
 
@@ -169,13 +171,6 @@ namespace renderer
 		float wave_speed;
 		float wave_distortion;
 	};
-	CBUFFER(PBRCB, CBSLOT_PBR)
-	{
-		float metallic;
-		float roughness;
-		float ao;
-	};
-
 
 
 
@@ -212,5 +207,15 @@ namespace renderer
 	void BindLight();
 	void BindNoiseTexture();
 	void CopyRenderTarget();
+
+	// mesh create
+	void CreatePointMesh();
+	void CreateLineMesh();
+	void CreateRectMesh();
+	void CreateGridMesh();
+	void CreateCircleMesh();
+	void CreateCubeMesh();
+	void CreateSphereMesh();
+	void CreateCapsuleMesh();
 }
 

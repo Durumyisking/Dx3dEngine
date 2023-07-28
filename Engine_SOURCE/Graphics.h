@@ -27,7 +27,6 @@
 #define CBSLOT_PARTICLESYSTEM 6
 #define CBSLOT_NOISE			7
 #define CBSLOT_POSTPROCESS		8
-#define CBSLOT_PBR			9
 
 
 enum class eValidationMode
@@ -138,11 +137,11 @@ struct GpuBuffer
 
 enum class eTextureSlot
 {
-	T0,
-	T1,
-	T2,
-	T3,
-	T4,
+	Albedo,
+	Normal,
+	Metallic,
+	Roughness,
+	Emissive,
 	T5,
 	T6,
 	T7,
