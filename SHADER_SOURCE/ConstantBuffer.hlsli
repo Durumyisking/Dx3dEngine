@@ -1,7 +1,9 @@
 cbuffer Transform : register(b0)
 {
     row_major matrix world;
+    row_major matrix inverseWorld;
     row_major matrix view;
+    row_major matrix inverseView;
     row_major matrix projection;
 }
 
@@ -111,9 +113,6 @@ cbuffer ParticleSystem : register(b6)
 // postprocess b8
 
 
-cbuffer PBRconstant : register(b9)
+cbuffer vvvconstant : register(b9) // 쓸사람 쓰세요
 {
-    float metallic; 
-    float roughness; 
-    float ao; 
 }

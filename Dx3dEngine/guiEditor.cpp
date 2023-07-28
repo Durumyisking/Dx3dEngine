@@ -61,7 +61,7 @@ namespace gui
 		// 충돌체의 종류 갯수만큼만 있으면 된다.
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
-		Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"DebugRectmesh");
+		Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
 		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugMaterial");
 
 		mDebugObjects[static_cast<UINT>(eColliderType::Rect)] = new DebugObject();
