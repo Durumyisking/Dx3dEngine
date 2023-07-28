@@ -1,0 +1,13 @@
+D:/GitHub/Dx3dEngine/External/assimp/CMakeFiles/uninstall.dir
+D:/GitHub/Dx3dEngine/External/assimp/CMakeFiles/UpdateAssimpLibsDebugSymbolsAndDLLs.dir
+D:/GitHub/Dx3dEngine/External/assimp/CMakeFiles/INSTALL.dir
+D:/GitHub/Dx3dEngine/External/assimp/CMakeFiles/ALL_BUILD.dir
+D:/GitHub/Dx3dEngine/External/assimp/CMakeFiles/ZERO_CHECK.dir
+D:/GitHub/Dx3dEngine/External/assimp/contrib/zlib/CMakeFiles/zlibstatic.dir
+D:/GitHub/Dx3dEngine/External/assimp/contrib/zlib/CMakeFiles/INSTALL.dir
+D:/GitHub/Dx3dEngine/External/assimp/contrib/zlib/CMakeFiles/ALL_BUILD.dir
+D:/GitHub/Dx3dEngine/External/assimp/code/CMakeFiles/assimp.dir
+D:/GitHub/Dx3dEngine/External/assimp/code/CMakeFiles/INSTALL.dir
+D:/GitHub/Dx3dEngine/External/assimp/test/CMakeFiles/unit.dir
+D:/GitHub/Dx3dEngine/External/assimp/test/CMakeFiles/INSTALL.dir
+D:/GitHub/Dx3dEngine/External/assimp/test/headercheck/CMakeFiles/INSTALL.dir
