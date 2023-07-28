@@ -121,6 +121,7 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 				GETSINGLE(ResourceMgr)->Insert<Model>(modelName, model);
 			}
 
+			model->SetCurDirectoryPath(fullPath);
 			if (L".DAE" == extension || L".Dae" == extension || L".dae" == extension)
 			{
 				model->Load(entry.path());
@@ -134,6 +135,11 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 		}
 	}
 
+	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(modelName);
+	if (model != nullptr)
+	{
+		model->CreateTexture();
+	}
 	return true;
 }
 

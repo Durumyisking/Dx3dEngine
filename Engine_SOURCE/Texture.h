@@ -3,6 +3,7 @@
 #include "ResourceMgr.h"
 #include "../External/DirectXTex/include/DirectXTex.h"
 #include "GraphicDevice.h"
+#include "Model.h"
 
 #ifdef _DEBUG
 #pragma comment(lib, "../External/DirectXTex/lib/Debug/DirectXTex.lib")
@@ -25,6 +26,7 @@ public:
 	bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag);
 	bool Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture);
 	virtual HRESULT Load(const std::wstring& path) override;
+	Texture* Load(const std::wstring& path, const Model::TextureInfo& info);
 
 	void BindShaderResource(eShaderStage stage, UINT slot);
 	void BindUnorderedAccessview(UINT slot);
