@@ -1,5 +1,6 @@
 #include "FileMgr.h"
 #include "Application.h"
+#include "Model.h"
 
 extern Application application;
 namespace fs = std::filesystem;
@@ -97,6 +98,43 @@ void FileMgr::FileLoad(const std::wstring& path)
 	}
 
 	file.close();
+}
+
+bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
+{
+	std::wstring fullPath = L"..//" + path;
+	fs::path folderPath = std::string(fullPath.begin(), fullPath.end());
+
+	// 폴더 내부 파일들을 순회하며 출력
+	for (const auto& entry : fs::directory_iterator(folderPath)) {
+		if (entry.is_regular_file())
+		{
+			wchar_t szExtension[256] = {};
+			_wsplitpath_s(entry.path().c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // 경로에서 확장자만 뽑아오는 녀석
+
+			std::wstring extension(szExtension);
+
+			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(modelName);
+			if (model == nullptr)
+			{
+				model = new Model();
+				GETSINGLE(ResourceMgr)->Insert<Model>(modelName, model);
+			}
+
+			if (L".DAE" == extension || L".Dae" == extension || L".dae" == extension)
+			{
+				model->Load(entry.path());
+			}
+
+			if (L".FBX" == extension || L".Fbx" == extension || L"fbx" == extension)
+			{
+				// FBX 파일 로드 테스트
+				//model->Load(entry.path());
+			}
+		}
+	}
+
+	return true;
 }
 
 const std::string FileMgr::parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const

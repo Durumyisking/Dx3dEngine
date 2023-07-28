@@ -541,49 +541,71 @@ namespace renderer
 	{
 
 #pragma region InputLayout
-		D3D11_INPUT_ELEMENT_DESC arrLayout[7] = {};
+		D3D11_INPUT_ELEMENT_DESC arrLayout[8] = {};
 
-		arrLayout[0].AlignedByteOffset = 0;
+		UINT offset = 0;
+		arrLayout[0].AlignedByteOffset = offset;
 		arrLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 		arrLayout[0].InputSlot = 0;
 		arrLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[0].SemanticName = "POSITION";
 		arrLayout[0].SemanticIndex = 0;
+		offset += sizeof(float) * 4;
 
-		arrLayout[1].AlignedByteOffset = 16;
+		arrLayout[1].AlignedByteOffset = offset;
 		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 		arrLayout[1].InputSlot = 0;
 		arrLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[1].SemanticName = "COLOR";
 		arrLayout[1].SemanticIndex = 0;
+		offset += sizeof(float) * 4;
 
-		arrLayout[2].AlignedByteOffset = 32;
+		arrLayout[2].AlignedByteOffset = offset;
 		arrLayout[2].Format = DXGI_FORMAT_R32G32_FLOAT;
 		arrLayout[2].InputSlot = 0;
 		arrLayout[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[2].SemanticName = "TEXCOORD";
 		arrLayout[2].SemanticIndex = 0;
+		offset += sizeof(float) * 2;
 
-		arrLayout[3].AlignedByteOffset = 40;
+		arrLayout[3].AlignedByteOffset = offset;
 		arrLayout[3].Format = DXGI_FORMAT_R32G32B32_FLOAT;
 		arrLayout[3].InputSlot = 0;
 		arrLayout[3].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[3].SemanticName = "TANGENT";
 		arrLayout[3].SemanticIndex = 0;
+		offset += sizeof(float) * 3;
 
-		arrLayout[4].AlignedByteOffset = 52;
+		arrLayout[4].AlignedByteOffset = offset;
 		arrLayout[4].Format = DXGI_FORMAT_R32G32B32_FLOAT;
 		arrLayout[4].InputSlot = 0;
 		arrLayout[4].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[4].SemanticName = "BINORMAL";
 		arrLayout[4].SemanticIndex = 0;
+		offset += sizeof(float) * 3;
 
-		arrLayout[5].AlignedByteOffset = 64;
+		arrLayout[5].AlignedByteOffset = offset;
 		arrLayout[5].Format = DXGI_FORMAT_R32G32B32_FLOAT;
 		arrLayout[5].InputSlot = 0;
 		arrLayout[5].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[5].SemanticName = "NORMAL";
 		arrLayout[5].SemanticIndex = 0;
+		offset += sizeof(float) * 3;
+
+		arrLayout[6].AlignedByteOffset = offset;
+		arrLayout[6].Format = DXGI_FORMAT_R32G32B32A32_UINT;
+		arrLayout[6].InputSlot = 0;
+		arrLayout[6].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		arrLayout[6].SemanticName = "BLENDINDICES";
+		arrLayout[6].SemanticIndex = 0;
+		offset += sizeof(UINT) * 4;
+
+		arrLayout[7].AlignedByteOffset = offset;
+		arrLayout[7].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[7].InputSlot = 0;
+		arrLayout[7].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		arrLayout[7].SemanticName = "BLENDWEIGHT";
+		arrLayout[7].SemanticIndex = 0;
 
 		//Vector3 tangent;
 		//Vector3 biNormal;
@@ -653,19 +675,19 @@ namespace renderer
 			, debugGeometryShader->GetInputLayoutAddr());
 
 		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
-		GetDevice()->CreateInputLayout(arrLayout, 6
+		GetDevice()->CreateInputLayout(arrLayout, 8
 			, phongShader->GetVSBlobBufferPointer()
 			, phongShader->GetVSBlobBufferSize()
 			, phongShader->GetInputLayoutAddr());
 
 		Shader* flatShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FlatShader");
-		GetDevice()->CreateInputLayout(arrLayout, 6
+		GetDevice()->CreateInputLayout(arrLayout, 8
 			, flatShader->GetVSBlobBufferPointer()
 			, flatShader->GetVSBlobBufferSize()
 			, flatShader->GetInputLayoutAddr());
 
 		Shader* PBRShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
-		GetDevice()->CreateInputLayout(arrLayout, 6
+		GetDevice()->CreateInputLayout(arrLayout, 8
 			, PBRShader->GetVSBlobBufferPointer()
 			, PBRShader->GetVSBlobBufferSize()
 			, PBRShader->GetInputLayoutAddr());

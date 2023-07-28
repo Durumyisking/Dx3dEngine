@@ -10,6 +10,7 @@
 #include "Texture.h"
 #include "Camera.h"
 #include "CameraScript.h"
+#include "Model.h"
 #include "FontWrapper.h"
 
 #include "GridScript.h"
@@ -171,6 +172,9 @@ void SceneTitle::Enter()
 		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
+
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
+		player->GetComponent<MeshRenderer>()->SetModel(model);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));

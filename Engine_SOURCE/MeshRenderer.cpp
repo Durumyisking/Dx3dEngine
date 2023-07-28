@@ -1,6 +1,8 @@
 #include "MeshRenderer.h"
 #include "GameObj.h"
 #include "Transform.h"
+#include "Model.h"
+#include "Mesh.h"
 
 
 
@@ -35,9 +37,9 @@ void MeshRenderer::Render()
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
 	GetMaterial()->Bind();
-	GetMesh()->BindBuffer();
 
-	GetMesh()->Render();
+	GetModel() != nullptr ? GetModel()->Bind() : GetMesh()->BindBuffer();
+	GetModel() != nullptr ? GetModel()->Render() : GetMesh()->Render();
 
 	GetMaterial()->Clear();
 }

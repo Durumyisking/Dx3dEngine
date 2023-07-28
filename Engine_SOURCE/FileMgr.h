@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine.h"
+#include "Renderer.h"
 
 
 
@@ -34,8 +35,9 @@ public:
 
 public:
 	void FileLoad(const std::wstring& path);
-	//std::string ParsingString(int startPos,std::string buf, std::string delValue){};
 
+	// 폴더명을 입력해주세요
+	bool ModelLoad(const std::wstring& path, const std::wstring& modelName);
 
 private:
 	const std::string parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const;

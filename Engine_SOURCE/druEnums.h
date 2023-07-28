@@ -53,6 +53,7 @@ namespace enums
 		Mesh,
 		Texture,
 		Material,
+		Model,
 		Sound,
 		//Font,
 		Prefab,

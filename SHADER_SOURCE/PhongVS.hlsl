@@ -7,6 +7,9 @@ struct VSIn
     float3 Tangent : TANGENT;
     float3 Normal : NORMAL;
     float3 BiNormal : BINORMAL;
+    
+    uint4 BlendID : BLENDINDICES;
+    float4 BlendWeight : BLENDWEIGHT;
 };
 
 struct VSOut
