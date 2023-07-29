@@ -64,7 +64,6 @@ float4 main(VSOut vsIn) : SV_Target
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
     normal.xyz = vsIn.ViewNormal;
-
     // PBR     
     float3 V = normalize(-vsIn.ViewPos); // 뷰공간 pinPoint(0,0,0)부터 픽셀로 향하는 벡터
     float3 N = normal; // 정점/텍스처 노말 뷰변환 완료
@@ -89,7 +88,8 @@ float4 main(VSOut vsIn) : SV_Target
     float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.f), roughness)).rg;
     float3 specular = (F * envBRDF.x + envBRDF.y);
         
-    float3 ambient = (diffuse + specular) * NdotL;
+    //float3 ambient = (diffuse + specular) * NdotL;
+    float3 ambient = (diffuse + specular); // 마딧세이는 전방향 빛 비추는듯?
     
     outColor.xyz = ambient;   
         

@@ -161,7 +161,9 @@ copy "$(SolutionDir)PhysXCommon_64.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)PhysXCooking_64.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"
 
-copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"</Command>
+copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
+
+</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -201,7 +203,9 @@ copy "$(SolutionDir)PhysXCommon_64.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)PhysXCooking_64.dll" "$(SolutionDir)\x64\Debug\"
 copy "$(SolutionDir)PhysXFoundation_64.dll" "$(SolutionDir)\x64\Debug\"
 
-copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"</Command>
+copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
+
+</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
