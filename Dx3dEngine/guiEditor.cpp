@@ -30,7 +30,7 @@
 #include "Graphics.h"
 
 #include "ResourceMgr.h"
-
+#include "InputMgr.h"
 
 
 extern Application application;
@@ -163,7 +163,10 @@ namespace gui
 
 		for (DebugMesh & mesh : renderer::debugMeshes)
 		{
-			DebugRender(mesh);
+			if (KEY_DOWN(V))
+			{
+				DebugRender(mesh);
+			}
 		}
 		renderer::debugMeshes.clear();
 	}

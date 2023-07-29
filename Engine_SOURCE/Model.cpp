@@ -43,7 +43,7 @@ HRESULT Model::Load(const std::wstring& path)
 	if (mStructure == nullptr)
 	{
 		mStructure = new StructedBuffer();
-		mStructure->Create(sizeof(BoneMat), mBones.size(), eSRVType::SRV, nullptr, true);
+		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
 	}
 
 	mAssimpImporter.FreeScene();
@@ -91,10 +91,10 @@ void Model::Bind_Render(Material* material)
 		boneMat.emplace_back(boneInfo);
 	}
 
-	mStructure->SetData(boneMat.data(), boneMat.size());
+	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
 	mStructure->BindSRV(eShaderStage::VS, 30);
 
-	for (size_t i = 0; i < mMeshes.size(); ++i)
+	for (int i = 0; i < mMeshes.size(); ++i)
 	{
 		if (mMeshes[i] == nullptr)
 			continue;
@@ -215,7 +215,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	}
 
 	int numBones = 0;
-	for (int i = 0; i < mesh->mNumBones; ++i)
+	for (UINT i = 0; i < mesh->mNumBones; ++i)
 	{
 		Bone bone = {};
 		aiBone* aiBone = mesh->mBones[i];
@@ -224,29 +224,29 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		mBones.emplace_back(bone);
 
 		UINT bonIndex = numBones++;
-		for (int j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
+		for (UINT j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
 		{
 			UINT vertexID = mesh->mBones[i]->mWeights[j].mVertexId;
 			float weight = mesh->mBones[i]->mWeights[j].mWeight;
 
 			if (vertexes[vertexID].BlendWeight.x == 0.0f)
 			{
-				vertexes[vertexID].BlendID.x = mBones.size() - 1;
+				vertexes[vertexID].BlendID.x = static_cast<float>(mBones.size() - 1);
 				vertexes[vertexID].BlendWeight.x = weight;
 			}
 			else if (vertexes[vertexID].BlendWeight.y == 0.0f)
 			{
-				vertexes[vertexID].BlendID.y = mBones.size() - 1;
+				vertexes[vertexID].BlendID.y = static_cast<float>(mBones.size() - 1);
 				vertexes[vertexID].BlendWeight.y = weight;
 			}
 			else if (vertexes[vertexID].BlendWeight.z == 0.0f)
 			{
-				vertexes[vertexID].BlendID.z = mBones.size() - 1;
+				vertexes[vertexID].BlendID.z = static_cast<float>(mBones.size() - 1);
 				vertexes[vertexID].BlendWeight.z = weight;
 			}
 			else if (vertexes[vertexID].BlendWeight.w == 0.0f)
 			{
-				vertexes[vertexID].BlendID.w = mBones.size() - 1;
+				vertexes[vertexID].BlendID.w = static_cast<float>(mBones.size() - 1);
 				vertexes[vertexID].BlendWeight.w = weight;
 			}
 		}
@@ -258,7 +258,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		Model::TextureVector textureBuff = {};
 		for (int type = static_cast<int>(aiTextureType_NONE); type < static_cast<int>(aiTextureType_UNKNOWN); ++type)
 		{
-			Model::TextureVector texInfo = processMaterial(aiMater, (aiTextureType)type);
+			Model::TextureVector texInfo = processMaterial(aiMater, static_cast<aiTextureType>(type));
 			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
 		}
 		mTextures.emplace_back(textureBuff);
@@ -266,8 +266,8 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	
 
 	Mesh* inMesh = new Mesh();
-	inMesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
-	inMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
+	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
 
 
@@ -324,7 +324,7 @@ void Model::CreateTexture()
 			Texture* tex = new Texture();
 			tex->Load(texInfo.texPath, texInfo);
 
-			texInfo.texID = tex->GetID();
+			texInfo.texID = static_cast<UINT>( tex->GetID());
 			texInfo.pTex = tex;
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(texInfo.texName, texInfo.pTex);

@@ -214,18 +214,6 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 	
-
-	//{
-	//	
-	//	Sphere* sphere = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
-	//	sphere->SetPos(Vector3(-5.f, 20.f, 5.f));
-	//	sphere->SetScale({ 2.5f, 2.5f, 2.5f });
-	//	sphere->SetName(L"Sphere");
-	//	sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-
-	//}
-
-
 	{
 		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
