@@ -167,10 +167,10 @@ void SceneTitle::Enter()
 		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"padded_leather_albedo", L"padded_leather_normal", L"padded_leather_metallic", L"padded_leather_roughness", L"PBRShader", L"mat_dirt");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
-			L"gold_albedo",
-			L"gold_normal", 
-			L"gold_metallic", 
-			L"gold_roughness", 
+			L"check_albedo",
+			L"check_normal", 
+			L"check_metallic", 
+			L"check_roughness", 
 			L"PBRShader",
 			L"mat_dirt"
 		);

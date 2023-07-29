@@ -444,10 +444,10 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_metallic", L"Textures/a/dented-metal_metallic.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_roughnes", L"Textures/a/dented-metal_roughness.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_albedo", L"Textures/a/older-padded-leather_albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_normal", L"Textures/a/older-padded-leather_normal.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_metallic", L"Textures/a/older-padded-leather_metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"padded_leather_roughness", L"Textures/a/older-padded-leather_roughness.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_albedo", L"Textures/Check/albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_normal", L"Textures/Check/normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_metallic", L"Textures/Check/metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_roughness", L"Textures/Check/roughness.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_albedo", L"Textures/a/used-stainless-steel2_albedo.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_normal", L"Textures/a/used-stainless-steel2_normal.png");

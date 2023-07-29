@@ -84,8 +84,7 @@ float4 main(VSOut vsIn) : SV_Target
     float3 diffuse = kd * albedo.xyz;
 
     const float MAX_REFLECTION_LOD = 4.f;
-    //float3 prefilteredColor = prefilteredMap.SampleLevel(splr, R, roughness * MAX_REFLECTION_LOD).rgb;
-    float3 prefilteredColor = colorTexture.SampleLevel(linearSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
+    //float3 prefilteredColor = prefilteredMap.SampleLevel(linearSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
     float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.f), roughness)).rg;
     float3 specular = (F * envBRDF.x + envBRDF.y);
         

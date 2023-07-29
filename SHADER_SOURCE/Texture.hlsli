@@ -5,6 +5,10 @@ Texture2D MetalTexture      : register(t2);
 Texture2D RoughnessTexture  : register(t3);
 Texture2D EmissiveTexture   : register(t4);
 
+
+TextureCube irradianceMap : register(t9);
+TextureCube prefilteredMap : register(t10);
+
 Texture2D BRDF : register(t11);
 
 //Atlas texture
