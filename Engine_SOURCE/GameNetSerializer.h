@@ -17,7 +17,7 @@ namespace server
 		//GameNetSerializer& operator=(const GameNetSerializer& _Other) = delete;
 		//GameNetSerializer& operator=(GameNetSerializer&& _Other) noexcept = delete;
 
-		unsigned int GetReadOffSet()
+		int GetReadOffSet()
 		{
 			return mReadOffset;
 		}
@@ -27,7 +27,7 @@ namespace server
 			mReadOffset = 0;
 		}
 
-		unsigned int GetWriteOffSet()
+		int GetWriteOffSet()
 		{
 			return mWriteOffset;
 		}
@@ -110,8 +110,8 @@ namespace server
 	protected:
 
 	private:
-		unsigned int mWriteOffset = 0;
-		unsigned int mReadOffset = 0;
+		int mWriteOffset = 0;
+		int mReadOffset = 0;
 		std::vector<unsigned char> mData;
 
 	};
