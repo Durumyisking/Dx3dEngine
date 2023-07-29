@@ -8,10 +8,6 @@ Material::Material()
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 }
 Material::Material(std::wstring textureColor, std::wstring shaderName)
@@ -20,10 +16,6 @@ Material::Material(std::wstring textureColor, std::wstring shaderName)
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
@@ -36,10 +28,6 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
@@ -54,16 +42,11 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
 	mTexture[static_cast<UINT>(eTextureSlot::Normal)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
 	mTexture[static_cast<UINT>(eTextureSlot::Metallic)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureMetal);
-	mBRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
 	
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 
@@ -75,17 +58,12 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
 	mTexture[static_cast<UINT>(eTextureSlot::Normal)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
 	mTexture[static_cast<UINT>(eTextureSlot::Metallic)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureMetal);
 	mTexture[static_cast<UINT>(eTextureSlot::Roughness)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureRoughness);
-	mBRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
 	
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 
@@ -97,10 +75,6 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
@@ -108,7 +82,6 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	mTexture[static_cast<UINT>(eTextureSlot::Metallic)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureMetal);
 	mTexture[static_cast<UINT>(eTextureSlot::Roughness)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureRoughness);
 	mTexture[static_cast<UINT>(eTextureSlot::Emissive)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureEmissive);
-	mBRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
 
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 
@@ -122,10 +95,6 @@ Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring sha
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 	mTexture[static_cast<UINT>(slot)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureName);
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
@@ -245,12 +214,6 @@ void Material::Bind()
 		mTexture[i]->BindShaderResource(eShaderStage::GS, i);
 		mTexture[i]->BindShaderResource(eShaderStage::PS, i);
 		mTexture[i]->BindShaderResource(eShaderStage::CS, i);
-	}
-
-	if (nullptr != mBRDF)
-	{
-		mBRDF->BindShaderResource(eShaderStage::VS, 11);
-		mBRDF->BindShaderResource(eShaderStage::PS, 11);
 	}
 
 	BindingTextures();	

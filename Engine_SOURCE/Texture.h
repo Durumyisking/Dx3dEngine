@@ -29,6 +29,8 @@ public:
 	Texture* Load(const std::wstring& path, const Model::TextureInfo& info);
 
 	void BindShaderResource(eShaderStage stage, UINT slot);
+	void BindShaderResource_VP(UINT slot);
+	void BindAllShaderResource(UINT slot);
 	void BindUnorderedAccessview(UINT slot);
 	void ClearUnorderedAccessview(UINT slot);
 

@@ -487,6 +487,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_roughness", L"Textures/Wood/roughness.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BRDF", L"Textures/BRDF.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"lightMap", L"Textures/lightMap.png");
 
 
 		Texture* uavTexture = new Texture();
@@ -655,6 +656,14 @@ namespace renderer
 	{
 		GetDevice()->OMSetRenderTarget();
 
+		// BindPBR Properties
+		Texture* irradianceMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
+		Texture* preFilteredMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
+		Texture* BRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
+		irradianceMap->BindShaderResource_VP(9);
+		preFilteredMap->BindShaderResource_VP(10);
+		BRDF->BindShaderResource_VP(11);
+
 		BindNoiseTexture();
 		BindLight();
 
@@ -792,6 +801,17 @@ namespace renderer
 
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 	}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CreatePointMesh()
 	{

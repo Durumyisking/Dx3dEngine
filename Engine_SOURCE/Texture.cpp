@@ -230,6 +230,22 @@ void Texture::BindShaderResource(eShaderStage stage, UINT slot)
 	GetDevice()->BindShaderResource(stage, slot, mSRV.GetAddressOf());
 }
 
+void Texture::BindShaderResource_VP(UINT slot)
+{
+	GetDevice()->BindShaderResource(eShaderStage::VS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::PS, slot, mSRV.GetAddressOf());
+}
+
+void Texture::BindAllShaderResource(UINT slot)
+{
+	GetDevice()->BindShaderResource(eShaderStage::VS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::DS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::GS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::HS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::CS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::PS, slot, mSRV.GetAddressOf());
+}
+
 void Texture::BindUnorderedAccessview(UINT slot)
 {
 	UINT i = -1; 

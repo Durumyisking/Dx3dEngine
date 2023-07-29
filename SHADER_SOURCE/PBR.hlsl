@@ -80,16 +80,18 @@ float4 main(VSOut vsIn) : SV_Target
     
     float3 kd = lerp((float3) 1.f - F, (float3) 0.f, metallic);
 
-    //float3 irradiance = irradianceMap.Sample(splr, N).rgb;
+    //float3 irradiance = irradianceMap.Sample(linearSampler, N).rgb;
+    //float3 diffuse = irradiance * kd * albedo.xyz;
     float3 diffuse = kd * albedo.xyz;
-
-    const float MAX_REFLECTION_LOD = 4.f;
+    
+    //const float MAX_REFLECTION_LOD = 4.f;
     //float3 prefilteredColor = prefilteredMap.SampleLevel(linearSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
     float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.f), roughness)).rg;
+    //float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
     float3 specular = (F * envBRDF.x + envBRDF.y);
-        
-    //float3 ambient = (diffuse + specular) * NdotL;
-    float3 ambient = (diffuse + specular); // 마딧세이는 전방향 빛 비추는듯?
+    
+    float3 ambient = (diffuse + specular) * NdotL;
+    //float3 ambient = (diffuse + specular); // 마딧세이는 전방향 빛 비추는듯?
     
     outColor.xyz = ambient;   
         
