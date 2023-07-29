@@ -32,6 +32,8 @@ Application::~Application()
 
 void Application::Initialize()
 {
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
+
 	GETSINGLE(TimeMgr)->Initialize();
 	GETSINGLE(InputMgr)->Initialize();
 	GETSINGLE(Fmod)->Initialize();
@@ -115,7 +117,6 @@ void Application::Present()
 
 void Application::Release()
 {
-	//GETSINGLE(FileMgr)->FileLoad(L"..//Resources/MarioHackStart.SMD");
 	GETSINGLE(ResourceMgr)->Release();
 	GETSINGLE(Fmod)->Release();
 	GETSINGLE(SceneMgr)->Release();
@@ -134,6 +135,7 @@ void Application::DestroySingle()
 	GETSINGLE(InputMgr)->DestroyInstance();
 	GETSINGLE(TimeMgr)->DestroyInstance();
 	GETSINGLE(ResourceMgr)->DestroyInstance();
+	GETSINGLE(FileMgr)->DestroyInstance();
 	GETSINGLE(PhysicsMgr)->DestroyInstance();
 	GETSINGLE(TimerMgr)->DestroyInstance();
 }

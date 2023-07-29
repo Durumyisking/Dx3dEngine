@@ -59,7 +59,7 @@ float4 TextureMapping_albedo(float2 uv)
 // 현재 픽셀의 normal을 얻고 viewspace로 변경한다.
 float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, float3 viewBiNormal)
 {
-    float3 result = normalTexture.SampleLevel(linearSampler, uv, 0.f).xyz;
+    float3 result = normalTexture.SampleLevel(linearSampler, uv, 0.f).rgb;
     
     result.xyz = normalize((result.xyz * 2.f).xyz - 1.f);
         

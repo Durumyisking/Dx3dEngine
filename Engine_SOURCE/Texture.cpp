@@ -182,6 +182,49 @@ HRESULT Texture::Load(const std::wstring& path)
 	return S_OK;
 }
 
+Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
+{
+	wchar_t szExtension[256] = {};
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // 경로에서 확장자만 뽑아오는 녀석
+
+	std::wstring extension(szExtension);
+
+	if (extension == L".dds" || extension == L".DDS")
+	{
+		if (FAILED(LoadFromDDSFile(path.c_str(), DDS_FLAGS::DDS_FLAGS_NONE, nullptr, mImage)))
+			return nullptr;
+	}
+	else if (extension == L".tga" || extension == L".TGA")
+	{
+		if (FAILED(LoadFromTGAFile(path.c_str(), nullptr, mImage)))
+			return nullptr;
+	}
+	else // WIC (png, jpg, jpeg, bmp )
+	{
+		if (FAILED(LoadFromWICFile(path.c_str(), WIC_FLAGS::WIC_FLAGS_NONE, nullptr, mImage)))
+			return nullptr;
+	}
+
+
+	CreateShaderResourceView(
+		GetDevice()->GetID3D11Device()
+		, mImage.GetImages()
+		, mImage.GetImageCount()
+		, mImage.GetMetadata()
+		, mSRV.GetAddressOf()
+	);
+
+
+	mSRV->GetResource((ID3D11Resource**)mTexture.GetAddressOf());
+
+	mTexture->GetDesc(&mDesc);
+	
+	SetName(info.texName);
+	SetPath(info.texPath);
+
+	return this;
+}
+
 void Texture::BindShaderResource(eShaderStage stage, UINT slot)
 {
 	GetDevice()->BindShaderResource(stage, slot, mSRV.GetAddressOf());

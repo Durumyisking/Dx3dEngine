@@ -22,8 +22,8 @@ void PlayerScript::Initialize()
 	mTransform = GetOwner()->GetComponent<Transform>();
 	mPhyXRigidBody = GetOwner()->GetComponent<PhysXRigidBody>();
 
-	mPhyXRigidBody->SetAngularMaxVelocityForDynamic(5555.f);
-	mPhyXRigidBody->SetLinearMaxVelocityForDynamic(5555.f);
+	mPhyXRigidBody->SetAngularMaxVelocityForDynamic(10.f);
+	mPhyXRigidBody->SetLinearMaxVelocityForDynamic(10.f);
 
 }
 void PlayerScript::Update()
@@ -58,23 +58,23 @@ void PlayerScript::FixedUpdate()
 
 	if (KEY_DOWN(LEFT))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * -1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camRight * -10000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(RIGHT))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * 1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camRight * 10000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(UP))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * 1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camForward * 10000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(DOWN))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * -1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camForward * -10000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_TAP(SPACE))
 	{
-		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((mTransform->Up() * 100000.f * DT), PxForceMode::Enum::eFORCE);
+		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((mTransform->Up() * 500000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(R))
 	{

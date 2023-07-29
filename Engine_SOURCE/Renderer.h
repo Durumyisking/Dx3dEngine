@@ -45,6 +45,9 @@ namespace renderer
 		Vector3 tangent;
 		Vector3 biNormal;
 		Vector3 normal;
+
+		Vector4 BlendID;
+		Vector4 BlendWeight;
 	};
 
 	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임

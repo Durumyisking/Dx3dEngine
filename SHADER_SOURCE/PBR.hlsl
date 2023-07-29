@@ -58,21 +58,21 @@ float4 main(VSOut vsIn) : SV_Target
         metallic = TextureMapping_metallic(vsIn.UV);
         roughness = TextureMapping_roughness(vsIn.UV);
     }
-    else if (5 == cbtextureExistence)// emissive Ãß°¡ÇÊ¿ä
+    else if (5 == cbtextureExistence)// emissive ì¶”ê°€í•„ìš”
     {
         albedo = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    
+    normal.xyz = vsIn.ViewNormal;
     // PBR     
-    float3 V = normalize(-vsIn.ViewPos); // ºä°ø°£ pinPoint(0,0,0)ºÎÅÍ ÇÈ¼¿·Î ÇâÇÏ´Â º¤ÅÍ
-    float3 N = normal; // Á¤Á¡/ÅØ½ºÃ³ ³ë¸» ºäº¯È¯ ¿Ï·á
+    float3 V = normalize(-vsIn.ViewPos); // ë·°ê³µê°„ pinPoint(0,0,0)ë¶€í„° í”½ì…€ë¡œ í–¥í•˜ëŠ” ë²¡í„°
+    float3 N = normal; // ì •ì /í…ìŠ¤ì²˜ ë…¸ë§ ë·°ë³€í™˜ ì™„ë£Œ
     float3 R = reflect(-V, N);
-    float NDotV = saturate(dot(N, V)); // ³ë¸Ö to ´« ¹İ»ç°¢ 
+    float NDotV = saturate(dot(N, V)); // ë…¸ë©€ to ëˆˆ ë°˜ì‚¬ê° 
 
-    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // ±İ¼Ó¼ºÀÌ °­ÇÒ¼ö·Ï albedo¸¦ »ç¿ëÇÏ°í ¾Æ´Ï¸é 0.04»ç¿ë (ÀçÁú °ª)
+    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // ê¸ˆì†ì„±ì´ ê°•í• ìˆ˜ë¡ albedoë¥¼ ì‚¬ìš©í•˜ê³  ì•„ë‹ˆë©´ 0.04ì‚¬ìš© (ì¬ì§ˆ ê°’)
 
-    float3 L = -normalize(mul(float4(lightAttributes[0].direction.xyz, 0.f), view)).xyz; // ºû °¢µµ            
+    float3 L = -normalize(mul(float4(lightAttributes[0].direction.xyz, 0.f), view)).xyz; // ë¹› ê°ë„            
 
     float NdotL = max(dot(N, L), 0.f);
     
@@ -88,7 +88,8 @@ float4 main(VSOut vsIn) : SV_Target
     float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.f), roughness)).rg;
     float3 specular = (F * envBRDF.x + envBRDF.y);
         
-    float3 ambient = (diffuse + specular) * NdotL;
+    //float3 ambient = (diffuse + specular) * NdotL;
+    float3 ambient = (diffuse + specular); // ë§ˆë”§ì„¸ì´ëŠ” ì „ë°©í–¥ ë¹› ë¹„ì¶”ëŠ”ë“¯?
     
     outColor.xyz = ambient;   
         
@@ -113,7 +114,7 @@ float4 main(VSOut vsIn) : SV_Target
 
 //        if (0 == lightAttributes[i].type)
 //        {
-//            L = -normalize(mul(float4(lightAttributes[i].direction.xyz, 0.f), view)).xyz; // ºû °¢µµ            
+//            L = -normalize(mul(float4(lightAttributes[i].direction.xyz, 0.f), view)).xyz; // ë¹› ê°ë„            
 //        }
 //        else if (1 == lightAttributes[i].type)
 //        {
@@ -122,15 +123,15 @@ float4 main(VSOut vsIn) : SV_Target
 //        }
         
         
-//        float3 H = normalize(V + L); // ÇÏÇÁº¤ÅÍ : ´«, ºû ¹İ»çº¤ÅÍ
+//        float3 H = normalize(V + L); // í•˜í”„ë²¡í„° : ëˆˆ, ë¹› ë°˜ì‚¬ë²¡í„°
         
-//        float3 F = fresnelSchlick(max(dot(H, V), 0.f), F0); // ºû ¹İ»çÀ²  metallicÀÌ ³ôÀ»¼ö·Ï ºûÀ» ¸¹ÀÌ ¹İ»çÇÑ´Ù.
-//        float D = DistributionGGX(N, H, roughness); // Ç¥¸éÀÇ °ÅÄ§ ºĞÆ÷¸¦ °è»êÇÔ, ¹Ì¼¼Ç¥¸éÀÇ °ÅÄ¥±â´Â ¿ì¸®°¡ Á¤È®È÷ ¾Ë ¼ö ¾ø±â¶§¹®¿¡ ÃßÁ¤Ä¡¸¦ ±¸ÇÑ´Ù. roughness°¡ ³·À»¼ö·Ï ºûÀ» ¼¼°Ô ¹İ»çÇÑ´Ù.
-//        float G = GeometrySmith(N, V, L, roughness); // Å×µÎ¸® °ÅÄ§µµ¿¡ ±â¿©ÇÑ´Ù. metallicÇÑ ¹°ÁúµéÀº view¿Í ³ë¸»º¤ÅÍ°¡ ÀÌ·ç´Â °¢µµ°¡ Å¬¼ö·Ï ºûÀ» Èí¼öÇÏ±âº¸´Ù´Â ¹İ»çÇÑ´Ù.
+//        float3 F = fresnelSchlick(max(dot(H, V), 0.f), F0); // ë¹› ë°˜ì‚¬ìœ¨  metallicì´ ë†’ì„ìˆ˜ë¡ ë¹›ì„ ë§ì´ ë°˜ì‚¬í•œë‹¤.
+//        float D = DistributionGGX(N, H, roughness); // í‘œë©´ì˜ ê±°ì¹¨ ë¶„í¬ë¥¼ ê³„ì‚°í•¨, ë¯¸ì„¸í‘œë©´ì˜ ê±°ì¹ ê¸°ëŠ” ìš°ë¦¬ê°€ ì •í™•íˆ ì•Œ ìˆ˜ ì—†ê¸°ë•Œë¬¸ì— ì¶”ì •ì¹˜ë¥¼ êµ¬í•œë‹¤. roughnessê°€ ë‚®ì„ìˆ˜ë¡ ë¹›ì„ ì„¸ê²Œ ë°˜ì‚¬í•œë‹¤.
+//        float G = GeometrySmith(N, V, L, roughness); // í…Œë‘ë¦¬ ê±°ì¹¨ë„ì— ê¸°ì—¬í•œë‹¤. metallicí•œ ë¬¼ì§ˆë“¤ì€ viewì™€ ë…¸ë§ë²¡í„°ê°€ ì´ë£¨ëŠ” ê°ë„ê°€ í´ìˆ˜ë¡ ë¹›ì„ í¡ìˆ˜í•˜ê¸°ë³´ë‹¤ëŠ” ë°˜ì‚¬í•œë‹¤.
  
  
-//        // ºûÀº ¹°Áú¿¡ ´êÀ¸¸é ¿©·¯¹ø ±¼ÀıµÇ¾î È®»ê »ê¶õÀÌ ÀÏ¾î³­´Ù.
-//        // ±İ¼Ó¼ºÀÌ ³ôÀ»¼ö·Ï ¿¡³ÊÁö¸¦ ¹İ»çÇÏ°Å³ª Èí¼öÇÏ±â¶§¹®¿¡ È®»ê±â¿©´Â ³·´Ù        
+//        // ë¹›ì€ ë¬¼ì§ˆì— ë‹¿ìœ¼ë©´ ì—¬ëŸ¬ë²ˆ êµ´ì ˆë˜ì–´ í™•ì‚° ì‚°ë€ì´ ì¼ì–´ë‚œë‹¤.
+//        // ê¸ˆì†ì„±ì´ ë†’ì„ìˆ˜ë¡ ì—ë„ˆì§€ë¥¼ ë°˜ì‚¬í•˜ê±°ë‚˜ í¡ìˆ˜í•˜ê¸°ë•Œë¬¸ì— í™•ì‚°ê¸°ì—¬ëŠ” ë‚®ë‹¤        
 //        float3 kd = lerp((float3) 1.f - F, (float3) 0.f, metallic);
 //        // Lambert diffuse BRDF.
 //        float3 diffuseBRDF = kd * albedo.xyz;
@@ -142,6 +143,6 @@ float4 main(VSOut vsIn) : SV_Target
 //        float3 specularBRDF = specNumerator / specDenominator;
 //        float NdotL = max(dot(N, L), 0.f);
         
-//        directLighting += saturate((diffuseBRDF + specularBRDF) * Lradiance * NdotL); // NDotLÀ» °öÇÏÁö ¾ÊÀ¸¸é diffuse°¡ ¸ğµç ¸é¿¡ ÀÛ¿ëÇÑ´Ù.
+//        directLighting += saturate((diffuseBRDF + specularBRDF) * Lradiance * NdotL); // NDotLì„ ê³±í•˜ì§€ ì•Šìœ¼ë©´ diffuseê°€ ëª¨ë“  ë©´ì— ì‘ìš©í•œë‹¤.
 
 //    }

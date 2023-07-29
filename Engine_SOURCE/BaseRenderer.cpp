@@ -6,7 +6,6 @@
 #include "Mesh.h"
 
 
-
 BaseRenderer::BaseRenderer(eComponentType type)
 	:Component(type)
 	, mbIsAnim(false)
