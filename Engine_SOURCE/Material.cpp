@@ -187,8 +187,8 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::bTextureExistence:
 		mMaterialConstantBuffer.bTextureExistence = *static_cast<int*>(data);
 		break;
-	case eGPUParam::bmetallic:
-		mMaterialConstantBuffer.bmetallic = *static_cast<int*>(data);
+	case eGPUParam::Bool_1:
+		mMaterialConstantBuffer.bool1 = *static_cast<int*>(data);
 		break;
 	case eGPUParam::Bool_2:
 		mMaterialConstantBuffer.bool2 = *static_cast<int*>(data);

@@ -100,7 +100,7 @@ namespace renderer
 		Matrix matrix4;
 
 		int bTextureExistence;
-		int bmetallic;
+		int bool1;
 		int bool2;
 		int bool3;
 	};

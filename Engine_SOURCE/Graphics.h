@@ -202,7 +202,7 @@ enum class eGPUParam
 	Matrix_3,
 	Matrix_4,
 	bTextureExistence,
-	bmetallic,
+	Bool_1,
 	Bool_2,
 	Bool_3,
 };
