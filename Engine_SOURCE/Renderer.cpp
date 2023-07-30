@@ -8,6 +8,7 @@
 #include "TimeMgr.h"
 #include "Application.h"
 #include "AudioClip.h"
+#include "FileMgr.h"
 
 extern Application application;
 
@@ -627,6 +628,8 @@ namespace renderer
 		LoadBuffer();
 		LoadDefaultTexture();
 		LoadDefaultMaterial();
+
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
 	}
 
 	void release()

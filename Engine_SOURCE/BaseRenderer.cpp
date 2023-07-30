@@ -66,6 +66,7 @@ void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
 	// adjustTexture();
 }
 
+
 void BaseRenderer::ChangeColor(Vector4 color)
 {
 	MulColor(Vector4::Zero);

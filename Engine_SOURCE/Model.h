@@ -63,6 +63,7 @@ public:
 	const ModelNode* FindNode(const std::wstring& nodeName) const;
 	aiMatrix4x4 RecursiveGetBoneMatirx(Bone& bone);
 	void CreateTexture();
+	void CreateMaterial();
 	std::vector<Texture*> GetTexture(int index);
 public:
 	std::wstring ConvertToW_String(const char* str);

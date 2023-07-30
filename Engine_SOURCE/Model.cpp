@@ -5,6 +5,7 @@
 #include "def.h"
 #include "StructedBuffer.h"
 #include "Material.h"
+#include "ResourceMgr.h"
 
 namespace fs = std::filesystem;
 
@@ -101,8 +102,7 @@ void Model::Bind_Render(Material* material)
 
 		std::vector<Texture*> Textures = GetTexture(i);
 		for (int slot = 0; slot < Textures.size(); ++slot)
-		{
-			
+		{			
 			material->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
 		}
 
@@ -261,6 +261,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 			Model::TextureVector texInfo = processMaterial(aiMater, static_cast<aiTextureType>(type));
 			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
 		}
+		
 		mTextures.emplace_back(textureBuff);
 	}
 	
@@ -269,8 +270,6 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
 	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
-
-
 
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 	inMesh->SetName(wName);
@@ -298,7 +297,7 @@ Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType typ
 
 Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType type)
 {
-	Model::TextureVector outTexVector;
+	Model::TextureVector outTexVector = {};
 	UINT texCount = mater->GetTextureCount(type);
 	for (UINT i = 0; i < texCount; ++i)
 	{
@@ -329,6 +328,47 @@ void Model::CreateTexture()
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(texInfo.texName, texInfo.pTex);
 		}
+	}
+}
+
+void Model::CreateMaterial()
+{
+	Material* inMaterial = new Material();
+	std::wstring matName = {};
+	for (auto& textureVec : mTextures)
+	{
+		for (TextureInfo texInfo : textureVec)
+		{
+			switch (texInfo.type)
+			{
+			case aiTextureType_DIFFUSE:
+			{
+				inMaterial->SetTexture(eTextureSlot::Albedo, texInfo.pTex);
+				matName = texInfo.texName;
+				std::size_t found = matName.find(L"_");
+				if (found != std::wstring::npos) {
+					matName = matName.substr(0, found); // _ 이전까지의 문자열 추출
+				}
+			}
+			break;
+			case aiTextureType_EMISSIVE:
+				inMaterial->SetTexture(eTextureSlot::Emissive, texInfo.pTex);
+				break;
+			case aiTextureType_NORMALS:
+				inMaterial->SetTexture(eTextureSlot::Normal, texInfo.pTex);
+				break;
+			case aiTextureType_METALNESS:
+				inMaterial->SetTexture(eTextureSlot::Metallic, texInfo.pTex);
+				break;
+			case aiTextureType_DIFFUSE_ROUGHNESS:
+				inMaterial->SetTexture(eTextureSlot::Roughness, texInfo.pTex);
+				break;
+			default:
+				break;
+			}
+		}
+		inMaterial->SetShaderByKey(L"PBRShader");
+		GETSINGLE(ResourceMgr)->Insert<Material>(matName, inMaterial);
 	}
 }
 

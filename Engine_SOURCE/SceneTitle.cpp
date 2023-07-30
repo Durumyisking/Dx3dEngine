@@ -170,19 +170,10 @@ void SceneTitle::Enter()
 		player->SetName(L"Object");
 
 		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		(
-			L"BrickBlockBody_alb",
-			L"BrickBlockBody_nrm",
-			L"BrickBlockBody_mtl",
-			L"BrickBlockBody_rgh",
-			L"PBRShader",
-			L"mat_brick"
-		);
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
-		player->GetComponent<MeshRenderer>()->SetModel(model);
+		meshRenderer->SetModel(model);
+		meshRenderer->SetMaterialByKey(L"BlockBrickBody");
 
 		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
@@ -195,19 +186,10 @@ void SceneTitle::Enter()
 		player->SetName(L"Object");
 
 		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		(
-			L"BrickBlockBody_alb",
-			L"BrickBlockBody_nrm",
-			L"BrickBlockBody_mtl",
-			L"BrickBlockBody_rgh",
-			L"PhongShader",
-			L"mat_brick2"
-		);
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
-		player->GetComponent<MeshRenderer>()->SetModel(model);
+		meshRenderer->SetModel(model);
+		meshRenderer->SetMaterialByKey(L"BlockBrickBody");
 
 		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
