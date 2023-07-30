@@ -31,10 +31,11 @@ public:
 	enums::eLightType GetType() { return mAttribute.type; }
 	float GetRadius() { return mAttribute.radius; }
 	float GetAngle() { return mAttribute.angle; }
-
+	void SetIndex(UINT idx) { mIndex = idx; }
 
 
 private:
 	LightAttribute mAttribute;
 	Mesh* mVolumeMesh;
+	UINT mIndex;
 };

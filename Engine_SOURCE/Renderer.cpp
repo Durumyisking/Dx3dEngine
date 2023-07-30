@@ -689,6 +689,13 @@ namespace renderer
 			, lightShader->GetVSBlobBufferSize()
 			, lightShader->GetInputLayoutAddr());
 
+		Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
+		GetDevice()->CreateInputLayout(arrLayout, 6
+			, lightPointShader->GetVSBlobBufferPointer()
+			, lightPointShader->GetVSBlobBufferSize()
+			, lightPointShader->GetInputLayoutAddr());
+
+
 #pragma endregion
 
 #pragma region SamplerState
@@ -966,15 +973,27 @@ namespace renderer
 #pragma endregion
 
 #pragma region LightDirShader
-		Shader* lightShader = new Shader();
-		lightShader->Create(eShaderStage::VS, L"LightDirVS.hlsl", "main");
-		lightShader->Create(eShaderStage::PS, L"LightDirPS.hlsl", "main");
+		Shader* lightDirShader = new Shader();
+		lightDirShader->Create(eShaderStage::VS, L"LightDirVS.hlsl", "main");
+		lightDirShader->Create(eShaderStage::PS, L"LightDirPS.hlsl", "main");
 
-		lightShader->SetRSState(eRasterizerType::SolidBack);
-		lightShader->SetDSState(eDepthStencilType::None);
-		lightShader->SetBSState(eBlendStateType::Default);
+		lightDirShader->SetRSState(eRasterizerType::SolidBack);
+		lightDirShader->SetDSState(eDepthStencilType::None);
+		lightDirShader->SetBSState(eBlendStateType::OneOne);
 
-		GETSINGLE(ResourceMgr)->Insert<Shader>(L"LightDirShader", lightShader);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"LightDirShader", lightDirShader);
+#pragma endregion
+
+#pragma region LightPointShader
+		Shader* lightPointShader = new Shader();
+		lightPointShader->Create(eShaderStage::VS, L"LightPointVS.hlsl", "main");
+		lightPointShader->Create(eShaderStage::PS, L"LightPointPS.hlsl", "main");
+
+		lightPointShader->SetRSState(eRasterizerType::SolidFront);
+		lightPointShader->SetDSState(eDepthStencilType::None);
+		lightPointShader->SetBSState(eBlendStateType::OneOne);
+
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"LightPointShader", lightPointShader);
 #pragma endregion
 	}
 
@@ -1172,21 +1191,37 @@ namespace renderer
 #pragma endregion
 
 #pragma region LightDirMaterial
-		Shader* lightShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightDirShader");
-		Material* lightMaterial = new Material();
-		lightMaterial->SetRenderingMode(eRenderingMode::None);
-		lightMaterial->SetShader(lightShader);
+		Shader* lightDirShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightDirShader");
+		Material* lightDirMaterial = new Material();
+		lightDirMaterial->SetRenderingMode(eRenderingMode::None);
+		lightDirMaterial->SetShader(lightDirShader);
 
-		Texture* lightTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
-		lightMaterial->SetTexture(eTextureSlot::PositionTarget, lightTex);
+		Texture* lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::PositionTarget, lightDirTex);
 
-		lightTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
-		lightMaterial->SetTexture(eTextureSlot::NormalTarget, lightTex);
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
 
-		lightTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularTargetTexture");
-		lightMaterial->SetTexture(eTextureSlot::SpecularTarget, lightTex);
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularTargetTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::SpecularTarget, lightDirTex);
 
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightMaterial);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
+#pragma endregion
+
+#pragma region LightDirMaterial
+		Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
+		Material* lightPointMaterial = new Material();
+		lightPointMaterial->SetRenderingMode(eRenderingMode::None);
+		lightPointMaterial->SetShader(lightPointShader);
+
+		Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTarget");
+		lightPointMaterial->SetTexture(eTextureSlot::PositionTarget, lightPointTex);
+		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTarget");
+		lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
+		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularTarget");
+		lightPointMaterial->SetTexture(eTextureSlot::SpecularTarget, lightPointTex);
+
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
 #pragma endregion
 
 #pragma region MergeMRT_Material

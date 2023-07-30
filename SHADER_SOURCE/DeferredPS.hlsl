@@ -39,11 +39,22 @@ PSOut main(VSOut vsIn) : SV_Target
     
     if (bAlbedo == 1)
     {
-        objColor = TextureMapping_albedo(vsIn.UV);
+        objColor = colorTexture.Sample(anisotropicSampler, vsIn.UV);
     }
     if (bNormal == 1)
     {
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+        normal = normalTexture.Sample(anisotropicSampler, vsIn.UV);
+        
+        normal = (normal * 2.0f) - 1.0f;
+        
+        float3x3 matTBN =
+        {
+            vsIn.ViewTangent,
+            vsIn.ViewBiNormal,
+            vsIn.ViewNormal,
+        };
+
+        normal = normalize(mul(normal, matTBN));
     }
     if (bMetallic == 1) 
     {

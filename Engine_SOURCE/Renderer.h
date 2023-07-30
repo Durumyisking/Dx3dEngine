@@ -50,7 +50,9 @@ namespace renderer
 	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 	{
 		Matrix world;
+		Matrix inverseWorld;
 		Matrix view;
+		Matrix inverseView;
 		Matrix projection;
 	};
 
@@ -131,6 +133,7 @@ namespace renderer
 	CBUFFER(LightCB, CBSLOT_LIGHTCOUNT)
 	{	
 		UINT lightCount;
+		UINT lightIndex;
 	};
 
 	CBUFFER(ParticleSystemCB, CBSLOT_LIGHTCOUNT)

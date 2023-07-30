@@ -17,6 +17,12 @@ struct PS_OUT
     float4 vSpecular : SV_Target1;
 };
 
+		//albedo = Resources::Find<Texture>(L"PositionTarget");
+		//lightMaterial->SetTexture(eTextureSlot::PositionTarget, albedo);
+		//albedo = Resources::Find<Texture>(L"NormalTarget");
+		//lightMaterial->SetTexture(eTextureSlot::NormalTarget, albedo);
+		//albedo = Resources::Find<Texture>(L"SpecularTarget");
+		//lightMaterial->SetTexture(eTextureSlot::SpecularTarget, albedo);
 
 PS_OUT main(VSOut vsin)
 {
@@ -28,10 +34,18 @@ PS_OUT main(VSOut vsin)
     if (0.f == vViewPos.a)
         discard;
       
+    // 광원 영역에 잡힌 position target의 위차값을 로컬영역으로 바꿔야한다.
+    // 로컬 영역에서 광원메쉬 (spherer)의 내부에 있다면 실제로 point light 안에 들어가있다는 뜻
+    float4 vLocalPos = mul(mul(vViewPos, inverseView), inverseWorld);
+    if (length(vLocalPos.xyz) > 0.5f)
+    {
+        discard;
+    }
+    
     float4 vViewNormal = normalTarget.Sample(anisotropicSampler, vUV);
         
     LightColor lightcolor = (LightColor) 0.f;
-    CalculateLight3D(vViewPos.xyz, vViewNormal.xyz, 0, lightcolor);
+    CalculateLight3D(vViewPos.xyz, vViewNormal.xyz, lightIndex, lightcolor);
     
     float SpecCoef = specularTarget.Sample(anisotropicSampler, vUV).x;
     float4 vSpec = DecodeColor(SpecCoef);

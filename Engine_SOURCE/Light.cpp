@@ -30,7 +30,7 @@ void Light::FixedUpdate()
 	Transform* tr = GetOwner()->GetComponent<Transform>();
 	if (eLightType::Point == mAttribute.type)
 	{
-		tr->SetScale(Vector3(mAttribute.radius * 2.f, mAttribute.radius * 2.f, mAttribute.radius * 2.f));
+		tr->SetScale(Vector3(mAttribute.radius * 5.f, mAttribute.radius * 5.f, mAttribute.radius * 5.f));
 	}
 
 	Vector3 position = tr->GetPosition();
@@ -42,12 +42,33 @@ void Light::FixedUpdate()
 
 void Light::Render()
 {
-	Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"LightDirMaterial");
+	Material* material = nullptr;
+
+	if (mAttribute.type == eLightType::Directional)
+	{
+		material = GETSINGLE(ResourceMgr)->Find<Material>(L"LightDirMaterial");
+	}
+	else if (mAttribute.type == eLightType::Point)
+	{
+		material = GETSINGLE(ResourceMgr)->Find<Material>(L"LightPointMaterial");
+	}
+
 
 	if (material == nullptr)
-	{
 		return;
-	}
+
+	Transform* tr = GetOwner()->GetComponent<Transform>();
+	tr->SetConstantBuffer();
+
+	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Light)];
+	LightCB data = {};
+	data.lightCount = static_cast<UINT>(renderer::lights.size());
+	data.lightIndex = mIndex;
+
+	cb->SetData(&data);
+	cb->Bind(eShaderStage::VS);
+	cb->Bind(eShaderStage::PS);
+
 
 	mVolumeMesh->BindBuffer();
 	material->Bind();
@@ -63,7 +84,7 @@ void Light::SetType(eLightType type)
 	}
 	else if (mAttribute.type == eLightType::Point)
 	{
-		mVolumeMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Circlemesh");
+		mVolumeMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Spheremesh");
 	}
 	else if (mAttribute.type == eLightType::Spot)
 	{

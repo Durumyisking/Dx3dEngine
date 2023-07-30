@@ -15,6 +15,7 @@ extern Application application;
 
 
 Matrix Camera::View = Matrix::Identity;
+Matrix Camera::InverseView = Matrix::Identity;
 Matrix Camera::Projection = Matrix::Identity;
 
 Camera::Camera()
@@ -77,6 +78,7 @@ void Camera::FixedUpdate()
 void Camera::Render()
 {
 	View = mView;
+	InverseView = View.Invert();
 	Projection = mProjection;
 
 	sortGameObjects();
