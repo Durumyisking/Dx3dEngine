@@ -71,13 +71,15 @@ const Model::ModelNode* Model::FindNode(const std::wstring& nodeName) const
 	return nullptr;
 }
 
-aiMatrix4x4 Model::RecursiveGetBoneMatirx(Bone& bone)
+void Model::RecursiveGetBoneMatirx()
 {
-	aiMatrix4x4 outMat = {};
-	outMat = bone.mOffsetMatrix;
-	recursiveProcessBoneMatrix(outMat, bone.mName);
+	const ModelNode* node = FindNode(mRootNodeName);
+	aiMatrix4x4 roomtmat = node->mTransformation;
 
-	return outMat;
+	for (size_t i = 0; i < node->mChilds.size(); ++i)
+	{
+		recursiveProcessBoneMatrix(roomtmat, node->mChilds[i]->mName);
+	}
 }
 
 void Model::Bind_Render(Material* material)
@@ -85,14 +87,19 @@ void Model::Bind_Render(Material* material)
 
 	BoneMat boneInfo = {};
 	std::vector<BoneMat> boneMat;
+	boneMat.reserve(mBones.size());
+
+	RecursiveGetBoneMatirx();
+
 	for (Bone& bone : mBones)
 	{
-		boneInfo.mat = ConvertMatrix(RecursiveGetBoneMatirx(bone));
+		boneInfo.FinalTransformation = ConvertMatrix(bone.mFinalMatrix);
 		boneMat.emplace_back(boneInfo);
 	}
 
-	mStructure->SetData(boneMat.data(), boneMat.size());
+	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
 	mStructure->BindSRV(eShaderStage::VS, 30);
+	mStructure->BindSRV(eShaderStage::PS, 30);
 
 	for (size_t i = 0; i < mMeshes.size(); ++i)
 	{
@@ -112,6 +119,7 @@ void Model::Bind_Render(Material* material)
 	}
 
 	mStructure->Clear();
+	boneMat.clear();
 }
 
 
@@ -343,20 +351,25 @@ std::vector<Texture*> Model::GetTexture(int index)
 	return outTex;
 }
 
-void Model::recursiveProcessBoneMatrix(aiMatrix4x4& matrix, const std::wstring& nodeName)
+void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& nodeName)
 {
 	const ModelNode* modelNode = FindNode(nodeName);
-	const ModelNode* SceneNode = FindNode(L"Scene");
-	aiMatrix4x4 InversRoot = SceneNode->mTransformation;
-	matrix = matrix * modelNode->mTransformation * InversRoot.Inverse();
-	return;
+	matrix = matrix * modelNode->mTransformation;
 
-	if (L"" == modelNode->mRootName || modelNode->mRootNode == nullptr)
+	for (Model::Bone& bone : mBones)
 	{
-		return;
+		if (bone.mName == nodeName)
+		{
+			aiMatrix4x4 globalInvers = FindNode(L"Scene")->mTransformation;
+			bone.mFinalMatrix = globalInvers.Inverse() * matrix * bone.mOffsetMatrix;
+			break;
+		}
 	}
 
-	recursiveProcessBoneMatrix(matrix, modelNode->mRootName);
+	for (size_t i = 0; i < modelNode->mChilds.size(); ++i)
+	{
+		recursiveProcessBoneMatrix(matrix, modelNode->mChilds[i]->mName);
+	}
 }
 
 std::wstring Model::ConvertToW_String(const char* str)

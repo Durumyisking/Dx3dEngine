@@ -16,6 +16,7 @@
 class Mesh;
 class Texture;
 class Material;
+class GameObj;
 class Model : public Resource
 {
 public:
@@ -32,13 +33,14 @@ public:
 
 	struct BoneMat
 	{
-		math::Matrix mat;
+		math::Matrix FinalTransformation;
 	};
 
 	struct Bone
 	{
 		std::wstring mName = L"";
 		aiMatrix4x4 mOffsetMatrix = {};
+		aiMatrix4x4 mFinalMatrix = {};
 	};
 
 	struct TextureInfo
@@ -61,7 +63,7 @@ public:
 	virtual HRESULT Load(const std::wstring& path) override;
 
 	const ModelNode* FindNode(const std::wstring& nodeName) const;
-	aiMatrix4x4 RecursiveGetBoneMatirx(Bone& bone);
+	void RecursiveGetBoneMatirx();
 	void CreateTexture();
 	std::vector<Texture*> GetTexture(int index);
 public:
@@ -74,12 +76,13 @@ private:
 	std::vector<TextureInfo> processMaterial(aiMaterial* mater, aiTextureType type, const std::wstring& typeName);
 	std::vector<TextureInfo> processMaterial(aiMaterial* mater, aiTextureType type);
 
-	void recursiveProcessBoneMatrix(aiMatrix4x4& matrix, const std::wstring& nodeName);
+	void recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& nodeName);
 public:
 	void Bind_Render(Material* material);
 
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
 	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
+	GETSET(GameObj*, mOwner, Owner)
 
 private:
 	Assimp::Importer mAssimpImporter;
@@ -93,5 +96,6 @@ private:
 	StructedBuffer* mStructure;
 	std::wstring mCurDirectoryPath;
 
+	GameObj* mOwner;
 };
 

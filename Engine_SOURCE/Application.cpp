@@ -33,6 +33,7 @@ Application::~Application()
 void Application::Initialize()
 {
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Mario", L"Mario");
 
 	GETSINGLE(TimeMgr)->Initialize();
 	GETSINGLE(InputMgr)->Initialize();
