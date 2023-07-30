@@ -150,9 +150,9 @@ enum class eTextureSlot
 	SpecularLightTarget,		// specularLightTarget
 
 
-  irradianceMap,
-  prefilteredMap, // ¶óÀÌÆ®¸Ê Àû¿ë
-  BRDF,
+	  irradianceMap,
+	  prefilteredMap,
+	  BRDF,
   
 	End,
 };

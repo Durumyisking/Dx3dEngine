@@ -765,9 +765,29 @@ namespace renderer
 		}
 	}
 
+	void ClearRenderTargets()
+	{
+		for (size_t i = 0; i < static_cast<UINT>(eRenderTargetType::End); i++)
+		{
+			if (renderTargets[i] == nullptr)
+				continue;
+
+			if (i == 0)
+			{
+				FLOAT backgroundColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+				renderTargets[i]->Clear(backgroundColor);
+			}
+			else
+			{
+				FLOAT backgroundColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+				renderTargets[i]->Clear(backgroundColor);
+			}
+		}
+	}
+
 	void PushLightAttribute(LightAttribute attribute)
 	{
-		lights.push_back(attribute);
+		lightAttributes.push_back(attribute);
 	}
 
 	void BindLight()
