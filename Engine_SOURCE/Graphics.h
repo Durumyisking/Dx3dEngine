@@ -27,7 +27,6 @@
 #define CBSLOT_PARTICLESYSTEM 6
 #define CBSLOT_NOISE			7
 #define CBSLOT_POSTPROCESS		8
-#define CBSLOT_PBR			9
 
 
 enum class eValidationMode
@@ -71,17 +70,17 @@ enum class eRasterizerType
 {
 	SolidBack,
 	SolidFront,
-	SolidNone, // ÄÃ¸µ ¾ÈÇÔ
-	WireframeNone, // ¼±À¸·Î¸¸ ±×¸®±â Topology¶û °°Àºµ¥ ±×³É gpu¿¡¼­ Ã³¸®ÇØÁÖ´Â°Å
+	SolidNone, // ì»¬ë§ ì•ˆí•¨
+	WireframeNone, // ì„ ìœ¼ë¡œë§Œ ê·¸ë¦¬ê¸° Topologyë‘ ê°™ì€ë° ê·¸ëƒ¥ gpuì—ì„œ ì²˜ë¦¬í•´ì£¼ëŠ”ê±°
 	End,
 };
 
 enum class eDepthStencilType
 {
-	Less, // ÀÏ¹İÀûÀÎ ¿ø±Ù
-	Greater, // ¿ø±Ù °Å²Ù·Î
-	NoWrite, // °ãÄ¡¸é ¾Æ¿¹ ¾È±×¸²
-	None, // ±íÀÌ¹öÆÛ »ç¿ë ¾ÈÇÔ
+	Less, // ì¼ë°˜ì ì¸ ì›ê·¼
+	Greater, // ì›ê·¼ ê±°ê¾¸ë¡œ
+	NoWrite, // ê²¹ì¹˜ë©´ ì•„ì˜ˆ ì•ˆê·¸ë¦¼
+	None, // ê¹Šì´ë²„í¼ ì‚¬ìš© ì•ˆí•¨
 	End,
 };
 
@@ -89,7 +88,7 @@ enum class eBlendStateType
 {
 	Default,
 	AlphaBlend,
-	OneOne, // ¾ËÆÄ°ª ¾øÀÌ ¹°Ã¼¿¡ »ö ¼¯À½
+	OneOne, // ì•ŒíŒŒê°’ ì—†ì´ ë¬¼ì²´ì— ìƒ‰ ì„ìŒ
 	End,
 };
 
@@ -104,11 +103,11 @@ enum class eRenderTargetType
 
 enum class eRenderingMode
 {
-	DeferredOpaque, // ºÒÅõ¸í
+	DeferredOpaque, // ë¶ˆíˆ¬ëª…
 	DeferredMask,
-	Light, // ±¤¿ø Ã³¸®
-	Opaque, // ºÒÅõ¸í
-	Cutout, // ÀÏºÎ¸¸ Åõ¸í
+	Light, // ê´‘ì› ì²˜ë¦¬
+	Opaque, // ë¶ˆíˆ¬ëª…
+	Cutout, // ì¼ë¶€ë§Œ íˆ¬ëª…
 	Transparent,
 	PostProcess,
 
@@ -136,11 +135,11 @@ struct GpuBuffer
 
 enum class eTextureSlot
 {
-	ColorTexture,				// colorTexture
-	NormalTexture,				// normalTexture
-	MetallicTexture,			// metalTexture
-	RoughnessTexture,			// roughnessTexture
-	EmissiveTexture,			// emissiveTexture
+	Albedo,
+	Normal,
+	Metallic,
+	Roughness,
+	Emissive,
 
 	PositionTarget = 5,			// positionTarget
 	NormalTarget,				// normalTarget
@@ -150,8 +149,11 @@ enum class eTextureSlot
 	DiffuseLightTarget = 9,		// diffuseLightTarget
 	SpecularLightTarget,		// specularLightTarget
 
-	T12 = 12,					// atlasTexture
 
+  irradianceMap,
+  prefilteredMap, // Â¶Ã³Ã€ÃŒÃ†Â®Â¸ÃŠ Ã€Ã»Â¿Ã«
+  BRDF,
+  
 	End,
 };
 
@@ -192,7 +194,7 @@ enum class eGPUParam
 	Vector3_1,
 	Vector3_2,
 	Vector3_3,
-	Vector3_4,
+	CamPosition,
 	Vector4_1,
 	Vector4_2,
 	Vector4_3,
@@ -202,13 +204,9 @@ enum class eGPUParam
 	Matrix_3,
 	Matrix_4,
 	bTextureExistence,
-	bAlbedo,
-	bNormal,
-	bMetallic,
-	bRoughness,
-	bEmissive,
 	Bool_1,
 	Bool_2,
+	Bool_3,
 };
 	
 
@@ -247,7 +245,7 @@ struct LightAttribute
 		
 	enums::eLightType type;
 
-	int padding; // »ó¼ö¹öÆÛ ÆĞµù
+	int padding; // ìƒìˆ˜ë²„í¼ íŒ¨ë”©
 };
 
 struct Particle

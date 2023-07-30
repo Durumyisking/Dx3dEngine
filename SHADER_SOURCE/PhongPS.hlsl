@@ -1,15 +1,5 @@
 #include "global.hlsli"
 
-struct VSIn
-{
-    float4 Position : POSITION;
-    float2 UV : TEXCOORD;
-    float3 Tangent : TANGENT;
-    float3 Normal : NORMAL;
-    float3 BiNormal : BINORMAL;
-
-};
-
 struct VSOut
 {
     float4 Position : SV_Position;
@@ -25,15 +15,20 @@ struct VSOut
 float4 main(VSOut vsIn) : SV_Target
 {
     float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
-    float3 normal = vsIn.ViewNormal;
+    float3 normal = (float3) 0.f;
 
-    if (bAlbedo == 1)
+    if (0 == cbtextureExistence)
     {
-        outColor = colorTexture.Sample(anisotropicSampler, vsIn.UV);
-        //outColor = TextureMapping_albedo(vsIn.UV);
+        normal.xyz = vsIn.ViewNormal;
     }
-    if (bNormal == 1)
+    else if (1 == cbtextureExistence) 
+    {              
+        outColor = TextureMapping_albedo(vsIn.UV);
+        normal.xyz = vsIn.ViewNormal;
+    }
+    else if (2 <= cbtextureExistence) 
     {
+        outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
     

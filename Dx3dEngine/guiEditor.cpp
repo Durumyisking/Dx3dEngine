@@ -30,7 +30,7 @@
 #include "Graphics.h"
 
 #include "ResourceMgr.h"
-
+#include "InputMgr.h"
 
 
 extern Application application;
@@ -53,7 +53,7 @@ namespace gui
 
 	void Editor::Initialize()
 	{
-		mEnable = false;
+		mEnable = true;
 		mImguiEnable = false;
 
 		if (mEnable == false)
@@ -61,52 +61,65 @@ namespace gui
 		// 충돌체의 종류 갯수만큼만 있으면 된다.
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
-		Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"DebugRectmesh");
 		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugMaterial");
 
+		Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
 		mDebugObjects[static_cast<UINT>(eColliderType::Rect)] = new DebugObject();
 		MeshRenderer* renderer
 			= mDebugObjects[static_cast<UINT>(eColliderType::Rect)]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-
 		renderer->SetMaterial(material);
 		renderer->SetMesh(rectMesh);
 
-		Mesh* circleMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Circlemesh");
 
+		Mesh* circleMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Circlemesh");
 		mDebugObjects[static_cast<UINT>(eColliderType::Circle)] = new DebugObject();
 		renderer
 			= mDebugObjects[static_cast<UINT>(eColliderType::Circle)]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-
 		renderer->SetMaterial(material);
 		renderer->SetMesh(circleMesh);
 
 
+		Mesh* cubeMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
+		mDebugObjects[static_cast<UINT>(eColliderType::Box)] = new DebugObject();
+		renderer
+			= mDebugObjects[static_cast<UINT>(eColliderType::Box)]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		renderer->SetMaterial(material);
+		renderer->SetMesh(cubeMesh);
+
+
+		Mesh* sphereMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Spheremesh");
+		mDebugObjects[static_cast<UINT>(eColliderType::Sphere)] = new DebugObject();
+		renderer
+			= mDebugObjects[static_cast<UINT>(eColliderType::Sphere)]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		renderer->SetMaterial(material);
+		renderer->SetMesh(sphereMesh);
+
 		if (mImguiEnable == false)
 			return;
 		
-		ImGui_Initialize();
+		//ImGui_Initialize();
 
-		mVisualEditor = new VisualEditor();
-		//mWidgets.push_back(mVisualEditor);
+		//mVisualEditor = new VisualEditor();
+		////mWidgets.push_back(mVisualEditor);
 
-		// Initialize Widget 
-		Inspector* inspector = new Inspector();
-		mWidgets.insert(std::make_pair("Inspector", inspector));
+		//// Initialize Widget 
+		//Inspector* inspector = new Inspector();
+		//mWidgets.insert(std::make_pair("Inspector", inspector));
 
-		Game* game = new Game();
-		mWidgets.insert(std::make_pair("Game", game));
+		//Game* game = new Game();
+		//mWidgets.insert(std::make_pair("Game", game));
 
-		Hierarchy* hierarchy = new Hierarchy();
-		mWidgets.insert(std::make_pair("Hierarchy", hierarchy));
+		//Hierarchy* hierarchy = new Hierarchy();
+		//mWidgets.insert(std::make_pair("Hierarchy", hierarchy));
 
-		Project* project = new Project();
-		mWidgets.insert(std::make_pair("Project", project));
-		
-		Console* console = new Console();
-		mWidgets.insert(std::make_pair("Console", console));
+		//Project* project = new Project();
+		//mWidgets.insert(std::make_pair("Project", project));
+		//
+		//Console* console = new Console();
+		//mWidgets.insert(std::make_pair("Console", console));
 
-		ListWidget* listWidget = new ListWidget();
-		mWidgets.insert(std::make_pair("ListWidget", listWidget));
+		//ListWidget* listWidget = new ListWidget();
+		//mWidgets.insert(std::make_pair("ListWidget", listWidget));
 
 	}
 
@@ -150,7 +163,10 @@ namespace gui
 
 		for (DebugMesh & mesh : renderer::debugMeshes)
 		{
-			DebugRender(mesh);
+			if (KEY_DOWN(V))
+			{
+				DebugRender(mesh);
+			}
 		}
 		renderer::debugMeshes.clear();
 	}
@@ -177,6 +193,8 @@ namespace gui
 
 		delete mDebugObjects[static_cast<UINT>(eColliderType::Rect)];
 		delete mDebugObjects[static_cast<UINT>(eColliderType::Circle)];
+		delete mDebugObjects[static_cast<UINT>(eColliderType::Box)];
+		delete mDebugObjects[static_cast<UINT>(eColliderType::Sphere)];
 
 		if (mImguiEnable == false)
 			return;
@@ -203,8 +221,10 @@ namespace gui
 			tr->SetScale(Vector3(mesh.scale.x, 1.f, 0.f));
 			break;
 		case enums::eColliderType::Box:
+			tr->SetScale(mesh.scale);
 			break;
 		case enums::eColliderType::Sphere:
+			tr->SetScale(Vector3(mesh.scale.x));
 			break;
 		case enums::eColliderType::End:
 			break;

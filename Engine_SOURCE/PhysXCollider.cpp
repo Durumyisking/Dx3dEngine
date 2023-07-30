@@ -2,13 +2,14 @@
 #include "GameObj.h"
 #include "PhysicsMgr.h"
 #include "MeshRenderer.h"
-
+#include "Transform.h"
 
 
 PhysXCollider::PhysXCollider()
 	: Component(eComponentType::Collider)
 	, mCallback(nullptr)
 	, mPhysical(nullptr)
+	, mTransform{}
 	, mRaycastHit{}
 	, mSweepHit	 {}
 	, mOverlapHit{}
@@ -21,7 +22,7 @@ PhysXCollider::~PhysXCollider()
 }
 void PhysXCollider::Initialize()
 {
-
+	mTransform = GetOwner()->GetComponent<Transform>()->GetPxTransform();
 	mFilterData.word0 = 1 << static_cast<unsigned __int32>(GetOwner()->GetLayerType()); // 충돌 레이어 정해주는듯
 
 	// 렌더링할 물체의 모양을 가진 콜라이더
@@ -43,6 +44,51 @@ void PhysXCollider::Update()
 }
 void PhysXCollider::FixedUpdate()
 {
+	
+	PxShape* shape = mPhysical->GetShape();
+	PxGeometryType::Enum geoType = shape->getGeometryType();
+	eColliderType colType = eColliderType::End;
+	PxVec3 scale = {};
+
+	switch (geoType)
+	{
+	case physx::PxGeometryType::eSPHERE:
+		scale.x = shape->getGeometry().sphere().radius;
+		colType = eColliderType::Sphere;
+		break;
+	case physx::PxGeometryType::ePLANE:
+		break;
+	case physx::PxGeometryType::eCAPSULE:
+		scale.x = shape->getGeometry().capsule().radius;
+		scale.y = shape->getGeometry().capsule().halfHeight;
+		break;
+	case physx::PxGeometryType::eBOX:
+		scale = shape->getGeometry().box().halfExtents;
+		colType = eColliderType::Box;
+		break;
+	case physx::PxGeometryType::eCONVEXMESH:
+		break;
+	case physx::PxGeometryType::eTRIANGLEMESH:
+		break;
+	case physx::PxGeometryType::eHEIGHTFIELD:
+		break;
+	case physx::PxGeometryType::eGEOMETRY_COUNT:
+		break;
+	case physx::PxGeometryType::eINVALID:
+		break;
+	default:
+		break;
+	}
+	scale *= 2.f;
+	scale += PxVec3(0.00001f, 0.00001f, 0.00001f);
+	Vector3 position = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+
+	DebugMesh meshAttribute = {};
+	meshAttribute.position = Vector3(position.x, position.y, position.z);
+	meshAttribute.scale = convert::PxVec3ToVector3(scale);
+	meshAttribute.type = colType;
+
+	renderer::debugMeshes.push_back(meshAttribute);
 }
 void PhysXCollider::Render()
 {

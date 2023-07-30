@@ -14,6 +14,7 @@ MultiRenderTarget::~MultiRenderTarget()
 
 void MultiRenderTarget::Create(Texture* texture[12], Texture* dsTexture)
 {
+
 	for (UINT i = 0; i < 12; i++)
 	{
 		if (texture[i] == nullptr)

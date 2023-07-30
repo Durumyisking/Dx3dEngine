@@ -64,14 +64,15 @@ float4 DecodeColor(float _value)
 
 float4 TextureMapping_albedo(float2 uv)
 {
-    return colorTexture.SampleLevel(anisotropicSampler, uv, 0.f);
+    return colorTexture.SampleLevel(linearSampler, uv, 0.f);
 }
 
 
-// ÇöÀç ÇÈ¼¿ÀÇ normalÀ» ¾ò°í viewspace·Î º¯°æÇÑ´Ù.
+// í˜„ì¬ í”½ì…€ì˜ normalì„ ì–»ê³  viewspaceë¡œ ë³€ê²½í•œë‹¤.
 float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, float3 viewBiNormal)
 {
-    float3 result = normalTexture.SampleLevel(anisotropicSampler, uv, 0.f).xyz;
+
+    float3 result = normalTexture.SampleLevel(linearSampler, uv, 0.f).rgb;
     
     result.xyz = normalize((result.xyz * 2.f).xyz - 1.f);
         
@@ -90,10 +91,10 @@ float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, f
 
 float TextureMapping_metallic(float2 uv)
 {
-    return saturate(metallicTexture.SampleLevel(anisotropicSampler, uv, 0.f).r);
+    return saturate(MetalTexture.SampleLevel(linearSampler, uv, 0.f).r);
 }
 
 float TextureMapping_roughness(float2 uv)
 {
-    return saturate(roughnessTexture.SampleLevel(anisotropicSampler, uv, 0.f).r);
+    return saturate(RoughnessTexture.SampleLevel(linearSampler, uv, 0.f).r);
 }

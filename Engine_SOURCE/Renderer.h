@@ -45,9 +45,12 @@ namespace renderer
 		Vector3 tangent;
 		Vector3 biNormal;
 		Vector3 normal;
+
+		Vector4 BlendID;
+		Vector4 BlendWeight;
 	};
 
-	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // ±¸Á¶Ã¼ ¸¸µå´Â°ÅÀÓ
+	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // êµ¬ì¡°ì²´ ë§Œë“œëŠ”ê±°ì„
 	{
 		Matrix world;
 		Matrix inverseWorld;
@@ -83,7 +86,7 @@ namespace renderer
 		float	xyzPadding2;
 		Vector3 xyz3;
 		float	xyzPadding3;
-		Vector3 xyz4;
+		Vector3 CamPosition;
 		float	xyzPadding4;
 
 		Vector4 xyzw1;
@@ -97,14 +100,9 @@ namespace renderer
 		Matrix matrix4;
 
 		int bTextureExistence;
-		int bAlbedo;
-		int bNormal;
-		int bMetallic;
-
-		int bRoughness;
-		int bEmissive;
 		int bool1;
 		int bool2;
+		int bool3;
 	};
 
 	CBUFFER(GridCB, CBSLOT_GRID)	
@@ -177,13 +175,6 @@ namespace renderer
 		float wave_speed;
 		float wave_distortion;
 	};
-	CBUFFER(PBRCB, CBSLOT_PBR)
-	{
-		float metallic;
-		float roughness;
-		float ao;
-	};
-
 
 
 
@@ -210,9 +201,9 @@ namespace renderer
 	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
 
 	void Initialize();
-	void release(); // ±×¸®´Â ¹æ½ÄÀÌ ¿©·¯°³ÀÏ¶§ ¿©·¯°³¸¦ ÇÒ´çÇÏ´Â°Ô ¾Æ´Ï¶ó
-					// ±×¸®´Â ¹æ½ÄÀ» º¯°æÇÒ¶§ ÇÒ´çµÈ °÷¿¡ ±×¸®´Â ¹æ½ÄÀÇ °´Ã¼µéÀ» ±³Ã¼¸¸ ÇØÁØ´Ù -> ¿À·¡°É¸²
-					// ¾ÆÁ÷ gpuÀÇ vramÀÇ ¿ë·®ÀÌ ramº¸´Ù ÇÑÂü ÀÛ¾Æ¼­±×·³
+	void release(); // ê·¸ë¦¬ëŠ” ë°©ì‹ì´ ì—¬ëŸ¬ê°œì¼ë•Œ ì—¬ëŸ¬ê°œë¥¼ í• ë‹¹í•˜ëŠ”ê²Œ ì•„ë‹ˆë¼
+					// ê·¸ë¦¬ëŠ” ë°©ì‹ì„ ë³€ê²½í• ë•Œ í• ë‹¹ëœ ê³³ì— ê·¸ë¦¬ëŠ” ë°©ì‹ì˜ ê°ì²´ë“¤ì„ êµì²´ë§Œ í•´ì¤€ë‹¤ -> ì˜¤ë˜ê±¸ë¦¼
+					// ì•„ì§ gpuì˜ vramì˜ ìš©ëŸ‰ì´ ramë³´ë‹¤ í•œì°¸ ì‘ì•„ì„œê·¸ëŸ¼
 	
 	void Render();
 
@@ -225,5 +216,15 @@ namespace renderer
 	void BindLight();
 	void BindNoiseTexture();
 	void CopyRenderTarget();
+
+	// mesh create
+	void CreatePointMesh();
+	void CreateLineMesh();
+	void CreateRectMesh();
+	void CreateGridMesh();
+	void CreateCircleMesh();
+	void CreateCubeMesh();
+	void CreateSphereMesh();
+	void CreateCapsuleMesh();
 }
 

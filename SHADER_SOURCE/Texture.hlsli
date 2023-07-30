@@ -15,6 +15,18 @@ Texture2D specularTarget        : register(t8);
 Texture2D diffuseLightTarget    : register(t9);
 Texture2D specularLightTarget   : register(t10);
 
+// PBR Related Resources
+TextureCube irradianceMap : register(t11);
+TextureCube prefilteredMap : register(t12); // ¶óÀÌÆ®¸Ê Àû¿ë
+
+Texture2D BRDF : register(t13);
+
 //Atlas texture
-Texture2D atlasTexture          : register(t12);
+Texture2D atlasTexture          : register(t29);
+
+struct BoneMatrix
+{
+    float4x4 bMatrix;
+};
+StructuredBuffer<BoneMatrix>BonArray : register(t30);
 

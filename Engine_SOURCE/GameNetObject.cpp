@@ -66,6 +66,8 @@ namespace server
 			MsgBoxAssert("네트워크 연결 상태가 아닙니다.");
 			return false;
 		}
+
+		return false;
 	}
 
 	void GameNetObject::ServerObjectInit()
