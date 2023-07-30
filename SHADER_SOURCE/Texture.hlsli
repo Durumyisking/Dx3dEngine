@@ -1,9 +1,10 @@
 // Material Textures
-Texture2D colorTexture          : register(t0);
-Texture2D normalTexture         : register(t1);
-Texture2D metallicTexture       : register(t2);
-Texture2D roughnessTexture      : register(t3);
-Texture2D emissiveTexture       : register(t4);
+
+Texture2D colorTexture      : register(t0);
+Texture2D normalTexture     : register(t1);
+Texture2D metalTexture      : register(t2);
+Texture2D roughnessTexture  : register(t3);
+Texture2D emissiveTexture   : register(t4);
 
 // Merge Targets
 Texture2D positionTarget        : register(t5);
