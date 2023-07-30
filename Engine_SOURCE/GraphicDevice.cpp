@@ -474,7 +474,7 @@ void GraphicDevice::ClearRenderTargetView(ID3D11RenderTargetView* renderTargetVi
 
 void GraphicDevice::ClearDepthStencilView(ID3D11DepthStencilView* depthStencilView, UINT clearFlags)
 {
-	mContext->ClearDepthStencilView(depthStencilView, clearFlags, 1.0f, 0.0f);
+	mContext->ClearDepthStencilView(depthStencilView, clearFlags, 1.0f, 0);
 }
 
 void GraphicDevice::AdjustViewPorts()

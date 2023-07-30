@@ -122,7 +122,6 @@ void GameObj::Render()
 {
 	for (Component* comp : mComponents)
 	{
-		this;
 		if (nullptr == comp)
 			continue;
 		comp->Render();

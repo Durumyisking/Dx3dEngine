@@ -12,9 +12,9 @@ MultiRenderTarget::~MultiRenderTarget()
 {
 }
 
-void MultiRenderTarget::Create(Texture* texture[8], Texture* dsTexture)
+void MultiRenderTarget::Create(Texture* texture[12], Texture* dsTexture)
 {
-	for (size_t i = 0; i < 8; i++)
+	for (UINT i = 0; i < 12; i++)
 	{
 		if (texture[i] == nullptr)
 		{
@@ -30,8 +30,10 @@ void MultiRenderTarget::Create(Texture* texture[8], Texture* dsTexture)
 
 void MultiRenderTarget::OMSetRenderTarget()
 {
-	ID3D11RenderTargetView* arrRenderTargetViews[8] = {};
-	for (size_t i = 0; i < 8; i++)
+	Texture::Clears();
+
+	ID3D11RenderTargetView* arrRenderTargetViews[12] = {};
+	for (UINT i = 0; i < 12; i++)
 	{
 		if (mRenderTargets[i])
 		{
@@ -49,11 +51,11 @@ void MultiRenderTarget::OMSetRenderTarget()
 	}
 }
 
-void MultiRenderTarget::Clear()
+void MultiRenderTarget::Clear(FLOAT backgroundColor[4])
 {
-	FLOAT backgroundColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	//FLOAT backgroundColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
 
-	for (size_t i = 0; i < mRenderTargetCount; i++)
+	for (UINT i = 0; i < mRenderTargetCount; i++)
 	{
 		if (mRenderTargets[i])
 		{

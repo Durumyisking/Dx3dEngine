@@ -65,6 +65,7 @@ private:
 	void renderOpaque();
 	void renderCutout();
 	void renderTransparent();
+	void renderPostProcess();
 		
 	void pushGameObjectToRenderingModes(GameObj* obj);
 	bool renderPassCheck(GameObj* obj);

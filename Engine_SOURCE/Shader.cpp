@@ -66,12 +66,12 @@ void Shader::CreateVS(const std::wstring& path, const std::string& funcName)
 	D3DCompileFromFile(path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 		, funcName.c_str(), "vs_5_0", 0, 0, mVSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
 
-	//if (mErrorBlob)
-	//{
-	//	OutputDebugStringA((char*)mErrorBlob->GetBufferPointer());
-	//	mErrorBlob->Release();
-	//	mErrorBlob = nullptr;
-	//}
+	if (mErrorBlob)
+	{
+		OutputDebugStringA((char*)mErrorBlob->GetBufferPointer());
+		mErrorBlob->Release();
+		mErrorBlob = nullptr;
+	}
 		
 	GetDevice()->CreateVertexShader(mVSBlob->GetBufferPointer()
 		, mVSBlob->GetBufferSize()
@@ -95,12 +95,12 @@ void Shader::CreateGS(const std::wstring& path, const std::string& funcName)
 	D3DCompileFromFile(path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 		, funcName.c_str(), "gs_5_0", 0, 0, mGSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
 
-	//if (mErrorBlob)
-	//{
-	//	OutputDebugStringA((char*)mErrorBlob->GetBufferPointer());
-	//	mErrorBlob->Release();
-	//	mErrorBlob = nullptr;
-	//}
+	if (mErrorBlob)
+	{
+		OutputDebugStringA((char*)mErrorBlob->GetBufferPointer());
+		mErrorBlob->Release();
+		mErrorBlob = nullptr;
+	}
 
 
 	GetDevice()->CreateGeometryShader(mGSBlob->GetBufferPointer()
@@ -114,12 +114,12 @@ void Shader::CreatePS(const std::wstring& path, const std::string& funcName)
 	D3DCompileFromFile(path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 		, funcName.c_str(), "ps_5_0", 0, 0, mPSBlob.GetAddressOf(), mErrorBlob.GetAddressOf());
 
-	//if (mErrorBlob)
-	//{
-	//	OutputDebugStringA((char*)mErrorBlob->GetBufferPointer());
-	//	mErrorBlob->Release();
-	//	mErrorBlob = nullptr;
-	//}
+	if (mErrorBlob)
+	{
+		OutputDebugStringA((char*)mErrorBlob->GetBufferPointer());
+		mErrorBlob->Release();
+		mErrorBlob = nullptr;
+	}
 
 	GetDevice()->CreatePixelShader(mPSBlob->GetBufferPointer()
 		, mPSBlob->GetBufferSize()

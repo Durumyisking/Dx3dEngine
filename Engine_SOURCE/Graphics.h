@@ -99,10 +99,6 @@ enum class eRenderTargetType
 	Deferred,
 	Light,
 	Shadow,
-	Default1,
-	Default2,
-	Default3,
-	Default4,
 	End,
 };
 
@@ -140,25 +136,21 @@ struct GpuBuffer
 
 enum class eTextureSlot
 {
-	T0,
-	T1,
-	T2,
-	T3,
-	T4,
-	T5,
-	T6,
-	T7,
+	ColorTexture,				// colorTexture
+	NormalTexture,				// normalTexture
+	MetallicTexture,			// metalTexture
+	RoughnessTexture,			// roughnessTexture
+	EmissiveTexture,			// emissiveTexture
 
-	CubeT8,
-	CubeT9,
+	PositionTarget = 5,			// positionTarget
+	NormalTarget,				// normalTarget
+	AlbedoTarget,				// albedoTarget
+	SpecularTarget,				// specularTarget
 
-	Array2DT10,
-	Array2DT11,
+	DiffuseLightTarget = 9,		// diffuseLightTarget
+	SpecularLightTarget,		// specularLightTarget
 
-	PositionTarget = 14,
-	NormalTarget,
-	AlbedoTarget,
-	SpecularTarget,
+	T12 = 12,					// atlasTexture
 
 	End,
 };
@@ -210,9 +202,13 @@ enum class eGPUParam
 	Matrix_3,
 	Matrix_4,
 	bTextureExistence,
-	bMetalic,
+	bAlbedo,
+	bNormal,
+	bMetallic,
+	bRoughness,
+	bEmissive,
+	Bool_1,
 	Bool_2,
-	Bool_3,
 };
 	
 

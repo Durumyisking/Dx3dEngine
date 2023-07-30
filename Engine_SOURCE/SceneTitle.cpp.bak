@@ -121,8 +121,8 @@ void SceneTitle::Enter()
 		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
-		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
-		//lightComp->SetDiffuse(Vector4(1.f, 0.f, 1.f, 1.f));
+		//lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetDiffuse(Vector4(1.f, 0.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
 		MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);

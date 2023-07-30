@@ -14,8 +14,6 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="$(MSBuildThisFileDirectory)BasicPS.hlsl" />
-    <FxCompile Include="$(MSBuildThisFileDirectory)BasicVS.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)ColorPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
     </FxCompile>
@@ -79,6 +77,12 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)MergePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)LightPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)LightDirPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)PostProcessPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
     </FxCompile>
@@ -104,12 +108,19 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)MergeVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)LightVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)LightDirVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Blur.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)ConstantBuffer.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)CSHeader.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)global.hlsli" />
+    <None Include="$(MSBuildThisFileDirectory)BRDF.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)Light.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)Particle.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)PostProcess.hlsli" />

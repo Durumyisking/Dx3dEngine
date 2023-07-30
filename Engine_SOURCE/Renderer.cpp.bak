@@ -1238,7 +1238,7 @@ namespace renderer
 		lightBuffer = nullptr;
 
 
-		for (size_t i = 0; i < static_cast<UINT>(eRenderTargetType::End); i++)
+		for (size_t i = 0; i < 8; i++)
 		{
 			if (renderTargets[i] == nullptr)
 			{

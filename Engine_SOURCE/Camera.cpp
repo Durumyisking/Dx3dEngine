@@ -92,13 +92,12 @@ void Camera::Render()
 		light->Render();
 	}
 
-	//SwapChain Render
+	//SwapChain
 	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
 
-	//// Deferred + SwapChain Merge
+	// Deferred + SwapChain Merge
 	Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
 	Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
-
 	rectMesh->BindBuffer();
 	mergeMaterial->Bind();
 	rectMesh->Render();
@@ -245,6 +244,18 @@ void Camera::renderTransparent()
 		if (renderPassCheck(obj))
 		{
 			obj->Render();				
+		}
+	}
+}
+
+void Camera::renderPostProcess()
+{
+	for (GameObj* obj : mPostProcessGameObjects)
+	{
+		if (renderPassCheck(obj))
+		{
+			renderer::CopyRenderTarget();
+			obj->Render();
 		}
 	}
 }

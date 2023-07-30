@@ -13,9 +13,9 @@ struct VSOut
 
 VSOut main(VSIn vsIn)
 {
-    VSOut vsOut = (VSOut) 0.0f;
+    VSOut Out = (VSOut) 0.0f;
     
-    vsOut.Position = float4(vsIn.Position.xy * 2.0f, 0.0f, 1.0f);
+    Out.Position = float4(vsIn.Position.xy * 2.0f, 0.0f, 1.0f);
     
-    return vsOut;
+    return Out;
 }

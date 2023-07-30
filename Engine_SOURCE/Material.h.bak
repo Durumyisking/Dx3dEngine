@@ -32,9 +32,9 @@ public:
 	void SetShaderByKey(std::wstring key);
 	Shader* GetShader() const { return mShader; }
 
-	void SetTexture(Texture* texture) { mTexture[static_cast<UINT>(eTextureSlot::ColorTexture)] = texture; }
+	void SetTexture(Texture* texture) { mTexture[static_cast<UINT>(eTextureSlot::T0)] = texture; }
 	void SetTexture(eTextureSlot slot, Texture* texture) { mTexture[static_cast<UINT>(slot)] = texture; }
-	Texture* GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::ColorTexture)]; }
+	Texture* GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::T0)]; }
 	Texture* GetTexture(eTextureSlot slot) const { return mTexture[static_cast<UINT>(slot)]; }
 
 	eRenderingMode GetRenderingMode() const { return mMode; }
@@ -43,7 +43,6 @@ public:
 	void SetMetalic(float value) { mMetalic = value; }
 	void SetRoughness(float value) { mRoughness = value; }
 	void SetAO(float value) { mAO = value; }
-
 
 private:
 	Shader* mShader;

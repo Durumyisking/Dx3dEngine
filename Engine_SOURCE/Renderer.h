@@ -95,9 +95,14 @@ namespace renderer
 		Matrix matrix4;
 
 		int bTextureExistence;
-		int bMetalic;
+		int bAlbedo;
+		int bNormal;
+		int bMetallic;
+
+		int bRoughness;
+		int bEmissive;
+		int bool1;
 		int bool2;
-		int bool3;
 	};
 
 	CBUFFER(GridCB, CBSLOT_GRID)	
