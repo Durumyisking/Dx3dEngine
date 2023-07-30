@@ -139,6 +139,7 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 	if (model != nullptr)
 	{
 		model->CreateTexture();
+		model->CreateMaterial();
 	}
 	return true;
 }

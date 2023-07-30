@@ -32,8 +32,6 @@ Application::~Application()
 
 void Application::Initialize()
 {
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
-
 	GETSINGLE(TimeMgr)->Initialize();
 	GETSINGLE(InputMgr)->Initialize();
 	GETSINGLE(Fmod)->Initialize();
@@ -42,6 +40,7 @@ void Application::Initialize()
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();
 	GETSINGLE(SceneMgr)->Initialize();
+
 }
 void Application::Update()
 {

@@ -5,6 +5,7 @@
 #include "def.h"
 #include "StructedBuffer.h"
 #include "Material.h"
+#include "ResourceMgr.h"
 
 namespace fs = std::filesystem;
 
@@ -43,7 +44,7 @@ HRESULT Model::Load(const std::wstring& path)
 	if (mStructure == nullptr)
 	{
 		mStructure = new StructedBuffer();
-		mStructure->Create(sizeof(BoneMat), mBones.size(), eSRVType::SRV, nullptr, true);
+		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
 	}
 
 	mAssimpImporter.FreeScene();
@@ -91,18 +92,17 @@ void Model::Bind_Render(Material* material)
 		boneMat.emplace_back(boneInfo);
 	}
 
-	mStructure->SetData(boneMat.data(), boneMat.size());
+	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
 	mStructure->BindSRV(eShaderStage::VS, 30);
 
-	for (size_t i = 0; i < mMeshes.size(); ++i)
+	for (int i = 0; i < mMeshes.size(); ++i)
 	{
 		if (mMeshes[i] == nullptr)
 			continue;
 
 		std::vector<Texture*> Textures = GetTexture(i);
 		for (int slot = 0; slot < Textures.size(); ++slot)
-		{
-			
+		{			
 			material->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
 		}
 
@@ -215,7 +215,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	}
 
 	int numBones = 0;
-	for (int i = 0; i < mesh->mNumBones; ++i)
+	for (UINT i = 0; i < mesh->mNumBones; ++i)
 	{
 		Bone bone = {};
 		aiBone* aiBone = mesh->mBones[i];
@@ -224,29 +224,29 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		mBones.emplace_back(bone);
 
 		UINT bonIndex = numBones++;
-		for (int j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
+		for (UINT j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
 		{
 			UINT vertexID = mesh->mBones[i]->mWeights[j].mVertexId;
 			float weight = mesh->mBones[i]->mWeights[j].mWeight;
 
 			if (vertexes[vertexID].BlendWeight.x == 0.0f)
 			{
-				vertexes[vertexID].BlendID.x = mBones.size() - 1;
+				vertexes[vertexID].BlendID.x = static_cast<float>(mBones.size() - 1);
 				vertexes[vertexID].BlendWeight.x = weight;
 			}
 			else if (vertexes[vertexID].BlendWeight.y == 0.0f)
 			{
-				vertexes[vertexID].BlendID.y = mBones.size() - 1;
+				vertexes[vertexID].BlendID.y = static_cast<float>(mBones.size() - 1);
 				vertexes[vertexID].BlendWeight.y = weight;
 			}
 			else if (vertexes[vertexID].BlendWeight.z == 0.0f)
 			{
-				vertexes[vertexID].BlendID.z = mBones.size() - 1;
+				vertexes[vertexID].BlendID.z = static_cast<float>(mBones.size() - 1);
 				vertexes[vertexID].BlendWeight.z = weight;
 			}
 			else if (vertexes[vertexID].BlendWeight.w == 0.0f)
 			{
-				vertexes[vertexID].BlendID.w = mBones.size() - 1;
+				vertexes[vertexID].BlendID.w = static_cast<float>(mBones.size() - 1);
 				vertexes[vertexID].BlendWeight.w = weight;
 			}
 		}
@@ -258,19 +258,18 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		Model::TextureVector textureBuff = {};
 		for (int type = static_cast<int>(aiTextureType_NONE); type < static_cast<int>(aiTextureType_UNKNOWN); ++type)
 		{
-			Model::TextureVector texInfo = processMaterial(aiMater, (aiTextureType)type);
+			Model::TextureVector texInfo = processMaterial(aiMater, static_cast<aiTextureType>(type));
 			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
 		}
+		
 		mTextures.emplace_back(textureBuff);
 	}
 	
 
 	Mesh* inMesh = new Mesh();
-	inMesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
-	inMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
+	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
-
-
 
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 	inMesh->SetName(wName);
@@ -298,7 +297,7 @@ Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType typ
 
 Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType type)
 {
-	Model::TextureVector outTexVector;
+	Model::TextureVector outTexVector = {};
 	UINT texCount = mater->GetTextureCount(type);
 	for (UINT i = 0; i < texCount; ++i)
 	{
@@ -324,11 +323,52 @@ void Model::CreateTexture()
 			Texture* tex = new Texture();
 			tex->Load(texInfo.texPath, texInfo);
 
-			texInfo.texID = tex->GetID();
+			texInfo.texID = static_cast<UINT>( tex->GetID());
 			texInfo.pTex = tex;
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(texInfo.texName, texInfo.pTex);
 		}
+	}
+}
+
+void Model::CreateMaterial()
+{
+	Material* inMaterial = new Material();
+	std::wstring matName = {};
+	for (auto& textureVec : mTextures)
+	{
+		for (TextureInfo texInfo : textureVec)
+		{
+			switch (texInfo.type)
+			{
+			case aiTextureType_DIFFUSE:
+			{
+				inMaterial->SetTexture(eTextureSlot::Albedo, texInfo.pTex);
+				matName = texInfo.texName;
+				std::size_t found = matName.find(L"_");
+				if (found != std::wstring::npos) {
+					matName = matName.substr(0, found); // _ 이전까지의 문자열 추출
+				}
+			}
+			break;
+			case aiTextureType_EMISSIVE:
+				inMaterial->SetTexture(eTextureSlot::Emissive, texInfo.pTex);
+				break;
+			case aiTextureType_NORMALS:
+				inMaterial->SetTexture(eTextureSlot::Normal, texInfo.pTex);
+				break;
+			case aiTextureType_METALNESS:
+				inMaterial->SetTexture(eTextureSlot::Metallic, texInfo.pTex);
+				break;
+			case aiTextureType_DIFFUSE_ROUGHNESS:
+				inMaterial->SetTexture(eTextureSlot::Roughness, texInfo.pTex);
+				break;
+			default:
+				break;
+			}
+		}
+		inMaterial->SetShaderByKey(L"PBRShader");
+		GETSINGLE(ResourceMgr)->Insert<Material>(matName, inMaterial);
 	}
 }
 

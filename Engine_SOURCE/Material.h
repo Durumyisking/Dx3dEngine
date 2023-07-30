@@ -41,10 +41,6 @@ public:
 	eRenderingMode GetRenderingMode() const { return mMode; }
 	void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 
-	void Setmetallic(float value) { mmetallic = value; }
-	void SetRoughness(float value) { mRoughness = value; }
-	void SetAO(float value) { mAO = value; }
-
 
 	void BindingTextures();
 
@@ -52,14 +48,10 @@ public:
 private:
 	Shader* mShader;
 	Texture* mTexture[static_cast<UINT>(eTextureSlot::End)];
-	Texture* mBRDF;
 
 	MaterialCB			mMaterialConstantBuffer;
 	eRenderingMode		mMode;
 
-	float mmetallic;
-	float mRoughness;
-	float mAO;
 
 };
 

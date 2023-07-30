@@ -7,7 +7,7 @@ Texture2D EmissiveTexture   : register(t4);
 
 
 TextureCube irradianceMap : register(t9);
-TextureCube prefilteredMap : register(t10);
+TextureCube prefilteredMap : register(t10); // 라이트맵 적용
 
 Texture2D BRDF : register(t11);
 
