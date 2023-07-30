@@ -24,7 +24,8 @@ namespace renderer
 	Camera* mainCamera = nullptr;
 	std::vector<Camera*> Cameras[static_cast<UINT>(SceneMgr::eSceneType::End)];
 	std::vector<DebugMesh> debugMeshes;
-	std::vector<LightAttribute> lights;
+	std::vector<Light*> lights;
+	std::vector<LightAttribute> lightAttributes;
 	StructedBuffer* lightBuffer = nullptr;
 
 	Texture* postProcessTexture = nullptr;
@@ -201,7 +202,31 @@ namespace renderer
 			, PBRShader->GetVSBlobBufferSize()
 			, PBRShader->GetInputLayoutAddr());
 
+    ////////////////////
+    Shader* deferredShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		GetDevice()->CreateInputLayout(arrLayout, 6
+			, deferredShader->GetVSBlobBufferPointer()
+			, deferredShader->GetVSBlobBufferSize()
+			, deferredShader->GetInputLayoutAddr());
 
+		Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
+		GetDevice()->CreateInputLayout(arrLayout, 6
+			, mergeShader->GetVSBlobBufferPointer()
+			, mergeShader->GetVSBlobBufferSize()
+			, mergeShader->GetInputLayoutAddr());
+
+		Shader* lightShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightDirShader");
+		GetDevice()->CreateInputLayout(arrLayout, 6
+			, lightShader->GetVSBlobBufferPointer()
+			, lightShader->GetVSBlobBufferSize()
+			, lightShader->GetInputLayoutAddr());
+
+		Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
+		GetDevice()->CreateInputLayout(arrLayout, 6
+			, lightPointShader->GetVSBlobBufferPointer()
+			, lightPointShader->GetVSBlobBufferSize()
+			, lightPointShader->GetInputLayoutAddr());
+    ////////////////////
 #pragma endregion
 
 #pragma region SamplerState
@@ -669,7 +694,7 @@ namespace renderer
 
 		BindNoiseTexture();
 		BindLight();
-
+    
 		UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
 
 		for (Camera* cam : Cameras[type])
@@ -1381,3 +1406,4 @@ namespace renderer
 		capsuleMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
 	}	
 }
+

@@ -2,6 +2,7 @@
 #include "GameObj.h"
 
 
+
 Material::Material()
 	:Resource(eResourceType::Material)
 	, mMode(eRenderingMode::Transparent)
@@ -89,9 +90,10 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 
 
 
+
 Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName)
 	: Resource(eResourceType::Material)
-	, mMode(eRenderingMode::Transparent)
+	, mMode(eRenderingMode::Opaque)
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
@@ -187,8 +189,8 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::bTextureExistence:
 		mMaterialConstantBuffer.bTextureExistence = *static_cast<int*>(data);
 		break;
-	case eGPUParam::bmetallic:
-		mMaterialConstantBuffer.bmetallic = *static_cast<int*>(data);
+	case eGPUParam::Bool_1:
+		mMaterialConstantBuffer.bool1 = *static_cast<int*>(data);
 		break;
 	case eGPUParam::Bool_2:
 		mMaterialConstantBuffer.bool2 = *static_cast<int*>(data);
@@ -201,6 +203,7 @@ void Material::SetData(eGPUParam param, void* data)
 	}
 
 }
+
 void Material::Bind()
 {
 	for (UINT i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
@@ -244,26 +247,26 @@ void Material::BindingTextures()
 {
 	ConstantBuffer* pMaterialCB = renderer::constantBuffers[static_cast<UINT>(eCBType::Material)];
 
-	// ÅØ½ºÃ³ °³¼ö
+	// í…ìŠ¤ì²˜ ê°œìˆ˜
 	mMaterialConstantBuffer.bTextureExistence = 0;
 
-	if (mTexture[0]) // color°¡ ÀÖ½À´Ï´Ù.
+	if (mTexture[0]) // colorê°€ ìžˆìŠµë‹ˆë‹¤.
 	{
 		++mMaterialConstantBuffer.bTextureExistence;
 	}
-	if (mTexture[1]) // normalÀÌ ÀÖ½À´Ï´Ù.
+	if (mTexture[1]) // normalì´ ìžˆìŠµë‹ˆë‹¤.
 	{
 		++mMaterialConstantBuffer.bTextureExistence;
 	}
-	if (mTexture[2]) // MetalÀÌ ÀÖ½À´Ï´Ù.
+	if (mTexture[2]) // Metalì´ ìžˆìŠµë‹ˆë‹¤.
 	{
 		++mMaterialConstantBuffer.bTextureExistence;
 	}
-	if (mTexture[3]) // Roughness°¡ ÀÖ½À´Ï´Ù.
+	if (mTexture[3]) // Roughnessê°€ ìžˆìŠµë‹ˆë‹¤.
 	{
 		++mMaterialConstantBuffer.bTextureExistence;
 	}
-	if (mTexture[4]) // Emissive°¡ ÀÖ½À´Ï´Ù.
+	if (mTexture[4]) // Emissiveê°€ ìžˆìŠµë‹ˆë‹¤.
 	{
 		++mMaterialConstantBuffer.bTextureExistence;
 	}
@@ -275,4 +278,3 @@ void Material::BindingTextures()
 	pMaterialCB->Bind(eShaderStage::GS);
 	pMaterialCB->Bind(eShaderStage::PS);
 }
-

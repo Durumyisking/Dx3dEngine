@@ -70,6 +70,7 @@ float4 main(VSOut vsIn) : SV_Target
     float3 R = reflect(-V, N);
     float NDotV = saturate(dot(N, V)); // 노멀 to 눈 반사각 
 
+
     float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // 금속성이 강할수록 albedo를 사용하고 아니면 0.04사용 (재질 값)
 
     float3 L = -normalize(mul(float4(lightAttributes[0].direction.xyz, 0.f), view)).xyz; // 빛 각도            

@@ -70,17 +70,17 @@ enum class eRasterizerType
 {
 	SolidBack,
 	SolidFront,
-	SolidNone, // ÄÃ¸µ ¾ÈÇÔ
-	WireframeNone, // ¼±À¸·Î¸¸ ±×¸®±â Topology¶û °°Àºµ¥ ±×³É gpu¿¡¼­ Ã³¸®ÇØÁÖ´Â°Å
+	SolidNone, // ì»¬ë§ ì•ˆí•¨
+	WireframeNone, // ì„ ìœ¼ë¡œë§Œ ê·¸ë¦¬ê¸° Topologyë‘ ê°™ì€ë° ê·¸ëƒ¥ gpuì—ì„œ ì²˜ë¦¬í•´ì£¼ëŠ”ê±°
 	End,
 };
 
 enum class eDepthStencilType
 {
-	Less, // ÀÏ¹İÀûÀÎ ¿ø±Ù
-	Greater, // ¿ø±Ù °Å²Ù·Î
-	NoWrite, // °ãÄ¡¸é ¾Æ¿¹ ¾È±×¸²
-	None, // ±íÀÌ¹öÆÛ »ç¿ë ¾ÈÇÔ
+	Less, // ì¼ë°˜ì ì¸ ì›ê·¼
+	Greater, // ì›ê·¼ ê±°ê¾¸ë¡œ
+	NoWrite, // ê²¹ì¹˜ë©´ ì•„ì˜ˆ ì•ˆê·¸ë¦¼
+	None, // ê¹Šì´ë²„í¼ ì‚¬ìš© ì•ˆí•¨
 	End,
 };
 
@@ -88,7 +88,7 @@ enum class eBlendStateType
 {
 	Default,
 	AlphaBlend,
-	OneOne, // ¾ËÆÄ°ª ¾øÀÌ ¹°Ã¼¿¡ »ö ¼¯À½
+	OneOne, // ì•ŒíŒŒê°’ ì—†ì´ ë¬¼ì²´ì— ìƒ‰ ì„ìŒ
 	End,
 };
 
@@ -98,22 +98,20 @@ enum class eRenderTargetType
 	Deferred,
 	Light,
 	Shadow,
-	Default1,
-	Default2,
-	Default3,
-	Default4,
 	End,
 };
 
 enum class eRenderingMode
 {
-	DeferredOpaque, // ºÒÅõ¸í
+	DeferredOpaque, // ë¶ˆíˆ¬ëª…
 	DeferredMask,
-	Light, // ±¤¿ø Ã³¸®
-	Opaque, // ºÒÅõ¸í
-	Cutout, // ÀÏºÎ¸¸ Åõ¸í
+	Light, // ê´‘ì› ì²˜ë¦¬
+	Opaque, // ë¶ˆíˆ¬ëª…
+	Cutout, // ì¼ë¶€ë§Œ íˆ¬ëª…
 	Transparent,
 	PostProcess,
+
+	None,
 	End,
 };
 
@@ -142,16 +140,20 @@ enum class eTextureSlot
 	Metallic,
 	Roughness,
 	Emissive,
-	T5,
-	T6,
-	T7,
 
-	CubeT8,
-	CubeT9,
+	PositionTarget = 5,			// positionTarget
+	NormalTarget,				// normalTarget
+	AlbedoTarget,				// albedoTarget
+	SpecularTarget,				// specularTarget
 
-	Array2DT10,
-	Array2DT11,
+	DiffuseLightTarget = 9,		// diffuseLightTarget
+	SpecularLightTarget,		// specularLightTarget
 
+
+  irradianceMap,
+  prefilteredMap, // Â¶Ã³Ã€ÃŒÃ†Â®Â¸ÃŠ Ã€Ã»Â¿Ã«
+  BRDF,
+  
 	End,
 };
 
@@ -202,7 +204,7 @@ enum class eGPUParam
 	Matrix_3,
 	Matrix_4,
 	bTextureExistence,
-	bmetallic,
+	Bool_1,
 	Bool_2,
 	Bool_3,
 };
@@ -243,7 +245,7 @@ struct LightAttribute
 		
 	enums::eLightType type;
 
-	int padding; // »ó¼ö¹öÆÛ ÆĞµù
+	int padding; // ìƒìˆ˜ë²„í¼ íŒ¨ë”©
 };
 
 struct Particle
