@@ -50,7 +50,7 @@ namespace renderer
 		Vector4 BlendWeight;
 	};
 
-	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // ±¸Á¶Ã¼ ¸¸µå´Â°ÅÀÓ
+	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // êµ¬ì¡°ì²´ ë§Œë“œëŠ”ê±°ì„
 	{
 		Matrix world;
 		Matrix inverseWorld;
@@ -131,6 +131,7 @@ namespace renderer
 	CBUFFER(LightCB, CBSLOT_LIGHTCOUNT)
 	{	
 		UINT lightCount;
+		UINT lightIndex;
 	};
 
 	CBUFFER(ParticleSystemCB, CBSLOT_LIGHTCOUNT)
@@ -190,7 +191,8 @@ namespace renderer
 
 	extern Camera* mainCamera;
 	extern std::vector<DebugMesh> debugMeshes;
-	extern std::vector<LightAttribute> lights;
+	extern std::vector<Light*> lights;
+	extern std::vector<LightAttribute> lightAttributes;
 
 	extern StructedBuffer* lightBuffer;
 
@@ -199,13 +201,17 @@ namespace renderer
 	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
 
 	void Initialize();
-	void release(); // ±×¸®´Â ¹æ½ÄÀÌ ¿©·¯°³ÀÏ¶§ ¿©·¯°³¸¦ ÇÒ´çÇÏ´Â°Ô ¾Æ´Ï¶ó
-					// ±×¸®´Â ¹æ½ÄÀ» º¯°æÇÒ¶§ ÇÒ´çµÈ °÷¿¡ ±×¸®´Â ¹æ½ÄÀÇ °´Ã¼µéÀ» ±³Ã¼¸¸ ÇØÁØ´Ù -> ¿À·¡°É¸²
-					// ¾ÆÁ÷ gpuÀÇ vramÀÇ ¿ë·®ÀÌ ramº¸´Ù ÇÑÂü ÀÛ¾Æ¼­±×·³
+	void release(); // ê·¸ë¦¬ëŠ” ë°©ì‹ì´ ì—¬ëŸ¬ê°œì¼ë•Œ ì—¬ëŸ¬ê°œë¥¼ í• ë‹¹í•˜ëŠ”ê²Œ ì•„ë‹ˆë¼
+					// ê·¸ë¦¬ëŠ” ë°©ì‹ì„ ë³€ê²½í• ë•Œ í• ë‹¹ëœ ê³³ì— ê·¸ë¦¬ëŠ” ë°©ì‹ì˜ ê°ì²´ë“¤ì„ êµì²´ë§Œ í•´ì¤€ë‹¤ -> ì˜¤ë˜ê±¸ë¦¼
+					// ì•„ì§ gpuì˜ vramì˜ ìš©ëŸ‰ì´ ramë³´ë‹¤ í•œì°¸ ì‘ì•„ì„œê·¸ëŸ¼
 	
 	void Render();
 
-	void CreateRenderTargets(); //MultiRenderTargets
+	// MultiRenderTargets
+	void CreateRenderTargets(); 
+	void ClearRenderTargets();
+
+	// Renderer
 	void PushLightAttribute(LightAttribute attribute);
 	void BindLight();
 	void BindNoiseTexture();

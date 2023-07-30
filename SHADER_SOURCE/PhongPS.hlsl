@@ -31,7 +31,6 @@ float4 main(VSOut vsIn) : SV_Target
         outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    normal.xyz = vsIn.ViewNormal;
     
     LightColor lightColor = (LightColor) 0.0f;
     
@@ -42,18 +41,18 @@ float4 main(VSOut vsIn) : SV_Target
     
     outColor = CombineLights(outColor, lightColor);
     
-    if (outColor.w == 0)
-        discard;
+    //if (outColor.w == 0)
+    //    discard;
     
-    if (cbxyzw1.w != 0)
-    {
-        outColor *= cbxyzw1; // 곱할 색        
-    }
+    //if (cbxyzw1.w != 0)
+    //{
+    //    outColor *= cbxyzw1; // 곱할 색        
+    //}
     
-    if (cbxyzw2.w != 0)
-    {
-        outColor += cbxyzw2; // 더할 색    
-    }
+    //if (cbxyzw2.w != 0)
+    //{
+    //    outColor += cbxyzw2; // 더할 색    
+    //}
         
     
     return outColor;
