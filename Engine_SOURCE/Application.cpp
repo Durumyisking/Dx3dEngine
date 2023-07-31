@@ -1,4 +1,4 @@
-#include "Application.h"
+﻿#include "Application.h"
 #include "Renderer.h"
 #include "TimeMgr.h"
 #include "InputMgr.h"
@@ -72,8 +72,9 @@ void Application::Render()
 		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::Render();
-		mGraphicDevice->Clear();
+
 		mGraphicDevice->AdjustViewPorts();
+		renderer::ClearRenderTargets(); // mGraphicDevice::Clear 대신 렌더타겟 클리어
 
 		renderer::Render();
 		GETSINGLE(SceneMgr)->Render();

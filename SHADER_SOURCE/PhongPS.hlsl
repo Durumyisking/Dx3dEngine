@@ -15,23 +15,20 @@ struct VSOut
 float4 main(VSOut vsIn) : SV_Target
 {
     float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
-    float3 normal = (float3) 0.f;
 
-    if (0 == cbtextureExistence)
+    float3 normal = vsIn.ViewNormal;
+
+
+    if (bAlbedo == 1)
     {
-        normal.xyz = vsIn.ViewNormal;
+        outColor = colorTexture.Sample(anisotropicSampler, vsIn.UV);
+        //outColor = TextureMapping_albedo(vsIn.UV);
     }
-    else if (1 == cbtextureExistence) 
-    {              
-        outColor = TextureMapping_albedo(vsIn.UV);
-        normal.xyz = vsIn.ViewNormal;
-    }
-    else if (2 <= cbtextureExistence) 
+    if (bNormal == 1)
+
     {
-        outColor = TextureMapping_albedo(vsIn.UV);
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    normal.xyz = vsIn.ViewNormal;
     
     LightColor lightColor = (LightColor) 0.0f;
     

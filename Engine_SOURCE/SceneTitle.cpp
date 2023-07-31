@@ -92,7 +92,7 @@ void SceneTitle::Enter()
 		mCamera->AddComponent<CameraScript>(eComponentType::Script);
 		renderer::mainCamera = cameraComp;
 		cameraComp->SetProjectionType(eProjectionType::Perspective);
-		mCamera->SetPos(Vector3(0.f, 15.f, 0.f));
+		mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
 
 	}
 
@@ -209,6 +209,65 @@ void SceneTitle::Enter()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
+
+	// DebugTest
+	{ 
+		//Basic
+		{
+			GameObj* test1 = object::Instantiate<GameObj>(eLayerType::Objects);
+			test1->SetPos(Vector3(0.f, 5.f, 0.f));
+			test1->SetScale({ 5.f, 5.f, 5.f });
+			test1->SetName(L"Test1");
+
+			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"Brick_Color", L"Brick_Normal", L"PhongShader", L"Brick_Phong_Mat");
+			test1->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			test1->GetComponent<MeshRenderer>()->SetMaterial(mat);
+			test1->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
+		}
+
+		//Deferred
+		{
+			GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);
+			test2->SetPos(Vector3(-10.f, 5.f, 0.f));
+			test2->SetScale({ 5.f, 5.f, 5.f });
+			test2->SetName(L"Test2");
+
+			test2->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			MeshRenderer* testRender = test2->GetComponent<MeshRenderer>();
+			Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"DeferredMaterial");
+
+			testRender->SetMaterial(testMaterial);
+			testRender->SetMeshByKey(L"Cubemesh");
+		}
+
+		// PointLight
+		{
+			{
+				GameObj* light = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLight1");
+				light->GetComponent<Transform>()->SetPosition(Vector3(0.f, 15.f, -20.f));
+				light->SetScale(Vector3(1.f, 1.f, 1.f));
+				//light->SetRotation(Vector3(45.f, 0.f, 0.f));
+				Light* lightComp = light->AddComponent<Light>(eComponentType::Light);
+				lightComp->SetType(eLightType::Point);
+				lightComp->SetRadius(20.0f);
+				lightComp->SetDiffuse(Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+				lightComp->SetSpecular(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+				lightComp->SetAmbient(Vector4(0.15f, 0.15f, 0.15f, 1.0f));
+			}
+			{
+				GameObj* light = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLight2");
+				light->GetComponent<Transform>()->SetPosition(Vector3(0.f, 15.f, -20.f));
+				light->SetScale(Vector3(1.f, 1.f, 1.f));
+				//light->SetRotation(Vector3(45.f, 0.f, 0.f));
+				Light* lightComp = light->AddComponent<Light>(eComponentType::Light);
+				lightComp->SetType(eLightType::Point);
+				lightComp->SetRadius(30.0f);
+				lightComp->SetDiffuse(Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+				lightComp->SetSpecular(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+				lightComp->SetAmbient(Vector4(0.15f, 0.15f, 0.15f, 1.0f));
+			}
+		}
+	}
 
 	Scene::Enter();
 }

@@ -6,9 +6,9 @@
 
 struct VTX_IN
 {
-    float4 vPos : POSITION;                                                     
+    float4 vPos : POSITION;
     float4 vColor : COLOR;
-    float2 vUV : TEXCOORD;                                
+    float2 vUV : TEXCOORD;
 };
 
 struct VTX_OUT
@@ -49,6 +49,18 @@ float3 RotatePointZ(float3 pointVal, float radian, float3 rotationCenter)
     return rotatedPoint + rotationCenter;
 }
 
+float4 DecodeColor(float _value)
+{
+    uint rgba = asint(_value);
+
+    float r = float((rgba & 0xff000000) >> 24) / 255.f;
+    float g = float((rgba & 0x00ff0000) >> 16) / 255.f;
+    float b = float((rgba & 0x0000ff00) >> 8) / 255.f;
+    float a = float((rgba & 0x000000ff) >> 0) / 255.f;
+
+    return float4(r, g, b, a);
+}
+
 
 float4 TextureMapping_albedo(float2 uv)
 {
@@ -56,7 +68,7 @@ float4 TextureMapping_albedo(float2 uv)
 }
 
 
-// ÇöÀç ÇÈ¼¿ÀÇ normalÀ» ¾ò°í viewspace·Î º¯°æÇÑ´Ù.
+// í˜„ì¬ í”½ì…€ì˜ normalì„ ì–»ê³  viewspaceë¡œ ë³€ê²½í•œë‹¤.
 float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, float3 viewBiNormal)
 {
     float3 result = normalTexture.SampleLevel(linearSampler, uv, 0.f).rgb;
@@ -78,10 +90,10 @@ float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, f
 
 float TextureMapping_metallic(float2 uv)
 {
-    return saturate(MetalTexture.SampleLevel(linearSampler, uv, 0.f).r);
+    return saturate(metallicTexture.SampleLevel(linearSampler, uv, 0.f).r);
 }
 
 float TextureMapping_roughness(float2 uv)
 {
-    return saturate(RoughnessTexture.SampleLevel(linearSampler, uv, 0.f).r);
+    return saturate(roughnessTexture.SampleLevel(linearSampler, uv, 0.f).r);
 }

@@ -467,6 +467,16 @@ void GraphicDevice::Clear()
 	mContext->ClearDepthStencilView(mDepthStencilBufferTexture->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0); // 깊이버퍼도 클리어 해줘야해
 }
 
+void GraphicDevice::ClearRenderTargetView(ID3D11RenderTargetView* renderTargetView, const FLOAT colorRGBA[4])
+{
+	mContext->ClearRenderTargetView(renderTargetView, colorRGBA);
+}
+
+void GraphicDevice::ClearDepthStencilView(ID3D11DepthStencilView* depthStencilView, UINT clearFlags)
+{
+	mContext->ClearDepthStencilView(depthStencilView, clearFlags, 1.0f, 0);
+}
+
 void GraphicDevice::AdjustViewPorts()
 {
 	RECT winRect;

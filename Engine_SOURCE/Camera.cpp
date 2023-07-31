@@ -8,12 +8,14 @@
 #include "BaseRenderer.h"
 #include "TimeMgr.h"
 #include "Layer.h"
+#include "ResourceMgr.h"
 
 extern Application application;
 
 
 
 Matrix Camera::View = Matrix::Identity;
+Matrix Camera::InverseView = Matrix::Identity;
 Matrix Camera::Projection = Matrix::Identity;
 
 Camera::Camera()
@@ -76,10 +78,33 @@ void Camera::FixedUpdate()
 void Camera::Render()
 {
 	View = mView;
+	InverseView = View.Invert();
 	Projection = mProjection;
 
 	sortGameObjects();
 
+	// Deferred Opaque Render 
+	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
+	renderDeferred();
+
+	//// Deferred light Render
+	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
+	for (Light* light : renderer::lights)
+	{
+		light->Render();
+	}
+
+	//SwapChain
+	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+
+	// Deferred + SwapChain Merge
+	Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
+	Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
+	rectMesh->BindBuffer();
+	mergeMaterial->Bind();
+	rectMesh->Render();
+
+	// Forward Render
 	renderOpaque();
 	renderCutout();
 	renderTransparent();
@@ -154,6 +179,7 @@ void Camera::SetTarget(GameObj* target)
 
 void Camera::sortGameObjects()
 {
+	mDeferredOpaqueGameObjects.clear();
 	mOpaqueGameObjects.clear();
 	mCutoutGameObjects.clear();
 	mTransparentGameObjects.clear();
@@ -178,6 +204,17 @@ void Camera::sortGameObjects()
 		}
 	}
 
+}
+
+void Camera::renderDeferred()
+{
+	for (GameObj* obj : mDeferredOpaqueGameObjects)
+	{
+		if (renderPassCheck(obj))
+		{
+			obj->Render();
+		}
+	}
 }
 
 void Camera::renderOpaque()
@@ -213,6 +250,18 @@ void Camera::renderTransparent()
 	}
 }
 
+void Camera::renderPostProcess()
+{
+	for (GameObj* obj : mPostProcessGameObjects)
+	{
+		if (renderPassCheck(obj))
+		{
+			renderer::CopyRenderTarget();
+			obj->Render();
+		}
+	}
+}
+
 
 void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 {
@@ -227,6 +276,10 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 
 	switch (mode)
 	{
+	case eRenderingMode::DeferredOpaque:
+	case eRenderingMode::DeferredMask:
+		mDeferredOpaqueGameObjects.push_back(obj);
+		break;
 	case eRenderingMode::Opaque:
 		mOpaqueGameObjects.push_back(obj);
 		break;
