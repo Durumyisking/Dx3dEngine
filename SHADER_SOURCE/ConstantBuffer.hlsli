@@ -34,7 +34,7 @@ cbuffer Material : register(b1)
     float cbxyzPadding2;
     float3 cbxyz3;
     float cbxyzPadding3;
-    float3 cbxyz4;
+    float3 camPosition;
     float cbxyzPadding4;
     
     float4 cbxyzw1;
@@ -119,9 +119,6 @@ cbuffer ParticleSystem : register(b6)
 // postprocess b8
 
 
-cbuffer PBRconstant : register(b9)
+cbuffer vvvconstant : register(b9) // 쓸사람 쓰세요
 {
-    float metallic; 
-    float roughness; 
-    float ao; 
 }

@@ -27,7 +27,6 @@
 #define CBSLOT_PARTICLESYSTEM 6
 #define CBSLOT_NOISE			7
 #define CBSLOT_POSTPROCESS		8
-#define CBSLOT_PBR			9
 
 
 enum class eValidationMode
@@ -136,11 +135,22 @@ struct GpuBuffer
 
 enum class eTextureSlot
 {
+<<<<<<< HEAD
 	ColorTexture,				// colorTexture
 	NormalTexture,				// normalTexture
 	MetallicTexture,			// metalTexture
 	RoughnessTexture,			// roughnessTexture
 	EmissiveTexture,			// emissiveTexture
+=======
+	Albedo,
+	Normal,
+	Metallic,
+	Roughness,
+	Emissive,
+	T5,
+	T6,
+	T7,
+>>>>>>> origin
 
 	PositionTarget = 5,			// positionTarget
 	NormalTarget,				// normalTarget
@@ -192,7 +202,7 @@ enum class eGPUParam
 	Vector3_1,
 	Vector3_2,
 	Vector3_3,
-	Vector3_4,
+	CamPosition,
 	Vector4_1,
 	Vector4_2,
 	Vector4_3,
@@ -202,12 +212,16 @@ enum class eGPUParam
 	Matrix_3,
 	Matrix_4,
 	bTextureExistence,
+<<<<<<< HEAD
 	bAlbedo,
 	bNormal,
 	bMetallic,
 	bRoughness,
 	bEmissive,
 	Bool_1,
+=======
+	bmetallic,
+>>>>>>> origin
 	Bool_2,
 };
 	

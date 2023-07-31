@@ -10,6 +10,7 @@
 #include "Texture.h"
 #include "Camera.h"
 #include "CameraScript.h"
+#include "Model.h"
 #include "FontWrapper.h"
 
 #include "GridScript.h"
@@ -128,24 +129,33 @@ void SceneTitle::Enter()
 		mr->SetMaterialByKey(L"SunMaterial");
 		mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
-
+	
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(5.f, 5.f, 5.f));
-		player->SetScale({ 5.f, 5.f, 5.f });
+		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"BrickBlockBody_nrm", L"PhongShader", L"mat_BrickBlockBody");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"BrickBlockBody_alb", L"PhongShader", L"mat_BrickBlockBody");
-		//player->GetComponent<MeshRenderer>()->SetMaterial(mat);
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"albedo", L"normal", L"PhongShader", L"mat_dirt");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"padded_leather_albedo", L"padded_leather_normal", L"padded_leather_metallic", L"padded_leather_roughness", L"PBRShader", L"mat_dirt");
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		(
+			L"check_albedo",
+			L"check_normal", 
+			L"check_metallic", 
+			L"check_roughness", 
+			L"PBRShader",
+			L"mat_dirt"
+		);
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
+		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+
+		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(2.5f, 2.5f, 2.5f));
-		PxRigidDynamic* dy = physical->GetActor<PxRigidDynamic>();
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
@@ -153,17 +163,39 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
-	//{
-	//	
-	//	Sphere* sphere = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
-	//	sphere->SetPos(Vector3(-5.f, 20.f, 5.f));
-	//	sphere->SetScale({ 2.5f, 2.5f, 2.5f });
-	//	sphere->SetName(L"Sphere");
-	//	sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+	{
+		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
+		player->SetPos(Vector3(0.f, 0.f, 0.f));
+		player->SetScale({ 0.01f, 0.01f, 0.01f });
+		player->SetName(L"Object");
 
-	//}
+		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
 
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
+		meshRenderer->SetModel(model);
+		meshRenderer->SetMaterialByKey(L"BlockBrickBody");
 
+		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	}
+	{
+		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
+		player->SetPos(Vector3(10.f, 0.f, 0.f));
+		player->SetScale({ 0.01f, 0.01f, 0.01f });
+		player->SetName(L"Object");
+
+		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
+
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
+		meshRenderer->SetModel(model);
+		meshRenderer->SetMaterialByKey(L"BlockBrickBody");
+
+		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	}
+	
 	{
 		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));

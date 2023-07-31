@@ -13,7 +13,7 @@ Player::Player()
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
 
-	MeshRenderer* spriteRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
+	MeshRenderer* meshRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
 }
 
 Player::~Player()

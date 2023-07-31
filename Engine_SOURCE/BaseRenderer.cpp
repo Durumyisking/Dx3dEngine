@@ -6,7 +6,6 @@
 #include "Mesh.h"
 
 
-
 BaseRenderer::BaseRenderer(eComponentType type)
 	:Component(type)
 	, mbIsAnim(false)
@@ -66,6 +65,7 @@ void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
 	mSpriteSize = spriteSize;
 	// adjustTexture();
 }
+
 
 void BaseRenderer::ChangeColor(Vector4 color)
 {

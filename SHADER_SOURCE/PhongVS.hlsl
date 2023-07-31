@@ -7,6 +7,9 @@ struct VSIn
     float3 Tangent : TANGENT;
     float3 Normal : NORMAL;
     float3 BiNormal : BINORMAL;
+    
+    uint4 BlendID : BLENDINDICES;
+    float4 BlendWeight : BLENDWEIGHT;
 };
 
 struct VSOut
@@ -18,6 +21,7 @@ struct VSOut
     float3 ViewTangent : TANGENT;
     float3 ViewNormal : NORMAL;
     float3 ViewBiNormal : BINORMAL;
+   
 };
 
 VSOut main(VSIn vsIn)
@@ -42,9 +46,9 @@ VSOut main(VSIn vsIn)
     viewBiNormal = normalize(mul(float4(viewBiNormal, 0.f), view).xyz);
     
     vsOut.ViewPos = viewPosition.xyz;
-    vsOut.ViewNormal = viewNormal.xyz;
-    vsOut.ViewTangent = viewTangent.xyz;
-    vsOut.ViewBiNormal = viewBiNormal.xyz;
+    vsOut.ViewNormal     = viewNormal.xyz;
+    vsOut.ViewTangent    = viewTangent.xyz;
+    vsOut.ViewBiNormal   = viewBiNormal.xyz;
     
     return vsOut;
 }

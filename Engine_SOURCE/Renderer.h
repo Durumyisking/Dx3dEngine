@@ -45,6 +45,9 @@ namespace renderer
 		Vector3 tangent;
 		Vector3 biNormal;
 		Vector3 normal;
+
+		Vector4 BlendID;
+		Vector4 BlendWeight;
 	};
 
 	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
@@ -83,7 +86,7 @@ namespace renderer
 		float	xyzPadding2;
 		Vector3 xyz3;
 		float	xyzPadding3;
-		Vector3 xyz4;
+		Vector3 CamPosition;
 		float	xyzPadding4;
 
 		Vector4 xyzw1;
@@ -97,6 +100,7 @@ namespace renderer
 		Matrix matrix4;
 
 		int bTextureExistence;
+<<<<<<< HEAD
 		int bAlbedo;
 		int bNormal;
 		int bMetallic;
@@ -104,6 +108,9 @@ namespace renderer
 		int bRoughness;
 		int bEmissive;
 		int bool1;
+=======
+		int bmetallic;
+>>>>>>> origin
 		int bool2;
 	};
 
@@ -177,13 +184,6 @@ namespace renderer
 		float wave_speed;
 		float wave_distortion;
 	};
-	CBUFFER(PBRCB, CBSLOT_PBR)
-	{
-		float metallic;
-		float roughness;
-		float ao;
-	};
-
 
 
 
@@ -225,5 +225,15 @@ namespace renderer
 	void BindLight();
 	void BindNoiseTexture();
 	void CopyRenderTarget();
+
+	// mesh create
+	void CreatePointMesh();
+	void CreateLineMesh();
+	void CreateRectMesh();
+	void CreateGridMesh();
+	void CreateCircleMesh();
+	void CreateCubeMesh();
+	void CreateSphereMesh();
+	void CreateCapsuleMesh();
 }
 

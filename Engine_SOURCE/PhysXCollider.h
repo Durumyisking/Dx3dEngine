@@ -39,6 +39,8 @@ public:
     PxEventCallback* mCallback;
     Physical* mPhysical;
 
+    PxTransform mTransform;
+
     PxRaycastHit     mRaycastHit;
     PxSweepHit       mSweepHit;
     PxOverlapHit     mOverlapHit;

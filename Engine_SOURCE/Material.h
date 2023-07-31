@@ -32,29 +32,33 @@ public:
 	void SetShaderByKey(std::wstring key);
 	Shader* GetShader() const { return mShader; }
 
+<<<<<<< HEAD
 	void SetTexture(Texture* texture) { mTexture[static_cast<UINT>(eTextureSlot::ColorTexture)] = texture; }
 	void SetTexture(eTextureSlot slot, Texture* texture) { mTexture[static_cast<UINT>(slot)] = texture; }
 	Texture* GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::ColorTexture)]; }
+=======
+	void SetTexture(Texture* texture) { mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = texture; }
+	void SetTexture(eTextureSlot slot, Texture* texture) { mTexture[static_cast<UINT>(slot)] = texture; }
+
+	Texture* GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::Albedo)]; }
+>>>>>>> origin
 	Texture* GetTexture(eTextureSlot slot) const { return mTexture[static_cast<UINT>(slot)]; }
 
 	eRenderingMode GetRenderingMode() const { return mMode; }
 	void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 
-	void SetMetalic(float value) { mMetalic = value; }
-	void SetRoughness(float value) { mRoughness = value; }
-	void SetAO(float value) { mAO = value; }
+
+	void BindingTextures();
+
 
 
 private:
 	Shader* mShader;
 	Texture* mTexture[static_cast<UINT>(eTextureSlot::End)];
+
 	MaterialCB			mMaterialConstantBuffer;
-	PBRCB				mPBRConstantBuffer;
 	eRenderingMode		mMode;
 
-	float mMetalic;
-	float mRoughness;
-	float mAO;
 
 };
 
