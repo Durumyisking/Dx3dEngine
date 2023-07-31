@@ -29,25 +29,25 @@ PS_OUT main(VSOut vsin)
     PS_OUT output = (PS_OUT) 0.f;
     
     float2 vUV = vsin.Position.xy / float2(1600.0f, 900.0f);
-    float4 vViewPos = positionTarget.Sample(anisotropicSampler, vUV);
+    float4 vViewPos = positionTarget.Sample(linearSampler, vUV);
     
     if (0.f == vViewPos.a)
         discard;
       
-    // ±¤¿ø ¿µ¿ª¿¡ ÀâÈù position targetÀÇ À§Â÷°ªÀ» ·ÎÄÃ¿µ¿ªÀ¸·Î ¹Ù²ã¾ßÇÑ´Ù.
-    // ·ÎÄÃ ¿µ¿ª¿¡¼­ ±¤¿ø¸Þ½¬ (spherer)ÀÇ ³»ºÎ¿¡ ÀÖ´Ù¸é ½ÇÁ¦·Î point light ¾È¿¡ µé¾î°¡ÀÖ´Ù´Â ¶æ
+    // ê´‘ì› ì˜ì—­ì— ìž¡ížŒ position targetì˜ ìœ„ì°¨ê°’ì„ ë¡œì»¬ì˜ì—­ìœ¼ë¡œ ë°”ê¿”ì•¼í•œë‹¤.
+    // ë¡œì»¬ ì˜ì—­ì—ì„œ ê´‘ì›ë©”ì‰¬ (spherer)ì˜ ë‚´ë¶€ì— ìžˆë‹¤ë©´ ì‹¤ì œë¡œ point light ì•ˆì— ë“¤ì–´ê°€ìžˆë‹¤ëŠ” ëœ»
     float4 vLocalPos = mul(mul(vViewPos, inverseView), inverseWorld);
     if (length(vLocalPos.xyz) > 0.5f)
     {
         discard;
     }
     
-    float4 vViewNormal = normalTarget.Sample(anisotropicSampler, vUV);
+    float4 vViewNormal = normalTarget.Sample(linearSampler, vUV);
         
     LightColor lightcolor = (LightColor) 0.f;
     CalculateLight3D(vViewPos.xyz, vViewNormal.xyz, lightIndex, lightcolor);
     
-    float SpecCoef = specularTarget.Sample(anisotropicSampler, vUV).x;
+    float SpecCoef = specularTarget.Sample(linearSampler, vUV).x;
     float4 vSpec = DecodeColor(SpecCoef);
 
     output.vDiffuse = lightcolor.diffuse + lightcolor.ambient;

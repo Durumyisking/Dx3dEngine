@@ -105,10 +105,10 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)MergePS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)LightVS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpotLightVS.hlsl">
       <Filter>VS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)LightPS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpotLightPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)LightDirPS.hlsl">

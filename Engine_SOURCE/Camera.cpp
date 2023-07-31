@@ -114,14 +114,14 @@ void Camera::CreateViewMatrix()
 {
 	Transform* transform = GetOwner()->GetComponent<Transform>();
 		
-	// ÀÌµ¿Á¤º¸
+	// ì´ë™ì •ë³´
 	Vector3 translation = transform->GetPosition();
 
 	// create view translation matrix
 	mView = Matrix::Identity;
 	mView *= Matrix::CreateTranslation(-translation);
 		
-	// È¸ÀüÁ¤º¸
+	// íšŒì „ì •ë³´
 	Vector3 up = transform->Up();
 	Vector3 right = transform->Right();
 	Vector3 foward = transform->Forward();

@@ -22,17 +22,17 @@ PSOut main(VSOut vsIn)
     PSOut outcolor = (PSOut) 0.0f;
     
     float2 UV = vsIn.Position.xy / float2(1600.0f, 900.0f);
-    float4 viewPos = positionTarget.Sample(anisotropicSampler, UV);
+    float4 viewPos = positionTarget.Sample(linearSampler, UV);
     
     if (1.0f != viewPos.a)
         discard;
     
-    float4 viewNormal = normalTarget.Sample(anisotropicSampler, UV);
+    float4 viewNormal = normalTarget.Sample(linearSampler, UV);
     
     LightColor lightColor = (LightColor) 0.0f;
     CalculateLight3D(viewPos.xyz, viewNormal.xyz, 0, lightColor);
     
-    float specCoef = specularTarget.Sample(anisotropicSampler, UV);
+    float specCoef = specularTarget.Sample(linearSampler, UV);
     
     outcolor.Diffuse = lightColor.diffuse + lightColor.ambient;
     outcolor.Specular = lightColor.specular * specCoef;

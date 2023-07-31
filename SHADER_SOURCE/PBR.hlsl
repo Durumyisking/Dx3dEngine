@@ -1,5 +1,4 @@
 #include "global.hlsli"
-#include "BRDF.hlsli"
 
 struct VSOut
 {
@@ -12,9 +11,6 @@ struct VSOut
     float3 ViewBiNormal : BINORMAL; // view Space binormal
 
 };
-
-static const float Epsilon = 0.00001f;
-static const float3 Fdielectric = 0.04f;
 
 float4 main(VSOut vsIn) : SV_Target
 {
@@ -51,47 +47,12 @@ float4 main(VSOut vsIn) : SV_Target
     }
 
     normal.xyz = vsIn.ViewNormal;
-    // PBR     
-    float3 V = normalize(-vsIn.ViewPos); // 뷰공간 pinPoint(0,0,0)부터 픽셀로 향하는 벡터
-    float3 N = normal; // 정점/텍스처 노말 뷰변환 완료
-    float3 R = reflect(-V, N);
-    float NDotV = saturate(dot(N, V)); // 노멀 to 눈 반사각 
 
-    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // 금속성이 강할수록 albedo를 사용하고 아니면 0.04사용 (재질 값)
-
-    float3 L = -normalize(mul(float4(lightAttributes[0].direction.xyz, 0.f), view)).xyz; // 빛 각도            
-
-    float NdotL = max(dot(N, L), 0.f);
-
-    float3 F = fresnelSchlickRoughness(max(dot(N, V), 0.f), F0, roughness);
-
-    float3 kd = lerp((float3) 1.f - F, (float3) 0.f, metallic);
-
-    //float3 irradiance = irradianceMap.Sample(linearSampler, N).rgb;
-    //float3 diffuse = irradiance * kd * albedo.xyz;
-    float3 diffuse = kd * albedo.xyz;
-
-    //const float MAX_REFLECTION_LOD = 4.f;
-    //float3 prefilteredColor = prefilteredMap.SampleLevel(linearSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
-    float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.f), roughness)).rg;
-    //float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
-    float3 specular = (F * envBRDF.x + envBRDF.y);
-
-    float3 ambient = (diffuse + specular) * NdotL;
-    //float3 ambient = (diffuse + specular); // 마딧세이는 전방향 빛 비추는듯?
-
-    outColor.xyz = ambient;
+    outColor.xyz = CalculateLightPBR_Direct(vsIn.ViewPos, albedo, normal, metallic, roughness);
 
     return float4(outColor, 1.f);;
 
 }
-
-
-
-
-
-
-
 
 
 

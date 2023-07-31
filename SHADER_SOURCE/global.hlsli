@@ -1,7 +1,5 @@
-#include "Texture.hlsli"
 #include "Light.hlsli"
 #include "Particle.hlsli"
-#include "Sampler.hlsli"
 
 
 struct VTX_IN

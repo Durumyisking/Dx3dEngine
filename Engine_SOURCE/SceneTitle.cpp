@@ -124,7 +124,7 @@ void SceneTitle::Enter()
 		lightComp->SetType(eLightType::Directional);
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
-		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
+//		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
 		MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 		mr->SetMaterialByKey(L"SunMaterial");
 		mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
@@ -225,20 +225,20 @@ void SceneTitle::Enter()
 			test1->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 		}
 
-		////Deferred
-		//{
-		//	GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);
-		//	test2->SetPos(Vector3(-10.f, 5.f, 0.f));
-		//	test2->SetScale({ 5.f, 5.f, 5.f });
-		//	test2->SetName(L"Test2");
+		//Deferred
+		{
+			GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);
+			test2->SetPos(Vector3(-10.f, 5.f, 0.f));
+			test2->SetScale({ 5.f, 5.f, 5.f });
+			test2->SetName(L"Test2");
 
-		//	test2->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//	MeshRenderer* testRender = test2->GetComponent<MeshRenderer>();
-		//	Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"DeferredMaterial");
+			test2->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			MeshRenderer* testRender = test2->GetComponent<MeshRenderer>();
+			Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"DeferredMaterial");
 
-		//	testRender->SetMaterial(testMaterial);
-		//	testRender->SetMeshByKey(L"Cubemesh");
-		//}
+			testRender->SetMaterial(testMaterial);
+			testRender->SetMeshByKey(L"Cubemesh");
+		}	
 	}
 
 	Scene::Enter();

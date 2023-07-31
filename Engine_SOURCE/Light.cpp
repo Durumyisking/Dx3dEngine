@@ -54,7 +54,6 @@ void Light::Render()
 		material = GETSINGLE(ResourceMgr)->Find<Material>(L"LightPointMaterial");
 	}
 
-
 	if (material == nullptr)
 		return;
 

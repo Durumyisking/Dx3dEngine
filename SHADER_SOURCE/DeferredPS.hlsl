@@ -33,22 +33,23 @@ PSOut main(VSOut vsIn) : SV_Target
 {
     PSOut vsOutColor;
     
-    float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.0f);
+    float4 objColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    
     float3 normal = vsIn.ViewNormal;
-
+    
     if (1 == cbbAlbedo)
     {
-        albedo = TextureMapping_albedo(vsIn.UV);
+        objColor = TextureMapping_albedo(vsIn.UV);
     }
     if (1 == cbbNormal)
     {
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-    }
+    }    
     
-    vsOutColor.Position = float4(vsIn.ViewPos, 1.f);
-    vsOutColor.Normal = float4(normal, 1.f);
-    vsOutColor.Color = albedo;
-    vsOutColor.Data = float4(1.f, 1.f, 1.f, 1.f);
+    vsOutColor.Position = float4(vsIn.ViewPos, 1.0f);
+    vsOutColor.Normal = float4(normal, 1.0f);
+    vsOutColor.Color = objColor;
+    vsOutColor.Data = float4(1.0f, 1.0f, 1.0f, 1.0f);
     
     return vsOutColor;
 }
