@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <wrl.h>
 #include "druMath.h"
 #include "druEnums.h"
@@ -200,7 +200,6 @@ enum class eGPUParam
 	Matrix_2,
 	Matrix_3,
 	Matrix_4,
-	bTextureExistence,
 	bAlbedo,
 	bNormal,
 	bMetallic,
@@ -208,6 +207,7 @@ enum class eGPUParam
 	bEmissive,
 	Bool_1,
 	Bool_2,
+	Bool_3,
 };
 	
 

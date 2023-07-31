@@ -29,40 +29,27 @@ float4 main(VSOut vsIn) : SV_Target
     float   roughness = 0.5f;
     float3  A0 = (float3) 1.f;
 
-    int textureCounts = cbtextureExistence;
+    if (1 == cbbAlbedo)
+    {
+        albedo = TextureMapping_albedo(vsIn.UV);
+    }
+    if (1 == cbbNormal)
+    {
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+    }
+    if (1 == cbbMetallic)
+    {
+        metallic  = TextureMapping_metallic(vsIn.UV);
+    }
+    if (1 == cbbRoughness)
+    {
+        normal = TextureMapping_roughness(vsIn.UV);
+    }
+    if (1 == cbbEmissive)
+    {
+        //normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+    }
 
-    if (0 == cbtextureExistence)
-    {
-        normal.xyz = vsIn.ViewNormal;
-    }
-    else if (1 == cbtextureExistence)
-    {
-        albedo = TextureMapping_albedo(vsIn.UV);
-        normal.xyz = vsIn.ViewNormal;
-    }
-    else if (2 == cbtextureExistence)
-    {
-        albedo = TextureMapping_albedo(vsIn.UV);
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-    }
-    else if (3 == cbtextureExistence)
-    {
-        albedo = TextureMapping_albedo(vsIn.UV);
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-        metallic = TextureMapping_metallic(vsIn.UV);
-    }
-    else if (4 == cbtextureExistence)
-    {
-        albedo = TextureMapping_albedo(vsIn.UV);
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-        metallic = TextureMapping_metallic(vsIn.UV);
-        roughness = TextureMapping_roughness(vsIn.UV);
-    }
-    else if (5 == cbtextureExistence)// emissive 추가필요
-    {
-        albedo = TextureMapping_albedo(vsIn.UV);
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-    }
     normal.xyz = vsIn.ViewNormal;
     // PBR     
     float3 V = normalize(-vsIn.ViewPos); // 뷰공간 pinPoint(0,0,0)부터 픽셀로 향하는 벡터

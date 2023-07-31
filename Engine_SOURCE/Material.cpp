@@ -182,9 +182,6 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::Matrix_4:
 		mMaterialConstantBuffer.matrix4 = *static_cast<Matrix*>(data);
 		break;
-	case eGPUParam::bTextureExistence:
-		mMaterialConstantBuffer.bTextureExistence = *static_cast<int*>(data);
-		break;
 	case eGPUParam::bAlbedo:
 		mMaterialConstantBuffer.bAlbedo = *static_cast<int*>(data);
 		break;
@@ -205,6 +202,9 @@ void Material::SetData(eGPUParam param, void* data)
 		break;
 	case eGPUParam::Bool_2:
 		mMaterialConstantBuffer.bool2 = *static_cast<int*>(data);
+		break;
+	case eGPUParam::Bool_3:
+		mMaterialConstantBuffer.bool3 = *static_cast<int*>(data);
 		break;
 	default:
 		break;

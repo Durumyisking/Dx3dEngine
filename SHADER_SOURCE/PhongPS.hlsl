@@ -14,18 +14,14 @@ struct VSOut
 
 float4 main(VSOut vsIn) : SV_Target
 {
-    float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
-
+    float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.0f);
     float3 normal = vsIn.ViewNormal;
 
-
-    if (bAlbedo == 1)
+    if (1 == cbbAlbedo)
     {
-        outColor = colorTexture.Sample(anisotropicSampler, vsIn.UV);
-        //outColor = TextureMapping_albedo(vsIn.UV);
+        albedo = TextureMapping_albedo(vsIn.UV);
     }
-    if (bNormal == 1)
-
+    if (1 == cbbNormal)
     {
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
@@ -37,22 +33,22 @@ float4 main(VSOut vsIn) : SV_Target
         CalculateLight3D(vsIn.ViewPos, normal.xyz, i, lightColor);
     }
     
-    outColor = CombineLights(outColor, lightColor);
+    albedo = CombineLights(albedo, lightColor);
     
-    if (outColor.w == 0)
+    if (albedo.w == 0)
         discard;
     
     if (cbxyzw1.w != 0)
     {
-        outColor *= cbxyzw1; // 곱할 색        
+        albedo *= cbxyzw1; // 곱할 색        
     }
     
     if (cbxyzw2.w != 0)
     {
-        outColor += cbxyzw2; // 더할 색    
+        albedo += cbxyzw2; // 더할 색    
     }
         
     
-    return outColor;
+    return albedo;
         
 }

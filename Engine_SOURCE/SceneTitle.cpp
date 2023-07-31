@@ -239,34 +239,6 @@ void SceneTitle::Enter()
 			testRender->SetMaterial(testMaterial);
 			testRender->SetMeshByKey(L"Cubemesh");
 		}
-
-		// PointLight
-		{
-			{
-				GameObj* light = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLight1");
-				light->GetComponent<Transform>()->SetPosition(Vector3(0.f, 15.f, -20.f));
-				light->SetScale(Vector3(1.f, 1.f, 1.f));
-				//light->SetRotation(Vector3(45.f, 0.f, 0.f));
-				Light* lightComp = light->AddComponent<Light>(eComponentType::Light);
-				lightComp->SetType(eLightType::Point);
-				lightComp->SetRadius(20.0f);
-				lightComp->SetDiffuse(Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-				lightComp->SetSpecular(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-				lightComp->SetAmbient(Vector4(0.15f, 0.15f, 0.15f, 1.0f));
-			}
-			{
-				GameObj* light = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLight2");
-				light->GetComponent<Transform>()->SetPosition(Vector3(0.f, 15.f, -20.f));
-				light->SetScale(Vector3(1.f, 1.f, 1.f));
-				//light->SetRotation(Vector3(45.f, 0.f, 0.f));
-				Light* lightComp = light->AddComponent<Light>(eComponentType::Light);
-				lightComp->SetType(eLightType::Point);
-				lightComp->SetRadius(30.0f);
-				lightComp->SetDiffuse(Vector4(0.0f, 1.0f, 0.0f, 1.0f));
-				lightComp->SetSpecular(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-				lightComp->SetAmbient(Vector4(0.15f, 0.15f, 0.15f, 1.0f));
-			}
-		}
 	}
 
 	Scene::Enter();

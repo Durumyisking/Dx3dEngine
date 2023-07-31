@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "CommonInclude.h"
 #include "druMath.h"
 #include "GraphicDevice.h"
@@ -99,7 +99,6 @@ namespace renderer
 		Matrix matrix3;
 		Matrix matrix4;
 
-		int bTextureExistence;
 		int bAlbedo;
 		int bNormal;
 		int bMetallic;
@@ -108,6 +107,7 @@ namespace renderer
 		int bEmissive;
 		int bool1;
 		int bool2;
+		int bool3;
 	};
 
 	CBUFFER(GridCB, CBSLOT_GRID)	
