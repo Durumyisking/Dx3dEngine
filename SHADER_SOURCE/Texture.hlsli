@@ -21,6 +21,10 @@ TextureCube prefilteredMap : register(t13); // 라이트맵 적용
 
 Texture2D BRDF : register(t14);
 
+// Texture2D NoiseTexture : register(t16);
+
+//StructuredBuffer<LightAttribute> lightAttributes : register(t22);
+
 //Atlas texture
 Texture2D atlasTexture : register(t29);
 

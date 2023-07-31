@@ -219,12 +219,7 @@ void Material::Bind()
 		if (nullptr == mTexture[i])
 			continue;
 
-		mTexture[i]->BindShaderResource(eShaderStage::VS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::HS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::DS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::GS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::PS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::CS, i);
+		mTexture[i]->BindAllShaderResource(i);
 	}
 
 	if (mTexture[static_cast<UINT>(eTextureSlot::Albedo)])

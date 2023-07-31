@@ -8,6 +8,7 @@
 Light::Light()
 	: Component(eComponentType::Light)
 	, mVolumeMesh(nullptr)
+	, mIndex(0)
 {
 	renderer::lights.push_back(this);
 }

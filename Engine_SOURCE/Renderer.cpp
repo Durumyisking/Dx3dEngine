@@ -750,10 +750,10 @@ namespace renderer
 		deferredMaterial->SetShader(deferredShader);
 
 		// specular map 추가 사용가능
-		Texture* DeferredTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Color");
-		deferredMaterial->SetTexture(eTextureSlot::Albedo, DeferredTex); // albedo Texture
-		DeferredTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Normal");
-		deferredMaterial->SetTexture(eTextureSlot::Normal, DeferredTex); // normal Texture
+		Texture* defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Color");
+		deferredMaterial->SetTexture(eTextureSlot::Albedo, defferdTex); // albedo Texture
+		defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Normal");
+		deferredMaterial->SetTexture(eTextureSlot::Normal, defferdTex); // normal Texture
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", deferredMaterial);
 #pragma endregion
 
@@ -862,9 +862,9 @@ namespace renderer
 		Texture* irradianceMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
 		Texture* preFilteredMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
 		Texture* BRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
-		irradianceMap->BindShaderResource_VP(9);
-		preFilteredMap->BindShaderResource_VP(10);
-		BRDF->BindShaderResource_VP(11);
+		irradianceMap->BindShaderResource_VP(12);
+		preFilteredMap->BindShaderResource_VP(13);
+		BRDF->BindShaderResource_VP(14);
 
 		BindNoiseTexture();
 		BindLight();
@@ -985,8 +985,8 @@ namespace renderer
 	void BindLight()
 	{
 		lightBuffer->SetData(lightAttributes.data(), static_cast<UINT>(lightAttributes.size()));
-		lightBuffer->BindSRV(eShaderStage::VS, 13);
-		lightBuffer->BindSRV(eShaderStage::PS, 13);
+		lightBuffer->BindSRV(eShaderStage::VS, 22);
+		lightBuffer->BindSRV(eShaderStage::PS, 22);
 
 		renderer::LightCB Lightcb = {};
 		Lightcb.lightCount = static_cast<UINT>(lightAttributes.size());
