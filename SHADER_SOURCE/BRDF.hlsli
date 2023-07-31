@@ -1,18 +1,5 @@
 float PI = 3.1415926535f;
 
-<<<<<<< HEAD
-// microfacet °è»ê        // ¹Ì¼¼Ç¥¸é°ú halvvector
-float NormalDistributionGGXTR(float NDotH, float roughness)
-{
-    float roughness2 = roughness * roughness;
-    float NdotH2 = NDotH * NDotH;
-
-    // GGX Trowbridge-Reitz                             // microfacet normal
-    float denom = (NdotH2 * (roughness2 - 1.f) + 1.f);
-    denom = PI * denom * denom;
-
-    return roughness2 / denom;
-}
 
 // GGX/Towbridge-Reitz normal distribution function.
 // Uses Disney's reparametrization of alpha = roughness^2.
@@ -24,8 +11,8 @@ float ndfGGX(float cosLh, float roughness)
     float denom = (cosLh * cosLh) * (alphaSq - 1.0) + 1.0;
     return alphaSq / (PI * denom * denom);
 }
-=======
-// microfacet °è»ê       
+
+// microfacet ê³„ì‚°       
 float DistributionGGX(float3 N, float3 H, float roughness)
 {
     float a = roughness * roughness;
@@ -40,27 +27,6 @@ float DistributionGGX(float3 N, float3 H, float roughness)
     return num / denom;
 }
 
->>>>>>> origin
-
-// ¿¡³ÊÁö º¸Á¸¹ıÄ¢ °è»ê
-// °ÅÄ¥±â¿¡ µû¸¥ ½¦µµÀ×°ú ¸¶½ºÅ· ¿¬»ê
-// °ÅÄ¥±â up = ¸¶½ºÅ· ½¦µµÀ× up
-// ¹Ì¼¼¸éÀÌ °ÅÄ¥¸é ¿ì¸® ´«¿¡ µé¾î¿Ã È®·üÀÌ ³·¾ÆÁü   
-// Schlick-GGX·Î ¾Ë·ÁÁø Schlick-Beckmann ±Ù»ç
-<<<<<<< HEAD
-float GeometrySchlickGGX(float cosTheta, float k)
-{
-    return cosTheta / (cosTheta * (1.f - k) + k);
-}
-  
-float GeometrySmith(float NDotL, float NDotV, float roughness)
-{
-    float r = roughness + 1.f;
-    float k = (r * r) / 8.f;
-
-    float ggx1 = GeometrySchlickGGX(NDotL, k); // ºûÀÇ ¹æÇâ¿¡ ´ëÇÑ ±×¸²ÀÚ Geometric Occlusion ¹İ»ç ( ¹Ì¼¼Ç¥¸é¿¡ ÀÇÇØ Ä«¸Ş¶ó°¡ º¸´Â ¶óÀÌÆ® ¼Ò½º°¡ °¡·ÁÁö´Â ¿µ¿ª)
-    float ggx2 = GeometrySchlickGGX(NDotV, k); // ½Ã¾ß ¹æÇâ¿¡ ´ëÇÑ ±×¸²ÀÚ Geometric Shadowing ÀÔ»ç ( ¹Ì¼¼Ç¥¸é¿¡ ÀÇÇØ ºûÀÌ Ç¥¸é¿¡ µµ´ŞÇÏÁö ¸øÇÏ´Â ¿µ¿ª)
-=======
 
 float GeometrySchlickGGX(float NdotV, float roughness)
 {
@@ -77,17 +43,14 @@ float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
 {
     float NdotV = max(dot(N, V), 0.0);
     float NdotL = max(dot(N, L), 0.0);
-    float ggx2 = GeometrySchlickGGX(NdotV, roughness);  // ºûÀÇ ¹æÇâ¿¡ ´ëÇÑ ±×¸²ÀÚ Geometric Occlusion ¹İ»ç ( ¹Ì¼¼Ç¥¸é¿¡ ÀÇÇØ Ä«¸Ş¶ó°¡ º¸´Â ¶óÀÌÆ® ¼Ò½º°¡ °¡·ÁÁö´Â ¿µ¿ª)
-    float ggx1 = GeometrySchlickGGX(NdotL, roughness); // ½Ã¾ß ¹æÇâ¿¡ ´ëÇÑ ±×¸²ÀÚ Geometric Shadowing ÀÔ»ç ( ¹Ì¼¼Ç¥¸é¿¡ ÀÇÇØ ºûÀÌ Ç¥¸é¿¡ µµ´ŞÇÏÁö ¸øÇÏ´Â ¿µ¿ª)
->>>>>>> origin
+    float ggx2 = GeometrySchlickGGX(NdotV, roughness);  // ë¹›ì˜ ë°©í–¥ì— ëŒ€í•œ ê·¸ë¦¼ì Geometric Occlusion ë°˜ì‚¬ ( ë¯¸ì„¸í‘œë©´ì— ì˜í•´ ì¹´ë©”ë¼ê°€ ë³´ëŠ” ë¼ì´íŠ¸ ì†ŒìŠ¤ê°€ ê°€ë ¤ì§€ëŠ” ì˜ì—­)
+    float ggx1 = GeometrySchlickGGX(NdotL, roughness); // ì‹œì•¼ ë°©í–¥ì— ëŒ€í•œ ê·¸ë¦¼ì Geometric Shadowing ì…ì‚¬ ( ë¯¸ì„¸í‘œë©´ì— ì˜í•´ ë¹›ì´ í‘œë©´ì— ë„ë‹¬í•˜ì§€ ëª»í•˜ëŠ” ì˜ì—­)
 
     return ggx1 * ggx2;
 }
-
-<<<<<<< HEAD
-// Fresnel ±¤ÅÃ °è»ê ÇÔ¼ö                             
-// ¹İ»çÀ²À» ±Ù»çÀûÀ¸·Î °è»êÇÑ´Ù.
-// cosTheta (ºûÀÇ ÀÔ»ç°¢) 
+// Fresnel ê´‘íƒ ê³„ì‚° í•¨ìˆ˜                             
+// ë°˜ì‚¬ìœ¨ì„ ê·¼ì‚¬ì ìœ¼ë¡œ ê³„ì‚°í•œë‹¤.
+// cosTheta (ë¹›ì˜ ì…ì‚¬ê°) 
 float3 FresnelSchlick(float3 F0, float VDotH)
 {
     // Fresnel Schlick 
@@ -96,22 +59,11 @@ float3 FresnelSchlick(float3 F0, float VDotH)
     return fresnel;
 }
 
-
-=======
-
-// Fresnel ±¤ÅÃ °è»ê ÇÔ¼ö                             
-// ¹İ»çÀ²À» ±Ù»çÀûÀ¸·Î °è»êÇÑ´Ù.
-// cosTheta (ºûÀÇ ÀÔ»ç°¢) 
-float3 fresnelSchlick(float cosTheta, float3 F0)
-{
-    return F0 + (1.f - F0) * pow(1.f - cosTheta, 5.f);
-}
-// ·¯ÇÁ´Ï½º±îÁö °í·ÁÇÑ ÇÁ·¹³Ú °è»êÇÔ¼ö¶ó°íÇÑ´Ù.
+// ëŸ¬í”„ë‹ˆìŠ¤ê¹Œì§€ ê³ ë ¤í•œ í”„ë ˆë„¬ ê³„ì‚°í•¨ìˆ˜ë¼ê³ í•œë‹¤.
 float3 fresnelSchlickRoughness(float cosTheta, float3 F0, float roughness)
 {
     return F0 + (max(float3(1.f - roughness, 1.f - roughness, 1.f - roughness), F0) - F0) * pow(clamp(1.f - cosTheta, 0.f, 1.f), 5.f);
 }
->>>>>>> origin
 
 // Single term for separable Schlick-GGX below.
 float gaSchlickG1(float cosTheta, float k)
@@ -119,7 +71,6 @@ float gaSchlickG1(float cosTheta, float k)
     return cosTheta / (cosTheta * (1.0 - k) + k);
 }
 
-<<<<<<< HEAD
 // Schlick-GGX approximation of geometric attenuation function using Smith's method.
 float gaSchlickGGX(float cosLi, float cosLo, float roughness)
 {
@@ -134,6 +85,3 @@ float3 fresnelSchlick(float3 F0, float cosTheta)
 {
     return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
-=======
-
->>>>>>> origin

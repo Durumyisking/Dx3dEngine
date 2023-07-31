@@ -1,4 +1,4 @@
-#include "Renderer.h"
+﻿#include "Renderer.h"
 #include "ResourceMgr.h"
 #include "Material.h"
 #include "SceneMgr.h"
@@ -751,9 +751,9 @@ namespace renderer
 
 		// specular map 추가 사용가능
 		Texture* defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Color");
-		deferredMaterial->SetTexture(eTextureSlot::ColorTexture, defferdTex); // albedo Texture
+		deferredMaterial->SetTexture(eTextureSlot::Albedo, defferdTex); // albedo Texture
 		defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Normal");
-		deferredMaterial->SetTexture(eTextureSlot::NormalTexture, defferdTex); // normal Texture
+		deferredMaterial->SetTexture(eTextureSlot::Normal, defferdTex); // normal Texture
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", deferredMaterial);
 #pragma endregion
 
