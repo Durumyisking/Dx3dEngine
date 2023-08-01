@@ -189,31 +189,31 @@ void SceneTitle::Enter()
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
-	//{
-	//	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
-	//	player->SetPos(Vector3(10.f, 0.f, 0.f));
-	//	player->SetScale({ 0.1f, 0.1f, 0.1f });
-	//	player->SetName(L"Object");
+	/*{
+		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
+		player->SetPos(Vector3(10.f, 0.f, 0.f));
+		player->SetScale({ 0.1f, 0.1f, 0.1f });
+		player->SetName(L"Object");
 
-	//	MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
-	//	Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-	//	(
-	//		L"BrickBlockBody_alb",
-	//		L"BrickBlockBody_nrm",
-	//		L"BrickBlockBody_mtl",
-	//		L"BrickBlockBody_rgh",
-	//		L"PhongShader",
-	//		L"mat_brick2"
-	//	);
-	//	player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		(
+			L"BrickBlockBody_alb",
+			L"BrickBlockBody_nrm",
+			L"BrickBlockBody_mtl",
+			L"BrickBlockBody_rgh",
+			L"PhongShader",
+			L"mat_brick2"
+		);
+		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
-	//	player->GetComponent<MeshRenderer>()->SetModel(model);
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
+		player->GetComponent<MeshRenderer>()->SetModel(model);
 
-	//	player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(5.f, 10.f, 5.f));
-	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
-	//}
+		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(5.f, 10.f, 5.f));
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	}*/
 	
 
 	//{

@@ -105,6 +105,7 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 	std::wstring fullPath = L"..//" + path;
 	fs::path folderPath = std::string(fullPath.begin(), fullPath.end());
 
+	Model* parentModel = nullptr;
 	// 폴더 내부 파일들을 순회하며 출력
 	for (const auto& entry : fs::directory_iterator(folderPath)) {
 		if (entry.is_regular_file())
@@ -115,10 +116,19 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 			std::wstring extension(szExtension);
 
 			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(modelName);
-			if (model == nullptr)
+
+			if (parentModel)
+			{
+				model = new Model();
+				model->SetParentModel(parentModel);
+				parentModel->PushChild(model);
+			}
+
+			if (model == nullptr && parentModel == nullptr)
 			{
 				model = new Model();
 				GETSINGLE(ResourceMgr)->Insert<Model>(modelName, model);
+				parentModel = model;
 			}
 
 			model->SetCurDirectoryPath(fullPath);

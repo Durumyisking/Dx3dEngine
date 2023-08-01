@@ -18,7 +18,7 @@ Texture2D atlasTexture : register(t12);
 
 struct BoneMatrix
 {
-    row_major matrix bMatrix;
+    float4x4 bMatrix;
 };
 
 StructuredBuffer<BoneMatrix>BonArray : register(t30);

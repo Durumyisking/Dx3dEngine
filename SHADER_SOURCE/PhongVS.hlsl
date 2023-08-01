@@ -38,7 +38,8 @@ VSOut main(VSIn vsIn)
     float4 pos = mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.x].bMatrix) * vsIn.BlendWeight.x;
     pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.y].bMatrix) * vsIn.BlendWeight.y;
     pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.z].bMatrix) * vsIn.BlendWeight.z;
-    pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.w].bMatrix) * vsIn.BlendWeight.w;
+    pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.w].bMatrix) * weights.w;
+
 
     vsIn.Position = pos;
     

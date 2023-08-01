@@ -9,7 +9,7 @@
 #include "..//External/assimp/include/assimp/scene.h"
 
 #pragma comment(lib, "..//External/assimp/lib/Debug/assimp-vc143-mtd.lib")
-#define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace |  aiProcess_MakeLeftHanded | aiProcess_FlipWindingOrder)
+#define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate  | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace  | aiProcess_FixInfacingNormals)
 #define ASSIMP_D3D_FLAGES aiProcess_ConvertToLeftHanded
 
 
@@ -29,6 +29,8 @@ public:
 		std::wstring mRootName = L"";
 		ModelNode* mRootNode = nullptr;
 		std::vector<ModelNode*> mChilds;
+
+		GETSET(aiMatrix4x4, mTransformation, Transformation)
 	};
 
 	struct BoneMat
@@ -38,9 +40,11 @@ public:
 
 	struct Bone
 	{
+		UINT mIndex;
 		std::wstring mName = L"";
 		aiMatrix4x4 mOffsetMatrix = {};
 		aiMatrix4x4 mFinalMatrix = {};
+		aiMatrix4x4 mLocalMatrix = {};
 	};
 
 	struct TextureInfo
@@ -56,13 +60,16 @@ public:
 	typedef std::vector<Bone> BoneVector;
 	typedef std::vector<Mesh*> MeshVector;
 	typedef std::vector<TextureInfo> TextureVector;
+	typedef std::map<std::wstring, Bone> BoneMap;
 public:
 	Model();
 	virtual ~Model();
 
 	virtual HRESULT Load(const std::wstring& path) override;
 
-	const ModelNode* FindNode(const std::wstring& nodeName) const;
+	ModelNode* FindNode(const std::wstring& nodeName);
+	Bone* FindBone(const std::wstring& nodeName);
+	Bone* GetBone(UINT index) { return &mBones[index]; }
 	void RecursiveGetBoneMatirx();
 	void CreateTexture();
 	std::vector<Texture*> GetTexture(int index);
@@ -83,12 +90,20 @@ public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
 	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
 	GETSET(GameObj*, mOwner, Owner)
+	GETSET(Model*, mParentModel, ParentModel)
+
+	void PushChild(Model* model)
+	{
+		mChildModel.emplace_back(model);
+	};
 
 private:
 	Assimp::Importer mAssimpImporter;
 	std::wstring mRootNodeName;
 
 	NodeMap mNodes;
+	BoneMap mBoneMap;
+
 	BoneVector mBones;
 	MeshVector mMeshes;
 	std::vector<TextureVector> mTextures;
@@ -97,5 +112,7 @@ private:
 	std::wstring mCurDirectoryPath;
 
 	GameObj* mOwner;
+	Model* mParentModel;
+	std::vector<Model*> mChildModel;
 };
 
