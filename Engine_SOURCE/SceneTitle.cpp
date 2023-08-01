@@ -125,9 +125,9 @@ void SceneTitle::Enter()
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
 //		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
-		MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		mr->SetMaterialByKey(L"SunMaterial");
-		mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
+		//MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		//mr->SetMaterialByKey(L"SunMaterial");
+		//mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
 	
 
@@ -212,19 +212,6 @@ void SceneTitle::Enter()
 
 	// DebugTest
 	{ 
-		//Basic
-		{
-			GameObj* test1 = object::Instantiate<GameObj>(eLayerType::Objects);
-			test1->SetPos(Vector3(0.f, 5.f, 0.f));
-			test1->SetScale({ 5.f, 5.f, 5.f });
-			test1->SetName(L"Test1");
-
-			Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"Brick_Color", L"Brick_Normal", L"PhongShader", L"Brick_Phong_Mat");
-			test1->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-			test1->GetComponent<MeshRenderer>()->SetMaterial(mat);
-			test1->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		}
-
 		//Deferred
 		{
 			GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);

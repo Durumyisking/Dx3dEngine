@@ -1,4 +1,4 @@
-﻿#include "Animation.h"
+#include "Animation.h"
 #include "TimeMgr.h"
 
 
@@ -112,7 +112,7 @@ void Animation::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop
 
 void Animation::BindShader()
 {
-	mAtlas->BindShaderResource(eShaderStage::PS, 12); // 아틀라스 srv에 바인딩
+	mAtlas->BindShaderResource(eShaderStage::PS, 29); // 아틀라스 srv에 바인딩
 
 	ConstantBuffer* cb =  renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 
@@ -129,7 +129,7 @@ void Animation::BindShader()
 
 void Animation::BindSpriteToShader(renderer::AnimationCB _Sprite)
 {
-	mAtlas->BindShaderResource(eShaderStage::PS, 12);
+	mAtlas->BindShaderResource(eShaderStage::PS, 29);
 
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 
@@ -141,7 +141,7 @@ void Animation::BindSpriteToShader(renderer::AnimationCB _Sprite)
 void Animation::Clear()
 {
 	// GUITexture Clear
-	Texture::Clear(12);
+	Texture::Clear(29);
 
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 	renderer::AnimationCB data = {};

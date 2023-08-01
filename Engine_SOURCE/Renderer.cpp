@@ -950,8 +950,8 @@ namespace renderer
 			arrRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
-			renderTargets[(UINT)eRenderTargetType::Light] = new MultiRenderTarget();
-			renderTargets[(UINT)eRenderTargetType::Light]->Create(arrRTTex, nullptr);
+			renderTargets[static_cast<UINT>(eRenderTargetType::Light)] = new MultiRenderTarget();
+			renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->Create(arrRTTex, nullptr);
 		}
 	}
 

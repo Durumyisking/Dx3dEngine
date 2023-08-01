@@ -37,5 +37,6 @@ public:
 private:
 	LightAttribute mAttribute;
 	Mesh* mVolumeMesh;
+	Material* mMaterial;
 	UINT mIndex;
 };
