@@ -34,8 +34,8 @@ PS_OUT main(VSOut vsin)
     if (0.f == vViewPos.a)
         discard;
       
-    // ±¤¿ø ¿µ¿ª¿¡ ÀâÈù position targetÀÇ À§Â÷°ªÀ» ·ÎÄÃ¿µ¿ªÀ¸·Î ¹Ù²ã¾ßÇÑ´Ù.
-    // ·ÎÄÃ ¿µ¿ª¿¡¼­ ±¤¿ø¸Þ½¬ (spherer)ÀÇ ³»ºÎ¿¡ ÀÖ´Ù¸é ½ÇÁ¦·Î point light ¾È¿¡ µé¾î°¡ÀÖ´Ù´Â ¶æ
+    // ê´‘ì› ì˜ì—­ì— ìž¡ížŒ position targetì˜ ìœ„ì°¨ê°’ì„ ë¡œì»¬ì˜ì—­ìœ¼ë¡œ ë°”ê¿”ì•¼í•œë‹¤.
+    // ë¡œì»¬ ì˜ì—­ì—ì„œ ê´‘ì›ë©”ì‰¬ (spherer)ì˜ ë‚´ë¶€ì— ìžˆë‹¤ë©´ ì‹¤ì œë¡œ point light ì•ˆì— ë“¤ì–´ê°€ìžˆë‹¤ëŠ” ëœ»
     float4 vLocalPos = mul(mul(vViewPos, inverseView), inverseWorld);
     if (length(vLocalPos.xyz) > 0.5f)
     {
