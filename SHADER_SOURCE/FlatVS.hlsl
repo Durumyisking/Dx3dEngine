@@ -32,7 +32,7 @@ VSOut main(VSIn vsIn)
     vsOut.Position = projPosition;
     vsOut.UV = vsIn.UV;
     
-    // ╥ндц ЁК╦╩ю╩ ╨Д╨╞х╞
+    // К║°Л╩╛ К┘╦К╖░Л²└ К╥╟КЁ─М≥≤
     float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.0f), world).xyz);
     viewNormal = normalize(mul(float4(viewNormal, 0.0f), view).xyz);
     

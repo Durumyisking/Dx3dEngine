@@ -97,23 +97,23 @@ void SceneTitle::Enter()
 	}
 
 
-	{
-		GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
+	//{
+	//	GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
 
-		MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	//	MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
-		gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
-		gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
-		gridMr->LODOff();
+	//	gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
+	//	gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
+	//	gridMr->LODOff();
 
-		GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
-		gridScript->SetCamera(mainCamera);
+	//	GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
+	//	gridScript->SetCamera(mainCamera);
 
-		float w = static_cast<float>(application.GetWidth());
-		float h = static_cast<float>(application.GetHeight());
-		gridObject->SetPos({ 0.f, 0.f, 0.f });
-		gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
-	}
+	//	float w = static_cast<float>(application.GetWidth());
+	//	float h = static_cast<float>(application.GetHeight());
+	//	gridObject->SetPos({ 0.f, 0.f, 0.f });
+	//	gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
+	//}
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
@@ -131,83 +131,83 @@ void SceneTitle::Enter()
 	}
 	
 
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(5.f, 5.f, 5.f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->SetName(L"Player");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"albedo", L"normal", L"PhongShader", L"mat_dirt");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"padded_leather_albedo", L"padded_leather_normal", L"padded_leather_metallic", L"padded_leather_roughness", L"PBRShader", L"mat_dirt");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		(
-			L"check_albedo",
-			L"check_normal", 
-			L"check_metallic", 
-			L"check_roughness", 
-			L"PBRShader",
-			L"mat_dirt"
-		);
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+	//{
+	//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+	//	player->SetPos(Vector3(5.f, 5.f, 5.f));
+	//	player->SetScale(Vector3(1.f, 1.f, 1.f));
+	//	player->SetName(L"Player");
+	//	//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"albedo", L"normal", L"PhongShader", L"mat_dirt");
+	//	//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"padded_leather_albedo", L"padded_leather_normal", L"padded_leather_metallic", L"padded_leather_roughness", L"PBRShader", L"mat_dirt");
+	//	Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+	//	(
+	//		L"check_albedo",
+	//		L"check_normal", 
+	//		L"check_metallic", 
+	//		L"check_roughness", 
+	//		L"PBRShader",
+	//		L"mat_dirt"
+	//	);
+	//	//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
+	//	player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
+	//	//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+	//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+	//	player->AddComponent<PlayerScript>(eComponentType::Script);
 
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+	//	Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+	//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-	}
+	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	//}
 
-	{
-		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
-		player->SetScale({ 0.01f, 0.01f, 0.01f });
-		player->SetName(L"Object");
+	//{
+	//	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
+	//	player->SetPos(Vector3(0.f, 0.f, 0.f));
+	//	player->SetScale({ 0.01f, 0.01f, 0.01f });
+	//	player->SetName(L"Object");
 
-		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
+	//	MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
-		meshRenderer->SetModel(model);
-		meshRenderer->SetMaterialByKey(L"BlockBrickBody");
+	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
+	//	meshRenderer->SetModel(model);
+	//	meshRenderer->SetMaterialByKey(L"BlockBrickBody");
 
-		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-	}
-	{
-		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
-		player->SetPos(Vector3(10.f, 0.f, 0.f));
-		player->SetScale({ 0.01f, 0.01f, 0.01f });
-		player->SetName(L"Object");
+	//	player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
+	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//}
+	//{
+	//	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
+	//	player->SetPos(Vector3(10.f, 0.f, 0.f));
+	//	player->SetScale({ 0.01f, 0.01f, 0.01f });
+	//	player->SetName(L"Object");
 
-		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
+	//	MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
-		meshRenderer->SetModel(model);
-		meshRenderer->SetMaterialByKey(L"BlockBrickBody");
+	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
+	//	meshRenderer->SetModel(model);
+	//	meshRenderer->SetMaterialByKey(L"BlockBrickBody");
 
-		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-	}
-	
-	{
-		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
-		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		plane->SetScale({ 1000.f, 0.5f, 1000.f });
-		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
-		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+	//	player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
+	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//}
+	//
+	//{
+	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
+	//	plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+	//	plane->SetScale({ 1000.f, 0.5f, 1000.f });
+	//	plane->SetName(L"Plane");
+	//	plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
+	//	plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
-		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//	PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-	}
+	//	plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//}
 
 
 	// DebugTest

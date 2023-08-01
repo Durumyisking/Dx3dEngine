@@ -10,7 +10,6 @@ VTX_OUT main(VTX_IN vtxIn)
     float4 projectionPosition = mul(viewPosition, projection);
     
     output.vPos = projectionPosition;
-    output.vColor = vtxIn.vColor;
     output.vUV = vtxIn.vUV;
        
     return output;

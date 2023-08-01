@@ -33,23 +33,42 @@ PSOut main(VSOut vsIn) : SV_Target
 {
     PSOut vsOutColor;
     
-    float4 objColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
-    
+    float3 directLighting = (float3) 0.f;
+    float3 ambientLighting = (float3) 0.f;
+
+    float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.f);
     float3 normal = vsIn.ViewNormal;
-    
+    float metallic = 0.01f;
+    float roughness = 0.5f;
+    float3 A0 = (float3) 1.f;
+
     if (1 == cbbAlbedo)
     {
-        objColor = TextureMapping_albedo(vsIn.UV);
+        albedo = TextureMapping_albedo(vsIn.UV);
     }
     if (1 == cbbNormal)
     {
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-    }    
+    }
+    if (1 == cbbMetallic)
+    {
+        metallic = TextureMapping_metallic(vsIn.UV);
+    }
+    if (1 == cbbRoughness)
+    {
+        roughness = TextureMapping_roughness(vsIn.UV);
+    }
+    if (1 == cbbEmissive)
+    {
+        //normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+    }
+
+//    albedo.xyz = CalculateLightPBR_Direct(vsIn.ViewPos, albedo, normal, metallic, roughness);
     
     vsOutColor.Position = float4(vsIn.ViewPos, 1.0f);
     vsOutColor.Normal = float4(normal, 1.0f);
-    vsOutColor.Color = objColor;
-    vsOutColor.Data = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    vsOutColor.Color = albedo;
+    vsOutColor.Data = (float4) 1.f;
     
     return vsOutColor;
 }

@@ -3,7 +3,7 @@
 
 VTX_OUT main(VTX_IN vtxIn)
 {
-    VTX_OUT output = (VTX_OUT) 0.f; // √ ±‚»≠
+    VTX_OUT output = (VTX_OUT) 0.f; // Ï¥àÍ∏∞Ìôî
   
     float4 worldPosition = mul(vtxIn.vPos, world);
     float4 viewPosition = mul(worldPosition, view);
@@ -11,8 +11,7 @@ VTX_OUT main(VTX_IN vtxIn)
     
     output.vPos = projectionPosition;
     output.vWorldPos = worldPosition;
-    output.vColor = vtxIn.vColor;
     output.vUV = vtxIn.vUV;
 
-    return output; // æÍ∏¶ ∑πΩ∫≈Õ∂Û¿Ã¿˙ø° ∫∏≥ª¡‹
+    return output; // ÏñòÎ•º Î†àÏä§ÌÑ∞ÎùºÏù¥Ï†ÄÏóê Î≥¥ÎÇ¥Ï§å
 }

@@ -122,7 +122,7 @@ namespace renderer
 		//Vector3 normal;
 
 		Shader* Meshshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
+		GetDevice()->CreateInputLayout(arrLayout, 8
 			, Meshshader->GetVSBlobBufferPointer()
 			, Meshshader->GetVSBlobBufferSize()
 			, Meshshader->GetInputLayoutAddr());
@@ -765,27 +765,25 @@ namespace renderer
 
 		Texture* lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::PositionTarget, lightDirTex);
-
 		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
-
 		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::SpecularTarget, lightDirTex);
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
 #pragma endregion
 
-#pragma region LightDirMaterial
+#pragma region LightPointMaterial
 		Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
 		Material* lightPointMaterial = new Material();
 		lightPointMaterial->SetRenderingMode(eRenderingMode::None);
 		lightPointMaterial->SetShader(lightPointShader);
 
-		Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTarget");
+		Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 		lightPointMaterial->SetTexture(eTextureSlot::PositionTarget, lightPointTex);
-		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTarget");
+		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
 		lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
-		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularTarget");
+		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularTargetTexture");
 		lightPointMaterial->SetTexture(eTextureSlot::SpecularTarget, lightPointTex);
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
