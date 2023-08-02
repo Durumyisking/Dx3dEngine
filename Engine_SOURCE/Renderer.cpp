@@ -806,7 +806,6 @@ namespace renderer
 
 		Texture* mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 		mergeMaterial->SetTexture(eTextureSlot::PositionTarget, mergeTex);
-
 		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
 		mergeMaterial->SetTexture(eTextureSlot::AlbedoTarget, mergeTex);
 		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DiffuseLightTargetTexture");
@@ -922,6 +921,7 @@ namespace renderer
 			arrRTTex[1] = albedo;
 			arrRTTex[2] = normal;
 			arrRTTex[3] = metallic;
+			arrRTTex[4] = roughness;
 
 			arrRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
@@ -930,6 +930,8 @@ namespace renderer
 			arrRTTex[2]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 			arrRTTex[3]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			arrRTTex[4]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			Texture* dsTex = nullptr;

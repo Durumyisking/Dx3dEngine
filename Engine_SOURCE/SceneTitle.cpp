@@ -144,7 +144,7 @@ void SceneTitle::Enter()
 			L"check_normal", 
 			L"check_metallic", 
 			L"check_roughness", 
-			L"PBRShader",
+			L"DeferredShader",
 			L"mat_dirt"
 		);
 		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
@@ -225,7 +225,9 @@ void SceneTitle::Enter()
 
 			testRender->SetMaterial(testMaterial);
 			testRender->SetMeshByKey(L"Cubemesh");
-		}	
+		}
+
+		
 	}
 
 	Scene::Enter();
