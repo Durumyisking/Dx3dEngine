@@ -23,8 +23,8 @@ struct VSOut
 struct PSOut
 {
     float4 Position : SV_Target0;
-    float4 Normal : SV_Target1;
-    float4 Color : SV_Target2;
+    float4 Albedo : SV_Target1;
+    float4 Normal : SV_Target2;
     float4 Data : SV_Target3;
 };
 
@@ -47,8 +47,8 @@ PSOut main(VSOut vsIn) : SV_Target
     }    
     
     vsOutColor.Position = float4(vsIn.ViewPos, 1.0f);
+    vsOutColor.Albedo = objColor;
     vsOutColor.Normal = float4(normal, 1.0f);
-    vsOutColor.Color = objColor;
     vsOutColor.Data = float4(1.0f, 1.0f, 1.0f, 1.0f);
     
     return vsOutColor;

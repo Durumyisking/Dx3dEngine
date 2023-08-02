@@ -142,8 +142,8 @@ enum class eTextureSlot
 	Emissive,			// emissiveTexture
 
 	PositionTarget = 5,			// positionTarget
-	NormalTarget,				// normalTarget
 	AlbedoTarget,				// albedoTarget
+	NormalTarget,				// normalTarget
 	SpecularTarget,				// specularTarget
 
 	DiffuseLightTarget = 9,		// diffuseLightTarget

@@ -903,18 +903,18 @@ namespace renderer
 		{
 			Texture* arrRTTex[12] = { };
 			Texture* pos = new Texture();
-			Texture* normal = new Texture();
 			Texture* albedo = new Texture();
+			Texture* normal = new Texture();
 			Texture* specular = new Texture();
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"PositionTargetTexture", pos);
-			GETSINGLE(ResourceMgr)->Insert<Texture>(L"NormalTargetTexture", normal);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"AlbedoTargetTexture", albedo);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"NormalTargetTexture", normal);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"SpecularTargetTexture", specular);
 
 			arrRTTex[0] = pos;
-			arrRTTex[1] = normal;
-			arrRTTex[2] = albedo;
+			arrRTTex[1] = albedo;
+			arrRTTex[2] = normal;
 			arrRTTex[3] = specular;
 
 			arrRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
