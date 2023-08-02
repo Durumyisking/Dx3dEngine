@@ -765,12 +765,12 @@ namespace renderer
 
 		Texture* lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::PositionTarget, lightDirTex);
-
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightDirTex);
 		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
-
-		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularTargetTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::SpecularTarget, lightDirTex);
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MetallicTargetTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::MetallicTarget, lightDirTex);
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
 #pragma endregion
@@ -783,10 +783,12 @@ namespace renderer
 
 		Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTarget");
 		lightPointMaterial->SetTexture(eTextureSlot::PositionTarget, lightPointTex);
+		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
+		lightPointMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightPointTex);
 		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTarget");
 		lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
-		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularTarget");
-		lightPointMaterial->SetTexture(eTextureSlot::SpecularTarget, lightPointTex);
+		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MetallicTarget");
+		lightPointMaterial->SetTexture(eTextureSlot::MetallicTarget, lightPointTex);
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
 #pragma endregion
@@ -803,10 +805,8 @@ namespace renderer
 
 		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
 		mergeMaterial->SetTexture(eTextureSlot::AlbedoTarget, mergeTex);
-
 		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DiffuseLightTargetTexture");
 		mergeMaterial->SetTexture(eTextureSlot::DiffuseLightTarget, mergeTex);
-
 		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularLightTargetTexture");
 		mergeMaterial->SetTexture(eTextureSlot::SpecularLightTarget, mergeTex);
 
@@ -910,7 +910,7 @@ namespace renderer
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"PositionTargetTexture", pos);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"AlbedoTargetTexture", albedo);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"NormalTargetTexture", normal);
-			GETSINGLE(ResourceMgr)->Insert<Texture>(L"SpecularTargetTexture", specular);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MetallicTargetTexture", specular);
 
 			arrRTTex[0] = pos;
 			arrRTTex[1] = albedo;

@@ -144,7 +144,7 @@ enum class eTextureSlot
 	PositionTarget = 5,			// positionTarget
 	AlbedoTarget,				// albedoTarget
 	NormalTarget,				// normalTarget
-	SpecularTarget,				// specularTarget
+	MetallicTarget,				// metallicTarget
 
 	DiffuseLightTarget = 9,		// diffuseLightTarget
 	SpecularLightTarget,		// specularLightTarget

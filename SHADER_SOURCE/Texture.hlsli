@@ -9,7 +9,7 @@ Texture2D emissiveTexture       : register(t4);
 Texture2D positionTarget        : register(t5);
 Texture2D albedoTarget          : register(t6);
 Texture2D normalTarget          : register(t7);
-Texture2D specularTarget        : register(t8);
+Texture2D metallicTarget        : register(t8);
 
 // Merge Light
 Texture2D diffuseLightTarget    : register(t9);
