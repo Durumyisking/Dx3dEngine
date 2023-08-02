@@ -39,14 +39,14 @@ float4 main(VSOut vsIn) : SV_Target
     }
     if (1 == cbbRoughness)
     {
-        normal = TextureMapping_roughness(vsIn.UV);
+        roughness = TextureMapping_roughness(vsIn.UV);
     }
     if (1 == cbbEmissive)
     {
         //normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
 
-    normal.xyz = vsIn.ViewNormal;
+//    normal.xyz = vsIn.ViewNormal;
 
     outColor.xyz = CalculateLightPBR_Direct(vsIn.ViewPos, albedo, normal, metallic, roughness);
 

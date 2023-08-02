@@ -122,7 +122,7 @@ namespace renderer
 		//Vector3 normal;
 
 		Shader* Meshshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
+		GetDevice()->CreateInputLayout(arrLayout, 8
 			, Meshshader->GetVSBlobBufferPointer()
 			, Meshshader->GetVSBlobBufferSize()
 			, Meshshader->GetInputLayoutAddr());
