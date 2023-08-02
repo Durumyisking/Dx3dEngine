@@ -10,10 +10,11 @@ Texture2D positionTarget        : register(t5);
 Texture2D albedoTarget          : register(t6);
 Texture2D normalTarget          : register(t7);
 Texture2D metallicTarget        : register(t8);
+Texture2D roughnessTarget       : register(t9);
 
 // Merge Light
-Texture2D diffuseLightTarget    : register(t9);
-Texture2D specularLightTarget   : register(t10);
+Texture2D diffuseLightTarget    : register(t10);
+Texture2D specularLightTarget   : register(t11);
 
 
 TextureCube irradianceMap : register(t12);

@@ -145,11 +145,12 @@ enum class eTextureSlot
 	AlbedoTarget,				// albedoTarget
 	NormalTarget,				// normalTarget
 	MetallicTarget,				// metallicTarget
+	RoughnessTarget,			// roughnessTarget
 
-	DiffuseLightTarget = 9,		// diffuseLightTarget
+	DiffuseLightTarget = 10,		// diffuseLightTarget
 	SpecularLightTarget,		// specularLightTarget
 
-	T12 = 12,					// atlasTexture
+//	Atlas = 29,					// atlasTexture
 
 	End,
 };
