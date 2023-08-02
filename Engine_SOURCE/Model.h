@@ -42,8 +42,14 @@ public:
 	{
 		UINT mIndex;
 		std::wstring mName = L"";
+
+		// 바인드 포즈의 역행렬
 		aiMatrix4x4 mOffsetMatrix = {};
+
+		// GlobalInverse * NodeTransform * mOffsetMatrix
 		aiMatrix4x4 mFinalMatrix = {};
+
+		// 노드의 계층 정보
 		aiMatrix4x4 mLocalMatrix = {};
 	};
 
@@ -73,10 +79,7 @@ public:
 	void RecursiveGetBoneMatirx();
 	void CreateTexture();
 	std::vector<Texture*> GetTexture(int index);
-public:
-	std::wstring ConvertToW_String(const char* str);
-	std::string ConvertToString(const wchar_t* str);
-	math::Matrix ConvertMatrix(aiMatrix4x4 aimat);
+
 private:
 	void recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode);
 	void recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::wstring& nodeName);
@@ -84,6 +87,13 @@ private:
 	std::vector<TextureInfo> processMaterial(aiMaterial* mater, aiTextureType type);
 
 	void recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& nodeName);
+
+public:
+	std::wstring ConvertToW_String(const char* str);
+	std::string ConvertToString(const wchar_t* str);
+	math::Matrix ConvertMatrix(aiMatrix4x4 aimat);
+
+
 public:
 	void Bind_Render(Material* material);
 
@@ -113,6 +123,11 @@ private:
 
 	GameObj* mOwner;
 	Model* mParentModel;
+
+	// 현재 폴더의 모든 파일들을 순회하며 모델객체를 생성하기 때문에
+	// 자식 노드의 정보가 없는 경우가 있음
+	// 예외처리 추가해야함 FileMgr -> ModeLoad 함수
+	// 따라서 현재 폴더의 dae 정보만 파일만을 넣어 사용해주세요 
 	std::vector<Model*> mChildModel;
 };
 

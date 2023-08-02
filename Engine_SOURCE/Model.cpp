@@ -12,8 +12,9 @@ namespace fs = std::filesystem;
 Model::Model()
 	: Resource(eResourceType::Model)
 	, mOwner(nullptr)
+	, mParentModel(nullptr)
+	, mStructure(nullptr)
 {
-	mStructure = nullptr;
 }
 
 Model::~Model()
@@ -46,9 +47,64 @@ HRESULT Model::Load(const std::wstring& path)
 		// 파일 로드 실패
 		return E_FAIL;
 	}
+	
+	// https://github.com/assimp/assimp/issues/849
+	if (aiscene->mMetaData)
+	{
+		int32_t UpAxis = 1, UpAxisSign = 1, FrontAxis = 2, FrontAxisSign = 1, CoordAxis = 0, CoordAxisSign = 1;
+		double UnitScaleFactor = 1.0;
+		for (unsigned MetadataIndex = 0; MetadataIndex < aiscene->mMetaData->mNumProperties; ++MetadataIndex)
+		{
+			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "UpAxis") == 0)
+			{
+				aiscene->mMetaData->Get<int32_t>(MetadataIndex, UpAxis);
+			}
+			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "UpAxisSign") == 0)
+			{
+				aiscene->mMetaData->Get<int32_t>(MetadataIndex, UpAxisSign);
+			}
+			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "FrontAxis") == 0)
+			{
+				aiscene->mMetaData->Get<int32_t>(MetadataIndex, FrontAxis);
+			}
+			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "FrontAxisSign") == 0)
+			{
+				aiscene->mMetaData->Get<int32_t>(MetadataIndex, FrontAxisSign);
+			}
+			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "CoordAxis") == 0)
+			{
+				aiscene->mMetaData->Get<int32_t>(MetadataIndex, CoordAxis);
+			}
+			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "CoordAxisSign") == 0)
+			{
+				aiscene->mMetaData->Get<int32_t>(MetadataIndex, CoordAxisSign);
+			}
+			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "UnitScaleFactor") == 0)
+			{
+				aiscene->mMetaData->Get<double>(MetadataIndex, UnitScaleFactor);
+			}
+		}
+
+		aiVector3D upVec, forwardVec, rightVec;
+
+		upVec[UpAxis] = UpAxisSign * (float)UnitScaleFactor;
+		forwardVec[FrontAxis] = FrontAxisSign * (float)UnitScaleFactor;
+		rightVec[CoordAxis] = CoordAxisSign * (float)UnitScaleFactor;
+
+		aiMatrix4x4 mat(rightVec.x, rightVec.y, rightVec.z, 0.0f,
+			upVec.x, upVec.y, upVec.z, 0.0f,
+			forwardVec.x, forwardVec.y, forwardVec.z, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f);
+
+		// assimp 항등 행렬이 간혹 아닌 경우가있음 (assimp 버그 수정 코드)
+		// 따라서 첫 노드 탐색전에 최상위 노드의 행렬을 항등행렬로 만든다
+		aiscene->mRootNode->mTransformation = aiMatrix4x4() * mat;
+	}
 
 	std::wstring sceneName = ConvertToW_String(aiscene->mName.C_Str());
 	mRootNodeName = ConvertToW_String(aiscene->mRootNode->mName.C_Str());
+
+	// 노드 탐색 
 	recursiveProcessNode(aiscene->mRootNode, aiscene, nullptr);
 
 	if (mStructure == nullptr)
@@ -57,6 +113,7 @@ HRESULT Model::Load(const std::wstring& path)
 		mStructure->Create(sizeof(BoneMat), mBones.size(), eSRVType::SRV, nullptr, true);
 	}
 
+
 	mAssimpImporter.FreeScene();
 
 	return S_OK;
@@ -64,13 +121,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 Model::ModelNode* Model::FindNode(const std::wstring& nodeName)
 {
-	// TODO: 여기에 return 문을 삽입합니다.
-	/*auto iter = mNodes.find(nodeName);
-	if (iter == mNodes.end())
-	{
-		return nullptr;
-	}*/
-
+	// 단어가 포함된 노드를 탐색
 	for (auto& iter : mNodes)
 	{
 		if (iter.second.mName.find(nodeName) != std::wstring::npos)
@@ -84,64 +135,37 @@ Model::ModelNode* Model::FindNode(const std::wstring& nodeName)
 
 Model::Bone* Model::FindBone(const std::wstring& nodeName)
 {
+	// 탐색 실패시 nullptr 반환
 	return mBoneMap.find(nodeName) == mBoneMap.end() ? nullptr : &mBoneMap.find(nodeName)->second;
-	for (auto& iter : mBoneMap)
-	{
-		if (iter.second.mName.find(nodeName) != std::wstring::npos)
-		{
-			return &iter.second;
-		}
-	}
-
-	return nullptr;
 }
 
 void Model::RecursiveGetBoneMatirx()
 {
+	// 루트노드를 시작으로 하위 노드를 탐색하고 
+	// mBonse 에 Local, Final 행렬을 채운다
 	const ModelNode* node = FindNode(mRootNodeName);
 	if (node == nullptr)
 		return;
 
-	aiMatrix4x4 roomtmat = node->mTransformation;
+	aiMatrix4x4 rootmat = node->mTransformation;
 
 	for (size_t i = 0; i < node->mChilds.size(); ++i)
 	{
-		recursiveProcessBoneMatrix(roomtmat, node->mChilds[i]->mName);
+		recursiveProcessBoneMatrix(rootmat, node->mChilds[i]->mName);
 	}
 }
 
 void Model::Bind_Render(Material* material)
 {
-	ModelNode* node = FindNode(L"Head");
-	if (node != nullptr)
-	{
-		aiMatrix4x4 mat = node->mTransformation;
-		node->SetTransformation(mat.Translation(aiVector3D(0.0f, 100.f, 0.0f), mat));
-	}
-
-	node = FindNode(L"HandL");
-	if (node != nullptr)
-	{
-		aiMatrix4x4 mat = node->mTransformation;
-		node->SetTransformation(mat.Translation(aiVector3D(0.0f, 100.f, 0.0f), mat));
-		node->SetTransformation(mat.Rotation(toRadian(30.f), aiVector3D(1.f, 1.f, 1.f), mat));
-	}
-
-	node = FindNode(L"HandR");
-	if (node != nullptr)
-	{
-		aiMatrix4x4 mat = node->mTransformation;
-
-		node->SetTransformation(mat.Translation(aiVector3D(0.0f, 100.f, 0.0f), mat));
-	}
 	if (mStructure == nullptr)
 		return;
 
-
 	BoneMat boneInfo = {};
-	std::vector<BoneMat> boneMat;
-	boneMat.reserve(mBones.size());
+	std::vector<BoneMat> boneMat = {};
 
+	// 자신의 본 계산후 자식 Model 객체를 계산
+	// 노드 이름 중복으로인해 해당 노드를 연결하기위해
+	// 작성한 예제이다 추후 코드 개선 필요
 	RecursiveGetBoneMatirx();
 
 	for (Model* model : mChildModel)
@@ -152,6 +176,9 @@ void Model::Bind_Render(Material* material)
 		model->Bind_Render(material);
 	}
 
+	// 탐색후 계산된 본들의 행렬을 배열로 저장후 GPU 에 바인딩
+	boneMat.reserve(mBones.size());
+
 	for (Bone& bone : mBones)
 	{
 		aiMatrix4x4 finalMat = bone.mFinalMatrix;
@@ -159,10 +186,12 @@ void Model::Bind_Render(Material* material)
 		boneMat.emplace_back(boneInfo);
 	}
 
-
 	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
 	mStructure->BindSRV(eShaderStage::VS, 30);
 
+	// 추후 모델 마다 Material 메모리 할당하여 사용해야함
+	// 현재 하나의 Material에 texture 을 바인딩하여 사용해서
+	// 모델들의 Texture 가 전부 같다
 	for (size_t i = 0; i < mMeshes.size(); ++i)
 	{
 		if (mMeshes[i] == nullptr)
@@ -177,7 +206,7 @@ void Model::Bind_Render(Material* material)
 			material->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
 		}
 
-
+		// 메쉬들의 바인딩
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 	}
@@ -190,9 +219,9 @@ void Model::Bind_Render(Material* material)
 void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode)
 {
 	std::wstring wNodeName = ConvertToW_String(node->mName.C_Str());
-	bool test = false;
 	std::map<std::wstring, ModelNode>::iterator iter = mNodes.find(wNodeName);
 	ModelNode* curNode = nullptr;
+	// 인자로 들어온 Node 가 처음 들어 온경우
 	if (iter == mNodes.end())
 	{
 		ModelNode modelnode = {};
@@ -204,25 +233,26 @@ void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* 
 		mNodes.insert(std::pair<std::wstring, ModelNode>(modelnode.mName, modelnode));
 		curNode = &(mNodes.find(wNodeName)->second);
 	}
-	else
+	else // 인자로 들어온 Node Name 이 중복된 경우
 	{
 		curNode = &iter->second;
 		if (curNode->mRootNode != nullptr)
 		{
 			rootNode = curNode->mRootNode;
-			test = true;
 		}
 	}
 
-	if (rootNode && test == false)
+	if (rootNode)
 		rootNode->mChilds.emplace_back(curNode);
 
+	// 현재 노드의 메쉬를 순회
 	for (UINT i = 0; i < node->mNumMeshes; ++i)
 	{
 		aiMesh* aiMesh = scene->mMeshes[node->mMeshes[i]];
 		recursiveProcessMesh(aiMesh, scene, wNodeName);
 	}
 
+	// 현재 노드의 자식을 순회
 	for (UINT i = 0; i < node->mNumChildren; ++i)
 	{
 		recursiveProcessNode(node->mChildren[i], scene, curNode);
@@ -238,34 +268,34 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<Texture> textures;
 
 	// 정점 정보 로드
+	vertexes.reserve(mesh->mNumVertices);
 	for (UINT i = 0; i < mesh->mNumVertices; ++i)
 	{
 		renderer::Vertex vertex = {};
 		math::Vector3 pos = {};
 
+		// 정점 위치
 		pos.x = mesh->mVertices[i].x;
 		pos.y = mesh->mVertices[i].y;
 		pos.z = mesh->mVertices[i].z;
 		vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
 
+
+		// 정점 노말
 		math::Vector3 normal = {};
 		normal.x = mesh->mNormals[i].x;
 		normal.y = mesh->mNormals[i].y;
 		normal.z = mesh->mNormals[i].z;
 		vertex.normal = normal;
 
+		// 탄젠트
 		math::Vector3 tangent = {};
 		tangent.x = mesh->mTangents[i].x;
 		tangent.y = mesh->mTangents[i].y;
 		tangent.z = mesh->mTangents[i].z;
 		vertex.tangent = tangent;
 
-		/*math::Vector3 bitangent = {};
-		bitangent .x = mesh->mBitangents[i].x;
-		bitangent .y = mesh->mBitangents[i].y;
-		bitangent .z = mesh->mBitangents[i].z;
-		vertex.biNormal = bitangent;*/
-
+		// UV
 		if (mesh->mTextureCoords[0] != nullptr)
 		{
 			math::Vector2 uv = {};
@@ -282,6 +312,8 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		vertexes.emplace_back(vertex);
 	}
 
+	// 인덱스 정보 로드
+	indexes.reserve(mesh->mNumFaces);
 	for (UINT i = 0; i < mesh->mNumFaces; ++i)
 	{
 		aiFace face = mesh->mFaces[i];
@@ -291,14 +323,13 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		}
 	}
 
-	int numBones = 0;
 	for (int i = 0; i < mesh->mNumBones; ++i)
 	{
 		Bone bone = {};
 		aiBone* aiBone = mesh->mBones[i];
 
-
 		UINT bonIndex = 0;
+		// 본 정보가 처음 인경우
 		if (mBoneMap.end() == mBoneMap.find(ConvertToW_String(aiBone->mName.C_Str())))
 		{
 			bone.mName = ConvertToW_String(aiBone->mName.C_Str());
@@ -309,7 +340,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 			bonIndex = bone.mIndex;
 		}
-		else
+		else // 본정보가 있던 경우
 		{
 			Bone* bone = &(mBoneMap.find(ConvertToW_String(aiBone->mName.C_Str()))->second);
 			bone->mOffsetMatrix = aiBone->mOffsetMatrix;
@@ -318,6 +349,8 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 			mBones[bonIndex].mOffsetMatrix = aiBone->mOffsetMatrix;
 		}
 
+
+		// 정점에 인덱스와 가중치 설정
 		for (int j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
 		{
 			UINT vertexID = mesh->mBones[i]->mWeights[j].mVertexId;
@@ -343,15 +376,10 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 				vertexes[vertexID].BlendID.w = bonIndex;
 				vertexes[vertexID].BlendWeight.w = weight;
 			}
-
-			if (vertexes[vertexID].BlendWeight.x + vertexes[vertexID].BlendWeight.y + vertexes[vertexID].BlendWeight.z + vertexes[vertexID].BlendWeight.w > 1.0f)
-			{
-				float test = vertexes[vertexID].BlendWeight.x + vertexes[vertexID].BlendWeight.y + vertexes[vertexID].BlendWeight.z + vertexes[vertexID].BlendWeight.w;
-				int a = 0;
-			}
 		}
 	}
 
+	// material 정보 로드
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial* aiMater = scene->mMaterials[mesh->mMaterialIndex];
@@ -364,6 +392,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		mTextures.emplace_back(textureBuff);
 	}
 
+	// 모델 객체 생성
 	Mesh* inMesh = new Mesh();
 	inMesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
 	inMesh->CreateIndexBuffer(indexes.data(), indexes.size());
@@ -447,14 +476,22 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 	aiMatrix4x4 transform = modelNode->mTransformation;
 	if (mParentModel)
 	{
+		// 모델에 같은 이름의 노드를 탐색하기 위해 작성한코드
 		ModelNode* parentModelNode = mParentModel->FindNode(nodeName);
 		if (parentModelNode)
 		{
+			// 이부분 문제 가능성 있음
+			// - 디버깅 필요!! -
+
+			// 부모의 해당 노드 계층정보로 내 계층 정보를 세팅한다.
+			// 강제로 해당 노드의 위치로 모델이 이동은 하지만
+			// 회전에 문제가 생긴다.
 			Bone* bone = mParentModel->FindBone(nodeName);
 
 			if (bone != nullptr)
 			{
 				bone = mParentModel->GetBone(bone->mIndex);
+
 				matrix = bone->mLocalMatrix;
 			}
 		}
@@ -466,6 +503,12 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 	{
 		Bone* bone = &mBoneMap.find(nodeName)->second;
 		aiMatrix4x4 glovalInvers = FindNode(L"Scene")->GetTransformation();
+
+		// bone->mOffsetMatrix - 정점을 본 공간으로 이동 ( world, view, projection 비슷한 개념)
+		// 바인드 포즈의 역행렬이다
+		//matrix - 현재 노드 까지의 변환된 행렬
+		// glovalInvers.Inverse() - 항등 행렬의 역 정점을 전역 공간으로 변환?
+		// 있든 없든 현재 똑같이 동작하기때문에 아직 정확히는 모르겠다
 		bone->mFinalMatrix = glovalInvers.Inverse() * matrix * bone->mOffsetMatrix;
 		bone->mLocalMatrix = matrix;
 
@@ -495,7 +538,7 @@ std::string Model::ConvertToString(const wchar_t* str)
 
 math::Matrix Model::ConvertMatrix(aiMatrix4x4 aimat)
 {
-	math::Matrix outMat = math::Matrix::Identity;
+	math::Matrix outMat;
 	outMat._11 = aimat.a1, outMat._12 = aimat.a2, outMat._13 = aimat.a3, outMat._14 = aimat.a4;
 	outMat._21 = aimat.b1, outMat._22 = aimat.b2, outMat._23 = aimat.b3, outMat._24 = aimat.b4;
 	outMat._31 = aimat.c1, outMat._32 = aimat.c2, outMat._33 = aimat.c3, outMat._34 = aimat.c4;
