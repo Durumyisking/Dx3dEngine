@@ -42,7 +42,7 @@ public:
 	void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 
 
-	void BindingTextures();
+	//void BindingTextures();
 
 
 

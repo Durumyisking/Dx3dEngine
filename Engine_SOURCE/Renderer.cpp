@@ -820,20 +820,6 @@ namespace renderer
 
 
 
-
-	void Initialize()
-	{
-		CreateRenderTargets();
-		LoadMesh();
-		LoadShader();
-		SetUpState();
-		LoadBuffer();
-		LoadDefaultTexture();
-		LoadDefaultMaterial();
-
-		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
-	}
-
 	void release()
 	{
 		for (size_t i = 0; i < static_cast<UINT>(eCBType::End); i++)
@@ -1625,4 +1611,19 @@ namespace renderer
 		capsuleMesh->CreateVertexBuffer(capsuleVtx.data(), static_cast<UINT>(capsuleVtx.size()));
 		capsuleMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
 	}	
+
+	/////////////////////////////////////////////////////
+
+	void Initialize()
+	{
+		CreateRenderTargets();
+		LoadMesh();
+		LoadShader();
+		SetUpState();
+		LoadBuffer();
+		LoadDefaultTexture();
+		LoadDefaultMaterial();
+
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/mario", L"Mario");
+	}
 }

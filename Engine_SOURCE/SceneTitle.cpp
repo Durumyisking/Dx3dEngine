@@ -171,16 +171,14 @@ void SceneTitle::Enter()
 
 		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
 		meshRenderer->SetModel(model);
-		meshRenderer->SetMaterialByKey(L"BlockBrickBody");
-
-		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		meshRenderer->SetMaterialByKey(L"PhongMaterial");
+		//meshRenderer->SetMaterialByKey(L"BlockBrickBody");
+		//meshRenderer->GetMaterial()->SetShaderByKey(L"PhongShader");
 	}
 	{
-		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
+	/*	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
 		player->SetPos(Vector3(10.f, 0.f, 0.f));
 		player->SetScale({ 0.01f, 0.01f, 0.01f });
 		player->SetName(L"Object");
@@ -193,7 +191,7 @@ void SceneTitle::Enter()
 
 		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);*/
 	}
 	
 	{

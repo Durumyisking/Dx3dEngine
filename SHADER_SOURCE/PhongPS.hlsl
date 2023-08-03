@@ -27,6 +27,7 @@ float4 main(VSOut vsIn) : SV_Target
     }
     
     LightColor lightColor = (LightColor) 0.0f;
+    normal = vsIn.ViewNormal;
     
     for (uint i = 0; i < lightCount; i++)
     {
@@ -34,6 +35,7 @@ float4 main(VSOut vsIn) : SV_Target
     }
     
     albedo = CombineLights(albedo, lightColor);
+    
     
     if (albedo.w == 0)
         discard;
