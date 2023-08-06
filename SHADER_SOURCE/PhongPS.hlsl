@@ -27,7 +27,6 @@ float4 main(VSOut vsIn) : SV_Target
     }
     
     LightColor lightColor = (LightColor) 0.0f;
-    normal = vsIn.ViewNormal;
     
     for (uint i = 0; i < lightCount; i++)
     {

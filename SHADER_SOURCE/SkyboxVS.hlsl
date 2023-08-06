@@ -8,7 +8,7 @@ struct VSIn
 struct VSOut
 {
     float4 Position : SV_Position;
-    float3 WorldPos : POSITION;   
+    float4 WorldPos : POSITION;   
 };
 
 VSOut main(VSIn vsIn)

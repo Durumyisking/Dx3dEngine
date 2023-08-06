@@ -36,8 +36,8 @@ PSOut main(VSOut vsIn) : SV_Target
     
     float4 albedo = float4(1.0f, 1.0f, 1.0f, 1.0f);
     float3 normal = vsIn.ViewNormal;
-    float metallic = 0.f;
-    float roughness = 0.f;
+    float metallic = 0.99f;
+    float roughness = 0.01f;
     
     if (1 == cbbAlbedo)
     {

@@ -226,6 +226,11 @@ namespace renderer
 			, lightPointShader->GetVSBlobBufferSize()
 			, lightPointShader->GetInputLayoutAddr());
 
+		Shader* skyBoxShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkyboxShader");
+		GetDevice()->CreateInputLayout(arrLayout, 8
+			, skyBoxShader->GetVSBlobBufferPointer()
+			, skyBoxShader->GetVSBlobBufferSize()
+			, skyBoxShader->GetInputLayoutAddr());
 
 #pragma endregion
 
@@ -528,6 +533,18 @@ namespace renderer
 		lightPointShader->SetBSState(eBlendStateType::OneOne);
 
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"LightPointShader", lightPointShader);
+#pragma endregion
+
+#pragma region SkyboxShader
+		Shader* skyboxShader = new Shader();
+		skyboxShader->Create(eShaderStage::VS, L"SkyboxVS.hlsl", "main");
+		skyboxShader->Create(eShaderStage::PS, L"SkyboxPS.hlsl", "main");
+
+		skyboxShader->SetRSState(eRasterizerType::SolidFront);
+		skyboxShader->SetDSState(eDepthStencilType::None);
+		skyboxShader->SetBSState(eBlendStateType::OneOne);
+
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"SkyboxShader", skyboxShader);
 #pragma endregion
 	}
 
@@ -1625,6 +1642,6 @@ namespace renderer
 		LoadDefaultTexture();
 		LoadDefaultMaterial();
 
-		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/mario", L"Mario");
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
 	}
 }

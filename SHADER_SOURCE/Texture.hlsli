@@ -24,6 +24,7 @@ Texture2D BRDF : register(t14);
 
 // t15 파티클 structured buffer
 // Texture2D NoiseTexture : register(t16);
+TextureCube skyboxTexture: register(t17); 
 
 //StructuredBuffer<LightAttribute> lightAttributes : register(t22);
 

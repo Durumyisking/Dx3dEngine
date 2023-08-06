@@ -30,7 +30,7 @@ void MultiRenderTarget::Create(Texture* texture[12], Texture* dsTexture)
 
 void MultiRenderTarget::OMSetRenderTarget()
 {
-	Texture::Clears();
+	//Texture::Clears();
 
 	ID3D11RenderTargetView* arrRenderTargetViews[12] = {};
 	for (UINT i = 0; i < 12; i++)

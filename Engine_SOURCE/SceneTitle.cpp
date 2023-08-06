@@ -136,8 +136,6 @@ void SceneTitle::Enter()
 		player->SetPos(Vector3(5.f, 5.f, 5.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"albedo", L"normal", L"PhongShader", L"mat_dirt");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"padded_leather_albedo", L"padded_leather_normal", L"padded_leather_metallic", L"padded_leather_roughness", L"PBRShader", L"mat_dirt");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
 			L"check_albedo",
@@ -147,7 +145,6 @@ void SceneTitle::Enter()
 			L"DeferredShader",
 			L"mat_dirt"
 		);
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
@@ -163,20 +160,7 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
-	{
-		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
-		player->SetScale({ 0.01f, 0.01f, 0.01f });
-		player->SetName(L"Object");
-
-		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
-
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
-		meshRenderer->SetModel(model);
-		meshRenderer->SetMaterialByKey(L"PhongMaterial");
-		//meshRenderer->SetMaterialByKey(L"BlockBrickBody");
-		//meshRenderer->GetMaterial()->SetShaderByKey(L"PhongShader");
-	}
+	
 	{
 	/*	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
 		player->SetPos(Vector3(10.f, 0.f, 0.f));
@@ -207,6 +191,21 @@ void SceneTitle::Enter()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
+	//{
+	//	GameObj* skyBox = object::Instantiate<GameObj>(eLayerType::Objects);
+	//	skyBox->SetPos(Vector3(0.f, 0.f, 0.f));
+	//	skyBox->SetScale({ 5.f, 5.f, 5.f });
+	//	skyBox->SetName(L"Skybox");
+	//	Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+	//	(
+	//		L"Skybox",
+	//		eTextureSlot::Skybox,
+	//		L"SkyboxShader",
+	//		L"SkyboxMat"
+	//	);
+	//	skyBox->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterial(mat);
+	//}
+
 
 	// DebugTest
 	{ 
@@ -223,9 +222,7 @@ void SceneTitle::Enter()
 
 			testRender->SetMaterial(testMaterial);
 			testRender->SetMeshByKey(L"Cubemesh");
-		}
-
-		
+		}		
 	}
 
 	Scene::Enter();

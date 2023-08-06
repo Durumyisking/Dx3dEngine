@@ -18,8 +18,8 @@ public:
 	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName);
 	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring textureEmissive, std::wstring shaderName);
 
-
 	Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName);
+
 	virtual ~Material();
 
 	virtual HRESULT Load(const std::wstring& path) override;

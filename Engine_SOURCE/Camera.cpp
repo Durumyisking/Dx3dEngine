@@ -87,7 +87,7 @@ void Camera::Render()
 	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
 	renderDeferred();
 
-	//// Deferred light Render
+	// Deferred light Render
 	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
 	for (Light* light : renderer::lights)
 	{
