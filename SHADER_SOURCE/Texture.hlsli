@@ -9,8 +9,8 @@ Texture2D emissiveTexture       : register(t4);
 Texture2D positionTarget        : register(t5);
 Texture2D albedoTarget          : register(t6);
 Texture2D normalTarget          : register(t7);
-Texture2D metallicTarget        : register(t8);
-Texture2D roughnessTarget       : register(t9);
+Texture2D MRDTarget             : register(t8); // metallic roughness Depth target
+Texture2D EmissiveTarget        : register(t9);
 
 // Merge Light
 Texture2D diffuseLightTarget    : register(t10);

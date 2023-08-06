@@ -25,8 +25,7 @@ struct PSOut
     float4 Position : SV_Target0;
     float4 Albedo : SV_Target1;
     float4 Normal : SV_Target2;
-    float1 Metallic : SV_Target3;
-    float1 Roughness : SV_Target4;
+    float4 MRD    : SV_Target3;
 };
 
 
@@ -59,8 +58,8 @@ PSOut main(VSOut vsIn) : SV_Target
     vsOutColor.Position = float4(vsIn.ViewPos, 1.0f);
     vsOutColor.Albedo = albedo;
     vsOutColor.Normal = float4(normal, 1.0f);
-    vsOutColor.Metallic = metallic;
-    vsOutColor.Roughness = roughness;
+    vsOutColor.MRD.r = metallic;
+    vsOutColor.MRD.g = roughness;
     
     return vsOutColor;
 }

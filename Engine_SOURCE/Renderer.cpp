@@ -787,10 +787,8 @@ namespace renderer
 		lightDirMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightDirTex);
 		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
-		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MetallicTargetTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::MetallicTarget, lightDirTex);
-		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"RoughnessTargetTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::RoughnessTarget, lightDirTex);
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
 #pragma endregion
@@ -807,10 +805,8 @@ namespace renderer
 		lightPointMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightPointTex);
 		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTarget");
 		lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
-		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MetallicTarget");
-		lightPointMaterial->SetTexture(eTextureSlot::MetallicTarget, lightPointTex);
-		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"RoughnessTargetTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::RoughnessTarget, lightDirTex);
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
 #pragma endregion
@@ -912,20 +908,17 @@ namespace renderer
 			Texture* pos = new Texture();
 			Texture* albedo = new Texture();
 			Texture* normal = new Texture();
-			Texture* metallic = new Texture();
-			Texture* roughness = new Texture();
+			Texture* mrd = new Texture();
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"PositionTargetTexture", pos);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"AlbedoTargetTexture", albedo);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"NormalTargetTexture", normal);
-			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MetallicTargetTexture", metallic);
-			GETSINGLE(ResourceMgr)->Insert<Texture>(L"RoughnessTargetTexture", roughness);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MRDTargetTexture", mrd);
 
 			arrRTTex[0] = pos;
 			arrRTTex[1] = albedo;
 			arrRTTex[2] = normal;
-			arrRTTex[3] = metallic;
-			arrRTTex[4] = roughness;
+			arrRTTex[3] = mrd;
 
 			arrRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
@@ -934,8 +927,6 @@ namespace renderer
 			arrRTTex[2]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 			arrRTTex[3]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
-				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-			arrRTTex[4]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			Texture* dsTex = nullptr;
