@@ -142,7 +142,7 @@ void SceneTitle::Enter()
 			L"check_normal", 
 			L"check_metallic", 
 			L"check_roughness", 
-			L"DeferredShader",
+			L"PBRShader",
 			L"mat_dirt"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
@@ -192,18 +192,20 @@ void SceneTitle::Enter()
 	}
 
 	//{
-	//	GameObj* skyBox = object::Instantiate<GameObj>(eLayerType::Objects);
-	//	skyBox->SetPos(Vector3(0.f, 0.f, 0.f));
-	//	skyBox->SetScale({ 5.f, 5.f, 5.f });
-	//	skyBox->SetName(L"Skybox");
-	//	Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-	//	(
-	//		L"Skybox",
-	//		eTextureSlot::Skybox,
-	//		L"SkyboxShader",
-	//		L"SkyboxMat"
-	//	);
-	//	skyBox->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterial(mat);
+		//GameObj* skyBox = object::Instantiate<GameObj>(eLayerType::Objects);
+		//skyBox->SetPos(Vector3(0.f, 5.f, 0.f));
+		//skyBox->SetScale({ 5.f, 5.f, 5.f });
+		//skyBox->SetName(L"Skybox");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		//(
+		//	L"Skybox",
+		//	eTextureSlot::Skybox,
+		//	L"SkyboxShader",
+		//	L"SkyboxMat"
+		//);
+		//MeshRenderer* mr = skyBox->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		//mr->SetMaterial(mat);
+		//mr->SetMeshByKey(L"Spheremesh");
 	//}
 
 

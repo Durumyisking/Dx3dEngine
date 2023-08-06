@@ -32,8 +32,10 @@ PS_OUT main(VSOut vsin)
       
     float4 albedo = albedoTarget.Sample(linearSampler, vUV);
     float4 normal = normalTarget.Sample(linearSampler, vUV);
-    float metallic = saturate(MRDTarget.Sample(linearSampler, vUV).r);
-    float roughness = saturate(MRDTarget.Sample(linearSampler, vUV).g);
+    float4 mrg = MRDTarget.Sample(linearSampler, vUV);
+    float metallic = saturate(mrg.r);
+    float roughness = saturate(mrg.g);
+    
 
     LightColor lightcolor = (LightColor) 0.f;
     

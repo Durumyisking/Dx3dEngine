@@ -108,7 +108,7 @@ void Shader::CreateGS(const std::wstring& path, const std::string& funcName)
 		, nullptr
 		, mGS.GetAddressOf());
 }
-
+ 
 void Shader::CreatePS(const std::wstring& path, const std::string& funcName)
 {
 	D3DCompileFromFile(path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
