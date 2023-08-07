@@ -793,13 +793,13 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
 #pragma endregion
 
-#pragma region LightDirMaterial
+#pragma region LightPointMaterial
 		Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
 		Material* lightPointMaterial = new Material();
 		lightPointMaterial->SetRenderingMode(eRenderingMode::None);
 		lightPointMaterial->SetShader(lightPointShader);
 
-		Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTarget");
+		Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 		lightPointMaterial->SetTexture(eTextureSlot::PositionTarget, lightPointTex);
 		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
 		lightPointMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightPointTex);
@@ -807,6 +807,7 @@ namespace renderer
 		lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
 		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
+
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
 #pragma endregion

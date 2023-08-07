@@ -37,7 +37,7 @@ void MultiRenderTarget::OMSetRenderTarget()
 	{
 		if (mRenderTargets[i])
 		{
-			arrRenderTargetViews[i] = mRenderTargets[i]->GetRTV().Get();
+			arrRenderTargetViews[i] = mRenderTargets[i]->GetRTV().Get(); // 텍스처 만들때 플래그 설정 해두어서 렌더타겟으로 사용 가능
 		}
 	}
 

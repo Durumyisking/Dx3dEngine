@@ -10,6 +10,10 @@ struct VSOut
     float4 Position : SV_Position;
 };
 
+/*
+실질적인 출력 픽셀값 연산을 처리한다.
+*/
+
 float4 main(VSOut vsIn) : SV_Target
 {
     float4 outColor = (float4) 0.0f;

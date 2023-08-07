@@ -45,7 +45,7 @@ PSOut main(VSOut vsIn) : SV_Target
     if (1 == cbbNormal)
     {
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-    }    
+    }
     if (1 == cbbMetallic)
     {
         metallic = TextureMapping_metallic(vsIn.UV);

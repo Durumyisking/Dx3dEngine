@@ -17,6 +17,11 @@ struct PS_OUT
     float4 vSpecular : SV_Target1;
 };
 
+/*
+pos, normal, specular 타겟을 기반으로 빛 연산을 한다.
+해당 쉐이더에서는 diffuse와 specular를 계산만 해준다.
+
+*/
 
 PS_OUT main(VSOut vsin)
 {

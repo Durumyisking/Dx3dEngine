@@ -46,8 +46,6 @@ float4 main(VSOut vsIn) : SV_Target
         //normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
 
-//    normal.xyz = vsIn.ViewNormal;
-
     outColor.xyz = CalculateLightPBR_Direct(vsIn.ViewPos, albedo, normal, metallic, roughness);
 
     return float4(outColor, 1.f);;
