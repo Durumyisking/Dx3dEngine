@@ -561,11 +561,11 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_color", L"Dirt/dirt_color.jpg");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_normal", L"Dirt/dirt_normal.jpg");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"Textures/BlockBrickBody/BlockBrickBody_alb.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"Textures/BlockBrickBody/BlockBrickBody_nrm.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"Textures/BlockBrickBody/BlockBrickBody_mtl.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"Textures/BlockBrickBody/BlockBrickBody_rgh.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"Textures/BlockBrickBody/BlockBrickBody_emm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"brick/BlockBrickBody_alb.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"brick/BlockBrickBody_nrm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"brick/BlockBrickBody_mtl.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"brick/BlockBrickBody_rgh.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"brick/BlockBrickBody_emm.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_alb", L"Textures/WanWan/WanwanBig_Body_alb.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_nrm", L"Textures/WanWan/WanwanBig_Body_nrm.png");
@@ -793,13 +793,13 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
 #pragma endregion
 
-#pragma region LightPointMaterial
+#pragma region LightDirMaterial
 		Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
 		Material* lightPointMaterial = new Material();
 		lightPointMaterial->SetRenderingMode(eRenderingMode::None);
 		lightPointMaterial->SetShader(lightPointShader);
 
-		Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
+		Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTarget");
 		lightPointMaterial->SetTexture(eTextureSlot::PositionTarget, lightPointTex);
 		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
 		lightPointMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightPointTex);
@@ -807,7 +807,6 @@ namespace renderer
 		lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
 		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
-
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
 #pragma endregion
@@ -1038,7 +1037,17 @@ namespace renderer
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 	}
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	void BindPBRProprerties()
+	{
+		Texture* irradianceMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
+		Texture* preFilteredMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
+		Texture* BRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
+		irradianceMap->BindShaderResource_VP(12);
+		preFilteredMap->BindShaderResource_VP(13);
+		BRDF->BindShaderResource_VP(14);
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -1047,7 +1056,7 @@ namespace renderer
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void CreatePointMesh()
 	{
@@ -1612,7 +1621,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Capsulemesh", capsuleMesh);
 		capsuleMesh->CreateVertexBuffer(capsuleVtx.data(), static_cast<UINT>(capsuleVtx.size()));
 		capsuleMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
-	}	
+	}
 
 	/////////////////////////////////////////////////////
 

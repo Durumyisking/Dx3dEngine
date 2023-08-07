@@ -252,18 +252,16 @@ void Material::Bind()
 	}
 
 	if (mTexture[static_cast<UINT>(eTextureSlot::Albedo)])
+	{
 		mMaterialConstantBuffer.bAlbedo = 1;
+	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Normal)])
+	{
 		mMaterialConstantBuffer.bNormal = 1;
+	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Metallic)])
 	{
-		// BindPBR Properties
-		Texture* irradianceMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
-		Texture* preFilteredMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
-		Texture* BRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
-		irradianceMap->BindShaderResource_VP(12);
-		preFilteredMap->BindShaderResource_VP(13);
-		BRDF->BindShaderResource_VP(14);
+		renderer::BindPBRProprerties();
 
 		mMaterialConstantBuffer.bMetallic = 1;
 	}
@@ -294,3 +292,5 @@ void Material::SetShaderByKey(std::wstring key)
 	Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(key);
 	mShader = shader;
 }
+
+

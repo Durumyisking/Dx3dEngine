@@ -33,7 +33,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// ÆÄÀÏ ·Îµå ½ÇÆĞ
+		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
 		return E_FAIL;
 	}
 
@@ -54,7 +54,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 const Model::ModelNode* Model::FindNode(const std::wstring& nodeName) const
 {
-	// TODO: ¿©±â¿¡ return ¹®À» »ğÀÔÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— return ë¬¸ì„ ì‚½ì…í•©ë‹ˆë‹¤.
 	/*auto iter = mNodes.find(nodeName);
 	if (iter == mNodes.end())
 	{
@@ -100,11 +100,11 @@ void Model::Bind_Render(Material* material)
 		if (mMeshes[i] == nullptr)
 			continue;
 
-		std::vector<Texture*> Textures = GetTexture(i);
-		for (int slot = 0; slot < Textures.size(); ++slot)
-		{			
-			material->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
-		}
+		//std::vector<Texture*> Textures = GetTexture(i);
+		//for (int slot = 0; slot < Textures.size(); ++slot)
+		//{			
+		//	material->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+		//}
 
 
 		mMeshes[i]->BindBuffer();
@@ -160,7 +160,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
-	// Á¤Á¡ Á¤º¸ ·Îµå
+	// ì •ì  ì •ë³´ ë¡œë“œ
 	for (UINT i = 0; i < mesh->mNumVertices; ++i)
 	{
 		renderer::Vertex vertex = {};
@@ -261,10 +261,10 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 			Model::TextureVector texInfo = processMaterial(aiMater, static_cast<aiTextureType>(type));
 			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
 		}
-		
+
 		mTextures.emplace_back(textureBuff);
 	}
-	
+
 
 	Mesh* inMesh = new Mesh();
 	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
@@ -305,7 +305,7 @@ Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType typ
 		aiString aiStr;
 		mater->GetTexture(type, i, &aiStr);
 		std::wstring texname = ConvertToW_String(aiStr.C_Str());
-		texInfo.texName = texname.substr(0,texname.find_last_of(L"."));
+		texInfo.texName = texname.substr(0, texname.find_last_of(L"."));
 		texInfo.texPath = GetCurDirectoryPath() + L"/" + texname;
 		texInfo.type = type;
 		outTexVector.emplace_back(texInfo);
@@ -323,7 +323,7 @@ void Model::CreateTexture()
 			Texture* tex = new Texture();
 			tex->Load(texInfo.texPath, texInfo);
 
-			texInfo.texID = static_cast<UINT>( tex->GetID());
+			texInfo.texID = static_cast<UINT>(tex->GetID());
 			texInfo.pTex = tex;
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(texInfo.texName, texInfo.pTex);
@@ -347,7 +347,7 @@ void Model::CreateMaterial()
 				matName = texInfo.texName;
 				std::size_t found = matName.find(L"_");
 				if (found != std::wstring::npos) {
-					matName = matName.substr(0, found); // _ ÀÌÀü±îÁöÀÇ ¹®ÀÚ¿­ ÃßÃâ
+					matName = matName.substr(0, found); // _ ì´ì „ê¹Œì§€ì˜ ë¬¸ìì—´ ì¶”ì¶œ
 				}
 			}
 			break;

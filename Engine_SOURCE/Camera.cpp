@@ -49,12 +49,12 @@ void Camera::Update()
 	if (mTargetObj)
 	{
 
-		Vector2 v2Start = Vector2(GetOwner()->GetPos().x,  GetOwner()->GetPos().y);
-		Vector2 v2Dest = Vector2(mTargetObj->GetPos().x,  mTargetObj->GetPos().y);
+		Vector2 v2Start = Vector2(GetOwner()->GetPos().x, GetOwner()->GetPos().y);
+		Vector2 v2Dest = Vector2(mTargetObj->GetPos().x, mTargetObj->GetPos().y);
 
 		mFarDist = (v2Start - v2Dest).Length();
 
-		if(mSmooth)
+		if (mSmooth)
 			mCamSpeed = mFarDist / mTime;
 
 		if (mFarDist < 0.001f)
@@ -89,6 +89,8 @@ void Camera::Render()
 
 	// Deferred light Render
 	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
+	renderer::BindPBRProprerties();
+
 	for (Light* light : renderer::lights)
 	{
 		light->Render();
@@ -103,24 +105,24 @@ void Camera::Render()
 	rectMesh->BindBuffer();
 	mergeMaterial->Bind();
 	rectMesh->Render();
-	
+
 	// Forward Render
 	renderOpaque();
 	renderCutout();
 	renderTransparent();
-}	
+}
 
 void Camera::CreateViewMatrix()
 {
 	Transform* transform = GetOwner()->GetComponent<Transform>();
-		
+
 	// 이동정보
 	Vector3 translation = transform->GetPosition();
 
 	// create view translation matrix
 	mView = Matrix::Identity;
 	mView *= Matrix::CreateTranslation(-translation);
-		
+
 	// 회전정보
 	Vector3 up = transform->Up();
 	Vector3 right = transform->Right();
@@ -134,7 +136,7 @@ void Camera::CreateViewMatrix()
 	mView *= viewRotate;
 
 }
-		
+
 void Camera::CreateProjectionMatrix()
 {
 	RECT winRect;
@@ -151,13 +153,13 @@ void Camera::CreateProjectionMatrix()
 	}
 	else // (mType == eProjectionType::Orthographic)
 	{
-		mProjection = Matrix::CreateOrthographic(width , height , mNear, mFar);
+		mProjection = Matrix::CreateOrthographic(width, height, mNear, mFar);
 	}
 
 }
 
 void Camera::RegisterCameraInRenderer()
-{	
+{
 	UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
 	renderer::Cameras[type].push_back(this);
 }
@@ -245,7 +247,7 @@ void Camera::renderTransparent()
 	{
 		if (renderPassCheck(obj))
 		{
-			obj->Render();				
+			obj->Render();
 		}
 	}
 }
@@ -314,6 +316,6 @@ bool Camera::renderPassCheck(GameObj* obj)
 			return false;
 		}
 	}
-		
+
 	return true;
 }

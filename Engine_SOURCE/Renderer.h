@@ -110,7 +110,7 @@ namespace renderer
 		int bool3;
 	};
 
-	CBUFFER(GridCB, CBSLOT_GRID)	
+	CBUFFER(GridCB, CBSLOT_GRID)
 	{
 		Vector3 cameraPosition;
 		Vector2 GridOffset;
@@ -134,7 +134,7 @@ namespace renderer
 	};
 
 	CBUFFER(LightCB, CBSLOT_LIGHTCOUNT)
-	{	
+	{
 		UINT lightCount;
 		UINT lightIndex;
 	};
@@ -202,18 +202,18 @@ namespace renderer
 	extern StructedBuffer* lightBuffer;
 
 	extern GameObj* inspectorGameObject;
-	
+
 	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
 
 	void Initialize();
 	void release(); // 그리는 방식이 여러개일때 여러개를 할당하는게 아니라
 					// 그리는 방식을 변경할때 할당된 곳에 그리는 방식의 객체들을 교체만 해준다 -> 오래걸림
 					// 아직 gpu의 vram의 용량이 ram보다 한참 작아서그럼
-	
+
 	void Render();
 
 	// MultiRenderTargets
-	void CreateRenderTargets(); 
+	void CreateRenderTargets();
 	void ClearRenderTargets();
 
 	// Renderer
@@ -221,6 +221,8 @@ namespace renderer
 	void BindLight();
 	void BindNoiseTexture();
 	void CopyRenderTarget();
+
+	void BindPBRProprerties();
 
 	// mesh create
 	void CreatePointMesh();
