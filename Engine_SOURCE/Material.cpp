@@ -256,7 +256,17 @@ void Material::Bind()
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Normal)])
 		mMaterialConstantBuffer.bNormal = 1;
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Metallic)])
+	{
+		// BindPBR Properties
+		Texture* irradianceMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
+		Texture* preFilteredMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
+		Texture* BRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
+		irradianceMap->BindShaderResource_VP(12);
+		preFilteredMap->BindShaderResource_VP(13);
+		BRDF->BindShaderResource_VP(14);
+
 		mMaterialConstantBuffer.bMetallic = 1;
+	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Roughness)])
 		mMaterialConstantBuffer.bRoughness = 1;
 

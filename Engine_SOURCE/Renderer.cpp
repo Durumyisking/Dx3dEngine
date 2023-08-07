@@ -861,14 +861,6 @@ namespace renderer
 	{
 		//GetDevice()->OMSetRenderTarget();
 
-		// BindPBR Properties
-		Texture* irradianceMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
-		Texture* preFilteredMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
-		Texture* BRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
-		irradianceMap->BindShaderResource_VP(12);
-		preFilteredMap->BindShaderResource_VP(13);
-		BRDF->BindShaderResource_VP(14);
-
 		BindNoiseTexture();
 		BindLight();
 

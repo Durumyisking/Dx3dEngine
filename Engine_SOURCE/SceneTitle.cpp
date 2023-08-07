@@ -142,7 +142,7 @@ void SceneTitle::Enter()
 			L"check_normal", 
 			L"check_metallic", 
 			L"check_roughness", 
-			L"PBRShader",
+			L"DeferredShader",
 			L"mat_dirt"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);

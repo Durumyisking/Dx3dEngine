@@ -153,12 +153,12 @@ enum class eTextureSlot
 	IrradianceMap = 12,		
 	PrefilteredMap,		
 
-	BRDF,		
+	BRDF = 14,		
 
-	ParticleStructuredBuffer,		
+	ParticleStructuredBuffer = 15,		
 	NoiseTexture,		
 
-	Skybox,
+	Skybox = 17,
 
 
 //	Atlas = 29,					// atlasTexture

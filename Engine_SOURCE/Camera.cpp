@@ -103,7 +103,7 @@ void Camera::Render()
 	rectMesh->BindBuffer();
 	mergeMaterial->Bind();
 	rectMesh->Render();
-
+	
 	// Forward Render
 	renderOpaque();
 	renderCutout();

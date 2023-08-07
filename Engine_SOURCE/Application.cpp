@@ -1,4 +1,4 @@
-﻿#include "Application.h"
+#include "Application.h"
 #include "Renderer.h"
 #include "TimeMgr.h"
 #include "InputMgr.h"
