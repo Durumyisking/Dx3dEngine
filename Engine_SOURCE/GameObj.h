@@ -139,7 +139,7 @@ public:
 	Vector3 GetPos();
 	Vector3 GetWorldPos();
 
-	// ui¸¸ »ç¿ë °¡´É
+	// uiï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	Vector3 GetUIWorldPos();
 
 	Vector3 GetScale();

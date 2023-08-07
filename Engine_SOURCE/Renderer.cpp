@@ -226,6 +226,11 @@ namespace renderer
 			, lightPointShader->GetVSBlobBufferSize()
 			, lightPointShader->GetInputLayoutAddr());
 
+		Shader* skyBoxShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkyboxShader");
+		GetDevice()->CreateInputLayout(arrLayout, 8
+			, skyBoxShader->GetVSBlobBufferPointer()
+			, skyBoxShader->GetVSBlobBufferSize()
+			, skyBoxShader->GetInputLayoutAddr());
 
 #pragma endregion
 
@@ -529,6 +534,18 @@ namespace renderer
 
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"LightPointShader", lightPointShader);
 #pragma endregion
+
+#pragma region SkyboxShader
+		Shader* skyboxShader = new Shader();
+		skyboxShader->Create(eShaderStage::VS, L"SkyboxVS.hlsl", "main");
+		skyboxShader->Create(eShaderStage::PS, L"SkyboxPS.hlsl", "main");
+
+		skyboxShader->SetRSState(eRasterizerType::SolidFront);
+		skyboxShader->SetDSState(eDepthStencilType::None);
+		skyboxShader->SetBSState(eBlendStateType::OneOne);
+
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"SkyboxShader", skyboxShader);
+#pragma endregion
 	}
 
 	void LoadDefaultTexture()
@@ -585,6 +602,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Brick_Color", L"Cube/Brick.jpg");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Brick_Normal", L"Cube/Brick_N.jpg");
 
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Skybox", L"Textures/SkyCityDayLight_color.png");
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
@@ -765,10 +783,12 @@ namespace renderer
 
 		Texture* lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::PositionTarget, lightDirTex);
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightDirTex);
 		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
-		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularTargetTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::SpecularTarget, lightDirTex);
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
 #pragma endregion
@@ -781,10 +801,13 @@ namespace renderer
 
 		Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 		lightPointMaterial->SetTexture(eTextureSlot::PositionTarget, lightPointTex);
-		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
+		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
+		lightPointMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightPointTex);
+		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTarget");
 		lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
-		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularTargetTexture");
-		lightPointMaterial->SetTexture(eTextureSlot::SpecularTarget, lightPointTex);
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
+
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
 #pragma endregion
@@ -798,13 +821,10 @@ namespace renderer
 
 		Texture* mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 		mergeMaterial->SetTexture(eTextureSlot::PositionTarget, mergeTex);
-
 		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
 		mergeMaterial->SetTexture(eTextureSlot::AlbedoTarget, mergeTex);
-
 		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DiffuseLightTargetTexture");
 		mergeMaterial->SetTexture(eTextureSlot::DiffuseLightTarget, mergeTex);
-
 		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularLightTargetTexture");
 		mergeMaterial->SetTexture(eTextureSlot::SpecularLightTarget, mergeTex);
 
@@ -814,20 +834,6 @@ namespace renderer
 	}
 
 
-
-
-	void Initialize()
-	{
-		CreateRenderTargets();
-		LoadMesh();
-		LoadShader();
-		SetUpState();
-		LoadBuffer();
-		LoadDefaultTexture();
-		LoadDefaultMaterial();
-
-		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
-	}
 
 	void release()
 	{
@@ -855,14 +861,6 @@ namespace renderer
 	void Render()
 	{
 		//GetDevice()->OMSetRenderTarget();
-
-		// BindPBR Properties
-		Texture* irradianceMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
-		Texture* preFilteredMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"lightMap");
-		Texture* BRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
-		irradianceMap->BindShaderResource_VP(12);
-		preFilteredMap->BindShaderResource_VP(13);
-		BRDF->BindShaderResource_VP(14);
 
 		BindNoiseTexture();
 		BindLight();
@@ -901,19 +899,19 @@ namespace renderer
 		{
 			Texture* arrRTTex[12] = { };
 			Texture* pos = new Texture();
-			Texture* normal = new Texture();
 			Texture* albedo = new Texture();
-			Texture* specular = new Texture();
+			Texture* normal = new Texture();
+			Texture* mrd = new Texture();
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"PositionTargetTexture", pos);
-			GETSINGLE(ResourceMgr)->Insert<Texture>(L"NormalTargetTexture", normal);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"AlbedoTargetTexture", albedo);
-			GETSINGLE(ResourceMgr)->Insert<Texture>(L"SpecularTargetTexture", specular);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"NormalTargetTexture", normal);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MRDTargetTexture", mrd);
 
 			arrRTTex[0] = pos;
-			arrRTTex[1] = normal;
-			arrRTTex[2] = albedo;
-			arrRTTex[3] = specular;
+			arrRTTex[1] = albedo;
+			arrRTTex[2] = normal;
+			arrRTTex[3] = mrd;
 
 			arrRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
@@ -1615,4 +1613,19 @@ namespace renderer
 		capsuleMesh->CreateVertexBuffer(capsuleVtx.data(), static_cast<UINT>(capsuleVtx.size()));
 		capsuleMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
 	}	
+
+	/////////////////////////////////////////////////////
+
+	void Initialize()
+	{
+		CreateRenderTargets();
+		LoadMesh();
+		LoadShader();
+		SetUpState();
+		LoadBuffer();
+		LoadDefaultTexture();
+		LoadDefaultMaterial();
+
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
+	}
 }

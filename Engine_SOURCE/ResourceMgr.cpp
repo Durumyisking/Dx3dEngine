@@ -13,6 +13,14 @@ ResourceMgr::~ResourceMgr()
 
 }
 
+Material* ResourceMgr::CreateMaterial(std::wstring texture, eTextureSlot slot, std::wstring shaderName, std::wstring materialName)
+{
+	Material* mat = new Material(texture, slot, shaderName);
+	Insert<Material>(materialName, mat);
+	return mat;
+}
+
+
 Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring shaderName, std::wstring materialName)
 {
 	Material* mat = new Material(textureColor, shaderName);

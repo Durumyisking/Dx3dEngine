@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "ResourceMgr.h"
 #include "Material.h"
+#include "Mesh.h"
 
 Light::Light()
 	: Component(eComponentType::Light)

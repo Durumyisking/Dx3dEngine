@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "EngineResource.h"
 #include "SimpleMath.h"
-
+#include "Graphics.h"
 
 
 class Material;
@@ -16,7 +16,7 @@ public:
 	{
 		std::map<std::wstring, Resource*>::iterator iter = mResources.find(key);
 
-		// ÀÌ¹Ì µ¿ÀÏÇÑ Å°°ªÀ¸·Î ´Ù¸¥ ¸®¼Ò½º°¡ ¸ÕÀú µî·ÏµÇ¾î ÀÖ¾ú´Ù.
+		// ì´ë¯¸ ë™ì¼í•œ í‚¤ê°’ìœ¼ë¡œ ë‹¤ë¥¸ ë¦¬ì†ŒìŠ¤ê°€ ë¨¼ì € ë“±ë¡ë˜ì–´ ìˆì—ˆë‹¤.
 		if (iter != mResources.end())
 		{
 			return dynamic_cast<T*>(iter->second);
@@ -44,15 +44,15 @@ public:
 	template <typename T>
 	T* Load(const std::wstring& key, const std::wstring& path)
 	{
-		// Å°°ªÀ¸·Î Å½»ö
+		// í‚¤ê°’ìœ¼ë¡œ íƒìƒ‰
 		T* resource = GETSINGLE(ResourceMgr)->Find<T>(key);
 		if (nullptr != resource)
 		{
-			// ÇØ´çÅ°·Î ÀÌ¹Ì ·ÎµùµÈ°Ô ÀÖÀ¸¸é ÇØ´ç ¸®¼Ò½º¸¦ ¹İÈ¯
+			// í•´ë‹¹í‚¤ë¡œ ì´ë¯¸ ë¡œë”©ëœê²Œ ìˆìœ¼ë©´ í•´ë‹¹ ë¦¬ì†ŒìŠ¤ë¥¼ ë°˜í™˜
 			return resource;
 		}
 
-		// ÇØ´ç Å°·Î ·ÎµùµÈ ¸®¼Ò½º°¡ ¾ø´Ù.
+		// í•´ë‹¹ í‚¤ë¡œ ë¡œë”©ëœ ë¦¬ì†ŒìŠ¤ê°€ ì—†ë‹¤.
 		resource = new T();
 		if (FAILED(resource->Load(path)))
 		{
@@ -86,6 +86,7 @@ public:
 		}
 	}
 
+	Material* CreateMaterial(std::wstring texture, eTextureSlot slot, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName, std::wstring materialName);

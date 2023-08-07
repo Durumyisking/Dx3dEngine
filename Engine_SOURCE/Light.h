@@ -1,9 +1,9 @@
 #pragma once
 #include "Component.h"
 #include "Graphics.h"
-#include "Mesh.h"
 
-
+class Mesh;
+class Material;
 class Light :
     public Component
 {
