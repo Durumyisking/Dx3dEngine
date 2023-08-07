@@ -4,103 +4,94 @@
 
 Material::Material()
 	:Resource(eResourceType::Material)
-	, mMode(eRenderingMode::Transparent)
+	, mMode(eRenderingMode::Opaque)
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 }
 Material::Material(std::wstring textureColor, std::wstring shaderName)
 	: Resource(eResourceType::Material)
-	, mMode(eRenderingMode::Transparent)
+	, mMode(eRenderingMode::Opaque)
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
+
 
 }
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName)
 	: Resource(eResourceType::Material)
-	, mMode(eRenderingMode::Transparent)
+	, mMode(eRenderingMode::Opaque)
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
 	mTexture[static_cast<UINT>(eTextureSlot::Normal)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
+
 
 }
 
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName)
 	: Resource(eResourceType::Material)
-	, mMode(eRenderingMode::Transparent)
+	, mMode(eRenderingMode::Opaque)
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
 	mTexture[static_cast<UINT>(eTextureSlot::Normal)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
 	mTexture[static_cast<UINT>(eTextureSlot::Metallic)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureMetal);
-	mBRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
-	
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
 
 }
 
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName)
 	: Resource(eResourceType::Material)
-	, mMode(eRenderingMode::Transparent)
+	, mMode(eRenderingMode::Opaque)
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
 	mTexture[static_cast<UINT>(eTextureSlot::Normal)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
 	mTexture[static_cast<UINT>(eTextureSlot::Metallic)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureMetal);
 	mTexture[static_cast<UINT>(eTextureSlot::Roughness)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureRoughness);
-	mBRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
-	
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
+
 
 }
 
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring textureEmissive, std::wstring shaderName)
 	: Resource(eResourceType::Material)
-	, mMode(eRenderingMode::Transparent)
+	, mMode(eRenderingMode::Opaque)
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
@@ -108,9 +99,13 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	mTexture[static_cast<UINT>(eTextureSlot::Metallic)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureMetal);
 	mTexture[static_cast<UINT>(eTextureSlot::Roughness)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureRoughness);
 	mTexture[static_cast<UINT>(eTextureSlot::Emissive)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureEmissive);
-	mBRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
 
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
+
 
 }
 
@@ -118,17 +113,18 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 
 Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring shaderName)
 	: Resource(eResourceType::Material)
-	, mMode(eRenderingMode::Transparent)
+	, mMode(eRenderingMode::Opaque)
 	, mMaterialConstantBuffer{}
 	, mShader(nullptr)
 	, mTexture{}
-	, mBRDF(nullptr)
-	, mmetallic(0.f)
-	, mRoughness(0.f)
-	, mAO(0.f)
 {
 	mTexture[static_cast<UINT>(slot)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureName);
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
 
 }
 
@@ -215,11 +211,23 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::Matrix_4:
 		mMaterialConstantBuffer.matrix4 = *static_cast<Matrix*>(data);
 		break;
-	case eGPUParam::bTextureExistence:
-		mMaterialConstantBuffer.bTextureExistence = *static_cast<int*>(data);
+	case eGPUParam::bAlbedo:
+		mMaterialConstantBuffer.bAlbedo = *static_cast<int*>(data);
 		break;
-	case eGPUParam::bmetallic:
-		mMaterialConstantBuffer.bmetallic = *static_cast<int*>(data);
+	case eGPUParam::bNormal:
+		mMaterialConstantBuffer.bNormal = *static_cast<int*>(data);
+		break;
+	case eGPUParam::bMetallic:
+		mMaterialConstantBuffer.bMetallic = *static_cast<int*>(data);
+		break;
+	case eGPUParam::bRoughness:
+		mMaterialConstantBuffer.bRoughness = *static_cast<int*>(data);
+		break;
+	case eGPUParam::bEmissive:
+		mMaterialConstantBuffer.bEmissive = *static_cast<int*>(data);
+		break;
+	case eGPUParam::Bool_1:
+		mMaterialConstantBuffer.bool1 = *static_cast<int*>(data);
 		break;
 	case eGPUParam::Bool_2:
 		mMaterialConstantBuffer.bool2 = *static_cast<int*>(data);
@@ -232,6 +240,7 @@ void Material::SetData(eGPUParam param, void* data)
 	}
 
 }
+
 void Material::Bind()
 {
 	for (UINT i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
@@ -239,24 +248,35 @@ void Material::Bind()
 		if (nullptr == mTexture[i])
 			continue;
 
-		mTexture[i]->BindShaderResource(eShaderStage::VS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::HS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::DS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::GS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::PS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::CS, i);
+		mTexture[i]->BindAllShaderResource(i);
 	}
 
-	if (nullptr != mBRDF)
+	if (mTexture[static_cast<UINT>(eTextureSlot::Albedo)])
 	{
-		mBRDF->BindShaderResource(eShaderStage::VS, 11);
-		mBRDF->BindShaderResource(eShaderStage::PS, 11);
+		mMaterialConstantBuffer.bAlbedo = 1;
 	}
+	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Normal)])
+	{
+		mMaterialConstantBuffer.bNormal = 1;
+	}
+	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Metallic)])
+	{
+		renderer::BindPBRProprerties();
 
-	BindingTextures();	
+		mMaterialConstantBuffer.bMetallic = 1;
+	}
+	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Roughness)])
+		mMaterialConstantBuffer.bRoughness = 1;
+
+	ConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::Material];
+	pCB->SetData(&mMaterialConstantBuffer);
+	pCB->Bind(eShaderStage::VS);
+	pCB->Bind(eShaderStage::GS);
+	pCB->Bind(eShaderStage::PS);
 
 	mShader->Bind();
 }
+
 void Material::Clear()
 {
 	for (size_t i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
@@ -266,10 +286,6 @@ void Material::Clear()
 
 		mTexture[i]->Clear();
 	}
-
-	ConstantBuffer* pCB = renderer::constantBuffers[static_cast<UINT>(eCBType::Material)];
-	pCB->Clear();
-
 }
 void Material::SetShaderByKey(std::wstring key)
 {
@@ -277,39 +293,4 @@ void Material::SetShaderByKey(std::wstring key)
 	mShader = shader;
 }
 
-void Material::BindingTextures()
-{
-	ConstantBuffer* pMaterialCB = renderer::constantBuffers[static_cast<UINT>(eCBType::Material)];
-
-	// 텍스처 개수
-	mMaterialConstantBuffer.bTextureExistence = 0;
-
-	if (mTexture[0]) // color가 있습니다.
-	{
-		++mMaterialConstantBuffer.bTextureExistence;
-	}
-	if (mTexture[1]) // normal이 있습니다.
-	{
-		++mMaterialConstantBuffer.bTextureExistence;
-	}
-	if (mTexture[2]) // Metal이 있습니다.
-	{
-		++mMaterialConstantBuffer.bTextureExistence;
-	}
-	if (mTexture[3]) // Roughness가 있습니다.
-	{
-		++mMaterialConstantBuffer.bTextureExistence;
-	}
-	if (mTexture[4]) // Emissive가 있습니다.
-	{
-		++mMaterialConstantBuffer.bTextureExistence;
-	}
-
-//	mMaterialConstantBuffer.CamPosition = renderer::mainCamera->GetOwner()->GetComponent<Transform>()->GetWorldPosition();
-
-	pMaterialCB->SetData(&mMaterialConstantBuffer);
-	pMaterialCB->Bind(eShaderStage::VS);
-	pMaterialCB->Bind(eShaderStage::GS);
-	pMaterialCB->Bind(eShaderStage::PS);
-}
 

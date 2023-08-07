@@ -27,6 +27,21 @@ void Texture::Clear(UINT startSlot)
 	GetDevice()->BindShaderResource(eShaderStage::PS, startSlot, &srv);
 }
 
+void Texture::Clears()
+{
+	for (UINT i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
+	{
+		ID3D11ShaderResourceView* srv = nullptr;
+		GetDevice()->BindShaderResource(eShaderStage::VS, i, &srv);
+		GetDevice()->BindShaderResource(eShaderStage::DS, i, &srv);
+		GetDevice()->BindShaderResource(eShaderStage::GS, i, &srv);
+		GetDevice()->BindShaderResource(eShaderStage::HS, i, &srv);
+		GetDevice()->BindShaderResource(eShaderStage::CS, i, &srv);
+		GetDevice()->BindShaderResource(eShaderStage::PS, i, &srv);
+	}
+}
+
+
 bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 {
 	mDesc.BindFlags = bindflag;
@@ -144,7 +159,7 @@ HRESULT Texture::Load(const std::wstring& path)
 			
 
 	wchar_t szExtension[256] = {};
-	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // °æ·Î¿¡¼­ È®ÀåÀÚ¸¸ »Ì¾Æ¿À´Â ³à¼®
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // ê²½ë¡œì—ì„œ í™•ìž¥ìžë§Œ ë½‘ì•„ì˜¤ëŠ” ë…€ì„
 
 	std::wstring extension(szExtension);
 
@@ -185,7 +200,7 @@ HRESULT Texture::Load(const std::wstring& path)
 Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 {
 	wchar_t szExtension[256] = {};
-	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // °æ·Î¿¡¼­ È®ÀåÀÚ¸¸ »Ì¾Æ¿À´Â ³à¼®
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // ê²½ë¡œì—ì„œ í™•ìž¥ìžë§Œ ë½‘ì•„ì˜¤ëŠ” ë…€ì„
 
 	std::wstring extension(szExtension);
 
@@ -228,6 +243,22 @@ Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 void Texture::BindShaderResource(eShaderStage stage, UINT slot)
 {
 	GetDevice()->BindShaderResource(stage, slot, mSRV.GetAddressOf());
+}
+
+void Texture::BindShaderResource_VP(UINT slot)
+{
+	GetDevice()->BindShaderResource(eShaderStage::VS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::PS, slot, mSRV.GetAddressOf());
+}
+
+void Texture::BindAllShaderResource(UINT slot)
+{
+	GetDevice()->BindShaderResource(eShaderStage::VS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::DS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::GS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::HS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::CS, slot, mSRV.GetAddressOf());
+	GetDevice()->BindShaderResource(eShaderStage::PS, slot, mSRV.GetAddressOf());
 }
 
 void Texture::BindUnorderedAccessview(UINT slot)

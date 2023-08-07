@@ -34,6 +34,8 @@
 
 #include "InputMgr.h"
 
+#include "SkyBox.h"
+
 extern Application application;
 
 
@@ -92,28 +94,34 @@ void SceneTitle::Enter()
 		mCamera->AddComponent<CameraScript>(eComponentType::Script);
 		renderer::mainCamera = cameraComp;
 		cameraComp->SetProjectionType(eProjectionType::Perspective);
-		mCamera->SetPos(Vector3(0.f, 15.f, 0.f));
+		mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
 
 	}
-
-
+	
 	{
-		GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
+		SkyBox* box = object::Instantiate<SkyBox>(eLayerType::BackGround, L"TitleSkyBox");
+		box->TextureLoad(L"TitleSky", L"..//Resources//SkyCityNightStar_color.png");
 
-		MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-
-		gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
-		gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
-		gridMr->LODOff();
-
-		GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
-		gridScript->SetCamera(mainCamera);
-
-		float w = static_cast<float>(application.GetWidth());
-		float h = static_cast<float>(application.GetHeight());
-		gridObject->SetPos({ 0.f, 0.f, 0.f });
-		gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
 	}
+
+
+	//{
+	//	GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
+
+	//	MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+
+	//	gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
+	//	gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
+	//	gridMr->LODOff();
+
+	//	GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
+	//	gridScript->SetCamera(mainCamera);
+
+	//	float w = static_cast<float>(application.GetWidth());
+	//	float h = static_cast<float>(application.GetHeight());
+	//	gridObject->SetPos({ 0.f, 0.f, 0.f });
+	//	gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
+	//}
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
@@ -124,10 +132,10 @@ void SceneTitle::Enter()
 		lightComp->SetType(eLightType::Directional);
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
-		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
-		MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		mr->SetMaterialByKey(L"SunMaterial");
-		mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
+//		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
+		//MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		//mr->SetMaterialByKey(L"SunMaterial");
+		//mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
 	
 
@@ -136,8 +144,6 @@ void SceneTitle::Enter()
 		player->SetPos(Vector3(5.f, 5.f, 5.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"albedo", L"normal", L"PhongShader", L"mat_dirt");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"padded_leather_albedo", L"padded_leather_normal", L"padded_leather_metallic", L"padded_leather_roughness", L"PBRShader", L"mat_dirt");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
 			L"check_albedo",
@@ -147,7 +153,6 @@ void SceneTitle::Enter()
 			L"PBRShader",
 			L"mat_dirt"
 		);
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
@@ -163,70 +168,26 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
+	
 	{
-		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
-		player->SetScale({ 0.1f, 0.1f, 0.1f });
-		player->SetName(L"Object");
 
-		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		(
-			L"BrickBlockBody_alb",
-			L"BrickBlockBody_nrm",
-			L"BrickBlockBody_mtl",
-			L"BrickBlockBody_rgh",
-			L"PBRShader",
-			L"mat_brick"
-		);
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
-
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
-		player->GetComponent<MeshRenderer>()->SetModel(model);
-		model->SetOwner(player);
-
-		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(5.f, 10.f, 5.f));
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-	}
-	/*{
-		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
+	/*	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
 		player->SetPos(Vector3(10.f, 0.f, 0.f));
-		player->SetScale({ 0.1f, 0.1f, 0.1f });
+		player->SetScale({ 0.01f, 0.01f, 0.01f });
 		player->SetName(L"Object");
 
 		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		(
-			L"BrickBlockBody_alb",
-			L"BrickBlockBody_nrm",
-			L"BrickBlockBody_mtl",
-			L"BrickBlockBody_rgh",
-			L"PhongShader",
-			L"mat_brick2"
-		);
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
-		player->GetComponent<MeshRenderer>()->SetModel(model);
+		meshRenderer->SetModel(model);
+		meshRenderer->SetMaterialByKey(L"BlockBrickBody");
 
-		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(5.f, 10.f, 5.f));
+		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-	}*/
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);*/
+	}
 	
-
-	//{
-	//	
-	//	Sphere* sphere = object::Instantiate<Sphere>(eLayerType::PhysicalObject);
-	//	sphere->SetPos(Vector3(-5.f, 20.f, 5.f));
-	//	sphere->SetScale({ 2.5f, 2.5f, 2.5f });
-	//	sphere->SetName(L"Sphere");
-	//	sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-
-	//}
-
-
 	{
 		/*GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
@@ -240,6 +201,42 @@ void SceneTitle::Enter()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);*/
 	}
 
+
+	//{
+		//GameObj* skyBox = object::Instantiate<GameObj>(eLayerType::Objects);
+		//skyBox->SetPos(Vector3(0.f, 5.f, 0.f));
+		//skyBox->SetScale({ 5.f, 5.f, 5.f });
+		//skyBox->SetName(L"Skybox");
+		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		//(
+		//	L"Skybox",
+		//	eTextureSlot::Skybox,
+		//	L"SkyboxShader",
+		//	L"SkyboxMat"
+		//);
+		//MeshRenderer* mr = skyBox->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		//mr->SetMaterial(mat);
+		//mr->SetMeshByKey(L"Spheremesh");
+	//}
+
+
+	// DebugTest
+	{ 
+		//Deferred
+		{
+			GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);
+			test2->SetPos(Vector3(-10.f, 5.f, 0.f));
+			test2->SetScale({ 5.f, 5.f, 5.f });
+			test2->SetName(L"Test2");
+
+			test2->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			MeshRenderer* testRender = test2->GetComponent<MeshRenderer>();
+			Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"DeferredMaterial");
+
+			testRender->SetMaterial(testMaterial);
+			testRender->SetMeshByKey(L"Cubemesh");
+		}		
+	}
 
 	Scene::Enter();
 }

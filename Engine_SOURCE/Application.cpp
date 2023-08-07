@@ -32,8 +32,6 @@ Application::~Application()
 
 void Application::Initialize()
 {
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
-
 	GETSINGLE(TimeMgr)->Initialize();
 	GETSINGLE(InputMgr)->Initialize();
 	GETSINGLE(Fmod)->Initialize();
@@ -76,8 +74,9 @@ void Application::Render()
 		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::Render();
-		mGraphicDevice->Clear();
+
 		mGraphicDevice->AdjustViewPorts();
+		renderer::ClearRenderTargets(); // mGraphicDevice::Clear 대신 렌더타겟 클리어
 
 		renderer::Render();
 		GETSINGLE(SceneMgr)->Render();

@@ -25,7 +25,10 @@ public:
 	void SetMaterialByKey(std::wstring key);
 	void SetAnimMaterial(Material* material, Vector2 spriteSize);
 
+	
 	GETSET(Model*, mModel, Model)
+
+
 
 	Mesh* GetMesh() const { return mMesh; }
 	Material* GetMaterial() const { return mMaterial; }

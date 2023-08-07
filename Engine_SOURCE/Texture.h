@@ -22,6 +22,7 @@ public:
 	virtual ~Texture();
 
 	static void Clear(UINT startSlot);
+	static void Clears();
 
 	bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag);
 	bool Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture);
@@ -29,6 +30,8 @@ public:
 	Texture* Load(const std::wstring& path, const Model::TextureInfo& info);
 
 	void BindShaderResource(eShaderStage stage, UINT slot);
+	void BindShaderResource_VP(UINT slot);
+	void BindAllShaderResource(UINT slot);
 	void BindUnorderedAccessview(UINT slot);
 	void ClearUnorderedAccessview(UINT slot);
 

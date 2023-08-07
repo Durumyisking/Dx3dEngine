@@ -8,12 +8,14 @@
 #include "BaseRenderer.h"
 #include "TimeMgr.h"
 #include "Layer.h"
+#include "ResourceMgr.h"
 
 extern Application application;
 
 
 
 Matrix Camera::View = Matrix::Identity;
+Matrix Camera::InverseView = Matrix::Identity;
 Matrix Camera::Projection = Matrix::Identity;
 
 Camera::Camera()
@@ -47,12 +49,12 @@ void Camera::Update()
 	if (mTargetObj)
 	{
 
-		Vector2 v2Start = Vector2(GetOwner()->GetPos().x,  GetOwner()->GetPos().y);
-		Vector2 v2Dest = Vector2(mTargetObj->GetPos().x,  mTargetObj->GetPos().y);
+		Vector2 v2Start = Vector2(GetOwner()->GetPos().x, GetOwner()->GetPos().y);
+		Vector2 v2Dest = Vector2(mTargetObj->GetPos().x, mTargetObj->GetPos().y);
 
 		mFarDist = (v2Start - v2Dest).Length();
 
-		if(mSmooth)
+		if (mSmooth)
 			mCamSpeed = mFarDist / mTime;
 
 		if (mFarDist < 0.001f)
@@ -76,27 +78,52 @@ void Camera::FixedUpdate()
 void Camera::Render()
 {
 	View = mView;
+	InverseView = View.Invert();
 	Projection = mProjection;
 
 	sortGameObjects();
 
+	// Deferred Opaque Render 
+	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
+	renderDeferred();
+
+	// Deferred light Render
+	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
+	renderer::BindPBRProprerties();
+
+	for (Light* light : renderer::lights)
+	{
+		light->Render();
+	}
+
+	//SwapChain
+	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+
+	// Deferred + SwapChain Merge
+	Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
+	Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
+	rectMesh->BindBuffer();
+	mergeMaterial->Bind();
+	rectMesh->Render();
+
+	// Forward Render
 	renderOpaque();
 	renderCutout();
 	renderTransparent();
-}	
+}
 
 void Camera::CreateViewMatrix()
 {
 	Transform* transform = GetOwner()->GetComponent<Transform>();
-		
-	// ÀÌµ¿Á¤º¸
+
+	// ì´ë™ì •ë³´
 	Vector3 translation = transform->GetPosition();
 
 	// create view translation matrix
 	mView = Matrix::Identity;
 	mView *= Matrix::CreateTranslation(-translation);
-		
-	// È¸ÀüÁ¤º¸
+
+	// íšŒì „ì •ë³´
 	Vector3 up = transform->Up();
 	Vector3 right = transform->Right();
 	Vector3 foward = transform->Forward();
@@ -109,7 +136,7 @@ void Camera::CreateViewMatrix()
 	mView *= viewRotate;
 
 }
-		
+
 void Camera::CreateProjectionMatrix()
 {
 	RECT winRect;
@@ -126,13 +153,13 @@ void Camera::CreateProjectionMatrix()
 	}
 	else // (mType == eProjectionType::Orthographic)
 	{
-		mProjection = Matrix::CreateOrthographic(width , height , mNear, mFar);
+		mProjection = Matrix::CreateOrthographic(width, height, mNear, mFar);
 	}
 
 }
 
 void Camera::RegisterCameraInRenderer()
-{	
+{
 	UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
 	renderer::Cameras[type].push_back(this);
 }
@@ -154,6 +181,7 @@ void Camera::SetTarget(GameObj* target)
 
 void Camera::sortGameObjects()
 {
+	mDeferredOpaqueGameObjects.clear();
 	mOpaqueGameObjects.clear();
 	mCutoutGameObjects.clear();
 	mTransparentGameObjects.clear();
@@ -178,6 +206,17 @@ void Camera::sortGameObjects()
 		}
 	}
 
+}
+
+void Camera::renderDeferred()
+{
+	for (GameObj* obj : mDeferredOpaqueGameObjects)
+	{
+		if (renderPassCheck(obj))
+		{
+			obj->Render();
+		}
+	}
 }
 
 void Camera::renderOpaque()
@@ -208,7 +247,19 @@ void Camera::renderTransparent()
 	{
 		if (renderPassCheck(obj))
 		{
-			obj->Render();				
+			obj->Render();
+		}
+	}
+}
+
+void Camera::renderPostProcess()
+{
+	for (GameObj* obj : mPostProcessGameObjects)
+	{
+		if (renderPassCheck(obj))
+		{
+			renderer::CopyRenderTarget();
+			obj->Render();
 		}
 	}
 }
@@ -227,6 +278,10 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 
 	switch (mode)
 	{
+	case eRenderingMode::DeferredOpaque:
+	case eRenderingMode::DeferredMask:
+		mDeferredOpaqueGameObjects.push_back(obj);
+		break;
 	case eRenderingMode::Opaque:
 		mOpaqueGameObjects.push_back(obj);
 		break;
@@ -261,6 +316,6 @@ bool Camera::renderPassCheck(GameObj* obj)
 			return false;
 		}
 	}
-		
+
 	return true;
 }

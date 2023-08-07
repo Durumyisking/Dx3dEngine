@@ -5,7 +5,9 @@
 #include "def.h"
 #include "StructedBuffer.h"
 #include "Material.h"
+
 #include "TimeMgr.h"
+#include "ResourceMgr.h"
 
 namespace fs = std::filesystem;
 
@@ -29,7 +31,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// ÆÄÀÏ ·Îµå ½ÇÆÐ
+		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
 		return E_FAIL;
 	}
 	
@@ -81,21 +83,21 @@ HRESULT Model::Load(const std::wstring& path)
 			forwardVec.x, forwardVec.y, forwardVec.z, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f);
 
-		// assimp Ç×µî Çà·ÄÀÌ °£È¤ ¾Æ´Ñ °æ¿ì°¡ÀÖÀ½ (assimp ¹ö±× ¼öÁ¤ ÄÚµå)
-		// µû¶ó¼­ Ã¹ ³ëµå Å½»öÀü¿¡ ÃÖ»óÀ§ ³ëµåÀÇ Çà·ÄÀ» Ç×µîÇà·Ä·Î ¸¸µç´Ù
+		// assimp ï¿½×µï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¤ ï¿½Æ´ï¿½ ï¿½ï¿½ì°¡ï¿½ï¿½ï¿½ï¿½ (assimp ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½)
+		// ï¿½ï¿½ï¿½ï¿½ Ã¹ ï¿½ï¿½ï¿½ Å½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×µï¿½ï¿½ï¿½Ä·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 		aiscene->mRootNode->mTransformation = aiMatrix4x4() * mat;
 	}
 
 	std::wstring sceneName = ConvertToW_String(aiscene->mName.C_Str());
 	mRootNodeName = ConvertToW_String(aiscene->mRootNode->mName.C_Str());
 
-	// ³ëµå Å½»ö 
+	// ï¿½ï¿½ï¿½ Å½ï¿½ï¿½ 
 	recursiveProcessNode(aiscene->mRootNode, aiscene, nullptr);
 
 	if (mStructure == nullptr)
 	{
 		mStructure = new StructedBuffer();
-		mStructure->Create(sizeof(BoneMat), mBones.size(), eSRVType::SRV, nullptr, true);
+		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
 	}
 
 
@@ -106,7 +108,8 @@ HRESULT Model::Load(const std::wstring& path)
 
 ModelNode* Model::FindNode(const std::wstring& nodeName)
 {
-	// ´Ü¾î°¡ Æ÷ÇÔµÈ ³ëµå¸¦ Å½»ö
+	// ï¿½Ü¾î°¡ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½å¸¦ Å½ï¿½ï¿½
+
 	for (auto& iter : mNodes)
 	{
 		if (iter.second->mName.find(nodeName) != std::wstring::npos)
@@ -120,14 +123,14 @@ ModelNode* Model::FindNode(const std::wstring& nodeName)
 
 Bone* Model::FindBone(const std::wstring& nodeName)
 {
-	// Å½»ö ½ÇÆÐ½Ã nullptr ¹ÝÈ¯
+	// Å½ï¿½ï¿½ ï¿½ï¿½ï¿½Ð½ï¿½ nullptr ï¿½ï¿½È¯
 	return mBoneMap.find(nodeName) == mBoneMap.end() ? nullptr : mBoneMap.find(nodeName)->second;
 }
 
 void Model::RecursiveGetBoneMatirx()
 {
-	// ·çÆ®³ëµå¸¦ ½ÃÀÛÀ¸·Î ÇÏÀ§ ³ëµå¸¦ Å½»öÇÏ°í 
-	// mBonse ¿¡ Local, Final Çà·ÄÀ» Ã¤¿î´Ù
+	// ï¿½ï¿½Æ®ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å¸¦ Å½ï¿½ï¿½ï¿½Ï°ï¿½ 
+	// mBonse ï¿½ï¿½ Local, Final ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½
 	const ModelNode* node = FindNode(mRootNodeName);
 	if (node == nullptr)
 		return;
@@ -148,10 +151,10 @@ void Model::Bind_Render()
 	BoneMat boneInfo = {};
 	std::vector<BoneMat> boneMat = {};
 
-	// º» transform °è»ê
+	// ï¿½ï¿½ transform ï¿½ï¿½ï¿½
 	RecursiveGetBoneMatirx();
 
-	// Å½»öÈÄ °è»êµÈ º»µéÀÇ Çà·ÄÀ» ¹è¿­·Î ÀúÀåÈÄ GPU ¿¡ ¹ÙÀÎµù
+	// Å½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ GPU ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
 	boneMat.reserve(mBones.size());
 
 	for (Bone* bone : mBones)
@@ -165,7 +168,7 @@ void Model::Bind_Render()
 	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
 	mStructure->BindSRV(eShaderStage::VS, 30);
 
-	// ·»´õ
+	// ï¿½ï¿½ï¿½ï¿½
 	for (size_t i = 0; i < mMeshes.size(); ++i)
 	{
 		if (mMeshes[i] == nullptr)
@@ -174,7 +177,7 @@ void Model::Bind_Render()
 		if (mMaterials[i] == nullptr)
 			continue;
 
-		//ÅØ½ºÃ³ ¹ÙÀÎµù
+		//ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½Îµï¿½
 		std::vector<Texture*> Textures = GetTexture(i);
 		for (int slot = 0; slot < Textures.size(); ++slot)
 		{
@@ -184,10 +187,10 @@ void Model::Bind_Render()
 			mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
 		}
 
-		//¸ÓÅÍ¸®¾ó ¹ÙÀÎµù
+		//ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
 		mMaterials[i]->Bind();
 
-		// ¸Þ½¬µéÀÇ ¹ÙÀÎµù
+		// ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
@@ -204,7 +207,7 @@ void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* 
 	std::wstring wNodeName = ConvertToW_String(node->mName.C_Str());
 	std::map<std::wstring, ModelNode*>::iterator iter = mNodes.find(wNodeName);
 	ModelNode* curNode = nullptr;
-	// ÀÎÀÚ·Î µé¾î¿Â Node °¡ Ã³À½ µé¾î ¿Â°æ¿ì
+	// ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½ Node ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Â°ï¿½ï¿½
 	if (iter == mNodes.end())
 	{
 		ModelNode* modelnode = new ModelNode();
@@ -216,7 +219,7 @@ void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* 
 		mNodes.insert(std::pair<std::wstring, ModelNode*>(modelnode->mName, modelnode));
 		curNode = mNodes.find(wNodeName)->second;
 	}
-	else // ÀÎÀÚ·Î µé¾î¿Â Node Name ÀÌ Áßº¹µÈ °æ¿ì
+	else // ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½ Node Name ï¿½ï¿½ ï¿½ßºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	{
 		curNode = iter->second;
 		if (curNode->mRootNode != nullptr)
@@ -228,14 +231,14 @@ void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* 
 	if (rootNode)
 		rootNode->mChilds.emplace_back(curNode);
 
-	// ÇöÀç ³ëµåÀÇ ¸Þ½¬¸¦ ¼øÈ¸
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	for (UINT i = 0; i < node->mNumMeshes; ++i)
 	{
 		aiMesh* aiMesh = scene->mMeshes[node->mMeshes[i]];
 		recursiveProcessMesh(aiMesh, scene, wNodeName);
 	}
 
-	// ÇöÀç ³ëµåÀÇ ÀÚ½ÄÀ» ¼øÈ¸
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	for (UINT i = 0; i < node->mNumChildren; ++i)
 	{
 		recursiveProcessNode(node->mChildren[i], scene, curNode);
@@ -250,28 +253,29 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
-	// Á¤Á¡ Á¤º¸ ·Îµå
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
 	vertexes.reserve(mesh->mNumVertices);
+
 	for (UINT i = 0; i < mesh->mNumVertices; ++i)
 	{
 		renderer::Vertex vertex = {};
 		math::Vector3 pos = {};
 
-		// Á¤Á¡ À§Ä¡
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 		pos.x = mesh->mVertices[i].x;
 		pos.y = mesh->mVertices[i].y;
 		pos.z = mesh->mVertices[i].z;
 		vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
 
 
-		// Á¤Á¡ ³ë¸»
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ë¸»
 		math::Vector3 normal = {};
 		normal.x = mesh->mNormals[i].x;
 		normal.y = mesh->mNormals[i].y;
 		normal.z = mesh->mNormals[i].z;
 		vertex.normal = normal;
 
-		// ÅºÁ¨Æ®
+		// Åºï¿½ï¿½Æ®
 		math::Vector3 tangent = {};
 		tangent.x = mesh->mTangents[i].x;
 		tangent.y = mesh->mTangents[i].y;
@@ -295,7 +299,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		vertexes.emplace_back(vertex);
 	}
 
-	// ÀÎµ¦½º Á¤º¸ ·Îµå
+	// ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
 	indexes.reserve(mesh->mNumFaces);
 	for (UINT i = 0; i < mesh->mNumFaces; ++i)
 	{
@@ -306,13 +310,14 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		}
 	}
 
+
 	for (int i = 0; i < mesh->mNumBones; ++i)
 	{
 		Bone* bone = nullptr;
 		aiBone* aiBone = mesh->mBones[i];
 
 		UINT bonIndex = 0;
-		// º» Á¤º¸°¡ Ã³À½ ÀÎ°æ¿ì
+		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½Î°ï¿½ï¿½
 		if (mBoneMap.end() == mBoneMap.find(ConvertToW_String(aiBone->mName.C_Str())))
 		{
 			bone = new Bone();
@@ -324,7 +329,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 			bonIndex = bone->mIndex;
 		}
-		else // º»Á¤º¸°¡ ÀÖ´ø °æ¿ì
+		else // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
 		{
 			bone = mBoneMap.find(ConvertToW_String(aiBone->mName.C_Str()))->second;
 			bone->mOffsetMatrix = aiBone->mOffsetMatrix;
@@ -334,7 +339,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		}
 
 
-		// Á¤Á¡¿¡ ÀÎµ¦½º¿Í °¡ÁßÄ¡ ¼³Á¤
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 		for (int j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
 		{
 			UINT vertexID = mesh->mBones[i]->mWeights[j].mVertexId;
@@ -363,7 +368,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		}
 	}
 
-	// material Á¤º¸ ·Îµå
+	// material ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
 	if (mesh->mMaterialIndex >= 0)
 	{
 		// TextureLoad
@@ -371,9 +376,10 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		std::vector<Model::TextureInfo> textureBuff = {};
 		for (int type = static_cast<int>(aiTextureType_NONE); type < static_cast<int>(aiTextureType_UNKNOWN); ++type)
 		{
-			std::vector<Model::TextureInfo> texInfo = processMaterial(aiMater, (aiTextureType)type);
+			std::vector<Model::TextureInfo> texInfo = processMaterial(aiMater, static_cast<aiTextureType>(type));
 			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
 		}
+
 		mTextures.emplace_back(textureBuff);
 
 		std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
@@ -386,7 +392,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 			tex.pTex->Load(tex.texPath, tex);
 		}
 
-		//Material »ý¼º
+		//Material ï¿½ï¿½ï¿½ï¿½
 		Material* inMaterial = new Material();
 		inMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
@@ -395,10 +401,10 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		mMaterials.emplace_back(inMaterial);
 	}
 
-	// ¸ðµ¨ °´Ã¼ »ý¼º
+	// ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 	Mesh* inMesh = new Mesh();
-	inMesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
-	inMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
+	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
 
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
@@ -452,11 +458,52 @@ void Model::CreateTexture()
 			Texture* tex = new Texture();
 			tex->Load(texInfo.texPath, texInfo);
 
-			texInfo.texID = tex->GetID();
+			texInfo.texID = static_cast<UINT>(tex->GetID());
 			texInfo.pTex = tex;
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(texInfo.texName, texInfo.pTex);
 		}
+	}
+}
+
+void Model::CreateMaterial()
+{
+	Material* inMaterial = new Material();
+	std::wstring matName = {};
+	for (auto& textureVec : mTextures)
+	{
+		for (TextureInfo texInfo : textureVec)
+		{
+			switch (texInfo.type)
+			{
+			case aiTextureType_DIFFUSE:
+			{
+				inMaterial->SetTexture(eTextureSlot::Albedo, texInfo.pTex);
+				matName = texInfo.texName;
+				std::size_t found = matName.find(L"_");
+				if (found != std::wstring::npos) {
+					matName = matName.substr(0, found); // _ ì´ì „ê¹Œì§€ì˜ ë¬¸ìžì—´ ì¶”ì¶œ
+				}
+			}
+			break;
+			case aiTextureType_EMISSIVE:
+				inMaterial->SetTexture(eTextureSlot::Emissive, texInfo.pTex);
+				break;
+			case aiTextureType_NORMALS:
+				inMaterial->SetTexture(eTextureSlot::Normal, texInfo.pTex);
+				break;
+			case aiTextureType_METALNESS:
+				inMaterial->SetTexture(eTextureSlot::Metallic, texInfo.pTex);
+				break;
+			case aiTextureType_DIFFUSE_ROUGHNESS:
+				inMaterial->SetTexture(eTextureSlot::Roughness, texInfo.pTex);
+				break;
+			default:
+				break;
+			}
+		}
+		inMaterial->SetShaderByKey(L"PBRShader");
+		GETSINGLE(ResourceMgr)->Insert<Material>(matName, inMaterial);
 	}
 }
 
@@ -488,11 +535,11 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 		Bone* bone = mBoneMap.find(nodeName)->second;
 		aiMatrix4x4 glovalInvers = FindNode(L"Scene")->GetTransformation();
 
-		// bone->mOffsetMatrix - Á¤Á¡À» º» °ø°£À¸·Î ÀÌµ¿ ( world, view, projection ºñ½ÁÇÑ °³³ä)
-		// ¹ÙÀÎµå Æ÷ÁîÀÇ ¿ªÇà·ÄÀÌ´Ù
-		//matrix - ÇöÀç ³ëµå ±îÁöÀÇ º¯È¯µÈ Çà·Ä
-		// glovalInvers.Inverse() - Ç×µî Çà·ÄÀÇ ¿ª Á¤Á¡À» Àü¿ª °ø°£À¸·Î º¯È¯?
-		// ÀÖµç ¾øµç ÇöÀç ¶È°°ÀÌ µ¿ÀÛÇÏ±â¶§¹®¿¡ ¾ÆÁ÷ Á¤È®È÷´Â ¸ð¸£°Ú´Ù
+		// bone->mOffsetMatrix - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ( world, view, projection ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+		// ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½
+		//matrix - ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½
+		// glovalInvers.Inverse() - ï¿½×µï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯?
+		// ï¿½Öµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±â¶§ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È®ï¿½ï¿½ï¿½ï¿½ ï¿½ð¸£°Ú´ï¿½
 		bone->mFinalMatrix = glovalInvers.Inverse() * matrix * bone->mOffsetMatrix;
 		bone->mLocalMatrix = matrix;
 

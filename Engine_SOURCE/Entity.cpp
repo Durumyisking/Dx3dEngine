@@ -25,7 +25,7 @@ namespace gui
 	}
 
 	Entity::Entity(const char* name)
-		: mID(reinterpret_cast<uintptr_t>(this))
+		: mID	(reinterpret_cast<uintptr_t>(this))
 		, mName(name)
 	{
 	}

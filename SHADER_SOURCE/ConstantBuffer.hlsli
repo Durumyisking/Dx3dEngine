@@ -47,10 +47,15 @@ cbuffer Material : register(b1)
     matrix cbmat3;
     matrix cbmat4;
     
-    int cbtextureExistence;
-    int cbbool1;
-    int cbbool2;
-    int cbbool3;
+    int cbbAlbedo;
+    int cbbNormal;
+    int cbbMetallic;    
+    int cbbRoughness;
+
+    int cbbEmissive;
+    int cbbBool1;
+    int cbbBool2;
+    int cbbBool3;
 }
 
 cbuffer Grid : register(b2)
@@ -80,6 +85,7 @@ cbuffer Animation : register(b4)
 cbuffer LightCount : register(b5)
 {
     uint lightCount;
+    uint lightIndex;
 }
 
 cbuffer ParticleSystem : register(b6)
@@ -113,6 +119,6 @@ cbuffer ParticleSystem : register(b6)
 // postprocess b8
 
 
-cbuffer vvvconstant : register(b9) // ¾µ»ç¶÷ ¾²¼¼¿ä
+cbuffer vvvconstant : register(b9) // ì“¸ì‚¬ëžŒ ì“°ì„¸ìš”
 {
 }

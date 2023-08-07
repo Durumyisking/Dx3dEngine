@@ -3,15 +3,14 @@
 
 VTX_OUT main(VTX_IN _in)
 {
-    VTX_OUT output = (VTX_OUT) 0.f; // √ ±‚»≠
+    VTX_OUT output = (VTX_OUT) 0.f; // Ï¥àÍ∏∞Ìôî
   
-    float4 worldPosition = mul(vtxIn.vPos, world);
+    float4 worldPosition = mul(_in.vPos, world);
     float4 viewPosition = mul(worldPosition, view);
     float4 projectionPosition = mul(viewPosition, projection);
     
     output.vPos = projectionPosition;
-    output.vColor = vtxIn.vColor;
-    output.vUV = vtxIn.vUV;
+    output.vUV = _in.vUV;
 
-    return output; // æÍ∏¶ ∑πΩ∫≈Õ∂Û¿Ã¿˙ø° ∫∏≥ª¡‹
+    return output; // ÏñòÎ•º Î†àÏä§ÌÑ∞ÎùºÏù¥Ï†ÄÏóê Î≥¥ÎÇ¥Ï§å
 }

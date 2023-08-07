@@ -26,10 +26,10 @@ UINT Animation::update()
 	if (mbComplete)
 		return -1;
 
-	// ½Ã°£ Ã¼Å©
+	// ì‹œê°„ ì²´í¬
 	mTime += DT;
 
-	// ´©Àû ½Ã°£ÀÌ ÇØ´ç ÇÁ·¹ÀÓÀÇ À¯Áö½Ã°£À» ³Ñ¾î¼­¸é 
+	// ëˆ„ì  ì‹œê°„ì´ í•´ë‹¹ í”„ë ˆì„ì˜ ìœ ì§€ì‹œê°„ì„ ë„˜ì–´ì„œë©´ 
 	if (mSpriteSheet[mIndex].duration < mTime)
 	{
 		mTime = 0.f;
@@ -86,7 +86,7 @@ void Animation::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop
 	{
 		Sprite sprite = {};
 
-		// ½ºÇÁ¶óÀÌÆ®ÀÇ LT°¡ + »çÀÌÁî°¡ width¸¦ ³Ñ¾î°¡¸é ´ÙÀ½ÁÙ·Î ¹Ù²Û´Ù.
+		// ìŠ¤í”„ë¼ì´íŠ¸ì˜ LTê°€ + ì‚¬ì´ì¦ˆê°€ widthë¥¼ ë„˜ì–´ê°€ë©´ ë‹¤ìŒì¤„ë¡œ ë°”ê¾¼ë‹¤.
 		if (leftTop.x + (size.x * (float)i) >= width)
 		{
 			leftTop.x = 0.f;
@@ -95,7 +95,7 @@ void Animation::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop
 			CollSkipCount = i;
 		}
 
-		// uvÁÂÇ¥·Î ³Ñ±â±â À§ÇØ width, height·Î ³ª´«´Ù.
+		// uvì¢Œí‘œë¡œ ë„˜ê¸°ê¸° ìœ„í•´ width, heightë¡œ ë‚˜ëˆˆë‹¤.
 		sprite.LT = Vector2(
 			(leftTop.x + (size.x * (float)(i - CollSkipCount))) / width,
 			leftTop.y / height
@@ -112,7 +112,7 @@ void Animation::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop
 
 void Animation::BindShader()
 {
-	mAtlas->BindShaderResource(eShaderStage::PS, 12); // ¾ÆÆ²¶ó½º srv¿¡ ¹ÙÀÎµù
+	mAtlas->BindShaderResource(eShaderStage::PS, 29); // ì•„í‹€ë¼ìŠ¤ srvì— ë°”ì¸ë”©
 
 	ConstantBuffer* cb =  renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 
@@ -129,7 +129,7 @@ void Animation::BindShader()
 
 void Animation::BindSpriteToShader(renderer::AnimationCB _Sprite)
 {
-	mAtlas->BindShaderResource(eShaderStage::PS, 12);
+	mAtlas->BindShaderResource(eShaderStage::PS, 29);
 
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 
@@ -141,7 +141,7 @@ void Animation::BindSpriteToShader(renderer::AnimationCB _Sprite)
 void Animation::Clear()
 {
 	// GUITexture Clear
-	Texture::Clear(12);
+	Texture::Clear(29);
 
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 	renderer::AnimationCB data = {};
@@ -187,7 +187,7 @@ renderer::AnimationCB Animation::GetAnimationData()
 }
 
 
-// ÄÁ k s if¹® ¹­ÀÌ
-// ÄÁ j ÇÔ¼öÃ£±â
-// ÄÁ mm ÄÚµåºí·Ï ´İ°í ¿­±â
-// ÄÁÆ®·Ñ RO ÇÔ¼ö ±¸Á¶º¯°æ
+// ì»¨ k s ifë¬¸ ë¬¶ì´
+// ì»¨ j í•¨ìˆ˜ì°¾ê¸°
+// ì»¨ mm ì½”ë“œë¸”ë¡ ë‹«ê³  ì—´ê¸°
+// ì»¨íŠ¸ë¡¤ RO í•¨ìˆ˜ êµ¬ì¡°ë³€ê²½

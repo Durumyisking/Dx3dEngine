@@ -18,14 +18,14 @@ FileMgr::~FileMgr()
 
 void FileMgr::FileLoad(const std::wstring& path)
 {
-	// ÆÄÀÏ °æ·Î ¼³Á¤
+	// íŒŒì¼ ê²½ë¡œ ì„¤ì •
 	std::ifstream file(L"..//" + path, std::ios::in);
 
 	std::string buf = "";
-	// ÆÄÀÏÀÌ ¿­¸®Áö ¾ÊÀ¸¸é Window Á¾·á
+	// íŒŒì¼ì´ ì—´ë¦¬ì§€ ì•Šìœ¼ë©´ Window ì¢…ë£Œ
 	if (!file.is_open())
 	{
-		std::cout << "ÆÄÀÏÀÌ ¾ø½À´Ï´Ù" << std::endl;
+		std::cout << "íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤" << std::endl;
 		DestroyWindow(application.GetHwnd());
 	}
 
@@ -106,12 +106,12 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 	fs::path folderPath = std::string(fullPath.begin(), fullPath.end());
 
 	Model* parentModel = nullptr;
-	// Æú´õ ³»ºÎ ÆÄÀÏµéÀ» ¼øÈ¸ÇÏ¸ç Ãâ·Â
+	// í´ë” ë‚´ë¶€ íŒŒì¼ë“¤ì„ ìˆœíšŒí•˜ë©° ì¶œë ¥
 	for (const auto& entry : fs::directory_iterator(folderPath)) {
 		if (entry.is_regular_file())
 		{
 			wchar_t szExtension[256] = {};
-			_wsplitpath_s(entry.path().c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // °æ·Î¿¡¼­ È®ÀåÀÚ¸¸ »Ì¾Æ¿À´Â ³à¼®
+			_wsplitpath_s(entry.path().c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // ê²½ë¡œì—ì„œ í™•ì¥ìë§Œ ë½‘ì•„ì˜¤ëŠ” ë…€ì„
 
 			std::wstring extension(szExtension);
 
@@ -131,11 +131,12 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 
 			if (L".FBX" == extension || L".Fbx" == extension || L"fbx" == extension)
 			{
-				// FBX ÆÄÀÏ ·Îµå Å×½ºÆ®
+				// FBX íŒŒì¼ ë¡œë“œ í…ŒìŠ¤íŠ¸
 				//model->Load(entry.path());
 			}
 		}
 	}
+
 
 	return true;
 }

@@ -1,4 +1,4 @@
-#include "guiEditor.h"
+﻿#include "guiEditor.h"
 #include "Mesh.h"
 #include "ResourceMgr.h"
 #include "Material.h"
@@ -30,7 +30,7 @@
 #include "Graphics.h"
 
 #include "ResourceMgr.h"
-
+#include "InputMgr.h"
 
 
 extern Application application;
@@ -163,7 +163,10 @@ namespace gui
 
 		for (DebugMesh & mesh : renderer::debugMeshes)
 		{
-			DebugRender(mesh);
+			if (KEY_DOWN(V))
+			{
+				DebugRender(mesh);
+			}
 		}
 		renderer::debugMeshes.clear();
 	}

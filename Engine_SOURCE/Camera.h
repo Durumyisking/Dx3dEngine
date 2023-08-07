@@ -18,6 +18,7 @@ class Camera : public Component
 public:
 
 	__forceinline static Matrix& GetGpuViewMatrix() { return View; }
+	__forceinline static Matrix& GetGpuInverseViewMatrix() { return View; }
 	__forceinline static Matrix& GetGpuProjectionMatrix() { return Projection; }
 	__forceinline static void SetGpuViewMatrix(Matrix view) { View = view; }
 	__forceinline static void SetGpuProjectionMatrix(Matrix projection) { Projection = projection; }
@@ -61,9 +62,11 @@ public:
 
 private:
 	void sortGameObjects();
+	void renderDeferred();
 	void renderOpaque();
 	void renderCutout();
 	void renderTransparent();
+	void renderPostProcess();
 		
 	void pushGameObjectToRenderingModes(GameObj* obj);
 	bool renderPassCheck(GameObj* obj);
@@ -71,6 +74,7 @@ private:
 
 private:
 	static Matrix View;
+	static Matrix InverseView;
 	static Matrix Projection; // 모든 obj들의 해당 행렬은 동일함
 
 	Matrix mView;
@@ -85,6 +89,7 @@ private:
 	float mScale;
 
 	std::bitset<static_cast<UINT>(eLayerType::End)> mLayerMask;
+	std::vector<GameObj*> mDeferredOpaqueGameObjects;
 	std::vector<GameObj*> mOpaqueGameObjects;
 	std::vector<GameObj*> mCutoutGameObjects;
 	std::vector<GameObj*> mTransparentGameObjects;

@@ -2,8 +2,8 @@
 #include "Component.h"
 #include "Graphics.h"
 
-
-
+class Mesh;
+class Material;
 class Light :
     public Component
 {
@@ -16,12 +16,13 @@ public:
 	virtual void FixedUpdate();
 	virtual void Render();
 
+	void SetType(eLightType type);
+
 	LightAttribute& GetAttribute() { return mAttribute; }
 
 	void SetDiffuse(math::Vector4 diffuse) { mAttribute.diffuse = diffuse; }
 	void SetSpecular(math::Vector4 spec) { mAttribute.specular = spec; }
 	void SetAmbient(math::Vector4 ambient) { mAttribute.ambient = ambient; }
-	void SetType(enums::eLightType type) { mAttribute.type = type; }
 	void SetRadius(float radius) { mAttribute.radius = radius; }
 	void SetAngle(float angle) { mAttribute.angle = angle; }
 
@@ -30,9 +31,12 @@ public:
 	enums::eLightType GetType() { return mAttribute.type; }
 	float GetRadius() { return mAttribute.radius; }
 	float GetAngle() { return mAttribute.angle; }
-
+	void SetIndex(UINT idx) { mIndex = idx; }
 
 
 private:
 	LightAttribute mAttribute;
+	Mesh* mVolumeMesh;
+	Material* mMaterial;
+	UINT mIndex;
 };

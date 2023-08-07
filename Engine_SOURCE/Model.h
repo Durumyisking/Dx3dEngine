@@ -52,6 +52,7 @@ public:
 	Bone* GetBone(UINT index) { return mBones[index]; }
 	void RecursiveGetBoneMatirx();
 	void CreateTexture();
+	void CreateMaterial();
 	std::vector<Texture*> GetTexture(int index);
 
 private:
