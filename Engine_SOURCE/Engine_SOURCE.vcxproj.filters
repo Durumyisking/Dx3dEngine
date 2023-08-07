@@ -485,6 +485,7 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Model.h" />
+    <ClInclude Include="SkyBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -742,6 +743,7 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

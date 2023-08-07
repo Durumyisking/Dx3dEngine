@@ -226,6 +226,12 @@ namespace renderer
 			, lightPointShader->GetVSBlobBufferSize()
 			, lightPointShader->GetInputLayoutAddr());
 
+		Shader* SkyBoxShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkyBoxShader");
+		GetDevice()->CreateInputLayout(arrLayout, 6
+			, SkyBoxShader->GetVSBlobBufferPointer()
+			, SkyBoxShader->GetVSBlobBufferSize()
+			, SkyBoxShader->GetInputLayoutAddr());
+
 
 #pragma endregion
 
@@ -529,6 +535,18 @@ namespace renderer
 
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"LightPointShader", lightPointShader);
 #pragma endregion
+
+#pragma region SkyBox Shader
+		Shader* skyBoxShader = new Shader();
+		skyBoxShader->Create(eShaderStage::VS, L"SkyBoxVS.hlsl", "main");
+		skyBoxShader->Create(eShaderStage::PS, L"SkyBoxPS.hlsl", "main");
+
+		skyBoxShader->SetRSState(eRasterizerType::SolidFront);
+		skyBoxShader->SetDSState(eDepthStencilType::None);
+		skyBoxShader->SetBSState(eBlendStateType::OneOne);
+
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"SkyBoxShader", skyBoxShader);
+#pragma endregion
 	}
 
 	void LoadDefaultTexture()
@@ -809,6 +827,14 @@ namespace renderer
 		mergeMaterial->SetTexture(eTextureSlot::SpecularLightTarget, mergeTex);
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"MergeMRT_Material", mergeMaterial);
+#pragma endregion
+
+#pragma region SkyBox Material
+		Shader* skyBoxShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkyBoxShader");
+		Material* skyBoxMaterial = new Material();
+		skyBoxMaterial->SetShader(skyBoxShader);
+
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"SkyBoxMaterial", skyBoxMaterial);
 #pragma endregion
 
 	}
