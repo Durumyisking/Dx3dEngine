@@ -146,5 +146,11 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)Blur.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)BRDF.hlsli" />
+    <None Include="$(MSBuildThisFileDirectory)SkyBoxVS.hlsl">
+      <Filter>VS</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)SkyBoxPS.hlsl">
+      <Filter>PS</Filter>
+    </None>
   </ItemGroup>
 </Project>
