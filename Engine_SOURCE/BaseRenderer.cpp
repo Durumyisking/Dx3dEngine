@@ -9,10 +9,10 @@
 BaseRenderer::BaseRenderer(eComponentType type)
 	:Component(type)
 	, mbIsAnim(false)
-	, mbUseLOD(true)
+	, mbUseLOD(false)
 	, mSpriteSize(Vector2::Zero)
 {
-	// µðÆúÆ® ¸Å½Ã ÁöÁ¤
+	// ë””í´íŠ¸ ë§¤ì‹œ ì§€ì •
 	Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
 	SetMesh(mesh);

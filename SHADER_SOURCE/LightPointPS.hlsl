@@ -47,9 +47,6 @@ PS_OUT main(VSOut vsin)
     LightColor lightcolor = (LightColor) 0.f;
     CalculateLight3D(vViewPos.xyz, vViewNormal.xyz, lightIndex, lightcolor);
     
-    float SpecCoef = specularTarget.Sample(linearSampler, vUV).x;
-    float4 vSpec = DecodeColor(SpecCoef);
-
     output.vDiffuse = lightcolor.diffuse + lightcolor.ambient;
     output.vSpecular.xyz = lightcolor.specular.xyz; // * vSpec.xyz;
        

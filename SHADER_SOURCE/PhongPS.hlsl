@@ -35,6 +35,7 @@ float4 main(VSOut vsIn) : SV_Target
     
     albedo = CombineLights(albedo, lightColor);
     
+    
     if (albedo.w == 0)
         discard;
     
