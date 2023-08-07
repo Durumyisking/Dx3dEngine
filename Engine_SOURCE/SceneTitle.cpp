@@ -34,6 +34,8 @@
 
 #include "InputMgr.h"
 
+#include "SkyBox.h"
+
 extern Application application;
 
 
@@ -93,6 +95,12 @@ void SceneTitle::Enter()
 		renderer::mainCamera = cameraComp;
 		cameraComp->SetProjectionType(eProjectionType::Perspective);
 		mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
+
+	}
+	
+	{
+		SkyBox* box = object::Instantiate<SkyBox>(eLayerType::BackGround, L"TitleSkyBox");
+		box->TextureLoad(L"TitleSky", L"..//Resources//SkyCityNightStar_color.png");
 
 	}
 
