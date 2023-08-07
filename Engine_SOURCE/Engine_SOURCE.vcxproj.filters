@@ -361,6 +361,8 @@
     <ClInclude Include="PhysicalMovement.h">
       <Filter>Common\Component\Movement</Filter>
     </ClInclude>
+    <ClInclude Include="SkyDomeClass.h" />
+    <ClInclude Include="SkyDomeShaderClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -542,6 +544,8 @@
     <ClCompile Include="PhysicalMovement.cpp">
       <Filter>Common\Component\Movement</Filter>
     </ClCompile>
+    <ClCompile Include="SkyDomeClass.cpp" />
+    <ClCompile Include="SkyDomeShaderClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">
