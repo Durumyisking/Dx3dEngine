@@ -33,16 +33,18 @@ Application::~Application()
 void Application::Initialize()
 {
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Mario", L"Mario");
 
 	GETSINGLE(TimeMgr)->Initialize();
 	GETSINGLE(InputMgr)->Initialize();
 	GETSINGLE(Fmod)->Initialize();
 	// GETSINGLE(CollisionMgr)->Initialize();
 	renderer::Initialize();
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioBody", L"Mario");
+
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();
 	GETSINGLE(SceneMgr)->Initialize();
+
 }
 void Application::Update()
 {

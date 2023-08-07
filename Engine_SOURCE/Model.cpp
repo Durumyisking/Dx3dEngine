@@ -12,29 +12,14 @@ namespace fs = std::filesystem;
 Model::Model()
 	: Resource(eResourceType::Model)
 	, mOwner(nullptr)
-	, mParentModel(nullptr)
 	, mStructure(nullptr)
 {
+	
 }
 
 Model::~Model()
 {
-	if (mStructure)
-	{
-		mStructure->Clear();
-		delete mStructure;
-	}
-
-	mStructure = nullptr;
-
-	for (Model* model : mChildModel)
-	{
-		if (model == nullptr)
-			continue;
-
-		delete model;
-		model = nullptr;
-	}
+	release();
 }
 
 HRESULT Model::Load(const std::wstring& path)
@@ -119,24 +104,24 @@ HRESULT Model::Load(const std::wstring& path)
 	return S_OK;
 }
 
-Model::ModelNode* Model::FindNode(const std::wstring& nodeName)
+ModelNode* Model::FindNode(const std::wstring& nodeName)
 {
 	// 단어가 포함된 노드를 탐색
 	for (auto& iter : mNodes)
 	{
-		if (iter.second.mName.find(nodeName) != std::wstring::npos)
+		if (iter.second->mName.find(nodeName) != std::wstring::npos)
 		{
-			return &iter.second;
+			return iter.second;
 		}
 	}
 
 	return nullptr;
 }
 
-Model::Bone* Model::FindBone(const std::wstring& nodeName)
+Bone* Model::FindBone(const std::wstring& nodeName)
 {
 	// 탐색 실패시 nullptr 반환
-	return mBoneMap.find(nodeName) == mBoneMap.end() ? nullptr : &mBoneMap.find(nodeName)->second;
+	return mBoneMap.find(nodeName) == mBoneMap.end() ? nullptr : mBoneMap.find(nodeName)->second;
 }
 
 void Model::RecursiveGetBoneMatirx()
@@ -155,7 +140,7 @@ void Model::RecursiveGetBoneMatirx()
 	}
 }
 
-void Model::Bind_Render(Material* material)
+void Model::Bind_Render()
 {
 	if (mStructure == nullptr)
 		return;
@@ -163,25 +148,16 @@ void Model::Bind_Render(Material* material)
 	BoneMat boneInfo = {};
 	std::vector<BoneMat> boneMat = {};
 
-	// 자신의 본 계산후 자식 Model 객체를 계산
-	// 노드 이름 중복으로인해 해당 노드를 연결하기위해
-	// 작성한 예제이다 추후 코드 개선 필요
+	// 본 transform 계산
 	RecursiveGetBoneMatirx();
-
-	for (Model* model : mChildModel)
-	{
-		if (model == nullptr)
-			continue;
-
-		model->Bind_Render(material);
-	}
 
 	// 탐색후 계산된 본들의 행렬을 배열로 저장후 GPU 에 바인딩
 	boneMat.reserve(mBones.size());
 
-	for (Bone& bone : mBones)
+	for (Bone* bone : mBones)
 	{
-		aiMatrix4x4 finalMat = bone.mFinalMatrix;
+
+		aiMatrix4x4 finalMat = bone->mFinalMatrix;
 		boneInfo.FinalTransformation = ConvertMatrix(finalMat);
 		boneMat.emplace_back(boneInfo);
 	}
@@ -189,26 +165,33 @@ void Model::Bind_Render(Material* material)
 	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
 	mStructure->BindSRV(eShaderStage::VS, 30);
 
-	// 추후 모델 마다 Material 메모리 할당하여 사용해야함
-	// 현재 하나의 Material에 texture 을 바인딩하여 사용해서
-	// 모델들의 Texture 가 전부 같다
+	// 렌더
 	for (size_t i = 0; i < mMeshes.size(); ++i)
 	{
 		if (mMeshes[i] == nullptr)
 			continue;
 
+		if (mMaterials[i] == nullptr)
+			continue;
+
+		//텍스처 바인딩
 		std::vector<Texture*> Textures = GetTexture(i);
 		for (int slot = 0; slot < Textures.size(); ++slot)
 		{
 			if (Textures[slot] == nullptr)
 				continue;
 
-			material->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+			mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
 		}
+
+		//머터리얼 바인딩
+		mMaterials[i]->Bind();
 
 		// 메쉬들의 바인딩
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
+
+		mMaterials[i]->Clear();
 	}
 
 	mStructure->Clear();
@@ -219,23 +202,23 @@ void Model::Bind_Render(Material* material)
 void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode)
 {
 	std::wstring wNodeName = ConvertToW_String(node->mName.C_Str());
-	std::map<std::wstring, ModelNode>::iterator iter = mNodes.find(wNodeName);
+	std::map<std::wstring, ModelNode*>::iterator iter = mNodes.find(wNodeName);
 	ModelNode* curNode = nullptr;
 	// 인자로 들어온 Node 가 처음 들어 온경우
 	if (iter == mNodes.end())
 	{
-		ModelNode modelnode = {};
-		modelnode.mName = wNodeName;
-		modelnode.mTransformation = node->mTransformation;
-		modelnode.mRootName = rootNode == nullptr ? wNodeName : rootNode->mName;
-		modelnode.mRootNode = rootNode;
+		ModelNode* modelnode = new ModelNode();
+		modelnode->mName = wNodeName;
+		modelnode->mTransformation = node->mTransformation;
+		modelnode->mRootName = rootNode == nullptr ? wNodeName : rootNode->mName;
+		modelnode->mRootNode = rootNode;
 
-		mNodes.insert(std::pair<std::wstring, ModelNode>(modelnode.mName, modelnode));
-		curNode = &(mNodes.find(wNodeName)->second);
+		mNodes.insert(std::pair<std::wstring, ModelNode*>(modelnode->mName, modelnode));
+		curNode = mNodes.find(wNodeName)->second;
 	}
 	else // 인자로 들어온 Node Name 이 중복된 경우
 	{
-		curNode = &iter->second;
+		curNode = iter->second;
 		if (curNode->mRootNode != nullptr)
 		{
 			rootNode = curNode->mRootNode;
@@ -261,7 +244,7 @@ void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* 
 
 void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::wstring& nodeName)
 {
-	std::map<std::wstring, ModelNode>::iterator iter = mNodes.find(nodeName);
+	std::map<std::wstring, ModelNode*>::iterator iter = mNodes.find(nodeName);
 
 	std::vector<renderer::Vertex> vertexes;
 	std::vector<UINT> indexes;
@@ -325,28 +308,29 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 	for (int i = 0; i < mesh->mNumBones; ++i)
 	{
-		Bone bone = {};
+		Bone* bone = nullptr;
 		aiBone* aiBone = mesh->mBones[i];
 
 		UINT bonIndex = 0;
 		// 본 정보가 처음 인경우
 		if (mBoneMap.end() == mBoneMap.find(ConvertToW_String(aiBone->mName.C_Str())))
 		{
-			bone.mName = ConvertToW_String(aiBone->mName.C_Str());
-			bone.mOffsetMatrix = aiBone->mOffsetMatrix;
-			bone.mIndex = mBones.size();
+			bone = new Bone();
+			bone->mName = ConvertToW_String(aiBone->mName.C_Str());
+			bone->mOffsetMatrix = aiBone->mOffsetMatrix;
+			bone->mIndex = mBones.size();
 			mBones.emplace_back(bone);
-			mBoneMap.insert(std::pair<std::wstring, Bone>(bone.mName, bone));
+			mBoneMap.insert(std::pair<std::wstring, Bone*>(bone->mName, bone));
 
-			bonIndex = bone.mIndex;
+			bonIndex = bone->mIndex;
 		}
 		else // 본정보가 있던 경우
 		{
-			Bone* bone = &(mBoneMap.find(ConvertToW_String(aiBone->mName.C_Str()))->second);
+			bone = mBoneMap.find(ConvertToW_String(aiBone->mName.C_Str()))->second;
 			bone->mOffsetMatrix = aiBone->mOffsetMatrix;
 			bonIndex = bone->mIndex;
 
-			mBones[bonIndex].mOffsetMatrix = aiBone->mOffsetMatrix;
+			mBones[bonIndex]->mOffsetMatrix = aiBone->mOffsetMatrix;
 		}
 
 
@@ -382,14 +366,33 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	// material 정보 로드
 	if (mesh->mMaterialIndex >= 0)
 	{
+		// TextureLoad
 		aiMaterial* aiMater = scene->mMaterials[mesh->mMaterialIndex];
-		Model::TextureVector textureBuff = {};
+		std::vector<Model::TextureInfo> textureBuff = {};
 		for (int type = static_cast<int>(aiTextureType_NONE); type < static_cast<int>(aiTextureType_UNKNOWN); ++type)
 		{
-			Model::TextureVector texInfo = processMaterial(aiMater, (aiTextureType)type);
+			std::vector<Model::TextureInfo> texInfo = processMaterial(aiMater, (aiTextureType)type);
 			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
 		}
 		mTextures.emplace_back(textureBuff);
+
+		std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
+		for (auto& tex : texInfo)
+		{
+			if (tex.texPath == L"")
+				continue;
+
+			tex.pTex = new Texture();
+			tex.pTex->Load(tex.texPath, tex);
+		}
+
+		//Material 생성
+		Material* inMaterial = new Material();
+		inMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
+		inMaterial->SetShader(shader);
+
+		mMaterials.emplace_back(inMaterial);
 	}
 
 	// 모델 객체 생성
@@ -398,16 +401,14 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	inMesh->CreateIndexBuffer(indexes.data(), indexes.size());
 	mMeshes.emplace_back(inMesh);
 
-
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 	inMesh->SetName(wName);
-	iter->second.mMeshes.emplace_back(inMesh);
 	GETSINGLE(ResourceMgr)->Insert<Mesh>(wName, inMesh);
 }
 
-Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType type, const std::wstring& typeName)
+std::vector<Model::TextureInfo>  Model::processMaterial(aiMaterial* mater, aiTextureType type, const std::wstring& typeName)
 {
-	Model::TextureVector outTexVector;
+	std::vector<Model::TextureInfo>  outTexVector;
 	UINT texCount = mater->GetTextureCount(type);
 	for (UINT i = 0; i < texCount; ++i)
 	{
@@ -416,16 +417,16 @@ Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType typ
 		mater->GetTexture(type, i, &aiStr);
 		texInfo.type = type;
 		texInfo.texName = typeName;
-		texInfo.texPath = GetCurDirectoryPath() + L"/" + ConvertToW_String(aiStr.C_Str());
+		texInfo.texPath = GetCurDirectoryPath() + L"/Image/" + ConvertToW_String(aiStr.C_Str());
 		outTexVector.emplace_back(texInfo);
 	}
 
 	return outTexVector;
 }
 
-Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType type)
+std::vector<Model::TextureInfo> Model::processMaterial(aiMaterial* mater, aiTextureType type)
 {
-	Model::TextureVector outTexVector;
+	std::vector<TextureInfo> outTexVector;
 	UINT texCount = mater->GetTextureCount(type);
 	for (UINT i = 0; i < texCount; ++i)
 	{
@@ -434,7 +435,7 @@ Model::TextureVector Model::processMaterial(aiMaterial* mater, aiTextureType typ
 		mater->GetTexture(type, i, &aiStr);
 		std::wstring texname = ConvertToW_String(aiStr.C_Str());
 		texInfo.texName = texname.substr(0, texname.find_last_of(L"."));
-		texInfo.texPath = GetCurDirectoryPath() + L"/" + texname;
+		texInfo.texPath = GetCurDirectoryPath() + L"/Image/" + texname;
 		texInfo.type = type;
 		outTexVector.emplace_back(texInfo);
 	}
@@ -461,47 +462,30 @@ void Model::CreateTexture()
 
 std::vector<Texture*> Model::GetTexture(int index)
 {
-	std::vector<Texture*> outTex;
-	TextureVector& texVec = mTextures[index];
-	for (TextureInfo& tex : texVec)
+	if (index >= mTextures.size())
+		return std::vector<Texture*>{};
+
+	std::vector<Texture*> outTexVector; 
+	const std::vector<TextureInfo>& texInfos = mTextures[index];
+	for (const TextureInfo& tex : texInfos)
 	{
-		outTex.emplace_back(tex.pTex);
+		if(tex.pTex != nullptr)
+			outTexVector.emplace_back(tex.pTex);
 	}
-	return outTex;
+
+	return outTexVector;
 }
 
 void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& nodeName)
 {
 	const ModelNode* modelNode = FindNode(nodeName);
 	aiMatrix4x4 transform = modelNode->mTransformation;
-	if (mParentModel)
-	{
-		// 모델에 같은 이름의 노드를 탐색하기 위해 작성한코드
-		ModelNode* parentModelNode = mParentModel->FindNode(nodeName);
-		if (parentModelNode)
-		{
-			// 이부분 문제 가능성 있음
-			// - 디버깅 필요!! -
-
-			// 부모의 해당 노드 계층정보로 내 계층 정보를 세팅한다.
-			// 강제로 해당 노드의 위치로 모델이 이동은 하지만
-			// 회전에 문제가 생긴다.
-			Bone* bone = mParentModel->FindBone(nodeName);
-
-			if (bone != nullptr)
-			{
-				bone = mParentModel->GetBone(bone->mIndex);
-
-				matrix = bone->mLocalMatrix;
-			}
-		}
-	}
 
 	matrix = matrix * transform;
 
 	if (mBoneMap.find(nodeName) != mBoneMap.end())
 	{
-		Bone* bone = &mBoneMap.find(nodeName)->second;
+		Bone* bone = mBoneMap.find(nodeName)->second;
 		aiMatrix4x4 glovalInvers = FindNode(L"Scene")->GetTransformation();
 
 		// bone->mOffsetMatrix - 정점을 본 공간으로 이동 ( world, view, projection 비슷한 개념)
@@ -512,14 +496,64 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 		bone->mFinalMatrix = glovalInvers.Inverse() * matrix * bone->mOffsetMatrix;
 		bone->mLocalMatrix = matrix;
 
-		mBones[bone->mIndex].mFinalMatrix = bone->mFinalMatrix;
-		mBones[bone->mIndex].mLocalMatrix = matrix;
+		mBones[bone->mIndex]->mFinalMatrix = bone->mFinalMatrix;
+		mBones[bone->mIndex]->mLocalMatrix = matrix;
 	}
 
  	for (size_t i = 0; i < modelNode->mChilds.size(); ++i)
 	{
 		recursiveProcessBoneMatrix(matrix, modelNode->mChilds[i]->mName);
 	}
+}
+
+void Model::release()
+{
+	for (auto& node : mNodes)
+	{
+		if (node.second == nullptr)
+			continue;
+
+		delete node.second;
+		node.second = nullptr;
+	}
+
+	for (Bone* bone : mBones)
+	{
+		if (bone == nullptr)
+			continue;
+
+		delete bone;
+		bone = nullptr;
+	}
+
+	for (Material* mater : mMaterials)
+	{
+		if (mater == nullptr)
+			continue;
+
+		delete mater;
+		mater = nullptr;
+	}
+
+	for (size_t i = 0; i < mTextures.size(); i++)
+	{
+		for (size_t j = 0; j < mTextures[i].size(); j++)
+		{
+			if (mTextures[i][j].pTex == nullptr)
+				continue;
+
+			delete mTextures[i][j].pTex;
+			mTextures[i][j].pTex = nullptr;
+		}
+	}
+
+	if (mStructure)
+	{
+		mStructure->Clear();
+		delete mStructure;
+	}
+
+	mStructure = nullptr;
 }
 
 std::wstring Model::ConvertToW_String(const char* str)

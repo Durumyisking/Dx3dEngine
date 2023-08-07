@@ -117,18 +117,10 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 
 			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(modelName);
 
-			if (parentModel)
-			{
-				model = new Model();
-				model->SetParentModel(parentModel);
-				parentModel->PushChild(model);
-			}
-
-			if (model == nullptr && parentModel == nullptr)
+			if (model == nullptr)
 			{
 				model = new Model();
 				GETSINGLE(ResourceMgr)->Insert<Model>(modelName, model);
-				parentModel = model;
 			}
 
 			model->SetCurDirectoryPath(fullPath);
@@ -145,11 +137,6 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 		}
 	}
 
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(modelName);
-	if (model != nullptr)
-	{
-		model->CreateTexture();
-	}
 	return true;
 }
 

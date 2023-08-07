@@ -36,9 +36,15 @@ void MeshRenderer::Render()
 
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-	GetMaterial()->Bind();
-
-	GetModel() != nullptr ? GetModel()->Bind_Render(GetMaterial()) : GetMesh()->BindBuffer(), GetMesh()->Render();
-
-	GetMaterial()->Clear();
+	if (GetModel() != nullptr)
+	{
+		GetModel()->Bind_Render();
+	}
+	else
+	{
+		GetMaterial()->Bind();
+		GetMesh()->BindBuffer();
+		GetMesh()->Render();
+		GetMaterial()->Clear();
+	}
 }
