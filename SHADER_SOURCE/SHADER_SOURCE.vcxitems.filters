@@ -123,10 +123,10 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)LightPointPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)SkyboxPS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)SkyboxB_PS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)SkyboxVS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)SkyboxB_VS.hlsl">
       <Filter>VS</Filter>
     </FxCompile>
   </ItemGroup>
