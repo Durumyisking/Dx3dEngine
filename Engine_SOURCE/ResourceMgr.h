@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "EngineResource.h"
 #include "SimpleMath.h"
-
+#include "Graphics.h"
 
 
 class Material;
