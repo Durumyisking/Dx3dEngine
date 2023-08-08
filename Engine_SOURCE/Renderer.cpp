@@ -119,117 +119,140 @@ namespace renderer
 		//Vector3 tangent;
 		//Vector3 biNormal;
 		//Vector3 normal;
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
+			GetDevice()->CreateInputLayout(arrLayout, 8
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
+			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UIShader");
+			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FadeShader");
+			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ColorShader");
+			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		} 
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"GridShader");
+			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugShader");
+			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		} 
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ParticleShader");
+			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		} 
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PostProcessShader");
+			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugGeometryShader");
+			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
+			GetDevice()->CreateInputLayout(arrLayout, 8
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FlatShader");
+			GetDevice()->CreateInputLayout(arrLayout, 8
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			GetDevice()->CreateInputLayout(arrLayout, 8
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+			GetDevice()->CreateInputLayout(arrLayout, 6
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
+			GetDevice()->CreateInputLayout(arrLayout, 6
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightDirShader");
+			GetDevice()->CreateInputLayout(arrLayout, 6
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		} 
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
+			GetDevice()->CreateInputLayout(arrLayout, 6
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkyBoxShader");
+			GetDevice()->CreateInputLayout(arrLayout, 6
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"RectToCubemapShader");
+			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
 
-		Shader* Meshshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
-		GetDevice()->CreateInputLayout(arrLayout, 8
-			, Meshshader->GetVSBlobBufferPointer()
-			, Meshshader->GetVSBlobBufferSize()
-			, Meshshader->GetInputLayoutAddr());
-
-
-		Shader* Spriteshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
-			, Spriteshader->GetVSBlobBufferPointer()
-			, Spriteshader->GetVSBlobBufferSize()
-			, Spriteshader->GetInputLayoutAddr());
-
-
-		Shader* UIshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UIShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
-			, UIshader->GetVSBlobBufferPointer()
-			, UIshader->GetVSBlobBufferSize()
-			, UIshader->GetInputLayoutAddr());
-
-		Shader* Fadeshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FadeShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
-			, Fadeshader->GetVSBlobBufferPointer()
-			, Fadeshader->GetVSBlobBufferSize()
-			, Fadeshader->GetInputLayoutAddr());
-
-		Shader* Colorshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ColorShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
-			, Colorshader->GetVSBlobBufferPointer()
-			, Colorshader->GetVSBlobBufferSize()
-			, Colorshader->GetInputLayoutAddr());
-
-		Shader* Gridshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"GridShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
-			, Gridshader->GetVSBlobBufferPointer()
-			, Gridshader->GetVSBlobBufferSize()
-			, Gridshader->GetInputLayoutAddr());
-
-		Shader* Debugshader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugShader");
-
-		GetDevice()->CreateInputLayout(arrLayout, 3
-			, Debugshader->GetVSBlobBufferPointer()
-			, Debugshader->GetVSBlobBufferSize()
-			, Debugshader->GetInputLayoutAddr());
-
-		Shader* particleShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ParticleShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
-			, particleShader->GetVSBlobBufferPointer()
-			, particleShader->GetVSBlobBufferSize()
-			, particleShader->GetInputLayoutAddr());
-
-		Shader* postProcessShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PostProcessShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
-			, postProcessShader->GetVSBlobBufferPointer()
-			, postProcessShader->GetVSBlobBufferSize()
-			, postProcessShader->GetInputLayoutAddr());
-
-		Shader* debugGeometryShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugGeometryShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
-			, debugGeometryShader->GetVSBlobBufferPointer()
-			, debugGeometryShader->GetVSBlobBufferSize()
-			, debugGeometryShader->GetInputLayoutAddr());
-
-		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
-		GetDevice()->CreateInputLayout(arrLayout, 8
-			, phongShader->GetVSBlobBufferPointer()
-			, phongShader->GetVSBlobBufferSize()
-			, phongShader->GetInputLayoutAddr());
-
-		Shader* flatShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FlatShader");
-		GetDevice()->CreateInputLayout(arrLayout, 8
-			, flatShader->GetVSBlobBufferPointer()
-			, flatShader->GetVSBlobBufferSize()
-			, flatShader->GetInputLayoutAddr());
-
-		Shader* PBRShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
-		GetDevice()->CreateInputLayout(arrLayout, 8
-			, PBRShader->GetVSBlobBufferPointer()
-			, PBRShader->GetVSBlobBufferSize()
-			, PBRShader->GetInputLayoutAddr());
-
-		Shader* deferredShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		GetDevice()->CreateInputLayout(arrLayout, 6
-			, deferredShader->GetVSBlobBufferPointer()
-			, deferredShader->GetVSBlobBufferSize()
-			, deferredShader->GetInputLayoutAddr());
-
-		Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
-		GetDevice()->CreateInputLayout(arrLayout, 6
-			, mergeShader->GetVSBlobBufferPointer()
-			, mergeShader->GetVSBlobBufferSize()
-			, mergeShader->GetInputLayoutAddr());
-
-		Shader* lightShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightDirShader");
-		GetDevice()->CreateInputLayout(arrLayout, 6
-			, lightShader->GetVSBlobBufferPointer()
-			, lightShader->GetVSBlobBufferSize()
-			, lightShader->GetInputLayoutAddr());
-
-		Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
-		GetDevice()->CreateInputLayout(arrLayout, 6
-			, lightPointShader->GetVSBlobBufferPointer()
-			, lightPointShader->GetVSBlobBufferSize()
-			, lightPointShader->GetInputLayoutAddr());
-
-		Shader* SkyBoxShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkyBoxShader");
-		GetDevice()->CreateInputLayout(arrLayout, 6
-			, SkyBoxShader->GetVSBlobBufferPointer()
-			, SkyBoxShader->GetVSBlobBufferSize()
-			, SkyBoxShader->GetInputLayoutAddr());
 
 
 #pragma endregion

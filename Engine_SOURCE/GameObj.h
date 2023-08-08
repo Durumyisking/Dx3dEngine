@@ -103,8 +103,6 @@ public:
 		}
 		return nullptr;
 	}
-
-	void Flip();
 		
 	bool IsRenderingBlock() const { return mbBlockRendering; }
 	void RenderingBlockOn() { mbBlockRendering = true; }
@@ -124,8 +122,6 @@ private:
 	std::vector<Script*> mScripts;
 	bool mbDestroy;
 
-	bool mbIsLeft;
-	bool mbOnFloor;
 	bool mbBlockRendering;
 
 public:
@@ -190,13 +186,5 @@ public:
 	eLayerType GetLayerType() const { return mType; }
 	void SetLayerType(eLayerType type) { mType = type; }
 
-	bool IsLeft() { return mbIsLeft; }
-	void SetLeft() { mbIsLeft = true; }
-
-	void SetRight() { mbIsLeft = false; }
-
-	bool IsOnFloor() const { return mbOnFloor; }
-	void SetFloorOn() { mbOnFloor = true; }
-	void SetFloorOff() { mbOnFloor = false; }
 };
 
