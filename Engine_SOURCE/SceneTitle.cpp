@@ -35,6 +35,8 @@
 #include "InputMgr.h"
 
 #include "SkyBox.h"
+#include "SB.h"
+
 
 extern Application application;
 
@@ -99,43 +101,32 @@ void SceneTitle::Enter()
 	}
 	
 	{
-		SkyBox* box = object::Instantiate<SkyBox>(eLayerType::BackGround, L"TitleSkyBox");
-		box->TextureLoad(L"TitleSky", L"..//Resources//SkyCityNightStar_color.png");
+		GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
 
+		MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+
+		gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
+		gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
+		gridMr->LODOff();
+
+		GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
+		gridScript->SetCamera(mainCamera);
+
+		float w = static_cast<float>(application.GetWidth());
+		float h = static_cast<float>(application.GetHeight());
+		gridObject->SetPos({ 0.f, 0.f, 0.f });
+		gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
 	}
-
-
-	//{
-	//	GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
-
-	//	MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-
-	//	gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
-	//	gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
-	//	gridMr->LODOff();
-
-	//	GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
-	//	gridScript->SetCamera(mainCamera);
-
-	//	float w = static_cast<float>(application.GetWidth());
-	//	float h = static_cast<float>(application.GetHeight());
-	//	gridObject->SetPos({ 0.f, 0.f, 0.f });
-	//	gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
-	//}
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 500.f, -1000.f));
-		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
+		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1000.f, 0.f));
+		directionalLight->SetRotation(Vector3(90.f, 0.f, 0.f));
 		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
-//		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
-		//MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//mr->SetMaterialByKey(L"SunMaterial");
-		//mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
 	
 
@@ -168,6 +159,10 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
+	{
+		SB* sb = object::Instantiate<SB>(eLayerType::Skybox);
+
+	}
 	
 	{
 	/*	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
@@ -198,25 +193,6 @@ void SceneTitle::Enter()
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
-
-
-	//{
-		//GameObj* skyBox = object::Instantiate<GameObj>(eLayerType::Objects);
-		//skyBox->SetPos(Vector3(0.f, 5.f, 0.f));
-		//skyBox->SetScale({ 5.f, 5.f, 5.f });
-		//skyBox->SetName(L"Skybox");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		//(
-		//	L"Skybox",
-		//	eTextureSlot::Skybox,
-		//	L"SkyboxShader",
-		//	L"SkyboxMat"
-		//);
-		//MeshRenderer* mr = skyBox->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//mr->SetMaterial(mat);
-		//mr->SetMeshByKey(L"Spheremesh");
-	//}
-
 
 	// DebugTest
 	{ 

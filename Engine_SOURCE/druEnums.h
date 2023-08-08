@@ -8,7 +8,7 @@ namespace enums
 		None = 0,
 		Camera,
 		Grid,
-		BackGround,
+		Skybox,
 		Objects,
 		PhysicalObject,
 		Bullet,

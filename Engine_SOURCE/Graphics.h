@@ -70,17 +70,17 @@ enum class eRasterizerType
 {
 	SolidBack,
 	SolidFront,
-	SolidNone, // ì»¬ë§ ì•ˆí•¨
-	WireframeNone, // ì„ ìœ¼ë¡œë§Œ ê·¸ë¦¬ê¸° Topologyë‘ ê°™ì€ë° ê·¸ëƒ¥ gpuì—ì„œ ì²˜ë¦¬í•´ì£¼ëŠ”ê±°
+	SolidNone, // ÄÃ¸µ ¾ÈÇÔ
+	WireframeNone, // ¼±À¸·Î¸¸ ±×¸®±â Topology¶û °°Àºµ¥ ±×³É gpu¿¡¼­ Ã³¸®ÇØÁÖ´Â°Å
 	End,
 };
 
 enum class eDepthStencilType
 {
-	Less, // ì¼ë°˜ì ì¸ ì›ê·¼
-	Greater, // ì›ê·¼ ê±°ê¾¸ë¡œ
-	NoWrite, // ê²¹ì¹˜ë©´ ì•„ì˜ˆ ì•ˆê·¸ë¦¼
-	None, // ê¹Šì´ë²„í¼ ì‚¬ìš© ì•ˆí•¨
+	Less, // ÀÏ¹İÀûÀÎ ¿ø±Ù
+	Greater, // ¿ø±Ù °Å²Ù·Î
+	NoWrite, // °ãÄ¡¸é ¾Æ¿¹ ¾È±×¸²
+	None, // ±íÀÌ¹öÆÛ »ç¿ë ¾ÈÇÔ
 	End,
 };
 
@@ -88,7 +88,7 @@ enum class eBlendStateType
 {
 	Default,
 	AlphaBlend,
-	OneOne, // ì•ŒíŒŒê°’ ì—†ì´ ë¬¼ì²´ì— ìƒ‰ ì„ìŒ
+	OneOne, // ¾ËÆÄ°ª ¾øÀÌ ¹°Ã¼¿¡ »ö ¼¯À½
 	End,
 };
 
@@ -103,11 +103,11 @@ enum class eRenderTargetType
 
 enum class eRenderingMode
 {
-	DeferredOpaque, // ë¶ˆíˆ¬ëª…
+	DeferredOpaque, // ºÒÅõ¸í
 	DeferredMask,
-	Light, // ê´‘ì› ì²˜ë¦¬
-	Opaque, // ë¶ˆíˆ¬ëª…
-	Cutout, // ì¼ë¶€ë§Œ íˆ¬ëª…
+	Light, // ±¤¿ø Ã³¸®
+	Opaque, // ºÒÅõ¸í
+	Cutout, // ÀÏºÎ¸¸ Åõ¸í
 	Transparent,
 	PostProcess,
 
@@ -258,7 +258,7 @@ struct LightAttribute
 		
 	enums::eLightType type;
 
-	int padding; // ìƒìˆ˜ë²„í¼ íŒ¨ë”©
+	int padding; // »ó¼ö¹öÆÛ ÆĞµù
 };
 
 struct Particle

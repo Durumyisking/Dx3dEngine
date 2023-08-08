@@ -73,7 +73,6 @@ float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, f
     
     result.xyz = normalize((result.xyz * 2.f).xyz - 1.f);
         
-
     float3x3 matTBN =
     {
         viewTangent,

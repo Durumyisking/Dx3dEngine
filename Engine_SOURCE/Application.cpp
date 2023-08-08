@@ -74,7 +74,7 @@ void Application::Render()
 		//		CollisionMgr::Render();
 
 		mGraphicDevice->AdjustViewPorts();
-		renderer::ClearRenderTargets(); // mGraphicDevice::Clear ëŒ€ì‹  ë Œë”íƒ€ê²Ÿ í´ë¦¬ì–´
+		renderer::ClearRenderTargets(); // mGraphicDevice::Clear ´ë½Å ·»´õÅ¸°Ù Å¬¸®¾î
 
 		renderer::Render();
 		GETSINGLE(SceneMgr)->Render();
@@ -105,7 +105,7 @@ void Application::Run()
 	FixedUpdate();
 	Render();
 
-	// í”„ë ˆì„ ì¢…ë£Œ í›„ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ ë° ì¶”ê°€
+	// ÇÁ·¹ÀÓ Á¾·á ÈÄ ¿ÀºêÁ§Æ® »èÁ¦ ¹× Ãß°¡
 	Destroy();
 	LateEvent();
 }

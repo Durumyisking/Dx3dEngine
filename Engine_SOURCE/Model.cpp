@@ -33,7 +33,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
+		// ÆÄÀÏ ·Îµå ½ÇÆĞ
 		return E_FAIL;
 	}
 
@@ -54,7 +54,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 const Model::ModelNode* Model::FindNode(const std::wstring& nodeName) const
 {
-	// TODO: ì—¬ê¸°ì— return ë¬¸ì„ ì‚½ì…í•©ë‹ˆë‹¤.
+	// TODO: ¿©±â¿¡ return ¹®À» »ğÀÔÇÕ´Ï´Ù.
 	/*auto iter = mNodes.find(nodeName);
 	if (iter == mNodes.end())
 	{
@@ -160,7 +160,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
-	// ì •ì  ì •ë³´ ë¡œë“œ
+	// Á¤Á¡ Á¤º¸ ·Îµå
 	for (UINT i = 0; i < mesh->mNumVertices; ++i)
 	{
 		renderer::Vertex vertex = {};
@@ -347,7 +347,7 @@ void Model::CreateMaterial()
 				matName = texInfo.texName;
 				std::size_t found = matName.find(L"_");
 				if (found != std::wstring::npos) {
-					matName = matName.substr(0, found); // _ ì´ì „ê¹Œì§€ì˜ ë¬¸ìì—´ ì¶”ì¶œ
+					matName = matName.substr(0, found); // _ ÀÌÀü±îÁöÀÇ ¹®ÀÚ¿­ ÃßÃâ
 				}
 			}
 			break;

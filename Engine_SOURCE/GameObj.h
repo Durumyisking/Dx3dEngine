@@ -139,7 +139,7 @@ public:
 	Vector3 GetPos();
 	Vector3 GetWorldPos();
 
-	// ui�� ��� ����
+	// ui           
 	Vector3 GetUIWorldPos();
 
 	Vector3 GetScale();

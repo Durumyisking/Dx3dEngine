@@ -77,6 +77,8 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)MergePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)RectToCubemapPS.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)RectToCubemapVS.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)SkyboxB_PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>

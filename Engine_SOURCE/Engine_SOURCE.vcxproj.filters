@@ -200,6 +200,15 @@
     <Filter Include="Common\Component\Script\Server">
       <UniqueIdentifier>{ed03df75-dd17-44d3-9c47-fbeb3c8e88af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\GameObj\Skybox">
+      <UniqueIdentifier>{8b17ea79-75c4-4107-9e5a-a0c6cd81c4f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Renderer\Mesh\Model">
+      <UniqueIdentifier>{7b7d2c08-6f5a-4eb5-9268-0f249a40791d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Skybox\CubeMap">
+      <UniqueIdentifier>{b37243e5-5b6c-4258-bcfc-6821d0ee1662}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -333,9 +342,6 @@
     </ClInclude>
     <ClInclude Include="StructedBuffer.h" />
     <ClInclude Include="ComputeShader.h">
-      <Filter>Resource\Shader\ComputeShader</Filter>
-    </ClInclude>
-    <ClInclude Include="PaintShader.h">
       <Filter>Resource\Shader\ComputeShader</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
@@ -484,8 +490,18 @@
     <ClInclude Include="MultiRenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="SkyBox.h">
+      <Filter>Common\GameObj\Skybox</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Common\Component\Renderer\Mesh\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="SB.h">
+      <Filter>Common\GameObj\Skybox</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeMap.h">
+      <Filter>Common\GameObj\Skybox\CubeMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -604,9 +620,6 @@
     </ClCompile>
     <ClCompile Include="StructedBuffer.cpp" />
     <ClCompile Include="ComputeShader.cpp">
-      <Filter>Resource\Shader\ComputeShader</Filter>
-    </ClCompile>
-    <ClCompile Include="PaintShader.cpp">
       <Filter>Resource\Shader\ComputeShader</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
@@ -742,8 +755,18 @@
     <ClCompile Include="MultiRenderTarget.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>Common\GameObj\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Common\Component\Renderer\Mesh\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="SB.cpp">
+      <Filter>Common\GameObj\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeMap.cpp">
+      <Filter>Common\GameObj\Skybox\CubeMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

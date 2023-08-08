@@ -7,7 +7,7 @@ class SkyBox : public GameObj
 public:
 	SkyBox();
 	SkyBox(const std::wstring& texName, const std::wstring& path);
-	~SkyBox();
+	virtual ~SkyBox();
 
 	virtual void Initialize() override;
 	virtual void Update() override;
