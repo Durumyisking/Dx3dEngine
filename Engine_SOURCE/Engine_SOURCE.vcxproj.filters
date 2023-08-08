@@ -200,6 +200,15 @@
     <Filter Include="Common\Component\Script\Server">
       <UniqueIdentifier>{ed03df75-dd17-44d3-9c47-fbeb3c8e88af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource\Model">
+      <UniqueIdentifier>{21538abc-aad6-47fc-b8ee-dd60b081efb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Model\ModelNode">
+      <UniqueIdentifier>{78218941-677c-4c23-86ee-d3d2ed9e2917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Model\Bone">
+      <UniqueIdentifier>{a98c76c5-55d5-4d1f-ac36-5bf457b0b8c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -484,8 +493,18 @@
     <ClInclude Include="MultiRenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h" />
+
+    <ClInclude Include="Model.h">
+      <Filter>Resource\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Bone.h">
+      <Filter>Resource\Model\Bone</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelNode.h">
+      <Filter>Resource\Model\ModelNode</Filter>
+    </ClInclude>
     <ClInclude Include="SkyBox.h" />
+
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -742,8 +761,18 @@
     <ClCompile Include="MultiRenderTarget.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp" />
+
+    <ClCompile Include="Model.cpp">
+      <Filter>Resource\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Bone.cpp">
+      <Filter>Resource\Model\Bone</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelNode.cpp">
+      <Filter>Resource\Model\ModelNode</Filter>
+    </ClCompile>
     <ClCompile Include="SkyBox.cpp" />
+
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

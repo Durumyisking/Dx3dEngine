@@ -37,6 +37,8 @@ void Application::Initialize()
 	GETSINGLE(Fmod)->Initialize();
 	// GETSINGLE(CollisionMgr)->Initialize();
 	renderer::Initialize();
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioBody", L"Mario");
+
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();
 	GETSINGLE(SceneMgr)->Initialize();
