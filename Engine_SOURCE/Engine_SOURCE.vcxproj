@@ -141,6 +141,7 @@
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
       <AdditionalIncludeDirectories>$(SolutionDir)External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <SubSystem>

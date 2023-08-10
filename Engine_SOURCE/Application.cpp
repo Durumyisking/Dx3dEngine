@@ -12,7 +12,7 @@
 #include "PhysicsMgr.h"
 #include "TimerMgr.h"
 #include "ServerMgr.h"
-
+#include "CubeMap.h"
 
 Application::Application()
 	: mbInitalized(false)
@@ -29,7 +29,7 @@ Application::~Application()
 {
 
 }
-
+CubeMapHDR hdrBg;
 void Application::Initialize()
 {
 	GETSINGLE(TimeMgr)->Initialize();
@@ -40,6 +40,8 @@ void Application::Initialize()
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();
 	GETSINGLE(SceneMgr)->Initialize();
+	
+	hdrBg.loadFromFile("C:/Users/csh/Desktop/Dx3dEngine-sehyun/Dx3dEngine/Resources/environment.hdr");
 
 }
 void Application::Update()
@@ -69,10 +71,11 @@ void Application::Render()
 {
 	if (!GETSINGLE(TimeMgr)->IsUpdatePass())
 	{
+		
 		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::Render();
-
+		hdrBg.Bind();
 		mGraphicDevice->AdjustViewPorts();
 		renderer::ClearRenderTargets(); // mGraphicDevice::Clear 대신 렌더타겟 클리어
 

@@ -6,6 +6,8 @@ struct VSOut
     float3 LocalPos : TEXCOORD;
 };
 
+Texture2D tex : register(t0);
+SamplerState splr : register(s0);
 
 static const float2 invAtan = float2(0.1591, 0.3183);
 float2 SampleSphericalMap(float3 v)

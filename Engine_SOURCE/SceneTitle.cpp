@@ -160,7 +160,7 @@ void SceneTitle::Enter()
 	}
 
 	{
-		SB* sb = object::Instantiate<SB>(eLayerType::Skybox);
+		//SB* sb = object::Instantiate<SB>(eLayerType::Skybox);
 
 	}
 	

@@ -612,6 +612,16 @@ namespace renderer
 		}
 #pragma endregion
 
+#pragma region PreFilteredMap
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"PreFilterVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"PreFilterPS.hlsl", "main");
+
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PreFilterShader", shader);
+		}
+#pragma endregion
+
 
 	}
 
@@ -954,22 +964,21 @@ namespace renderer
 	{
 		UINT width = application.GetWidth();
 		UINT height = application.GetHeight();
+		std::vector<Texture*> vecRTTex = { };
 
 		//SwapChain MultiRenderTargets
 		{
-			Texture* arrRTTex[12] = {};
 			Texture* dsTex = nullptr;
 
-			arrRTTex[0] = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
+			vecRTTex.emplace_back(GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture"));
 			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilBufferTexture");
 
 			renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)] = new MultiRenderTarget();
-			renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->Create(arrRTTex, dsTex);
+			renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->Create(vecRTTex, dsTex);
 		}
-
+		vecRTTex.clear();
 		// Deferred MultiRenderTargets
 		{
-			Texture* arrRTTex[12] = { };
 			Texture* pos = new Texture();
 			Texture* albedo = new Texture();
 			Texture* normal = new Texture();
@@ -979,47 +988,45 @@ namespace renderer
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"AlbedoTargetTexture", albedo);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"NormalTargetTexture", normal);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MRDTargetTexture", mrd);
-
-			arrRTTex[0] = pos;
-			arrRTTex[1] = albedo;
-			arrRTTex[2] = normal;
-			arrRTTex[3] = mrd;
-
-			arrRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+			vecRTTex.emplace_back(pos);
+			vecRTTex.emplace_back(albedo);
+			vecRTTex.emplace_back(normal);
+			vecRTTex.emplace_back(mrd);
+		
+			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-			arrRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+			vecRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-			arrRTTex[2]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+			vecRTTex[2]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-			arrRTTex[3]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+			vecRTTex[3]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			Texture* dsTex = nullptr;
 			dsTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthStencilBufferTexture");
 
 			renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)] = new MultiRenderTarget();
-			renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->Create(arrRTTex, dsTex);
+			renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->Create(vecRTTex, dsTex);
 		}
-
+		vecRTTex.clear();
 		// Light MultiRenderTargets
 		{
-			Texture* arrRTTex[12] = { };
 			Texture* diffuse = new Texture();
 			Texture* specular = new Texture();
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"DiffuseLightTargetTexture", diffuse);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"SpecularLightTargetTexture", specular);
 
-			arrRTTex[0] = diffuse;
-			arrRTTex[1] = specular;
+			vecRTTex.emplace_back(diffuse);
+			vecRTTex.emplace_back(specular);
 
-			arrRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-			arrRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+			vecRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			renderTargets[static_cast<UINT>(eRenderTargetType::Light)] = new MultiRenderTarget();
-			renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->Create(arrRTTex, nullptr);
+			renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->Create(vecRTTex, nullptr);
 		}
 	}
 
@@ -1708,6 +1715,6 @@ namespace renderer
 		LoadDefaultTexture();
 		LoadDefaultMaterial();
 
-		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"blockBrick");
 	}
 }

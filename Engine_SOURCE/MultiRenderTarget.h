@@ -9,12 +9,13 @@ public:
 	MultiRenderTarget();
 	~MultiRenderTarget();
 
-	void Create(Texture* texture[12], Texture* dsTexture);
+	void Create(std::vector<Texture*> textures, Texture* dsTexture);
+	void Create(Texture* textures, Texture* dsTexture);
 	void OMSetRenderTarget();
 	void Clear(FLOAT backgroundColor[4]);
 
 private:
-	Texture* mRenderTargets[12];
+	std::vector<Texture*> mRenderTargets;
 	Vector4 mClearColors[8];
 	Texture* mDSTexture;
 	UINT mRenderTargetCount;
