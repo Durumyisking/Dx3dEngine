@@ -8,8 +8,10 @@
 #include "Application.h"
 #include "AudioClip.h"
 #include "FileMgr.h"
+#include "CubeMap.h"
 
 extern Application application;
+CubeMapHDR hdrBg;
 
 namespace renderer
 {
@@ -252,7 +254,13 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
-
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PreFilterShader");
+			GetDevice()->CreateInputLayout(arrLayout, 8
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
 
 
 #pragma endregion
@@ -285,9 +293,16 @@ namespace renderer
 		samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
 
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;
+		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Skybox)].GetAddressOf());
+
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Point), 1, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Linear), 1, samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Anisotropic), 1, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
+		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Skybox), 1, samplerState[static_cast<UINT>(eSamplerType::Skybox)].GetAddressOf());
 
 #pragma endregion
 
@@ -944,6 +959,7 @@ namespace renderer
 	{
 		//GetDevice()->OMSetRenderTarget();
 
+		hdrBg.Bind();
 		BindNoiseTexture();
 		BindLight();
 
@@ -1716,5 +1732,6 @@ namespace renderer
 		LoadDefaultMaterial();
 
 		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"blockBrick");
+		hdrBg.loadFromFile("C:/Users/csh/Desktop/Dx3dEngine-sehyun/Dx3dEngine/Resources/environment.hdr");
 	}
 }

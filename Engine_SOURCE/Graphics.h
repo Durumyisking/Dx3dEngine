@@ -63,6 +63,7 @@ enum class eSamplerType
 	Point,
 	Linear,
 	Anisotropic,
+	Skybox,
 	End,
 };
 

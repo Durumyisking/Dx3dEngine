@@ -71,25 +71,12 @@ void TextureHDR::loadFromData(void* data, int w, int h, int channels, bool linea
     hr = GetDevice()->GetID3D11Device()->CreateShaderResourceView(pTexture, &srvDesc, &pTextureView);
     assert(SUCCEEDED(hr));
 
-    D3D11_SAMPLER_DESC SamplerDesc = {};
-    SamplerDesc.Filter = linearFilter ? D3D11_FILTER_MIN_MAG_MIP_LINEAR : D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT;
-    SamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
-    SamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
-    SamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;
-    SamplerDesc.MipLODBias = 0.0f;
-    SamplerDesc.MinLOD = 0.0f;
-    SamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-
-
-    hr =  GetDevice()->GetID3D11Device()->CreateSamplerState(&SamplerDesc, &pSampler);
-    assert(SUCCEEDED(hr));
 }
 
 
 
 void TextureHDR::Bind(unsigned int slot)
 {
-     GetDevice()->GetDeviceContext()->PSSetSamplers(slot, 1, &pSampler);
      GetDevice()->GetDeviceContext()->PSSetShaderResources(slot, 1, &pTextureView);
 }
 
@@ -167,9 +154,9 @@ void CubeMapHDR::loadFromFile(std::string name, bool linearFilter, bool flipTex)
     srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
     srvDesc.Texture2D.MostDetailedMip = 0;
     srvDesc.Texture2D.MipLevels = 1;
-     GetDevice()->GetID3D11Device()->CreateShaderResourceView(tex, &srvDesc, &pCubemapView);
-     GetDevice()->GetID3D11Device()->CreateShaderResourceView(texIrradiance, &srvDesc, &pIrradiaceMapView);
-     GetDevice()->GetID3D11Device()->CreateShaderResourceView(texPreFilter, &srvDesc, &pFilteredMapView);
+    GetDevice()->GetID3D11Device()->CreateShaderResourceView(tex, &srvDesc, &pCubemapView);
+    GetDevice()->GetID3D11Device()->CreateShaderResourceView(texIrradiance, &srvDesc, &pIrradiaceMapView);
+    GetDevice()->GetID3D11Device()->CreateShaderResourceView(texPreFilter, &srvDesc, &pFilteredMapView);
 
     // Convolution texture
     // GetDevice()->GetID3D11Device()->CreateTexture2D(&textureDesc, nullptr, &texConv);
@@ -295,21 +282,6 @@ void CubeMapHDR::loadFromFile(std::string name, bool linearFilter, bool flipTex)
         cmap.Draw();
     }
 
-    // GetDevice()->GetDeviceContext()->PSSetSamplers(0, 1, &pSampler);
-    // GetDevice()->GetDeviceContext()->PSSetShaderResources(0, 1, &pTextureView);
-    //Shader sCon;
-    //sCon.Create("res/Shaders/convolution.hlsl");
-    //sCon.Bind();
-    //for (uint32_t i = 0; i < 6; ++i)
-    //{
-    //    float clearColor[4] = { 1.0f, 0.1f, 0.1f, 1.0f };
-    //     GetDevice()->GetDeviceContext()->ClearRenderTargetView(rtvsCon[i], clearColor);
-    //    XMMATRIX d = XMMatrixTranspose(captureViews[i] * captureProjection);
-    //    cb.SetData(&d, 16 * sizeof(float));
-    //    cb.Bind(0);
-    //     GetDevice()->GetDeviceContext()->OMSetRenderTargets(1, &rtvsCon[i], nullptr);
-    //    cmap.Draw();
-    //}
     vp.Width = 1600.f;
     vp.Height = 900.f;
     GetDevice()->GetDeviceContext()->RSSetViewports(1, &vp);
@@ -318,8 +290,8 @@ void CubeMapHDR::loadFromFile(std::string name, bool linearFilter, bool flipTex)
 
 void CubeMapHDR::Bind()
 {
-     //GetDevice()->GetDeviceContext()->PSSetSamplers(0, 1, &pSampler);
+    Texture::Clears();
      //GetDevice()->GetDeviceContext()->PSSetShaderResources(0, 1, &pCubemapView);
      //GetDevice()->GetDeviceContext()->PSSetShaderResources(6, 1, &pIrradiaceMapView);
-     GetDevice()->GetDeviceContext()->PSSetShaderResources(static_cast<UINT>(eTextureSlot::PrefilteredMap), 1, &pFilteredMapView);
+     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &pFilteredMapView);
 }

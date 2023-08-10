@@ -158,7 +158,7 @@ float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal
     float3 result = (diffuse + specular) * NdotL;
     //float3 ambient = (diffuse + specular); // 마딧세이는 전방향 빛 비추는듯?
     
-    return result;
+    return prefilteredColor;
 }
 
 float3 CalculateLightPBR_Diffuse(float3 viewPos, float4 albedo, float3 viewNormal, float metallic, float roughness)
