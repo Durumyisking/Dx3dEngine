@@ -65,8 +65,6 @@ private:
 
 	void release();
 public:
-	std::wstring ConvertToW_String(const char* str);
-	std::string ConvertToString(const wchar_t* str);
 	math::Matrix ConvertMatrix(aiMatrix4x4 aimat);
 
 

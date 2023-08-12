@@ -105,24 +105,6 @@ void SceneTitle::Enter()
 	}
 
 
-	//{
-	//	GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
-
-	//	MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-
-	//	gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
-	//	gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
-	//	gridMr->LODOff();
-
-	//	GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
-	//	gridScript->SetCamera(mainCamera);
-
-	//	float w = static_cast<float>(application.GetWidth());
-	//	float h = static_cast<float>(application.GetHeight());
-	//	gridObject->SetPos({ 0.f, 0.f, 0.f });
-	//	gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
-	//}
-
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
 		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 500.f, -1000.f));

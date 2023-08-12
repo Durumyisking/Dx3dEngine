@@ -71,31 +71,31 @@ void FileMgr::FileLoad(const std::wstring& path)
 		mSkeletonData.emplace_back(data);
 	}
 
-	// Triangles
-	std::string texName = "";
-	while (1)
-	{
-		getline(file, buf);
-		if (buf.find("triangles") != std::string::npos)
-		{
-			continue;
-		}
-		else if (buf.find("end") != std::string::npos)
-		{
-			break;
-		}
-		else if (buf.find("png") != std::string::npos)
-		{
-			texName = buf;
-			continue;
-		}
+	//// Triangles
+	//std::string texName = "";
+	//while (1)
+	//{
+	//	getline(file, buf);
+	//	if (buf.find("triangles") != std::string::npos)
+	//	{
+	//		continue;
+	//	}
+	//	else if (buf.find("end") != std::string::npos)
+	//	{
+	//		break;
+	//	}
+	//	else if (buf.find("png") != std::string::npos)
+	//	{
+	//		texName = buf;
+	//		continue;
+	//	}
 
-		ParsingTriangleData data = {};
-		data = readTriangles(buf);
-		data.TexName = texName;
+	//	ParsingTriangleData data = {};
+	//	data = readTriangles(buf);
+	//	data.TexName = texName;
 
-		mTriangleData.emplace_back(data);
-	}
+	//	mTriangleData.emplace_back(data);
+	//}
 
 	file.close();
 }

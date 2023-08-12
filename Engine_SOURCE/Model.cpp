@@ -603,20 +603,6 @@ void Model::release()
 	mStructure = nullptr;
 }
 
-std::wstring Model::ConvertToW_String(const char* str)
-{
-	std::string sName = std::string(str);
-	std::wstring wName(sName.begin(), sName.end());
-	return wName;
-}
-
-std::string Model::ConvertToString(const wchar_t* str)
-{
-	std::wstring sName = std::wstring(str);
-	std::string wName(sName.begin(), sName.end());
-	return wName;
-}
-
 math::Matrix Model::ConvertMatrix(aiMatrix4x4 aimat)
 {
 	math::Matrix outMat;

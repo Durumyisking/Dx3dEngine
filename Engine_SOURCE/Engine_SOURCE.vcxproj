@@ -210,6 +210,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationClip.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="ApplyPacketScript.h" />
@@ -218,6 +219,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="AudioSource.h" />
     <ClInclude Include="BaseRenderer.h" />
     <ClInclude Include="Bone.h" />
+    <ClInclude Include="BoneAnimator.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraScript.h" />
@@ -304,6 +306,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="StringFunctions.h" />
+    <ClInclude Include="Struct.h" />
     <ClInclude Include="StructedBuffer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeMgr.h" />
@@ -312,6 +315,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationClip.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="ApplyPacketScript.cpp" />
@@ -320,6 +324,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="BaseRenderer.cpp" />
     <ClCompile Include="Bone.cpp" />
+    <ClCompile Include="BoneAnimator.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraScript.cpp" />
