@@ -11,6 +11,12 @@
 extern Application application;
 namespace fs = std::filesystem;
 AnimationClip::AnimationClip()
+	: mDuration(0.0f)
+	, mDeltaTime(0.0f)
+	, mCurIndex(0)
+	, mCompleate(false)
+	, mAnimator(nullptr)
+	, mName(L"")
 {
 }
 
@@ -23,54 +29,23 @@ void AnimationClip::Update()
 	if (mCompleate)
 		return;
 
-	mDeltaTime += DT;
+	mDeltaTime += GETSINGLE(TimeMgr)->DeltaTime();
 
 	if (mDeltaTime >= mDuration)
 	{
 		mDeltaTime -= mDuration;
 		mCurIndex++;
-
-		if (mCurIndex >= mSkeletonData.size() - 1)
-		{
-			// 애니메이션 종료시 리셋
-			mCompleate = true;
-			mCurIndex = 0;
-			mDeltaTime = 0.0f;
-
-			return;
-		}
-
-		// 본 정보들을 변경.
-		if (!mAnimator)
-			return;
-
-		GameObj* owner = mAnimator->GetOwner();
-		if (!owner)
-			return;
-
-		BaseRenderer* baseRenderer = mAnimator->GetOwner()->GetComponent<BaseRenderer>();
-		if (!baseRenderer)
-			return;
-		
-		Model* model = mAnimator->GetOwner()->GetComponent<BaseRenderer>()->GetModel();
-		if (!model)
-			return;
-
-		UINT curFrameIDX = mCurIndex;
-		UINT nextFrameIDX = mCurIndex++;
-
-		animation::SkeletonData curDT = mSkeletonData[curFrameIDX];
-		animation::SkeletonData nextDT = mSkeletonData[nextFrameIDX];
-
 	}
-}
 
-void AnimationClip::FixedUpdate()
-{
-}
+	if (mCurIndex >= mSkeletonData.size() - 1)
+	{
+		// 애니메이션 종료시 리셋
+		Reset();
+		mCompleate = true;
+		return;
+	}
 
-void AnimationClip::Render()
-{
+	SetBoneMatrix();
 }
 
 void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring& path, float duration)
@@ -87,7 +62,7 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 	}
 
 	// 애니메이션 이름 설정
-	SetName(name);
+	SetAnimationName(name);
 	SetDuration(duration);
 
 	// Nodes
@@ -111,6 +86,7 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 	}
 
 	// Skeleton
+	int frame = 0;
 	while (1)
 	{
 		getline(file, buf);
@@ -124,15 +100,92 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 		}
 		else if (buf.find("time") != std::string::npos)
 		{
+			mSkeletonData.emplace_back(animation::SkeletonData{});
+			frame = mSkeletonData.size() - 1;
 			continue;
 		}
 
 		animation::SkeletonData data = {};
 		data = readSkeleton(buf);
-		mSkeletonData.emplace_back(data);
+		data.Time = static_cast<float>(frame);
+
+		mSkeletonData[frame].Time = frame;
+
+		for (int i = 0; i < data.Translation.size(); ++i)
+		{
+			mSkeletonData[frame].Translation.emplace_back(data.Translation[i]);
+			mSkeletonData[frame].Rotaion.emplace_back(data.Rotaion[i]);
+		}
 	}
 
 	file.close();
+}
+
+void AnimationClip::SetBoneMatrix()
+{
+	// 본 정보들을 변경.
+	if (!mAnimator)
+		return;
+
+	GameObj* owner = mAnimator->GetOwner();
+	if (!owner)
+		return;
+
+	BaseRenderer* baseRenderer = mAnimator->GetOwner()->GetComponent<BaseRenderer>();
+	if (!baseRenderer)
+		return;
+
+	Model* model = mAnimator->GetOwner()->GetComponent<BaseRenderer>()->GetModel();
+	if (!model)
+		return;
+
+	UINT curFrameIDX = mCurIndex;
+	UINT nextFrameIDX = mCurIndex++;
+
+	animation::SkeletonData curData = mSkeletonData[curFrameIDX];
+	animation::SkeletonData nextData = mSkeletonData[nextFrameIDX];
+
+	for (int i = 0; i < curData.Translation.size(); ++i)
+	{
+		std::wstring wName = ConvertToW_String(mNodeData[i].Name.c_str());
+
+		ModelNode* node = model->FindNode(wName);
+		if (node == nullptr)
+			continue;
+
+		// 이동 계산
+		aiMatrix4x4 traslation = {};
+		Vector3 positionVec = Interpolation(curData.Translation[i], nextData.Translation[i], mDeltaTime, mDuration);
+		traslation.Translation(aiVector3D(positionVec.x, positionVec.y, positionVec.z), traslation);
+
+		// 회전 계산
+		aiMatrix4x4 rotation = {};
+		Vector3 rotationVec = Interpolation(curData.Rotaion[i], nextData.Rotaion[i], mDeltaTime, mDuration);
+		rotation.FromEulerAnglesXYZ(rotationVec.x, rotationVec.y, rotationVec.z);
+
+		// 스케일 계산
+		Vector3 mathScaleVector = mAnimator->GetOwner()->GetComponent<Transform>()->GetScale();
+		aiVector3D scaleVec(mathScaleVector.x, mathScaleVector.y, mathScaleVector.z);
+		aiMatrix4x4 scale = scale.Scaling(scaleVec, scale);
+
+		// 열우선 행렬이라 TRS 순서로 계산
+		node->SetTransformation(traslation * rotation * scale);
+	}
+}
+
+void AnimationClip::Reset()
+{
+	mCompleate = false;
+	mCurIndex = 0;
+	mDeltaTime = 0.0f;
+}
+
+math::Vector3 AnimationClip::Interpolation(math::Vector3& startVec, math::Vector3& endVec, float accTime, float endTime)
+{
+	float x = ((startVec.x * (endTime - accTime)) + (endVec.x * accTime)) / endTime;
+	float y = ((startVec.y * (endTime - accTime)) + (endVec.y * accTime)) / endTime;
+	float z = ((startVec.z * (endTime - accTime)) + (endVec.z * accTime)) / endTime;
+	return Vector3(x,y,z);
 }
 
 const std::string AnimationClip::parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const
@@ -192,7 +245,7 @@ const animation::SkeletonData AnimationClip::readSkeleton(std::string& buf) cons
 		temp.emplace_back((std::stof(str.c_str())));
 	}
 
-	data.Translation = math::Vector3(temp[0], temp[1], temp[2]);
+	data.Translation.emplace_back(math::Vector3(temp[0], temp[1], temp[2]));
 	temp.clear();
 
 	for (int i = 0; i < 3; ++i)
@@ -201,7 +254,7 @@ const animation::SkeletonData AnimationClip::readSkeleton(std::string& buf) cons
 		temp.emplace_back(std::stof(str.c_str()));
 	}
 
-	data.Rotaion = math::Vector3(temp[0], temp[1], temp[2]);
+	data.Rotaion.emplace_back(math::Vector3(temp[0], temp[1], temp[2]));
 
 	return data;
 }

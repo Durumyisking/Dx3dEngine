@@ -35,6 +35,7 @@
 #include "InputMgr.h"
 
 #include "SkyBox.h"
+#include "BoneAnimator.h"
 
 extern Application application;
 
@@ -148,6 +149,20 @@ void SceneTitle::Enter()
 
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	}
+
+	{
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(5.f, 5.f, 5.f));
+		player->SetScale(Vector3(1.f, 1.f, 1.f));
+		player->SetName(L"Player");
+		
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
+		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+
+		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		animator->CreateAnimation(L"test", L"..//Resources/MarioBody/Animation/Jump.smd", 10.0f);
+		animator->Play(L"test");
 	}
 
 	

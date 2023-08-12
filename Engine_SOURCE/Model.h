@@ -54,6 +54,7 @@ public:
 	void CreateTexture();
 	void CreateMaterial();
 	std::vector<Texture*> GetTexture(int index);
+	Material* GetMaterial(UINT index) { return mMaterials[index]; }
 
 private:
 	void recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode);

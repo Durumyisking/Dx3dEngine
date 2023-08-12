@@ -11,13 +11,16 @@ public:
 
 	virtual void Initialize() override;
 	virtual void Update() override;
-	virtual void FixedUpdate() override;
-	virtual void Render() override;
+	virtual void FixedUpdate() override{};
+	virtual void Render() override{};
 
 	void CreateAnimation(const std::wstring& name, const std::wstring& path, float duration);
 
-	void Play(const std::wstring& name);
+	void Play(const std::wstring& name, bool loop = true);
 private:
-	std::map<std::wstring, AnimationClip> mAnimationClips;
+	std::map<std::wstring, AnimationClip*> mAnimationClips;
+	AnimationClip* mPlayAnimation;
+
+	bool mbLoop;
 };
 

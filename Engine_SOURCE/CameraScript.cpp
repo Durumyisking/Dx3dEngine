@@ -80,21 +80,22 @@ void CameraScript::KeyBoardMove()
 {
 	// Keyboard Move
 
+	float speed = 100.f;
 	if (KEY_DOWN(W))
 	{
-		mLookAt += 20.f * mTransform->Forward() * DT;
+		mLookAt += speed * mTransform->Forward() * DT;
 	}
 	if (KEY_DOWN(S))
 	{
-		mLookAt -= 20.f * mTransform->Forward() * DT;
+		mLookAt -= speed * mTransform->Forward() * DT;
 	}
 	if (KEY_DOWN(A))
 	{
-		mLookAt -= 20.f * mTransform->Right() * DT;
+		mLookAt -= speed * mTransform->Right() * DT;
 	}
 	if (KEY_DOWN(D))
 	{
-		mLookAt += 20.f * mTransform->Right() * DT;
+		mLookAt += speed * mTransform->Right() * DT;
 	}
 	//if (KEY_DOWN(Q))
 	//{
@@ -154,8 +155,8 @@ void CameraScript::Shake(const ShakeParams& params)
 {
 	if (mbShaking) 
 	{
-		// »õ·Î¿î Èçµé±â È¿°ú µé¾î°¡¸é
-		// ÀÌÀü Èçµé¸² È¿°ú¸¦ Ãë¼Ò
+		// ìƒˆë¡œìš´ í”ë“¤ê¸° íš¨ê³¼ ë“¤ì–´ê°€ë©´
+		// ì´ì „ í”ë“¤ë¦¼ íš¨ê³¼ë¥¼ ì·¨ì†Œ
 		CancelShake();
 	}
 
@@ -178,11 +179,11 @@ void CameraScript::ShakeMove()
 		mShakeTimer += GETSINGLE(TimeMgr)->DeltaTimeConstant();
 		if (mShakeTimer >= mShakeParams.duration)
 		{
-			// Èçµé¸² Áö¼Ó ½Ã°£ÀÌ Áö³ª¸é È¿°ú Á¾·á
+			// í”ë“¤ë¦¼ ì§€ì† ì‹œê°„ì´ ì§€ë‚˜ë©´ íš¨ê³¼ ì¢…ë£Œ
 			CancelShake();
 		}
 		else {				
-			// Èçµé¸² È¿°ú °è»ê
+			// í”ë“¤ë¦¼ íš¨ê³¼ ê³„ì‚°
 			float magnitude = mShakeParams.magnitude *
 				(1.f - mShakeTimer / mShakeParams.duration);
 

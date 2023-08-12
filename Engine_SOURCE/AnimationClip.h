@@ -1,6 +1,15 @@
 #pragma once
 #include "Struct.h"
+#include "StringFunctions.h"
 #include "Engine.h"
+
+
+#include "..//External/assimp/include/assimp/Importer.hpp"
+#include "..//External/assimp/include/assimp/cimport.h"
+#include "..//External/assimp/include/assimp/postprocess.h"
+#include "..//External/assimp/include/assimp/scene.h"
+
+#pragma comment(lib, "..//External/assimp/lib/Debug/assimp-vc143-mtd.lib")
 
 class BoneAnimator;
 class AnimationClip
@@ -10,15 +19,20 @@ public:
 	~AnimationClip();
 
 	void Update();
-	void FixedUpdate();
-	void Render();
-
+	void FixedUpdate(){};
+	void Render(){};
 
 	void CreateAnimation(const std::wstring& name ,const std::wstring& path, float duration);
+	void SetBoneMatrix();
+	void Reset();
 
+	bool IsCompleate() { return mCompleate; }
+
+	// 보간함수
+	math::Vector3 Interpolation(math::Vector3& startVec,math::Vector3& endVec, float accTime, float endTime);
 
 public:
-	GETSET(const std::wstring&, mName, Name)
+	GETSET(const std::wstring&, mName, AnimationName)
 	GETSET(float, mDuration, Duration)
 	GETSET(float, mDeltaTime, DeltaTime)
 	GETSET(bool, mCompleate, Compleate)
