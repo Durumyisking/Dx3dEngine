@@ -100,8 +100,8 @@ void SceneTitle::Enter()
 	}
 	
 	{
-		SkyBox* box = object::Instantiate<SkyBox>(eLayerType::BackGround, L"TitleSkyBox");
-		box->TextureLoad(L"TitleSky", L"..//Resources//SkyCityNightStar_color.png");
+		/*SkyBox* box = object::Instantiate<SkyBox>(eLayerType::BackGround, L"TitleSkyBox");
+		box->TextureLoad(L"TitleSky", L"..//Resources//SkyCityNightStar_color.png");*/
 
 	}
 
@@ -153,16 +153,32 @@ void SceneTitle::Enter()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(5.f, 5.f, 5.f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
+		player->SetPos(Vector3(50.f, 5.f, 5.f));
+		player->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 		player->SetName(L"Player");
 		
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
 		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//Resources/MarioBody/Animation/Jump.smd", 10.0f);
+
+		//animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
+		animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
 		animator->Play(L"test");
+	}
+
+	{
+		/*Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(0.f, 0.f, 0.f));
+		player->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+		player->SetName(L"Player");
+
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Tank");
+		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+
+		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		animator->CreateAnimation(L"test", L"..//Resources/Tank/Animation/Move.smd", 0.05f);
+		animator->Play(L"test");*/
 	}
 
 	

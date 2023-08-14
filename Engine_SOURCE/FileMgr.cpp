@@ -123,16 +123,10 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 				GETSINGLE(ResourceMgr)->Insert<Model>(modelName, model);
 			}
 
-			model->SetCurDirectoryPath(fullPath);
 			if (L".DAE" == extension || L".Dae" == extension || L".dae" == extension)
 			{
+				model->SetCurDirectoryPath(fullPath);
 				model->Load(entry.path());
-			}
-
-			if (L".FBX" == extension || L".Fbx" == extension || L"fbx" == extension)
-			{
-				// FBX 파일 로드 테스트
-				//model->Load(entry.path());
 			}
 		}
 	}

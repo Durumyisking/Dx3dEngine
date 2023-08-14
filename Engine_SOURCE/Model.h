@@ -11,7 +11,7 @@
 #include "..//External/assimp/include/assimp/scene.h"
 
 #pragma comment(lib, "..//External/assimp/lib/Debug/assimp-vc143-mtd.lib")
-#define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate  | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace  | aiProcess_FixInfacingNormals)
+#define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate  | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace  | aiProcess_FixInfacingNormals | aiProcess_LimitBoneWeights)
 #define ASSIMP_D3D_FLAGES aiProcess_ConvertToLeftHanded
 
 class Mesh;
@@ -55,6 +55,8 @@ public:
 	void CreateMaterial();
 	std::vector<Texture*> GetTexture(int index);
 	Material* GetMaterial(UINT index) { return mMaterials[index]; }
+
+	void AddMaterial(Material* mater) { mMaterials.emplace_back(mater); }
 
 private:
 	void recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode);

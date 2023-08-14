@@ -22,7 +22,7 @@ public:
 	void FixedUpdate(){};
 	void Render(){};
 
-	void CreateAnimation(const std::wstring& name ,const std::wstring& path, float duration);
+	void CreateAnimation(const std::wstring& name ,const std::wstring& path, double duration);
 	void SetBoneMatrix();
 	void Reset();
 
@@ -33,8 +33,8 @@ public:
 
 public:
 	GETSET(const std::wstring&, mName, AnimationName)
-	GETSET(float, mDuration, Duration)
-	GETSET(float, mDeltaTime, DeltaTime)
+	GETSET(double, mDuration, Duration)
+	GETSET(double, mTickPerSceond, TickPerSceond)
 	GETSET(bool, mCompleate, Compleate)
 	GETSET(BoneAnimator*, mAnimator, Animator)
 private:
@@ -48,8 +48,8 @@ private:
 	std::vector<animation::NodeData>     mNodeData;
 	std::vector<animation::SkeletonData> mSkeletonData;
 
-	float	    mDuration;
-	float       mDeltaTime;
+	double	    mDuration;
+	double      mTickPerSceond;
 	UINT	    mCurIndex;
 	bool		mCompleate;
 

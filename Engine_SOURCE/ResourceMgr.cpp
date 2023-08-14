@@ -1,5 +1,6 @@
 #include "ResourceMgr.h"
 #include "Material.h"
+#include "FileMgr.h"
 
 
 ResourceMgr::ResourceMgr()
@@ -54,6 +55,17 @@ Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring te
 	Material* mat = new Material(textureColor, textureNormal, textureMetal, textureRoughness, textureEmissive, shaderName);
 	Insert<Material>(materialName, mat);
 	return mat;
+}
+
+void ResourceMgr::Initalize()
+{
+	// Mario
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioBody", L"Mario");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHandL", L"MarioHandL");
+
+
+	// Monster
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Tank", L"Tank");
 }
 
 void ResourceMgr::Release()

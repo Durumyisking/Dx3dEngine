@@ -12,7 +12,7 @@ extern Application application;
 namespace fs = std::filesystem;
 AnimationClip::AnimationClip()
 	: mDuration(0.0f)
-	, mDeltaTime(0.0f)
+	, mTickPerSceond(0.0f)
 	, mCurIndex(0)
 	, mCompleate(false)
 	, mAnimator(nullptr)
@@ -29,11 +29,11 @@ void AnimationClip::Update()
 	if (mCompleate)
 		return;
 
-	mDeltaTime += GETSINGLE(TimeMgr)->DeltaTime();
+	mTickPerSceond += DT;
 
-	if (mDeltaTime >= mDuration)
+	if (mTickPerSceond >= mDuration)
 	{
-		mDeltaTime -= mDuration;
+		mTickPerSceond -= mDuration;
 		mCurIndex++;
 	}
 
@@ -48,10 +48,10 @@ void AnimationClip::Update()
 	SetBoneMatrix();
 }
 
-void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring& path, float duration)
+void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring& path, double duration)
 {
 	// 파일 경로 설정
-	std::ifstream file(L"..//" + path, std::ios::in);
+	std::ifstream file(path, std::ios::in);
 
 	std::string buf = "";
 	// 파일이 열리지 않으면 Window 종료
@@ -139,37 +139,48 @@ void AnimationClip::SetBoneMatrix()
 	if (!model)
 		return;
 
-	UINT curFrameIDX = mCurIndex;
-	UINT nextFrameIDX = mCurIndex++;
+	animation::SkeletonData curData = mSkeletonData[mCurIndex];
+	animation::SkeletonData nextData = mSkeletonData[mCurIndex + 1];
 
-	animation::SkeletonData curData = mSkeletonData[curFrameIDX];
-	animation::SkeletonData nextData = mSkeletonData[nextFrameIDX];
-
-	for (int i = 0; i < curData.Translation.size(); ++i)
+	int size = curData.Translation.size();
+	for (int i = 0; i < size; ++i)
 	{
-		std::wstring wName = ConvertToW_String(mNodeData[i].Name.c_str());
-
-		ModelNode* node = model->FindNode(wName);
+		ModelNode* node = model->FindNode(mNodeData[i].Name);
 		if (node == nullptr)
 			continue;
 
 		// 이동 계산
 		aiMatrix4x4 traslation = {};
-		Vector3 positionVec = Interpolation(curData.Translation[i], nextData.Translation[i], mDeltaTime, mDuration);
+		Vector3 positionVec = Interpolation(curData.Translation[i], nextData.Translation[i], mTickPerSceond, mDuration);
 		traslation.Translation(aiVector3D(positionVec.x, positionVec.y, positionVec.z), traslation);
 
-		// 회전 계산
+		// 회전 계산 쿼터니언
+		// 버그 있음 사용 X
 		aiMatrix4x4 rotation = {};
-		Vector3 rotationVec = Interpolation(curData.Rotaion[i], nextData.Rotaion[i], mDeltaTime, mDuration);
-		rotation.FromEulerAnglesXYZ(rotationVec.x, rotationVec.y, rotationVec.z);
+		{
+			//Vector3 startE = curData.Rotaion[i];
+			//Vector3 EndE = nextData.Rotaion[i];
 
-		// 스케일 계산
-		Vector3 mathScaleVector = mAnimator->GetOwner()->GetComponent<Transform>()->GetScale();
-		aiVector3D scaleVec(mathScaleVector.x, mathScaleVector.y, mathScaleVector.z);
-		aiMatrix4x4 scale = scale.Scaling(scaleVec, scale);
+			//aiQuaternion roationQ(startE.x, startE.y, startE.z);
+			//aiQuaternion endQ(EndE.x, EndE.y, EndE.z);
 
-		// 열우선 행렬이라 TRS 순서로 계산
-		node->SetTransformation(traslation * rotation * scale);
+			//aiQuaternion resultQ = {};
+			//resultQ.Interpolate(resultQ, roationQ, endQ, mTickPerSceond / mDuration);
+
+			//// Scale, Quternion, Tranlation
+			//node->SetTransformation(aiMatrix4x4(aiVector3t(1.0f, 1.0f, 1.0f)
+			//	, aiQuaternion(resultQ.x, resultQ.y, resultQ.z)
+			//	, aiVector3t(positionVec.x, positionVec.y, positionVec.z)));
+		}
+
+		// 회전 계산 오일러
+		{
+			Vector3 rotationVec = curData.Rotaion[i];
+			rotation.FromEulerAnglesXYZ(rotationVec.x, rotationVec.y, rotationVec.z);
+
+		}
+		// T*R;
+		node->SetTransformation(traslation * rotation);
 	}
 }
 
@@ -177,7 +188,7 @@ void AnimationClip::Reset()
 {
 	mCompleate = false;
 	mCurIndex = 0;
-	mDeltaTime = 0.0f;
+	mTickPerSceond = 0.0f;
 }
 
 math::Vector3 AnimationClip::Interpolation(math::Vector3& startVec, math::Vector3& endVec, float accTime, float endTime)
@@ -221,7 +232,7 @@ const animation::NodeData AnimationClip::readNodes(std::string& buf) const
 	fPos += 1;
 
 	str = buf.substr(fPos, lPos - fPos);
-	Data.Name = str;
+	Data.Name = ConvertToW_String(str.c_str());
 
 
 	fPos = buf.find_last_of(' ', buf.size() - 1);

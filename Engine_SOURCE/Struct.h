@@ -6,7 +6,7 @@ namespace animation
 {
 	struct NodeData
 	{
-		std::string Name;
+		std::wstring Name;
 		int ParentsIDX;
 	};
 
