@@ -27,7 +27,7 @@ Model::~Model()
 HRESULT Model::Load(const std::wstring& path)
 {
 	std::string sPath = ConvertToString(path.c_str());
-	const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES | ASSIMP_D3D_FLAGES);
+	const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES);
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
@@ -85,7 +85,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 		// assimp �׵� ����� ��Ȥ �ƴ� ��찡���� (assimp ���� ���� �ڵ�)
 		// ���� ù ��� Ž������ �ֻ��� ����� ����� �׵���ķ� �����
-		aiscene->mRootNode->mTransformation = aiMatrix4x4() * mat;
+		aiscene->mRootNode->mTransformation = aiMatrix4x4();
 	}
 
 	std::wstring sceneName = ConvertToW_String(aiscene->mName.C_Str());

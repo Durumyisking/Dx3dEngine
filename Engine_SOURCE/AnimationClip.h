@@ -31,6 +31,8 @@ public:
 	// 보간함수
 	math::Vector3 Interpolation(math::Vector3& startVec,math::Vector3& endVec, float accTime, float endTime);
 
+	aiMatrix4x4 ToLeftHandMatrix(Vector3 pos, Vector3 rotation);
+
 public:
 	GETSET(const std::wstring&, mName, AnimationName)
 	GETSET(double, mDuration, Duration)

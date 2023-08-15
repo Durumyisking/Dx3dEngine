@@ -149,38 +149,23 @@ void AnimationClip::SetBoneMatrix()
 		if (node == nullptr)
 			continue;
 
-		// 이동 계산
-		aiMatrix4x4 traslation = {};
-		Vector3 positionVec = Interpolation(curData.Translation[i], nextData.Translation[i], mTickPerSceond, mDuration);
-		traslation.Translation(aiVector3D(positionVec.x, positionVec.y, positionVec.z), traslation);
-
 		// 회전 계산 쿼터니언
 		// 버그 있음 사용 X
-		aiMatrix4x4 rotation = {};
-		{
-			//Vector3 startE = curData.Rotaion[i];
-			//Vector3 EndE = nextData.Rotaion[i];
+		//Vector3 startE = curData.Rotaion[i];
+		//Vector3 EndE = nextData.Rotaion[i];
+		//aiQuaternion roationQ(startE.x, startE.y, startE.z);
+		//aiQuaternion endQ(EndE.x, EndE.y, EndE.z);
+		//aiQuaternion resultQ = {};
+		//resultQ.Interpolate(resultQ, roationQ, endQ, mTickPerSceond / mDuration);
+		//// Scale, Quternion, Tranlation
+		//node->SetTransformation(aiMatrix4x4(aiVector3t(1.0f, 1.0f, 1.0f)
+		//	, aiQuaternion(resultQ.x, resultQ.y, resultQ.z)
+		//	, aiVector3t(positionVec.x, positionVec.y, positionVec.z)));
 
-			//aiQuaternion roationQ(startE.x, startE.y, startE.z);
-			//aiQuaternion endQ(EndE.x, EndE.y, EndE.z);
 
-			//aiQuaternion resultQ = {};
-			//resultQ.Interpolate(resultQ, roationQ, endQ, mTickPerSceond / mDuration);
-
-			//// Scale, Quternion, Tranlation
-			//node->SetTransformation(aiMatrix4x4(aiVector3t(1.0f, 1.0f, 1.0f)
-			//	, aiQuaternion(resultQ.x, resultQ.y, resultQ.z)
-			//	, aiVector3t(positionVec.x, positionVec.y, positionVec.z)));
-		}
-
-		// 회전 계산 오일러
-		{
-			Vector3 rotationVec = curData.Rotaion[i];
-			rotation.FromEulerAnglesXYZ(rotationVec.x, rotationVec.y, rotationVec.z);
-
-		}
 		// T*R;
-		node->SetTransformation(traslation * rotation);
+		Vector3 positionVec = Interpolation(curData.Translation[i], nextData.Translation[i], mTickPerSceond, mDuration);
+		node->SetTransformation(ToLeftHandMatrix(positionVec, curData.Rotaion[i]));
 	}
 }
 
@@ -196,7 +181,20 @@ math::Vector3 AnimationClip::Interpolation(math::Vector3& startVec, math::Vector
 	float x = ((startVec.x * (endTime - accTime)) + (endVec.x * accTime)) / endTime;
 	float y = ((startVec.y * (endTime - accTime)) + (endVec.y * accTime)) / endTime;
 	float z = ((startVec.z * (endTime - accTime)) + (endVec.z * accTime)) / endTime;
-	return Vector3(x,y,z);
+	return Vector3(x, y, z);
+}
+
+aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, Vector3 rotation)
+{
+	// 이동 계산
+	aiMatrix4x4 traslation = {};
+	traslation.Translation(aiVector3D(pos.x, pos.y, pos.z), traslation);
+
+	// 회전 계산 오일러
+	aiMatrix4x4 rotationmatrix = {};
+	rotationmatrix.FromEulerAnglesXYZ(rotation.x, rotation.y, rotation.z);
+
+	return traslation * rotationmatrix;
 }
 
 const std::string AnimationClip::parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const

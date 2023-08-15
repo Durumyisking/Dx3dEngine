@@ -177,7 +177,7 @@ void SceneTitle::Enter()
 		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//Resources/Tank/Animation/Move.smd", 0.05f);
+		animator->CreateAnimation(L"test", L"..//..//Resources/Tank/Animation/Move.smd", 0.05f);
 		animator->Play(L"test");*/
 	}
 
