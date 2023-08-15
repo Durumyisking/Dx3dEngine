@@ -218,6 +218,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="AudioSource.h" />
     <ClInclude Include="BaseRenderer.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraScript.h" />
     <ClInclude Include="ClientToServer.h" />
@@ -251,6 +252,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="GraphicDevice.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GridScript.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Light.h" />
@@ -262,6 +264,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PaintShader.h" />
+    <ClInclude Include="Panal.h" />
     <ClInclude Include="ParticleShader.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Physical.h" />
@@ -307,6 +310,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="TimerMgr.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -318,6 +323,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="BaseRenderer.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraScript.cpp" />
     <ClCompile Include="Collider2D.cpp" />
@@ -345,6 +351,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="GameObj.cpp" />
     <ClCompile Include="GraphicDevice.cpp" />
     <ClCompile Include="GridScript.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -354,6 +361,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="PaintShader.cpp" />
+    <ClCompile Include="Panal.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Physical.cpp" />
@@ -397,6 +405,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="TimerMgr.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini" />

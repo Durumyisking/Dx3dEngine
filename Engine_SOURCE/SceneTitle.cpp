@@ -36,6 +36,8 @@
 
 #include "SkyBox.h"
 
+#include "Panal.h"
+
 extern Application application;
 
 
@@ -235,6 +237,8 @@ void SceneTitle::Enter()
 			testRender->SetMeshByKey(L"Cubemesh");
 		}		
 	}
+	
+    //Panal* test1 = object::Instantiate<Panal>(eLayerType::UI);
 
 	Scene::Enter();
 }
