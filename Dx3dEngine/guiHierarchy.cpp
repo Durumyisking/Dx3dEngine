@@ -9,6 +9,7 @@
 #include "Application.h"
 
 #include "guiTreeWidget.h"
+#include "guiWidgetMgr.h"
 
 extern Application application;
 extern gui::Editor editor;
@@ -56,7 +57,7 @@ namespace gui
 		renderer::inspectorGameObject 
 			= static_cast<GameObj*>(data);
 
-		Inspector* inspector = editor.GetWidget<Inspector>("Inspector");
+		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
 		inspector->SetTargetGameObject(renderer::inspectorGameObject);
 		inspector->InitializeTargetGameObject();
 

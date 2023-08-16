@@ -8,6 +8,7 @@
 #include "guiInspector.h"
 #include "guiResource.h"
 #include "guiEditor.h"
+#include "guiWidgetMgr.h"
 
 extern gui::Editor editor;
 
@@ -88,7 +89,7 @@ namespace gui
 	{
 		Resource* resource = static_cast<Resource*>(data);
 
-		Inspector* inspector = editor.GetWidget<Inspector>("Inspector");
+		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
 		inspector->SetTargetResource(resource);
 		inspector->InitializeTargetResource();
 	}

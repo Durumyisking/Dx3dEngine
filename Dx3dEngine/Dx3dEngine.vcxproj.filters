@@ -38,6 +38,9 @@
     <Filter Include="Widget\Components\Base">
       <UniqueIdentifier>{7a74e626-791c-4f8d-9cf7-28ea863c9dbf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor\Managers">
+      <UniqueIdentifier>{ed97636b-69b6-431b-a8a5-53646a539d88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dx3dEngine.h" />
@@ -123,6 +126,12 @@
       <Filter>Editor\Object</Filter>
     </ClInclude>
     <ClInclude Include="guiVisualEditor.h" />
+    <ClInclude Include="guiWidgetMgr.h">
+      <Filter>Editor\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="guiEditorObjMgr.h">
+      <Filter>Editor\Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Dx3dEngine.rc">
@@ -217,5 +226,11 @@
       <Filter>Editor\Object</Filter>
     </ClCompile>
     <ClCompile Include="guiVisualEditor.cpp" />
+    <ClCompile Include="guiWidgetMgr.cpp">
+      <Filter>Editor\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="guiEditorObjMgr.cpp">
+      <Filter>Editor\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -45,7 +45,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -168,6 +168,7 @@
     <ClInclude Include="guiDebugObject.h" />
     <ClInclude Include="guiEditor.h" />
     <ClInclude Include="guiEditorObject.h" />
+    <ClInclude Include="guiEditorObjMgr.h" />
     <ClInclude Include="guiGame.h" />
     <ClInclude Include="guiHierarchy.h" />
     <ClInclude Include="guiInspector.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="guiTransform.h" />
     <ClInclude Include="guiTreeWidget.h" />
     <ClInclude Include="guiVisualEditor.h" />
+    <ClInclude Include="guiWidgetMgr.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="imgui_impl_dx11.h" />
@@ -199,6 +201,7 @@
     <ClCompile Include="guiDebugObject.cpp" />
     <ClCompile Include="guiEditor.cpp" />
     <ClCompile Include="guiEditorObject.cpp" />
+    <ClCompile Include="guiEditorObjMgr.cpp" />
     <ClCompile Include="guiGame.cpp" />
     <ClCompile Include="guiHierarchy.cpp" />
     <ClCompile Include="guiInspector.cpp" />
@@ -212,6 +215,7 @@
     <ClCompile Include="guiTransform.cpp" />
     <ClCompile Include="guiTreeWidget.cpp" />
     <ClCompile Include="guiVisualEditor.cpp" />
+    <ClCompile Include="guiWidgetMgr.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
