@@ -11,7 +11,6 @@
 #include "CubeMap.h"
 
 extern Application application;
-CubeMapHDR hdrBg;
 
 namespace renderer
 {
@@ -418,6 +417,8 @@ namespace renderer
 		constantBuffers[static_cast<UINT>(eCBType::PostProcess)] = new ConstantBuffer(eCBType::PostProcess);
 		constantBuffers[static_cast<UINT>(eCBType::PostProcess)]->Create(sizeof(PostProcessCB));
 
+		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)] = new ConstantBuffer(eCBType::CubeMapProj);
+		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Create(sizeof(CubeMapCB));
 
 		lightBuffer = new StructedBuffer();
 		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
@@ -930,52 +931,6 @@ namespace renderer
 
 	}
 
-
-
-	void release()
-	{
-		for (size_t i = 0; i < static_cast<UINT>(eCBType::End); i++)
-		{
-			delete constantBuffers[i];
-			constantBuffers[i] = nullptr;
-		}
-		delete lightBuffer;
-		lightBuffer = nullptr;
-
-
-		for (size_t i = 0; i < static_cast<UINT>(eRenderTargetType::End); i++)
-		{
-			if (renderTargets[i] == nullptr)
-			{
-				continue;
-			}
-
-			delete renderTargets[i];
-			renderTargets[i] = nullptr;
-		}
-	}
-
-	void Render()
-	{
-		//GetDevice()->OMSetRenderTarget();
-
-		hdrBg.Bind();
-		BindNoiseTexture();
-		BindLight();
-
-		UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
-
-		for (Camera* cam : Cameras[type])
-		{
-			if (nullptr == cam)
-				continue;
-
-			cam->Render();
-		}
-		Cameras[type].clear();
-		renderer::lightAttributes.clear();
-	}
-
 	void CreateRenderTargets()
 	{
 		UINT width = application.GetWidth();
@@ -1313,7 +1268,6 @@ namespace renderer
 		arrCube[1].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		arrCube[1].uv = Vector2(1.f, 0.f);
-
 		arrCube[1].tangent = Vector3(1.0f, 0.0f, 0.0f);
 		arrCube[1].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 		arrCube[1].normal = Vector3(0.f, 1.f, 0.f);
@@ -1732,6 +1686,49 @@ namespace renderer
 		LoadDefaultMaterial();
 
 		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"blockBrick");
-		hdrBg.loadFromFile("C:/Users/csh/Desktop/Dx3dEngine-sehyun/Dx3dEngine/Resources/environment.hdr");
 	}
+
+	void release()
+	{
+		for (size_t i = 0; i < static_cast<UINT>(eCBType::End); i++)
+		{
+			delete constantBuffers[i];
+			constantBuffers[i] = nullptr;
+		}
+		delete lightBuffer;
+		lightBuffer = nullptr;
+
+
+		for (size_t i = 0; i < static_cast<UINT>(eRenderTargetType::End); i++)
+		{
+			if (renderTargets[i] == nullptr)
+			{
+				continue;
+			}
+
+			delete renderTargets[i];
+			renderTargets[i] = nullptr;
+		}
+	}
+
+	void Render()
+	{
+		//GetDevice()->OMSetRenderTarget();
+
+		BindNoiseTexture();
+		BindLight();
+
+		UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
+
+		for (Camera* cam : Cameras[type])
+		{
+			if (nullptr == cam)
+				continue;
+
+			cam->Render();
+		}
+		Cameras[type].clear();
+		renderer::lightAttributes.clear();
+	}
+
 }

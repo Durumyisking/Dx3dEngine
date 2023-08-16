@@ -27,6 +27,7 @@
 #define CBSLOT_PARTICLESYSTEM 6
 #define CBSLOT_NOISE			7
 #define CBSLOT_POSTPROCESS		8
+#define CBSLOT_CUBEMAP 9
 
 
 enum class eValidationMode
@@ -179,6 +180,7 @@ enum class eCBType
 	Noise, 
 	PostProcess,
 	PBR,
+	CubeMapProj,
 	End,
 };
 

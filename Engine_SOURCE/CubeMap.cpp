@@ -4,7 +4,7 @@
 #include "Texture.h"
 #include "MeshRenderer.h"
 #include "Material.h"
-#include "SB.h"
+#include "SkyboxRenderer.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "../External/stb/stb_image.h"
@@ -72,7 +72,7 @@ void TextureHDR::loadFromData(void* data, int w, int h, int channels, bool linea
     assert(SUCCEEDED(hr));
 
 }
-
+ 
 
 
 void TextureHDR::Bind(unsigned int slot)
@@ -87,7 +87,15 @@ void TextureHDR::Bind(unsigned int slot)
 
 
 CubeMapHDR::CubeMapHDR()
+    : g_d3dDevice(nullptr)
+    , mEnvMapTex(nullptr)
+    , mEnvMapRTV(nullptr)
+    , mEnvMapSRV(nullptr)
+
 {
+    g_d3dDevice = GetDevice()->GetID3D11Device();
+
+    AddComponent<SkyboxRenderer>(eComponentType::MeshRenderer);
 }
 
 CubeMapHDR::~CubeMapHDR()
@@ -98,32 +106,147 @@ CubeMapHDR::~CubeMapHDR()
     SafeRelease(&pSampler);
 }
 
-void CubeMapHDR::loadFromFile(std::string name, bool linearFilter, bool flipTex)
+void CubeMapHDR::Initialize()
 {
+    createEnvMap();
+    //createEnvMapDepthStencilTexture();
 
-    TextureHDR t;
-    t.loadFromFile(name, true, flipTex);
+    XMMATRIX captureProjection = XMMatrixPerspectiveFovLH((XM_PI / 180) * 90, 1, 0.1, 10);
+    XMMATRIX captureViews[] =
+    {
+        XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(1, 0, 0, 0), XMVectorSet(0, -1, 0, 0)),
+        XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, -1, 0, 0)),
+        XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0,-1, 0, 0), XMVectorSet(0,  0, 1, 0)),
+        XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0,  0,-1, 0)),
+        XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 0,-1, 0), XMVectorSet(0, -1, 0, 0)),
+        XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, -1, 0, 0))
+    };
 
-    //XMMATRIX captureProjection = XMMatrixPerspectiveFovLH((XM_PI / 180) * 90, 1, 0.1, 10);
-    //XMMATRIX captureViews
-    //{
-    //    XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(1, 0, 0, 0), XMVectorSet(0, -1, 0, 0)),
-    //    XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, -1, 0, 0)),
-    //    XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, -1, 0, 0), XMVectorSet(0, 0, 1, 0)),
-    //    XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 0, -1, 0)),
-    //    XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 0, -1, 0), XMVectorSet(0, -1, 0, 0)),
-    //    XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, -1, 0, 0))
-    //};
+    D3D11_VIEWPORT vp;
+    vp.Width = SIZE_SKYBOX;
+    vp.Height = SIZE_SKYBOX;
+    vp.MinDepth = 0.0f;
+    vp.MaxDepth = 1.0f;
+    vp.TopLeftX = 0;
+    vp.TopLeftY = 0;
+    GetDevice()->GetDeviceContext()->RSSetViewports(1, &vp);
 
-    //Create the TextureCube
+    Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
+
+    Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"RectToCubemapShader");
+
+    //TextureHDR t;
+    //t.loadFromFile("E:/Dev/3d-my/Dx3dEngine/Resources/environment.hdr");
+    //t.Bind(0);
+
+    Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"noise1");
+
+    CubeMapCB cb;
+
+    for (uint32_t i = 0; i < 6; ++i)
+    {
+        float clearColor[4] = { 0.f, 0.f, 0.f, 1.f };
+        switch (i)
+        {
+        case 0:
+            clearColor[0] = 1.f;
+            break;
+        case 1:
+            clearColor[1] = 1.f;
+            break;
+        case 2:
+            clearColor[2] = 1.f;
+            break;
+        case 3:
+            clearColor[1] = 1.f;
+            clearColor[2] = 1.f;
+            break;
+        case 4:
+            clearColor[1] = 1.f;
+            clearColor[3] = 1.f;
+            break;
+        case 5:
+            clearColor[2] = 1.f;
+            clearColor[3] = 1.f;
+            break;
+        default:
+            break;
+        }
+
+        GetDevice()->GetDeviceContext()->ClearRenderTargetView(mRTVs[i], clearColor);
+        XMMATRIX d = XMMatrixTranspose(captureViews[i] * captureProjection);
+        cb.matrix = d;
+        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->SetData(&cb);
+        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Bind(eShaderStage::VS);
+        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Bind(eShaderStage::PS);
+        GetDevice()->GetDeviceContext()->OMSetRenderTargets(1, &mRTVs[i], nullptr);
+        t->BindAllShaderResource(28);
+        shader->Bind();
+        mesh->BindBuffer();
+        mesh->Render();
+    }
+    vp.Width = 1600;
+    vp.Height = 900;
+    GetDevice()->GetDeviceContext()->RSSetViewports(1, &vp);
+
+    GameObj::Initialize();
+}
+
+void CubeMapHDR::Update()
+{
+    GameObj::Update();
+}
+
+void CubeMapHDR::FixedUpdate()
+{
+    GameObj::FixedUpdate();
+}
+
+void CubeMapHDR::Render()
+{
+    Bind();
+    GameObj::Render();
+}
+
+//TextureHDR CubeMapHDR::loadFromFile(std::string name, bool linearFilter, bool flipTex)
+//{
+//    return loadFromFile(name, true, flipTex);
+//}
+
+void CubeMapHDR::createEnvMapDepthStencilTexture()
+{
+    D3D11_TEXTURE2D_DESC textureDesc = {};
+    textureDesc.Width = SIZE_SKYBOX;
+    textureDesc.Height = SIZE_SKYBOX;
+    textureDesc.Format = DXGI_FORMAT_R32_FLOAT;
+    textureDesc.MipLevels = 1;
+    textureDesc.ArraySize = 6;
+    textureDesc.SampleDesc.Count = 1;
+    textureDesc.SampleDesc.Quality = 0;
+    textureDesc.Usage = D3D11_USAGE_DEFAULT;
+    textureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+    textureDesc.CPUAccessFlags = 0;
+    textureDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+    g_d3dDevice->CreateTexture2D(&textureDesc, nullptr, &mEnvMapDepth);
+
+    D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+    dsvDesc.Format = textureDesc.Format;
+    dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DARRAY;
+    dsvDesc.Texture2DArray.FirstArraySlice = 0;
+    dsvDesc.Texture2DArray.ArraySize = 6;
+    dsvDesc.Texture2DArray.MipSlice = 0;
+    GetDevice()->CreateDepthStencilView(mEnvMapDepth, &dsvDesc, &mEnvMapDSV);
+}
+
+
+void CubeMapHDR::createEnvMap()
+{
+    // Create the TextureCube for enviroment mapping rendertarget
     D3D11_TEXTURE2D_DESC textureDesc = {};
 
-    const int SkyboxSize = 2048;
-    const int IrradianceSize = 32;
-    const int PreFilterSize = 256;
-
-    textureDesc.Width = SkyboxSize;
-    textureDesc.Height = SkyboxSize;
+    textureDesc.Width = SIZE_SKYBOX;
+    textureDesc.Height = SIZE_SKYBOX;
+    //textureDesc.MipLevels = 9;
     textureDesc.MipLevels = 1;
     textureDesc.ArraySize = 6;
     textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -132,166 +255,40 @@ void CubeMapHDR::loadFromFile(std::string name, bool linearFilter, bool flipTex)
     textureDesc.SampleDesc.Quality = 0;
     textureDesc.Usage = D3D11_USAGE_DEFAULT;
     textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+    //textureDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS | D3D11_RESOURCE_MISC_TEXTURECUBE;
     textureDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
-    ID3D11Texture2D* tex = nullptr;
-     GetDevice()->GetID3D11Device()->CreateTexture2D(&textureDesc, nullptr, &tex);
-    textureDesc.Width = IrradianceSize;
-    textureDesc.Height = IrradianceSize;
-    ID3D11Texture2D* texIrradiance = nullptr;
-     GetDevice()->GetID3D11Device()->CreateTexture2D(&textureDesc, nullptr, &texIrradiance);
-    textureDesc.Width = PreFilterSize;
-    textureDesc.Height = PreFilterSize;
-    ID3D11Texture2D* texPreFilter = nullptr;
-     GetDevice()->GetID3D11Device()->CreateTexture2D(&textureDesc, nullptr, &texPreFilter);
-    //textureDesc.Width = BrdfLookupSize;
-    //textureDesc.Height = BrdfLookupSize;
-    //ID3D11Texture2D* BrdfLookupSize = nullptr;
-    // GetDevice()->GetID3D11Device()->CreateTexture2D(&textureDesc, nullptr, &BrdfLookupSize);
-
-    // Create the Shader Resource view for the texture cube
-    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-    srvDesc.Format = textureDesc.Format;
-    srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
-    srvDesc.Texture2D.MostDetailedMip = 0;
-    srvDesc.Texture2D.MipLevels = 1;
-    GetDevice()->GetID3D11Device()->CreateShaderResourceView(tex, &srvDesc, &pCubemapView);
-    GetDevice()->GetID3D11Device()->CreateShaderResourceView(texIrradiance, &srvDesc, &pIrradiaceMapView);
-    GetDevice()->GetID3D11Device()->CreateShaderResourceView(texPreFilter, &srvDesc, &pFilteredMapView);
-
-    // Convolution texture
-    // GetDevice()->GetID3D11Device()->CreateTexture2D(&textureDesc, nullptr, &texConv);
-    // GetDevice()->GetID3D11Device()->CreateShaderResourceView(texConv, &srvDesc, &pTextureViewConvoluted);
-
-
-    //Create the Render target views
-    std::vector<ID3D11RenderTargetView*> rtvs;
-    std::vector<ID3D11RenderTargetView*> preFilteredRtv;
-    std::vector<ID3D11RenderTargetView*> IrradianceRtv;
-
-    //std::vector<ID3D11RenderTargetView*> rtvsCon;
+    g_d3dDevice->CreateTexture2D(&textureDesc, nullptr, &mEnvMapTex);
 
     for (uint32_t i = 0; i < 6; i++)
     {
-        D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc = {};
-        renderTargetViewDesc.Format = textureDesc.Format;
-        renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-        renderTargetViewDesc.Texture2DArray.MipSlice = 0;
-        renderTargetViewDesc.Texture2DArray.FirstArraySlice = i;
-        renderTargetViewDesc.Texture2DArray.ArraySize = 1;
+        D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+        rtvDesc.Format = textureDesc.Format;
+        rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+        //rtvDesc.Texture2DArray.ArraySize = 6;
+        //rtvDesc.Texture2DArray.FirstArraySlice = 0;
+        rtvDesc.Texture2DArray.MipSlice = 0;
+        rtvDesc.Texture2DArray.FirstArraySlice = i;
+        rtvDesc.Texture2DArray.ArraySize = 1;
 
-        ID3D11RenderTargetView* view1 = nullptr;
-        ID3D11RenderTargetView* view2 = nullptr;
-        ID3D11RenderTargetView* view3 = nullptr;
+        ID3D11RenderTargetView* rtv = nullptr;
+        GetDevice()->CreateRenderTargetView(mEnvMapTex, &rtvDesc, &rtv);
 
-        //ID3D11RenderTargetView* viewConv = nullptr;
-         GetDevice()->GetID3D11Device()->CreateRenderTargetView(tex, &renderTargetViewDesc, &view1);
-         GetDevice()->GetID3D11Device()->CreateRenderTargetView(texIrradiance, &renderTargetViewDesc, &view2);
-         GetDevice()->GetID3D11Device()->CreateRenderTargetView(texPreFilter, &renderTargetViewDesc, &view3);
-
-        // GetDevice()->GetID3D11Device()->CreateRenderTargetView(texConv, &renderTargetViewDesc, &viewConv);
-        rtvs.push_back(view1);
-        IrradianceRtv.push_back(view2);
-        preFilteredRtv.push_back(view3);
-
-        //rtvsCon.push_back(viewConv);
-    }
-    tex->Release();
-    texIrradiance->Release();
-    texPreFilter->Release();
-
-
-    ////ENVIRONMENT MAP
-    //MeshRenderer* mr = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-    //mr->SetMeshByKey(L"Cubemesh");
-
-    //Material* material = new Material;
-    //GETSINGLE(ResourceMgr)->Insert<Material>(L"SkyboxMat", material);
-    //material->SetShaderByKey(L"RectToCubemapShader");
-
-    //mr->SetMaterial(material);
-
-    Skybox cmap;
-    //Shader s;
-    //s.Create("res/Shaders/EquirectangulatToCubemap.hlsl");
-
-    //ConstantBuffer cb;
-    //cb.Create(nullptr, 16 * sizeof(float), 0, CONST_BUFFER_USAGE_VERTEX);
-
-    D3D11_VIEWPORT vp;
-    vp.Width = SkyboxSize;
-    vp.Height = SkyboxSize;
-    vp.MinDepth = 0.0f;
-    vp.MaxDepth = 1.0f;
-    vp.TopLeftX = 0;
-    vp.TopLeftY = 0;
-    GetDevice()->GetDeviceContext()->RSSetViewports(1, &vp);
-
-    //s.Bind();
-    //t.Bind(0);
-    //for (uint32_t i = 0; i < 6; ++i)
-    //{
-    //    float clearColor[4] = { 1.0f, 0.1f, 0.1f, 1.0f };
-    //     GetDevice()->GetDeviceContext()->ClearRenderTargetView(rtvs[i], clearColor);
-    //    XMMATRIX d = XMMatrixTranspose(captureViews[i] * captureProjection);
-    //    cb.SetData(&d, 16 * sizeof(float));
-    //    cb.Bind(0);
-    //     GetDevice()->GetDeviceContext()->OMSetRenderTargets(1, &rtvs[i], nullptr);
-    //    cmap.Draw();
-    //}
-
-    // IRADIANCE
-
-    //Shader sirr;
-    //sirr.Create("res/Shaders/irradiance.hlsl");
-    //sirr.Bind();
-    //vp.Width = IrradianceSize;
-    //vp.Height = IrradianceSize;
-    // GetDevice()->GetDeviceContext()->RSSetViewports(1, &vp);
-
-    //t.Bind(0);
-
-    //for (uint32_t i = 0; i < 6; ++i)
-    //{
-    //    float clearColor[4] = { 1.0f, 0.1f, 0.1f, 1.0f };
-    //     GetDevice()->GetDeviceContext()->ClearRenderTargetView(IrradianceRtv[i], clearColor);
-    //    XMMATRIX d = XMMatrixTranspose(captureViews[i] * captureProjection);
-    //    cb.SetData(&d, 16 * sizeof(float));
-    //    cb.Bind(0);
-    //     GetDevice()->GetDeviceContext()->OMSetRenderTargets(1, &IrradianceRtv[i], nullptr);
-    //    cmap.Draw();
-    //    std::this_thread::sleep_for(std::chrono::microseconds(100)); // ¼º´É¶«½Ã
-    //}
-
-    //PREFILTERED MAP
-
-    Shader* spre;
-    spre = GETSINGLE(ResourceMgr)->Find<Shader>(L"PreFilterShader");
-    spre->Bind();
-    vp.Width = PreFilterSize;
-    vp.Height = PreFilterSize;
-     GetDevice()->GetDeviceContext()->RSSetViewports(1, &vp);
-
-    t.Bind(0);
-
-    for (uint32_t i = 0; i < 6; ++i)
-    {
-        float clearColor[4] = { 1.0f, 0.1f, 0.1f, 1.0f };
-         GetDevice()->GetDeviceContext()->ClearRenderTargetView(preFilteredRtv[i], clearColor);
-        //XMMATRIX d = XMMatrixTranspose(captureViews[i] * captureProjection);
-         GetDevice()->GetDeviceContext()->OMSetRenderTargets(1, &preFilteredRtv[i], nullptr);
-        cmap.Draw();
+        mRTVs.push_back(rtv);
     }
 
-    vp.Width = 1600.f;
-    vp.Height = 900.f;
-    GetDevice()->GetDeviceContext()->RSSetViewports(1, &vp);
+    // Create SRV to access to envMap in Shader
+    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+    srvDesc.Format = textureDesc.Format;
+    srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURECUBE;
+    srvDesc.TextureCube.MostDetailedMip = 0;
+    srvDesc.TextureCube.MipLevels = 1;
+    GetDevice()->CreateShaderResourceView(mEnvMapTex, &srvDesc, &mEnvMapSRV);
 }
-
 
 void CubeMapHDR::Bind()
 {
-    Texture::Clears();
-     //GetDevice()->GetDeviceContext()->PSSetShaderResources(0, 1, &pCubemapView);
+    //Texture::Clears();
+    GetDevice()->GetDeviceContext()->PSSetShaderResources(17, 1, &mEnvMapSRV);
      //GetDevice()->GetDeviceContext()->PSSetShaderResources(6, 1, &pIrradiaceMapView);
-     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &pFilteredMapView);
+    //GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &pFilteredMapView);
 }

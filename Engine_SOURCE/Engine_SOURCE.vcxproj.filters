@@ -209,6 +209,9 @@
     <Filter Include="Common\GameObj\Skybox\CubeMap">
       <UniqueIdentifier>{b37243e5-5b6c-4258-bcfc-6821d0ee1662}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Component\Renderer\Skybox">
+      <UniqueIdentifier>{b410bcf3-ae25-480a-b5b4-bd17195ed68c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -502,6 +505,9 @@
     <ClInclude Include="CubeMap.h">
       <Filter>Common\GameObj\Skybox\CubeMap</Filter>
     </ClInclude>
+    <ClInclude Include="SkyboxRenderer.h">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -766,6 +772,9 @@
     </ClCompile>
     <ClCompile Include="CubeMap.cpp">
       <Filter>Common\GameObj\Skybox\CubeMap</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyboxRenderer.cpp">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

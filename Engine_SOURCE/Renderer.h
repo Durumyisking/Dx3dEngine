@@ -181,6 +181,10 @@ namespace renderer
 		float wave_distortion;
 	};
 
+	CBUFFER(CubeMapCB, CBSLOT_CUBEMAP)
+	{
+		Matrix matrix;
+	};
 
 
 	// vertex data

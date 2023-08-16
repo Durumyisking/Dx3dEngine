@@ -3,48 +3,24 @@
 struct VSOut
 {
     float4 Position : SV_Position;
-    float2 UV : TEXCOORD;
-    float3 ViewPos : POSITION;
-  
-    float3 ViewTangent : TANGENT;
-    float3 ViewNormal : NORMAL;
-    float3 ViewBiNormal : BINORMAL;
-    
+    float3 WorldPos : Position;
 };
 
-float4 main(VSOut vsIn) : SV_Target
-{
-    float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.0f);
-    float3 normal = vsIn.ViewNormal;
+//SamplerState splr : register(s0);
 
-    float2 uv = vsIn.UV;
-    uv.y += uv.y * 0.5f;
-    if (1 == cbbAlbedo)
-    {
-        albedo = colorTexture.Sample(anisotropicSampler, uv);
-    }
-    if (1 == cbbNormal)
-    {
-        normal = TextureMapping_normal(uv, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-    }
-    
-    
-    if (albedo.w <= 0.1f)
-        discard;
-    
-    albedo.w = 1.0f;
-    
-    if (cbxyzw1.w != 0)
-    {
-        albedo *= cbxyzw1; // 곱할 색        
-    }
-    
-    if (cbxyzw2.w != 0)
-    {
-        albedo += cbxyzw2; // 더할 색    
-    }
-        
-    
-    return albedo;
-        
+static const float2 invAtan = float2(0.1591, 0.3183);
+float2 SampleSphericalMap(float3 v)
+{
+    float2 uv = float2(atan2(v.z, v.x), asin(v.y));
+    uv *= invAtan;
+    uv += 0.5;
+    return uv;
+}
+
+float4 main(VSOut psIn) : SV_TARGET
+{
+    float2 uv = SampleSphericalMap(normalize(psIn.WorldPos));
+    float3 color = CubeMapTexture.Sample(skyBoxSampler, normalize(psIn.WorldPos)).rgb;
+		
+    return float4(color, 1.0);
 }

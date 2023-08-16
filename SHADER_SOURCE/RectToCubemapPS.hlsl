@@ -3,11 +3,11 @@
 struct VSOut
 {
     float4 Position : SV_Position;
-    float3 LocalPos : TEXCOORD;
+    float3 WorldPos : Position;
 };
 
-Texture2D tex : register(t0);
-SamplerState splr : register(s0);
+Texture2D tex : register(t28);
+//SamplerState splr : register(s0);
 
 static const float2 invAtan = float2(0.1591, 0.3183);
 float2 SampleSphericalMap(float3 v)
@@ -20,8 +20,8 @@ float2 SampleSphericalMap(float3 v)
 
 float4 main(VSOut psIn) : SV_TARGET
 {
-    float2 uv = SampleSphericalMap(normalize(psIn.LocalPos));
-    float3 colour = CubeMapTexture.Sample(linearSampler, uv).rgb;
+    float2 uv = SampleSphericalMap(normalize(psIn.WorldPos));
+    float3 color = tex.Sample(skyBoxSampler, uv).rgb;
 		
-    return float4(colour, 1.0);
+    return float4(color, 1.0);
 }

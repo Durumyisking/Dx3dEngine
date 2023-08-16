@@ -119,6 +119,7 @@ cbuffer ParticleSystem : register(b6)
 // postprocess b8
 
 
-cbuffer vvvconstant : register(b9) // 쓸사람 쓰세요
+cbuffer CubemapProj : register(b9) 
 {
+    matrix cubemapMat;
 }
