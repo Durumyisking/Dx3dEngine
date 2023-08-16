@@ -105,10 +105,10 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)MergePS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)LightVS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpotLightVS.hlsl">
       <Filter>VS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)LightPS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpotLightPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)LightDirPS.hlsl">
@@ -122,6 +122,12 @@
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)LightPointPS.hlsl">
       <Filter>PS</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)SkyboxB_PS.hlsl">
+      <Filter>PS</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)SkyboxB_VS.hlsl">
+      <Filter>VS</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,5 +146,11 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)Blur.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)BRDF.hlsli" />
+    <None Include="$(MSBuildThisFileDirectory)SkyBoxVS.hlsl">
+      <Filter>VS</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)SkyBoxPS.hlsl">
+      <Filter>PS</Filter>
+    </None>
   </ItemGroup>
 </Project>

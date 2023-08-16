@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <wrl.h>
 #include "druMath.h"
 #include "druEnums.h"
@@ -142,14 +142,26 @@ enum class eTextureSlot
 	Emissive,			// emissiveTexture
 
 	PositionTarget = 5,			// positionTarget
-	NormalTarget,				// normalTarget
 	AlbedoTarget,				// albedoTarget
-	SpecularTarget,				// specularTarget
+	NormalTarget,				// normalTarget
+	MRDTarget,					// metallic roughness Depth target
+	EmissiveTarget,				// emissivetarget
 
-	DiffuseLightTarget = 9,		// diffuseLightTarget
+	DiffuseLightTarget = 10,		// diffuseLightTarget
 	SpecularLightTarget,		// specularLightTarget
 
-	T12 = 12,					// atlasTexture
+	IrradianceMap = 12,		
+	PrefilteredMap,		
+
+	BRDF = 14,		
+
+	ParticleStructuredBuffer = 15,		
+	NoiseTexture,		
+
+	Skybox = 17,
+
+
+//	Atlas = 29,					// atlasTexture
 
 	End,
 };
@@ -200,7 +212,6 @@ enum class eGPUParam
 	Matrix_2,
 	Matrix_3,
 	Matrix_4,
-	bTextureExistence,
 	bAlbedo,
 	bNormal,
 	bMetallic,
@@ -208,6 +219,7 @@ enum class eGPUParam
 	bEmissive,
 	Bool_1,
 	Bool_2,
+	Bool_3,
 };
 	
 

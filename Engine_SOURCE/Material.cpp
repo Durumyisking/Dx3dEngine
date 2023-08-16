@@ -20,6 +20,11 @@ Material::Material(std::wstring textureColor, std::wstring shaderName)
 
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
+
 
 }
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName)
@@ -33,6 +38,11 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureColor);
 	mTexture[static_cast<UINT>(eTextureSlot::Normal)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
+
 
 }
 
@@ -48,6 +58,10 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	mTexture[static_cast<UINT>(eTextureSlot::Normal)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureNormal);
 	mTexture[static_cast<UINT>(eTextureSlot::Metallic)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureMetal);
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
 
 }
 
@@ -64,6 +78,11 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	mTexture[static_cast<UINT>(eTextureSlot::Metallic)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureMetal);
 	mTexture[static_cast<UINT>(eTextureSlot::Roughness)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureRoughness);
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
+
 
 }
 
@@ -82,6 +101,11 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	mTexture[static_cast<UINT>(eTextureSlot::Emissive)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureEmissive);
 
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
+
 
 }
 
@@ -96,6 +120,11 @@ Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring sha
 {
 	mTexture[static_cast<UINT>(slot)] = GETSINGLE(ResourceMgr)->Find<Texture>(textureName);
 	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
 
 }
 
@@ -182,9 +211,6 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::Matrix_4:
 		mMaterialConstantBuffer.matrix4 = *static_cast<Matrix*>(data);
 		break;
-	case eGPUParam::bTextureExistence:
-		mMaterialConstantBuffer.bTextureExistence = *static_cast<int*>(data);
-		break;
 	case eGPUParam::bAlbedo:
 		mMaterialConstantBuffer.bAlbedo = *static_cast<int*>(data);
 		break;
@@ -206,6 +232,9 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::Bool_2:
 		mMaterialConstantBuffer.bool2 = *static_cast<int*>(data);
 		break;
+	case eGPUParam::Bool_3:
+		mMaterialConstantBuffer.bool3 = *static_cast<int*>(data);
+		break;
 	default:
 		break;
 	}
@@ -219,20 +248,23 @@ void Material::Bind()
 		if (nullptr == mTexture[i])
 			continue;
 
-		mTexture[i]->BindShaderResource(eShaderStage::VS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::HS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::DS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::GS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::PS, i);
-		mTexture[i]->BindShaderResource(eShaderStage::CS, i);
+		mTexture[i]->BindAllShaderResource(i);
 	}
 
 	if (mTexture[static_cast<UINT>(eTextureSlot::Albedo)])
+	{
 		mMaterialConstantBuffer.bAlbedo = 1;
+	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Normal)])
+	{
 		mMaterialConstantBuffer.bNormal = 1;
+	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Metallic)])
+	{
+		renderer::BindPBRProprerties();
+
 		mMaterialConstantBuffer.bMetallic = 1;
+	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Roughness)])
 		mMaterialConstantBuffer.bRoughness = 1;
 
@@ -260,3 +292,5 @@ void Material::SetShaderByKey(std::wstring key)
 	Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(key);
 	mShader = shader;
 }
+
+

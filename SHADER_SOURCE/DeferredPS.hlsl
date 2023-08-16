@@ -23,9 +23,9 @@ struct VSOut
 struct PSOut
 {
     float4 Position : SV_Target0;
-    float4 Normal : SV_Target1;
-    float4 Color : SV_Target2;
-    float4 Data : SV_Target3;
+    float4 Albedo : SV_Target1;
+    float4 Normal : SV_Target2;
+    float4 MRD    : SV_Target3;
 };
 
 
@@ -33,37 +33,35 @@ PSOut main(VSOut vsIn) : SV_Target
 {
     PSOut vsOutColor;
     
-    float4 objColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    float4 albedo = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    float3 normal = (float3) 0.f;
+    float metallic = 0.04f;
+    float roughness = 0.5f;
     
-    float3 normal = vsIn.ViewNormal;
-    
-    if (bAlbedo == 1)
+    if (1 == cbbAlbedo)
     {
-        objColor = colorTexture.Sample(anisotropicSampler, vsIn.UV);
+        albedo = TextureMapping_albedo(vsIn.UV);
     }
-    if (bNormal == 1)
+    if (1 == cbbNormal)
     {
-        normal = normalTexture.Sample(anisotropicSampler, vsIn.UV);
-        
-        normal = (normal * 2.0f) - 1.0f;
-        
-        float3x3 matTBN =
-        {
-            vsIn.ViewTangent,
-            vsIn.ViewBiNormal,
-            vsIn.ViewNormal,
-        };
-
-        normal = normalize(mul(normal, matTBN));
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    if (bMetallic == 1) 
+    if (1 == cbbMetallic)
     {
+        metallic = TextureMapping_metallic(vsIn.UV);
+    }
+    if (1 == cbbRoughness)
+    {
+        roughness = TextureMapping_roughness(vsIn.UV);
     }
     
     vsOutColor.Position = float4(vsIn.ViewPos, 1.0f);
+    vsOutColor.Albedo = albedo;
     vsOutColor.Normal = float4(normal, 1.0f);
-    vsOutColor.Color = objColor;
-    vsOutColor.Data = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    vsOutColor.MRD.r = metallic;
+    vsOutColor.MRD.g = roughness;
+    vsOutColor.MRD.b = 0.f;
+    vsOutColor.MRD.w = 0.25f;
     
     return vsOutColor;
 }

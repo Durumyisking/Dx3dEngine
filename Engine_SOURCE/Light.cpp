@@ -4,10 +4,13 @@
 #include "Renderer.h"
 #include "ResourceMgr.h"
 #include "Material.h"
+#include "Mesh.h"
 
 Light::Light()
 	: Component(eComponentType::Light)
 	, mVolumeMesh(nullptr)
+	, mMaterial(nullptr)
+	, mIndex(0)
 {
 	renderer::lights.push_back(this);
 }
@@ -18,7 +21,7 @@ Light::~Light()
 
 void Light::Initialize()
 {
-
+	
 }
 
 void Light::Update()
@@ -42,19 +45,7 @@ void Light::FixedUpdate()
 
 void Light::Render()
 {
-	Material* material = nullptr;
-
-	if (mAttribute.type == eLightType::Directional)
-	{
-		material = GETSINGLE(ResourceMgr)->Find<Material>(L"LightDirMaterial");
-	}
-	else if (mAttribute.type == eLightType::Point)
-	{
-		material = GETSINGLE(ResourceMgr)->Find<Material>(L"LightPointMaterial");
-	}
-
-
-	if (material == nullptr)
+	if (mMaterial == nullptr)
 		return;
 
 	Transform* tr = GetOwner()->GetComponent<Transform>();
@@ -71,7 +62,7 @@ void Light::Render()
 
 
 	mVolumeMesh->BindBuffer();
-	material->Bind();
+	mMaterial->Bind();
 	mVolumeMesh->Render();
 }
 
@@ -81,10 +72,12 @@ void Light::SetType(eLightType type)
 	if (mAttribute.type == eLightType::Directional)
 	{
 		mVolumeMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"LightDirMaterial");
 	}
 	else if (mAttribute.type == eLightType::Point)
 	{
 		mVolumeMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Spheremesh");
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"LightPointMaterial");
 	}
 	else if (mAttribute.type == eLightType::Spot)
 	{

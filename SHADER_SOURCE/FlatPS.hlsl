@@ -15,35 +15,19 @@ struct VSOut
 
 float4 main(VSOut vsIn) : SV_Target
 { 
-    float4 outColor = float4(0.5f, 0.5f, 0.5f, 1.0f);
-    float4 normal = (float4) 0.f;
-    
-    if (1 == cbtextureExistence)
-    {
-        outColor = colorTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);
-    }
-    else if (2 == cbtextureExistence)
-    {
-        outColor = colorTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);
-        normal = normalTexture.SampleLevel(anisotropicSampler, vsIn.UV, 0.f);
-        
-        // 노말을 새로 받아와서 뷰변환 되어있지 않다.
-        normal.xyz = normalize((normal.xyz * 2.f) - 1.f);
-        
-        
-        float3x3 matTBN =
-        {
-            vsIn.ViewTangent,
-          vsIn.ViewBiNormal,
-          vsIn.ViewNormal,
-        };
 
-        normal = normalize(float4(mul(normal.xyz, matTBN), 0.f));
-    }
-    else
+    float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.0f);
+    float3 normal = vsIn.ViewNormal;
+
+    if (1 == cbbAlbedo)
     {
-        normal.xyz = vsIn.ViewNormal;
+        albedo = TextureMapping_albedo(vsIn.UV);
     }
+    if (1 == cbbNormal)
+    {
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+    }
+
 
     LightColor lightColor = (LightColor) 0.0f;
     
@@ -52,11 +36,11 @@ float4 main(VSOut vsIn) : SV_Target
         CalculateLight3D(vsIn.ViewPos, normal.xyz, i, lightColor);
     }
 
-    outColor.rgb *= lightColor.diffuse.rgb;
+    albedo.rgb *= lightColor.diffuse.rgb;
 
-    outColor.rgb += lightColor.specular.rgb;
+    albedo.rgb += lightColor.specular.rgb;
 
-    outColor.rgb += outColor.rgb * lightColor.ambient.rgb;
+    albedo.rgb += albedo.rgb * lightColor.ambient.rgb;
     
-    return outColor;
+    return albedo;
 }
