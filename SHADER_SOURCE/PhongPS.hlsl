@@ -19,7 +19,7 @@ float4 main(VSOut vsIn) : SV_Target
 
     if (1 == cbbAlbedo)
     {
-        albedo = TextureMapping_albedo(vsIn.UV);
+        //albedo = TextureMapping_albedo(vsIn.UV);
     }
     if (1 == cbbNormal)
     {

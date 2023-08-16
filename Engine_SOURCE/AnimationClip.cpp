@@ -192,6 +192,11 @@ aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, Vector3 rotation)
 
 	// 회전 계산 오일러
 	aiMatrix4x4 rotationmatrix = {};
+
+	// 아마? 닌텐도 만에 좌표계가 있는거같다
+	// x 오른손좌표계기준, 반시계
+	// y 오른손좌표계기준, 반시계
+	// z 포지션은 오른손좌표계기준, 회전은 시계방향
 	rotationmatrix.FromEulerAnglesXYZ(-rotation.x, -rotation.y, rotation.z);
 	
 	return traslation * rotationmatrix;
