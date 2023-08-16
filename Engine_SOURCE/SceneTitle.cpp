@@ -164,7 +164,9 @@ void SceneTitle::Enter()
 
 		//animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
 		animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
-		animator->Play(L"test");
+		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
+		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
+		animator->Play(L"test3");
 	}
 
 	{

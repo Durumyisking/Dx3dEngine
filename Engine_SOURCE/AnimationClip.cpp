@@ -188,12 +188,12 @@ aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, Vector3 rotation)
 {
 	// 이동 계산
 	aiMatrix4x4 traslation = {};
-	traslation.Translation(aiVector3D(pos.x, pos.y, pos.z), traslation);
+	traslation.Translation(aiVector3D(pos.x, pos.y, -pos.z), traslation);
 
 	// 회전 계산 오일러
 	aiMatrix4x4 rotationmatrix = {};
-	rotationmatrix.FromEulerAnglesXYZ(rotation.x, rotation.y, rotation.z);
-
+	rotationmatrix.FromEulerAnglesXYZ(-rotation.x, -rotation.y, rotation.z);
+	
 	return traslation * rotationmatrix;
 }
 
