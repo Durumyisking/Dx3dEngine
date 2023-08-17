@@ -16,17 +16,19 @@ Texture2D EmissiveTarget        : register(t9);
 Texture2D diffuseLightTarget    : register(t10);
 Texture2D specularLightTarget   : register(t11);
 
+TextureCube CubeMapTexture : register(t12);
+TextureCube irradianceMap : register(t13);
+TextureCube prefilteredMap : register(t14); // 라이트맵 적용
 
-TextureCube irradianceMap : register(t12);
-TextureCube prefilteredMap : register(t13); // 라이트맵 적용
+Texture2D BRDF : register(t15);
 
-Texture2D BRDF : register(t14);
-
-// t15 파티클 structured buffer
-// Texture2D NoiseTexture : register(t16a
-TextureCube CubeMapTexture : register(t17);
+//  파티클 structured buffer t16
+// Texture2D NoiseTexture : register(t17
 
 //StructuredBuffer<LightAttribute> lightAttributes : register(t22);
+
+
+Texture2D Skybox : register(t28);
 
 //Atlas texture
 Texture2D atlasTexture : register(t29);

@@ -9,7 +9,7 @@ struct VSOut
 
 
 //TextureCube tex : register(t0);
-Texture2D tex : register(t0);
+//Texture2D tex : register(t0);
 
 
 float RadicalInverse_VdC(uint bits)
@@ -78,7 +78,7 @@ float4 main(VSOut psIn) : SV_TARGET
         float NdotL = max(dot(N, L), 0.0);
         if (NdotL > 0.0)
         {
-            prefilteredColor += tex.Sample(skyBoxSampler, SampleSphericalMap(L)).rgb * NdotL;
+            prefilteredColor += Skybox.Sample(skyBoxSampler, SampleSphericalMap(L)).rgb * NdotL;
             totalWeight += NdotL;
         }
     }

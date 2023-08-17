@@ -152,16 +152,14 @@ enum class eTextureSlot
 	DiffuseLightTarget = 10,		// diffuseLightTarget
 	SpecularLightTarget,		// specularLightTarget
 
-	IrradianceMap = 12,		
+	CubeMap = 12,
+	IrradianceMap,
 	PrefilteredMap,		
 
-	BRDF = 14,		
+	BRDF = 15,		
 
-	ParticleStructuredBuffer = 15,		
+	ParticleStructuredBuffer = 16,		
 	NoiseTexture,		
-
-	Skybox = 17,
-
 
 //	Atlas = 29,					// atlasTexture
 

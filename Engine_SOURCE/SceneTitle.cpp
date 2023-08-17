@@ -138,16 +138,15 @@ void SceneTitle::Enter()
 		player->SetName(L"Player");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
-			L"check_albedo",
-			L"check_normal", 
-			L"check_metallic", 
-			L"check_roughness", 
+			L"gold_albedo",
+			L"gold_normal", 
+			L"gold_metallic", 
+			L"gold_roughness", 
 			L"PBRShader",
 			L"mat_dirt"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
@@ -161,7 +160,7 @@ void SceneTitle::Enter()
 	}
 
 	{
-		//SB* sb = object::Instantiate<SB>(eLayerType::Skybox);
+		//SB* sb = object::Instantiate<SB>(eLayerType::CubeMap);
 		CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::Skybox);
 
 	}
@@ -188,7 +187,7 @@ void SceneTitle::Enter()
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial");
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);

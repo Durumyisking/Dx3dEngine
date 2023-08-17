@@ -23,6 +23,8 @@ private:
 
 };
 
+class Mesh;
+
 class CubeMapHDR : public GameObj
 {
 #define SIZE_SKYBOX 256;
@@ -48,29 +50,41 @@ private:
 	void createEnvMap();
 	void createEnvMapDepthStencilTexture();
 
+	void bindCubeMap();
+	void bindIrradianceMap();
+	void bindPrefilterMap();
+
 private:
 	int m_Width;
 	int m_Height;
 
 	ID3D11Device* g_d3dDevice;
 
+	D3D11_VIEWPORT mViewport;
+	TextureHDR mhdrTexture;
+	CubeMapCB mProjConstantBuffer;
+	Mesh* mCubemesh;
+
 	std::vector<ID3D11RenderTargetView*> mRTVs;
+	std::vector<ID3D11RenderTargetView*> mRTVs2;
+	std::vector<ID3D11RenderTargetView*> mRTVs3;
 
 
 	ID3D11Texture2D* mEnvMapTex;
 	ID3D11RenderTargetView* mEnvMapRTV;
 	ID3D11ShaderResourceView* mEnvMapSRV;
 
+	ID3D11Texture2D* mIrradianceTex;
+	ID3D11RenderTargetView* mIrradianceRTV;
+	ID3D11ShaderResourceView* mIrradianceSRV;
+
+	ID3D11Texture2D* mPreFilterTex;
+	ID3D11RenderTargetView* mPreFilterRTV;
+	ID3D11ShaderResourceView* mPreFilterSRV;
+
+
 	ID3D11Texture2D* mEnvMapDepth;
 	ID3D11DepthStencilView* mEnvMapDSV;
-
-	ID3D11Texture2D* pCubemap;
-	ID3D11Texture2D* pIrradiaceMap;
-	ID3D11Texture2D* pFilteredMap;
-
-	ID3D11ShaderResourceView* pCubemapView;
-	ID3D11ShaderResourceView* pIrradiaceMapView;
-	ID3D11ShaderResourceView* pFilteredMapView;
 
 	ID3D11SamplerState* pSampler;
 

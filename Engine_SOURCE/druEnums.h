@@ -8,7 +8,6 @@ namespace enums
 		None = 0,
 		Camera,
 		Grid,
-		Skybox,
 		Objects,
 		PhysicalObject,
 		Bullet,
@@ -20,6 +19,7 @@ namespace enums
 		Particle,
 		FX,
 		UI,
+		Skybox,
 		PostProcess,
 		End = 16,
 	};

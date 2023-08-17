@@ -100,14 +100,12 @@ CubeMapHDR::CubeMapHDR()
 
 CubeMapHDR::~CubeMapHDR()
 {
-    SafeRelease(&pCubemap);
-    SafeRelease(&pCubemapView);
-    SafeRelease(&pFilteredMapView);
-    SafeRelease(&pSampler);
+    mEnvMapTex->Release();
 }
 
 void CubeMapHDR::Initialize()
 {
+    mhdrTexture.loadFromFile("E:/Dev/3d-my/Dx3dEngine/Resources/environment.hdr");
     createEnvMap();
     //createEnvMapDepthStencilTexture();
 
@@ -121,73 +119,20 @@ void CubeMapHDR::Initialize()
         XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 0,-1, 0), XMVectorSet(0, -1, 0, 0)),
         XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, -1, 0, 0))
     };
-
-    D3D11_VIEWPORT vp;
-    vp.Width = SIZE_SKYBOX;
-    vp.Height = SIZE_SKYBOX;
-    vp.MinDepth = 0.0f;
-    vp.MaxDepth = 1.0f;
-    vp.TopLeftX = 0;
-    vp.TopLeftY = 0;
-    GetDevice()->GetDeviceContext()->RSSetViewports(1, &vp);
-
-    Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
-
-    Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"RectToCubemapShader");
-
-    //TextureHDR t;
-    //t.loadFromFile("E:/Dev/3d-my/Dx3dEngine/Resources/environment.hdr");
-    //t.Bind(0);
-
-    Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"noise1");
-
-    CubeMapCB cb;
-
     for (uint32_t i = 0; i < 6; ++i)
     {
-        float clearColor[4] = { 0.f, 0.f, 0.f, 1.f };
-        switch (i)
-        {
-        case 0:
-            clearColor[0] = 1.f;
-            break;
-        case 1:
-            clearColor[1] = 1.f;
-            break;
-        case 2:
-            clearColor[2] = 1.f;
-            break;
-        case 3:
-            clearColor[1] = 1.f;
-            clearColor[2] = 1.f;
-            break;
-        case 4:
-            clearColor[1] = 1.f;
-            clearColor[3] = 1.f;
-            break;
-        case 5:
-            clearColor[2] = 1.f;
-            clearColor[3] = 1.f;
-            break;
-        default:
-            break;
-        }
-
-        GetDevice()->GetDeviceContext()->ClearRenderTargetView(mRTVs[i], clearColor);
         XMMATRIX d = XMMatrixTranspose(captureViews[i] * captureProjection);
-        cb.matrix = d;
-        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->SetData(&cb);
-        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Bind(eShaderStage::VS);
-        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Bind(eShaderStage::PS);
-        GetDevice()->GetDeviceContext()->OMSetRenderTargets(1, &mRTVs[i], nullptr);
-        t->BindAllShaderResource(28);
-        shader->Bind();
-        mesh->BindBuffer();
-        mesh->Render();
+        mProjConstantBuffer.matrix = d;
     }
-    vp.Width = 1600;
-    vp.Height = 900;
-    GetDevice()->GetDeviceContext()->RSSetViewports(1, &vp);
+
+    mCubemesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
+
+    bindCubeMap();
+    bindIrradianceMap();
+    bindPrefilterMap();
+
+
+    GetDevice()->AdjustViewPorts();
 
     GameObj::Initialize();
 }
@@ -212,6 +157,63 @@ void CubeMapHDR::Render()
 //{
 //    return loadFromFile(name, true, flipTex);
 //}
+
+void CubeMapHDR::createEnvMap()
+{
+    // Create the TextureCube for enviroment mapping rendertarget
+    D3D11_TEXTURE2D_DESC textureDesc = {};
+
+    textureDesc.Width = SIZE_SKYBOX;
+    textureDesc.Height = SIZE_SKYBOX;
+    //textureDesc.MipLevels = 9;
+    textureDesc.MipLevels = 1;
+    textureDesc.ArraySize = 6;
+    textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+    textureDesc.CPUAccessFlags = 0;
+    textureDesc.SampleDesc.Count = 1;
+    textureDesc.SampleDesc.Quality = 0;
+    textureDesc.Usage = D3D11_USAGE_DEFAULT;
+    textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+    //textureDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS | D3D11_RESOURCE_MISC_TEXTURECUBE;
+    textureDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+
+    g_d3dDevice->CreateTexture2D(&textureDesc, nullptr, &mEnvMapTex);
+    g_d3dDevice->CreateTexture2D(&textureDesc, nullptr, &mIrradianceTex);
+    g_d3dDevice->CreateTexture2D(&textureDesc, nullptr, &mPreFilterTex);
+
+    for (uint32_t i = 0; i < 6; i++)
+    {
+        D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+        rtvDesc.Format = textureDesc.Format;
+        rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+        //rtvDesc.Texture2DArray.ArraySize = 6;
+        //rtvDesc.Texture2DArray.FirstArraySlice = 0;
+        rtvDesc.Texture2DArray.MipSlice = 0;
+        rtvDesc.Texture2DArray.FirstArraySlice = i;
+        rtvDesc.Texture2DArray.ArraySize = 1;
+
+        ID3D11RenderTargetView* rtv = nullptr;
+        GetDevice()->CreateRenderTargetView(mEnvMapTex, &rtvDesc, &rtv); // envmaptex텍스처를 rtv로 사용할거야
+        ID3D11RenderTargetView* rtv2 = nullptr;
+        GetDevice()->CreateRenderTargetView(mIrradianceTex, &rtvDesc, &rtv2);
+        ID3D11RenderTargetView* rtv3 = nullptr;
+        GetDevice()->CreateRenderTargetView(mPreFilterTex, &rtvDesc, &rtv3);
+
+        mRTVs.emplace_back(rtv);
+        mRTVs2.emplace_back(rtv2);
+        mRTVs3.emplace_back(rtv3);
+    }
+
+    // Create SRV to access to envMap in Shader
+    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+    srvDesc.Format = textureDesc.Format;
+    srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURECUBE;
+    srvDesc.TextureCube.MostDetailedMip = 0;
+    srvDesc.TextureCube.MipLevels = 1;
+    GetDevice()->CreateShaderResourceView(mEnvMapTex, &srvDesc, &mEnvMapSRV);
+    GetDevice()->CreateShaderResourceView(mIrradianceTex, &srvDesc, &mIrradianceSRV);
+    GetDevice()->CreateShaderResourceView(mPreFilterTex, &srvDesc, &mPreFilterSRV);
+}
 
 void CubeMapHDR::createEnvMapDepthStencilTexture()
 {
@@ -238,57 +240,109 @@ void CubeMapHDR::createEnvMapDepthStencilTexture()
     GetDevice()->CreateDepthStencilView(mEnvMapDepth, &dsvDesc, &mEnvMapDSV);
 }
 
-
-void CubeMapHDR::createEnvMap()
+void CubeMapHDR::bindCubeMap()
 {
-    // Create the TextureCube for enviroment mapping rendertarget
-    D3D11_TEXTURE2D_DESC textureDesc = {};
+    Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"RectToCubemapShader");
+    mViewport.Width = SIZE_SKYBOX;
+    mViewport.Height = SIZE_SKYBOX;
+    mViewport.MinDepth = 0.0f;
+    mViewport.MaxDepth = 1.0f;
+    mViewport.TopLeftX = 0;
+    mViewport.TopLeftY = 0;
+    GetDevice()->BindViewports(&mViewport);
 
-    textureDesc.Width = SIZE_SKYBOX;
-    textureDesc.Height = SIZE_SKYBOX;
-    //textureDesc.MipLevels = 9;
-    textureDesc.MipLevels = 1;
-    textureDesc.ArraySize = 6;
-    textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-    textureDesc.CPUAccessFlags = 0;
-    textureDesc.SampleDesc.Count = 1;
-    textureDesc.SampleDesc.Quality = 0;
-    textureDesc.Usage = D3D11_USAGE_DEFAULT;
-    textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-    //textureDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS | D3D11_RESOURCE_MISC_TEXTURECUBE;
-    textureDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
-    g_d3dDevice->CreateTexture2D(&textureDesc, nullptr, &mEnvMapTex);
+    mhdrTexture.Bind(28);
+    shader->Bind();
 
-    for (uint32_t i = 0; i < 6; i++)
+    for (uint32_t i = 0; i < 6; ++i)
     {
-        D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-        rtvDesc.Format = textureDesc.Format;
-        rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-        //rtvDesc.Texture2DArray.ArraySize = 6;
-        //rtvDesc.Texture2DArray.FirstArraySlice = 0;
-        rtvDesc.Texture2DArray.MipSlice = 0;
-        rtvDesc.Texture2DArray.FirstArraySlice = i;
-        rtvDesc.Texture2DArray.ArraySize = 1;
+        float clearColor[4] = { 0.f, 0.f, 0.f, 1.f };
+        switch (i)
+        {
+        case 0:
+            clearColor[0] = 1.f;
+            break;
+        case 1:
+            clearColor[1] = 1.f;
+            break;
+        case 2:
+            clearColor[2] = 1.f;
+            break;
+        case 3:
+            clearColor[0] = 1.f;
+            clearColor[1] = 1.f;
+            break;
+        case 4:
+            clearColor[0] = 1.f;
+            clearColor[2] = 1.f;
+            break;
+        case 5:
+            clearColor[1] = 1.f;
+            clearColor[2] = 1.f;
+            break;
+        default:
+            break;
+        }
 
-        ID3D11RenderTargetView* rtv = nullptr;
-        GetDevice()->CreateRenderTargetView(mEnvMapTex, &rtvDesc, &rtv);
-
-        mRTVs.push_back(rtv);
+        GetDevice()->GetDeviceContext()->ClearRenderTargetView(mRTVs[i], clearColor);
+        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->SetData(&mProjConstantBuffer);
+        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Bind(eShaderStage::VS);
+        GetDevice()->GetDeviceContext()->OMSetRenderTargets(1, &mRTVs[i], nullptr);
+        mCubemesh->BindBuffer();
+        mCubemesh->Render();
     }
-
-    // Create SRV to access to envMap in Shader
-    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-    srvDesc.Format = textureDesc.Format;
-    srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURECUBE;
-    srvDesc.TextureCube.MostDetailedMip = 0;
-    srvDesc.TextureCube.MipLevels = 1;
-    GetDevice()->CreateShaderResourceView(mEnvMapTex, &srvDesc, &mEnvMapSRV);
 }
+
+void CubeMapHDR::bindIrradianceMap()
+{
+    Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"IrradianceShader");
+    shader->Bind();
+    mViewport.Width = SIZE_IRRADIANCE;
+    mViewport.Height = SIZE_IRRADIANCE;
+    GetDevice()->BindViewports(&mViewport);
+
+    mhdrTexture.Bind(28);
+
+    for (uint32_t i = 0; i < 6; ++i)
+    {
+        float clearColor[4] = { 0.0f, 1.f, 0.f, 1.0f };
+        GetDevice()->GetDeviceContext()->ClearRenderTargetView(mRTVs2[i], clearColor);
+        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->SetData(&mProjConstantBuffer);
+        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Bind(eShaderStage::VS);
+        GetDevice()->GetDeviceContext()->OMSetRenderTargets(1, &mRTVs2[i], nullptr);
+        mCubemesh->BindBuffer();
+        mCubemesh->Render();
+        std::this_thread::sleep_for(std::chrono::microseconds(100));
+    }
+}
+
+void CubeMapHDR::bindPrefilterMap()
+{
+    Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PreFilterShader");
+    shader->Bind();
+    mViewport.Width = SIZE_PREFILTER;
+    mViewport.Height = SIZE_PREFILTER;
+    GetDevice()->BindViewports(&mViewport);
+
+    mhdrTexture.Bind(28);
+
+    for (uint32_t i = 0; i < 6; ++i)
+    {
+        float clearColor[4] = { 0.0f, 0.f, 1.f, 1.0f };
+        GetDevice()->GetDeviceContext()->ClearRenderTargetView(mRTVs3[i], clearColor);
+        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->SetData(&mProjConstantBuffer);
+        constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Bind(eShaderStage::VS);
+        GetDevice()->GetDeviceContext()->OMSetRenderTargets(1, &mRTVs3[i], nullptr);
+        mCubemesh->BindBuffer();
+        mCubemesh->Render();
+    }
+}
+
+
 
 void CubeMapHDR::Bind()
 {
-    //Texture::Clears();
-    GetDevice()->GetDeviceContext()->PSSetShaderResources(17, 1, &mEnvMapSRV);
-     //GetDevice()->GetDeviceContext()->PSSetShaderResources(6, 1, &pIrradiaceMapView);
-    //GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &pFilteredMapView);
+    //GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::CubeMap), &mEnvMapSRV);
+    GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::IrradianceMap), &mIrradianceSRV);
+    GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &mPreFilterSRV);
 }

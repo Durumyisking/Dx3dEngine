@@ -6,7 +6,6 @@ struct VSOut
     float3 WorldPos : Position;
 };
 
-Texture2D tex : register(t28);
 //SamplerState splr : register(s0);
 
 static const float2 invAtan = float2(0.1591, 0.3183);
@@ -21,7 +20,7 @@ float2 SampleSphericalMap(float3 v)
 float4 main(VSOut psIn) : SV_TARGET
 {
     float2 uv = SampleSphericalMap(normalize(psIn.WorldPos));
-    float3 color = tex.Sample(skyBoxSampler, uv).rgb;
+    float3 color = Skybox.Sample(skyBoxSampler, uv).rgb;
 		
     return float4(color, 1.0);
 }

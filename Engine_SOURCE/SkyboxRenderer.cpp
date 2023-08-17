@@ -43,4 +43,7 @@ void SkyboxRenderer::Render()
 
 	GetMaterial()->Clear();
 
+	//Texture::Clear(12);
+	//Texture::Clear(13);
+	//Texture::Clear(14);
 }

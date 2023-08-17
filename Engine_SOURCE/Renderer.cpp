@@ -254,6 +254,13 @@ namespace renderer
 				, shader->GetInputLayoutAddr());
 		}
 		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"IrradianceShader");
+			GetDevice()->CreateInputLayout(arrLayout, 8
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PreFilterShader");
 			GetDevice()->CreateInputLayout(arrLayout, 8
 				, shader->GetVSBlobBufferPointer()
@@ -625,6 +632,16 @@ namespace renderer
 			shader->Create(eShaderStage::PS, L"RectToCubemapPS.hlsl", "main");
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"RectToCubemapShader", shader);
+		}
+#pragma endregion
+
+#pragma region IrradianceMap
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"IrradianceVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"IrradiancePS.hlsl", "main");
+
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"IrradianceShader", shader);
 		}
 #pragma endregion
 
@@ -1050,12 +1067,12 @@ namespace renderer
 	void BindNoiseTexture()
 	{
 		Texture* noise = GETSINGLE(ResourceMgr)->Find<Texture>(L"noise1");
-		noise->BindShaderResource(eShaderStage::VS, 16);
-		noise->BindShaderResource(eShaderStage::HS, 16);
-		noise->BindShaderResource(eShaderStage::DS, 16);
-		noise->BindShaderResource(eShaderStage::GS, 16);
-		noise->BindShaderResource(eShaderStage::PS, 16);
-		noise->BindShaderResource(eShaderStage::CS, 16);
+		noise->BindShaderResource(eShaderStage::VS, static_cast<UINT>(eTextureSlot::NoiseTexture));
+		noise->BindShaderResource(eShaderStage::HS, static_cast<UINT>(eTextureSlot::NoiseTexture));
+		noise->BindShaderResource(eShaderStage::DS, static_cast<UINT>(eTextureSlot::NoiseTexture));
+		noise->BindShaderResource(eShaderStage::GS, static_cast<UINT>(eTextureSlot::NoiseTexture));
+		noise->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::NoiseTexture));
+		noise->BindShaderResource(eShaderStage::CS, static_cast<UINT>(eTextureSlot::NoiseTexture));
 
 		NoiseCB info = {};
 		info.noiseSize.x = static_cast<float>(noise->GetWidth());
@@ -1090,12 +1107,8 @@ namespace renderer
 
 	void BindPBRProprerties()
 	{
-		//Texture* irradianceMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"IrradianceTexture");
-		//Texture* preFilteredMap = GETSINGLE(ResourceMgr)->Find<Texture>(L"PrefilteredTexture");
 		Texture* BRDF = GETSINGLE(ResourceMgr)->Find<Texture>(L"BRDF");
-		//irradianceMap->BindShaderResource_VP(12);
-		//preFilteredMap->BindShaderResource_VP(13);
-		BRDF->BindShaderResource_VP(14);
+		BRDF->BindShaderResource_VP(15);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
