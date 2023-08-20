@@ -493,14 +493,8 @@
     <ClInclude Include="MultiRenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="SkyBox.h">
-      <Filter>Common\GameObj\Skybox</Filter>
-    </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Common\Component\Renderer\Mesh\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="SB.h">
-      <Filter>Common\GameObj\Skybox</Filter>
     </ClInclude>
     <ClInclude Include="CubeMap.h">
       <Filter>Common\GameObj\Skybox\CubeMap</Filter>
@@ -761,14 +755,8 @@
     <ClCompile Include="MultiRenderTarget.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="SkyBox.cpp">
-      <Filter>Common\GameObj\Skybox</Filter>
-    </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Common\Component\Renderer\Mesh\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="SB.cpp">
-      <Filter>Common\GameObj\Skybox</Filter>
     </ClCompile>
     <ClCompile Include="CubeMap.cpp">
       <Filter>Common\GameObj\Skybox\CubeMap</Filter>

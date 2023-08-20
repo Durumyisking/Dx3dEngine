@@ -161,6 +161,8 @@ enum class eTextureSlot
 	ParticleStructuredBuffer = 16,		
 	NoiseTexture,		
 
+	Skybox = 18,
+
 //	Atlas = 29,					// atlasTexture
 
 	End,

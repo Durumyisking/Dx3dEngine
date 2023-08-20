@@ -289,7 +289,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="EngineResource.h" />
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="RigidBody.h" />
-    <ClInclude Include="SB.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="SceneTitle.h" />
@@ -300,7 +299,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ServerToClient.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimpleMath.h" />
-    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SkyboxRenderer.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpriteRenderer.h" />
@@ -383,7 +381,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="EngineResource.cpp" />
     <ClCompile Include="ResourceMgr.cpp" />
     <ClCompile Include="RigidBody.cpp" />
-    <ClCompile Include="SB.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
@@ -392,7 +389,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PacketSendScript.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
-    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SkyboxRenderer.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />

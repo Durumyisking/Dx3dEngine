@@ -97,12 +97,11 @@ CubeMapHDR::CubeMapHDR()
 
 CubeMapHDR::~CubeMapHDR()
 {
-    mEnvMapTex->Release();
 }
 
 void CubeMapHDR::Initialize()
 {
-    mhdrTexture.loadFromFile("E:/Dev/3d-my/Dx3dEngine/Resources/environment.hdr");
+    mhdrTexture.loadFromFile("C:/Users/csh/Desktop/Dx3dEngine-sehyun/Dx3dEngine/Resources/environment.hdr");
     createEnvMap();
     //createEnvMapDepthStencilTexture();
 
@@ -129,7 +128,7 @@ void CubeMapHDR::Initialize()
     bindPrefilterMap();
 
 
-    GetDevice()->AdjustViewPorts();
+ //   GetDevice()->AdjustViewPorts();
 
     GameObj::Initialize();
 }
@@ -160,9 +159,7 @@ void CubeMapHDR::createEnvMap()
     // Create the TextureCube for enviroment mapping rendertarget
     D3D11_TEXTURE2D_DESC textureDesc = {};
 
-    textureDesc.Width = SIZE_SKYBOX;
-    textureDesc.Height = SIZE_SKYBOX;
-    //textureDesc.MipLevels = 9;
+
     textureDesc.MipLevels = 1;
     textureDesc.ArraySize = 6;
     textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -174,17 +171,33 @@ void CubeMapHDR::createEnvMap()
     //textureDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS | D3D11_RESOURCE_MISC_TEXTURECUBE;
     textureDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
 
+    textureDesc.Width = SIZE_SKYBOX;
+    textureDesc.Height = SIZE_SKYBOX;
     g_d3dDevice->CreateTexture2D(&textureDesc, nullptr, &mEnvMapTex);
+
+    textureDesc.Width = SIZE_IRRADIANCE;
+    textureDesc.Height = SIZE_IRRADIANCE;
     g_d3dDevice->CreateTexture2D(&textureDesc, nullptr, &mIrradianceTex);
+
+    textureDesc.Width = SIZE_PREFILTER;
+    textureDesc.Height = SIZE_PREFILTER;
     g_d3dDevice->CreateTexture2D(&textureDesc, nullptr, &mPreFilterTex);
+
+    // Create SRV to access to envMap in Shader
+    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+    srvDesc.Format = textureDesc.Format;
+    srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURECUBE;
+    srvDesc.TextureCube.MostDetailedMip = 0;
+    srvDesc.TextureCube.MipLevels = 1;
+    GetDevice()->CreateShaderResourceView(mEnvMapTex, &srvDesc, &mEnvMapSRV);
+    GetDevice()->CreateShaderResourceView(mIrradianceTex, &srvDesc, &mIrradianceSRV);
+    GetDevice()->CreateShaderResourceView(mPreFilterTex, &srvDesc, &mPreFilterSRV);
 
     for (uint32_t i = 0; i < 6; i++)
     {
         D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
         rtvDesc.Format = textureDesc.Format;
         rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-        //rtvDesc.Texture2DArray.ArraySize = 6;
-        //rtvDesc.Texture2DArray.FirstArraySlice = 0;
         rtvDesc.Texture2DArray.MipSlice = 0;
         rtvDesc.Texture2DArray.FirstArraySlice = i;
         rtvDesc.Texture2DArray.ArraySize = 1;
@@ -200,16 +213,9 @@ void CubeMapHDR::createEnvMap()
         mRTVs2.emplace_back(rtv2);
         mRTVs3.emplace_back(rtv3);
     }
-
-    // Create SRV to access to envMap in Shader
-    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-    srvDesc.Format = textureDesc.Format;
-    srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURECUBE;
-    srvDesc.TextureCube.MostDetailedMip = 0;
-    srvDesc.TextureCube.MipLevels = 1;
-    GetDevice()->CreateShaderResourceView(mEnvMapTex, &srvDesc, &mEnvMapSRV);
-    GetDevice()->CreateShaderResourceView(mIrradianceTex, &srvDesc, &mIrradianceSRV);
-    GetDevice()->CreateShaderResourceView(mPreFilterTex, &srvDesc, &mPreFilterSRV);
+    mEnvMapTex->Release();
+    mIrradianceTex->Release();
+    mPreFilterTex->Release();
 }
 
 void CubeMapHDR::createEnvMapDepthStencilTexture()
@@ -240,15 +246,15 @@ void CubeMapHDR::createEnvMapDepthStencilTexture()
 void CubeMapHDR::bindCubeMap()
 {
     Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"RectToCubemapShader");
-    mViewport.Width = SIZE_SKYBOX;
+  /*  mViewport.Width = SIZE_SKYBOX;
     mViewport.Height = SIZE_SKYBOX;
     mViewport.MinDepth = 0.0f;
     mViewport.MaxDepth = 1.0f;
     mViewport.TopLeftX = 0;
     mViewport.TopLeftY = 0;
-    GetDevice()->BindViewports(&mViewport);
+    GetDevice()->BindViewports(&mViewport);*/
 
-    mhdrTexture.Bind(28);
+    mhdrTexture.Bind(static_cast<UINT>(eTextureSlot::Skybox));
     shader->Bind();
 
     for (uint32_t i = 0; i < 6; ++i)
@@ -293,12 +299,12 @@ void CubeMapHDR::bindCubeMap()
 void CubeMapHDR::bindIrradianceMap()
 {
     Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"IrradianceShader");
-    shader->Bind();
-    mViewport.Width = SIZE_IRRADIANCE;
+  /*  mViewport.Width = SIZE_IRRADIANCE;
     mViewport.Height = SIZE_IRRADIANCE;
-    GetDevice()->BindViewports(&mViewport);
+    GetDevice()->BindViewports(&mViewport);*/
 
-    mhdrTexture.Bind(28);
+    mhdrTexture.Bind(static_cast<UINT>(eTextureSlot::Skybox));
+    shader->Bind();
 
     for (uint32_t i = 0; i < 6; ++i)
     {
@@ -316,12 +322,12 @@ void CubeMapHDR::bindIrradianceMap()
 void CubeMapHDR::bindPrefilterMap()
 {
     Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PreFilterShader");
-    shader->Bind();
-    mViewport.Width = SIZE_PREFILTER;
+   /* mViewport.Width = SIZE_PREFILTER;
     mViewport.Height = SIZE_PREFILTER;
-    GetDevice()->BindViewports(&mViewport);
+    GetDevice()->BindViewports(&mViewport);*/
 
-    mhdrTexture.Bind(28);
+    mhdrTexture.Bind(static_cast<UINT>(eTextureSlot::Skybox));
+    shader->Bind();
 
     for (uint32_t i = 0; i < 6; ++i)
     {
@@ -340,6 +346,19 @@ void CubeMapHDR::bindPrefilterMap()
 void CubeMapHDR::Bind()
 {
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::CubeMap), &mEnvMapSRV);
+    // 문제들
+    // SRV는 바인딩 되고있음 그런데 안에 텍스처가 없어, 그래서 clear된 렌더타겟만 나와 그럼 렌더타겟에 그려지지간 않는다는건데, (이상한데에도 안그림 텍스처 리소스가 안올라갔으니까)
+    // 그냥 srv를 cubemap에 올리면 올라간걸 몰라 왜? 그거 찾아야됨    
+    // skybox 쉐이더는 동작을 하고 잇음 샘플이 잘 안되는걸까?
+    // cubemap texture는 샘플링이 되고 있음
+    // 그런데 아무것도 안나오고 있음 그럼 텍스처가 암것도 없는 첵스천가?
+    // ㄴㄴ 다른srv넣어도 아예 안올라가는거 보면 문제 있음
+
+    // 그리고 지금 윗단계에서 RTV에 텍스처가 안그려짐
+    // 그래서 렌더타겟들에 클리어된 렌더타겟만 나옴 ㅇㅇ
+    // 바인딩이 안되는게 맞지 않을?까?
+    // 바인딩 하는 함수에서는 아~무런 문제가 없음
+
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::IrradianceMap), &mIrradianceSRV);
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &mPreFilterSRV);
 }

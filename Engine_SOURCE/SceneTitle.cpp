@@ -34,8 +34,6 @@
 
 #include "InputMgr.h"
 
-#include "SkyBox.h"
-#include "SB.h"
 #include "CubeMap.h"
 
 
@@ -160,9 +158,7 @@ void SceneTitle::Enter()
 	}
 
 	{
-		//SB* sb = object::Instantiate<SB>(eLayerType::CubeMap);
 		CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::Skybox);
-
 	}
 	
 	{

@@ -723,8 +723,8 @@ namespace renderer
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
-			DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM,
-			D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS);
+		DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM,
+		D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PaintTexture", uavTexture);
 
 		postProcessTexture = new Texture();

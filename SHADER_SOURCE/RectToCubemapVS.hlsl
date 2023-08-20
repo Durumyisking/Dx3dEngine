@@ -2,8 +2,7 @@
 
 struct VSIn
 {
-    float4 Position : POSITION;
-    float2 UV : TEXCOORD;
+    float4 Position : Position;
 };
 
 struct VSOut
@@ -22,8 +21,8 @@ VSOut main(VSIn vsIn)
     float4 viewPosition = mul(worldPosition, view);
     float4 projPosition = mul(viewPosition, projection); // cubemap proj °öÇØ¾ßÇÒµí?
     
-    vsOut.WorldPos = worldPosition.xyz;
-    vsOut.Position = mul(worldPosition, cubemapMat);
+    vsOut.WorldPos = vsIn.Position;
+    vsOut.Position = mul(float4(vsIn.Position.xyz, 1.0), cubemapMat);
     vsOut.Position.z = vsOut.Position.w;
     
     return vsOut;

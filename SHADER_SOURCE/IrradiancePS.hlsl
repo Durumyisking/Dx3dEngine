@@ -1,9 +1,5 @@
 #include "global.hlsli"
 
-struct VSIn
-{
-    float4 Position : Position;
-};
 
 struct VSOut
 {

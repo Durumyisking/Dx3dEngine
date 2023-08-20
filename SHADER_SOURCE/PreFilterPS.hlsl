@@ -8,10 +8,6 @@ struct VSOut
 };
 
 
-//TextureCube tex : register(t0);
-//Texture2D tex : register(t0);
-
-
 float RadicalInverse_VdC(uint bits)
 {
     bits = (bits << 16u) | (bits >> 16u);
