@@ -72,7 +72,6 @@ void TextureHDR::loadFromData(void* data, int w, int h, int channels, bool linea
     assert(SUCCEEDED(hr));
 
 }
- 
 
 
 void TextureHDR::Bind(unsigned int slot)
@@ -81,9 +80,7 @@ void TextureHDR::Bind(unsigned int slot)
 }
 
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 CubeMapHDR::CubeMapHDR()
@@ -342,7 +339,7 @@ void CubeMapHDR::bindPrefilterMap()
 
 void CubeMapHDR::Bind()
 {
-    //GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::CubeMap), &mEnvMapSRV);
+    GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::CubeMap), &mEnvMapSRV);
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::IrradianceMap), &mIrradianceSRV);
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &mPreFilterSRV);
 }

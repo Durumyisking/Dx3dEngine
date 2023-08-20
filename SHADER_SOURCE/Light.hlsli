@@ -160,6 +160,7 @@ float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal
     
     return result;
 }
+
 float3 CalculateLightPBR_Diffuse(float3 viewPos, float4 albedo, float3 viewNormal, float metallic, float roughness)
 {
     // PBR     

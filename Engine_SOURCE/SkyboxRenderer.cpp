@@ -35,6 +35,7 @@ void SkyboxRenderer::Render()
 
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
+	// 텍스처는 cubemap에서 바인딩
 	GetMaterial()->GetShader()->Bind();
 
 	// draw
