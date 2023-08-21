@@ -5,13 +5,22 @@ class Button : public UIBase
 {
 public:
 	Button();
-	~Button();
+	Button(eUIType type);
+	virtual ~Button();
 
-	virtual void OnInit() final;
-	virtual void OnActive() final;
-	virtual void OnInActive() final;
-	virtual void OnTick() final;
-	virtual void OnRender() final;
-	virtual void OnClear() final;
+	virtual void OnInit() override;
+	virtual void OnActive() override;
+	virtual void OnInActive() override;
+	virtual void OnUpdate() override;
+	virtual void OnFixedUpdate() override;
+	virtual void OnRender() override;
+	virtual void OnFontRender() override;
+	virtual void OnClear() override;
+	
+	virtual void Click();
 
+private:
+	Event mOnClick;
+
+	Vector3 mScreenPos;
 };

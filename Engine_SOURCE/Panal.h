@@ -15,9 +15,7 @@ public:
 	virtual void OnRender() final;
 	virtual void OnClear() final;
 
-	void AddUIBase(UIBase* uiBase);
 
 private:
-	std::vector<UIBase*> mChilds;
-};
 
+};

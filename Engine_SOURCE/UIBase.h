@@ -6,6 +6,24 @@ using namespace math;
 class UIBase : public GameObj
 {
 public:
+	struct Event
+	{
+		void operator=(std::function<void()> func)
+		{
+			mEvent = std::move(func);
+		}
+
+		void operator()()
+		{
+			if (mEvent)
+				mEvent();
+		}
+
+
+		std::function<void()> mEvent;
+	};
+
+
 	UIBase(eUIType type);
 	virtual ~UIBase();
 
@@ -28,6 +46,21 @@ public:
 	void SetIsFullScreen(bool enable) { mUIbFullScreen = enable; }
 	void SetUIParent(UIBase* parent) { mUIParent = parent; }
 
+	Vector3 GetUIScreenPos() { return mUIScreenPos; }
+	Vector3 GetUIPos() { return mUIPos; }
+	Vector3 GetUISize() { return mUISize; }
+	void SetUIScreenPos(Vector3 pos) { mUIScreenPos = pos; }
+	void SetUIPos(Vector3 pos) { mUIPos = pos; }
+	void SetUISize(Vector3 size) { mUISize = size; }
+	void Addchild(UIBase* uiBase);
+
+protected:
+	UIBase* mUIParent;
+	Vector3 mUIScreenPos;
+	Vector3 mUIPos;
+	Vector3 mUISize;
+
+
 private:
 	virtual void OnInit() {};
 	virtual void OnActive() {};
@@ -39,13 +72,11 @@ private:
 	virtual void OnClear() {};
 
 private:
-	UIBase* mUIParent;
 	eUIType mUIType;
 	bool mUIbFullScreen;
 	bool mbUIEnable;
 
-	//Vector3 mUIScreenPos;
-	//Vector3 mUIPos;
-	//Vector3 mUISize;
+	//백터가 더 메모리 친화적이기 떄문에 사용
+	std::vector<UIBase*> mChilds;
 };
 

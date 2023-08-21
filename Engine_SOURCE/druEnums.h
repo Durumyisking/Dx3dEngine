@@ -147,6 +147,7 @@ namespace enums
 		Coin,
 		Option,
 		Crosshair,
+		Button,
 
 		End,
 	};

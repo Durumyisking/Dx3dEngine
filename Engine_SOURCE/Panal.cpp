@@ -1,14 +1,19 @@
 #include "Panal.h"
+#include "MeshRenderer.h"
+#include "SpriteRenderer.h"
 
 Panal::Panal()
 	:UIBase(eUIType::HP)
 {
+	SpriteRenderer* spritreRender = AddComponent<SpriteRenderer>(eComponentType::UI);
 
 }
 
 Panal::Panal(eUIType type)
 	:UIBase(type)
 {
+	SpriteRenderer* spritreRender = AddComponent<SpriteRenderer>(eComponentType::UI);
+
 }
 
 Panal::~Panal()
@@ -42,11 +47,6 @@ void Panal::OnRender()
 }
 
 void Panal::OnClear()
-{
-
-}
-
-void Panal::AddUIBase(UIBase* uiBase)
 {
 
 }

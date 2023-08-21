@@ -605,6 +605,8 @@ namespace renderer
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Skybox", L"Textures/SkyCityDayLight_color.png");
 
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"MarioTitle", L"CmTitleLogo.png");
+
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
 			DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM,
