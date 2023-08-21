@@ -22,11 +22,8 @@ namespace gui
 		void Release();
 		void DestroySingle();
 
-		void DebugRender(DebugMesh& mesh);
 
 	private:
-		std::vector<EditorObject*> mEditorObjects;
-		std::vector<DebugObject*> mDebugObjects;
 
 		bool mEnable;
 		bool mImguiEnable;

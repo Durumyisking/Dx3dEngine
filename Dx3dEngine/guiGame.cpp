@@ -20,11 +20,9 @@ namespace gui
 
 	void Game::Update()
 	{
-		Texture* renderTarget
-			= GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
+		Texture* renderTarget = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
 
-		Texture* gameTex
-			= new Texture();
+		Texture* gameTex = new Texture();
 		gameTex->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		
 		//61 번 셰이더 리소스 뷰 null초기화
@@ -42,6 +40,9 @@ namespace gui
 
 		ImGui::Image((void*)gameTex->GetSRV().Get(), panelSize
 				, ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), tintColor);
+
+		delete gameTex;
+		gameTex = nullptr;
 	}
 
 	void Game::LateUpdate()
