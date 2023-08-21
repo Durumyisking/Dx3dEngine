@@ -152,21 +152,22 @@ void SceneTitle::Enter()
 	}
 
 	{
-		//Player* player = object::Instantiate<Player>(eLayerType::Player);
-		//player->SetPos(Vector3(50.f, 5.f, 5.f));
-		//player->SetScale(Vector3(1.0f, 1.0f, 1.0f));
-		//player->SetName(L"Player");
-		//
-		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
-		//player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(50.f, 5.f, 5.f));
+		player->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+		player->SetName(L"Player");
+		
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
+		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-		//BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
-		////animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
-		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
-		//animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
-		//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
-		//animator->Play(L"test2");
+		//animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
+		animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
+		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
+		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
+		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
+		animator->Play(L"test4");
 	}
 
 	{
@@ -175,13 +176,12 @@ void SceneTitle::Enter()
 		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
 		player->SetName(L"Player");
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandL");
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
 		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandL/Animation/Dead.smd", 0.05f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandL/Animation/Jump.smd", 0.05f);
-		animator->Play(L"test2");
+		animator->CreateAnimation(L"test", L"..//..//Resources/Packun/Animation/Vomit.smd", 0.05f);
+		animator->Play(L"test");
 	}
 
 	{
@@ -200,7 +200,7 @@ void SceneTitle::Enter()
 	}
 
 	{
-		/*Player* player = object::Instantiate<Player>(eLayerType::Player);
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(-100.f, -100.f, 0.f));
 		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
 		player->SetName(L"Player");
@@ -209,8 +209,8 @@ void SceneTitle::Enter()
 		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//..//Resources/BirdCity/Animation/Turn.smd", 0.05f);
-		animator->Play(L"test");*/
+		animator->CreateAnimation(L"test", L"..//..//Resources/BirdCity/Animation/FlyLanding.smd", 0.05f);
+		animator->Play(L"test");
 	}
 
 	{
@@ -228,7 +228,7 @@ void SceneTitle::Enter()
 	}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		/*Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(0.f, 0.f, 0.f));
 		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
 		player->SetName(L"Player");
@@ -238,13 +238,13 @@ void SceneTitle::Enter()
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 		animator->CreateAnimation(L"test", L"..//..//Resources/goomba/Animation/newAttack.smd", 0.05f);
-		animator->Play(L"test");
+		animator->Play(L"test");*/
 	}
 
 	{
-		/*Player* player = object::Instantiate<Player>(eLayerType::Player);
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(-100.f, -100.f, 0.f));
-		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
+		player->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 		player->SetName(L"Player");
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Tank");
@@ -252,7 +252,7 @@ void SceneTitle::Enter()
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 		animator->CreateAnimation(L"test", L"..//..//Resources/Tank/Animation/Move.smd", 0.05f);
-		animator->Play(L"test");*/
+		animator->Play(L"test");
 	}
 	
 	{
@@ -286,24 +286,6 @@ void SceneTitle::Enter()
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);*/
 	}
-
-
-	//{
-		//GameObj* skyBox = object::Instantiate<GameObj>(eLayerType::Objects);
-		//skyBox->SetPos(Vector3(0.f, 5.f, 0.f));
-		//skyBox->SetScale({ 5.f, 5.f, 5.f });
-		//skyBox->SetName(L"Skybox");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		//(
-		//	L"Skybox",
-		//	eTextureSlot::Skybox,
-		//	L"SkyboxShader",
-		//	L"SkyboxMat"
-		//);
-		//MeshRenderer* mr = skyBox->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//mr->SetMaterial(mat);
-		//mr->SetMeshByKey(L"Spheremesh");
-	//}
 
 
 	// DebugTest

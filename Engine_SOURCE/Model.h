@@ -12,7 +12,7 @@
 
 #pragma comment(lib, "..//External/assimp/lib/Debug/assimp-vc143-mtd.lib")
 #define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate  | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace  | aiProcess_FixInfacingNormals | aiProcess_LimitBoneWeights )
-#define ASSIMP_D3D_FLAGES aiProcess_ConvertToLeftHanded
+#define ASSIMP_TEST_FLAGES (aiProcess_RemoveRedundantMaterials | aiProcess_ImproveCacheLocality | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_PopulateArmatureData | aiProcess_LimitBoneWeights | aiProcess_CalcTangentSpace | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph )
 // aiProcess_RemoveRedundantMaterials | aiProcess_ImproveCacheLocality | aiProcess_ConvertToLeftHanded | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_PopulateArmatureData | aiProcess_LimitBoneWeights | aiProcess_CalcTangentSpace | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph
 class Mesh;
 class Texture;
