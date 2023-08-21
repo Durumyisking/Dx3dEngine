@@ -186,6 +186,7 @@ void SceneTitle::Enter()
 
 	
 	{
+
 	/*	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
 		player->SetPos(Vector3(10.f, 0.f, 0.f));
 		player->SetScale({ 0.01f, 0.01f, 0.01f });
@@ -199,11 +200,12 @@ void SceneTitle::Enter()
 
 		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);*/
 	}
 	
 	{
-		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
+		/*GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
@@ -212,7 +214,7 @@ void SceneTitle::Enter()
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+		plane->AddComponent<PhysXCollider>(eComponentType::Collider);*/
 	}
 
 
