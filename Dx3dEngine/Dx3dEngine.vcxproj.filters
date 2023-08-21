@@ -122,15 +122,15 @@
     <ClInclude Include="guiEditorObject.h">
       <Filter>Editor\Object</Filter>
     </ClInclude>
-    <ClInclude Include="guiEditor.h">
-      <Filter>Editor\Object</Filter>
-    </ClInclude>
     <ClInclude Include="guiVisualEditor.h" />
     <ClInclude Include="guiWidgetMgr.h">
       <Filter>Editor\Managers</Filter>
     </ClInclude>
     <ClInclude Include="guiEditorObjMgr.h">
       <Filter>Editor\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="guiEditor.h">
+      <Filter>Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -222,15 +222,15 @@
     <ClCompile Include="guiEditorObject.cpp">
       <Filter>Editor\Object</Filter>
     </ClCompile>
-    <ClCompile Include="guiEditor.cpp">
-      <Filter>Editor\Object</Filter>
-    </ClCompile>
     <ClCompile Include="guiVisualEditor.cpp" />
     <ClCompile Include="guiWidgetMgr.cpp">
       <Filter>Editor\Managers</Filter>
     </ClCompile>
     <ClCompile Include="guiEditorObjMgr.cpp">
       <Filter>Editor\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="guiEditor.cpp">
+      <Filter>Editor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
