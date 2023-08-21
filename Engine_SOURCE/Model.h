@@ -11,9 +11,9 @@
 #include "..//External/assimp/include/assimp/scene.h"
 
 #pragma comment(lib, "..//External/assimp/lib/Debug/assimp-vc143-mtd.lib")
-#define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate  | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace  | aiProcess_FixInfacingNormals | aiProcess_LimitBoneWeights)
+#define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate  | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace  | aiProcess_FixInfacingNormals | aiProcess_LimitBoneWeights )
 #define ASSIMP_D3D_FLAGES aiProcess_ConvertToLeftHanded
-
+// aiProcess_RemoveRedundantMaterials | aiProcess_ImproveCacheLocality | aiProcess_ConvertToLeftHanded | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_PopulateArmatureData | aiProcess_LimitBoneWeights | aiProcess_CalcTangentSpace | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph
 class Mesh;
 class Texture;
 class Material;
@@ -50,7 +50,7 @@ public:
 	ModelNode* FindNode(const std::wstring& nodeName);
 	Bone* FindBone(const std::wstring& nodeName);
 	Bone* GetBone(UINT index) { return mBones[index]; }
-	void RecursiveGetBoneMatirx();
+	void BindBoneMatrix();
 	void CreateTexture();
 	void CreateMaterial();
 	std::vector<Texture*> GetTexture(int index);
@@ -94,4 +94,3 @@ private:
 	std::wstring mRootNodeName;
 	std::wstring mCurDirectoryPath;
 };
-

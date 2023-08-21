@@ -67,6 +67,9 @@ void ResourceMgr::Initalize()
 
 	// Monster
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Tank", L"Tank");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/BirdCity", L"BirdCity");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CapMan", L"CapMan");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/goomba", L"Test");
 }
 
 void ResourceMgr::Release()

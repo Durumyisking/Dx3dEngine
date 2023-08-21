@@ -27,7 +27,7 @@ Model::~Model()
 HRESULT Model::Load(const std::wstring& path)
 {
 	std::string sPath = ConvertToString(path.c_str());
-	const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES | ASSIMP_D3D_FLAGES);
+	const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES | aiProcess_FlipUVs);
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
@@ -127,7 +127,7 @@ Bone* Model::FindBone(const std::wstring& nodeName)
 	return mBoneMap.find(nodeName) == mBoneMap.end() ? nullptr : mBoneMap.find(nodeName)->second;
 }
 
-void Model::RecursiveGetBoneMatirx()
+void Model::BindBoneMatrix()
 {
 	// ��Ʈ��带 �������� ���� ��带 Ž���ϰ� 
 	// mBonse �� Local, Final ����� ä���
@@ -152,7 +152,7 @@ void Model::Bind_Render()
 	std::vector<BoneMat> boneMat = {};
 
 	// �� transform ���
-	RecursiveGetBoneMatirx();
+	BindBoneMatrix();
 
 	// Ž���� ���� ������ ����� �迭�� ������ GPU �� ���ε�
 	boneMat.reserve(mBones.size());
@@ -175,6 +175,9 @@ void Model::Bind_Render()
 			continue;
 
 		if (mMaterials[i] == nullptr)
+			continue;
+
+		if (mMeshes[i]->GetName().find(L"Press") != std::wstring::npos)
 			continue;
 
 		//�ؽ�ó ���ε�
