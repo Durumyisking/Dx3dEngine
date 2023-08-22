@@ -1,4 +1,4 @@
-﻿#include "Camera.h"
+#include "Camera.h"
 #include "Transform.h"
 #include "GameObj.h"
 #include "Application.h"
@@ -9,6 +9,11 @@
 #include "TimeMgr.h"
 #include "Layer.h"
 #include "ResourceMgr.h"
+#include "InputMgr.h"
+
+#include "RayObject.h"
+#include "Object.h"
+
 
 extern Application application;
 
@@ -33,6 +38,7 @@ Camera::Camera()
 	, mFarDist(0.f)
 	, mTime(0.3f)
 	, mSmooth(false)
+	, mbMouseClick(false)
 {
 	EnableLayerMasks();
 }
@@ -65,6 +71,17 @@ void Camera::Update()
 		(Dir).Normalize(mCamDir);
 	}
 
+	if (mbMouseClick)
+	{
+		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LBTN))
+		{
+			DrawRay();
+		}
+		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RBTN))
+		{
+
+		}
+	}
 }
 
 void Camera::FixedUpdate()
@@ -162,6 +179,15 @@ void Camera::RegisterCameraInRenderer()
 {
 	UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
 	renderer::Cameras[type].push_back(this);
+}
+
+void Camera::DrawRay()
+{
+	Vector3 mousePos = GETSINGLE(InputMgr)->GetMousePosition_world();
+	mousePos.z = 100.f;
+
+	RayObject* ray = object::Instantiate<RayObject>(eLayerType::Player);
+	ray->SetRaycast(mousePos, mCamDir);
 }
 
 void Camera::TurnLayerMask(eLayerType layer, bool enable)

@@ -41,6 +41,9 @@
     <Filter Include="Editor\Managers">
       <UniqueIdentifier>{ed97636b-69b6-431b-a8a5-53646a539d88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Widget\Group">
+      <UniqueIdentifier>{1dbec8ca-ea62-41de-8c71-c38cc0268470}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dx3dEngine.h" />
@@ -131,6 +134,15 @@
     </ClInclude>
     <ClInclude Include="guiEditor.h">
       <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="guiContentsBrowser.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="guiWidgetGroup.h">
+      <Filter>Widget\Group</Filter>
+    </ClInclude>
+    <ClInclude Include="guiOutLine.h">
+      <Filter>View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +243,15 @@
     </ClCompile>
     <ClCompile Include="guiEditor.cpp">
       <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="guiContentsBrowser.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="guiWidgetGroup.cpp">
+      <Filter>Widget\Group</Filter>
+    </ClCompile>
+    <ClCompile Include="guiOutLine.cpp">
+      <Filter>View</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

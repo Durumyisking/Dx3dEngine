@@ -493,7 +493,6 @@
     <ClInclude Include="MultiRenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-
     <ClInclude Include="Model.h">
       <Filter>Resource\Model</Filter>
     </ClInclude>
@@ -504,7 +503,7 @@
       <Filter>Resource\Model\ModelNode</Filter>
     </ClInclude>
     <ClInclude Include="SkyBox.h" />
-
+    <ClInclude Include="RayObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -761,7 +760,6 @@
     <ClCompile Include="MultiRenderTarget.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-
     <ClCompile Include="Model.cpp">
       <Filter>Resource\Model</Filter>
     </ClCompile>
@@ -772,7 +770,7 @@
       <Filter>Resource\Model\ModelNode</Filter>
     </ClCompile>
     <ClCompile Include="SkyBox.cpp" />
-
+    <ClCompile Include="RayObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

@@ -286,6 +286,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PxFilter.h" />
     <ClInclude Include="PxInitialization.h" />
     <ClInclude Include="PxEventCallback.h" />
+    <ClInclude Include="RayObject.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="EngineResource.h" />
     <ClInclude Include="ResourceMgr.h" />
@@ -380,6 +381,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PxEventCallback.cpp" />
     <ClCompile Include="PxFilter.cpp" />
     <ClCompile Include="PxInitialization.cpp" />
+    <ClCompile Include="RayObject.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="EngineResource.cpp" />
     <ClCompile Include="ResourceMgr.cpp" />
