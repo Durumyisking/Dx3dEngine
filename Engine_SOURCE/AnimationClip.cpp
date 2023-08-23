@@ -102,20 +102,39 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 		{
 			mSkeletonData.emplace_back(animation::SkeletonData{});
 			frame = mSkeletonData.size() - 1;
+			mSkeletonData[frame].Translation.resize(mNodeData.size());
+			mSkeletonData[frame].Rotation.resize(mNodeData.size());
+
+			GameObj* owner = mAnimator->GetOwner();
+			BaseRenderer* baseRenderer = mAnimator->GetOwner()->GetComponent<BaseRenderer>();
+			Model* model = mAnimator->GetOwner()->GetComponent<BaseRenderer>()->GetModel();
+
+			for (int i = 0; i < mNodeData.size(); ++i)
+			{
+				ModelNode* node = model->FindNode(mNodeData[i].Name);
+
+				aiMatrix4x4 transform = node->mTransformation;
+				aiVector3t pos = aiVector3t<float>();
+				aiQuaternion rotation = aiQuaternion();
+
+				transform.DecomposeNoScaling(rotation, pos);
+
+				mSkeletonData[frame].Translation[i] = std::pair(i, Vector3(pos.x,pos.y,pos.z));
+				mSkeletonData[frame].Rotation[i] = std::pair(i, Vector3(rotation.x, rotation.y, rotation.z));
+			}
+
+
 			continue;
 		}
 
 		animation::SkeletonData data = {};
-		data = readSkeleton(buf);
+		data = readSkeleton(buf, mNodeData.size());
 		data.Time = static_cast<float>(frame);
 
 		mSkeletonData[frame].Time = frame;
 
-		for (int i = 0; i < data.Translation.size(); ++i)
-		{
-			mSkeletonData[frame].Translation.emplace_back(data.Translation[i]);
-			mSkeletonData[frame].Rotaion.emplace_back(data.Rotaion[i]);
-		}
+		mSkeletonData[frame].Translation[data.Translation[0].first].second = data.Translation[0].second;
+		mSkeletonData[frame].Rotation[data.Rotation[0].first].second = data.Rotation[0].second;
 	}
 
 	file.close();
@@ -145,7 +164,7 @@ void AnimationClip::SetBoneMatrix()
 	int size = curData.Translation.size();
 	for (int i = 0; i < size; ++i)
 	{
-		ModelNode* node = model->FindNode(mNodeData[i].Name);
+		ModelNode* node = model->FindNode(mNodeData[curData.Translation[i].first].Name);
 		if (node == nullptr)
 			continue;
 
@@ -164,8 +183,8 @@ void AnimationClip::SetBoneMatrix()
 
 
 		// T*R;
-		Vector3 positionVec = Interpolation(curData.Translation[i], nextData.Translation[i], mTickPerSceond, mDuration);
-		node->SetTransformation(ToLeftHandMatrix(positionVec, curData.Rotaion[i]));
+		Vector3 positionVec = Interpolation(curData.Translation[i].second, nextData.Translation[i].second, mTickPerSceond, mDuration);
+		node->SetTransformation(ToLeftHandMatrix(positionVec, curData.Rotation[i].second));
 	}
 }
 
@@ -188,7 +207,7 @@ aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, Vector3 rotation)
 {
 	// 이동 계산
 	aiMatrix4x4 traslation = {};
-	traslation.Translation(aiVector3D(pos.x, pos.y, pos.z), traslation);
+	traslation.Translation(aiVector3D(pos.x, pos.y, -pos.z), traslation);
 
 	// 회전 계산 오일러
 	aiMatrix4x4 rotationmatrix = {};
@@ -197,8 +216,8 @@ aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, Vector3 rotation)
 	// x 오른손좌표계기준, 반시계
 	// y 오른손좌표계기준, 반시계
 	// z 포지션은 오른손좌표계기준, 회전은 시계방향
-	rotationmatrix.FromEulerAnglesXYZ(rotation.x, rotation.y, rotation.z);
-	
+	rotationmatrix.FromEulerAnglesXYZ(-rotation.x, -rotation.y, rotation.z);
+
 	return traslation * rotationmatrix;
 }
 
@@ -226,6 +245,16 @@ const std::string::size_type AnimationClip::startStringPos(std::string& buf, con
 	return pos;
 }
 
+int AnimationClip::getTransformation_Index(const std::string& buf, const std::string& delValue) const
+{
+	std::string::size_type pos = 0;
+	pos = buf.find_first_of(delValue, 0);
+
+	std::string temp = buf.substr(0, pos);
+
+	return std::stoi(temp);
+}
+
 const animation::NodeData AnimationClip::readNodes(std::string& buf) const
 {
 	animation::NodeData Data = {};
@@ -245,9 +274,12 @@ const animation::NodeData AnimationClip::readNodes(std::string& buf) const
 	return Data;
 }
 
-const animation::SkeletonData AnimationClip::readSkeleton(std::string& buf) const
+const animation::SkeletonData AnimationClip::readSkeleton(std::string& buf, int arrSize) const
 {
 	animation::SkeletonData data = {};
+
+	int index = getTransformation_Index(buf, " ");
+
 	std::string str = "";
 	std::string::size_type pos = 0;
 	pos = startStringPos(buf, " ");
@@ -259,7 +291,7 @@ const animation::SkeletonData AnimationClip::readSkeleton(std::string& buf) cons
 		temp.emplace_back((std::stof(str.c_str())));
 	}
 
-	data.Translation.emplace_back(math::Vector3(temp[0], temp[1], temp[2]));
+	data.Translation.emplace_back(index ,math::Vector3(temp[0], temp[1], temp[2]));
 	temp.clear();
 
 	for (int i = 0; i < 3; ++i)
@@ -267,8 +299,7 @@ const animation::SkeletonData AnimationClip::readSkeleton(std::string& buf) cons
 		str = parsingString(buf, " ", pos);
 		temp.emplace_back(std::stof(str.c_str()));
 	}
-
-	data.Rotaion.emplace_back(math::Vector3(temp[0], temp[1], temp[2]));
+	data.Rotation.emplace_back(index, math::Vector3(temp[0], temp[1], temp[2]));
 
 	return data;
 }

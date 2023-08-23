@@ -89,8 +89,8 @@ void BoneAnimator::CreateAnimation(const std::wstring& name, const std::wstring&
 	AnimationClip* clip = new AnimationClip();
 	mAnimationClips.insert(std::pair<std::wstring, AnimationClip*>(name, clip));
 
-	clip->CreateAnimation(name, path, duration);
 	clip->SetAnimator(this);
+	clip->CreateAnimation(name, path, duration);
 }
 
 void BoneAnimator::Play(const std::wstring& name, bool loop)

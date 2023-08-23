@@ -24,6 +24,9 @@ float4 main(VSOut vsIn) : SV_Target
     if (1 == cbbNormal)
     {
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+        float4 outColor = float4(normalTexture.SampleLevel(linearSampler, vsIn.UV, 0.f).rgba);
+        return float4(outColor.x, outColor.z, outColor.y, 1.0f);
+
     }
     
     LightColor lightColor = (LightColor) 0.0f;

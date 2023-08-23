@@ -13,7 +13,7 @@ namespace animation
 	struct SkeletonData
 	{
 		float Time;
-		std::vector<math::Vector3> Translation;
-		std::vector<math::Vector3> Rotaion;
+		std::vector<std::pair<int,math::Vector3>> Translation;
+		std::vector< std::pair<int,math::Vector3>> Rotation;
 	};
 }

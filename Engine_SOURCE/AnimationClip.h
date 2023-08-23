@@ -42,9 +42,10 @@ public:
 private:
 	const std::string parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const;
 	const std::string::size_type startStringPos(std::string& buf, const std::string& delValue) const;
+	int getTransformation_Index(const std::string& buf, const std::string& delValue) const;
 
 	const animation::NodeData readNodes(std::string& buf) const;
-	const animation::SkeletonData readSkeleton(std::string& buf) const;
+	const animation::SkeletonData readSkeleton(std::string& buf, int arrSize) const;
 
 private:
 	std::vector<animation::NodeData>     mNodeData;
