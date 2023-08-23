@@ -64,7 +64,6 @@ void ResourceMgr::Initalize()
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHandL", L"MarioHandL");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioFace", L"MarioFace");
 
-
 	// Monster
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Tank", L"Tank");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/BirdCity", L"BirdCity");

@@ -171,7 +171,7 @@ void SceneTitle::Enter()
 	}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		/*Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(-100.f, 0.f, 0.f));
 		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
 		player->SetName(L"Player");
@@ -181,7 +181,7 @@ void SceneTitle::Enter()
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 		animator->CreateAnimation(L"test", L"..//..//Resources/Packun/Animation/AttackHit.smd", 0.05f);
-		animator->Play(L"test");
+		animator->Play(L"test");*/
 	}
 
 	{
@@ -228,7 +228,7 @@ void SceneTitle::Enter()
 	}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		/*Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(0.f, 0.f, 0.f));
 		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
 		player->SetName(L"Player");
@@ -238,7 +238,7 @@ void SceneTitle::Enter()
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 		animator->CreateAnimation(L"test", L"..//..//Resources/goomba/Animation/Jump.smd", 0.05f);
-		animator->Play(L"test");
+		animator->Play(L"test");*/
 	}
 
 	{
@@ -257,7 +257,7 @@ void SceneTitle::Enter()
 	
 	{
 
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		/*Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(-100.f, -100.f, 0.f));
 		player->SetScale(Vector3(0.3f, 0.3f, 0.3f));
 		player->SetName(L"Player");
@@ -267,7 +267,7 @@ void SceneTitle::Enter()
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 		animator->CreateAnimation(L"test", L"..//..//Resources/CityWomans/Animation/ByeBye.smd", 0.05f);
-		animator->Play(L"test");
+		animator->Play(L"test");*/
 	}
 	
 	{
