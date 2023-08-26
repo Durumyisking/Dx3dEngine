@@ -75,6 +75,9 @@ public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
 	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
 	GETSET(GameObj*, mOwner, Owner)
+	GETSET(Model*, mParentModel, ParentModel)
+	GETSET(const std::wstring&, mPrentTargetBone, PrentTargetBone)
+	GETSET(const std::wstring&, mTargetBone, TargetBone)
 
 private:
 	Assimp::Importer mAssimpImporter;
@@ -93,4 +96,8 @@ private:
 
 	std::wstring mRootNodeName;
 	std::wstring mCurDirectoryPath;
+
+	Model* mParentModel;
+	std::wstring mPrentTargetBone;
+	std::wstring mTargetBone;
 };

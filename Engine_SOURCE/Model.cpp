@@ -482,17 +482,24 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 
 	matrix = matrix * transform;
 
+	if (nodeName == mTargetBone && mParentModel)
+	{
+		Bone* parentBone = mParentModel->FindBone(mPrentTargetBone);
+		aiMatrix4x4 testMat;
+		transform = (testMat.RotationY(math::toDegree(1.570796f), testMat) * transform);
+		matrix = parentBone->mLocalMatrix;// *(testMat.RotationY(math::toDegree(-1.570796f), testMat) * transform);//* transform;
+	}
+
 	if (mBoneMap.find(nodeName) != mBoneMap.end())
 	{
 		Bone* bone = mBoneMap.find(nodeName)->second;
-		aiMatrix4x4 glovalInvers = FindNode(L"Scene")->GetTransformation();
 
 		// bone->mOffsetMatrix - ������ �� �������� �̵� ( world, view, projection ����� ����)
 		// ���ε� ������ ������̴�
 		//matrix - ���� ��� ������ ��ȯ�� ���
 		// glovalInvers.Inverse() - �׵� ����� �� ������ ���� �������� ��ȯ?
 		// �ֵ� ���� ���� �Ȱ��� �����ϱ⶧���� ���� ��Ȯ���� �𸣰ڴ�
-		bone->mFinalMatrix = glovalInvers.Inverse() * matrix * bone->mOffsetMatrix;
+		bone->mFinalMatrix = matrix * bone->mOffsetMatrix;
 		bone->mLocalMatrix = matrix;
 
 		mBones[bone->mIndex]->mFinalMatrix = bone->mFinalMatrix;

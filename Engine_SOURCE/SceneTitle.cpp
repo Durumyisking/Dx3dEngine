@@ -153,7 +153,7 @@ void SceneTitle::Enter()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(50.f, 5.f, 5.f));
+		player->SetPos(Vector3(0.f, 0.f, 0.f));
 		player->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 		player->SetName(L"Player");
 		
@@ -171,17 +171,75 @@ void SceneTitle::Enter()
 	}
 
 	{
-		/*Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(-100.f, 0.f, 0.f));
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(0.f, 0.f, 0.f));
 		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
 		player->SetName(L"Player");
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandL");
 		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//..//Resources/Packun/Animation/AttackHit.smd", 0.05f);
-		animator->Play(L"test");*/
+		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandL/Animation/Walk.smd", 0.05f);
+		animator->Play(L"test");
+
+		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		model->SetPrentTargetBone(L"Armature_HandL");
+		model->SetTargetBone(L"Armature_HandL");
+	}
+
+	{
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(0.f, 0.f, 0.f));
+		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
+		player->SetName(L"Player");
+
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandR");
+		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+
+		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandR/Animation/Walk.smd", 0.05f);
+		//animator->Play(L"test");
+
+		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		model->SetPrentTargetBone(L"Armature_HandR");
+		model->SetTargetBone(L"Armature_HandR");
+	}
+
+	{
+		//Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//player->SetPos(Vector3(0.f, 0.f, 0.f));
+		//player->SetScale(Vector3(1.0f, 1.f, 1.0f));
+		//player->SetName(L"Player");
+
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
+		//player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+
+		//BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		////animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandR/Animation/Walk.smd", 0.05f);
+		////animator->Play(L"test");
+
+		//model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		//model->SetPrentTargetBone(L"Armature_Head");
+		//model->SetTargetBone(L"Armature_MarioHead");
+	}
+
+	{/*
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(0.f, 0.f, 0.f));
+		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
+		player->SetName(L"Player");
+
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioFace");
+		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+
+		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/Walk.smd", 0.05f);
+		animator->Play(L"test");
+
+		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		model->SetPrentTargetBone(L"Armature_Head");
+		model->SetTargetBone(L"Armature_new4f_root");*/
 	}
 
 	{
