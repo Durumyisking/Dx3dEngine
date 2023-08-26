@@ -486,8 +486,8 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 	{
 		Bone* parentBone = mParentModel->FindBone(mPrentTargetBone);
 		aiMatrix4x4 testMat;
-		transform = (testMat.RotationY(math::toDegree(1.570796f), testMat) * transform);
-		matrix = parentBone->mLocalMatrix;// *(testMat.RotationY(math::toDegree(-1.570796f), testMat) * transform);//* transform;
+		transform = transform * testMat.FromEulerAnglesXYZ(mOffsetRotation.x, mOffsetRotation.y, mOffsetRotation.z);
+		matrix = parentBone->mLocalMatrix * transform;
 	}
 
 	if (mBoneMap.find(nodeName) != mBoneMap.end())

@@ -78,7 +78,7 @@ public:
 	GETSET(Model*, mParentModel, ParentModel)
 	GETSET(const std::wstring&, mPrentTargetBone, PrentTargetBone)
 	GETSET(const std::wstring&, mTargetBone, TargetBone)
-
+	GETSET(math::Vector3, mOffsetRotation, OffsetRotation)
 private:
 	Assimp::Importer mAssimpImporter;
 
@@ -100,4 +100,6 @@ private:
 	Model* mParentModel;
 	std::wstring mPrentTargetBone;
 	std::wstring mTargetBone;
+
+	math::Vector3 mOffsetRotation;
 };

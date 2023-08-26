@@ -17,17 +17,15 @@ float4 main(VSOut vsIn) : SV_Target
     float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.0f);
     float3 normal = vsIn.ViewNormal;
 
-    //return albedo;
     if (1 == cbbAlbedo)
     {
-        albedo = TextureMapping_albedo(vsIn.UV);
+        //albedo = TextureMapping_albedo(vsIn.UV);
     }
     
     if (1 == cbbNormal)
     {
         normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-    
     LightColor lightColor = (LightColor) 0.0f;
     
     for (uint i = 0; i < lightCount; i++)
