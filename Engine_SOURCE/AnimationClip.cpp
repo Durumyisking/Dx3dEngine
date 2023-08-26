@@ -168,23 +168,21 @@ void AnimationClip::SetBoneMatrix()
 		if (node == nullptr)
 			continue;
 
-		// 회전 계산 쿼터니언
-		// 버그 있음 사용 X
-		//Vector3 startE = curData.Rotaion[i];
-		//Vector3 EndE = nextData.Rotaion[i];
-		//aiQuaternion roationQ(startE.x, startE.y, startE.z);
-		//aiQuaternion endQ(EndE.x, EndE.y, EndE.z);
-		//aiQuaternion resultQ = {};
-		//resultQ.Interpolate(resultQ, roationQ, endQ, mTickPerSceond / mDuration);
-		//// Scale, Quternion, Tranlation
-		//node->SetTransformation(aiMatrix4x4(aiVector3t(1.0f, 1.0f, 1.0f)
-		//	, aiQuaternion(resultQ.x, resultQ.y, resultQ.z)
-		//	, aiVector3t(positionVec.x, positionVec.y, positionVec.z)));
-
-
-		// T*R;
+		// T
 		Vector3 positionVec = Interpolation(curData.Translation[i].second, nextData.Translation[i].second, mTickPerSceond, mDuration);
-		node->SetTransformation(ToLeftHandMatrix(positionVec, curData.Rotation[i].second));
+
+		// R
+		Vector3 eRotation = curData.Rotation[i].second;
+		aiQuaternion qRotation(-eRotation.y, eRotation.z, -eRotation.x);
+
+		Vector3 eNextRotation = nextData.Rotation[i].second;
+		aiQuaternion qNextRotation(-eNextRotation.y, eNextRotation.z, -eNextRotation.x);
+
+		aiQuaternion result = {};
+		result.Interpolate(result, qRotation, qNextRotation, mTickPerSceond / mDuration);
+
+		// T * R
+		node->SetTransformation(ToLeftHandMatrix(positionVec, result.GetMatrix()));
 	}
 }
 
@@ -217,6 +215,24 @@ aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, Vector3 rotation)
 	// y 오른손좌표계기준, 반시계
 	// z 포지션은 오른손좌표계기준, 회전은 시계방향
 	rotationmatrix.FromEulerAnglesXYZ(-rotation.x, -rotation.y, rotation.z);
+
+	return traslation * rotationmatrix;
+}
+
+aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, aiMatrix3x3 rotation)
+{
+	// 이동 계산
+	aiMatrix4x4 traslation = {};
+	traslation.Translation(aiVector3D(pos.x, pos.y, -pos.z), traslation);
+
+	// 회전 계산 오일러
+	aiMatrix4x4 rotationmatrix(rotation);
+
+	// 아마? 닌텐도 만에 좌표계가 있는거같다
+	// x 오른손좌표계기준, 반시계
+	// y 오른손좌표계기준, 반시계
+	// z 포지션은 오른손좌표계기준, 회전은 시계방향
+	//rotationmatrix.FromEulerAnglesXYZ(-rotation.x, -rotation.y, rotation.z);
 
 	return traslation * rotationmatrix;
 }

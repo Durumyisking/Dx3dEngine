@@ -224,7 +224,7 @@ void SceneTitle::Enter()
 		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/AreaWaitHot.smd", 0.05f);
+		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
 		animator->Play(L"test");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
@@ -245,7 +245,8 @@ void SceneTitle::Enter()
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 		animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
-		animator->Play(L"test");
+		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioFace/Animation/Walk.smd", 0.02f);
+		animator->Play(L"test2");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
 		model->SetPrentTargetBone(L"Armature_Head");
