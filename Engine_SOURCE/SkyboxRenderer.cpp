@@ -16,6 +16,7 @@ SkyboxRenderer::~SkyboxRenderer()
 
 void SkyboxRenderer::Initialize()
 {
+	//SetMeshByKey(L"Spheremesh");
 	BaseRenderer::Initialize();
 }
 

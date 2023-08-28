@@ -83,28 +83,28 @@ void Camera::Render()
 
 	sortGameObjects();
 
-	//// Deferred Opaque Render 
-	//renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
-	//renderDeferred();
+	// Deferred Opaque Render 
+	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
+	renderDeferred();
 
-	//// Deferred light Render
-	//renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
-	//renderer::BindPBRProprerties();
+	// Deferred light Render
+	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
+	renderer::BindPBRProprerties();
 
-	//for (Light* light : renderer::lights)
-	//{
-	//	light->Render();
-	//}
+	for (Light* light : renderer::lights)
+	{
+		light->Render();
+	}
 
-	////SwapChain
-	//renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+	//SwapChain
+	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
 
-	//// Deferred + SwapChain Merge
-	//Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
-	//Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
-	//rectMesh->BindBuffer();
-	//mergeMaterial->Bind();
-	//rectMesh->Render();
+	// Deferred + SwapChain Merge
+	Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
+	Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
+	rectMesh->BindBuffer();
+	mergeMaterial->Bind();
+	rectMesh->Render();
 
 	// Forward Render
 	renderOpaque();

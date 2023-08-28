@@ -158,7 +158,7 @@ void SceneTitle::Enter()
 	}
 
 	{
-		//CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::Skybox);
+		CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::Skybox);
 	}
 	
 	{

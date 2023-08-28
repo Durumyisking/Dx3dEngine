@@ -24,6 +24,7 @@ private:
 };
 
 class Mesh;
+class Texture;
 
 class CubeMapHDR : public GameObj
 {
@@ -69,6 +70,9 @@ private:
 	std::vector<ID3D11RenderTargetView*> mRTVs2;
 	std::vector<ID3D11RenderTargetView*> mRTVs3;
 
+	Texture* mEnvMapTex;
+	Texture* mIrradianceTex;
+	Texture* mPreFilterTex;
 
 	ID3D11Texture2D* mEnvMapTex;
 	ID3D11RenderTargetView* mEnvMapRTV;

@@ -630,6 +630,9 @@ namespace renderer
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"RectToCubemapVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"RectToCubemapPS.hlsl", "main");
+			shader->SetRSState(eRasterizerType::SolidFront);
+			shader->SetDSState(eDepthStencilType::Less);
+			shader->SetBSState(eBlendStateType::Default);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"RectToCubemapShader", shader);
 		}
@@ -1697,6 +1700,7 @@ namespace renderer
 		LoadBuffer();
 		LoadDefaultTexture();
 		LoadDefaultMaterial();
+		BindPBRProprerties();
 
 		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"blockBrick");
 	}

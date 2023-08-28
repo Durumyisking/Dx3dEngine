@@ -347,19 +347,6 @@ void CubeMapHDR::bindPrefilterMap()
 void CubeMapHDR::Bind()
 {
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::CubeMap), &mEnvMapSRV);
-    // 문제들
-    // SRV는 바인딩 되고있음 그런데 안에 텍스처가 없어, 그래서 clear된 렌더타겟만 나와 그럼 렌더타겟에 그려지지간 않는다는건데, (이상한데에도 안그림 텍스처 리소스가 안올라갔으니까)
-    // 그냥 srv를 cubemap에 올리면 올라간걸 몰라 왜? 그거 찾아야됨    
-    // skybox 쉐이더는 동작을 하고 잇음 샘플이 잘 안되는걸까?
-    // cubemap texture는 샘플링이 되고 있음
-    // 그런데 아무것도 안나오고 있음 그럼 텍스처가 암것도 없는 첵스천가?
-    // ㄴㄴ 다른srv넣어도 아예 안올라가는거 보면 문제 있음
-
-    // 그리고 지금 윗단계에서 RTV에 텍스처가 안그려짐
-    // 그래서 렌더타겟들에 클리어된 렌더타겟만 나옴 ㅇㅇ
-    // 바인딩이 안되는게 맞지 않을?까?
-    // 바인딩 하는 함수에서는 아~무런 문제가 없음
-
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::IrradianceMap), &mIrradianceSRV);
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &mPreFilterSRV);
 }

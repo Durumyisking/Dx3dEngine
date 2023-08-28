@@ -261,7 +261,6 @@ void Material::Bind()
 	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Metallic)])
 	{
-		renderer::BindPBRProprerties();
 		mMaterialConstantBuffer.bMetallic = 1;
 	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Roughness)])
@@ -283,7 +282,7 @@ void Material::Clear()
 		if (mTexture[i] == nullptr)
 			continue;
 
-		mTexture[i]->Clear(i);
+		Texture::Clear(i);
 	}
 }
 void Material::SetShaderByKey(std::wstring key)

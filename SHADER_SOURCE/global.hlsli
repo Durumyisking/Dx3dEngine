@@ -94,3 +94,16 @@ float TextureMapping_roughness(float2 uv)
 {
     return saturate(roughnessTexture.SampleLevel(linearSampler, uv, 0.f).r);
 }
+
+
+// 3d위치나 방향을 구면 매핑 좌표로 변환합니다.
+// 해당 좌표를 텍스처의 샘플링에 사용합니다.
+
+static const float2 invAtan = float2(0.1591, 0.3183);
+float2 SampleSphericalMap(float3 v)
+{
+    float2 uv = float2(atan2(v.z, v.x), asin(v.y));
+    uv *= invAtan;
+    uv += 0.5;
+    return uv;
+}

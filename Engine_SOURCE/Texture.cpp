@@ -31,6 +31,12 @@ void Texture::Clears()
 {
 	for (UINT i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
 	{
+
+		if ((i == static_cast<UINT>(eTextureSlot::BRDF)) || 
+			(i == static_cast<UINT>(eTextureSlot::Skybox)))
+			continue;
+
+
 		ID3D11ShaderResourceView* srv = nullptr;
 		GetDevice()->BindShaderResource(eShaderStage::VS, i, &srv);
 		GetDevice()->BindShaderResource(eShaderStage::DS, i, &srv);
@@ -323,16 +329,4 @@ void Texture::ClearUnorderedAccessview(UINT slot)
 	GetDevice()->BindUnorderedAccessView(slot, 1, &p, &i);
 }
 
-
-void Texture::Clear(UINT slot)
-{
-	ID3D11ShaderResourceView* srv = nullptr;
-
-	GetDevice()->BindShaderResource(eShaderStage::VS, slot, &srv);
-	GetDevice()->BindShaderResource(eShaderStage::DS, slot, &srv);
-	GetDevice()->BindShaderResource(eShaderStage::GS, slot, &srv);
-	GetDevice()->BindShaderResource(eShaderStage::HS, slot, &srv);
-	GetDevice()->BindShaderResource(eShaderStage::CS, slot, &srv);
-	GetDevice()->BindShaderResource(eShaderStage::PS, slot, &srv);
-}
 
