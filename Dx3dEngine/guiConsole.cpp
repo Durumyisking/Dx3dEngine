@@ -30,12 +30,13 @@ namespace gui
 		ImageWidget* image1 = new ImageWidget("Image1");
 		AddWidget(image1);
 		image1->SetTexture(L"default");
+		image1->SetSize(100.f, 100.f);
 
-		GUITexture* image2 = new gui::GUITexture();
-		image2->SetName("Image2");
-		AddWidget(image2);
+		//GUITexture* image2 = new gui::GUITexture();
+		//image2->SetName("Image2");
+		//AddWidget(image2);
 
-		image2->SetTarget(GETSINGLE(ResourceMgr)->Find<Texture>(L"default"));
+		//image2->SetTarget(GETSINGLE(ResourceMgr)->Find<Texture>(L"default"));
 	}
 
 	void Console::FixedUpdate()
@@ -51,6 +52,11 @@ namespace gui
 	void Console::LateUpdate()
 	{
 		Widget::LateUpdate();
+	}
+
+	void Console::Render()
+	{
+		Widget::Render();
 	}
 
 	void Console::SetProject(std::wstring path)

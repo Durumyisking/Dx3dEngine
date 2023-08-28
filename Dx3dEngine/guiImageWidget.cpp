@@ -52,7 +52,7 @@ namespace gui
 	}
 	void ImageWidget::SetTexture(const std::wstring& name)
 	{
-		Texture* mTexture = GETSINGLE(ResourceMgr)->Find<Texture>(name);
+		mTexture = GETSINGLE(ResourceMgr)->Find<Texture>(name);
 
 		if (mTexture == nullptr)
 		{
@@ -61,5 +61,7 @@ namespace gui
 
 		mImageEnd.x = (float)mTexture->GetWidth();
 		mImageEnd.y = (float)mTexture->GetHeight();
+
+		mColor = ImVec4(1.f, 1.f, 1.f, 1.f);
 	}
 }

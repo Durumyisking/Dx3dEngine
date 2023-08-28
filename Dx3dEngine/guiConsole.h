@@ -14,6 +14,7 @@ namespace gui
 		virtual void FixedUpdate() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;
+		virtual void Render() override;
 
 		void SetProject(std::wstring path);
 		void SetProject(std::string path);
