@@ -179,7 +179,6 @@ enum class eCBType
 	ParticleSystem,
 	Noise, 
 	PostProcess,
-	PBR,
 	CubeMapProj,
 	End,
 };

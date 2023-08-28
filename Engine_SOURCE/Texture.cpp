@@ -19,6 +19,13 @@ void Texture::Clear(UINT startSlot)
 {
 	ID3D11ShaderResourceView* srv = nullptr;
 
+	if ((startSlot == static_cast<UINT>(eTextureSlot::BRDF)) ||
+		(startSlot == static_cast<UINT>(eTextureSlot::Skybox)) ||
+		(startSlot == static_cast<UINT>(eTextureSlot::CubeMap)) ||
+		(startSlot == static_cast<UINT>(eTextureSlot::IrradianceMap)) ||
+		(startSlot == static_cast<UINT>(eTextureSlot::PrefilteredMap)))
+		return;
+
 	GetDevice()->BindShaderResource(eShaderStage::VS, startSlot, &srv);
 	GetDevice()->BindShaderResource(eShaderStage::DS, startSlot, &srv);
 	GetDevice()->BindShaderResource(eShaderStage::GS, startSlot, &srv);
@@ -33,7 +40,10 @@ void Texture::Clears()
 	{
 
 		if ((i == static_cast<UINT>(eTextureSlot::BRDF)) || 
-			(i == static_cast<UINT>(eTextureSlot::Skybox)))
+			(i == static_cast<UINT>(eTextureSlot::Skybox)) ||
+			(i == static_cast<UINT>(eTextureSlot::CubeMap))||
+			(i == static_cast<UINT>(eTextureSlot::IrradianceMap)) ||
+			(i == static_cast<UINT>(eTextureSlot::PrefilteredMap)))
 			continue;
 
 

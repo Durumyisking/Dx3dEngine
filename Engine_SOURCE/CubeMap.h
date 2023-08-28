@@ -49,7 +49,6 @@ public:
 
 private:
 	void createEnvMap();
-	void createEnvMapDepthStencilTexture();
 
 	void bindCubeMap();
 	void bindIrradianceMap();
@@ -70,10 +69,6 @@ private:
 	std::vector<ID3D11RenderTargetView*> mRTVs2;
 	std::vector<ID3D11RenderTargetView*> mRTVs3;
 
-	Texture* mEnvMapTex;
-	Texture* mIrradianceTex;
-	Texture* mPreFilterTex;
-
 	ID3D11Texture2D* mEnvMapTex;
 	ID3D11RenderTargetView* mEnvMapRTV;
 	ID3D11ShaderResourceView* mEnvMapSRV;
@@ -86,10 +81,10 @@ private:
 	ID3D11RenderTargetView* mPreFilterRTV;
 	ID3D11ShaderResourceView* mPreFilterSRV;
 
-
-	ID3D11Texture2D* mEnvMapDepth;
-	ID3D11DepthStencilView* mEnvMapDSV;
-
 	ID3D11SamplerState* pSampler;
 
+	XMMATRIX captureProjection;
+	XMMATRIX captureViews[6];
+
+	int asdf = 0;
 };

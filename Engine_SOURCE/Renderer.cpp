@@ -632,7 +632,7 @@ namespace renderer
 			shader->Create(eShaderStage::PS, L"RectToCubemapPS.hlsl", "main");
 			shader->SetRSState(eRasterizerType::SolidFront);
 			shader->SetDSState(eDepthStencilType::Less);
-			shader->SetBSState(eBlendStateType::Default);
+			shader->SetBSState(eBlendStateType::AlphaBlend);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"RectToCubemapShader", shader);
 		}
@@ -643,6 +643,9 @@ namespace renderer
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"IrradianceVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"IrradiancePS.hlsl", "main");
+			shader->SetRSState(eRasterizerType::SolidFront);
+			shader->SetDSState(eDepthStencilType::Less);
+			shader->SetBSState(eBlendStateType::AlphaBlend);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"IrradianceShader", shader);
 		}
@@ -653,6 +656,9 @@ namespace renderer
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"PreFilterVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"PreFilterPS.hlsl", "main");
+			shader->SetRSState(eRasterizerType::SolidFront);
+			shader->SetDSState(eDepthStencilType::Less);
+			shader->SetBSState(eBlendStateType::AlphaBlend);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PreFilterShader", shader);
 		}
