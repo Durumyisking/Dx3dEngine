@@ -23,6 +23,8 @@ VSOut main(VSIn vsIn)
     
     vsOut.WorldPos = vsIn.Position.xyz;
     vsOut.Position = mul(float4(vsIn.Position.xyz, 1.0), mul(v, projection));
+    
+    // 원근 나누기
     vsOut.Position.z = vsOut.Position.w;
     return vsOut;
 

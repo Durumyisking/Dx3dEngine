@@ -102,6 +102,7 @@ CubeMapHDR::~CubeMapHDR()
 void CubeMapHDR::Initialize()
 {
     mhdrTexture.loadFromFile("C:/Users/csh/Desktop/Dx3dEngine-sehyun/Dx3dEngine/Resources/environment.hdr");
+    //    mhdrTexture.loadFromFile("E:/Dev/3d-my/Dx3dEngine/Resources/environment.hdr");
     createEnvMap();
     //createEnvMapDepthStencilTexture();
 

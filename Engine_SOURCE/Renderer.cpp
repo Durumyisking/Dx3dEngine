@@ -618,8 +618,8 @@ namespace renderer
 			shader->Create(eShaderStage::VS, L"SkyBoxVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"SkyBoxPS.hlsl", "main");
 			shader->SetRSState(eRasterizerType::SolidFront);
-			shader->SetDSState(eDepthStencilType::None);
-			shader->SetBSState(eBlendStateType::OneOne);
+			shader->SetDSState(eDepthStencilType::Less);
+			shader->SetBSState(eBlendStateType::Default);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"SkyBoxShader", shader);
 		}

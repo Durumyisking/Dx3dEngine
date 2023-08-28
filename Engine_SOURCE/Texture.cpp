@@ -324,15 +324,15 @@ void Texture::ClearUnorderedAccessview(UINT slot)
 }
 
 
-void Texture::Clear()
+void Texture::Clear(UINT slot)
 {
 	ID3D11ShaderResourceView* srv = nullptr;
 
-	GetDevice()->BindShaderResource(eShaderStage::VS, 0, &srv);
-	GetDevice()->BindShaderResource(eShaderStage::DS, 0, &srv);
-	GetDevice()->BindShaderResource(eShaderStage::GS, 0, &srv);
-	GetDevice()->BindShaderResource(eShaderStage::HS, 0, &srv);
-	GetDevice()->BindShaderResource(eShaderStage::CS, 0, &srv);
-	GetDevice()->BindShaderResource(eShaderStage::PS, 0, &srv);
+	GetDevice()->BindShaderResource(eShaderStage::VS, slot, &srv);
+	GetDevice()->BindShaderResource(eShaderStage::DS, slot, &srv);
+	GetDevice()->BindShaderResource(eShaderStage::GS, slot, &srv);
+	GetDevice()->BindShaderResource(eShaderStage::HS, slot, &srv);
+	GetDevice()->BindShaderResource(eShaderStage::CS, slot, &srv);
+	GetDevice()->BindShaderResource(eShaderStage::PS, slot, &srv);
 }
 

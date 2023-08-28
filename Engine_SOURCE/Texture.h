@@ -37,7 +37,7 @@ public:
 	void BindUnorderedAccessview(UINT slot);
 	void ClearUnorderedAccessview(UINT slot);
 
-	void Clear();
+	void Clear(UINT slot);
 
 	void SetTexture(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture) { mTexture = texture; }
 	void MakeCropTexture(UINT DstSubresource, UINT DstX, UINT DstY, UINT DstZ, ID3D11Resource* pSrcResource, UINT SrcSubresource, const D3D11_BOX* pSrcBox);
