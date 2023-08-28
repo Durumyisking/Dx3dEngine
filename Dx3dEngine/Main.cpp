@@ -104,11 +104,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
     
     application.Release();
-    editor.Release();
-
-
     application.DestroySingle();
+
+    editor.Release();
     editor.DestroySingle();
+
 
     return (int)msg.wParam;
 }

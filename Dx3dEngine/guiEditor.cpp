@@ -80,15 +80,15 @@ namespace gui
 
 	void Editor::Release()
 	{
+		if (mImguiEnable == false)
+			return;
+
+		GETSINGLE(WidgetMgr)->Release();
+
 		if (mEnable == false)
 			return;
 
 		GETSINGLE(EditorObjMgr)->Release();
-
-		if (mImguiEnable == false)
-			return;
-		
-		GETSINGLE(WidgetMgr)->Release();
 	}
 
 	void Editor::DestroySingle()

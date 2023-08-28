@@ -44,6 +44,9 @@
     <Filter Include="Widget\Group">
       <UniqueIdentifier>{1dbec8ca-ea62-41de-8c71-c38cc0268470}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Widget\Image">
+      <UniqueIdentifier>{26ab6d6d-2dc2-4323-889c-70c8dd49955a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dx3dEngine.h" />
@@ -138,11 +141,14 @@
     <ClInclude Include="guiContentsBrowser.h">
       <Filter>View</Filter>
     </ClInclude>
-    <ClInclude Include="guiWidgetGroup.h">
+    <ClInclude Include="guiGroupWidget.h">
       <Filter>Widget\Group</Filter>
     </ClInclude>
     <ClInclude Include="guiOutLine.h">
       <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="guiImageWidget.h">
+      <Filter>Widget\Image</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -247,11 +253,14 @@
     <ClCompile Include="guiContentsBrowser.cpp">
       <Filter>View</Filter>
     </ClCompile>
-    <ClCompile Include="guiWidgetGroup.cpp">
+    <ClCompile Include="guiGroupWidget.cpp">
       <Filter>Widget\Group</Filter>
     </ClCompile>
     <ClCompile Include="guiOutLine.cpp">
       <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="guiImageWidget.cpp">
+      <Filter>Widget\Image</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

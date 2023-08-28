@@ -63,6 +63,7 @@ namespace gui
 		
 		Console* console = new Console();
 		mWidgets.insert(std::make_pair("Console", console));
+		console->Initialize();
 
 		ListWidget* listWidget = new ListWidget();
 		mWidgets.insert(std::make_pair("ListWidget", listWidget));
@@ -146,6 +147,7 @@ namespace gui
 
 	void WidgetMgr::ImGui_Run()
 	{
+
 		bool show_demo_window = false;
 		bool show_another_window = false;
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -160,6 +162,11 @@ namespace gui
 		//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 		if (show_demo_window)
 			ImGui::ShowDemoWindow(&show_demo_window);
+
+		//for (Widget* widget : mWidgets) 
+		//{
+		//	widget->Update();
+		//}
 
 		mVisualEditor->Render();
 		for (auto iter : mWidgets)

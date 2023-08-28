@@ -16,9 +16,6 @@ namespace gui
 		void Initialize();
 		void Run();
 
-		void Update();
-		void FixedUpdate();
-		void Render();
 		void Release();
 		void DestroySingle();
 

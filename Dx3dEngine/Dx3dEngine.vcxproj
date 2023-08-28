@@ -172,6 +172,7 @@
     <ClInclude Include="guiEditorObjMgr.h" />
     <ClInclude Include="guiGame.h" />
     <ClInclude Include="guiHierarchy.h" />
+    <ClInclude Include="guiImageWidget.h" />
     <ClInclude Include="guiInspector.h" />
     <ClInclude Include="guiListWidget.h" />
     <ClInclude Include="guiMaterial.h" />
@@ -184,7 +185,7 @@
     <ClInclude Include="guiTransform.h" />
     <ClInclude Include="guiTreeWidget.h" />
     <ClInclude Include="guiVisualEditor.h" />
-    <ClInclude Include="guiWidgetGroup.h" />
+    <ClInclude Include="guiGroupWidget.h" />
     <ClInclude Include="guiWidgetMgr.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="guiEditorObjMgr.cpp" />
     <ClCompile Include="guiGame.cpp" />
     <ClCompile Include="guiHierarchy.cpp" />
+    <ClCompile Include="guiImageWidget.cpp" />
     <ClCompile Include="guiInspector.cpp" />
     <ClCompile Include="guiListWidget.cpp" />
     <ClCompile Include="guiMaterial.cpp" />
@@ -220,7 +222,7 @@
     <ClCompile Include="guiTransform.cpp" />
     <ClCompile Include="guiTreeWidget.cpp" />
     <ClCompile Include="guiVisualEditor.cpp" />
-    <ClCompile Include="guiWidgetGroup.cpp" />
+    <ClCompile Include="guiGroupWidget.cpp" />
     <ClCompile Include="guiWidgetMgr.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />

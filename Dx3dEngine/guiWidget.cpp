@@ -5,6 +5,8 @@ namespace gui
 	Widget::Widget()
 		: GuiEntity()
 		, mState(eState::Active)
+		, mSize{}
+		, mColor{}
 		, mParent(nullptr)
 		, mChilds{}
 		, mWindow_flags(ImGuiWindowFlags_None)
@@ -18,35 +20,20 @@ namespace gui
 
 	void Widget::FixedUpdate()
 	{
-		if (mState != eState::Active)
-			return;
-
-		//for (Widget* child : mChilds)
-		//{
-		//	child->FixedUpdate();
-		//}
+		//if (mState != eState::Active)
+		//	return;
 	}
 
 	void Widget::Update()
 	{
-		if (mState != eState::Active)
-			return;
-
-		//for ( Widget* child : mChilds )
-		//{
-		//	child->Update();
-		//}
+		//if (mState != eState::Active)
+		//	return;
 	}
 
 	void Widget::LateUpdate()
 	{
-		if (mState != eState::Active)
-			return;
-
-		//for (Widget* child : mChilds)
-		//{
-		//	child->LateUpdate();
-		//}
+		//if (mState != eState::Active)
+		//	return;
 	}
 
 	void Widget::Render()
@@ -59,7 +46,8 @@ namespace gui
 		{
 			bool open = (bool)GetState();
 			FixedUpdate();
-			ImGui::Begin(GetName().c_str(), &open, mWindow_flags);
+			if (!ImGui::Begin(GetName().c_str(), &open, mWindow_flags))
+				mState = eState::Paused;
 			Update();
 			for (Widget* child : mChilds)
 			{
