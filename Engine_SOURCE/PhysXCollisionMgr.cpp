@@ -30,6 +30,7 @@ void PhysXCollisionMgr::Update()
 		{
 			if (mLayerCollisionMatrix[i][j])
 			{
+				setCollisionFlag(i, j);
 			}
 		}
 	}

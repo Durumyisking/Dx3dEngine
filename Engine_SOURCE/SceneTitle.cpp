@@ -99,29 +99,29 @@ void SceneTitle::Enter()
 	}
 	
 	{
-		SkyBox* box = object::Instantiate<SkyBox>(eLayerType::BackGround, L"TitleSkyBox");
-		box->TextureLoad(L"TitleSky", L"..//Resources//SkyCityNightStar_color.png");
+		//SkyBox* box = object::Instantiate<SkyBox>(eLayerType::BackGround, L"TitleSkyBox");
+		//box->TextureLoad(L"TitleSky", L"..//Resources//SkyCityNightStar_color.png");
 
 	}
 
 
-	//{
-	//	GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
+	{
+		GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
 
-	//	MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
-	//	gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
-	//	gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
-	//	gridMr->LODOff();
+		gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
+		gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
+		gridMr->LODOff();
 
-	//	GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
-	//	gridScript->SetCamera(mainCamera);
+		GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
+		gridScript->SetCamera(mainCamera);
 
-	//	float w = static_cast<float>(application.GetWidth());
-	//	float h = static_cast<float>(application.GetHeight());
-	//	gridObject->SetPos({ 0.f, 0.f, 0.f });
-	//	gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
-	//}
+		float w = static_cast<float>(application.GetWidth());
+		float h = static_cast<float>(application.GetHeight());
+		gridObject->SetPos({ 0.f, 0.f, 0.f });
+		gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
+	}
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
@@ -169,27 +169,26 @@ void SceneTitle::Enter()
 	}
 
 	
-	{
+	//{
+	//	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
+	//	player->SetPos(Vector3(10.f, 0.f, 0.f));
+	//	player->SetScale({ 0.01f, 0.01f, 0.01f });
+	//	player->SetName(L"Object");
 
-	/*	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
-		player->SetPos(Vector3(10.f, 0.f, 0.f));
-		player->SetScale({ 0.01f, 0.01f, 0.01f });
-		player->SetName(L"Object");
+	//	MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
 
-		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
+	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
+	//	meshRenderer->SetModel(model);
+	//	meshRenderer->SetMaterialByKey(L"BlockBrickBody");
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
-		meshRenderer->SetModel(model);
-		meshRenderer->SetMaterialByKey(L"BlockBrickBody");
+	//	player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
+	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);*/
-	}
+	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//}
 	
 	{
-		/*GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
+		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
@@ -198,44 +197,25 @@ void SceneTitle::Enter()
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);*/
+		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
-
-
-	//{
-		//GameObj* skyBox = object::Instantiate<GameObj>(eLayerType::Objects);
-		//skyBox->SetPos(Vector3(0.f, 5.f, 0.f));
-		//skyBox->SetScale({ 5.f, 5.f, 5.f });
-		//skyBox->SetName(L"Skybox");
-		//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		//(
-		//	L"Skybox",
-		//	eTextureSlot::Skybox,
-		//	L"SkyboxShader",
-		//	L"SkyboxMat"
-		//);
-		//MeshRenderer* mr = skyBox->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//mr->SetMaterial(mat);
-		//mr->SetMeshByKey(L"Spheremesh");
-	//}
-
 
 	// DebugTest
 	{ 
 		//Deferred
-		{
-			GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);
-			test2->SetPos(Vector3(-10.f, 5.f, 0.f));
-			test2->SetScale({ 5.f, 5.f, 5.f });
-			test2->SetName(L"Test2");
+		//{
+		//	GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);
+		//	test2->SetPos(Vector3(-10.f, 5.f, 0.f));
+		//	test2->SetScale({ 5.f, 5.f, 5.f });
+		//	test2->SetName(L"Test2");
 
-			test2->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-			MeshRenderer* testRender = test2->GetComponent<MeshRenderer>();
-			Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"DeferredMaterial");
+		//	test2->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		//	MeshRenderer* testRender = test2->GetComponent<MeshRenderer>();
+		//	Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"DeferredMaterial");
 
-			testRender->SetMaterial(testMaterial);
-			testRender->SetMeshByKey(L"Cubemesh");
-		}		
+		//	testRender->SetMaterial(testMaterial);
+		//	testRender->SetMeshByKey(L"Cubemesh");
+		//}		
 	}
 
 	Scene::Enter();

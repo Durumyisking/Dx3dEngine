@@ -14,15 +14,20 @@ public:
 
 	void	CreateFoundation();
 	void	CreatePhysics();
+	void	CreateVisualDebugger();
+	void	ConntectVisualDebugger();
 
 	PxDefaultAllocator& GetAllocator() { return mAllocCallback; }
 	PxDefaultErrorCallback& GetErrorCallback() { return mErrorCallback; }
 
 private:
-	PxDefaultAllocator		mAllocCallback; // ÇÇÁ÷½º ¸Ş¸ğ¸® ÇÒ´ç ¹× ÇØÁ¦ °ü¸® (±»ÀÌ °ÇµéÇÊ¿ä¾øÀ½)
-	PxDefaultErrorCallback  mErrorCallback; // ¿¡·¯ ¹× °æ°í ¸Ş½ÃÁö Ã³¸®
-	PxFoundation* mFoundation; // ÇÇÁ÷½º ½Ã½ºÅÛ ±âº»ÀûÀÎ ÃÊ±âÈ­ ¹× Á¾·á °ü¸®
-	PxPhysics* mPhysics; // ÇÇÁ÷½ºÀÇ ÀüÃ¼ÀûÀÎ ±â´ÉÀ» °¡Áö°í ÀÖ´Â Å¬·¡½º
+	PxDefaultAllocator		mAllocCallback; // í”¼ì§ìŠ¤ ë©”ëª¨ë¦¬ í• ë‹¹ ë° í•´ì œ ê´€ë¦¬ (êµ³ì´ ê±´ë“¤í•„ìš”ì—†ìŒ)
+	PxDefaultErrorCallback  mErrorCallback; // ì—ëŸ¬ ë° ê²½ê³  ë©”ì‹œì§€ ì²˜ë¦¬
+	PxFoundation* mFoundation; // í”¼ì§ìŠ¤ ì‹œìŠ¤í…œ ê¸°ë³¸ì ì¸ ì´ˆê¸°í™” ë° ì¢…ë£Œ ê´€ë¦¬
+	PxPhysics* mPhysics; // í”¼ì§ìŠ¤ì˜ ì „ì²´ì ì¸ ê¸°ëŠ¥ì„ ê°€ì§€ê³  ìˆëŠ” í´ë˜ìŠ¤
+	PxPvd* mPvd;
+	PxPvdTransport* mTransport;
+
 };
 
 
