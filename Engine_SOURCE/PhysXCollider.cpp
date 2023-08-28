@@ -9,12 +9,13 @@ PhysXCollider::PhysXCollider()
 	: Component(eComponentType::Collider)
 	, mCallback(nullptr)
 	, mPhysical(nullptr)
-	, mTransform{}
+	, mPxTransform{}
 	, mRaycastHit{}
 	, mSweepHit	 {}
 	, mOverlapHit{}
 	, mFilterData{}
-
+	, mRayMaxDist(5.f)
+	, mRayMaxHit (1)
 {
 }
 PhysXCollider::~PhysXCollider()
@@ -22,7 +23,7 @@ PhysXCollider::~PhysXCollider()
 }
 void PhysXCollider::Initialize()
 {
-	mTransform = GetOwner()->GetComponent<Transform>()->GetPxTransform();
+	mPxTransform = GetOwner()->GetComponent<Transform>()->GetPxTransform();
 	mFilterData.word0 = 1 << static_cast<unsigned __int32>(GetOwner()->GetLayerType()); // 충돌 레이어 정해주는듯
 
 	// 렌더링할 물체의 모양을 가진 콜라이더
@@ -111,6 +112,71 @@ void PhysXCollider::OnTriggerStay(PhysXCollider* otherCollider)
 void PhysXCollider::OnTriggerExit(PhysXCollider* otherCollider)
 {
 	GetOwner()->OnTriggerExit(otherCollider->GetOwner());
+}
+
+bool PhysXCollider::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance)
+{
+	Physical* physical = gameObject->GetComponent<Physical>();
+	if (!physical)
+	{
+		return false;
+	}
+	eGeometryType geometryType = physical->GetGeometryType();
+	PxTransform pxTransform = gameObject->GetComponent<Transform>()->GetPxTransform();
+
+	switch (geometryType)
+	{
+	case eGeometryType::Box:
+	{
+		PxBoxGeometry boxGeom = physical->GetGeometries()->boxGeom;
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			boxGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		return bResult;
+	}
+	break;
+
+	case eGeometryType::Capsule:
+	{
+		PxCapsuleGeometry capsuleGeom = physical->GetGeometries()->capsuleGeom;
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			capsuleGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		return bResult;
+	}
+	break;
+
+	case eGeometryType::Sphere:
+	{
+		PxSphereGeometry sphereGeom = physical->GetGeometries()->sphereGeom;
+
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			sphereGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		return bResult;
+	}
+	break;
+	}
+
+	return false;
 }
 
 void PhysXCollider::createDebugGeometry(std::shared_ptr<Geometry> geometries)

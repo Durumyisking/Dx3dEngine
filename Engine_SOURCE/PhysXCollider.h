@@ -27,6 +27,9 @@ public:
     void OnTriggerStay(PhysXCollider* otherCollider);
     void OnTriggerExit(PhysXCollider* otherCollider);
 
+    bool Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance);
+
+
     PxFilterData& GetFilterData()  { return mFilterData; }
 
 private:
@@ -39,12 +42,16 @@ public:
     PxEventCallback* mCallback;
     Physical* mPhysical;
 
-    PxTransform mTransform;
+    PxTransform mPxTransform;
 
     PxRaycastHit     mRaycastHit;
     PxSweepHit       mSweepHit;
     PxOverlapHit     mOverlapHit;
     PxFilterData     mFilterData;
+
+    float  mRayMaxDist;
+    UINT   mRayMaxHit;
+
 
 };
 

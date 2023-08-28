@@ -40,7 +40,6 @@ VSOut main(VSIn vsIn)
     //pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.z].bMatrix) * vsIn.BlendWeight.z;
     //pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.w].bMatrix) * weights.w;
 
-
     //vsIn.Position = pos;
     
     float4 worldPosition = mul(vsIn.Position, world);
