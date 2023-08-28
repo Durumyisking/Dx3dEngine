@@ -19,6 +19,8 @@ public:
 
 private:
 	GameObj*	mCamera;
+	GameObj*	mRootGameobj;
+	std::vector<GameObj*>	mRoot;
 
 };
 

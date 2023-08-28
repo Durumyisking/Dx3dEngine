@@ -3,6 +3,7 @@
 
 #include "Object.h"
 #include "Camera.h"
+
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "SpriteRenderer.h"
@@ -69,6 +70,12 @@ void SceneTitle::update()
 		GETSINGLE(server::ServerMgr)->ConnectAsClient();
 	}
 
+
+	for (auto& i : mRoot)
+	{
+		i->GetComponent<Transform>()->SetPosition(mRootGameobj->GetComponent<Transform>()->GetPosition());
+		i->GetComponent<Transform>()->SetRotation(mRootGameobj->GetComponent<Transform>()->GetRotation());
+	}
 
 	Scene::update();
 }
@@ -168,6 +175,19 @@ void SceneTitle::Enter()
 		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
 		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
 		animator->Play(L"test");
+
+		player->AddComponent<PlayerScript>(eComponentType::Script);
+
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+		mRootGameobj = player;
+	
+
 	}
 
 	{
@@ -187,9 +207,10 @@ void SceneTitle::Enter()
 		animator->Play(L"test");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_HandL");
+		model->SetParentTargetBone(L"Armature_HandL");
 		model->SetTargetBone(L"Armature_HandL");
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
+		mRoot.push_back(player);
 	}
 
 	{
@@ -209,9 +230,10 @@ void SceneTitle::Enter()
 		animator->Play(L"test");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_HandR");
+		model->SetParentTargetBone(L"Armature_HandR");
 		model->SetTargetBone(L"Armature_HandR");
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
+		mRoot.push_back(player);
 	}
 
 	{
@@ -228,10 +250,11 @@ void SceneTitle::Enter()
 		animator->Play(L"test");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_Head");
+		model->SetParentTargetBone(L"Armature_Head");
 		model->SetTargetBone(L"Armature_MarioHead");
 
 		model->SetOffsetRotation(Vector3(0.0f, 1.570796f , -1.570796f * 2));
+		mRoot.push_back(player);
 	}
 
 	{
@@ -249,10 +272,11 @@ void SceneTitle::Enter()
 		animator->Play(L"test2");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_Head");
+		model->SetParentTargetBone(L"Armature_Head");
 		model->SetTargetBone(L"Armature_Face");
 
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
+		mRoot.push_back(player);
 	}
 
 	{
