@@ -99,11 +99,11 @@ void CameraScript::KeyBoardMove()
 	}
 	//if (KEY_DOWN(Q))
 	//{
-	//	mLookAt -= 20.f * mTransform->Forward() * DT;
+	//	mLookAt -= 20.f * mPxTransform->Forward() * DT;
 	//}
 	//if (KEY_DOWN(E))
 	//{
-	//	mLookAt += 20.f * mTransform->Forward() * DT;
+	//	mLookAt += 20.f * mPxTransform->Forward() * DT;
 	//}
 
 	if (KEY_DOWN(RBTN))

@@ -6,6 +6,8 @@ PxInitialization::PxInitialization()
 	, mErrorCallback{}
 	, mFoundation{}
 	, mPhysics{}
+	, mPvd{}
+	, mTransport{}
 {
 }
 
@@ -13,6 +15,12 @@ PxInitialization::~PxInitialization()
 {
 	if (mPhysics)
 		mPhysics->release();
+
+	if (mPvd)
+		mPvd->release();
+
+	if (mTransport)
+		mTransport->release();
 
 	if (mFoundation)
 		mFoundation->release();
@@ -26,14 +34,34 @@ void PxInitialization::CreateFoundation()
 
 void PxInitialization::CreatePhysics()
 {
-	//bool recordMemoryAllocations = true;
+	bool recordMemoryAllocations = true;
 
-	//mPvd = PxCreatePvd(*gFoundation);
-	//PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
-	//mPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
+	mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, PxTolerancesScale(), recordMemoryAllocations, mPvd);
 
-	mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, PxTolerancesScale());
+//#ifdef _DEBUG
+//	mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, PxTolerancesScale(), recordMemoryAllocations, mPvd);
+//
+//#endif
+//	mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, PxTolerancesScale());
+
 	assert(mPhysics);
+}
+
+void PxInitialization::CreateVisualDebugger()
+{
+	mPvd = PxCreatePvd(*mFoundation);
+	assert(mPvd);
+}
+
+void PxInitialization::ConntectVisualDebugger()
+{
+	mTransport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
+	assert(mTransport);
+
+	if (mPvd)
+	{
+		mPvd->connect(*mTransport, PxPvdInstrumentationFlag::eALL);
+	}
 }
 
 

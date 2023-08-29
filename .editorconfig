@@ -1,4 +1,4 @@
 root = true
  
 [*.cpp;*.h]
-charset = utf-8-bom
+charset = ANSI

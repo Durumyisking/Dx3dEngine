@@ -38,6 +38,7 @@ void Application::Initialize()
 	// GETSINGLE(CollisionMgr)->Initialize();
 	renderer::Initialize();
 	GETSINGLE(ResourceMgr)->Initalize();
+
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();
 	GETSINGLE(SceneMgr)->Initialize();

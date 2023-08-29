@@ -6,7 +6,6 @@ PhysX::PhysX()
 	:mPhysicsScene(nullptr)
 	, mInitialization(nullptr)
 	, mTransport (nullptr)
-	, mPvd (nullptr)
 	, mSceneClient (nullptr)
 	, mScene(nullptr)
 	, mControllerMgr(nullptr)
@@ -21,17 +20,13 @@ PhysX::~PhysX()
 
 	if (mScene)
 		mScene->release();
-
-	if (mPvd)
-		mPvd->release();
-
-	if (mTransport)
-		mTransport->release();
 }
 
 void PhysX::Init()
 {
 	mInitialization->CreateFoundation();
+	mInitialization->CreateVisualDebugger();
+	mInitialization->ConntectVisualDebugger();
 	mInitialization->CreatePhysics();
 
 //	CreateSceneQuery();
@@ -58,11 +53,14 @@ void PhysX::CreateControllerManager()
 	assert(mControllerMgr);
 }
 
-void PhysX::CreateDebugger(const char* szHost, __int32 iPort)
+void PhysX::ConnectDebuggerToScene()
 {
-}
+	mSceneClient = mScene->getScenePvdClient();
+	assert(mSceneClient);
 
-void PhysX::ConnectDebugger()
-{
+	mSceneClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
+	mSceneClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
+	mSceneClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
+
 }
 
