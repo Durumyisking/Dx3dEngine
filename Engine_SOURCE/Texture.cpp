@@ -230,7 +230,7 @@ Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 	);
 
 	//TEST
-	{
+	/*{
 		std::vector<std::uint8_t> pixels{};
 		pixels.resize(mImage.GetPixelsSize());
 		std::memcpy(pixels.data(), mImage.GetPixels(), pixels.size());
@@ -253,7 +253,7 @@ Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 			assert(result == S_OK);
 		}
 
-	}
+	}*/
 
 	mSRV->GetResource((ID3D11Resource**)mTexture.GetAddressOf());
 
