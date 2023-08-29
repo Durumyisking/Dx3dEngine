@@ -36,6 +36,8 @@
 
 #include "SkyBox.h"
 
+#include "Panal.h"
+
 extern Application application;
 
 
@@ -97,6 +99,20 @@ void SceneTitle::Enter()
 		mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
 
 	}
+
+	//{
+	//	// UI Camera
+	//	mUICamera = object::Instantiate<GameObj>(eLayerType::Camera);
+	//	Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
+	//	mUICamera->AddComponent<CameraScript>(eComponentType::Script);
+
+	//	cameraUIComp->SetProjectionType(eProjectionType::Perspective);
+	//	cameraUIComp->SmoothOn();
+	//	cameraUIComp->DisableLayerMasks();
+	//	cameraUIComp->TurnLayerMask(eLayerType::UI, true);
+	//	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
+	//}
+
 	
 	{
 		//SkyBox* box = object::Instantiate<SkyBox>(eLayerType::BackGround, L"TitleSkyBox");
@@ -213,6 +229,35 @@ void SceneTitle::Enter()
 		//	testRender->SetMeshByKey(L"Cubemesh");
 		//}		
 	}
+	
+ //   GameObj* test1 = object::Instantiate<GameObj>(eLayerType::Objects);
+	//test1->SetPos(Vector3(-5.f, 5.f, 0.f));
+	//test1->SetScale({ 5.f, 5.f, 5.f });
+
+	//test1->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	//MeshRenderer* testRender = test1->GetComponent<MeshRenderer>();
+
+	////SpriteRenderer* spriteRender = test1->AddComponent<SpriteRenderer>(eComponentType::UI);
+	////Texture* titleTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle"));
+
+	//Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"RectMesh");
+	//testRender->SetMesh(mesh);
+	//Material* mat = GETSINGLE(ResourceMgr)->Find<Material>(L"UIMaterial");
+	////mat->SetTexture(titleTexture);
+	//testRender->SetMaterial(mat);
+	//testRender->SetMeshByKey(L"Cubemesh");
+
+	Panal* testObj = object::Instantiate<Panal>(eLayerType::Objects);
+	testObj->SetPos(Vector3(0.f, 5.f, 0.f));
+	testObj->SetScale({ 5.f, 5.f, 5.f });
+	Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"SpriteMaterial");
+	Texture* titleTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle"));
+	testMaterial->SetTexture(titleTexture);
+	testObj->GetComponent <SpriteRenderer>()->SetMaterial(testMaterial);
+	testObj->GetComponent<SpriteRenderer>()->SetMaterialByKey(L"SpriteMaterial");
+	testObj->GetComponent<SpriteRenderer>()->SetMeshByKey(L"Rectmesh");
+
+
 
 	Scene::Enter();
 }

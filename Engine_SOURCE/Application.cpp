@@ -12,7 +12,7 @@
 #include "PhysicsMgr.h"
 #include "TimerMgr.h"
 #include "ServerMgr.h"
-
+#include "UIManager.h"
 
 Application::Application()
 	: mbInitalized(false)
@@ -36,6 +36,7 @@ void Application::Initialize()
 	GETSINGLE(InputMgr)->Initialize();
 	GETSINGLE(Fmod)->Initialize();
 	// GETSINGLE(CollisionMgr)->Initialize();
+	//UIManager::Initialize();
 	renderer::Initialize();
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
 
@@ -53,6 +54,7 @@ void Application::Update()
 		GETSINGLE(TimerMgr)->Update();
 		GETSINGLE(InputMgr)->Update();
 		//		GETSINGLE(CollisionMgr)->Update();
+		//UIManager::Tick();
 		GETSINGLE(SceneMgr)->Update();
 		GETSINGLE(PhysXCollisionMgr)->Update();
 		GETSINGLE(PhysicsMgr)->Update();
@@ -77,8 +79,8 @@ void Application::Render()
 
 		mGraphicDevice->AdjustViewPorts();
 		renderer::ClearRenderTargets(); // mGraphicDevice::Clear 대신 렌더타겟 클리어
-
 		renderer::Render();
+		//UIManager::Render();
 		GETSINGLE(SceneMgr)->Render();
 		GETSINGLE(SceneMgr)->FontRender();
 	}

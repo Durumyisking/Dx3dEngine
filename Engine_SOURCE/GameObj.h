@@ -123,7 +123,6 @@ private:
 	eState mState;
 	std::vector<Script*> mScripts;
 	bool mbDestroy;
-
 	bool mbIsLeft;
 	bool mbOnFloor;
 	bool mbBlockRendering;

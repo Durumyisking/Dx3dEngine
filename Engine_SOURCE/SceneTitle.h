@@ -19,6 +19,7 @@ public:
 
 private:
 	GameObj*	mCamera;
+	GameObj*    mUICamera;
 
 };
 

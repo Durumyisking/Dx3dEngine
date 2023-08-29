@@ -504,7 +504,6 @@
       <Filter>Resource\Model\ModelNode</Filter>
     </ClInclude>
     <ClInclude Include="SkyBox.h" />
-
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -772,7 +771,6 @@
       <Filter>Resource\Model\ModelNode</Filter>
     </ClCompile>
     <ClCompile Include="SkyBox.cpp" />
-
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">
