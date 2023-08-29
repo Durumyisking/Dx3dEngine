@@ -142,6 +142,17 @@ namespace enums
 		End,
 	};
 
+	enum class eUIType
+	{
+		HP,
+		Coin,
+		Option,
+		Crosshair,
+		Button,
+
+		End,
+	};
+
 	enum class AXIS
 	{
 		X,
