@@ -121,4 +121,6 @@ cbuffer ParticleSystem : register(b6)
 
 cbuffer vvvconstant : register(b9) // 쓸사람 쓰세요
 {
+    
+    
 }

@@ -30,3 +30,6 @@ std::string UTF8ToAnsiReturn(const std::string& UTF8);
 
 std::string Replace(const std::string& text, const std::string_view& oldText, const std::string_view& changeText);
 
+std::wstring ConvertToW_String(const char* str);
+std::string ConvertToString(const wchar_t* str);
+

@@ -35,9 +35,10 @@ namespace enums
 		Movement, 
 		Physical,
 		Collider,
+		Animator,
+		BoneAnimator,
 		MeshRenderer,
 		Renderer,
-		Animator,
 		Particle,
 		Light, 
 		UI,
@@ -138,6 +139,17 @@ namespace enums
 		Static,
 		Articulation,
 		ParticleFluid,
+		End,
+	};
+
+	enum class eUIType
+	{
+		HP,
+		Coin,
+		Option,
+		Crosshair,
+		Button,
+
 		End,
 	};
 

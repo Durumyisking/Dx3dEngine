@@ -71,31 +71,31 @@ void FileMgr::FileLoad(const std::wstring& path)
 		mSkeletonData.emplace_back(data);
 	}
 
-	// Triangles
-	std::string texName = "";
-	while (1)
-	{
-		getline(file, buf);
-		if (buf.find("triangles") != std::string::npos)
-		{
-			continue;
-		}
-		else if (buf.find("end") != std::string::npos)
-		{
-			break;
-		}
-		else if (buf.find("png") != std::string::npos)
-		{
-			texName = buf;
-			continue;
-		}
+	//// Triangles
+	//std::string texName = "";
+	//while (1)
+	//{
+	//	getline(file, buf);
+	//	if (buf.find("triangles") != std::string::npos)
+	//	{
+	//		continue;
+	//	}
+	//	else if (buf.find("end") != std::string::npos)
+	//	{
+	//		break;
+	//	}
+	//	else if (buf.find("png") != std::string::npos)
+	//	{
+	//		texName = buf;
+	//		continue;
+	//	}
 
-		ParsingTriangleData data = {};
-		data = readTriangles(buf);
-		data.TexName = texName;
+	//	ParsingTriangleData data = {};
+	//	data = readTriangles(buf);
+	//	data.TexName = texName;
 
-		mTriangleData.emplace_back(data);
-	}
+	//	mTriangleData.emplace_back(data);
+	//}
 
 	file.close();
 }
@@ -123,16 +123,10 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 				GETSINGLE(ResourceMgr)->Insert<Model>(modelName, model);
 			}
 
-			model->SetCurDirectoryPath(fullPath);
 			if (L".DAE" == extension || L".Dae" == extension || L".dae" == extension)
 			{
+				model->SetCurDirectoryPath(fullPath);
 				model->Load(entry.path());
-			}
-
-			if (L".FBX" == extension || L".Fbx" == extension || L"fbx" == extension)
-			{
-				// FBX 파일 로드 테스트
-				//model->Load(entry.path());
 			}
 		}
 	}

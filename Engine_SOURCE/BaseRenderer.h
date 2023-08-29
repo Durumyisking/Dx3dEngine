@@ -26,6 +26,7 @@ public:
 	void SetAnimMaterial(Material* material, Vector2 spriteSize);
 
 	
+	void SetModel(Model* model, Material* mater) { mModel = model, mMaterial = mater; }
 	GETSET(Model*, mModel, Model)
 
 
