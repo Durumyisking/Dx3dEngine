@@ -3,10 +3,10 @@
 
 struct VSOut
 {
-    float4 ProjPosition : SV_Position;
-    float4 WorldPosition : Position;
+    float4 Position : SV_Position;
+    float3 WorldPos : Position;
+    float3 ViewPos : Position;
 };
-
 
 float RadicalInverse_VdC(uint bits)
 {
@@ -48,8 +48,12 @@ float3 ImportanceSampleGGX(float2 Xi, float3 N, float roughness)
 float4 main(VSOut psIn) : SV_TARGET
 {
     float roughness = 0.1f;
-    float3 N = normalize(psIn.WorldPosition).xyz;
+    
+    // input으로 부터 현재 픽셀의 표면 법선을 계산
+    float3 N = normalize(psIn.WorldPos);
+    // 반사 방향을 현재 픽셀의 법선과 같게 초기화
     float3 R = N;
+    //뷰 방향을 반사 방향으로 초기화한다.
     float3 V = R;
 
     const uint SAMPLE_COUNT = 1024u;
@@ -57,14 +61,16 @@ float4 main(VSOut psIn) : SV_TARGET
     float3 prefilteredColor = float3(0.0, 0.0, 0.0);
     for (uint i = 0u; i < SAMPLE_COUNT; ++i)
     {
+        // half verter 계산
         float2 Xi = Hammersley(i, SAMPLE_COUNT);
         float3 H = ImportanceSampleGGX(Xi, N, roughness);
+
         float3 L = normalize(2.0 * dot(V, H) * H - V);
 
         float NdotL = max(dot(N, L), 0.0);
         if (NdotL > 0.0)
         {
-            prefilteredColor += Skybox.Sample(skyBoxSampler, SampleSphericalMap(L)).rgb * NdotL;
+            prefilteredColor += Skybox.Sample(linearSampler, SampleSphericalMap(L)).rgb * NdotL;
             totalWeight += NdotL;
         }
     }

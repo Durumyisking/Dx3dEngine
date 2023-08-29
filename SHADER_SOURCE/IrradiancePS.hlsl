@@ -3,14 +3,13 @@
 
 struct VSOut
 {
-    float4 ProjPosition : SV_Position;
-    float4 WorldPosition : Position;
+    float4 Position : SV_Position;
+    float3 WorldPos : Position;
 };
-
 
 float4 main(VSOut psIn) : SV_TARGET
 {
-    float3 normal = normalize(psIn.WorldPosition);
+    float3 normal = normalize(psIn.WorldPos);
     float3 irradiance = float3(0.0, 0.0, 0.0);
 
     float3 up = float3(0.0, 1.0, 0.0);
@@ -28,7 +27,7 @@ float4 main(VSOut psIn) : SV_TARGET
 			// tangent space to world
             float3 sampleVec = tangentSample.x * right + tangentSample.y * up + tangentSample.z * normal;
 
-            irradiance += Skybox.Sample(skyBoxSampler, SampleSphericalMap(sampleVec)).rgb * cos(theta) * sin(theta);
+            irradiance += Skybox.Sample(linearSampler, SampleSphericalMap(sampleVec)).rgb * cos(theta) * sin(theta);
             nrSamples++;
         }
     }

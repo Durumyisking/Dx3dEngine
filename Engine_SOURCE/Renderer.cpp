@@ -154,7 +154,7 @@ namespace renderer
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
-		} 
+		}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"GridShader");
 			GetDevice()->CreateInputLayout(arrLayout, 3
@@ -168,14 +168,14 @@ namespace renderer
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
-		} 
+		}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ParticleShader");
 			GetDevice()->CreateInputLayout(arrLayout, 3
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
-		} 
+		}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PostProcessShader");
 			GetDevice()->CreateInputLayout(arrLayout, 3
@@ -231,7 +231,7 @@ namespace renderer
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
-		} 
+		}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
 			GetDevice()->CreateInputLayout(arrLayout, 6
@@ -632,7 +632,7 @@ namespace renderer
 			shader->Create(eShaderStage::PS, L"RectToCubemapPS.hlsl", "main");
 			shader->SetRSState(eRasterizerType::SolidFront);
 			shader->SetDSState(eDepthStencilType::Less);
-			shader->SetBSState(eBlendStateType::AlphaBlend);
+			shader->SetBSState(eBlendStateType::Default);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"RectToCubemapShader", shader);
 		}
@@ -645,7 +645,7 @@ namespace renderer
 			shader->Create(eShaderStage::PS, L"IrradiancePS.hlsl", "main");
 			shader->SetRSState(eRasterizerType::SolidFront);
 			shader->SetDSState(eDepthStencilType::Less);
-			shader->SetBSState(eBlendStateType::AlphaBlend);
+			shader->SetBSState(eBlendStateType::Default);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"IrradianceShader", shader);
 		}
@@ -658,7 +658,7 @@ namespace renderer
 			shader->Create(eShaderStage::PS, L"PreFilterPS.hlsl", "main");
 			shader->SetRSState(eRasterizerType::SolidFront);
 			shader->SetDSState(eDepthStencilType::Less);
-			shader->SetBSState(eBlendStateType::AlphaBlend);
+			shader->SetBSState(eBlendStateType::Default);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PreFilterShader", shader);
 		}

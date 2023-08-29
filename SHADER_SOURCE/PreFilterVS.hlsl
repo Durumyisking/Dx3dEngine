@@ -7,8 +7,9 @@ struct VSIn
 
 struct VSOut
 {
-    float4 ProjPosition : SV_Position;
-    float4 WorldPosition : Position;
+    float4 Position : SV_Position;
+    float3 WorldPos : Position;
+    float3 ViewPos : Position1;
 };
 
 
@@ -16,11 +17,12 @@ VSOut main(VSIn vsIn)
 {
     VSOut vsOut;
     
-    float4 viewPos = mul(float4(vsIn.Position.xyz, 0.0f), view);
-
-    vsOut.WorldPosition = vsIn.Position;
-    vsOut.ProjPosition = mul(float4(vsIn.Position.xyz, 1.0), cubemapMat);
-    vsOut.ProjPosition.z = vsOut.ProjPosition.w;
+    float4 worldPosition = mul(float4(vsIn.Position.xyz, 1.0f), world);
+    float4 viewPosition = mul(worldPosition, view);
+    vsOut.WorldPos = vsIn.Position;
+    vsOut.Position = mul(float4(vsIn.Position.xyz, 1.0), cubemapMat);
+    vsOut.Position.z = vsOut.Position.w;
+    vsOut.ViewPos = viewPosition;
 
     return vsOut;
 }

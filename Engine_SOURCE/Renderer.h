@@ -102,8 +102,8 @@ namespace renderer
 		int bAlbedo;
 		int bNormal;
 		int bMetallic;
-
 		int bRoughness;
+
 		int bEmissive;
 		int bool1;
 		int bool2;

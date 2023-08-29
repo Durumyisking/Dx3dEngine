@@ -126,7 +126,7 @@ void CubeMapHDR::Initialize()
     mCubemesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
     bindCubeMap();
-    bindIrradianceMap();
+    //bindIrradianceMap();
     bindPrefilterMap();
 
 
@@ -305,10 +305,10 @@ void CubeMapHDR::bindPrefilterMap()
 
 void CubeMapHDR::Bind()
 {
-    if (asdf <= 1)
+    if (asdf <= 10)
     {
         bindCubeMap();
-        bindIrradianceMap();
+        //bindIrradianceMap();
         bindPrefilterMap();
         GetDevice()->AdjustViewPorts();
         renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
