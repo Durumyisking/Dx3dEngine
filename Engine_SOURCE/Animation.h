@@ -8,18 +8,16 @@
 using namespace math;
 
 
-
-
 class Animation : public DruEntity
 {
 public:
 	struct Sprite
 	{
 		Vector2 LT;
-		Vector2 size;	// ì˜ë¼ë‚¼ í”½ì…€ í¬ê¸°
+		Vector2 size;	// Àß¶ó³¾ ÇÈ¼¿ Å©±â
 		Vector2 offset;
 		Vector2 altasSize;
-		float duration; // ì´ë¯¸ì§€ í”„ë ˆì„ë‹¹ ì‹œê°„ ê°„ê²©
+		float duration; // ÀÌ¹ÌÁö ÇÁ·¹ÀÓ´ç ½Ã°£ °£°İ
 
 		Sprite()
 			: LT(Vector2::Zero)
