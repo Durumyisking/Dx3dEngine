@@ -1,5 +1,6 @@
 #include "ResourceMgr.h"
 #include "Material.h"
+#include "FileMgr.h"
 
 
 ResourceMgr::ResourceMgr()
@@ -54,6 +55,26 @@ Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring te
 	Material* mat = new Material(textureColor, textureNormal, textureMetal, textureRoughness, textureEmissive, shaderName);
 	Insert<Material>(materialName, mat);
 	return mat;
+}
+
+void ResourceMgr::Initalize()
+{
+	// Mario
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioBody", L"Mario");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHandL", L"MarioHandL");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHandR", L"MarioHandR");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioFace", L"MarioFace");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHead", L"MarioHead");
+
+	// Monster
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Tank", L"Tank");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/BirdCity", L"BirdCity");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CapMan", L"CapMan");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/goomba", L"goomba");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Packun", L"Packun");
+
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWomans", L"CityWomans");
+
 }
 
 void ResourceMgr::Release()

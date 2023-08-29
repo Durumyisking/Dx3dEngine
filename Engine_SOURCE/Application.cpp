@@ -38,7 +38,7 @@ void Application::Initialize()
 	// GETSINGLE(CollisionMgr)->Initialize();
 	//UIManager::Initialize();
 	renderer::Initialize();
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
+	GETSINGLE(ResourceMgr)->Initalize();
 
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();

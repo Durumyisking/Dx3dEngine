@@ -209,6 +209,9 @@
     <Filter Include="Resource\Model\Bone">
       <UniqueIdentifier>{a98c76c5-55d5-4d1f-ac36-5bf457b0b8c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Component\Animator3D">
+      <UniqueIdentifier>{fabcf555-eba3-403d-88ef-e82bc3bc8461}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -493,7 +496,6 @@
     <ClInclude Include="MultiRenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-
     <ClInclude Include="Model.h">
       <Filter>Resource\Model</Filter>
     </ClInclude>
@@ -504,6 +506,15 @@
       <Filter>Resource\Model\ModelNode</Filter>
     </ClInclude>
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="BoneAnimator.h">
+      <Filter>Common\Component\Animator3D</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationClip.h">
+      <Filter>Common\Component\Animator3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -760,7 +771,6 @@
     <ClCompile Include="MultiRenderTarget.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-
     <ClCompile Include="Model.cpp">
       <Filter>Resource\Model</Filter>
     </ClCompile>
@@ -771,6 +781,12 @@
       <Filter>Resource\Model\ModelNode</Filter>
     </ClCompile>
     <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="AnimationClip.cpp">
+      <Filter>Common\Component\Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneAnimator.cpp">
+      <Filter>Common\Component\Animator3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

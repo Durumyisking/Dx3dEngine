@@ -27,66 +27,15 @@ Model::~Model()
 HRESULT Model::Load(const std::wstring& path)
 {
 	std::string sPath = ConvertToString(path.c_str());
-	const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES | ASSIMP_D3D_FLAGES);
+	const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES);
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
 		// 파일 로드 실패
 		return E_FAIL;
 	}
-	
-	// https://github.com/assimp/assimp/issues/849
-	if (aiscene->mMetaData)
-	{
-		int32_t UpAxis = 1, UpAxisSign = 1, FrontAxis = 2, FrontAxisSign = 1, CoordAxis = 0, CoordAxisSign = 1;
-		double UnitScaleFactor = 1.0;
-		for (unsigned MetadataIndex = 0; MetadataIndex < aiscene->mMetaData->mNumProperties; ++MetadataIndex)
-		{
-			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "UpAxis") == 0)
-			{
-				aiscene->mMetaData->Get<int32_t>(MetadataIndex, UpAxis);
-			}
-			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "UpAxisSign") == 0)
-			{
-				aiscene->mMetaData->Get<int32_t>(MetadataIndex, UpAxisSign);
-			}
-			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "FrontAxis") == 0)
-			{
-				aiscene->mMetaData->Get<int32_t>(MetadataIndex, FrontAxis);
-			}
-			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "FrontAxisSign") == 0)
-			{
-				aiscene->mMetaData->Get<int32_t>(MetadataIndex, FrontAxisSign);
-			}
-			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "CoordAxis") == 0)
-			{
-				aiscene->mMetaData->Get<int32_t>(MetadataIndex, CoordAxis);
-			}
-			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "CoordAxisSign") == 0)
-			{
-				aiscene->mMetaData->Get<int32_t>(MetadataIndex, CoordAxisSign);
-			}
-			if (strcmp(aiscene->mMetaData->mKeys[MetadataIndex].C_Str(), "UnitScaleFactor") == 0)
-			{
-				aiscene->mMetaData->Get<double>(MetadataIndex, UnitScaleFactor);
-			}
-		}
 
-		aiVector3D upVec, forwardVec, rightVec;
-
-		upVec[UpAxis] = UpAxisSign * (float)UnitScaleFactor;
-		forwardVec[FrontAxis] = FrontAxisSign * (float)UnitScaleFactor;
-		rightVec[CoordAxis] = CoordAxisSign * (float)UnitScaleFactor;
-
-		aiMatrix4x4 mat(rightVec.x, rightVec.y, rightVec.z, 0.0f,
-			upVec.x, upVec.y, upVec.z, 0.0f,
-			forwardVec.x, forwardVec.y, forwardVec.z, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f);
-
-		// assimp �׵� ����� ��Ȥ �ƴ� ��찡���� (assimp ���� ���� �ڵ�)
-		// ���� ù ��� Ž������ �ֻ��� ����� ����� �׵���ķ� �����
-		aiscene->mRootNode->mTransformation = aiMatrix4x4() * mat;
-	}
+	aiscene->mRootNode->mTransformation = aiMatrix4x4();
 
 	std::wstring sceneName = ConvertToW_String(aiscene->mName.C_Str());
 	mRootNodeName = ConvertToW_String(aiscene->mRootNode->mName.C_Str());
@@ -127,7 +76,7 @@ Bone* Model::FindBone(const std::wstring& nodeName)
 	return mBoneMap.find(nodeName) == mBoneMap.end() ? nullptr : mBoneMap.find(nodeName)->second;
 }
 
-void Model::RecursiveGetBoneMatirx()
+void Model::BindBoneMatrix()
 {
 	// ��Ʈ��带 �������� ���� ��带 Ž���ϰ� 
 	// mBonse �� Local, Final ����� ä���
@@ -152,7 +101,7 @@ void Model::Bind_Render()
 	std::vector<BoneMat> boneMat = {};
 
 	// �� transform ���
-	RecursiveGetBoneMatirx();
+	BindBoneMatrix();
 
 	// Ž���� ���� ������ ����� �迭�� ������ GPU �� ���ε�
 	boneMat.reserve(mBones.size());
@@ -175,6 +124,9 @@ void Model::Bind_Render()
 			continue;
 
 		if (mMaterials[i] == nullptr)
+			continue;
+
+		if (mMeshes[i]->GetName().find(L"Press") != std::wstring::npos)
 			continue;
 
 		//�ؽ�ó ���ε�
@@ -530,17 +482,24 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 
 	matrix = matrix * transform;
 
+	if (nodeName == mTargetBone && mParentModel)
+	{
+		Bone* parentBone = mParentModel->FindBone(mPrentTargetBone);
+		aiMatrix4x4 testMat;
+		transform = transform * testMat.FromEulerAnglesXYZ(mOffsetRotation.x, mOffsetRotation.y, mOffsetRotation.z);
+		matrix = parentBone->mLocalMatrix * transform;
+	}
+
 	if (mBoneMap.find(nodeName) != mBoneMap.end())
 	{
 		Bone* bone = mBoneMap.find(nodeName)->second;
-		aiMatrix4x4 glovalInvers = FindNode(L"Scene")->GetTransformation();
 
 		// bone->mOffsetMatrix - ������ �� �������� �̵� ( world, view, projection ����� ����)
 		// ���ε� ������ ������̴�
 		//matrix - ���� ��� ������ ��ȯ�� ���
 		// glovalInvers.Inverse() - �׵� ����� �� ������ ���� �������� ��ȯ?
 		// �ֵ� ���� ���� �Ȱ��� �����ϱ⶧���� ���� ��Ȯ���� �𸣰ڴ�
-		bone->mFinalMatrix = glovalInvers.Inverse() * matrix * bone->mOffsetMatrix;
+		bone->mFinalMatrix = matrix * bone->mOffsetMatrix;
 		bone->mLocalMatrix = matrix;
 
 		mBones[bone->mIndex]->mFinalMatrix = bone->mFinalMatrix;
@@ -601,20 +560,6 @@ void Model::release()
 	}
 
 	mStructure = nullptr;
-}
-
-std::wstring Model::ConvertToW_String(const char* str)
-{
-	std::string sName = std::string(str);
-	std::wstring wName(sName.begin(), sName.end());
-	return wName;
-}
-
-std::string Model::ConvertToString(const wchar_t* str)
-{
-	std::wstring sName = std::wstring(str);
-	std::string wName(sName.begin(), sName.end());
-	return wName;
 }
 
 math::Matrix Model::ConvertMatrix(aiMatrix4x4 aimat)

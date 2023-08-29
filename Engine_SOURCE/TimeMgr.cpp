@@ -28,10 +28,10 @@ TimeMgr::~TimeMgr()
 
 void TimeMgr::Initialize()
 {
-    //CPU ÀÇ ÃÊ´ç ¹İº¹µÇ´Â ÁÖÆÄ¼ö¸¦ ¾ò¾î¿Â´Ù.
+    //CPU ì˜ ì´ˆë‹¹ ë°˜ë³µë˜ëŠ” ì£¼íŒŒìˆ˜ë¥¼ ì–»ì–´ì˜¨ë‹¤.
     QueryPerformanceFrequency(&mCpuFrequency);
 
-    //ÇÁ·Î±×·¥À» ½ÃÀÛÇßÀ»¶§ÀÇ CPU Å¬·° ¼ö
+    //í”„ë¡œê·¸ë¨ì„ ì‹œì‘í–ˆì„ë•Œì˜ CPU í´ëŸ­ ìˆ˜
     QueryPerformanceCounter(&mPrevFrequency);
 }
 
@@ -57,7 +57,7 @@ void TimeMgr::Render(HDC hdc)
     static int iCount = 0;
     ++iCount;
 
-    // 1 ÃÊ¿¡ ÇÑ¹ø
+    // 1 ì´ˆì— í•œë²ˆ
     mOneSecond += mDeltaTime;
     if (1.0f < mOneSecond)
     {
@@ -71,7 +71,7 @@ void TimeMgr::Render(HDC hdc)
 
         SetWindowText(hWnd, szFloat);
 
-        // ´©Àû½Ã°£, Ä«¿îÆ® ÃÊ±âÈ­
+        // ëˆ„ì ì‹œê°„, ì¹´ìš´íŠ¸ ì´ˆê¸°í™”
         mOneSecond = 0.f;
         iCount = 0;
     }
@@ -81,7 +81,7 @@ void TimeMgr::Render(HDC hdc)
 
 void TimeMgr::frameRateLock()
 {
-    // ÇÁ·¹ÀÓ °íÁ¤
+    // í”„ë ˆì„ ê³ ì •
     if (mMaxFrameRate > mDeltaTime)
     {
         if (mMaxFrameRate > mFrameRateStack)
@@ -107,11 +107,11 @@ void TimeMgr::frameRateLock()
 void TimeMgr::frameRateLock_Debugging()
 {
 
-//#ifdef _DEBUG
-//        if (mDeltaTime > (1.f / 60.f))
-//            mDeltaTime = (1.f / 60.f);
-//        if (mDeltaTimeConstant > (1.f / 60.f))
-//            mDeltaTimeConstant = (1.f / 60.f);
-//#endif
+#ifdef _DEBUG
+        if (mDeltaTime > (1.f / 60.f))
+            mDeltaTime = (1.f / 60.f);
+        if (mDeltaTimeConstant > (1.f / 60.f))
+            mDeltaTimeConstant = (1.f / 60.f);
+#endif
 }
 
