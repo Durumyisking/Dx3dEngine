@@ -36,7 +36,7 @@ void PhysicsMgr::Initialize()
 	sceneDesc.simulationEventCallback = mDispatcher->GetSimulationCallback();
 
 	mPhysX->CreatePhysicsScene(sceneDesc);
-	//	mPhysX->ConnectDebuggerToScene();
+	mPhysX->ConnectDebuggerToScene();
 
 	assert(mPhysX->GetPhysicsScene());
 }

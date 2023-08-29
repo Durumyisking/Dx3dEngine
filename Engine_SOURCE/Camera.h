@@ -30,7 +30,7 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
 	virtual void Render() override;
-
+	
 	void CreateViewMatrix();
 	void CreateProjectionMatrix();
 		
@@ -59,6 +59,9 @@ public:
 
 	void SmoothOn() { mSmooth = true; }
 	void SmoothOff() { mSmooth = false; }
+
+	bool Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance = 100.f);
+
 
 private:
 	void sortGameObjects();
@@ -95,15 +98,16 @@ private:
 	std::vector<GameObj*> mTransparentGameObjects;
 	std::vector<GameObj*> mPostProcessGameObjects;
 
+	PxRaycastHit    mRaycastHit;
+	float			mRayMaxDist;
+	UINT			mRayMaxHit;
+
 	GameObj*	mTargetObj;
 	Vector3		mCamDir;
 
 	float		mFarDist;
-
 	float		mCamSpeed;
-
 	float		mTime;
-
 	bool		mSmooth;
 };
 
