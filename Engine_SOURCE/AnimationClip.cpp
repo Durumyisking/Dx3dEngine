@@ -39,7 +39,7 @@ void AnimationClip::Update()
 
 	if (mCurIndex >= mSkeletonData.size() - 1)
 	{
-		// ì• ë‹ˆë©”ì´ì…˜ ì¢…ë£Œì‹œ ë¦¬ì…‹
+		// ¾Ö´Ï¸ŞÀÌ¼Ç Á¾·á½Ã ¸®¼Â
 		Reset();
 		mCompleate = true;
 		return;
@@ -50,18 +50,18 @@ void AnimationClip::Update()
 
 void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring& path, double duration)
 {
-	// íŒŒì¼ ê²½ë¡œ ì„¤ì •
+	// ÆÄÀÏ °æ·Î ¼³Á¤
 	std::ifstream file(path, std::ios::in);
 
 	std::string buf = "";
-	// íŒŒì¼ì´ ì—´ë¦¬ì§€ ì•Šìœ¼ë©´ Window ì¢…ë£Œ
+	// ÆÄÀÏÀÌ ¿­¸®Áö ¾ÊÀ¸¸é Window Á¾·á
 	if (!file.is_open())
 	{
-		std::cout << "íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤" << std::endl;
+		std::cout << "ÆÄÀÏÀÌ ¾ø½À´Ï´Ù" << std::endl;
 		DestroyWindow(application.GetHwnd());
 	}
 
-	// ì• ë‹ˆë©”ì´ì…˜ ì´ë¦„ ì„¤ì •
+	// ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌ¸§ ¼³Á¤
 	SetAnimationName(name);
 	SetDuration(duration);
 
@@ -142,7 +142,7 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 
 void AnimationClip::SetBoneMatrix()
 {
-	// ë³¸ ì •ë³´ë“¤ì„ ë³€ê²½.
+	// º» Á¤º¸µéÀ» º¯°æ.
 	if (!mAnimator)
 		return;
 
@@ -201,37 +201,37 @@ math::Vector3 AnimationClip::Interpolation(math::Vector3& startVec, math::Vector
 	return Vector3(x, y, z);
 }
 
-aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, Vector3 rotation)
+aiMatrix4x4 AnimationClip::ToLeftHandMatrix(math::Vector3 pos, math::Vector3 rotation)
 {
-	// ì´ë™ ê³„ì‚°
+	// ÀÌµ¿ °è»ê
 	aiMatrix4x4 traslation = {};
 	traslation.Translation(aiVector3D(pos.x, pos.y, -pos.z), traslation);
 
-	// íšŒì „ ê³„ì‚° ì˜¤ì¼ëŸ¬
+	// È¸Àü °è»ê ¿ÀÀÏ·¯
 	aiMatrix4x4 rotationmatrix = {};
 
-	// ì•„ë§ˆ? ë‹Œí…ë„ ë§Œì— ì¢Œí‘œê³„ê°€ ìˆëŠ”ê±°ê°™ë‹¤
-	// x ì˜¤ë¥¸ì†ì¢Œí‘œê³„ê¸°ì¤€, ë°˜ì‹œê³„
-	// y ì˜¤ë¥¸ì†ì¢Œí‘œê³„ê¸°ì¤€, ë°˜ì‹œê³„
-	// z í¬ì§€ì…˜ì€ ì˜¤ë¥¸ì†ì¢Œí‘œê³„ê¸°ì¤€, íšŒì „ì€ ì‹œê³„ë°©í–¥
+	// ¾Æ¸¶? ´ÑÅÙµµ ¸¸¿¡ ÁÂÇ¥°è°¡ ÀÖ´Â°Å°°´Ù
+	// x ¿À¸¥¼ÕÁÂÇ¥°è±âÁØ, ¹İ½Ã°è
+	// y ¿À¸¥¼ÕÁÂÇ¥°è±âÁØ, ¹İ½Ã°è
+	// z Æ÷Áö¼ÇÀº ¿À¸¥¼ÕÁÂÇ¥°è±âÁØ, È¸ÀüÀº ½Ã°è¹æÇâ
 	rotationmatrix.FromEulerAnglesXYZ(-rotation.x, -rotation.y, rotation.z);
 
 	return traslation * rotationmatrix;
 }
 
-aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, aiMatrix3x3 rotation)
+aiMatrix4x4 AnimationClip::ToLeftHandMatrix(math::Vector3 pos, aiMatrix3x3 rotation)
 {
-	// ì´ë™ ê³„ì‚°
+	// ÀÌµ¿ °è»ê
 	aiMatrix4x4 traslation = {};
 	traslation.Translation(aiVector3D(pos.x, pos.y, -pos.z), traslation);
 
-	// íšŒì „ ê³„ì‚° ì˜¤ì¼ëŸ¬
+	// È¸Àü °è»ê ¿ÀÀÏ·¯
 	aiMatrix4x4 rotationmatrix(rotation);
 
-	// ì•„ë§ˆ? ë‹Œí…ë„ ë§Œì— ì¢Œí‘œê³„ê°€ ìˆëŠ”ê±°ê°™ë‹¤
-	// x ì˜¤ë¥¸ì†ì¢Œí‘œê³„ê¸°ì¤€, ë°˜ì‹œê³„
-	// y ì˜¤ë¥¸ì†ì¢Œí‘œê³„ê¸°ì¤€, ë°˜ì‹œê³„
-	// z í¬ì§€ì…˜ì€ ì˜¤ë¥¸ì†ì¢Œí‘œê³„ê¸°ì¤€, íšŒì „ì€ ì‹œê³„ë°©í–¥
+	// ¾Æ¸¶? ´ÑÅÙµµ ¸¸¿¡ ÁÂÇ¥°è°¡ ÀÖ´Â°Å°°´Ù
+	// x ¿À¸¥¼ÕÁÂÇ¥°è±âÁØ, ¹İ½Ã°è
+	// y ¿À¸¥¼ÕÁÂÇ¥°è±âÁØ, ¹İ½Ã°è
+	// z Æ÷Áö¼ÇÀº ¿À¸¥¼ÕÁÂÇ¥°è±âÁØ, È¸ÀüÀº ½Ã°è¹æÇâ
 	//rotationmatrix.FromEulerAnglesXYZ(-rotation.x, -rotation.y, rotation.z);
 
 	return traslation * rotationmatrix;

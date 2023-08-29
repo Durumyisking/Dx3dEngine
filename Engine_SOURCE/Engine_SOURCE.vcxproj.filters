@@ -515,6 +515,11 @@
     <ClInclude Include="Struct.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="Panal.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -787,6 +792,11 @@
     <ClCompile Include="BoneAnimator.cpp">
       <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Panal.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

@@ -223,7 +223,7 @@ void SceneTitle::Enter()
 		animator->Play(L"test");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_HandL");
+		model->SetParentTargetBone(L"Armature_HandL");
 		model->SetTargetBone(L"Armature_HandL");
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
 	}
@@ -245,7 +245,7 @@ void SceneTitle::Enter()
 		animator->Play(L"test");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_HandR");
+		model->SetParentTargetBone(L"Armature_HandR");
 		model->SetTargetBone(L"Armature_HandR");
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
 	}
@@ -264,7 +264,7 @@ void SceneTitle::Enter()
 		animator->Play(L"test");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_Head");
+		model->SetParentTargetBone(L"Armature_Head");
 		model->SetTargetBone(L"Armature_MarioHead");
 
 		model->SetOffsetRotation(Vector3(0.0f, 1.570796f , -1.570796f * 2));
@@ -285,7 +285,7 @@ void SceneTitle::Enter()
 		animator->Play(L"test2");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_Head");
+		model->SetParentTargetBone(L"Armature_Head");
 		model->SetTargetBone(L"Armature_Face");
 
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));

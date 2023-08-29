@@ -155,8 +155,8 @@ void CameraScript::Shake(const ShakeParams& params)
 {
 	if (mbShaking) 
 	{
-		// ìƒˆë¡œìš´ í”ë“¤ê¸° íš¨ê³¼ ë“¤ì–´ê°€ë©´
-		// ì´ì „ í”ë“¤ë¦¼ íš¨ê³¼ë¥¼ ì·¨ì†Œ
+		// »õ·Î¿î Èçµé±â È¿°ú µé¾î°¡¸é
+		// ÀÌÀü Èçµé¸² È¿°ú¸¦ Ãë¼Ò
 		CancelShake();
 	}
 
@@ -179,11 +179,11 @@ void CameraScript::ShakeMove()
 		mShakeTimer += GETSINGLE(TimeMgr)->DeltaTimeConstant();
 		if (mShakeTimer >= mShakeParams.duration)
 		{
-			// í”ë“¤ë¦¼ ì§€ì† ì‹œê°„ì´ ì§€ë‚˜ë©´ íš¨ê³¼ ì¢…ë£Œ
+			// Èçµé¸² Áö¼Ó ½Ã°£ÀÌ Áö³ª¸é È¿°ú Á¾·á
 			CancelShake();
 		}
 		else {				
-			// í”ë“¤ë¦¼ íš¨ê³¼ ê³„ì‚°
+			// Èçµé¸² È¿°ú °è»ê
 			float magnitude = mShakeParams.magnitude *
 				(1.f - mShakeTimer / mShakeParams.duration);
 

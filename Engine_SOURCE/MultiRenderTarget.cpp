@@ -37,7 +37,7 @@ void MultiRenderTarget::OMSetRenderTarget()
 	{
 		if (mRenderTargets[i])
 		{
-			arrRenderTargetViews[i] = mRenderTargets[i]->GetRTV().Get(); // í…ìŠ¤ì²˜ ë§Œë“¤ë•Œ í”Œëž˜ê·¸ ì„¤ì • í•´ë‘ì–´ì„œ ë Œë”íƒ€ê²Ÿìœ¼ë¡œ ì‚¬ìš© ê°€ëŠ¥
+			arrRenderTargetViews[i] = mRenderTargets[i]->GetRTV().Get(); // ÅØ½ºÃ³ ¸¸µé¶§ ÇÃ·¡±× ¼³Á¤ ÇØµÎ¾î¼­ ·»´õÅ¸°ÙÀ¸·Î »ç¿ë °¡´É
 		}
 	}
 

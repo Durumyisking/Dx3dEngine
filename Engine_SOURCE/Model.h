@@ -76,7 +76,7 @@ public:
 	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
 	GETSET(GameObj*, mOwner, Owner)
 	GETSET(Model*, mParentModel, ParentModel)
-	GETSET(const std::wstring&, mPrentTargetBone, PrentTargetBone)
+	GETSET(const std::wstring&, mParentTargetBone, ParentTargetBone)
 	GETSET(const std::wstring&, mTargetBone, TargetBone)
 	GETSET(math::Vector3, mOffsetRotation, OffsetRotation)
 private:
@@ -98,7 +98,7 @@ private:
 	std::wstring mCurDirectoryPath;
 
 	Model* mParentModel;
-	std::wstring mPrentTargetBone;
+	std::wstring mParentTargetBone;
 	std::wstring mTargetBone;
 
 	math::Vector3 mOffsetRotation;

@@ -14,17 +14,17 @@ public:
 	virtual void FixedUpdate() override{};
 	virtual void Render() override{};
 
-	// í´ë”ì— ì• ë‹ˆë©”ì´ì…˜ì„ ì „ë¶€ ë¡œë“œí•˜ëŠ” í•¨ìˆ˜
-	// ì• ë‹ˆë©”ì´ì…˜ ëª…ì€ íŒŒì¼ëª…ìœ¼ë¡œ ìƒì„±
+	// Æú´õ¿¡ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ÀüºÎ ·ÎµåÇÏ´Â ÇÔ¼ö
+	// ¾Ö´Ï¸ŞÀÌ¼Ç ¸íÀº ÆÄÀÏ¸íÀ¸·Î »ı¼º
 	void LoadAnimations(const std::wstring& folderPath);
 
-	// ì• ë‹ˆë©”ì´ì…˜ì„ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
+	// ¾Ö´Ï¸ŞÀÌ¼ÇÀ» »ı¼ºÇÏ´Â ÇÔ¼ö
 	void CreateAnimation(const std::wstring& name, const std::wstring& path, double duration);
 
-	// ì• ë‹ˆë©”ì´ì…˜ Play
+	// ¾Ö´Ï¸ŞÀÌ¼Ç Play
 	void Play(const std::wstring& name, bool loop = true);
 
-	// ì• ë‹ˆë©”ì´ì…˜ì˜ 1 í”„ë ˆì„ ê°„ê²© ì„¸íŒ…
+	// ¾Ö´Ï¸ŞÀÌ¼ÇÀÇ 1 ÇÁ·¹ÀÓ °£°İ ¼¼ÆÃ
 	void SetAnimationDruationTime(const std::wstring& name, float duration = 0.1f);
 private:
 	std::map<std::wstring, AnimationClip*> mAnimationClips;

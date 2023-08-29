@@ -5,6 +5,7 @@
 
 
 
+
 using namespace math;
 
 class Material;
@@ -138,7 +139,6 @@ public:
 	Vector3 GetPos();
 	Vector3 GetWorldPos();
 
-	// ui�� ��� ����
 	Vector3 GetUIWorldPos();
 
 	Vector3 GetScale();

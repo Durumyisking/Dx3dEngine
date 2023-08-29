@@ -23,7 +23,7 @@ bool Mesh::CreateVertexBuffer(void* data, UINT count)
 	mVBDesc.ByteWidth = sizeof(renderer::Vertex) * count;
 	mVBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
 	mVBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
-	mVBDesc.CPUAccessFlags = 0; // ìƒìˆ˜ë²„í¼ í†µí•´ì„œ ê°’ ë³€ê²½í• êº¼ì„
+	mVBDesc.CPUAccessFlags = 0; // »ó¼ö¹öÆÛ ÅëÇØ¼­ °ª º¯°æÇÒ²¨ÀÓ
 
 	D3D11_SUBRESOURCE_DATA subData = {};
 	subData.pSysMem = data;

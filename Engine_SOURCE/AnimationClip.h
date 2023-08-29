@@ -28,11 +28,11 @@ public:
 
 	bool IsCompleate() { return mCompleate; }
 
-	// ë³´ê°„í•¨ìˆ˜
+	// º¸°£ÇÔ¼ö
 	math::Vector3 Interpolation(math::Vector3& startVec,math::Vector3& endVec, float accTime, float endTime);
 
-	aiMatrix4x4 ToLeftHandMatrix(Vector3 pos, Vector3 rotation);
-	aiMatrix4x4 ToLeftHandMatrix(Vector3 pos, aiMatrix3x3 rotation);
+	aiMatrix4x4 ToLeftHandMatrix(math::Vector3 pos, math::Vector3 rotation);
+	aiMatrix4x4 ToLeftHandMatrix(math::Vector3 pos, aiMatrix3x3 rotation);
 
 public:
 	GETSET(const std::wstring&, mName, AnimationName)

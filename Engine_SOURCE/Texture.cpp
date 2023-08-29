@@ -159,7 +159,7 @@ HRESULT Texture::Load(const std::wstring& path)
 
 
 	wchar_t szExtension[256] = {};
-	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // ê²½ë¡œì—ì„œ í™•ì¥ìë§Œ ë½‘ì•„ì˜¤ëŠ” ë…€ì„
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // °æ·Î¿¡¼­ È®ÀåÀÚ¸¸ »Ì¾Æ¿À´Â ³à¼®
 
 	std::wstring extension(szExtension);
 
@@ -200,7 +200,7 @@ HRESULT Texture::Load(const std::wstring& path)
 Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 {
 	wchar_t szExtension[256] = {};
-	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // ê²½ë¡œì—ì„œ í™•ì¥ìë§Œ ë½‘ì•„ì˜¤ëŠ” ë…€ì„
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // °æ·Î¿¡¼­ È®ÀåÀÚ¸¸ »Ì¾Æ¿À´Â ³à¼®
 
 	std::wstring extension(szExtension);
 
