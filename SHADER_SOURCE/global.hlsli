@@ -79,7 +79,7 @@ float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, f
         viewBiNormal,
         viewNormal,
     };
-
+    
     result = normalize(float3(mul(result.xyz, matTBN)));
     
     return result;

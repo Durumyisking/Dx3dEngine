@@ -1,5 +1,0 @@
-Game: Super Mario Odyssey
-Subject: Mario
-Copyright: Nintendo
-Model Rippers: Random Talking Bush and SciresM
-Hosting Permissions: The Models Resource

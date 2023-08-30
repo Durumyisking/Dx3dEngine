@@ -10,6 +10,8 @@
 #include "Layer.h"
 #include "ResourceMgr.h"
 
+#include "Physical.h"
+
 extern Application application;
 
 
@@ -34,6 +36,9 @@ Camera::Camera()
 	, mFarDist(0.f)
 	, mTime(0.3f)
 	, mSmooth(false)
+	, mRaycastHit{}
+	, mRayMaxDist(5.f)
+	, mRayMaxHit(1)
 {
 	EnableLayerMasks();
 }
@@ -179,6 +184,76 @@ void Camera::SetTarget(GameObj* target)
 	Dir.z = GetOwner()->GetPos().z;
 
 	(Dir).Normalize(mCamDir);
+}
+
+bool Camera::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance)
+{
+	if (this == renderer::mainCamera)
+	{
+		Physical* physical = gameObject->GetComponent<Physical>();
+		if (!physical)
+		{
+			return false;
+		}
+		eGeometryType geometryType = physical->GetGeometryType();
+		PxTransform pxTransform = gameObject->GetComponent<Transform>()->GetPxTransform();
+
+		switch (geometryType)
+		{
+		case eGeometryType::Box:
+		{
+			PxBoxGeometry boxGeom = physical->GetGeometries()->boxGeom;
+			bool bResult = PxGeometryQuery::raycast(
+				convert::Vector3ToPxVec3(origin),
+				convert::Vector3ToPxVec3(dir),
+				boxGeom, pxTransform,
+				maxDistance,
+				PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+				mRayMaxHit,
+				&mRaycastHit);
+
+			return bResult;
+		}
+		break;
+
+		case eGeometryType::Capsule:
+		{
+			PxCapsuleGeometry capsuleGeom = physical->GetGeometries()->capsuleGeom;
+			bool bResult = PxGeometryQuery::raycast(
+				convert::Vector3ToPxVec3(origin),
+				convert::Vector3ToPxVec3(dir),
+				capsuleGeom, pxTransform,
+				maxDistance,
+				PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+				mRayMaxHit,
+				&mRaycastHit);
+
+			return bResult;
+		}
+		break;
+
+		case eGeometryType::Sphere:
+		{
+			PxSphereGeometry sphereGeom = physical->GetGeometries()->sphereGeom;
+
+			bool bResult = PxGeometryQuery::raycast(
+				convert::Vector3ToPxVec3(origin),
+				convert::Vector3ToPxVec3(dir),
+				sphereGeom, pxTransform,
+				maxDistance,
+				PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+				mRayMaxHit,
+				&mRaycastHit);
+
+			return bResult;
+		}
+		break;
+		}
+
+		return false;
+	}
+
+	return false;
 }
 
 void Camera::sortGameObjects()

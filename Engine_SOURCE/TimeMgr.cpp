@@ -107,11 +107,11 @@ void TimeMgr::frameRateLock()
 void TimeMgr::frameRateLock_Debugging()
 {
 
-//#ifdef _DEBUG
-//        if (mDeltaTime > (1.f / 60.f))
-//            mDeltaTime = (1.f / 60.f);
-//        if (mDeltaTimeConstant > (1.f / 60.f))
-//            mDeltaTimeConstant = (1.f / 60.f);
-//#endif
+#ifdef _DEBUG
+        if (mDeltaTime > (1.f / 60.f))
+            mDeltaTime = (1.f / 60.f);
+        if (mDeltaTimeConstant > (1.f / 60.f))
+            mDeltaTimeConstant = (1.f / 60.f);
+#endif
 }
 

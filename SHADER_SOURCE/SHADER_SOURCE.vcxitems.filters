@@ -123,7 +123,13 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)LightPointPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)RectToCubemapVS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)UISpriteVS.hlsl">
+      <Filter>VS</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)UISpritePS.hlsl">
+    <Filter>PS</Filter>
+    </FxCompile>
+ <FxCompile Include="$(MSBuildThisFileDirectory)RectToCubemapVS.hlsl">
       <Filter>VS</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)RectToCubemapPS.hlsl">
@@ -135,13 +141,7 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)PreFilterPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)IrradiancePS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)IrradianceVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-  </ItemGroup>
+    <FxCompile Include="$(MSBuildThisFileDirectory)IrradiancePS.hlsl">  </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)global.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)Light.hlsli" />

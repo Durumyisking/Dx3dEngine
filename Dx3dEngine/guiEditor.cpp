@@ -1,4 +1,4 @@
-ï»¿#include "guiEditor.h"
+#include "guiEditor.h"
 #include "Mesh.h"
 #include "ResourceMgr.h"
 #include "Material.h"
@@ -58,7 +58,7 @@ namespace gui
 
 		if (mEnable == false)
 			return;
-		// ì¶©ëŒì²´ì˜ ì¢…ë¥˜ ê°¯ìˆ˜ë§Œí¼ë§Œ ìˆìœ¼ë©´ ëœë‹¤.
+		// Ãæµ¹Ã¼ÀÇ Á¾·ù °¹¼ö¸¸Å­¸¸ ÀÖÀ¸¸é µÈ´Ù.
 		mDebugObjects.resize(static_cast<UINT>(eColliderType::End));
 
 		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"DebugMaterial");

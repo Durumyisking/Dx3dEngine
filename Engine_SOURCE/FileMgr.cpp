@@ -71,31 +71,31 @@ void FileMgr::FileLoad(const std::wstring& path)
 		mSkeletonData.emplace_back(data);
 	}
 
-	// Triangles
-	std::string texName = "";
-	while (1)
-	{
-		getline(file, buf);
-		if (buf.find("triangles") != std::string::npos)
-		{
-			continue;
-		}
-		else if (buf.find("end") != std::string::npos)
-		{
-			break;
-		}
-		else if (buf.find("png") != std::string::npos)
-		{
-			texName = buf;
-			continue;
-		}
+	//// Triangles
+	//std::string texName = "";
+	//while (1)
+	//{
+	//	getline(file, buf);
+	//	if (buf.find("triangles") != std::string::npos)
+	//	{
+	//		continue;
+	//	}
+	//	else if (buf.find("end") != std::string::npos)
+	//	{
+	//		break;
+	//	}
+	//	else if (buf.find("png") != std::string::npos)
+	//	{
+	//		texName = buf;
+	//		continue;
+	//	}
 
-		ParsingTriangleData data = {};
-		data = readTriangles(buf);
-		data.TexName = texName;
+	//	ParsingTriangleData data = {};
+	//	data = readTriangles(buf);
+	//	data.TexName = texName;
 
-		mTriangleData.emplace_back(data);
-	}
+	//	mTriangleData.emplace_back(data);
+	//}
 
 	file.close();
 }
@@ -105,6 +105,7 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 	std::wstring fullPath = L"..//" + path;
 	fs::path folderPath = std::string(fullPath.begin(), fullPath.end());
 
+	Model* parentModel = nullptr;
 	// 폴더 내부 파일들을 순회하며 출력
 	for (const auto& entry : fs::directory_iterator(folderPath)) {
 		if (entry.is_regular_file())
@@ -115,32 +116,22 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 			std::wstring extension(szExtension);
 
 			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(modelName);
+
 			if (model == nullptr)
 			{
 				model = new Model();
 				GETSINGLE(ResourceMgr)->Insert<Model>(modelName, model);
 			}
 
-			model->SetCurDirectoryPath(fullPath);
 			if (L".DAE" == extension || L".Dae" == extension || L".dae" == extension)
 			{
+				model->SetCurDirectoryPath(fullPath);
 				model->Load(entry.path());
-			}
-
-			if (L".FBX" == extension || L".Fbx" == extension || L"fbx" == extension)
-			{
-				// FBX 파일 로드 테스트
-				//model->Load(entry.path());
 			}
 		}
 	}
 
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(modelName);
-	if (model != nullptr)
-	{
-		model->CreateTexture();
-		model->CreateMaterial();
-	}
+
 	return true;
 }
 

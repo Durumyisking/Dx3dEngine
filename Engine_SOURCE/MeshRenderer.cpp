@@ -38,17 +38,15 @@ void MeshRenderer::Render()
 
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-	GetMaterial()->Bind();
-
-	//t.Bind(0);
-	//t.Bind(28);
-
-	//Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"noise1");
-	//t->BindAllShaderResource(0);
-	//t->BindAllShaderResource(28);
-
-
-	GetModel() != nullptr ? GetModel()->Bind_Render(GetMaterial()) : GetMesh()->BindBuffer(), GetMesh()->Render();
-
-	GetMaterial()->Clear();
+	if (GetModel() != nullptr)
+	{
+		GetModel()->Bind_Render();
+	}
+	else
+	{
+		GetMaterial()->Bind();
+		GetMesh()->BindBuffer();
+		GetMesh()->Render();
+		GetMaterial()->Clear();
+	}
 }

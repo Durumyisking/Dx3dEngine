@@ -103,12 +103,12 @@ namespace renderer
 		offset += sizeof(float) * 3;
 
 		arrLayout[6].AlignedByteOffset = offset;
-		arrLayout[6].Format = DXGI_FORMAT_R32G32B32A32_UINT;
+		arrLayout[6].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 		arrLayout[6].InputSlot = 0;
 		arrLayout[6].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[6].SemanticName = "BLENDINDICES";
 		arrLayout[6].SemanticIndex = 0;
-		offset += sizeof(UINT) * 4;
+		offset += sizeof(float) * 4;
 
 		arrLayout[7].AlignedByteOffset = offset;
 		arrLayout[7].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -716,6 +716,8 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"night12", L"Cube/night/DarkNight_Scenario12.dds");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"night13", L"Cube/night/DarkNight_Scenario13.dds");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"night14", L"Cube/night/DarkNight_Scenario14.dds");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"MarioTitle", L"CmTitleLogo.png");
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,

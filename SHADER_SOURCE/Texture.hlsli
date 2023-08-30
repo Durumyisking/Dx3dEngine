@@ -36,9 +36,12 @@ Texture2D Skybox : register(t18);
 //Atlas texture
 Texture2D atlasTexture : register(t29);
 
+
+
 struct BoneMatrix
 {
     float4x4 bMatrix;
 };
+
 StructuredBuffer<BoneMatrix>BonArray : register(t30);
 

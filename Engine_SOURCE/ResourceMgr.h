@@ -93,6 +93,7 @@ public:
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring textureEmissive, std::wstring shaderName, std::wstring materialName);
 
+	void Initalize();
 	void Release();
 private:
 	std::map<std::wstring, Resource* > mResources;

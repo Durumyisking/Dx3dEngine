@@ -200,16 +200,24 @@
     <Filter Include="Common\Component\Script\Server">
       <UniqueIdentifier>{ed03df75-dd17-44d3-9c47-fbeb3c8e88af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Component\Renderer\Mesh\Model">
-      <UniqueIdentifier>{7b7d2c08-6f5a-4eb5-9268-0f249a40791d}</UniqueIdentifier>
+    <Filter Include="Resource\Model">
+      <UniqueIdentifier>{21538abc-aad6-47fc-b8ee-dd60b081efb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Model\ModelNode">
+      <UniqueIdentifier>{78218941-677c-4c23-86ee-d3d2ed9e2917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Model\Bone">
+      <UniqueIdentifier>{a98c76c5-55d5-4d1f-ac36-5bf457b0b8c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Animator3D">
+      <UniqueIdentifier>{fabcf555-eba3-403d-88ef-e82bc3bc8461}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common\Component\Renderer\Skybox">
       <UniqueIdentifier>{b410bcf3-ae25-480a-b5b4-bd17195ed68c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common\Component\Renderer\Skybox\CubeMap">
       <UniqueIdentifier>{9758229a-fb7a-43d0-89de-cf6b2aa53bed}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
+    </Filter>  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
       <Filter>Common</Filter>
@@ -490,10 +498,26 @@
     <ClInclude Include="MultiRenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Common\Component\Renderer\Mesh\Model</Filter>
+  <ClInclude Include="Model.h">
+      <Filter>Resource\Model</Filter>
     </ClInclude>
-    <ClInclude Include="SkyboxRenderer.h">
+    <ClInclude Include="Bone.h">
+      <Filter>Resource\Model\Bone</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelNode.h">
+      <Filter>Resource\Model\ModelNode</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="BoneAnimator.h">
+      <Filter>Common\Component\Animator3D</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationClip.h">
+      <Filter>Common\Component\Animator3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+ <ClInclude Include="SkyboxRenderer.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
     <ClInclude Include="SkySphere.h">
@@ -501,8 +525,7 @@
     </ClInclude>
     <ClInclude Include="CubeMap.h">
       <Filter>Common\Component\Renderer\Skybox\CubeMap</Filter>
-    </ClInclude>
-  </ItemGroup>
+    </ClInclude>  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
       <Filter>High Level Interface</Filter>
@@ -755,9 +778,27 @@
     <ClCompile Include="MultiRenderTarget.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Common\Component\Renderer\Mesh\Model</Filter>
+        <ClCompile Include="Model.cpp">
+      <Filter>Resource\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Bone.cpp">
+      <Filter>Resource\Model\Bone</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelNode.cpp">
+      <Filter>Resource\Model\ModelNode</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="AnimationClip.cpp">
+      <Filter>Common\Component\Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneAnimator.cpp">
+      <Filter>Common\Component\Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Panal.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="SkyboxRenderer.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
@@ -766,8 +807,7 @@
     </ClCompile>
     <ClCompile Include="CubeMap.cpp">
       <Filter>Common\Component\Renderer\Skybox\CubeMap</Filter>
-    </ClCompile>
-  </ItemGroup>
+    </ClCompile>  </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">
       <Filter>Common\Math</Filter>

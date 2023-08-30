@@ -41,12 +41,9 @@ void StructedBuffer::SetData(void* data, UINT stride)
 {
 	if (mStride < stride) // 셋데이터시 버퍼로 넘겨줄 데이터 개수가 들어온 stride보다 크면 
 	{
-		Create(mSize, stride, eSRVType::SRV, data); //크기만큼 새로 buffer 생성
+		Create(mSize, stride, eSRVType::SRV, data,true); //크기만큼 새로 buffer 생성
 	}
-	else
-	{
-		GetDevice()->SetData(mWriteBuffer.Get(), data, mSize * stride); // 데이터 크기 * stride(개수)만큼 데이터 세팅한다.
-	}
+	GetDevice()->SetData(mWriteBuffer.Get(), data, mSize * mStride); // 데이터 크기 * stride(개수)만큼 데이터 세팅한다.
 	GetDevice()->CopyResource(buffer.Get(), mWriteBuffer.Get()); // writebuffer에 있는거 내 buffer도 들고있게함
 }
 

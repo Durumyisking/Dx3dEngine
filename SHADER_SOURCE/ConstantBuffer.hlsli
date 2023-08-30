@@ -121,7 +121,7 @@ cbuffer ParticleSystem : register(b6)
 // postprocess b8
 
 
-cbuffer Sky : register(b9) 
+cbuffer Sky : register(b9)
 {
     row_major matrix cubemapMat;
 }

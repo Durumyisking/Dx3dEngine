@@ -24,18 +24,18 @@ PSOut main(VSOut vsIn)
     float2 UV = vsIn.Position.xy / float2(1600.0f, 900.0f);
     float4 viewPos = positionTarget.Sample(linearSampler, UV);
     
-    if (1.0f != viewPos.a)
-        discard;
+    //if (1.0f != viewPos.a)
+    //    discard;
     
-    float4 viewNormal = normalTarget.Sample(linearSampler, UV);
+    //float4 viewNormal = normalTarget.Sample(linearSampler, UV);
     
-    LightColor lightColor = (LightColor) 0.0f;
-    CalculateLight3D(viewPos.xyz, viewNormal.xyz, 0, lightColor);
+    //LightColor lightColor = (LightColor) 0.0f;
+    //CalculateLight3D(viewPos.xyz, viewNormal.xyz, 0, lightColor);
     
-    float specCoef = specularTarget.Sample(linearSampler, UV);
+    //float specCoef = specularTarget.Sample(linearSampler, UV);
     
-    outcolor.Diffuse = lightColor.diffuse + lightColor.ambient;
-    outcolor.Specular = lightColor.specular * specCoef;
+    //outcolor.Diffuse = lightColor.diffuse + lightColor.ambient;
+    //outcolor.Specular = lightColor.specular * specCoef;
     
     outcolor.Diffuse.a = 1.0f;
     outcolor.Specular.a = 1.0f;

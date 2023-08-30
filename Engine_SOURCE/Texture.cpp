@@ -7,7 +7,7 @@ Texture::Texture()
 	: Resource(eResourceType::Texture)
 	, mDesc{}
 	, mTexture(nullptr)
-		
+
 {
 }
 
@@ -222,10 +222,10 @@ HRESULT Texture::Load(const std::wstring& path)
 {
 	std::filesystem::path parentPath = std::filesystem::current_path().parent_path();
 	std::wstring fullPath = parentPath.wstring() + L"/../Resources/" + path;
-			
+
 
 	wchar_t szExtension[256] = {};
-	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // ê²½ë¡œì—ì„œ í™•ì¥ìë§Œ ë½‘ì•„ì˜¤ëŠ” ë…€ì„
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // °æ·Î¿¡¼­ È®ÀåÀÚ¸¸ »Ì¾Æ¿À´Â ³à¼®
 
 	std::wstring extension(szExtension);
 
@@ -265,7 +265,7 @@ HRESULT Texture::Load(const std::wstring& path)
 Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 {
 	wchar_t szExtension[256] = {};
-	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // ê²½ë¡œì—ì„œ í™•ì¥ìë§Œ ë½‘ì•„ì˜¤ëŠ” ë…€ì„
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // °æ·Î¿¡¼­ È®ÀåÀÚ¸¸ »Ì¾Æ¿À´Â ³à¼®
 
 	std::wstring extension(szExtension);
 
@@ -294,11 +294,36 @@ Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 		, mSRV.GetAddressOf()
 	);
 
+	//TEST
+	/*{
+		std::vector<std::uint8_t> pixels{};
+		pixels.resize(mImage.GetPixelsSize());
+		std::memcpy(pixels.data(), mImage.GetPixels(), pixels.size());
+		 
+		ScratchImage image;
+		std::memcpy(&image, &mImage, sizeof(ScratchImage));
+
+		for (size_t i = 0; i < pixels.size(); ++i)
+		{
+			if (i % 4 == 0)
+				pixels[i] = 255 - pixels[i];
+		}
+
+		std::memcpy(image.GetImages()->pixels, pixels.data(), pixels.size());
+
+		{
+			const std::wstring folderName = L"./TEST/";
+			const std::wstring fileName = std::filesystem::path{ path }.filename().wstring();
+			HRESULT result = SaveToWICFile(*image.GetImages(), WIC_FLAGS_NONE, GetWICCodec(WIC_CODEC_PNG), (folderName + fileName).c_str());
+			assert(result == S_OK);
+		}
+
+	}*/
 
 	mSRV->GetResource((ID3D11Resource**)mTexture.GetAddressOf());
 
 	mTexture->GetDesc(&mDesc);
-	
+
 	SetName(info.texName);
 	SetPath(info.texPath);
 
@@ -328,7 +353,7 @@ void Texture::BindAllShaderResource(UINT slot)
 
 void Texture::BindUnorderedAccessview(UINT slot)
 {
-	UINT i = -1; 
+	UINT i = -1;
 	GetDevice()->BindUnorderedAccessView(slot, 1, mUAV.GetAddressOf(), &i);
 }
 
