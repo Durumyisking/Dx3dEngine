@@ -4,7 +4,6 @@
 #include "Texture.h"
 #include "Renderer.h"
 
-
 using namespace math;
 
 

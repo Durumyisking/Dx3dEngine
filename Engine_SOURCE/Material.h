@@ -34,8 +34,10 @@ public:
 
 	void SetTexture(Texture* texture) { mTexture[static_cast<UINT>(eTextureSlot::Albedo)] = texture; }
 	void SetTexture(eTextureSlot slot, Texture* texture) { mTexture[static_cast<UINT>(slot)] = texture; }
-	Texture* GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::Albedo)]; }
 
+	void SetTextureByKey(std::wstring key, eTextureSlot slot);
+
+	Texture* GetTexture() const { return mTexture[static_cast<UINT>(eTextureSlot::Albedo)]; }
 	Texture* GetTexture(eTextureSlot slot) const { return mTexture[static_cast<UINT>(slot)]; }
 
 	eRenderingMode GetRenderingMode() const { return mMode; }

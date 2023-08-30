@@ -29,7 +29,6 @@ Application::~Application()
 {
 
 }
-
 void Application::Initialize()
 {
 	GETSINGLE(TimeMgr)->Initialize();
@@ -73,10 +72,10 @@ void Application::Render()
 {
 	if (!GETSINGLE(TimeMgr)->IsUpdatePass())
 	{
+		
 		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::Render();
-
 		mGraphicDevice->AdjustViewPorts();
 		renderer::ClearRenderTargets(); // mGraphicDevice::Clear ´ë½Å ·»´õÅ¸°Ù Å¬¸®¾î
 		renderer::Render();

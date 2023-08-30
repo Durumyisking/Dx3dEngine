@@ -14,6 +14,5 @@ public:
 	virtual void Initialize() final ;
 	virtual void Update() final;
 	virtual void FixedUpdate() final;
-	virtual void Render() final;
-
+	virtual void Render() final;	
 };

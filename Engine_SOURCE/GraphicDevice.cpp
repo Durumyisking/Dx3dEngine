@@ -14,9 +14,6 @@
 
 extern Application application;
 
-
-
-
 GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 {
 	/*

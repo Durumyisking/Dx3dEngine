@@ -26,8 +26,8 @@ void PlayerScript::Initialize()
 	mTransform = GetOwner()->GetComponent<Transform>();
 	mPhyXRigidBody = GetOwner()->GetComponent<PhysXRigidBody>();
 
-	mPhyXRigidBody->SetAngularMaxVelocityForDynamic(10.f);
-	mPhyXRigidBody->SetLinearMaxVelocityForDynamic(10.f);
+	//mPhyXRigidBody->SetAngularMaxVelocityForDynamic(10.f);
+	//mPhyXRigidBody->SetLinearMaxVelocityForDynamic(10.f);
 
 }
 void PlayerScript::Update()

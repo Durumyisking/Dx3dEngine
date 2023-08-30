@@ -23,9 +23,7 @@ GameObj::GameObj()
 	, mType(eLayerType::None)
 	, mScripts{}
 	, mbDestroy(false)
-	, mbIsLeft(false)
 	, mbBlockRendering(false)
-	, mbOnFloor(false)
 {
 	mComponents.resize(static_cast<UINT>(eComponentType::End));
 	this->AddComponent<Transform>(eComponentType::Transform);
@@ -245,26 +243,6 @@ void GameObj::SetMesh(Mesh* mesh)
 	}
 }
 
-void GameObj::Flip()
-{
-	BaseRenderer* baseRenderer = GetComponent<BaseRenderer>();
-	if (baseRenderer)
-	{
-		Material* mtrl = baseRenderer->GetMaterial();
-		if (mtrl)
-		{
-
-#define INVERSE -1
-#define NORMAL 1
-
-
-			int isInverse = mbIsLeft ? INVERSE : NORMAL;
-
-			mtrl->SetData(eGPUParam::Int_1, &isInverse);
-		}
-	}
-
-}
 bool GameObj::MoveToTarget_Smooth_bool(GameObj* target, float speed, bool zOn, eDir dir)
 {
 

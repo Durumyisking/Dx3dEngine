@@ -5,7 +5,6 @@
 
 
 
-
 using namespace math;
 
 class Material;
@@ -40,7 +39,7 @@ public:
 
 	template <typename T>
 	T* AddComponent(eComponentType eType)
-	{			
+	{
 		T* comp = new T();
 
 		if (eType != eComponentType::Script)
@@ -105,8 +104,6 @@ public:
 		return nullptr;
 	}
 
-	void Flip();
-		
 	bool IsRenderingBlock() const { return mbBlockRendering; }
 	void RenderingBlockOn() { mbBlockRendering = true; }
 	void RenderingBlockOff() { mbBlockRendering = false; }
@@ -124,8 +121,7 @@ private:
 	eState mState;
 	std::vector<Script*> mScripts;
 	bool mbDestroy;
-	bool mbIsLeft;
-	bool mbOnFloor;
+
 	bool mbBlockRendering;
 
 public:
@@ -139,6 +135,7 @@ public:
 	Vector3 GetPos();
 	Vector3 GetWorldPos();
 
+	// ui           
 	Vector3 GetUIWorldPos();
 
 	Vector3 GetScale();
@@ -189,13 +186,4 @@ public:
 	eLayerType GetLayerType() const { return mType; }
 	void SetLayerType(eLayerType type) { mType = type; }
 
-	bool IsLeft() { return mbIsLeft; }
-	void SetLeft() { mbIsLeft = true; }
-
-	void SetRight() { mbIsLeft = false; }
-
-	bool IsOnFloor() const { return mbOnFloor; }
-	void SetFloorOn() { mbOnFloor = true; }
-	void SetFloorOff() { mbOnFloor = false; }
 };
-

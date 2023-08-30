@@ -17,6 +17,8 @@ MeshRenderer::~MeshRenderer()
 
 void MeshRenderer::Initialize()
 {
+	//t.loadFromFile("E:/Dev/3d-my/Dx3dEngine/Resources/environment.hdr");
+
 	BaseRenderer::Initialize();
 }
 
