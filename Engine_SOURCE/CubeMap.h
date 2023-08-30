@@ -32,9 +32,6 @@ private:
 	void bindPrefilterMap();
 
 private:
-	int m_Width;
-	int m_Height;
-
 	ID3D11Device* g_d3dDevice;
 
 	D3D11_VIEWPORT mViewport;

@@ -13,10 +13,25 @@
 
 
 CubeMapHDR::CubeMapHDR()
-    : g_d3dDevice(nullptr)
+    : g_d3dDevice(GetDevice()->GetID3D11Device())
+    , mViewport{}
+    , mProjConstantBuffer{}
+    , mCubemesh(nullptr)
+    , mTexture(nullptr)
+    , mRTVs2{}
+    , mRTVs3{}
+    , mIrradianceTex(nullptr)
+    , mIrradianceRTV(nullptr)
+    , mIrradianceSRV(nullptr)
+    , mPreFilterTex(nullptr)
+    , mPreFilterRTV(nullptr)
+    , mPreFilterSRV(nullptr)
+    , pSampler(nullptr)
+    , captureProjection{}
+    , captureViews{}
 
 {
-    g_d3dDevice = GetDevice()->GetID3D11Device();
+
 
 }
 

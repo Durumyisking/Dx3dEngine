@@ -187,9 +187,9 @@ void SceneTitle::Enter()
 	}
 
 	{
-		CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap);
-		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
-		sb->SetTexture(t);
+		//CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap);
+		//Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
+		//sb->SetTexture(t);
 	}
 	{
 		SkySphere* player = object::Instantiate<SkySphere>(eLayerType::SkySphere);

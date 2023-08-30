@@ -90,7 +90,6 @@ void Camera::Render()
 
 	//// Deferred light Render
 	//renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
-	//renderer::BindPBRProprerties();
 
 	//for (Light* light : renderer::lights)
 	//{
@@ -147,7 +146,7 @@ void Camera::CreateProjectionMatrix()
 	float height = (winRect.bottom - winRect.top) * mScale;
 	mAspectRatio = width / height;
 
-	SkyFov = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f , 1.f, mNear, mFar);
+	SkyFov = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f , mAspectRatio, mNear, mFar);
 
 
 	if (mType == eProjectionType::Perspective)
