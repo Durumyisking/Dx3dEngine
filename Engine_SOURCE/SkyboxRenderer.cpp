@@ -6,8 +6,9 @@
 
 SkyboxRenderer::SkyboxRenderer()
 	: BaseRenderer(eComponentType::MeshRenderer)
+	, mProjConstantBuffer{}
 {
-	SetMaterialByKey(L"SkyBoxMaterial");
+
 }
 
 SkyboxRenderer::~SkyboxRenderer()
@@ -16,8 +17,8 @@ SkyboxRenderer::~SkyboxRenderer()
 
 void SkyboxRenderer::Initialize()
 {
-	//SetMeshByKey(L"Spheremesh");
 	BaseRenderer::Initialize();
+
 }
 
 void SkyboxRenderer::Update()
@@ -36,8 +37,8 @@ void SkyboxRenderer::Render()
 
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-	// 텍스처는 cubemap에서 바인딩
-	GetMaterial()->GetShader()->Bind();
+	// skysphere 텍스처 바인딩.
+	GetMaterial()->Bind();
 
 	// draw
 	GetMesh()->BindBuffer();

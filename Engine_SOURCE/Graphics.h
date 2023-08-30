@@ -27,7 +27,7 @@
 #define CBSLOT_PARTICLESYSTEM 6
 #define CBSLOT_NOISE			7
 #define CBSLOT_POSTPROCESS		8
-#define CBSLOT_CUBEMAP 9
+#define CBSLOT_SKY 9
 
 
 enum class eValidationMode
@@ -152,7 +152,7 @@ enum class eTextureSlot
 	DiffuseLightTarget = 10,		// diffuseLightTarget
 	SpecularLightTarget,		// specularLightTarget
 
-	CubeMap = 12,
+	SkySphere = 12,
 	IrradianceMap,
 	PrefilteredMap,		
 

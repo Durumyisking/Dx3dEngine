@@ -14,4 +14,7 @@ public:
 	virtual void FixedUpdate() final;
 	virtual void Render() final;
 
+
+private:
+	SkyCB mProjConstantBuffer;
 };

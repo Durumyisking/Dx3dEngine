@@ -158,10 +158,10 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)Blur.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)BRDF.hlsli" />
-    <None Include="$(MSBuildThisFileDirectory)SkyBoxVS.hlsl">
+    <None Include="$(MSBuildThisFileDirectory)SkySphereVS.hlsl">
       <Filter>VS</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)SkyBoxPS.hlsl">
+    <None Include="$(MSBuildThisFileDirectory)SkySpherePS.hlsl">
       <Filter>PS</Filter>
     </None>
   </ItemGroup>

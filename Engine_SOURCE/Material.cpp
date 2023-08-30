@@ -291,4 +291,11 @@ void Material::SetShaderByKey(std::wstring key)
 	mShader = shader;
 }
 
+void Material::SetTextureByKey(std::wstring key, eTextureSlot slot)
+{
+	Texture* texture = GETSINGLE(ResourceMgr)->Find<Texture>(key);
+	mTexture[static_cast<UINT>(slot)] = texture;
+
+}
+
 

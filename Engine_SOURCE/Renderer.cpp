@@ -240,15 +240,8 @@ namespace renderer
 				, shader->GetInputLayoutAddr());
 		}
 		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkyBoxShader");
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkySphereShader");
 			GetDevice()->CreateInputLayout(arrLayout, 6
-				, shader->GetVSBlobBufferPointer()
-				, shader->GetVSBlobBufferSize()
-				, shader->GetInputLayoutAddr());
-		}
-		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"RectToCubemapShader");
-			GetDevice()->CreateInputLayout(arrLayout, 3
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
@@ -425,7 +418,7 @@ namespace renderer
 		constantBuffers[static_cast<UINT>(eCBType::PostProcess)]->Create(sizeof(PostProcessCB));
 
 		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)] = new ConstantBuffer(eCBType::CubeMapProj);
-		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Create(sizeof(CubeMapCB));
+		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Create(sizeof(SkyCB));
 
 		lightBuffer = new StructedBuffer();
 		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
@@ -615,26 +608,13 @@ namespace renderer
 #pragma region SkyBox Shader
 		{
 			Shader* shader = new Shader();
-			shader->Create(eShaderStage::VS, L"SkyBoxVS.hlsl", "main");
-			shader->Create(eShaderStage::PS, L"SkyBoxPS.hlsl", "main");
+			shader->Create(eShaderStage::VS, L"SkySphereVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"SkySpherePS.hlsl", "main");
 			shader->SetRSState(eRasterizerType::SolidFront);
 			shader->SetDSState(eDepthStencilType::Less);
 			shader->SetBSState(eBlendStateType::Default);
 
-			GETSINGLE(ResourceMgr)->Insert<Shader>(L"SkyBoxShader", shader);
-		}
-#pragma endregion
-
-#pragma region RectToCubeMap
-		{
-			Shader* shader = new Shader();
-			shader->Create(eShaderStage::VS, L"RectToCubemapVS.hlsl", "main");
-			shader->Create(eShaderStage::PS, L"RectToCubemapPS.hlsl", "main");
-			shader->SetRSState(eRasterizerType::SolidFront);
-			shader->SetDSState(eDepthStencilType::Less);
-			shader->SetBSState(eBlendStateType::Default);
-
-			GETSINGLE(ResourceMgr)->Insert<Shader>(L"RectToCubemapShader", shader);
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"SkySphereShader", shader);
 		}
 #pragma endregion
 
@@ -720,15 +700,22 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Brick_Color", L"Cube/Brick.jpg");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Brick_Normal", L"Cube/Brick_N.jpg");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"Skybox", L"Textures/SkyCityDayLight_color.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"SkySphereTexture", L"SkyCityNightStar_color.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"environment", L"Cube/environment.dds");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"CubeMap_negX", L"Cube/negx.bmp");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"CubeMap_negY", L"Cube/negy.bmp");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"CubeMap_negZ", L"Cube/negz.bmp");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"CubeMap_posX", L"Cube/posx.bmp");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"CubeMap_posY", L"Cube/posy.bmp");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"CubeMap_posZ", L"Cube/posz.bmp");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night1", L"Cube/night/DarkNight_.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night2", L"Cube/night/DarkNight_Scenario2.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night3", L"Cube/night/DarkNight_Scenario3.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night4", L"Cube/night/DarkNight_Scenario4.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night5", L"Cube/night/DarkNight_Scenario5.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night6", L"Cube/night/DarkNight_Scenario6.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night7", L"Cube/night/DarkNight_Scenario7.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night8", L"Cube/night/DarkNight_Scenario8.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night9", L"Cube/night/DarkNight_Scenario9.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night10", L"Cube/night/DarkNight_Scenario10.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night11", L"Cube/night/DarkNight_Scenario11.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night12", L"Cube/night/DarkNight_Scenario12.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night13", L"Cube/night/DarkNight_Scenario13.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"night14", L"Cube/night/DarkNight_Scenario14.dds");
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
@@ -947,12 +934,12 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"MergeMRT_Material", mergeMaterial);
 #pragma endregion
 
-#pragma region SkyBox Material
-		Shader* skyBoxShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkyBoxShader");
-		Material* skyBoxMaterial = new Material();
-		skyBoxMaterial->SetShader(skyBoxShader);
-
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"SkyBoxMaterial", skyBoxMaterial);
+#pragma region SkySphere Material
+		Shader* skySphereShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkySphereShader");
+		Material* skySphereMaterial = new Material();
+		skySphereMaterial->SetShader(skySphereShader);
+		skySphereMaterial->SetTextureByKey(L"SkySphereTexture", eTextureSlot::SkySphere);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"SkySphereMaterial", skySphereMaterial);
 #pragma endregion
 
 	}

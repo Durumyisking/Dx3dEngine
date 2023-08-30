@@ -206,6 +206,9 @@
     <Filter Include="Common\Component\Renderer\Skybox">
       <UniqueIdentifier>{b410bcf3-ae25-480a-b5b4-bd17195ed68c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Component\Renderer\Skybox\CubeMap">
+      <UniqueIdentifier>{9758229a-fb7a-43d0-89de-cf6b2aa53bed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -493,11 +496,11 @@
     <ClInclude Include="SkyboxRenderer.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
-    <ClInclude Include="CubeMap.h">
+    <ClInclude Include="SkySphere.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
-    <ClInclude Include="Skybox.h">
-      <Filter>Common\Component\Renderer\Skybox</Filter>
+    <ClInclude Include="CubeMap.h">
+      <Filter>Common\Component\Renderer\Skybox\CubeMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -758,11 +761,11 @@
     <ClCompile Include="SkyboxRenderer.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
-    <ClCompile Include="CubeMap.cpp">
+    <ClCompile Include="SkySphere.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>Common\Component\Renderer\Skybox</Filter>
+    <ClCompile Include="CubeMap.cpp">
+      <Filter>Common\Component\Renderer\Skybox\CubeMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

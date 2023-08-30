@@ -35,6 +35,7 @@
 #include "InputMgr.h"
 
 #include "CubeMap.h"
+#include "SkySphere.h"
 
 
 extern Application application;
@@ -186,8 +187,17 @@ void SceneTitle::Enter()
 	}
 
 	{
-		CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::Skybox);
+		CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap);
+		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
+		sb->SetTexture(t);
 	}
+	{
+		SkySphere* player = object::Instantiate<SkySphere>(eLayerType::SkySphere);
+		player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		player->GetComponent<Transform>()->SetScale(Vector3(500.0f, 500.0f, 500.0f));
+		player->SetName(L"SkySphere");
+	}
+
 	
 	{
 	/*	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
@@ -207,16 +217,16 @@ void SceneTitle::Enter()
 	}
 	
 	{
-		//GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
-		//plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		//plane->SetScale({ 1000.f, 0.5f, 1000.f });
-		//plane->SetName(L"Plane");
-		//plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial");
-		//plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
+		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+		plane->SetScale({ 1000.f, 0.5f, 1000.f });
+		plane->SetName(L"Plane");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial");
+		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
-		//PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
 	// DebugTest

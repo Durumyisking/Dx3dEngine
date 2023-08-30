@@ -1,4 +1,4 @@
-#include "Texture.h"
+﻿#include "Texture.h"
 
 
 
@@ -21,7 +21,7 @@ void Texture::Clear(UINT startSlot)
 
 	if ((startSlot == static_cast<UINT>(eTextureSlot::BRDF)) ||
 		(startSlot == static_cast<UINT>(eTextureSlot::Skybox)) ||
-		(startSlot == static_cast<UINT>(eTextureSlot::CubeMap)) ||
+		(startSlot == static_cast<UINT>(eTextureSlot::SkySphere)) ||
 		(startSlot == static_cast<UINT>(eTextureSlot::IrradianceMap)) ||
 		(startSlot == static_cast<UINT>(eTextureSlot::PrefilteredMap)))
 		return;
@@ -41,7 +41,7 @@ void Texture::Clears()
 
 		if ((i == static_cast<UINT>(eTextureSlot::BRDF)) || 
 			(i == static_cast<UINT>(eTextureSlot::Skybox)) ||
-			(i == static_cast<UINT>(eTextureSlot::CubeMap))||
+			(i == static_cast<UINT>(eTextureSlot::SkySphere))||
 			(i == static_cast<UINT>(eTextureSlot::IrradianceMap)) ||
 			(i == static_cast<UINT>(eTextureSlot::PrefilteredMap)))
 			continue;
@@ -338,5 +338,4 @@ void Texture::ClearUnorderedAccessview(UINT slot)
 	UINT i = -1;
 	GetDevice()->BindUnorderedAccessView(slot, 1, &p, &i);
 }
-
 

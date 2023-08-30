@@ -2,30 +2,7 @@
 #include "Engine.h"
 #include "GameObj.h"
 
-class TextureHDR
-{
-public:
-	TextureHDR();
-	~TextureHDR();
-	void Bind(unsigned int slot);
-	void loadFromFile(std::string name, bool linearFilter = true, bool flipTex = false);
-	/* Supports 1 or 4 channels */
-	void loadFromData(void* data, int w, int h, int channels, bool linearFilter = true);
-	int get_width() { return m_Width; };
-	int get_height() { return m_Height; };
-private:
-	int m_Width;
-	int m_Height;
-
-	ID3D11Texture2D* pTexture;
-	ID3D11SamplerState* pSampler;
-	ID3D11ShaderResourceView* pTextureView;
-
-};
-
-class Mesh;
 class Texture;
-
 class CubeMapHDR : public GameObj
 {
 #define SIZE_SKYBOX 2048;
@@ -42,15 +19,15 @@ public:
 	virtual void FixedUpdate();
 	virtual void Render();
 
+	void SetTexture(Texture* texture) { mTexture = texture; }
+
 	void Bind();
 	//TextureHDR loadFromFile(std::string name, bool linearFilter = true, bool flipTex = false);
-	int get_width() { return m_Width; };
-	int get_height() { return m_Height; };
+
+
 
 private:
 	void createEnvMap();
-
-	void bindCubeMap();
 	void bindIrradianceMap();
 	void bindPrefilterMap();
 
@@ -61,17 +38,13 @@ private:
 	ID3D11Device* g_d3dDevice;
 
 	D3D11_VIEWPORT mViewport;
-	TextureHDR mhdrTexture;
-	CubeMapCB mProjConstantBuffer;
+	SkyCB mProjConstantBuffer;
 	Mesh* mCubemesh;
 
-	std::vector<ID3D11RenderTargetView*> mRTVs;
+	Texture* mTexture;
+
 	std::vector<ID3D11RenderTargetView*> mRTVs2;
 	std::vector<ID3D11RenderTargetView*> mRTVs3;
-
-	ID3D11Texture2D* mEnvMapTex;
-	ID3D11RenderTargetView* mEnvMapRTV;
-	ID3D11ShaderResourceView* mEnvMapSRV;
 
 	ID3D11Texture2D* mIrradianceTex;
 	ID3D11RenderTargetView* mIrradianceRTV;

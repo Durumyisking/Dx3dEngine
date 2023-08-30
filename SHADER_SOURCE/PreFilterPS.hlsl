@@ -5,7 +5,6 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float3 WorldPos : Position;
-    float3 ViewPos : Position;
 };
 
 float RadicalInverse_VdC(uint bits)

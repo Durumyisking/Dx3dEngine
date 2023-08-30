@@ -2,7 +2,6 @@
 #include "BaseRenderer.h"
 #include "Mesh.h"
 #include "Material.h"
-#include "CubeMap.h"
 
 
 
@@ -15,8 +14,5 @@ public:
 	virtual void Initialize() final ;
 	virtual void Update() final;
 	virtual void FixedUpdate() final;
-	virtual void Render() final;
-
-	TextureHDR t;
-	
+	virtual void Render() final;	
 };

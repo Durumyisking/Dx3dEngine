@@ -57,6 +57,7 @@ namespace renderer
 		Matrix view;
 		Matrix inverseView;
 		Matrix projection;
+		Matrix fovForSkySphere;
 	};
 
 	CBUFFER(MaterialCB, CBSLOT_MATERIAL)
@@ -181,7 +182,7 @@ namespace renderer
 		float wave_distortion;
 	};
 
-	CBUFFER(CubeMapCB, CBSLOT_CUBEMAP)
+	CBUFFER(SkyCB, CBSLOT_SKY)
 	{
 		Matrix matrix;
 	};

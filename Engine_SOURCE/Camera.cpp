@@ -17,6 +17,7 @@ extern Application application;
 Matrix Camera::View = Matrix::Identity;
 Matrix Camera::InverseView = Matrix::Identity;
 Matrix Camera::Projection = Matrix::Identity;
+Matrix Camera::SkyFov = Matrix::Identity;
 
 Camera::Camera()
 	: Component(eComponentType::Camera)
@@ -146,11 +147,13 @@ void Camera::CreateProjectionMatrix()
 	float height = (winRect.bottom - winRect.top) * mScale;
 	mAspectRatio = width / height;
 
+	SkyFov = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f , 1.f, mNear, mFar);
+
 
 	if (mType == eProjectionType::Perspective)
 	{
 		mProjection = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, mAspectRatio, mNear, mFar);
-	}
+	}	
 	else // (mType == eProjectionType::Orthographic)
 	{
 		mProjection = Matrix::CreateOrthographic(width, height, mNear, mFar);
@@ -268,6 +271,11 @@ void Camera::renderPostProcess()
 void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 {
 	BaseRenderer* renderer = obj->GetComponent<BaseRenderer>();
+
+	if ( eLayerType::CubeMap== obj->GetLayerType())
+	{
+		obj->Render();
+	}
 
 	if (nullptr == renderer)
 		return;

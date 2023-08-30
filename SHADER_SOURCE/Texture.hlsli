@@ -16,7 +16,8 @@ Texture2D EmissiveTarget        : register(t9);
 Texture2D diffuseLightTarget    : register(t10);
 Texture2D specularLightTarget   : register(t11);
 
-TextureCube CubeMapTexture : register(t12);
+//TextureCube CubeMapTexture : register(t12);
+Texture2D SkySphere: register(t12);
 TextureCube irradianceMap : register(t13);
 TextureCube prefilteredMap : register(t14); // 라이트맵 적용
 
