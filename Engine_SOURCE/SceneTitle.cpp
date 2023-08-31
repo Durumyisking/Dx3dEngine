@@ -37,6 +37,8 @@
 #include "SkyBox.h"
 
 #include "Panal.h"
+#include "HUD.h"
+#include "Button.h"
 
 extern Application application;
 
@@ -71,6 +73,12 @@ void SceneTitle::update()
 	}
 
 
+	if (KEY_TAP(N_1))
+	{
+		panal->InActive();
+	}
+
+
 	Scene::update();
 }
 
@@ -99,19 +107,19 @@ void SceneTitle::Enter()
 		mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
 
 	}
+	  
+	{
+		// UI Camera
+		mUICamera = object::Instantiate<GameObj>(eLayerType::Camera);
+		Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
+		mUICamera->AddComponent<CameraScript>(eComponentType::Script);
 
-	//{
-	//	// UI Camera
-	//	mUICamera = object::Instantiate<GameObj>(eLayerType::Camera);
-	//	Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
-	//	mUICamera->AddComponent<CameraScript>(eComponentType::Script);
-
-	//	cameraUIComp->SetProjectionType(eProjectionType::Perspective);
-	//	cameraUIComp->SmoothOn();
-	//	cameraUIComp->DisableLayerMasks();
-	//	cameraUIComp->TurnLayerMask(eLayerType::UI, true);
-	//	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
-	//}
+		cameraUIComp->SetProjectionType(eProjectionType::Perspective);
+		cameraUIComp->SmoothOn();
+		cameraUIComp->DisableLayerMasks();
+		cameraUIComp->TurnLayerMask(eLayerType::UI, true);
+		mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
+	}
 
 	
 	{
@@ -253,35 +261,57 @@ void SceneTitle::Enter()
 			testRender->SetMeshByKey(L"Cubemesh");
 		}		
 	}
-	
- //   GameObj* test1 = object::Instantiate<GameObj>(eLayerType::Objects);
-	//test1->SetPos(Vector3(-5.f, 5.f, 0.f));
-	//test1->SetScale({ 5.f, 5.f, 5.f });
+	//   GameObj* test1 = object::Instantiate<GameObj>(eLayerType::Objects);
+	   //test1->SetPos(Vector3(-5.f, 5.f, 0.f));
+	   //test1->SetScale({ 5.f, 5.f, 5.f });
 
-	//test1->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	//MeshRenderer* testRender = test1->GetComponent<MeshRenderer>();
+	   //test1->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	   //MeshRenderer* testRender = test1->GetComponent<MeshRenderer>();
 
-	////SpriteRenderer* spriteRender = test1->AddComponent<SpriteRenderer>(eComponentType::UI);
-	////Texture* titleTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle"));
+	   ////SpriteRenderer* spriteRender = test1->AddComponent<SpriteRenderer>(eComponentType::UI);
+	   ////Texture* titleTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle"));
 
-	//Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"RectMesh");
-	//testRender->SetMesh(mesh);
-	//Material* mat = GETSINGLE(ResourceMgr)->Find<Material>(L"UIMaterial");
-	////mat->SetTexture(titleTexture);
-	//testRender->SetMaterial(mat);
-	//testRender->SetMeshByKey(L"Cubemesh");
+	   //Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"RectMesh");
+	   //testRender->SetMesh(mesh);
+	   //Material* mat = GETSINGLE(ResourceMgr)->Find<Material>(L"UIMaterial");
+	   ////mat->SetTexture(titleTexture);
+	   //testRender->SetMaterial(mat);
+	   //testRender->SetMeshByKey(L"Cubemesh");
+	   // 
+	//UISpriteMaterial
+	{
 
-	Panal* testObj = object::Instantiate<Panal>(eLayerType::Objects);
-	testObj->SetPos(Vector3(0.f, 5.f, 0.f));
-	testObj->SetScale({ 5.f, 5.f, 5.f });
-	Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"SpriteMaterial");
-	Texture* titleTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle"));
-	testMaterial->SetTexture(titleTexture);
-	testObj->GetComponent <SpriteRenderer>()->SetMaterial(testMaterial);
-	testObj->GetComponent<SpriteRenderer>()->SetMaterialByKey(L"SpriteMaterial");
-	testObj->GetComponent<SpriteRenderer>()->SetMeshByKey(L"Rectmesh");
+		HUD* hud = object::Instantiate<HUD>(eLayerType::UI);
+		hud->SetPos(Vector3(-5.f, 2.f, 10.f));
+		hud->SetScale({ 1.f, 1.f, 1.f });
+		hud->SetName(L"hud");
+		
+		MeshRenderer* hudRender = hud->AddComponent<MeshRenderer>(eComponentType::UI);
+		hudRender->SetMeshByKey(L"Rectmesh");
+		hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"UISpriteMaterial"));
 
+		hud->GetComponent<Transform>()->SetParent(mUICamera);
 
+		panal = object::Instantiate<Panal>(eLayerType::UI);
+		panal->SetPos(Vector3(-3.f, 2.f, 10.f));
+		panal->SetScale({ 1.0f, 1.0f, 1.0f });
+		panal->SetName(L"panal");
+		MeshRenderer* panalRender = panal->AddComponent<MeshRenderer>(eComponentType::UI);
+		panalRender->SetMeshByKey(L"Rectmesh");
+		panalRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"UISpriteMaterial"));
+		panal->GetComponent<Transform>()->SetParent(mUICamera);
+		panal->Addchild(hud);
+		//panal->Addchild(button);
+	}
+		
+	//UISpriteMaterial
+	HUD* hud = object::Instantiate<HUD>(eLayerType::UI);
+	hud->SetPos(Vector3(1.f, 1.f, 5.f));
+	hud->SetScale({ 50.f, 50.f, 1.f});
+	hud->SetName(L"hud2");
+	MeshRenderer* hudRender = hud->AddComponent<MeshRenderer>(eComponentType::UI);
+	hudRender->SetMeshByKey(L"Rectmesh");
+	hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"UISpriteMaterial"));
 
 	Scene::Enter();
 }

@@ -493,7 +493,6 @@
     <ClInclude Include="MultiRenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-
     <ClInclude Include="Model.h">
       <Filter>Resource\Model</Filter>
     </ClInclude>
@@ -504,6 +503,12 @@
       <Filter>Resource\Model\ModelNode</Filter>
     </ClInclude>
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="Panal.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -760,7 +765,6 @@
     <ClCompile Include="MultiRenderTarget.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-
     <ClCompile Include="Model.cpp">
       <Filter>Resource\Model</Filter>
     </ClCompile>
@@ -771,6 +775,12 @@
       <Filter>Resource\Model\ModelNode</Filter>
     </ClCompile>
     <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Panal.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UIFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

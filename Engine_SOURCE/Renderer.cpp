@@ -117,6 +117,7 @@ namespace renderer
 		arrLayout[7].SemanticName = "BLENDWEIGHT";
 		arrLayout[7].SemanticIndex = 0;
 
+
 		//Vector3 tangent;
 		//Vector3 biNormal;
 		//Vector3 normal;
@@ -232,6 +233,12 @@ namespace renderer
 			, SkyBoxShader->GetVSBlobBufferSize()
 			, SkyBoxShader->GetInputLayoutAddr());
 
+
+		Shader* uiSpriteShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UISpriteShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, uiSpriteShader->GetVSBlobBufferPointer()
+			, uiSpriteShader->GetVSBlobBufferSize()
+			, uiSpriteShader->GetInputLayoutAddr());
 
 #pragma endregion
 
@@ -547,6 +554,15 @@ namespace renderer
 
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"SkyBoxShader", skyBoxShader);
 #pragma endregion
+
+
+#pragma region UISprite Shader
+		Shader* uiSS = new Shader();
+		uiSS->Create(eShaderStage::VS, L"UISpriteVS.hlsl", "main");
+		uiSS->Create(eShaderStage::PS, L"UISpritePS.hlsl", "main");
+		uiSS->SetRSState(eRasterizerType::SolidNone);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UISpriteShader", uiSS);
+#pragma endregion
 	}
 
 	void LoadDefaultTexture()
@@ -605,7 +621,7 @@ namespace renderer
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Skybox", L"Textures/SkyCityDayLight_color.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"MarioTitle", L"CmTitleLogo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"MarioTitle", L"Textures/CmTitleLogo.png");
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
@@ -639,7 +655,7 @@ namespace renderer
 		Material* SpriteMaterial = new Material();
 		SpriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		SpriteMaterial->SetShader(SpriteShader);
-		SpriteMaterial->SetTexture(Spritetexture);
+		SpriteMaterial->SetTexture(eTextureSlot::Albedo,Spritetexture);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"SpriteMaterial", SpriteMaterial);
 #pragma endregion
 
@@ -841,6 +857,17 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"SkyBoxMaterial", skyBoxMaterial);
 #pragma endregion
 
+
+#pragma region UISprite Material
+		Texture* mariotitle = GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle");
+		Shader* uiSpriteShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UISpriteShader");
+		Material* uiSpriteMaterial = new Material();
+		uiSpriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		uiSpriteMaterial->SetShader(uiSpriteShader);
+		uiSpriteMaterial->SetTexture(eTextureSlot::Albedo, mariotitle); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"UISpriteMaterial", uiSpriteMaterial);
+
+#pragma endregion
 	}
 
 

@@ -1,6 +1,8 @@
 #pragma once
 #include "Scene.h"
 
+
+class Panal;
 class SceneTitle :
     public Scene
 {
@@ -20,6 +22,8 @@ public:
 private:
 	GameObj*	mCamera;
 	GameObj*    mUICamera;
+
+	Panal* panal;
 
 };
 

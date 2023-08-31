@@ -4,6 +4,7 @@
 class HUD : public UIBase
 {
 public:
+	HUD();
 	HUD(eUIType type);
 	~HUD();
 

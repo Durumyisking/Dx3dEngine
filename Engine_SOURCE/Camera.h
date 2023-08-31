@@ -37,7 +37,7 @@ public:
 	void RegisterCameraInRenderer();
 
 	void TurnLayerMask(eLayerType layer, bool enable = true);
-	void EnableLayerMasks() { mLayerMask.set(); } // ÀüºÎ´Ù true·Î }
+	void EnableLayerMasks() { mLayerMask.set(); } // ì „ë¶€ë‹¤ trueë¡œ }
 	void DisableLayerMasks() { mLayerMask.reset(); }
 
 	void SetProjectionType(eProjectionType type) { mType = type; }
@@ -75,14 +75,14 @@ private:
 private:
 	static Matrix View;
 	static Matrix InverseView;
-	static Matrix Projection; // ¸ğµç objµéÀÇ ÇØ´ç Çà·ÄÀº µ¿ÀÏÇÔ
+	static Matrix Projection; // ëª¨ë“  objë“¤ì˜ í•´ë‹¹ í–‰ë ¬ì€ ë™ì¼í•¨
 
 	Matrix mView;
 	Matrix mProjection;
 
 
 	eProjectionType mType;
-	float mAspectRatio; // Á¾È¾ºñ
+	float mAspectRatio; // ì¢…íš¡ë¹„
 
 	float mNear;
 	float mFar;

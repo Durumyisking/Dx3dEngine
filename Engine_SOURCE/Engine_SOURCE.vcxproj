@@ -313,6 +313,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="TimerMgr.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIFactory.h" />
     <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -410,6 +411,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="TimerMgr.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIFactory.cpp" />
     <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
