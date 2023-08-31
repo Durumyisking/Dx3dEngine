@@ -213,6 +213,11 @@ void SceneTitle::Enter()
 		player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		player->GetComponent<Transform>()->SetScale(Vector3(500.0f, 500.0f, 500.0f));
 		player->SetName(L"SkySphere");
+
+		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
+		t->BindAllShaderResource(13);
+		t->BindAllShaderResource(14);
+
 	}
 	
 	{

@@ -19,7 +19,6 @@ void Texture::Clear(UINT startSlot)
 	ID3D11ShaderResourceView* srv = nullptr;
 
 	if ((startSlot == static_cast<UINT>(eTextureSlot::BRDF)) ||
-		(startSlot == static_cast<UINT>(eTextureSlot::Skybox)) ||
 		(startSlot == static_cast<UINT>(eTextureSlot::SkySphere)) ||
 		(startSlot == static_cast<UINT>(eTextureSlot::IrradianceMap)) ||
 		(startSlot == static_cast<UINT>(eTextureSlot::PrefilteredMap)))
@@ -31,6 +30,7 @@ void Texture::Clear(UINT startSlot)
 	GetDevice()->BindShaderResource(eShaderStage::HS, startSlot, &srv);
 	GetDevice()->BindShaderResource(eShaderStage::CS, startSlot, &srv);
 	GetDevice()->BindShaderResource(eShaderStage::PS, startSlot, &srv);
+
 }
 
 void Texture::Clears()
@@ -39,7 +39,6 @@ void Texture::Clears()
 	{
 
 		if ((i == static_cast<UINT>(eTextureSlot::BRDF)) ||
-			(i == static_cast<UINT>(eTextureSlot::Skybox)) ||
 			(i == static_cast<UINT>(eTextureSlot::SkySphere)) ||
 			(i == static_cast<UINT>(eTextureSlot::IrradianceMap)) ||
 			(i == static_cast<UINT>(eTextureSlot::PrefilteredMap)))
@@ -53,6 +52,8 @@ void Texture::Clears()
 		GetDevice()->BindShaderResource(eShaderStage::HS, i, &srv);
 		GetDevice()->BindShaderResource(eShaderStage::CS, i, &srv);
 		GetDevice()->BindShaderResource(eShaderStage::PS, i, &srv);
+
+
 	}
 }
 

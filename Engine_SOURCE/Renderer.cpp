@@ -246,20 +246,6 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
-		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"IrradianceShader");
-			GetDevice()->CreateInputLayout(arrLayout, 8
-				, shader->GetVSBlobBufferPointer()
-				, shader->GetVSBlobBufferSize()
-				, shader->GetInputLayoutAddr());
-		}
-		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PreFilterShader");
-			GetDevice()->CreateInputLayout(arrLayout, 8
-				, shader->GetVSBlobBufferPointer()
-				, shader->GetVSBlobBufferSize()
-				, shader->GetInputLayoutAddr());
-		}
 
 
 #pragma endregion
@@ -605,7 +591,7 @@ namespace renderer
 		}
 #pragma endregion
 
-#pragma region SkyBox Shader
+#pragma region SkySphere Shader
 		{
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"SkySphereVS.hlsl", "main");
@@ -615,32 +601,6 @@ namespace renderer
 			shader->SetBSState(eBlendStateType::Default);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"SkySphereShader", shader);
-		}
-#pragma endregion
-
-#pragma region IrradianceMap
-		{
-			Shader* shader = new Shader();
-			shader->Create(eShaderStage::VS, L"IrradianceVS.hlsl", "main");
-			shader->Create(eShaderStage::PS, L"IrradiancePS.hlsl", "main");
-			shader->SetRSState(eRasterizerType::SolidFront);
-			shader->SetDSState(eDepthStencilType::Less);
-			shader->SetBSState(eBlendStateType::Default);
-
-			GETSINGLE(ResourceMgr)->Insert<Shader>(L"IrradianceShader", shader);
-		}
-#pragma endregion
-
-#pragma region PreFilteredMap
-		{
-			Shader* shader = new Shader();
-			shader->Create(eShaderStage::VS, L"PreFilterVS.hlsl", "main");
-			shader->Create(eShaderStage::PS, L"PreFilterPS.hlsl", "main");
-			shader->SetRSState(eRasterizerType::SolidFront);
-			shader->SetDSState(eDepthStencilType::Less);
-			shader->SetBSState(eBlendStateType::Default);
-
-			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PreFilterShader", shader);
 		}
 #pragma endregion
 
