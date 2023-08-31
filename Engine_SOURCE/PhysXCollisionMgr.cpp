@@ -30,24 +30,13 @@ void PhysXCollisionMgr::Update()
 		{
 			if (mLayerCollisionMatrix[i][j])
 			{
+				setCollisionFlag(i, j);
 			}
 		}
 	}
 }
 
 void PhysXCollisionMgr::SetForceInLayer(eLayerType layerType, const Vector3& pos, const Vector3& volume, const Vector3& impulse)
-{
-}
-
-void PhysXCollisionMgr::SetForceInPlayerAndTakeDamage(const Vector3& pos, const Vector3& volume, const Vector3& impulse, float damage)
-{
-}
-
-void PhysXCollisionMgr::SetForceFromDotInLayerAndTakeDamage(eLayerType layerType, const Vector3& pos, const Vector3& volume, const Vector3& impulse, float damage)
-{
-}
-
-void PhysXCollisionMgr::SetForceInLayerAndFollowPlayer(eLayerType layerType, const Vector3& pos, const Vector3& volume, const Vector3& impulse)
 {
 }
 
