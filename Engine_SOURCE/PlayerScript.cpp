@@ -62,11 +62,11 @@ void PlayerScript::FixedUpdate()
 
 	if (KEY_DOWN(LEFT))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * -1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camRight * -10000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(RIGHT))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * 1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camRight * 10000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(UP))
 	{

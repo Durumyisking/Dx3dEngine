@@ -175,7 +175,7 @@ void SceneTitle::Enter()
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Capsulemesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
@@ -186,6 +186,23 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
+
+	//Ä¸½¶ Å×½ºÆ®¿ë ÄÚµå
+	{
+		GameObj* capsule = object::Instantiate<GameObj>(eLayerType::Monster);
+		capsule->SetPos(Vector3(500.f, 0.f, 0.f));
+		capsule->SetScale(Vector3(100.0f, 100.0f, 100.0f));
+		capsule->SetName(L"Capsule");
+		capsule->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMeshByKey(L"Capsulemesh");
+		capsule->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"FlatMaterial");
+
+		capsule->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Capsule, Vector3(500.f, 0.25f, 500.f));
+
+		PhysXRigidBody* rigid = capsule->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		capsule->AddComponent<PhysXCollider>(eComponentType::Collider);
+	}
+
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
@@ -204,6 +221,17 @@ void SceneTitle::Enter()
 		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
 		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
 		animator->Play(L"test");
+
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Capsulemesh");
+		player->AddComponent<PlayerScript>(eComponentType::Script);
+
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
+
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
 	{
@@ -393,19 +421,19 @@ void SceneTitle::Enter()
 
 	// DebugTest
 	{ 
-		//Deferred
+		//deferred
 		//{
-		//	GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);
-		//	test2->SetPos(Vector3(-10.f, 5.f, 0.f));
-		//	test2->SetScale({ 5.f, 5.f, 5.f });
-		//	test2->SetName(L"Test2");
+		//	gameobj* test2 = object::instantiate<gameobj>(elayertype::objects);
+		//	test2->setpos(vector3(-10.f, 5.f, 0.f));
+		//	test2->setscale({ 5.f, 5.f, 5.f });
+		//	test2->setname(l"test2");
 
-		//	test2->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//	MeshRenderer* testRender = test2->GetComponent<MeshRenderer>();
-		//	Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"DeferredMaterial");
+		//	test2->addcomponent<meshrenderer>(ecomponenttype::meshrenderer);
+		//	meshrenderer* testrender = test2->getcomponent<meshrenderer>();
+		//	material* testmaterial = getsingle(resourcemgr)->find<material>(l"deferredmaterial");
 
-		//	testRender->SetMaterial(testMaterial);
-		//	testRender->SetMeshByKey(L"Cubemesh");
+		//	testrender->setmaterial(testmaterial);
+		//	testrender->setmeshbykey(l"cubemesh");
 		//}		
 	}
 	
