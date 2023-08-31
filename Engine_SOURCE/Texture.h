@@ -27,7 +27,6 @@ public:
 	bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag);
 	bool Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture);
 	bool Create(D3D11_TEXTURE2D_DESC& desc);
-	bool CreateCubeMapTexture();
 
 	virtual HRESULT Load(const std::wstring& path) override;
 	Texture* Load(const std::wstring& path, const Model::TextureInfo& info);
@@ -41,7 +40,7 @@ public:
 
 
 	void SetTexture(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture) { mTexture = texture; }
-	void MakeCropTexture(UINT DstSubresource, UINT DstX, UINT DstY, UINT DstZ, ID3D11Resource* pSrcResource, UINT SrcSubresource, const D3D11_BOX* pSrcBox);
+	//void MakeCropTexture(UINT DstSubresource, UINT DstX, UINT DstY, UINT DstZ, ID3D11Resource* pSrcResource, UINT SrcSubresource, const D3D11_BOX* pSrcBox);
 	ScratchImage& GetScratchImage() { return mImage; }
 
 	UINT GetHeight() { return mDesc.Height; }

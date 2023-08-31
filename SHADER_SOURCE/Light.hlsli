@@ -127,7 +127,7 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
     lightColor.ambient = lightInfo.color.ambient;
 }
 
-float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal, float metallic, float roughness)
+float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal, float metallic, float roughness, float3 uv)
 {
     // PBR     
     float3 V = normalize(-viewPos); // 뷰공간 pinPoint(0,0,0)부터 픽셀로 향하는 벡터
@@ -145,18 +145,16 @@ float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal
 
     float3 kd = lerp((float3) 1.f - F, (float3) 0.f, metallic);
 
-    float3 irradiance = irradianceMap.Sample(linearSampler, N).rgb;
+    float3 irradiance = irradianceMap.Sample(linearSampler, uv).rgb;
     float3 diffuse = irradiance * kd * albedo.xyz;
-    //float3 diffuse = kd * albedo.xyz;
 
     const float MAX_REFLECTION_LOD = 4.f;
-    float3 prefilteredColor = prefilteredMap.SampleLevel(linearSampler, R, roughness * MAX_REFLECTION_LOD).rgb; 
+    float3 prefilteredColor = prefilteredMap.SampleLevel(linearSampler, uv, roughness * MAX_REFLECTION_LOD).rgb;
     float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.f), roughness)).rg;
     float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y); 
-    //float3 specular = (F * envBRDF.x + envBRDF.y);
 
-    float3 result = (diffuse + specular) * NdotL;
-    //float3 result = (diffuse + specular); // 마딧세이는 전방향 빛 비추는듯?4
+    //float3 result = (diffuse + specular) * NdotL;
+    float3 result = (diffuse + specular); // 마딧세이는 전방향 빛 비추는듯?4
     
     return result;
 }

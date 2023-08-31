@@ -19,8 +19,6 @@ public:
 	virtual void FixedUpdate();
 	virtual void Render();
 
-	void SetTexture(Texture* texture) { mTexture = texture; }
-
 	void Bind();
 	//TextureHDR loadFromFile(std::string name, bool linearFilter = true, bool flipTex = false);
 
@@ -37,9 +35,7 @@ private:
 	D3D11_VIEWPORT mViewport;
 	SkyCB mProjConstantBuffer;
 	Mesh* mCubemesh;
-
-	Texture* mTexture;
-
+	
 	std::vector<ID3D11RenderTargetView*> mRTVs2;
 	std::vector<ID3D11RenderTargetView*> mRTVs3;
 

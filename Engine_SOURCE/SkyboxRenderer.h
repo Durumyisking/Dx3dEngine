@@ -14,6 +14,7 @@ public:
 	virtual void FixedUpdate() final;
 	virtual void Render() final;
 
+	void SetSkyBoyTextureByKey(const std::wstring& texureName);
 
 private:
 	SkyCB mProjConstantBuffer;

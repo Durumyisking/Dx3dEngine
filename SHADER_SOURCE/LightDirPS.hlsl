@@ -8,6 +8,7 @@ struct VSIn
 struct VSOut
 {
     float4 Position : SV_Position;
+    float3 CubeUV : TEXCOORD;
 };
 
 
@@ -52,7 +53,7 @@ PS_OUT main(VSOut vsin)
     //}
     //else
     {
-        diffuse = CalculateLightPBR_Direct(vViewPos.xyz, albedo, normal.xyz, metallic, roughness);
+        diffuse = CalculateLightPBR_Direct(vViewPos.xyz, albedo, normal.xyz, metallic, roughness, vsin.CubeUV);
 //        specular = CalculateLightPBR_Specular(vViewPos.xyz, albedo, normal.xyz, metallic, roughness);
         output.vDiffuse.xyz = diffuse;
       //  output.vSpecular.xyz = specular;

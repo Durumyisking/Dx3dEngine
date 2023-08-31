@@ -137,7 +137,7 @@ void SceneTitle::Enter()
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
 		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1000.f, 0.f));
-		directionalLight->SetRotation(Vector3(90.f, 0.f, 0.f));
+		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
 		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
@@ -204,20 +204,15 @@ void SceneTitle::Enter()
 
 
 	{
-		//CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap);
-		//Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
-		//sb->SetTexture(t);
+		CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap);
+
+		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
+		t->BindAllShaderResource(12);
 	}
 	{
 		SkySphere* player = object::Instantiate<SkySphere>(eLayerType::SkySphere);
 		player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		player->GetComponent<Transform>()->SetScale(Vector3(500.0f, 500.0f, 500.0f));
 		player->SetName(L"SkySphere");
-
-		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
-		t->BindAllShaderResource(13);
-		t->BindAllShaderResource(14);
-
 	}
 	
 	{

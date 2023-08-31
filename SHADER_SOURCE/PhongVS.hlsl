@@ -19,6 +19,7 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float2 UV : TEXCOORD;     
+    float3 UVCube : TEXCOORD1;
     float3 ViewPos : POSITION;
 
     float3 ViewTangent : TANGENT;
@@ -61,10 +62,12 @@ VSOut main(VSIn vsIn)
     float3 viewBiNormal = normalize(mul(float4(biNormal, 0.f), world).xyz);
     viewBiNormal = normalize(mul(float4(viewBiNormal, 0.f), view).xyz);
     
-    vsOut.ViewPos = viewPosition.xyz;
+    vsOut.ViewPos       = viewPosition.xyz;
     vsOut.ViewNormal     = viewNormal.xyz;
     vsOut.ViewTangent    = viewTangent.xyz;
     vsOut.ViewBiNormal   = viewBiNormal.xyz;
+    
+    vsOut.UVCube = normalize(vsIn.Position.xyz);
     
     return vsOut;
 }

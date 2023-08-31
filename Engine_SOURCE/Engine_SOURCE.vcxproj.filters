@@ -525,6 +525,9 @@
     <ClInclude Include="Panal.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="CubeMap.h">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -802,6 +805,9 @@
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
     <ClCompile Include="SkySphere.cpp">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeMap.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
   </ItemGroup>

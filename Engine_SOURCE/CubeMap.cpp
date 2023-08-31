@@ -17,7 +17,6 @@ CubeMapHDR::CubeMapHDR()
     , mViewport{}
     , mProjConstantBuffer{}
     , mCubemesh(nullptr)
-    , mTexture(nullptr)
     , mRTVs2{}
     , mRTVs3{}
     , mIrradianceTex(nullptr)
@@ -55,13 +54,6 @@ void CubeMapHDR::Initialize()
 
     mCubemesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
-    mViewport.MinDepth = 0.0f;
-    mViewport.MaxDepth = 1.0f;
-    mViewport.TopLeftX = 0;
-    mViewport.TopLeftY = 0;
-
-//    bindIrradianceMap();
-    bindPrefilterMap();
 
     GetDevice()->AdjustViewPorts();
 
@@ -116,8 +108,8 @@ void CubeMapHDR::createEnvMap()
     srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURECUBE;
     srvDesc.TextureCube.MostDetailedMip = 0;
     srvDesc.TextureCube.MipLevels = 1;
-    GetDevice()->CreateShaderResourceView(mTexture->GetTexture().Get(), &srvDesc, &mIrradianceSRV);
-    GetDevice()->CreateShaderResourceView(mTexture->GetTexture().Get(), &srvDesc, &mPreFilterSRV);
+    GetDevice()->CreateShaderResourceView(mIrradianceTex, &srvDesc, &mIrradianceSRV);
+    GetDevice()->CreateShaderResourceView(mPreFilterTex, &srvDesc, &mPreFilterSRV);
 
     for (uint32_t i = 0; i < 6; i++)
     {
@@ -129,9 +121,9 @@ void CubeMapHDR::createEnvMap()
         rtvDesc.Texture2DArray.ArraySize = 1;
 
         ID3D11RenderTargetView* rtv2 = nullptr;
-        GetDevice()->CreateRenderTargetView(mTexture->GetTexture().Get(), &rtvDesc, &rtv2);
+        GetDevice()->CreateRenderTargetView(mIrradianceTex, &rtvDesc, &rtv2);
         ID3D11RenderTargetView* rtv3 = nullptr;
-        GetDevice()->CreateRenderTargetView(mTexture->GetTexture().Get() , &rtvDesc, &rtv3);
+        GetDevice()->CreateRenderTargetView(mPreFilterTex, &rtvDesc, &rtv3);
 
         mRTVs2.emplace_back(rtv2);
         mRTVs3.emplace_back(rtv3);
@@ -150,7 +142,6 @@ void CubeMapHDR::bindIrradianceMap()
     mViewport.Height = SIZE_IRRADIANCE;
     GetDevice()->BindViewports(&mViewport);
 
-    mTexture->BindShaderResource(eShaderStage::PS, (static_cast<UINT>(eTextureSlot::Skybox)));
     shader->Bind();
 
     for (uint32_t i = 0; i < 6; ++i)
@@ -176,7 +167,6 @@ void CubeMapHDR::bindPrefilterMap()
     mViewport.Height = SIZE_PREFILTER;
     GetDevice()->BindViewports(&mViewport);
 
-    mTexture->BindShaderResource(eShaderStage::PS, (static_cast<UINT>(eTextureSlot::Skybox)));
     shader->Bind();
 
     for (uint32_t i = 0; i < 6; ++i)
@@ -199,12 +189,16 @@ void CubeMapHDR::Bind()
 {
     if (asdf <= 100)
     {
-//        bindIrradianceMap();
+        mViewport.MinDepth = 0.0f;
+        mViewport.MaxDepth = 1.0f;
+        mViewport.TopLeftX = 0;
+        mViewport.TopLeftY = 0;
+        bindIrradianceMap();
         bindPrefilterMap();
         GetDevice()->AdjustViewPorts();
         renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
         ++asdf;
     }
-//    GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::IrradianceMap), &mIrradianceSRV);
+    //GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::IrradianceMap), &mIrradianceSRV);
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &mPreFilterSRV);
 }
