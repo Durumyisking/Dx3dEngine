@@ -12,7 +12,7 @@ BaseRenderer::BaseRenderer(eComponentType type)
 	, mbUseLOD(false)
 	, mSpriteSize(Vector2::Zero)
 {
-	// ë””í´íŠ¸ ë§¤ì‹œ ì§€ì •
+	// µðÆúÆ® ¸Å½Ã ÁöÁ¤
 	Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
 	SetMesh(mesh);
@@ -47,15 +47,11 @@ void BaseRenderer::SetMeshByKey(std::wstring key)
 void BaseRenderer::SetMaterial(Material* material)
 {
 	mMaterial = material;
-
-	// adjustTexture();
 }
 
 void BaseRenderer::SetMaterialByKey(std::wstring key)
 {
 	mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
-
-	// adjustTexture();
 }
 
 void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
@@ -63,7 +59,6 @@ void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
 	mMaterial = material;
 	mbIsAnim = true;
 	mSpriteSize = spriteSize;
-	// adjustTexture();
 }
 
 

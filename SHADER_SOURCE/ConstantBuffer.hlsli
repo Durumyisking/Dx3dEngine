@@ -5,6 +5,8 @@ cbuffer Transform : register(b0)
     row_major matrix view;
     row_major matrix inverseView;
     row_major matrix projection;
+    row_major matrix fovForSkySphere;
+
 }
 
 cbuffer Material : register(b1)
@@ -119,8 +121,7 @@ cbuffer ParticleSystem : register(b6)
 // postprocess b8
 
 
-cbuffer vvvconstant : register(b9) // 쓸사람 쓰세요
+cbuffer Sky : register(b9)
 {
-    
-    
+    row_major matrix cubemapMat;
 }

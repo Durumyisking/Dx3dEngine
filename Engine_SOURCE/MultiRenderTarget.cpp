@@ -6,26 +6,31 @@ MultiRenderTarget::MultiRenderTarget()
 	, mRenderTargetCount(0)
 	, mClearColors{}
 {
+	mRenderTargets.resize(12);
 }
 
 MultiRenderTarget::~MultiRenderTarget()
 {
 }
 
-void MultiRenderTarget::Create(Texture* texture[12], Texture* dsTexture)
+void MultiRenderTarget::Create(std::vector<Texture*> textures, Texture* dsTexture)
 {
-	for (UINT i = 0; i < 12; i++)
+	for (UINT i = 0; i <= textures.size(); i++)
 	{
-		if (texture[i] == nullptr)
+		if (i == textures.size())
 		{
 			mRenderTargetCount = i;
 			break;
 		}
 
-		mRenderTargets[i] = texture[i];
+		mRenderTargets[i] = textures[i];
 	}
 
 	mDSTexture = dsTexture;
+}
+
+void MultiRenderTarget::Create(Texture* textures, Texture* dsTexture)
+{
 }
 
 void MultiRenderTarget::OMSetRenderTarget()
@@ -37,7 +42,7 @@ void MultiRenderTarget::OMSetRenderTarget()
 	{
 		if (mRenderTargets[i])
 		{
-			arrRenderTargetViews[i] = mRenderTargets[i]->GetRTV().Get(); // í…ìŠ¤ì²˜ ë§Œë“¤ë•Œ í”Œëž˜ê·¸ ì„¤ì • í•´ë‘ì–´ì„œ ë Œë”íƒ€ê²Ÿìœ¼ë¡œ ì‚¬ìš© ê°€ëŠ¥
+			arrRenderTargetViews[i] = mRenderTargets[i]->GetRTV().Get(); // ÅØ½ºÃ³ ¸¸µé¶§ ÇÃ·¡±× ¼³Á¤ ÇØµÎ¾î¼­ ·»´õÅ¸°ÙÀ¸·Î »ç¿ë °¡´É
 		}
 	}
 
@@ -51,9 +56,9 @@ void MultiRenderTarget::OMSetRenderTarget()
 	}
 }
 
-void MultiRenderTarget::Clear(FLOAT backgroundColor[4])
+void MultiRenderTarget::Clear(FLOAT backgroundColor[4] )
 {
-	//FLOAT backgroundColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	//FLOAT backgroundColor[4] = backgroundColor;
 
 	for (UINT i = 0; i < mRenderTargetCount; i++)
 	{

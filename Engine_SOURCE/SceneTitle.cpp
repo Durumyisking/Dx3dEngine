@@ -34,14 +34,15 @@
 
 #include "InputMgr.h"
 
-#include "SkyBox.h"
+#include "CubeMap.h"
+#include "SkySphere.h"
+
+#include "BoneAnimator.h"
 
 #include "Panal.h"
 #include "HUD.h"
 #include "Button.h"
 #include "UIFactory.h"
-
-
 extern Application application;
 
 
@@ -125,13 +126,6 @@ void SceneTitle::Enter()
 
 	
 	{
-		//SkyBox* box = object::Instantiate<SkyBox>(eLayerType::BackGround, L"TitleSkyBox");
-		//box->TextureLoad(L"TitleSky", L"..//Resources//SkyCityNightStar_color.png");
-
-	}
-
-
-	{
 		GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
 
 		MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
@@ -151,17 +145,13 @@ void SceneTitle::Enter()
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 500.f, -1000.f));
-		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
+		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1000.f, 0.f));
+		directionalLight->SetRotation(Vector3(90.f, 0.f, 0.f));
 		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
-//		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
-		//MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//mr->SetMaterialByKey(L"SunMaterial");
-		//mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
 	
 
@@ -172,21 +162,20 @@ void SceneTitle::Enter()
 		player->SetName(L"Player");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
-			L"check_albedo",
-			L"check_normal", 
-			L"check_metallic", 
-			L"check_roughness", 
+			L"gold_albedo",
+			L"gold_normal", 
+			L"gold_metallic", 
+			L"gold_roughness", 
 			L"PBRShader",
 			L"mat_dirt"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
@@ -194,19 +183,45 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
-	
 	{
-		GameObj* obj = object::Instantiate<GameObj>(eLayerType::Objects);
-		obj->SetPos(Vector3(10.f, 5.f, 0.f));
-		obj->SetScale({ 1.f, 1.f, 1.f });
-		obj->SetName(L"Object");
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(-5.f, 5.f, 5.f));
+		player->SetScale(Vector3(1.f, 1.f, 1.f));
+		player->SetName(L"Player");
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		(
+			L"check_albedo",
+			L"check_normal",
+			L"check_metallic",
+			L"check_roughness",
+			L"PBRShader",
+			L"mat_dirt"
+		);
+		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-		obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
-		obj->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->AddComponent<PlayerScript>(eComponentType::Script);
 
-		PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
-		obj->AddComponent<PhysXCollider>(eComponentType::Collider);
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	}
+
+
+	{
+		//CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap);
+		//Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
+		//sb->SetTexture(t);
+	}
+	{
+		SkySphere* player = object::Instantiate<SkySphere>(eLayerType::SkySphere);
+		player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		player->GetComponent<Transform>()->SetScale(Vector3(500.0f, 500.0f, 500.0f));
+		player->SetName(L"SkySphere");
 	}
 	
 	{
@@ -214,7 +229,7 @@ void SceneTitle::Enter()
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial");
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
@@ -222,7 +237,6 @@ void SceneTitle::Enter()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-	// DebugTest
 	{ 
 		//Deferred
 		//{

@@ -141,6 +141,7 @@
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
       <AdditionalIncludeDirectories>$(SolutionDir)External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -210,6 +211,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationClip.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="ApplyPacketScript.h" />
@@ -218,6 +220,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="AudioSource.h" />
     <ClInclude Include="BaseRenderer.h" />
     <ClInclude Include="Bone.h" />
+    <ClInclude Include="BoneAnimator.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
@@ -230,6 +233,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="ConstantBuffer.h" />
+    <ClInclude Include="CubeMap.h" />
     <ClInclude Include="CursorScript.h" />
     <ClInclude Include="def.h" />
     <ClInclude Include="druEnums.h" />
@@ -265,7 +269,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ModelNode.h" />
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="PaintShader.h" />
     <ClInclude Include="Panal.h" />
     <ClInclude Include="ParticleShader.h" />
     <ClInclude Include="ParticleSystem.h" />
@@ -303,10 +306,12 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ServerToClient.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimpleMath.h" />
-    <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="SkySphere.h" />
+    <ClInclude Include="SkyboxRenderer.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="StringFunctions.h" />
+    <ClInclude Include="Struct.h" />
     <ClInclude Include="StructedBuffer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeMgr.h" />
@@ -318,6 +323,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationClip.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="ApplyPacketScript.cpp" />
@@ -326,6 +332,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="BaseRenderer.cpp" />
     <ClCompile Include="Bone.cpp" />
+    <ClCompile Include="BoneAnimator.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -336,6 +343,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
+    <ClCompile Include="CubeMap.cpp" />
     <ClCompile Include="CursorScript.cpp" />
     <ClCompile Include="druEnums.cpp" />
     <ClCompile Include="druMath.cpp" />
@@ -365,7 +373,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelNode.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
-    <ClCompile Include="PaintShader.cpp" />
     <ClCompile Include="Panal.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -401,7 +408,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PacketSendScript.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
-    <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="SkySphere.cpp" />
+    <ClCompile Include="SkyboxRenderer.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="StringFunctions.cpp" />

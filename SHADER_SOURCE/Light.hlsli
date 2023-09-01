@@ -34,7 +34,7 @@ static const float Epsilon = 0.00001f;
 static const float3 Fdielectric = 0.04f;
 
 
-void CalculateLight(in out LightColor lightColor, float3 position, int idx) // in out í‚¤ì›Œë“œëŠ” ì°¸ì¡°/í¬ì¸í„°ë¡œ ì“¸ê±°ì„
+void CalculateLight(in out LightColor lightColor, float3 position, int idx) // in out Å°¿öµå´Â ÂüÁ¶/Æ÷ÀÎÅÍ·Î ¾µ°ÅÀÓ
 {
     if (0 == lightAttributes[idx].type)
     {
@@ -43,7 +43,7 @@ void CalculateLight(in out LightColor lightColor, float3 position, int idx) // i
     }
     else if (1 == lightAttributes[idx].type)
     {
-        float dist = distance(lightAttributes[idx].position.xy, position.xy); // zê°’ì„ ì—°ì‚°í•´ì£¼ì.
+        float dist = distance(lightAttributes[idx].position.xy, position.xy); // z°ªÀ» ¿¬»êÇØÁÖÀÚ.
         
         if (dist < lightAttributes[idx].radius)
         {
@@ -59,7 +59,7 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
     
     float3 viewLightDir = (float3) 0.f;
 
-    //view space ìƒì—ì„œ ë¹›ì˜ ì„¸ê¸°ë¥¼ êµ¬í•¨
+    //view space »ó¿¡¼­ ºûÀÇ ¼¼±â¸¦ ±¸ÇÔ
     float diffseIntensity = 0.f;
     float specularIntensity = 0.f;
     float3 eye = (float3) 0.f;
@@ -68,37 +68,37 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
     // Directional
     if (0 == lightInfo.type)
     {
-        // ê´‘ì›ì˜ ë°©í–¥ì„ ì›”ë“œ ì¢Œí‘œê³„ì—ì„œ ë·° ì¢Œí‘œê³„ë¡œ ë³€í™˜
-        // directionì€ lightObjectì˜ transformì˜ forward ì…ë‹ˆë‹¤.
+        // ±¤¿øÀÇ ¹æÇâÀ» ¿ùµå ÁÂÇ¥°è¿¡¼­ ºä ÁÂÇ¥°è·Î º¯È¯
+        // directionÀº lightObjectÀÇ transformÀÇ forward ÀÔ´Ï´Ù.
         viewLightDir = normalize(mul(float4(lightInfo.direction.xyz, 0.f), view)).xyz;
 
-        // ë°©í–¥ì— ìŒìˆ˜ë¥¼ ì·¨í•˜ëŠ” ì´ìœ 
-        // ë¹›ì„ í‘œë©´ì— í‘œì‹œí•˜ê³  ì‹¶ê¸°ë•Œë¬¸ (ë‚´ì ì€ ë°©í–¥ì´ ê°™ì„ìˆ˜ë¡ 1ì— ê°€ê¹Œì›Œì§)
-        // ìŒìˆ˜ë¥¼ ì·¨í•˜ì§€ ì•Šìœ¼ë©´ ë¹›ì˜ ë°©í–¥ê³¼ normalë²¡í„°ì˜ ê°ì´ 180ë„ê°€ ë„˜ì–´ê°€ëŠ” ì¦‰ êµ¬ ë’¤ìª½ì— ë¹›ì´ ë“¤ì–´ê°
+        // ¹æÇâ¿¡ À½¼ö¸¦ ÃëÇÏ´Â ÀÌÀ¯
+        // ºûÀ» Ç¥¸é¿¡ Ç¥½ÃÇÏ°í ½Í±â¶§¹® (³»ÀûÀº ¹æÇâÀÌ °°À»¼ö·Ï 1¿¡ °¡±î¿öÁü)
+        // À½¼ö¸¦ ÃëÇÏÁö ¾ÊÀ¸¸é ºûÀÇ ¹æÇâ°ú normalº¤ÅÍÀÇ °¢ÀÌ 180µµ°¡ ³Ñ¾î°¡´Â Áï ±¸ µÚÂÊ¿¡ ºûÀÌ µé¾î°¨
         diffseIntensity = saturate(dot(-viewLightDir, viewNormal));
         
     }
     // point
     else if (1 == lightInfo.type)
     {
-        // ë·° ì¢Œí‘œê³„ ìƒì—ì„œ ê´‘ì›ì˜ ìœ„ì¹˜ë¥¼ ì•Œì•„ë‚¸ë‹¤.
-        // point lightëŠ” ë¹› object ì£¼ë³€ì—ë§Œ ë¹›ì„ ì¤˜ì•¼í•˜ê¸° ë•Œë¬¸ì— ì ˆëŒ€ì ì¸ directionìœ¼ë¡œ ê³„ì‚°í•˜ì§€ ì•ŠëŠ”ë‹¤.
-        // í‘œë©´ê¹Œì§€ì˜ ë°©í–¥ì„ ë”°ë¡œ êµ¬í•´ì¤˜ì•¼í•œë‹¤.
+        // ºä ÁÂÇ¥°è »ó¿¡¼­ ±¤¿øÀÇ À§Ä¡¸¦ ¾Ë¾Æ³½´Ù.
+        // point light´Â ºû object ÁÖº¯¿¡¸¸ ºûÀ» Áà¾ßÇÏ±â ¶§¹®¿¡ Àı´ëÀûÀÎ directionÀ¸·Î °è»êÇÏÁö ¾Ê´Â´Ù.
+        // Ç¥¸é±îÁöÀÇ ¹æÇâÀ» µû·Î ±¸ÇØÁà¾ßÇÑ´Ù.
         float3 lightViewPos = mul(float4(lightInfo.position.xyz, 1.f), view).xyz;
         
-        // ê´‘ì›ì˜ ìœ„ì¹˜ì—ì„œ í‘œë©´ì„ í–¥í•˜ëŠ” ë²¡í„°
+        // ±¤¿øÀÇ À§Ä¡¿¡¼­ Ç¥¸éÀ» ÇâÇÏ´Â º¤ÅÍ
         viewLightDir = viewPos - lightViewPos;
         
-        //ê´‘ì›ì—ì„œ í‘œë©´ê¹Œì§€ì˜ ê±°ë¦¬ë¥¼ êµ¬í•œë‹¤.
+        //±¤¿ø¿¡¼­ Ç¥¸é±îÁöÀÇ °Å¸®¸¦ ±¸ÇÑ´Ù.
         float dist = length(viewLightDir);
         
-        // ê´‘ì›ì—ì„œ í‘œë©´ì„ í–¥í•˜ëŠ” ë‹¨ìœ„ë²¡í„°ë¥¼ êµ¬í•œë‹¤.
+        // ±¤¿ø¿¡¼­ Ç¥¸éÀ» ÇâÇÏ´Â ´ÜÀ§º¤ÅÍ¸¦ ±¸ÇÑ´Ù.
         viewLightDir = normalize(viewLightDir);
         
-        // ë¹›ì˜ ê°ì‡„
+        // ºûÀÇ °¨¼â
         float ratio = cos(saturate(dist / lightInfo.radius) * 3.1415926535f * 0.5f);
         
-        //view space ìƒì—ì„œ í‘œë©´ì˜ ë¹›ì˜ ì„¸ê¸°ë¥¼ êµ¬í•¨
+        //view space »ó¿¡¼­ Ç¥¸éÀÇ ºûÀÇ ¼¼±â¸¦ ±¸ÇÔ
         diffseIntensity = saturate(dot(-viewLightDir, viewNormal)) * ratio;
         
     }
@@ -106,38 +106,38 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
     {
         
     }
-    // ë°˜ì‚¬ê´‘ ì„¸ê¸°ë¥¼ êµ¬í•¨
-    // í‘œë©´ì˜ ë¹›ì˜ ë°˜ì‚¬ë²¡í„°
+    // ¹İ»ç±¤ ¼¼±â¸¦ ±¸ÇÔ
+    // Ç¥¸éÀÇ ºûÀÇ ¹İ»çº¤ÅÍ
     viewReflect = normalize(viewLightDir + 2.f * dot(-viewLightDir, viewNormal) * viewNormal);
         
-    // ì‹œì ì—ì„œ í‘œë©´ì„ í–¥í•˜ëŠ” ë²¡í„°
+    // ½ÃÁ¡¿¡¼­ Ç¥¸éÀ» ÇâÇÏ´Â º¤ÅÍ
     eye = normalize(viewPos);
     
-     //ì‹œì„  ë²¡í„°ë‘ ë°˜ì‚¬ë²¡í„°ë¥¼ ë‚´ì í•´ì„œ ë°˜ì‚¬ê´‘ì˜ ì„¸ê¸°ë¥¼ êµ¬í•œë‹¤.
+     //½Ã¼± º¤ÅÍ¶û ¹İ»çº¤ÅÍ¸¦ ³»ÀûÇØ¼­ ¹İ»ç±¤ÀÇ ¼¼±â¸¦ ±¸ÇÑ´Ù.
     specularIntensity = saturate(dot(-eye, viewReflect));
     specularIntensity = pow(specularIntensity, 30);
     
-    // ìµœì¢… ë‚œë°˜ì‚¬ê´‘
+    // ÃÖÁ¾ ³­¹İ»ç±¤
     lightColor.diffuse += lightInfo.color.diffuse * diffseIntensity;
         
-    // ì •ë°˜ì‚¬ê´‘
+    // Á¤¹İ»ç±¤
     lightColor.specular += lightInfo.color.specular * specularIntensity;
         
-    // ì£¼ë³€ê´‘
+    // ÁÖº¯±¤
     lightColor.ambient = lightInfo.color.ambient;
 }
 
 float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal, float metallic, float roughness)
 {
     // PBR     
-    float3 V = normalize(-viewPos); // ë·°ê³µê°„ pinPoint(0,0,0)ë¶€í„° í”½ì…€ë¡œ í–¥í•˜ëŠ” ë²¡í„°
-    float3 N = viewNormal; // ì •ì /í…ìŠ¤ì²˜ ë…¸ë§ ë·°ë³€í™˜ ì™„ë£Œ
+    float3 V = normalize(-viewPos); // ºä°ø°£ pinPoint(0,0,0)ºÎÅÍ ÇÈ¼¿·Î ÇâÇÏ´Â º¤ÅÍ
+    float3 N = viewNormal; // Á¤Á¡/ÅØ½ºÃ³ ³ë¸» ºäº¯È¯ ¿Ï·á
     float3 R = reflect(-V, N);
-    float NDotV = saturate(dot(N, V)); // ë…¸ë©€ to ëˆˆ ë°˜ì‚¬ê° 
+    float NDotV = saturate(dot(N, V)); // ³ë¸Ö to ´« ¹İ»ç°¢ 
 
-    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // ê¸ˆì†ì„±ì´ ê°•í• ìˆ˜ë¡ albedoë¥¼ ì‚¬ìš©í•˜ê³  ì•„ë‹ˆë©´ 0.04ì‚¬ìš© (ì¬ì§ˆ ê°’)
+    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // ±İ¼Ó¼ºÀÌ °­ÇÒ¼ö·Ï albedo¸¦ »ç¿ëÇÏ°í ¾Æ´Ï¸é 0.04»ç¿ë (ÀçÁú °ª)
 
-    float3 L = -normalize(mul(float4(lightAttributes[0].direction.xyz, 0.f), view)).xyz; // ë¹› ê°ë„            
+    float3 L = -normalize(mul(float4(lightAttributes[0].direction.xyz, 0.f), view)).xyz; // ºû °¢µµ            
 
     float NdotL = max(dot(N, L), 0.f);
 
@@ -145,18 +145,18 @@ float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal
 
     float3 kd = lerp((float3) 1.f - F, (float3) 0.f, metallic);
 
-    //float3 irradiance = irradianceMap.Sample(linearSampler, N).rgb;
-    //float3 diffuse = irradiance * kd * albedo.xyz;
-    float3 diffuse = kd * albedo.xyz;
+    float3 irradiance = irradianceMap.Sample(linearSampler, N).rgb;
+    float3 diffuse = irradiance * kd * albedo.xyz;
+    //float3 diffuse = kd * albedo.xyz;
 
-    //const float MAX_REFLECTION_LOD = 4.f;
-    //float3 prefilteredColor = prefilteredMap.SampleLevel(linearSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
+    const float MAX_REFLECTION_LOD = 4.f;
+    float3 prefilteredColor = prefilteredMap.SampleLevel(linearSampler, R, roughness * MAX_REFLECTION_LOD).rgb; // ÇÁ·¹ÀÓÀ» ¸¹ÀÌ Àâ¾Æ¸Ô´Âµí?
     float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.f), roughness)).rg;
-    //float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
-    float3 specular = (F * envBRDF.x + envBRDF.y);
+    float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y); 
+    //float3 specular = (F * envBRDF.x + envBRDF.y);
 
     float3 result = (diffuse + specular) * NdotL;
-    //float3 ambient = (diffuse + specular); // ë§ˆë”§ì„¸ì´ëŠ” ì „ë°©í–¥ ë¹› ë¹„ì¶”ëŠ”ë“¯?
+    //float3 result = (diffuse + specular); // ¸¶µ÷¼¼ÀÌ´Â Àü¹æÇâ ºû ºñÃß´Âµí?
     
     return result;
 }
@@ -187,24 +187,24 @@ float3 CalculateLightPBR_Diffuse(float3 viewPos, float4 albedo, float3 viewNorma
 float3 CalculateLightPBR_Specular(float3 viewPos, float4 albedo, float3 viewNormal, float metallic, float roughness)
 {
     // PBR     
-    float3 V = normalize(-viewPos); // ë·°ê³µê°„ pinPoint(0,0,0)ë¶€í„° í”½ì…€ë¡œ í–¥í•˜ëŠ” ë²¡í„°
-    float3 N = viewNormal; // ì •ì /í…ìŠ¤ì²˜ ë…¸ë§ ë·°ë³€í™˜ ì™„ë£Œ
+    float3 V = normalize(-viewPos); // ºä°ø°£ pinPoint(0,0,0)ºÎÅÍ ÇÈ¼¿·Î ÇâÇÏ´Â º¤ÅÍ
+    float3 N = viewNormal; // Á¤Á¡/ÅØ½ºÃ³ ³ë¸» ºäº¯È¯ ¿Ï·á
     float3 R = reflect(-V, N);
-    float NDotV = saturate(dot(N, V)); // ë…¸ë©€ to ëˆˆ ë°˜ì‚¬ê° 
+    float NDotV = saturate(dot(N, V)); // ³ë¸Ö to ´« ¹İ»ç°¢ 
 
-    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // ê¸ˆì†ì„±ì´ ê°•í• ìˆ˜ë¡ albedoë¥¼ ì‚¬ìš©í•˜ê³  ì•„ë‹ˆë©´ 0.04ì‚¬ìš© (ì¬ì§ˆ ê°’)
+    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // ±İ¼Ó¼ºÀÌ °­ÇÒ¼ö·Ï albedo¸¦ »ç¿ëÇÏ°í ¾Æ´Ï¸é 0.04»ç¿ë (ÀçÁú °ª)
 
-    float3 L = -normalize(mul(float4(lightAttributes[0].direction.xyz, 0.f), view)).xyz; // ë¹› ê°ë„            
+    float3 L = -normalize(mul(float4(lightAttributes[0].direction.xyz, 0.f), view)).xyz; // ºû °¢µµ            
 
     float NdotL = max(dot(N, L), 0.f);
 
     float3 F = fresnelSchlickRoughness(max(dot(N, V), 0.f), F0, roughness);
     
-    //const float MAX_REFLECTION_LOD = 4.f;
-    //float3 prefilteredColor = prefilteredMap.SampleLevel(linearSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
+    const float MAX_REFLECTION_LOD = 4.f;
+    float3 prefilteredColor = prefilteredMap.SampleLevel(linearSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
     float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.f), roughness)).rg;
-    //float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
-    float3 specular = (F * envBRDF.x + envBRDF.y);
+    float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
+    //float3 specular = (F * envBRDF.x + envBRDF.y);
     
     return specular;
 }

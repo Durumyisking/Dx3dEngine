@@ -50,13 +50,14 @@ namespace renderer
 		Vector4 BlendWeight;
 	};
 
-	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // êµ¬ì¡°ì²´ ë§Œë“œëŠ”ê±°ì„
+	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // ±¸Á¶Ã¼ ¸¸µå´Â°ÅÀÓ
 	{
 		Matrix world;
 		Matrix inverseWorld;
 		Matrix view;
 		Matrix inverseView;
 		Matrix projection;
+		Matrix fovForSkySphere;
 	};
 
 	CBUFFER(MaterialCB, CBSLOT_MATERIAL)
@@ -102,8 +103,8 @@ namespace renderer
 		int bAlbedo;
 		int bNormal;
 		int bMetallic;
-
 		int bRoughness;
+
 		int bEmissive;
 		int bool1;
 		int bool2;
@@ -181,6 +182,10 @@ namespace renderer
 		float wave_distortion;
 	};
 
+	CBUFFER(SkyCB, CBSLOT_SKY)
+	{
+		Matrix matrix;
+	};
 
 
 	// vertex data
@@ -206,9 +211,9 @@ namespace renderer
 	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
 
 	void Initialize();
-	void release(); // ê·¸ë¦¬ëŠ” ë°©ì‹ì´ ì—¬ëŸ¬ê°œì¼ë•Œ ì—¬ëŸ¬ê°œë¥¼ í• ë‹¹í•˜ëŠ”ê²Œ ì•„ë‹ˆë¼
-					// ê·¸ë¦¬ëŠ” ë°©ì‹ì„ ë³€ê²½í• ë•Œ í• ë‹¹ëœ ê³³ì— ê·¸ë¦¬ëŠ” ë°©ì‹ì˜ ê°ì²´ë“¤ì„ êµì²´ë§Œ í•´ì¤€ë‹¤ -> ì˜¤ë˜ê±¸ë¦¼
-					// ì•„ì§ gpuì˜ vramì˜ ìš©ëŸ‰ì´ ramë³´ë‹¤ í•œì°¸ ì‘ì•„ì„œê·¸ëŸ¼
+	void release(); // ±×¸®´Â ¹æ½ÄÀÌ ¿©·¯°³ÀÏ¶§ ¿©·¯°³¸¦ ÇÒ´çÇÏ´Â°Ô ¾Æ´Ï¶ó
+					// ±×¸®´Â ¹æ½ÄÀ» º¯°æÇÒ¶§ ÇÒ´çµÈ °÷¿¡ ±×¸®´Â ¹æ½ÄÀÇ °´Ã¼µéÀ» ±³Ã¼¸¸ ÇØÁØ´Ù -> ¿À·¡°É¸²
+					// ¾ÆÁ÷ gpuÀÇ vramÀÇ ¿ë·®ÀÌ ramº¸´Ù ÇÑÂü ÀÛ¾Æ¼­±×·³
 
 	void Render();
 

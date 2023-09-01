@@ -19,6 +19,7 @@ extern Application application;
 Matrix Camera::View = Matrix::Identity;
 Matrix Camera::InverseView = Matrix::Identity;
 Matrix Camera::Projection = Matrix::Identity;
+Matrix Camera::SkyFov = Matrix::Identity;
 
 Camera::Camera()
 	: Component(eComponentType::Camera)
@@ -51,7 +52,7 @@ void Camera::Initialize()
 
 void Camera::Update()
 {
-	if (mTargetObj)
+	if (mTargetObj) // Å¸°Ù ¿ÀºêÁ§Æ®¸¦ ÂÑ¾Æ°¨
 	{
 
 		Vector2 v2Start = Vector2(GetOwner()->GetPos().x, GetOwner()->GetPos().y);
@@ -88,28 +89,27 @@ void Camera::Render()
 
 	sortGameObjects();
 
-	// Deferred Opaque Render 
-	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
-	renderDeferred();
+	//// Deferred Opaque Render 
+	//renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
+	//renderDeferred();
 
-	// Deferred light Render
-	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
-	renderer::BindPBRProprerties();
+	//// Deferred light Render
+	//renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
 
-	for (Light* light : renderer::lights)
-	{
-		light->Render();
-	}
+	//for (Light* light : renderer::lights)
+	//{
+	//	light->Render();
+	//}
 
-	//SwapChain
-	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+	////SwapChain
+	//renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
 
-	// Deferred + SwapChain Merge
-	Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
-	Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
-	rectMesh->BindBuffer();
-	mergeMaterial->Bind();
-	rectMesh->Render();
+	//// Deferred + SwapChain Merge
+	//Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
+	//Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
+	//rectMesh->BindBuffer();
+	//mergeMaterial->Bind();
+	//rectMesh->Render();
 
 	// Forward Render
 	renderOpaque();
@@ -121,14 +121,14 @@ void Camera::CreateViewMatrix()
 {
 	Transform* transform = GetOwner()->GetComponent<Transform>();
 
-	// ì´ë™ì •ë³´
+	// ÀÌµ¿Á¤º¸
 	Vector3 translation = transform->GetPosition();
 
 	// create view translation matrix
 	mView = Matrix::Identity;
 	mView *= Matrix::CreateTranslation(-translation);
 
-	// íšŒì „ì •ë³´
+	// È¸ÀüÁ¤º¸
 	Vector3 up = transform->Up();
 	Vector3 right = transform->Right();
 	Vector3 foward = transform->Forward();
@@ -151,11 +151,13 @@ void Camera::CreateProjectionMatrix()
 	float height = (winRect.bottom - winRect.top) * mScale;
 	mAspectRatio = width / height;
 
+	SkyFov = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f , mAspectRatio, mNear, mFar);
+
 
 	if (mType == eProjectionType::Perspective)
 	{
 		mProjection = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, mAspectRatio, mNear, mFar);
-	}
+	}	
 	else // (mType == eProjectionType::Orthographic)
 	{
 		mProjection = Matrix::CreateOrthographic(width, height, mNear, mFar);
@@ -343,6 +345,11 @@ void Camera::renderPostProcess()
 void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 {
 	BaseRenderer* renderer = obj->GetComponent<BaseRenderer>();
+
+	if ( eLayerType::CubeMap== obj->GetLayerType())
+	{
+		obj->Render();
+	}
 
 	if (nullptr == renderer)
 		return;

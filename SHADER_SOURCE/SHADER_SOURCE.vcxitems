@@ -47,6 +47,12 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)GridVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)IrradiancePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)IrradianceVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)PaintCS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
@@ -77,6 +83,14 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)MergePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)PreFilterPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)PreFilterVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)RectToCubemapPS.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)RectToCubemapVS.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)SpotLightPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
     </FxCompile>
@@ -138,8 +152,8 @@
     <None Include="$(MSBuildThisFileDirectory)PostProcess.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)Random.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)Sampler.hlsli" />
-    <None Include="$(MSBuildThisFileDirectory)SkyBoxVS.hlsl" />
-    <None Include="$(MSBuildThisFileDirectory)SkyBoxPS.hlsl" />
+    <None Include="$(MSBuildThisFileDirectory)SkySphereVS.hlsl" />
+    <None Include="$(MSBuildThisFileDirectory)SkySpherePS.hlsl" />
     <None Include="$(MSBuildThisFileDirectory)Texture.hlsli" />
   </ItemGroup>
 </Project>

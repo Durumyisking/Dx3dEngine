@@ -31,7 +31,6 @@ Application::~Application()
 {
 
 }
-
 void Application::Initialize()
 {
 	GETSINGLE(TimeMgr)->Initialize();
@@ -42,6 +41,7 @@ void Application::Initialize()
 	renderer::Initialize();
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
 	GETSINGLE(UIFactory)->Initialize();
+	GETSINGLE(ResourceMgr)->Initalize();
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();
 	GETSINGLE(SceneMgr)->Initialize();
@@ -75,10 +75,10 @@ void Application::Render()
 {
 	if (!GETSINGLE(TimeMgr)->IsUpdatePass())
 	{
+		
 		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::Render();
-
 		mGraphicDevice->AdjustViewPorts();
 		renderer::ClearRenderTargets(); // mGraphicDevice::Clear 대신 렌더타겟 클리어
 		renderer::Render();

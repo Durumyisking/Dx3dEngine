@@ -1,8 +1,6 @@
 #include "Animation.h"
 #include "TimeMgr.h"
 
-
-
 Animation::Animation()
 	: mAnimator(nullptr)
 	, mAtlas(nullptr)
@@ -14,7 +12,6 @@ Animation::Animation()
 	, mbReversePlay(false)
 	, mbCompleteEventPlayed(false)
 {
-
 }
 
 Animation::~Animation()
@@ -26,10 +23,10 @@ UINT Animation::update()
 	if (mbComplete)
 		return -1;
 
-	// ì‹œê°„ ì²´í¬
+	// ½Ã°£ Ã¼Å©
 	mTime += DT;
 
-	// ëˆ„ì  ì‹œê°„ì´ í•´ë‹¹ í”„ë ˆì„ì˜ ìœ ì§€ì‹œê°„ì„ ë„˜ì–´ì„œë©´ 
+	// ´©Àû ½Ã°£ÀÌ ÇØ´ç ÇÁ·¹ÀÓÀÇ À¯Áö½Ã°£À» ³Ñ¾î¼­¸é 
 	if (mSpriteSheet[mIndex].duration < mTime)
 	{
 		mTime = 0.f;
@@ -86,7 +83,7 @@ void Animation::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop
 	{
 		Sprite sprite = {};
 
-		// ìŠ¤í”„ë¼ì´íŠ¸ì˜ LTê°€ + ì‚¬ì´ì¦ˆê°€ widthë¥¼ ë„˜ì–´ê°€ë©´ ë‹¤ìŒì¤„ë¡œ ë°”ê¾¼ë‹¤.
+		// ½ºÇÁ¶óÀÌÆ®ÀÇ LT°¡ + »çÀÌÁî°¡ width¸¦ ³Ñ¾î°¡¸é ´ÙÀ½ÁÙ·Î ¹Ù²Û´Ù.
 		if (leftTop.x + (size.x * (float)i) >= width)
 		{
 			leftTop.x = 0.f;
@@ -95,7 +92,7 @@ void Animation::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop
 			CollSkipCount = i;
 		}
 
-		// uvì¢Œí‘œë¡œ ë„˜ê¸°ê¸° ìœ„í•´ width, heightë¡œ ë‚˜ëˆˆë‹¤.
+		// uvÁÂÇ¥·Î ³Ñ±â±â À§ÇØ width, height·Î ³ª´«´Ù.
 		sprite.LT = Vector2(
 			(leftTop.x + (size.x * (float)(i - CollSkipCount))) / width,
 			leftTop.y / height
@@ -112,7 +109,7 @@ void Animation::Create(const std::wstring& name, Texture* atlas, Vector2 leftTop
 
 void Animation::BindShader()
 {
-	mAtlas->BindShaderResource(eShaderStage::PS, 29); // ì•„í‹€ë¼ìŠ¤ srvì— ë°”ì¸ë”©
+	mAtlas->BindShaderResource(eShaderStage::PS, 29); // ¾ÆÆ²¶ó½º srv¿¡ ¹ÙÀÎµù
 
 	ConstantBuffer* cb =  renderer::constantBuffers[static_cast<UINT>(eCBType::Animation)];
 
@@ -187,7 +184,7 @@ renderer::AnimationCB Animation::GetAnimationData()
 }
 
 
-// ì»¨ k s ifë¬¸ ë¬¶ì´
-// ì»¨ j í•¨ìˆ˜ì°¾ê¸°
-// ì»¨ mm ì½”ë“œë¸”ë¡ ë‹«ê³  ì—´ê¸°
-// ì»¨íŠ¸ë¡¤ RO í•¨ìˆ˜ êµ¬ì¡°ë³€ê²½
+// ÄÁ k s if¹® ¹­ÀÌ
+// ÄÁ j ÇÔ¼öÃ£±â
+// ÄÁ mm ÄÚµåºí·Ï ´İ°í ¿­±â
+// ÄÁÆ®·Ñ RO ÇÔ¼ö ±¸Á¶º¯°æ

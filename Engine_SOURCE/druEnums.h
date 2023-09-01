@@ -8,10 +8,8 @@ namespace enums
 		None = 0,
 		Camera,
 		Grid,
-		BackGround,
 		Objects,
 		PhysicalObject,
-		Bullet,
 		Monster,
 		Boss,
 		Player,
@@ -19,6 +17,8 @@ namespace enums
 		Platforms,
 		Particle,
 		FX,
+		SkySphere,
+		CubeMap,
 		UI,
 		PostProcess,
 		End = 16,
@@ -35,9 +35,10 @@ namespace enums
 		Movement, 
 		Physical,
 		Collider,
+		Animator,
+		BoneAnimator,
 		MeshRenderer,
 		Renderer,
-		Animator,
 		Particle,
 		Light, 
 		UI,
@@ -116,10 +117,10 @@ namespace enums
 
 	enum class eActorType
 	{
-		Static, // ì •ì ì¸ ë¬¼ì²´ (ë¬¼ë¦¬ì ìœ¼ë¡œ ì›€ì§ì´ì§€ ì•Šì„ ë¬¼ì²´)
-		Dynamic, // ë™ì ì¸ ë¬¼ì²´ (ë¬¼ë¦¬ì—”ì§„ì— ì§ì ‘ì ì¸ ì˜í–¥ì„ ë°›ëŠ”ë‹¤)
-		Kinematic, // í”„ë¡œê·¸ë˜ë° ìš´ë™ì œì–´ ë¬¼ë¦¬ ì‹œë®¬ë ˆì´ì…˜ ì˜í–¥ì„ ë°›ì§€ ì•Šê³  ìŠ¤í¬ë¦½íŠ¸ë¡œ ì›€ì§ì¸ë‹¤.
-		Character, // ì¼ë°˜ì ì¸ ì•¡í„°ë“¤ê³¼ ë‹¤ë¥¸ ì›€ì§ì„ì„ ì²˜ë¦¬í•˜ê¸° ìœ„í•´ ì‚¬ìš©í•œë‹¤. (ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ë¶™ì—¬ì¤˜ì•¼í•œë‹¤)
+		Static, // Á¤ÀûÀÎ ¹°Ã¼ (¹°¸®ÀûÀ¸·Î ¿òÁ÷ÀÌÁö ¾ÊÀ» ¹°Ã¼)
+		Dynamic, // µ¿ÀûÀÎ ¹°Ã¼ (¹°¸®¿£Áø¿¡ Á÷Á¢ÀûÀÎ ¿µÇâÀ» ¹Ş´Â´Ù)
+		Kinematic, // ÇÁ·Î±×·¡¹Ö ¿îµ¿Á¦¾î ¹°¸® ½Ã¹Ä·¹ÀÌ¼Ç ¿µÇâÀ» ¹ŞÁö ¾Ê°í ½ºÅ©¸³Æ®·Î ¿òÁ÷ÀÎ´Ù.
+		Character, // ÀÏ¹İÀûÀÎ ¾×ÅÍµé°ú ´Ù¸¥ ¿òÁ÷ÀÓÀ» Ã³¸®ÇÏ±â À§ÇØ »ç¿ëÇÑ´Ù. (ÄÁÆ®·Ñ·¯¸¦ ºÙ¿©Áà¾ßÇÑ´Ù)
 		End,
 	};
 

@@ -11,9 +11,9 @@
 #include "..//External/assimp/include/assimp/scene.h"
 
 #pragma comment(lib, "..//External/assimp/lib/Debug/assimp-vc143-mtd.lib")
-#define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate  | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace  | aiProcess_FixInfacingNormals)
-#define ASSIMP_D3D_FLAGES aiProcess_ConvertToLeftHanded
-
+#define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate  | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace  | aiProcess_FixInfacingNormals | aiProcess_LimitBoneWeights | aiProcess_ConvertToLeftHanded)
+#define ASSIMP_TEST_FLAGES (aiProcess_RemoveRedundantMaterials | aiProcess_ImproveCacheLocality | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType  | aiProcess_LimitBoneWeights | aiProcess_CalcTangentSpace | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph |)
+// aiProcess_RemoveRedundantMaterials | aiProcess_ImproveCacheLocality | aiProcess_ConvertToLeftHanded | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_PopulateArmatureData | aiProcess_LimitBoneWeights | aiProcess_CalcTangentSpace | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph
 class Mesh;
 class Texture;
 class Material;
@@ -50,11 +50,13 @@ public:
 	ModelNode* FindNode(const std::wstring& nodeName);
 	Bone* FindBone(const std::wstring& nodeName);
 	Bone* GetBone(UINT index) { return mBones[index]; }
-	void RecursiveGetBoneMatirx();
+	void BindBoneMatrix();
 	void CreateTexture();
 	void CreateMaterial();
 	std::vector<Texture*> GetTexture(int index);
+	Material* GetMaterial(UINT index) { return mMaterials[index]; }
 
+	void AddMaterial(Material* mater) { mMaterials.emplace_back(mater); }
 private:
 	void recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode);
 	void recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::wstring& nodeName);
@@ -65,10 +67,7 @@ private:
 
 	void release();
 public:
-	std::wstring ConvertToW_String(const char* str);
-	std::string ConvertToString(const wchar_t* str);
 	math::Matrix ConvertMatrix(aiMatrix4x4 aimat);
-
 
 public:
 	void Bind_Render();
@@ -76,7 +75,10 @@ public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
 	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
 	GETSET(GameObj*, mOwner, Owner)
-
+	GETSET(Model*, mParentModel, ParentModel)
+	GETSET(const std::wstring&, mParentTargetBone, ParentTargetBone)
+	GETSET(const std::wstring&, mTargetBone, TargetBone)
+	GETSET(math::Vector3, mOffsetRotation, OffsetRotation)
 private:
 	Assimp::Importer mAssimpImporter;
 
@@ -94,5 +96,10 @@ private:
 
 	std::wstring mRootNodeName;
 	std::wstring mCurDirectoryPath;
-};
 
+	Model* mParentModel;
+	std::wstring mParentTargetBone;
+	std::wstring mTargetBone;
+
+	math::Vector3 mOffsetRotation;
+};

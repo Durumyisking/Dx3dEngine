@@ -141,6 +141,7 @@ void Transform::SetConstantBuffer()
 	trCb.view = Camera::GetGpuViewMatrix();
 	trCb.inverseView = trCb.view.Invert();
 	trCb.projection = Camera::GetGpuProjectionMatrix();
+	trCb.fovForSkySphere= Camera::GetSkySphereFov();
 
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Transform)];
 	cb->SetData(&trCb);
