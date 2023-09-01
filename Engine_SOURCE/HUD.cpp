@@ -3,11 +3,13 @@
 HUD::HUD()
 	:UIBase(eUIType::HP)
 {
+
 }
 
 HUD::HUD(eUIType type)
 	:UIBase(type)
 {
+
 }
 
 HUD::~HUD()

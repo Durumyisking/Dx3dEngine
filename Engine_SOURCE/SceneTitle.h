@@ -23,7 +23,9 @@ private:
 	GameObj*	mCamera;
 	GameObj*    mUICamera;
 
-	Panal* panal;
+	Panal* mCoinPanal;
+	Panal* mLifePanal;
+	Panal* mLunaPanal;
 
 };
 

@@ -13,6 +13,8 @@
 #include "TimerMgr.h"
 #include "ServerMgr.h"
 #include "UIManager.h"
+#include "UIFactory.h"
+
 
 Application::Application()
 	: mbInitalized(false)
@@ -39,7 +41,7 @@ void Application::Initialize()
 	//UIManager::Initialize();
 	renderer::Initialize();
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
-
+	GETSINGLE(UIFactory)->Initialize();
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();
 	GETSINGLE(SceneMgr)->Initialize();
@@ -133,6 +135,7 @@ void Application::DestroySingle()
 	GETSINGLE(server::ServerMgr)->DestroyInstance();
 	GETSINGLE(SceneMgr)->DestroyInstance();
 	GETSINGLE(FontWrapper)->DestroyInstance();
+	GETSINGLE(UIFactory)->DestroyInstance();
 //		GETSINGLE(CollisionMgr)->DestroyInstance();
 	GETSINGLE(PhysXCollisionMgr)->DestroyInstance();
 	GETSINGLE(Fmod)->DestroyInstance();

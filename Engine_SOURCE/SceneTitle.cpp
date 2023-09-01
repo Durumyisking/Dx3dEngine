@@ -39,6 +39,8 @@
 #include "Panal.h"
 #include "HUD.h"
 #include "Button.h"
+#include "UIFactory.h"
+
 
 extern Application application;
 
@@ -75,7 +77,7 @@ void SceneTitle::update()
 
 	if (KEY_TAP(N_1))
 	{
-		panal->InActive();
+		//mLifePanal->InActive();
 	}
 
 
@@ -257,37 +259,119 @@ void SceneTitle::Enter()
 	//UISpriteMaterial
 	{
 
+		//HUD* hud = object::Instantiate<HUD>(eLayerType::UI);
+		//hud->SetPos(Vector3(-5.f, 2.f, 10.f));
+		//hud->SetScale({ 1.f, 1.f, 1.f });
+		//hud->SetName(L"hud");
+		//
+		//MeshRenderer* hudRender = hud->AddComponent<MeshRenderer>(eComponentType::UI);
+		//hudRender->SetMeshByKey(L"Rectmesh");
+		//hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"UISpriteMaterial"));
+
+		//hud->GetComponent<Transform>()->SetParent(mUICamera);
+
+
+	}
+			
+	//LifePanal
+	{
+		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(6.4f, 3.1f, 10.f), Vector3(1.0f, 1.0f, 1.0f), L"LifePanal"));
+
+
+		//LifeGauge
 		HUD* hud = object::Instantiate<HUD>(eLayerType::UI);
-		hud->SetPos(Vector3(-5.f, 2.f, 10.f));
+		hud->SetPos(Vector3(0.f, 0.f, 0.f));
 		hud->SetScale({ 1.f, 1.f, 1.f });
-		hud->SetName(L"hud");
-		
+		hud->SetName(L"hud2");
 		MeshRenderer* hudRender = hud->AddComponent<MeshRenderer>(eComponentType::UI);
 		hudRender->SetMeshByKey(L"Rectmesh");
-		hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"UISpriteMaterial"));
+		hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"LifeGauge_3Material"));
+		hud->GetComponent<Transform>()->SetParent(mLifePanal);
 
-		hud->GetComponent<Transform>()->SetParent(mUICamera);
 
-		panal = object::Instantiate<Panal>(eLayerType::UI);
-		panal->SetPos(Vector3(-3.f, 2.f, 10.f));
-		panal->SetScale({ 1.0f, 1.0f, 1.0f });
-		panal->SetName(L"panal");
-		MeshRenderer* panalRender = panal->AddComponent<MeshRenderer>(eComponentType::UI);
-		panalRender->SetMeshByKey(L"Rectmesh");
-		panalRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"UISpriteMaterial"));
-		panal->GetComponent<Transform>()->SetParent(mUICamera);
-		panal->Addchild(hud);
-		//panal->Addchild(button);
+		//Lifeheart
+		HUD* lifeheart = object::Instantiate<HUD>(eLayerType::UI);
+		lifeheart->SetPos(Vector3(0.f, -0.03f, 0.f));
+		lifeheart->SetScale({ 0.6f, 0.6f, 1.f });
+		lifeheart->SetName(L"Lifeheart");
+		MeshRenderer* lifeheartRender = lifeheart->AddComponent<MeshRenderer>(eComponentType::UI);
+		lifeheartRender->SetMeshByKey(L"Rectmesh");
+		lifeheartRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"LifeheartMaterial"));
+		lifeheart->GetComponent<Transform>()->SetParent(mLifePanal);
 	}
-		
-	//UISpriteMaterial
-	HUD* hud = object::Instantiate<HUD>(eLayerType::UI);
-	hud->SetPos(Vector3(1.f, 1.f, 5.f));
-	hud->SetScale({ 50.f, 50.f, 1.f});
-	hud->SetName(L"hud2");
-	MeshRenderer* hudRender = hud->AddComponent<MeshRenderer>(eComponentType::UI);
-	hudRender->SetMeshByKey(L"Rectmesh");
-	hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"UISpriteMaterial"));
+
+	//Left Coin UI
+	{
+		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(-6.4f, 3.1f, 10.f), Vector3(0.7f,0.7f,1.0f), L"CoinPanal"));
+
+
+		HUD* coin = object::Instantiate<HUD>(eLayerType::UI);
+		coin->SetPos(Vector3(0.f, 0.f, 0.f));
+		coin->SetScale({ 1.f, 1.f, 1.f });
+		coin->SetName(L"Coin");
+		MeshRenderer* coinRender = coin->AddComponent<MeshRenderer>(eComponentType::UI);
+		coinRender->SetMeshByKey(L"Rectmesh");
+		coinRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"CoinMaterial"));
+		coin->GetComponent<Transform>()->SetParent(mCoinPanal);
+
+		HUD* cityCoin = object::Instantiate<HUD>(eLayerType::UI);
+		cityCoin->SetPos(Vector3(3.f, 0.1f, 0.f));
+		cityCoin->SetScale({ 1.f, 1.f, 1.f });
+		cityCoin->SetName(L"CityCoin");
+		MeshRenderer* cityCoinRender = cityCoin->AddComponent<MeshRenderer>(eComponentType::UI);
+		cityCoinRender->SetMeshByKey(L"Rectmesh");
+		cityCoinRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"CityCoinMaterial"));
+		cityCoin->GetComponent<Transform>()->SetParent(mCoinPanal);
+
+		HUD* bar = object::Instantiate<HUD>(eLayerType::UI);
+		bar->SetPos(Vector3(2.f, -0.55f, 0.f));
+		bar->SetScale({ 5.f, 1.4f, 1.f });
+		bar->SetRotation({ 0.f, 0.f, 1.f });
+		bar->SetName(L"Bar");
+		MeshRenderer* barRender = bar->AddComponent<MeshRenderer>(eComponentType::UI);
+		barRender->SetMeshByKey(L"Rectmesh");
+		barRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"BarMaterial"));
+		bar->GetComponent<Transform>()->SetParent(mCoinPanal);
+	}
+
+	//left Luna UI
+	{
+		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(-6.4f, 2.0f, 10.f),Vector3::One ,L"LunaPanal"));
+
+
+		for (size_t i = 0; i < 10; i++)
+		{
+			for (size_t j = 0; j < 2; j++)
+			{
+				HUD* luna = object::Instantiate<HUD>(eLayerType::UI);
+				luna->SetPos(Vector3(-0.11f + (0.33f * i), (0.40f - (0.35f * j)) + (0.01f * i), 0.f));
+				luna->SetScale({ 0.3f, 0.3f, 1.f });
+				luna->SetName(L"Luna" + i + (j * 10));
+
+				MeshRenderer* lunaRender = luna->AddComponent<MeshRenderer>(eComponentType::UI);
+				lunaRender->SetMeshByKey(L"Rectmesh");
+				lunaRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"LunaMaterial"));
+				luna->GetComponent<Transform>()->SetParent(mLunaPanal);
+				luna->Die();
+			}
+		}
+
+		for (size_t i = 0; i < 10; i++)
+		{
+			for (size_t j = 0; j < 2; j++)
+			{
+				HUD* dottedLine = object::Instantiate<HUD>(eLayerType::UI);
+				dottedLine->SetPos(Vector3(-0.11f + (0.33f * i), (0.40f - (0.35f * j)) + (0.01f * i), 0.f));
+				dottedLine->SetScale({ 0.3f, 0.3f, 1.f });
+				dottedLine->SetName(L"DottedLine");
+
+				MeshRenderer* dottedLineRender = dottedLine->AddComponent<MeshRenderer>(eComponentType::UI);
+				dottedLineRender->SetMeshByKey(L"Rectmesh");
+				dottedLineRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"DottedLineMaterial"));
+				dottedLine->GetComponent<Transform>()->SetParent(mLunaPanal);
+			}
+		}
+	}
 
 	Scene::Enter();
 }

@@ -233,5 +233,7 @@ namespace renderer
 	void CreateCubeMesh();
 	void CreateSphereMesh();
 	void CreateCapsuleMesh();
+
+	void CreateMaterial();
 }
 

@@ -1,5 +1,6 @@
 #include "UIBase.h"
-
+#include "Material.h"
+#include "MeshRenderer.h"
 
 Vector3 mUIScreenPos;
 Vector3 mUIPos;

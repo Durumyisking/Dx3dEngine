@@ -621,7 +621,18 @@ namespace renderer
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Skybox", L"Textures/SkyCityDayLight_color.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"MarioTitle", L"Textures/CmTitleLogo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"MarioTitle", L"Textures/UI/CmTitleLogo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Gauge_1", L"Textures/UI/Life/Gauge_1.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Gauge_2", L"Textures/UI/Life/Gauge_2.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Gauge_3", L"Textures/UI/Life/Gauge_3.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Lifeheart", L"Textures/UI/Life/heart.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Coin", L"Textures/UI/CoinUI/Coin.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CityCoin", L"Textures/UI/CoinUI/CityCoin.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Bar", L"Textures/UI/CoinUI/Bar.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"DottedLine", L"Textures/UI/Luna/DottedLine.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CityLuna", L"Textures/UI/Luna/CityLuna.png");
+
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
@@ -866,7 +877,68 @@ namespace renderer
 		uiSpriteMaterial->SetShader(uiSpriteShader);
 		uiSpriteMaterial->SetTexture(eTextureSlot::Albedo, mariotitle); // albedo Texture
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"UISpriteMaterial", uiSpriteMaterial);
+#pragma endregion
 
+#pragma region LifeHeartMaterial
+		Texture* lifeTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Lifeheart");
+		Material* lifeheartMaterial = new Material();
+		lifeheartMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		lifeheartMaterial->SetShader(uiSpriteShader);
+		lifeheartMaterial->SetTexture(eTextureSlot::Albedo, lifeTexture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"LifeheartMaterial", lifeheartMaterial);
+#pragma endregion
+
+#pragma region LifeGaugeMaterial
+		Texture* gaugeTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Gauge_3");
+		Material* gaugeMaterial = new Material();
+		gaugeMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		gaugeMaterial->SetShader(uiSpriteShader);
+		gaugeMaterial->SetTexture(eTextureSlot::Albedo, gaugeTexture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"LifeGauge_3Material", gaugeMaterial);
+#pragma endregion
+
+#pragma region CoinMaterial
+		Texture* coinTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Coin");
+		Material* coinMaterial = new Material();
+		coinMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		coinMaterial->SetShader(uiSpriteShader);
+		coinMaterial->SetTexture(eTextureSlot::Albedo, coinTexture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"CoinMaterial", coinMaterial);
+#pragma endregion
+
+#pragma region CityCoinMaterial
+		Texture* cityCoinTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"CityCoin");
+		Material* cityCoinMaterial = new Material();
+		cityCoinMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		cityCoinMaterial->SetShader(uiSpriteShader);
+		cityCoinMaterial->SetTexture(eTextureSlot::Albedo, cityCoinTexture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"CityCoinMaterial", cityCoinMaterial);
+#pragma endregion
+
+#pragma region BarMaterial
+		Texture* barTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Bar");
+		Material* barMaterial = new Material();
+		barMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		barMaterial->SetShader(uiSpriteShader);
+		barMaterial->SetTexture(eTextureSlot::Albedo, barTexture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"BarMaterial", barMaterial);
+#pragma endregion
+
+#pragma region DottedLineMaterial
+		Texture* dottedLine = GETSINGLE(ResourceMgr)->Find<Texture>(L"DottedLine");
+		Material* dottedLineMaterial = new Material();
+		dottedLineMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		dottedLineMaterial->SetShader(uiSpriteShader);
+		dottedLineMaterial->SetTexture(eTextureSlot::Albedo, dottedLine); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"DottedLineMaterial", dottedLineMaterial);
+#pragma endregion
+#pragma region LunaMaterial
+		Texture* luna = GETSINGLE(ResourceMgr)->Find<Texture>(L"CityLuna");
+		Material* lunaMaterial = new Material();
+		lunaMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		lunaMaterial->SetShader(uiSpriteShader);
+		lunaMaterial->SetTexture(eTextureSlot::Albedo, luna); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"LunaMaterial", lunaMaterial);
 #pragma endregion
 	}
 
