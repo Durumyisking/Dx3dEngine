@@ -19,12 +19,7 @@ public:
 
 private:
 	GameObj*	mCamera;
-<<<<<<< HEAD
 	GameObj*    mUICamera;
-=======
-	GameObj*	mRootGameobj;
-	std::vector<GameObj*>	mRoot;
->>>>>>> c22fd52be324c63ef46a67bcee5e505d422e9998
 
 };
 

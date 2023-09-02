@@ -1,16 +1,11 @@
 #pragma once
-#include "GameObj.h"
 #include "DynamicObject.h"
-
-
-
-class Player :
-	public DynamicObject
+class MarioParts :
+    public DynamicObject
 {
-
 public:
-	Player();
-	virtual ~Player();
+	MarioParts();
+	virtual ~MarioParts();
 
 	virtual void Initialize() override;
 	virtual void Update() override;
@@ -22,10 +17,5 @@ public:
 	virtual void OnCollisionEnter(GameObj* gameObject) override;
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
-
-
-private:
-
-public:
-
 };
+

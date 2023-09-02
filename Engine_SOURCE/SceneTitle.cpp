@@ -73,11 +73,11 @@ void SceneTitle::update()
 	}
 
 
-	for (auto& i : mRoot)
+	/*for (auto& i : mroot)
 	{
-		i->GetComponent<Transform>()->SetPosition(mRootGameobj->GetComponent<Transform>()->GetPosition());
-		i->GetComponent<Transform>()->SetRotation(mRootGameobj->GetComponent<Transform>()->GetRotation());
-	}
+		i->getcomponent<transform>()->setposition(mrootgameobj->getcomponent<transform>()->getposition());
+		i->getcomponent<transform>()->setrotation(mrootgameobj->getcomponent<transform>()->getrotation());
+	}*/
 
 	Scene::update();
 }
@@ -194,21 +194,21 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
-	//Ä¸½¶ Å×½ºÆ®¿ë ÄÚµå
-	{
-		GameObj* capsule = object::Instantiate<GameObj>(eLayerType::Monster);
-		capsule->SetPos(Vector3(500.f, 0.f, 0.f));
-		capsule->SetScale(Vector3(100.0f, 100.0f, 100.0f));
-		capsule->SetName(L"Capsule");
-		capsule->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMeshByKey(L"Capsulemesh");
-		capsule->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"FlatMaterial");
+	////Ä¸½¶ Å×½ºÆ®¿ë ÄÚµå
+	//{
+	//	GameObj* capsule = object::Instantiate<GameObj>(eLayerType::Monster);
+	//	capsule->SetPos(Vector3(500.f, 0.f, 0.f));
+	//	capsule->SetScale(Vector3(100.0f, 100.0f, 100.0f));
+	//	capsule->SetName(L"Capsule");
+	//	capsule->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMeshByKey(L"Capsulemesh");
+	//	capsule->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"FlatMaterial");
 
-		capsule->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Capsule, Vector3(500.f, 0.25f, 500.f));
+	//	capsule->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Capsule, Vector3(500.f, 0.25f, 500.f));
 
-		PhysXRigidBody* rigid = capsule->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//	PhysXRigidBody* rigid = capsule->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		capsule->AddComponent<PhysXCollider>(eComponentType::Collider);
-	}
+	//	capsule->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//}
 
 
 	{
@@ -229,29 +229,16 @@ void SceneTitle::Enter()
 		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
 		animator->Play(L"test");
 
-<<<<<<< HEAD
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Capsulemesh");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
-=======
-		player->AddComponent<PlayerScript>(eComponentType::Script);
-
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
->>>>>>> c22fd52be324c63ef46a67bcee5e505d422e9998
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-<<<<<<< HEAD
-=======
-		mRootGameobj = player;
-	
-
->>>>>>> c22fd52be324c63ef46a67bcee5e505d422e9998
 	}
 
 	{
@@ -274,7 +261,7 @@ void SceneTitle::Enter()
 		model->SetParentTargetBone(L"Armature_HandL");
 		model->SetTargetBone(L"Armature_HandL");
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
-		mRoot.push_back(player);
+
 	}
 
 	{
@@ -297,7 +284,7 @@ void SceneTitle::Enter()
 		model->SetParentTargetBone(L"Armature_HandR");
 		model->SetTargetBone(L"Armature_HandR");
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
-		mRoot.push_back(player);
+	
 	}
 
 	{
@@ -318,7 +305,7 @@ void SceneTitle::Enter()
 		model->SetTargetBone(L"Armature_MarioHead");
 
 		model->SetOffsetRotation(Vector3(0.0f, 1.570796f , -1.570796f * 2));
-		mRoot.push_back(player);
+	
 	}
 
 	{
@@ -340,7 +327,7 @@ void SceneTitle::Enter()
 		model->SetTargetBone(L"Armature_Face");
 
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
-		mRoot.push_back(player);
+
 	}
 
 	{

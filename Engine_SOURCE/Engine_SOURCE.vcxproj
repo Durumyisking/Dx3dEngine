@@ -236,6 +236,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="def.h" />
     <ClInclude Include="druEnums.h" />
     <ClInclude Include="druMath.h" />
+    <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FadeScript.h" />
@@ -260,11 +261,14 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="MarioHead.h" />
+    <ClInclude Include="MarioParts.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelNode.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PaintShader.h" />
@@ -343,6 +347,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="CursorScript.cpp" />
     <ClCompile Include="druEnums.cpp" />
     <ClCompile Include="druMath.cpp" />
+    <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FadeScript.cpp" />
     <ClCompile Include="FileMgr.cpp" />
@@ -363,11 +368,14 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="MarioHead.cpp" />
+    <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelNode.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="PaintShader.cpp" />
     <ClCompile Include="Panal.cpp" />

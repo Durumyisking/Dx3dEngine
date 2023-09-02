@@ -1,16 +1,11 @@
 #pragma once
 #include "GameObj.h"
-#include "DynamicObject.h"
-
-
-
-class Player :
-	public DynamicObject
+class DynamicObject :
+    public GameObj
 {
-
 public:
-	Player();
-	virtual ~Player();
+	DynamicObject();
+	virtual ~DynamicObject();
 
 	virtual void Initialize() override;
 	virtual void Update() override;
@@ -23,9 +18,14 @@ public:
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
 
-
 private:
 
 public:
+	virtual void BoneInitialize();
+	struct StateInfo {
+		UINT mState;
+		std::set<UINT> mLockState;
+	};
 
 };
+

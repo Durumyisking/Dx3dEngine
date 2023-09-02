@@ -113,9 +113,6 @@
     <Filter Include="Common\GameObj">
       <UniqueIdentifier>{ccd15fdd-31ba-4ced-8ea7-a2e5acfb3e55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\GameObj\Player">
-      <UniqueIdentifier>{58ec3c23-b57e-47a8-a2b2-2ae5eca9e2a3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\GameObj\Cursor">
       <UniqueIdentifier>{396a8426-32c6-4cfc-b631-138593724573}</UniqueIdentifier>
     </Filter>
@@ -211,6 +208,15 @@
     </Filter>
     <Filter Include="Common\Component\Animator3D">
       <UniqueIdentifier>{fabcf555-eba3-403d-88ef-e82bc3bc8461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\DynamicObject">
+      <UniqueIdentifier>{490394fb-5193-498a-b432-f2dcc741810c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\DynamicObject\Player">
+      <UniqueIdentifier>{58ec3c23-b57e-47a8-a2b2-2ae5eca9e2a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\DynamicObject\MarioParts">
+      <UniqueIdentifier>{2f811f8e-0942-4460-973e-b57aa2a1b313}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -329,7 +335,7 @@
       <Filter>Common\GameObj\Cursor</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Common\GameObj\Player</Filter>
+      <Filter>Common\GameObj\DynamicObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="Animator.h">
       <Filter>Common\Component\Animator</Filter>
@@ -385,7 +391,7 @@
       <Filter>Common\Font</Filter>
     </ClInclude>
     <ClInclude Include="PlayerScript.h">
-      <Filter>Common\GameObj\Player</Filter>
+      <Filter>Common\GameObj\DynamicObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="Macro.h" />
     <ClInclude Include="def.h">
@@ -520,6 +526,18 @@
     <ClInclude Include="Panal.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="DynamicObject.h">
+      <Filter>Common\GameObj\DynamicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioParts.h">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Common\GameObj\DynamicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioHead.h">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -622,7 +640,7 @@
       <Filter>Common\GameObj\Cursor</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Common\GameObj\Player</Filter>
+      <Filter>Common\GameObj\DynamicObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Common\Component\Animator</Filter>
@@ -678,7 +696,7 @@
       <Filter>Common\Font</Filter>
     </ClCompile>
     <ClCompile Include="PlayerScript.cpp">
-      <Filter>Common\GameObj\Player</Filter>
+      <Filter>Common\GameObj\DynamicObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="druEnums.cpp">
       <Filter>Common</Filter>
@@ -797,6 +815,18 @@
     <ClCompile Include="Panal.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="DynamicObject.cpp">
+      <Filter>Common\GameObj\DynamicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioParts.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Common\GameObj\DynamicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioHead.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

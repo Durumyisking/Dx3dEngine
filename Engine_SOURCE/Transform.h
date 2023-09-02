@@ -123,7 +123,8 @@ public:
 	Vector3 GetPhysicalPosition();
 	void SetPhysicalPosition(const Vector3& vPosition);
 
-	PxTransform GetPxTransform() const { return mPxTransform; }
+	//PxTransform GetPxTransform() const { return mPxTransform; }
+	GETSET(PxTransform, mPxTransform, PxTransform)
 
 private:
 	Transform* mParent;
