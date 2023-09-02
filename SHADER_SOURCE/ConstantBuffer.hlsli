@@ -123,5 +123,5 @@ cbuffer ParticleSystem : register(b6)
 
 cbuffer Sky : register(b9)
 {
-    row_major matrix cubemapMat;
+    matrix cubemapMat;
 }

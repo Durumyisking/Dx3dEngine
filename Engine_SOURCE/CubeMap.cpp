@@ -44,11 +44,11 @@ void CubeMapHDR::Initialize()
 
 
     captureProjection = XMMatrixPerspectiveFovLH((XM_PI / 180.f) * 90.f, 1.f, 0.1f, 10.f);
-    captureViews[0] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(1, 0, 0, 0), XMVectorSet(0, -1, 0, 0));
-    captureViews[1] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, -1, 0, 0));
-    captureViews[2] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0,-1, 0, 0), XMVectorSet(0,  0, 1, 0));
-    captureViews[3] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0,  0,-1, 0));
-    captureViews[4] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 0,-1, 0), XMVectorSet(0, -1, 0, 0));
+    captureViews[0] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(1, 0, 0, 0), XMVectorSet(0, -1, 0, 0)),
+    captureViews[1] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, -1, 0, 0)),
+    captureViews[2] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0,-1, 0, 0), XMVectorSet(0,  0, 1, 0)),
+    captureViews[3] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 1, 0, 0), XMVectorSet(0,  0,-1, 0)),
+    captureViews[4] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 0,-1, 0), XMVectorSet(0, -1, 0, 0)),
     captureViews[5] = XMMatrixLookAtLH(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, -1, 0, 0));
 
 
@@ -145,7 +145,7 @@ void CubeMapHDR::bindIrradianceMap()
     shader->Bind();
 
     for (uint32_t i = 0; i < 6; ++i)
-    {
+    {   
         float clearColor[4] = { 0.0f, 1.f, 0.f, 1.0f };
         GetDevice()->GetDeviceContext()->ClearRenderTargetView(mRTVs2[i], clearColor);
         XMMATRIX d = XMMatrixTranspose(captureViews[i] * captureProjection);
@@ -199,6 +199,6 @@ void CubeMapHDR::Bind()
         renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
         ++asdf;
     }
-    //GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::IrradianceMap), &mIrradianceSRV);
+    GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::IrradianceMap), &mIrradianceSRV);
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &mPreFilterSRV);
-}
+} 

@@ -158,7 +158,7 @@ void SceneTitle::Enter()
 			L"gold_metallic", 
 			L"gold_roughness", 
 			L"PBRShader",
-			L"mat_dirt"
+			L"gold_dirt"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
@@ -186,7 +186,35 @@ void SceneTitle::Enter()
 			L"check_metallic",
 			L"check_roughness",
 			L"PBRShader",
-			L"mat_dirt"
+			L"check_dirt"
+		);
+		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->AddComponent<PlayerScript>(eComponentType::Script);
+
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	}
+
+	{
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(0.f, 5.f, 5.f));
+		player->SetScale(Vector3(1.f, 1.f, 1.f));
+		player->SetName(L"Player");
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		(
+			L"wood_albedo",
+			L"wood_normal",
+			L"wood_metallic",
+			L"wood_roughness",
+			L"PBRShader",
+			L"wood_dirt"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 

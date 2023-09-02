@@ -18,9 +18,16 @@ float4 main(VSOut psIn) : SV_TARGET
 
     float sampleDelta = 0.012;
     float nrSamples = 0.0;
-    for (float phi = 0.0; phi < 2.0 * PI; phi += sampleDelta)
+    //for (int i = 0.0; i < 10; i++)
+    //{
+    //    irradiance = float3(1.f, 0.f, 1.f);        
+    //}
+    
+    
+    
+    for (float phi = 0.0; phi < 2.0 * 3.1415926535f; phi += sampleDelta)
     {
-        for (float theta = 0.0; theta < 0.5 * PI; theta += sampleDelta)
+        for (float theta = 0.0; theta < 0.5 * 3.1415926535f; theta += sampleDelta)
         {
 			// spherical to cartesian (in tangent space)
             float3 tangentSample = float3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
@@ -31,7 +38,7 @@ float4 main(VSOut psIn) : SV_TARGET
             nrSamples++;
         }
     }
-    irradiance = PI * irradiance * (1.0 / float(nrSamples));
+    irradiance = 3.1415926535f * irradiance * (1.0 / float(nrSamples));
 
     return float4(irradiance, 1.0);
 }

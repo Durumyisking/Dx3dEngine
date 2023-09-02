@@ -58,7 +58,7 @@ float4 main(VSOut psIn) : SV_TARGET
     const uint SAMPLE_COUNT = 1024u;
     float totalWeight = 0.0;
     float3 prefilteredColor = float3(0.0, 0.0, 0.0);
-    for (uint i = 0u; i < SAMPLE_COUNT; ++i)
+        for (uint i = 0u; i < SAMPLE_COUNT; ++i)
     {
         // half verter °è»ê
         float2 Xi = Hammersley(i, SAMPLE_COUNT);
@@ -69,7 +69,7 @@ float4 main(VSOut psIn) : SV_TARGET
         float NdotL = max(dot(N, L), 0.0);
         if (NdotL > 0.0)
         {
-            prefilteredColor += CubeMapTexture.Sample(linearSampler, L).rgb * NdotL;
+            prefilteredColor += CubeMapTexture.Sample(linearSampler, normalize(psIn.WorldPos)).rgb * NdotL;
             totalWeight += NdotL;
         }
     }
