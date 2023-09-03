@@ -156,8 +156,8 @@ float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal
     float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.f), roughness)).rg;
     float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y); 
 
-    //float3 result = (diffuse + specular) * NdotL;
-    float3 result = (kd * diffuse + specular); // 마딧세이는 전방향 빛 비추는듯?4
+    float3 result = (diffuse + specular) * NdotL;
+    //float3 result = (kd * diffuse + specular); // 마딧세이는 전방향 빛 비추는듯?4
     
     return result;
 }
