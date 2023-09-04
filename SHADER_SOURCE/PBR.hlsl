@@ -4,7 +4,6 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float2 UV : TEXCOORD;
-    float3 UVCube : TEXCOORD1;
     float3 ViewPos : POSITION; // viewspace fragmentPos
 
     float3 ViewTangent : TANGENT; // view Space tangent
@@ -22,8 +21,9 @@ float4 main(VSOut vsIn) : SV_Target
 
     float4  albedo = float4(0.5f, 0.5f, 0.5f, 1.f);
     float3  normal = vsIn.ViewNormal;
-    float   metallic = 0.01f;
-    float   roughness = 1.f;
+    float3  worldnormal = -mul(float4(vsIn.ViewNormal.xyz, 0.f), inverseView);
+    float   metallic = 0.5;
+    float   roughness = 0.5;
     float3  A0 = (float3) 1.f;
 
     if (1 == cbbAlbedo)
@@ -46,8 +46,9 @@ float4 main(VSOut vsIn) : SV_Target
     {
         //normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
     }
-
-    outColor.xyz = CalculateLightPBR_Direct(vsIn.ViewPos, albedo, normal, metallic, roughness, vsIn.UVCube);
+   
+    
+    outColor.xyz = CalculateLightPBR_Direct(vsIn.ViewPos, albedo, normal, metallic, roughness);
         
     return float4(outColor, 1.f);;
 
