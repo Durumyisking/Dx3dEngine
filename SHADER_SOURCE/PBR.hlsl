@@ -19,11 +19,11 @@ float4 main(VSOut vsIn) : SV_Target
     float3 directLighting = (float3) 0.f;
     float3 ambientLighting = (float3) 0.f;
 
-    float4  albedo = float4(0.5f, 0.5f, 0.5f, 1.f);
+    float4 albedo = (float4) 1.f;
     float3  normal = vsIn.ViewNormal;
-    float3  worldnormal = -mul(float4(vsIn.ViewNormal.xyz, 0.f), inverseView);
-    float   metallic = 0.5;
-    float   roughness = 0.5;
+    float3  worldnormal = mul(float4(vsIn.ViewNormal.xyz, 0.f), inverseView);
+    float   metallic = 0.01f;
+    float   roughness = 0.99f;
     float3  A0 = (float3) 1.f;
 
     if (1 == cbbAlbedo)

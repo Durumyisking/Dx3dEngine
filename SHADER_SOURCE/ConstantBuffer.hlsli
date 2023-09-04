@@ -6,7 +6,7 @@ cbuffer Transform : register(b0)
     row_major matrix inverseView;
     row_major matrix projection;
     row_major matrix fovForSkySphere;
-
+    float4 cameraWorldPos;
 }
 
 cbuffer Material : register(b1)

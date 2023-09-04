@@ -36,6 +36,14 @@ CubeMapHDR::CubeMapHDR()
 
 CubeMapHDR::~CubeMapHDR()
 {
+    mIrradianceSRV->Release();
+    mPreFilterSRV->Release();
+
+    for (size_t i = 0; i < mRTVs2.size(); i++)
+    {
+        mRTVs2[i]->Release();
+        mRTVs3[i]->Release();
+    }
 }
 
 void CubeMapHDR::Initialize()
@@ -54,6 +62,14 @@ void CubeMapHDR::Initialize()
 
     mCubemesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
+    mViewport.MinDepth = 0.0f;
+    mViewport.MaxDepth = 1.0f;
+    mViewport.TopLeftX = 0;
+    mViewport.TopLeftY = 0;
+    bindIrradianceMap();
+    bindPrefilterMap();
+    GetDevice()->AdjustViewPorts();
+    renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
 
     GetDevice()->AdjustViewPorts();
 
@@ -187,18 +203,8 @@ void CubeMapHDR::bindPrefilterMap()
 
 void CubeMapHDR::Bind()
 {
-    if (asdf <= 10)
-    {
-        mViewport.MinDepth = 0.0f;
-        mViewport.MaxDepth = 1.0f;
-        mViewport.TopLeftX = 0;
-        mViewport.TopLeftY = 0;
-        bindIrradianceMap();
-        bindPrefilterMap();
-        GetDevice()->AdjustViewPorts();
-        renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
-        ++asdf;
-    }
+
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::IrradianceMap), &mIrradianceSRV);
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &mPreFilterSRV);
+
 } 

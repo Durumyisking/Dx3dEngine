@@ -130,10 +130,11 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
 float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal, float metallic, float roughness)
 {
     // PBR     
-    float3 V = normalize(viewPos); // 뷰공간 pinPoint(0,0,0)부터 픽셀로 향하는 벡터의 음수
+    float3 V = normalize(cameraWorldPos.xyz - viewPos); // 뷰공간 pinPoint(0,0,0)부터 픽셀로 향하는 벡터의 음수
     float3 N = normalize(viewNormal); // 정점/텍스처 노말 뷰변환 완료
-    float3 R = reflect(V, N);
-    float NDotV = saturate(dot(N, -V)); // 노멀 to 눈 반사각 
+
+    float3 R = reflect(-V, N);
+    float NDotV = saturate(dot(N, V)); // 노멀 to 눈 반사각 
 
     float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // 금속성이 강할수록 albedo를 사용하고 아니면 0.04사용 (재질 값)
 
@@ -150,7 +151,7 @@ float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal
 
     float3 irradiance = irradianceMap.Sample(skyBoxSampler, -N).rgb;
     
-    float3 diffuse = saturate(irradiance * albedo.xyz);
+    float3 diffuse = irradiance * albedo.xyz;
 
     const float MAX_REFLECTION_LOD = 4.f;
     float3 prefilteredColor = prefilteredMap.SampleLevel(skyBoxSampler, -R, roughness * MAX_REFLECTION_LOD).rgb;
@@ -161,7 +162,7 @@ float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal
                                         // 반사 관련된 x는 프레넬과 계산 y는 diffuse처럼 생각하는 듯 보임
     float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
 
-    float3 result = (specular); // * NdotL;
+    float3 result = (kd * diffuse + specular);
     //float3 result = (specular); // 마딧세이는 전방향 빛 비추는듯?
     //float3 result = (kd * diffuse);
 

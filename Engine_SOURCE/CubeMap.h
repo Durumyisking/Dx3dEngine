@@ -41,7 +41,6 @@ private:
 	ID3D11Texture2D* mIrradianceTex;
 	ID3D11RenderTargetView* mIrradianceRTV;
 	ID3D11ShaderResourceView* mIrradianceSRV;
-
 	ID3D11Texture2D* mPreFilterTex;
 	ID3D11RenderTargetView* mPreFilterRTV;
 	ID3D11ShaderResourceView* mPreFilterSRV;
@@ -51,5 +50,4 @@ private:
 	XMMATRIX captureProjection;
 	XMMATRIX captureViews[6];
 
-	int asdf = 0;
 };
