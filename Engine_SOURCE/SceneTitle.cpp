@@ -209,10 +209,10 @@ void SceneTitle::Enter()
 		player->SetName(L"Player");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
-			L"wood_albedo",
-			L"wood_normal",
-			L"wood_metallic",
-			L"wood_roughness",
+			L"iron_albedo",
+			L"iron_normal",
+			L"iron_metallic",
+			L"iron_roughness",
 			L"PBRShader",
 			L"wood_dirt"
 		);

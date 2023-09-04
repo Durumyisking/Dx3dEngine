@@ -49,9 +49,8 @@ float4 main(VSOut psIn) : SV_TARGET
 {
     float roughness = 0.1f;
     
-    // input으로 부터 현재 픽셀의 표면 법선을 계산
+    // input으로 부터 현재 픽셀의 표면 법선을 계산0
     float3 N = normalize(psIn.WorldPos);
-    // 반사 방향을 현재 픽셀의 법선과 같게 초기화
     float3 R = N;
     //뷰 방향을 반사 방향으로 초기화한다.
     float3 V = R;
@@ -59,7 +58,7 @@ float4 main(VSOut psIn) : SV_TARGET
     const uint SAMPLE_COUNT = 1024u;
     float totalWeight = 0.0;
     float3 prefilteredColor = float3(0.0, 0.0, 0.0);
-        for (uint i = 0u; i < SAMPLE_COUNT; ++i)
+    for (uint i = 0u; i < SAMPLE_COUNT; ++i)
     {
         // half verter 계산
         float2 Xi = Hammersley(i, SAMPLE_COUNT);

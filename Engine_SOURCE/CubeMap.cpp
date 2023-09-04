@@ -187,7 +187,7 @@ void CubeMapHDR::bindPrefilterMap()
 
 void CubeMapHDR::Bind()
 {
-    if (asdf <= 100)
+    if (asdf <= 10)
     {
         mViewport.MinDepth = 0.0f;
         mViewport.MaxDepth = 1.0f;

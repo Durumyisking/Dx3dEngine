@@ -87,12 +87,12 @@ float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, f
 
 float TextureMapping_metallic(float2 uv)
 {
-    return saturate(metallicTexture.SampleLevel(linearSampler, uv, 0.f).r);
+    return metallicTexture.Sample(linearSampler, uv).r;
 }
 
 float TextureMapping_roughness(float2 uv)
 {
-    return saturate(roughnessTexture.SampleLevel(linearSampler, uv, 0.f).r);
+    return roughnessTexture.Sample(linearSampler, uv).r;
 }
 
 

@@ -467,6 +467,8 @@ namespace renderer
 			shader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"PBR.hlsl", "main");
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PBRShader", shader);
+			shader->SetBSState(eBlendStateType::Default);
+
 		}
 #pragma endregion
 
@@ -663,25 +665,12 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"brick/BlockBrickBody_rgh.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"brick/BlockBrickBody_emm.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_alb", L"Textures/WanWan/WanwanBig_Body_alb.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_nrm", L"Textures/WanWan/WanwanBig_Body_nrm.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_mtl", L"Textures/WanWan/WanwanBig_Body_mtl.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_rgh", L"Textures/WanWan/WanwanBig_Body_rgh.png");
-
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_albedo", L"Textures/a/dented-metal_albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_normal", L"Textures/a/dented-metal_normal-dx.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_metallic", L"Textures/a/dented-metal_metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_roughnes", L"Textures/a/dented-metal_roughness.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_albedo", L"Textures/Check/albedo.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_normal", L"Textures/Check/normal.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_metallic", L"Textures/Check/metallic.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_roughness", L"Textures/Check/roughness.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_albedo", L"Textures/a/used-stainless-steel2_albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_normal", L"Textures/a/used-stainless-steel2_normal.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_metallic", L"Textures/a/used-stainless-steel2_metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_roughness", L"Textures/a/used-stainless-steel2_roughness.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_albedo", L"Textures/Gold/albedo.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_normal", L"Textures/Gold/normal.png");
@@ -692,6 +681,12 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_normal", L"Textures/Wood/normal.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_metallic", L"Textures/Wood/metallic.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_roughness", L"Textures/Wood/roughness.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_albedo", L"Textures/Iron/albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_normal", L"Textures/Iron/normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_metallic", L"Textures/Iron/metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_roughness", L"Textures/Iron/roughness.png");
+
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BRDF", L"Textures/BRDF.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Brick_Color", L"Cube/Brick.jpg");
