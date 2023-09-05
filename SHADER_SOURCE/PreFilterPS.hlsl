@@ -25,7 +25,8 @@ float3 ImportanceSampleGGX(float2 Xi, float3 N, float roughness)
 {
     float a = roughness * roughness;
 
-    float phi = 2.0 * PI * Xi.x;
+    float phi = 2.0 * 3.1415926535f * Xi.x;
+    //float phi = 2.0 * 3.1415926535f * Xi.x;
     float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
     float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
 
@@ -48,9 +49,8 @@ float4 main(VSOut psIn) : SV_TARGET
 {
     float roughness = 0.1f;
     
-    // input으로 부터 현재 픽셀의 표면 법선을 계산
+    // input으로 부터 현재 픽셀의 표면 법선을 계산0
     float3 N = normalize(psIn.WorldPos);
-    // 반사 방향을 현재 픽셀의 법선과 같게 초기화
     float3 R = N;
     //뷰 방향을 반사 방향으로 초기화한다.
     float3 V = R;
@@ -69,7 +69,7 @@ float4 main(VSOut psIn) : SV_TARGET
         float NdotL = max(dot(N, L), 0.0);
         if (NdotL > 0.0)
         {
-            prefilteredColor += Skybox.Sample(linearSampler, SampleSphericalMap(L)).rgb * NdotL;
+            prefilteredColor += CubeMapTexture.Sample(linearSampler, -L).rgb * NdotL;
             totalWeight += NdotL;
         }
     }

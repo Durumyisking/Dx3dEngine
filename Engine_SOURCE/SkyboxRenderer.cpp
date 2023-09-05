@@ -47,3 +47,8 @@ void SkyboxRenderer::Render()
 	GetMaterial()->Clear();
 
 }
+
+void SkyboxRenderer::SetSkyBoyTextureByKey(const std::wstring& texureName)
+{
+	GetMaterial()->SetTextureByKey(texureName, eTextureSlot::SkySphere);
+}

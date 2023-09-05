@@ -249,19 +249,18 @@ namespace renderer
 		}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"IrradianceShader");
-			GetDevice()->CreateInputLayout(arrLayout, 8
+			GetDevice()->CreateInputLayout(arrLayout, 6
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PreFilterShader");
-			GetDevice()->CreateInputLayout(arrLayout, 8
+			GetDevice()->CreateInputLayout(arrLayout, 6
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
-
 
 		Shader* uiSpriteShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UISpriteShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
@@ -472,9 +471,11 @@ namespace renderer
 #pragma region PBRShader
 		{
 			Shader* shader = new Shader();
-			shader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
-			shader->Create(eShaderStage::PS, L"PBR.hlsl", "main");
+			shader->Create(eShaderStage::VS, L"PBRVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"PBRPS.hlsl", "main");
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PBRShader", shader);
+			shader->SetBSState(eBlendStateType::Default);
+
 		}
 #pragma endregion
 
@@ -612,7 +613,7 @@ namespace renderer
 		}
 #pragma endregion
 
-#pragma region SkyBox Shader
+#pragma region SkySphere Shader
 		{
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"SkySphereVS.hlsl", "main");
@@ -625,27 +626,26 @@ namespace renderer
 		}
 #pragma endregion
 
-#pragma region IrradianceMap
+#pragma region SkySphere Shader
 		{
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"IrradianceVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"IrradiancePS.hlsl", "main");
 			shader->SetRSState(eRasterizerType::SolidFront);
 			shader->SetDSState(eDepthStencilType::Less);
-			shader->SetBSState(eBlendStateType::Default);
+			shader->SetBSState(eBlendStateType::AlphaBlend);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"IrradianceShader", shader);
 		}
 #pragma endregion
-
-#pragma region PreFilteredMap
+#pragma region SkySphere Shader
 		{
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"PreFilterVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"PreFilterPS.hlsl", "main");
 			shader->SetRSState(eRasterizerType::SolidFront);
 			shader->SetDSState(eDepthStencilType::Less);
-			shader->SetBSState(eBlendStateType::Default);
+			shader->SetBSState(eBlendStateType::AlphaBlend);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PreFilterShader", shader);
 		}
@@ -659,6 +659,7 @@ namespace renderer
 		uiSS->SetRSState(eRasterizerType::SolidNone);
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UISpriteShader", uiSS);
 #pragma endregion
+
 	}
 
 	void LoadDefaultTexture()
@@ -680,25 +681,12 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"brick/BlockBrickBody_rgh.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"brick/BlockBrickBody_emm.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_alb", L"Textures/WanWan/WanwanBig_Body_alb.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_nrm", L"Textures/WanWan/WanwanBig_Body_nrm.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_mtl", L"Textures/WanWan/WanwanBig_Body_mtl.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"WanwanBig_Body_rgh", L"Textures/WanWan/WanwanBig_Body_rgh.png");
-
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_albedo", L"Textures/a/dented-metal_albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_normal", L"Textures/a/dented-metal_normal-dx.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_metallic", L"Textures/a/dented-metal_metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dented_metal_roughnes", L"Textures/a/dented-metal_roughness.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_albedo", L"Textures/Check/albedo.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_normal", L"Textures/Check/normal.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_metallic", L"Textures/Check/metallic.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_roughness", L"Textures/Check/roughness.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_albedo", L"Textures/a/used-stainless-steel2_albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_normal", L"Textures/a/used-stainless-steel2_normal.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_metallic", L"Textures/a/used-stainless-steel2_metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"stainless_steel2_roughness", L"Textures/a/used-stainless-steel2_roughness.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_albedo", L"Textures/Gold/albedo.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_normal", L"Textures/Gold/normal.png");
@@ -709,6 +697,12 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_normal", L"Textures/Wood/normal.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_metallic", L"Textures/Wood/metallic.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_roughness", L"Textures/Wood/roughness.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_albedo", L"Textures/Iron/albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_normal", L"Textures/Iron/normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_metallic", L"Textures/Iron/metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_roughness", L"Textures/Iron/roughness.png");
+
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BRDF", L"Textures/BRDF.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Brick_Color", L"Cube/Brick.jpg");
@@ -734,6 +728,16 @@ namespace renderer
 
 		CreateUITexture();
 
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly1", L"Cube/people/SkyOnly_.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly2", L"Cube/people/SkyOnly_Scenario2.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly3", L"Cube/people/SkyOnly_Scenario3.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly4", L"Cube/people/SkyOnly_Scenario4.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly5", L"Cube/people/SkyOnly_Scenario5.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly6", L"Cube/people/SkyOnly_Scenario6.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly7", L"Cube/people/SkyOnly_Scenario7.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly8", L"Cube/people/SkyOnly_Scenario8.dds");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly9", L"Cube/people/SkyOnly_Scenario9.dds");
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,

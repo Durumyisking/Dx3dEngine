@@ -10,6 +10,19 @@ Material::Material()
 	, mTexture{}
 {
 }
+Material::Material(std::wstring shaderName)
+	: Resource(eResourceType::Material)
+	, mMode(eRenderingMode::Opaque)
+	, mMaterialConstantBuffer{}
+	, mShader(nullptr)
+	, mTexture{}
+{
+	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
+}
 Material::Material(std::wstring textureColor, std::wstring shaderName)
 	: Resource(eResourceType::Material)
 	, mMode(eRenderingMode::Opaque)
@@ -24,8 +37,6 @@ Material::Material(std::wstring textureColor, std::wstring shaderName)
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
-
-
 }
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName)
 	: Resource(eResourceType::Material)
