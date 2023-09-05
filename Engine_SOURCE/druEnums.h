@@ -160,6 +160,16 @@ namespace enums
 		Z,
 	};
 
+	enum class HUDState
+	{
+		None,
+		MoveBlink,
+		MoveTowards,
+		Rotate,
+		Size,
+		GoAndReturn,
+		End
+	};
 
 	extern const char* charComponentType[(int)eComponentType::End];
 	extern const wchar_t* wcharComponentType[(int)eComponentType::End];

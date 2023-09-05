@@ -43,6 +43,9 @@
 #include "HUD.h"
 #include "Button.h"
 #include "UIFactory.h"
+#include "Animator.h"
+
+
 extern Application application;
 
 
@@ -78,7 +81,8 @@ void SceneTitle::update()
 
 	if (KEY_TAP(N_1))
 	{
-		//mLifePanal->InActive();
+		MainMenuPanal->InActivate();
+
 	}
 
 
@@ -286,106 +290,8 @@ void SceneTitle::Enter()
 
 
 	}
-			
-	//LifePanal
-	{
-		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(6.4f, 3.1f, 10.f), Vector3(1.0f, 1.0f, 1.0f), L"LifePanal"));
-
-
-		//LifeGauge
-		HUD* hud = object::Instantiate<HUD>(eLayerType::UI);
-		hud->SetPos(Vector3(0.f, 0.f, 0.f));
-		hud->SetScale({ 1.f, 1.f, 1.f });
-		hud->SetName(L"hud2");
-		MeshRenderer* hudRender = hud->AddComponent<MeshRenderer>(eComponentType::UI);
-		hudRender->SetMeshByKey(L"Rectmesh");
-		hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"LifeGauge_3Material"));
-		hud->GetComponent<Transform>()->SetParent(mLifePanal);
-
-
-		//Lifeheart
-		HUD* lifeheart = object::Instantiate<HUD>(eLayerType::UI);
-		lifeheart->SetPos(Vector3(0.f, -0.03f, 0.f));
-		lifeheart->SetScale({ 0.6f, 0.6f, 1.f });
-		lifeheart->SetName(L"Lifeheart");
-		MeshRenderer* lifeheartRender = lifeheart->AddComponent<MeshRenderer>(eComponentType::UI);
-		lifeheartRender->SetMeshByKey(L"Rectmesh");
-		lifeheartRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"LifeheartMaterial"));
-		lifeheart->GetComponent<Transform>()->SetParent(mLifePanal);
-	}
-
-	//Left Coin UI
-	{
-		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(-6.4f, 3.1f, 10.f), Vector3(0.7f,0.7f,1.0f), L"CoinPanal"));
-
-
-		HUD* coin = object::Instantiate<HUD>(eLayerType::UI);
-		coin->SetPos(Vector3(0.f, 0.f, 0.f));
-		coin->SetScale({ 1.f, 1.f, 1.f });
-		coin->SetName(L"Coin");
-		MeshRenderer* coinRender = coin->AddComponent<MeshRenderer>(eComponentType::UI);
-		coinRender->SetMeshByKey(L"Rectmesh");
-		coinRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"CoinMaterial"));
-		coin->GetComponent<Transform>()->SetParent(mCoinPanal);
-
-		HUD* cityCoin = object::Instantiate<HUD>(eLayerType::UI);
-		cityCoin->SetPos(Vector3(3.f, 0.1f, 0.f));
-		cityCoin->SetScale({ 1.f, 1.f, 1.f });
-		cityCoin->SetName(L"CityCoin");
-		MeshRenderer* cityCoinRender = cityCoin->AddComponent<MeshRenderer>(eComponentType::UI);
-		cityCoinRender->SetMeshByKey(L"Rectmesh");
-		cityCoinRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"CityCoinMaterial"));
-		cityCoin->GetComponent<Transform>()->SetParent(mCoinPanal);
-
-		HUD* bar = object::Instantiate<HUD>(eLayerType::UI);
-		bar->SetPos(Vector3(2.f, -0.55f, 0.f));
-		bar->SetScale({ 5.f, 1.4f, 1.f });
-		bar->SetRotation({ 0.f, 0.f, 1.f });
-		bar->SetName(L"Bar");
-		MeshRenderer* barRender = bar->AddComponent<MeshRenderer>(eComponentType::UI);
-		barRender->SetMeshByKey(L"Rectmesh");
-		barRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"BarMaterial"));
-		bar->GetComponent<Transform>()->SetParent(mCoinPanal);
-	}
-
-	//left Luna UI
-	{
-		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(-6.4f, 2.0f, 10.f),Vector3::One ,L"LunaPanal"));
-
-
-		for (size_t i = 0; i < 10; i++)
-		{
-			for (size_t j = 0; j < 2; j++)
-			{
-				HUD* luna = object::Instantiate<HUD>(eLayerType::UI);
-				luna->SetPos(Vector3(-0.11f + (0.33f * i), (0.40f - (0.35f * j)) + (0.01f * i), 0.f));
-				luna->SetScale({ 0.3f, 0.3f, 1.f });
-				luna->SetName(L"Luna" + i + (j * 10));
-
-				MeshRenderer* lunaRender = luna->AddComponent<MeshRenderer>(eComponentType::UI);
-				lunaRender->SetMeshByKey(L"Rectmesh");
-				lunaRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"LunaMaterial"));
-				luna->GetComponent<Transform>()->SetParent(mLunaPanal);
-				luna->Die();
-			}
-		}
-
-		for (size_t i = 0; i < 10; i++)
-		{
-			for (size_t j = 0; j < 2; j++)
-			{
-				HUD* dottedLine = object::Instantiate<HUD>(eLayerType::UI);
-				dottedLine->SetPos(Vector3(-0.11f + (0.33f * i), (0.40f - (0.35f * j)) + (0.01f * i), 0.f));
-				dottedLine->SetScale({ 0.3f, 0.3f, 1.f });
-				dottedLine->SetName(L"DottedLine");
-
-				MeshRenderer* dottedLineRender = dottedLine->AddComponent<MeshRenderer>(eComponentType::UI);
-				dottedLineRender->SetMeshByKey(L"Rectmesh");
-				dottedLineRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"DottedLineMaterial"));
-				dottedLine->GetComponent<Transform>()->SetParent(mLunaPanal);
-			}
-		}
-	}
+	CreateMainMenu();
+	CreatePlayerUI();
 
 	Scene::Enter();
 }
@@ -393,4 +299,82 @@ void SceneTitle::Enter()
 void SceneTitle::Exit()
 {
 	Scene::Exit();
+}
+
+void SceneTitle::CreateMainMenu()
+{
+	MainMenuPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(0.0f, 0.0f, 1.f), Vector3(1.0f, 1.0f, 1.0f), L"WorldMapPanal"));
+
+	HUD* worldMap = (GETSINGLE(UIFactory)->CreateHud(L"WorldMap", L"WorldMapMaterial", Vector3(0.f, 0.6f, 0.f), Vector3(3.f, 3.f, 1.f), MainMenuPanal));
+	HUD* filter = (GETSINGLE(UIFactory)->CreateHud(L"RedFilter", L"FilterMaterial", Vector3(0.f, 0.6f, 0.f), Vector3(3.f, 3.f, 1.f), MainMenuPanal));
+	worldMap->SetState(HUDState::Rotate);
+	worldMap->SetSpeed(1);
+	HUD* title = (GETSINGLE(UIFactory)->CreateHud(L"MarioTitle", L"TitleMaterial", Vector3(-0.6f, 0.3f, 0.f), Vector3(0.2f, 0.2f, 1.f), MainMenuPanal));
+	HUD* bar = (GETSINGLE(UIFactory)->CreateHud(L"UIBar", L"UIBarMaterial", Vector3(-0.4f, 0.f, 0.f), Vector3(0.6f, 0.08f, 1.f), MainMenuPanal));
+	bar->SetRotation(Vector3(0.0f, 0.0f, 2.0f));
+	bar->SetState(HUDState::MoveBlink);
+	HUD* cap = (GETSINGLE(UIFactory)->CreateHud(L"Cap", L"CapMaterial", Vector3(-0.35f, 0.0f, 0.f), Vector3(0.15f, 0.45f, 1.f), bar));
+	//Animator* capAni = cap->AddComponent<Animator>(eComponentType::Animator);
+	//Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(L"CapRotate"));
+	//capAni->Create(L"CapAni", tex, Vector2::Zero, Vector2(84.0f, 50.0f), Vector2::One, 5, Vector2(100.0f, 80.0f), 0.1f);
+	//capAni->Play(L"CapAni", true);
+	MainMenuPanal->Addchild(worldMap);
+	MainMenuPanal->Addchild(filter);
+	MainMenuPanal->Addchild(title);
+	MainMenuPanal->Addchild(bar);
+	MainMenuPanal->Addchild(cap);
+}
+
+void SceneTitle::CreatePlayerUI()
+{
+	//Life UI
+	{
+		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(6.4f, 3.1f, 10.f), Vector3(1.0f, 1.0f, 1.0f), L"LifePanal"));
+		//LifeGauge
+		HUD* hud = (GETSINGLE(UIFactory)->CreateHud(L"LifeGauge", L"LifeGauge_3Material", Vector3(0.f, 0.f, 0.f), Vector3::One, mLifePanal));
+		//Lifeheart
+		HUD* lifeheart = (GETSINGLE(UIFactory)->CreateHud(L"LifeHeart", L"LifeheartMaterial", Vector3(0.f, -0.03f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal));
+
+		mLifePanal->Addchild(hud);
+		mLifePanal->Addchild(lifeheart);
+	}
+
+	//Left Coin UI
+	{
+		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(-6.4f, 3.1f, 10.f), Vector3(0.7f, 0.7f, 1.0f), L"CoinPanal"));
+		HUD* coin = (GETSINGLE(UIFactory)->CreateHud(L"Coin", L"CoinMaterial", Vector3(0.f, 0.f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal));
+		HUD* cityCoin = (GETSINGLE(UIFactory)->CreateHud(L"CityCoin", L"CityCoinMaterial", Vector3(3.f, 0.1f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal));
+		HUD* bar = (GETSINGLE(UIFactory)->CreateHud(L"Bar", L"BarMaterial", Vector3(2.f, -0.55f, 0.f), Vector3(5.f, 1.4f, 1.f), mCoinPanal));
+		mCoinPanal->Addchild(coin);
+		mCoinPanal->Addchild(cityCoin);
+		mCoinPanal->Addchild(bar);
+	}
+
+	//left Luna UI
+	{
+		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(-6.4f, 2.0f, 10.f), Vector3::One, L"LunaPanal"));
+
+		for (size_t i = 0; i < 10; i++)
+		{
+			for (size_t j = 0; j < 2; j++)
+			{
+				Vector3 position = Vector3(-0.11f + (0.33f * i), (0.40f - (0.35f * j)) + (0.01f * i), 0.f);
+
+
+				HUD* luna = (GETSINGLE(UIFactory)->CreateHud(L"Luna" + std::to_wstring(i) + std::to_wstring(j * 10), L"LunaMaterial",
+					position,
+					Vector3(0.3f, 0.3f, 1.f),
+					mLunaPanal));
+				luna->Die();
+				mLunaPanal->Addchild(luna);
+
+				HUD* dottedLine = (GETSINGLE(UIFactory)->CreateHud(L"DottedLine" + std::to_wstring(i) + std::to_wstring(j * 10), L"DottedLineMaterial",
+					position,
+					Vector3(0.3f, 0.3f, 1.f),
+					mLunaPanal));
+
+				mLunaPanal->Addchild(dottedLine);
+			}
+		}
+	}
 }

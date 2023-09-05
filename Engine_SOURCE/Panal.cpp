@@ -34,14 +34,22 @@ void Panal::OnInActive()
 	this->Die();
 }
 
-void Panal::OnTick()
+void Panal::OnUpdate()
 {
 
+}
+
+void Panal::OnFixedUpdate()
+{
 }
 
 void Panal::OnRender()
 {
 
+}
+
+void Panal::OnFontRender()
+{
 }
 
 void Panal::OnClear()

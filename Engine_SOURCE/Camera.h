@@ -38,7 +38,7 @@ public:
 	void RegisterCameraInRenderer();
 
 	void TurnLayerMask(eLayerType layer, bool enable = true);
-	void EnableLayerMasks() { mLayerMask.set(); } // �遺 true濡 }
+	void EnableLayerMasks() { mLayerMask.set(); }
 	void DisableLayerMasks() { mLayerMask.reset(); }
 
 	void SetProjectionType(eProjectionType type) { mType = type; }
@@ -86,7 +86,7 @@ private:
 
 
 	eProjectionType mType;
-	float mAspectRatio; // 醫〓
+	float mAspectRatio; // 
 
 	float mNear;
 	float mFar;
@@ -111,4 +111,3 @@ private:
 	float		mTime;
 	bool		mSmooth;
 };
-

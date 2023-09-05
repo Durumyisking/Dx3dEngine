@@ -3,6 +3,7 @@
 
 
 class Panal;
+class HUD;
 class SceneTitle :
     public Scene
 {
@@ -18,7 +19,8 @@ public:
 	virtual void Enter();
 	virtual void Exit();
 
-
+	void CreateMainMenu();
+	void CreatePlayerUI();
 private:
 	GameObj*	mCamera;
 	GameObj*    mUICamera;
@@ -26,6 +28,7 @@ private:
 	Panal* mCoinPanal;
 	Panal* mLifePanal;
 	Panal* mLunaPanal;
+	Panal* MainMenuPanal;
 
 };
 
