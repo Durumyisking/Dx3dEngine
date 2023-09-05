@@ -162,7 +162,7 @@ void SceneTitle::Enter()
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
@@ -190,7 +190,7 @@ void SceneTitle::Enter()
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
@@ -218,7 +218,7 @@ void SceneTitle::Enter()
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);

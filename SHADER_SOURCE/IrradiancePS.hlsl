@@ -34,7 +34,7 @@ float4 main(VSOut psIn) : SV_TARGET
 			// tangent space to world
             float3 sampleVec = tangentSample.x * right + tangentSample.y * up + tangentSample.z * normal;
 
-            irradiance += CubeMapTexture.Sample(linearSampler, sampleVec).rgb * cos(theta) * sin(theta);
+            irradiance += CubeMapTexture.Sample(linearSampler, -sampleVec).rgb * cos(theta) * sin(theta);
             nrSamples++;
         }
     }

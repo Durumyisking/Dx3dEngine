@@ -19,7 +19,7 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float2 UV : TEXCOORD;
-    float3 ViewPos : POSITION;
+    float3 WorldPos : POSITION;
 
     float3 WorldTangent : TANGENT;
     float3 WorldNormal : NORMAL;
@@ -43,7 +43,7 @@ VSOut main(VSIn vsIn)
     //if (weights.x + weights.y + weights.z + weights.w == 0.0f)
     pos = vsIn.Position;
     
-    float4 worldPosition = mul(pos, world);
+    float4 worldPosition = mul(float4(pos.xyz, 1.f), world);
     float4 viewPosition = mul(worldPosition, view);
     float4 projPosition = mul(viewPosition, projection);
     
@@ -58,7 +58,7 @@ VSOut main(VSIn vsIn)
     float3 biNormal = cross(vsIn.Normal, vsIn.Tangent);
     float3 BiNormal = normalize(mul(float4(biNormal, 0.f), world).xyz);
     
-    vsOut.ViewPos = worldPosition.xyz;
+    vsOut.WorldPos = worldPosition.xyz;
     vsOut.WorldNormal = Normal.xyz;
     vsOut.WorldTangent = Tangent.xyz;
     vsOut.WorldBiNormal = BiNormal.xyz;
