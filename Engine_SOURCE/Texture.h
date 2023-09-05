@@ -1,7 +1,12 @@
 #pragma once
 #include "EngineResource.h"
 #include "ResourceMgr.h"
+
+#pragma warning( push )
+#pragma warning( disable : 4099 )
 #include "../External/DirectXTex/include/DirectXTex.h"
+#pragma warning( pop ) 
+
 #include "GraphicDevice.h"
 #include "Model.h"
 

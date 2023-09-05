@@ -18,12 +18,12 @@ struct VSIn
 struct VSOut
 {
     float4 Position : SV_Position;
-    float2 UV : TEXCOORD;     
+    float2 UV : TEXCOORD;
     float3 ViewPos : POSITION;
 
-    float3 ViewTangent : TANGENT;
-    float3 ViewNormal : NORMAL;
-    float3 ViewBiNormal : BINORMAL;
+    float3 WorldTangent : TANGENT;
+    float3 WorldNormal : NORMAL;
+    float3 WorldBiNormal : BINORMAL;
    
 };
 
@@ -41,7 +41,7 @@ VSOut main(VSIn vsIn)
     //pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.w].bMatrix) * weights.w;
 
     //if (weights.x + weights.y + weights.z + weights.w == 0.0f)
-        pos = vsIn.Position;
+    pos = vsIn.Position;
     
     float4 worldPosition = mul(pos, world);
     float4 viewPosition = mul(worldPosition, view);
@@ -51,20 +51,17 @@ VSOut main(VSIn vsIn)
     vsOut.UV = vsIn.UV;
 
     // 로컬 노말을 뷰변환
-    float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), world).xyz);
-    viewNormal = normalize(mul(float4(viewNormal, 0.f), view).xyz);
+    float3 Normal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), world).xyz);
     
-    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), world).xyz);
-    viewTangent = normalize(mul(float4(viewTangent, 0.f), view).xyz);
+    float3 Tangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), world).xyz);
     
     float3 biNormal = cross(vsIn.Normal, vsIn.Tangent);
-    float3 viewBiNormal = normalize(mul(float4(biNormal, 0.f), world).xyz);
-    viewBiNormal = normalize(mul(float4(viewBiNormal, 0.f), view).xyz);
+    float3 BiNormal = normalize(mul(float4(biNormal, 0.f), world).xyz);
     
     vsOut.ViewPos = worldPosition.xyz;
-    vsOut.ViewNormal     = viewNormal.xyz;
-    vsOut.ViewTangent    = viewTangent.xyz;
-    vsOut.ViewBiNormal   = viewBiNormal.xyz;
+    vsOut.WorldNormal = Normal.xyz;
+    vsOut.WorldTangent = Tangent.xyz;
+    vsOut.WorldBiNormal = BiNormal.xyz;
         
     return vsOut;
 }

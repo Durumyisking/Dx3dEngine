@@ -181,10 +181,10 @@ void SceneTitle::Enter()
 		player->SetName(L"Player");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
-			L"wood_albedo",
-			L"wood_normal",
-			L"wood_metallic",
-			L"wood_roughness",
+			L"check_albedo",
+			L"check_normal",
+			L"check_metallic",
+			L"check_roughness",
 			L"PBRShader",
 			L"check_dirt"
 		);
@@ -232,15 +232,15 @@ void SceneTitle::Enter()
 
 
 	{
-		CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap);
+		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap);
 
 		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
 		t->BindAllShaderResource(12);
 	}
 	{
-		//SkySphere* player = object::Instantiate<SkySphere>(eLayerType::SkySphere);
-		//player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		//player->SetName(L"SkySphere");
+		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere);
+		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		skySphere->SetName(L"SkySphere");
 	}
 	
 	{

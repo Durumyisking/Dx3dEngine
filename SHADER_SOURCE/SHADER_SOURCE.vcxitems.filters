@@ -127,8 +127,11 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)ParticleGS.hlsl">
       <Filter>GS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)PBR.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)PBRPS.hlsl">
       <Filter>PS</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)PBRVS.hlsl">
+      <Filter>VS</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

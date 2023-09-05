@@ -464,8 +464,8 @@ namespace renderer
 #pragma region PBRShader
 		{
 			Shader* shader = new Shader();
-			shader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
-			shader->Create(eShaderStage::PS, L"PBR.hlsl", "main");
+			shader->Create(eShaderStage::VS, L"PBRVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"PBRPS.hlsl", "main");
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PBRShader", shader);
 			shader->SetBSState(eBlendStateType::Default);
 
