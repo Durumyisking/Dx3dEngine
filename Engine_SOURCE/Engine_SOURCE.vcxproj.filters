@@ -215,9 +215,7 @@
     <Filter Include="Common\Component\Renderer\Skybox">
       <UniqueIdentifier>{b410bcf3-ae25-480a-b5b4-bd17195ed68c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Component\Renderer\Skybox\CubeMap">
-      <UniqueIdentifier>{9758229a-fb7a-43d0-89de-cf6b2aa53bed}</UniqueIdentifier>
-    </Filter>  </ItemGroup>
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
       <Filter>Common</Filter>
@@ -498,7 +496,7 @@
     <ClInclude Include="MultiRenderTarget.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-  <ClInclude Include="Model.h">
+    <ClInclude Include="Model.h">
       <Filter>Resource\Model</Filter>
     </ClInclude>
     <ClInclude Include="Bone.h">
@@ -507,7 +505,6 @@
     <ClInclude Include="ModelNode.h">
       <Filter>Resource\Model\ModelNode</Filter>
     </ClInclude>
-    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="BoneAnimator.h">
       <Filter>Common\Component\Animator3D</Filter>
     </ClInclude>
@@ -517,15 +514,21 @@
     <ClInclude Include="Struct.h">
       <Filter>Common</Filter>
     </ClInclude>
- <ClInclude Include="SkyboxRenderer.h">
+    <ClInclude Include="SkyboxRenderer.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
     <ClInclude Include="SkySphere.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="Panal.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIManager.h" />
     <ClInclude Include="CubeMap.h">
-      <Filter>Common\Component\Renderer\Skybox\CubeMap</Filter>
-    </ClInclude>  </ItemGroup>
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClInclude>
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
       <Filter>High Level Interface</Filter>
@@ -778,7 +781,7 @@
     <ClCompile Include="MultiRenderTarget.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-        <ClCompile Include="Model.cpp">
+    <ClCompile Include="Model.cpp">
       <Filter>Resource\Model</Filter>
     </ClCompile>
     <ClCompile Include="Bone.cpp">
@@ -787,7 +790,6 @@
     <ClCompile Include="ModelNode.cpp">
       <Filter>Resource\Model\ModelNode</Filter>
     </ClCompile>
-    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="AnimationClip.cpp">
       <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
@@ -806,8 +808,9 @@
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
     <ClCompile Include="CubeMap.cpp">
-      <Filter>Common\Component\Renderer\Skybox\CubeMap</Filter>
-    </ClCompile>  </ItemGroup>
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClCompile>
+  </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">
       <Filter>Common\Math</Filter>

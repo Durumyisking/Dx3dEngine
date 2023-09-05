@@ -61,10 +61,10 @@ VSOut main(VSIn vsIn)
     float3 viewBiNormal = normalize(mul(float4(biNormal, 0.f), world).xyz);
     viewBiNormal = normalize(mul(float4(viewBiNormal, 0.f), view).xyz);
     
-    vsOut.ViewPos = viewPosition.xyz;
+    vsOut.ViewPos = worldPosition.xyz;
     vsOut.ViewNormal     = viewNormal.xyz;
     vsOut.ViewTangent    = viewTangent.xyz;
     vsOut.ViewBiNormal   = viewBiNormal.xyz;
-    
+        
     return vsOut;
 }

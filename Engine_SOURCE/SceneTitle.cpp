@@ -116,28 +116,28 @@ void SceneTitle::Enter()
 	//}
 
 	
-	{
-		GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
+	//{
+	//	GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
 
-		MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	//	MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
-		gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
-		gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
-		gridMr->LODOff();
+	//	gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
+	//	gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
+	//	gridMr->LODOff();
 
-		GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
-		gridScript->SetCamera(mainCamera);
+	//	GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
+	//	gridScript->SetCamera(mainCamera);
 
-		float w = static_cast<float>(application.GetWidth());
-		float h = static_cast<float>(application.GetHeight());
-		gridObject->SetPos({ 0.f, 0.f, 0.f });
-		gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
-	}
+	//	float w = static_cast<float>(application.GetWidth());
+	//	float h = static_cast<float>(application.GetHeight());
+	//	gridObject->SetPos({ 0.f, 0.f, 0.f });
+	//	gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
+	//}
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
 		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1000.f, 0.f));
-		directionalLight->SetRotation(Vector3(90.f, 0.f, 0.f));
+		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
 		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
@@ -158,7 +158,7 @@ void SceneTitle::Enter()
 			L"gold_metallic", 
 			L"gold_roughness", 
 			L"PBRShader",
-			L"mat_dirt"
+			L"gold_dirt"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
@@ -186,7 +186,35 @@ void SceneTitle::Enter()
 			L"check_metallic",
 			L"check_roughness",
 			L"PBRShader",
-			L"mat_dirt"
+			L"check_dirt"
+		);
+		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->AddComponent<PlayerScript>(eComponentType::Script);
+
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	}
+
+	{
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(0.f, 5.f, 5.f));
+		player->SetScale(Vector3(1.f, 1.f, 1.f));
+		player->SetName(L"Player");
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		(
+			L"iron_albedo",
+			L"iron_normal",
+			L"iron_metallic",
+			L"iron_roughness",
+			L"PBRShader",
+			L"wood_dirt"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
@@ -204,15 +232,15 @@ void SceneTitle::Enter()
 
 
 	{
-		//CubeMapHDR* sb = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap);
-		//Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
-		//sb->SetTexture(t);
+		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap);
+
+		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
+		t->BindAllShaderResource(12);
 	}
 	{
-		SkySphere* player = object::Instantiate<SkySphere>(eLayerType::SkySphere);
-		player->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		player->GetComponent<Transform>()->SetScale(Vector3(500.0f, 500.0f, 500.0f));
-		player->SetName(L"SkySphere");
+		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere);
+		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		skySphere->SetName(L"SkySphere");
 	}
 	
 	{
@@ -220,13 +248,14 @@ void SceneTitle::Enter()
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
+
 
 
 	Scene::Enter();

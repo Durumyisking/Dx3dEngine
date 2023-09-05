@@ -58,6 +58,7 @@ namespace renderer
 		Matrix inverseView;
 		Matrix projection;
 		Matrix fovForSkySphere;
+		Vector4 cameraWorldPos;
 	};
 
 	CBUFFER(MaterialCB, CBSLOT_MATERIAL)

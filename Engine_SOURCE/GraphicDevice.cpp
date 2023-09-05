@@ -501,7 +501,7 @@ void GraphicDevice::Draw()
 }
 
 
-void GraphicDevice::DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation)
+void GraphicDevice::DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation	)
 {
 	mContext->DrawIndexed(indexCount, startIndexLocation, startIndexLocation);
 }
