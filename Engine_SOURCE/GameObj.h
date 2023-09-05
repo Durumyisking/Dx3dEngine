@@ -30,6 +30,7 @@ public:
 	virtual void Update();
 	virtual void FixedUpdate();
 	virtual void Render();
+	virtual void PrevRender();
 	virtual void FontRender();
 
 public:

@@ -4,15 +4,6 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)ColorPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)DebugGeometryPS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)DebugPS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)DeferredPS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)FadePS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
@@ -22,53 +13,11 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)GridPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)IrradiancePS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)LightDirPS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)LightPointPS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)MergePS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)ParticlePS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)PhongPS.hlsl">
       <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)PostProcessPS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)PreFilterPS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)RectToCubemapPS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)SpotLightPS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)SpritePS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)UIPS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)UISpritePS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)DebugVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)DebugGeometryVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)DeferredVS.hlsl">
-      <Filter>VS</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)FadeVS.hlsl">
       <Filter>VS</Filter>
@@ -79,43 +28,7 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)GridVS.hlsl">
       <Filter>VS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)IrradianceVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)LightDirVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)LightPointVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)MergeVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)ParticleVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)PhongVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)PostProcessVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)PreFilterVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)RectToCubemapVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)SpotLightVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)SpriteVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)UISpriteVS.hlsl">
-      <Filter>VS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)UIVS.hlsl">
       <Filter>VS</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)PaintCS.hlsl">
@@ -128,17 +41,101 @@
       <Filter>GS</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)PBRPS.hlsl">
-      <Filter>PS</Filter>
+      <Filter>PBR</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)PBRVS.hlsl">
-      <Filter>VS</Filter>
+      <Filter>PBR</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)IrradiancePS.hlsl">
+      <Filter>PBR\irradiance</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)IrradianceVS.hlsl">
+      <Filter>PBR\irradiance</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)PreFilterPS.hlsl">
+      <Filter>PBR\prefilter</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)PreFilterVS.hlsl">
+      <Filter>PBR\prefilter</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpriteVS.hlsl">
+      <Filter>2D</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)SpritePS.hlsl">
+      <Filter>2D</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)UIPS.hlsl">
+      <Filter>2D\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)UISpritePS.hlsl">
+      <Filter>2D\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)UISpriteVS.hlsl">
+      <Filter>2D\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)UIVS.hlsl">
+      <Filter>2D\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DebugVS.hlsl">
+      <Filter>Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DebugGeometryVS.hlsl">
+      <Filter>Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DebugGeometryPS.hlsl">
+      <Filter>Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DebugPS.hlsl">
+      <Filter>Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DeferredPS.hlsl">
+      <Filter>Deferred</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DeferredVS.hlsl">
+      <Filter>Deferred</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)MergeVS.hlsl">
+      <Filter>Deferred</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)LightDirPS.hlsl">
+      <Filter>Deferred\Light</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)LightDirVS.hlsl">
+      <Filter>Deferred\Light</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)LightPointPS.hlsl">
+      <Filter>Deferred\Light</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)LightPointVS.hlsl">
+      <Filter>Deferred\Light</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)LightSpotVS.hlsl">
+      <Filter>Deferred\Light</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)LightSpotPS.hlsl">
+      <Filter>Deferred\Light</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)PostProcessVS.hlsl">
+      <Filter>PostProcess</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)PostProcessPS.hlsl">
+      <Filter>PostProcess</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)ParticlePS.hlsl">
+      <Filter>Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)ParticleVS.hlsl">
+      <Filter>Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DepthVS.hlsl">
+      <Filter>depth</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DepthPS.hlsl">
+      <Filter>depth</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Blur.hlsli">
-      <Filter>Header</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)BRDF.hlsli">
       <Filter>Header</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)ConstantBuffer.hlsli">
@@ -151,12 +148,6 @@
       <Filter>Header</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Light.hlsli">
-      <Filter>Header</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Particle.hlsli">
-      <Filter>Header</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)PostProcess.hlsli">
       <Filter>Header</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Random.hlsli">
@@ -174,6 +165,15 @@
     <None Include="$(MSBuildThisFileDirectory)SkySphereVS.hlsl">
       <Filter>VS</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)BRDF.hlsli">
+      <Filter>PBR</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)PostProcess.hlsli">
+      <Filter>PostProcess</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Particle.hlsli">
+      <Filter>Particle</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">
@@ -190,6 +190,39 @@
     </Filter>
     <Filter Include="GS">
       <UniqueIdentifier>{b5c8ea76-1ede-4ed1-bf7f-43d2171f31fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PBR">
+      <UniqueIdentifier>{67d3dc53-bfbe-4740-a0f2-63d092fc242c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PBR\irradiance">
+      <UniqueIdentifier>{a8816b24-06f0-4bc8-aea2-9b81dbdf0501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PBR\prefilter">
+      <UniqueIdentifier>{e365a60d-6942-4c8d-9945-43463ce06eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2D">
+      <UniqueIdentifier>{32c35208-c38b-4dd1-ae7a-e66956b0ea73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2D\UI">
+      <UniqueIdentifier>{9293fb25-1b33-46da-8997-42d63d277caa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{2627d425-1053-45d3-8707-189b1432dd78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deferred">
+      <UniqueIdentifier>{6042a23a-bbcd-46a3-abf4-9bb53af59cdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Deferred\Light">
+      <UniqueIdentifier>{7ea90c90-4a8b-4ccf-834f-95a209d6a7d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PostProcess">
+      <UniqueIdentifier>{f472b003-4076-4726-b7dc-8d6a8087b967}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle">
+      <UniqueIdentifier>{00032a58-6937-45ab-91c1-d64f22e57cbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="depth">
+      <UniqueIdentifier>{ea8f9196-9cee-4cd5-a614-f6bc10ab39f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

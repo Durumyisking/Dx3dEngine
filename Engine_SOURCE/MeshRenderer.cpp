@@ -32,6 +32,40 @@ void MeshRenderer::FixedUpdate()
 	BaseRenderer::FixedUpdate();
 }
 
+void MeshRenderer::PrevRender()
+{
+	Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"ShadowMaterial");
+
+	material->Bind();
+
+	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
+
+	//BoneAnimatior* animator
+	//	= GetOwner()->GetComponent<BoneAnimatior>();
+
+	//UINT subSetCount = GetMesh()->GetSubSetCount();
+	for (size_t i = 0; i < subSetCount; i++)
+	{
+		if (animator)
+		{
+			animator->Binds();
+			material->SetAnimation(true);
+			UINT boneCount = animator->GetBoneCount();
+			material->SetBoneCount(boneCount);
+		}
+
+		GetMesh()->BindBuffer(i);
+		GetMesh()->Render(i);
+
+		material->Clear();
+	}
+
+	if (animator)
+	{
+		animator->ClearData();
+	}
+}
+
 void MeshRenderer::Render()
 {
 	BaseRenderer::Render();
