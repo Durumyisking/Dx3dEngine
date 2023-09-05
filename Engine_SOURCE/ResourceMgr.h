@@ -87,6 +87,7 @@ public:
 	}
 
 	Material* CreateMaterial(std::wstring texture, eTextureSlot slot, std::wstring shaderName, std::wstring materialName);
+	Material* CreateMaterial(std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName, std::wstring materialName);

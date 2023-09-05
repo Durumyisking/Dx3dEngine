@@ -127,44 +127,42 @@ void CalculateLight3D(float3 viewPos, float3 viewNormal, int lightIdx, inout Lig
     lightColor.ambient = lightInfo.color.ambient;
 }
 
-float3 CalculateLightPBR_Direct(float3 viewPos, float4 albedo, float3 viewNormal, float metallic, float roughness)
+float3 CalculateLightPBR_Direct(float3 worldPos, float4 albedo, float3 worldNormal, float metallic, float roughness)
 {
-    // PBR     
-    float3 V = normalize(cameraWorldPos.xyz - viewPos); // 뷰공간 pinPoint(0,0,0)부터 픽셀로 향하는 벡터의 음수
-    float3 N = normalize(viewNormal); // 정점/텍스처 노말 뷰변환 완료
-
-    float3 R = reflect(-V, N);
-    float NDotV = saturate(dot(N, V)); // 노멀 to 눈 반사각 
-
-    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // 금속성이 강할수록 albedo를 사용하고 아니면 0.04사용 (재질 값)
-
     float3 L = -normalize(mul(float4(lightAttributes[0].direction.xyz, 0.f), view)).xyz; // 빛 각도
-    
-    float NdotL = max(dot(N, L), 0.f);
 
-    float3 F = fresnelSchlickRoughness(NDotV, F0, roughness);
+    // PBR     
+    float3 N = normalize(worldNormal); 
+    float3 V = normalize(cameraWorldPos.xyz - worldPos); 
+    float3 R = reflect(-V, N);
+
+    float3 F0 = float3(0.04, 0.04, 0.04);
+    F0 = lerp(F0, albedo.xyz, metallic); // 금속성이 강할수록 albedo를 사용하고 아니면 0.04사용 (재질 값)
+
+    float NDotV = saturate(dot(N, V)); // 노멀 to 눈 반사각 
+    float NdotL = max(dot(N, L), 0.f); // 노말과 빛
+
+    float3 F = fresnelSchlickRoughness(max(dot(N, V), 0.0), F0, roughness);
+    
 
     //float3 kd = lerp((float3) 1.f - F, (float3) 0.f, metallic);
     float3 ks = F;
-    float3 kd = 1.f - ks;
-    kd *= 1.f - metallic;
+    float3 kd = 1.0f - ks;
+    kd *= 1.0f - metallic;
 
-    float3 irradiance = irradianceMap.Sample(skyBoxSampler, -N).rgb;
-    
+    float3 irradiance = irradianceMap.Sample(skyBoxSampler, N).rgb;    
     float3 diffuse = irradiance * albedo.xyz;
 
     const float MAX_REFLECTION_LOD = 4.f;
-    float3 prefilteredColor = prefilteredMap.SampleLevel(skyBoxSampler, -R, roughness * MAX_REFLECTION_LOD).rgb;
+    float3 prefilteredColor = prefilteredMap.SampleLevel(skyBoxSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
     
     // brdf 텍스처를 x는 반사에 따라 y는 러프니스에 따라 샘플링한다.
-    float2 envBRDF = BRDF.Sample(linearSampler, float2(NDotV, roughness)).rg;
+    float2 envBRDF = BRDF.Sample(linearSampler, float2(max(dot(N, V), 0.0), roughness)).rg;
     
                                         // 반사 관련된 x는 프레넬과 계산 y는 diffuse처럼 생각하는 듯 보임
     float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
 
     float3 result = (kd * diffuse + specular);
-    //float3 result = (specular); // 마딧세이는 전방향 빛 비추는듯?
-    //float3 result = (kd * diffuse);
 
     return result;
 }

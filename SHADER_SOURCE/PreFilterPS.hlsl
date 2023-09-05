@@ -69,7 +69,7 @@ float4 main(VSOut psIn) : SV_TARGET
         float NdotL = max(dot(N, L), 0.0);
         if (NdotL > 0.0)
         {
-            prefilteredColor += CubeMapTexture.Sample(linearSampler, L).rgb * NdotL;
+            prefilteredColor += CubeMapTexture.Sample(linearSampler, -L).rgb * NdotL;
             totalWeight += NdotL;
         }
     }

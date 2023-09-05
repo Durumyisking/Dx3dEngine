@@ -12,6 +12,7 @@ class Material : public Resource
 {
 public:
 	Material();
+	Material(std::wstring shaderName);
 	Material(std::wstring textureColor, std::wstring shaderName);
 	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName);
 	Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName);
