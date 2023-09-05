@@ -17,8 +17,6 @@ MeshRenderer::~MeshRenderer()
 
 void MeshRenderer::Initialize()
 {
-	//t.loadFromFile("E:/Dev/3d-my/Dx3dEngine/Resources/environment.hdr");
-
 	BaseRenderer::Initialize();
 }
 
@@ -40,30 +38,10 @@ void MeshRenderer::PrevRender()
 
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-	//BoneAnimatior* animator
-	//	= GetOwner()->GetComponent<BoneAnimatior>();
+	GetMesh()->BindBuffer();
+	GetMesh()->Render();
 
-	//UINT subSetCount = GetMesh()->GetSubSetCount();
-	for (size_t i = 0; i < subSetCount; i++)
-	{
-		if (animator)
-		{
-			animator->Binds();
-			material->SetAnimation(true);
-			UINT boneCount = animator->GetBoneCount();
-			material->SetBoneCount(boneCount);
-		}
-
-		GetMesh()->BindBuffer(i);
-		GetMesh()->Render(i);
-
-		material->Clear();
-	}
-
-	if (animator)
-	{
-		animator->ClearData();
-	}
+	material->Clear();
 }
 
 void MeshRenderer::Render()

@@ -43,19 +43,36 @@ PS_OUT main(VSOut vsin)
     
 
     LightColor lightcolor = (LightColor) 0.f;
+        // 그림자 판정
+    // ViewPos -> WorldPos
+    float3 vWorldPos = mul(float4(vViewPos.xyz, 1.f), inverseView).xyz;
+
+    // WorldPos -> Light 투영
+    float4 vLightProj = mul(float4(vWorldPos, 1.f), lightView);
+    vLightProj = mul(float4(vWorldPos, 1.f), lightProjection);
+
+    // w 로 나눠서 실제 xy 투영좌표를 구함
+    vLightProj.xy /= vLightProj.w;
+    vLightProj.z /= vLightProj.w;
+
+    // 샘플링을 하기 위해서 투영좌표계를 UV 좌표계로 변환
+    float2 vDepthMapUV = float2((vLightProj.x * 0.5) + 0.5f, -(vLightProj.y * 0.5) + 0.5f);
+    float fDepth = ShadowMap.Sample(anisotropicSampler, vDepthMapUV).r;
+    float fShadowPow = 0.f;
+
+    //// 광원에 기록된 깊이보다, 물체의 깊이가 더 멀 때, 그림자 판정
+    if (0.f != fDepth
+        && 0.f <= vDepthMapUV.x && vDepthMapUV.x <= 1.f
+        && 0.f <= vDepthMapUV.y && vDepthMapUV.y <= 1.f
+        && vLightProj.z >= fDepth + 0.0001f)
+    {
+        fShadowPow = 0.9f;
+    }
     
-    //if (0.f == metallic && 0.f == roughness)
-    //{
-    //    CalculateLight3D(vViewPos.xyz, normal.xyz, 0, lightcolor);
-    //    output.vDiffuse = lightcolor.diffuse + lightcolor.ambient;
-    //    output.vSpecular.xyz = lightcolor.specular.xyz; // * vSpec.xyz;
-    //}
-    //else
+    
     {
         diffuse = CalculateLightPBR_Direct(vViewPos.xyz, albedo, normal.xyz, metallic, roughness);
-//        specular = CalculateLightPBR_Specular(vViewPos.xyz, albedo, normal.xyz, metallic, roughness);
         output.vDiffuse.xyz = diffuse;
-      //  output.vSpecular.xyz = specular;
     }
     
     output.vDiffuse.a = 1.f;

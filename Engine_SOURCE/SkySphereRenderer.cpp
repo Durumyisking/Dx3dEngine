@@ -1,37 +1,37 @@
-#include "SkyboxRenderer.h"
+#include "SkySphereRenderer.h"
 #include "GameObj.h"
 #include "Transform.h"
 #include "Model.h"
 #include "Mesh.h"
 
-SkyboxRenderer::SkyboxRenderer()
+SkySphereRenderer::SkySphereRenderer()
 	: BaseRenderer(eComponentType::MeshRenderer)
 	, mProjConstantBuffer{}
 {
 
 }
 
-SkyboxRenderer::~SkyboxRenderer()
+SkySphereRenderer::~SkySphereRenderer()
 {
 }
 
-void SkyboxRenderer::Initialize()
+void SkySphereRenderer::Initialize()
 {
 	BaseRenderer::Initialize();
 
 }
 
-void SkyboxRenderer::Update()
+void SkySphereRenderer::Update()
 {
 	BaseRenderer::Update();
 }
 
-void SkyboxRenderer::FixedUpdate()
+void SkySphereRenderer::FixedUpdate()
 {
 	BaseRenderer::FixedUpdate();
 }
 
-void SkyboxRenderer::Render()
+void SkySphereRenderer::Render()
 {
 	BaseRenderer::Render();
 
@@ -48,7 +48,7 @@ void SkyboxRenderer::Render()
 
 }
 
-void SkyboxRenderer::SetSkyBoyTextureByKey(const std::wstring& texureName)
+void SkySphereRenderer::SetSkyBoyTextureByKey(const std::wstring& texureName)
 {
 	GetMaterial()->SetTextureByKey(texureName, eTextureSlot::SkySphere);
 }

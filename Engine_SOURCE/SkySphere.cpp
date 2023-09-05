@@ -1,9 +1,9 @@
 #include "SkySphere.h"
-#include "SkyboxRenderer.h"
+#include "SkySphereRenderer.h"
 
 SkySphere::SkySphere()
 {
-    SkyboxRenderer* sr =  AddComponent<SkyboxRenderer>(eComponentType::MeshRenderer);
+    SkySphereRenderer* sr =  AddComponent<SkySphereRenderer>(eComponentType::MeshRenderer);
     sr->SetMaterialByKey(L"SkySphereMaterial");
     sr->SetMeshByKey(L"Spheremesh");
 }
