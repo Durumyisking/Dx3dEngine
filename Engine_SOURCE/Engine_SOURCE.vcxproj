@@ -44,7 +44,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -52,7 +52,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -138,7 +138,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
       <AdditionalIncludeDirectories>$(SolutionDir)External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -178,7 +178,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
       <AdditionalIncludeDirectories>$(SolutionDir)External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -209,6 +209,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AiScript.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationClip.h" />
     <ClInclude Include="Animator.h" />
@@ -224,6 +225,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraScript.h" />
+    <ClInclude Include="CaptureObj.h" />
     <ClInclude Include="ClientToServer.h" />
     <ClInclude Include="Collider2D.h" />
     <ClInclude Include="Collider3D.h" />
@@ -252,6 +254,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="GameNetThread.h" />
     <ClInclude Include="GameObj.h" />
     <ClInclude Include="GlobalPacket.h" />
+    <ClInclude Include="Goomba.h" />
+    <ClInclude Include="GoombaStateScript.h" />
     <ClInclude Include="GraphicDevice.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GridScript.h" />
@@ -265,6 +269,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelNode.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterAiScript.h" />
+    <ClInclude Include="MonsterStateScript.h" />
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PaintShader.h" />
@@ -319,6 +326,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AiScript.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationClip.cpp" />
     <ClCompile Include="Animator.cpp" />
@@ -334,6 +342,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraScript.cpp" />
+    <ClCompile Include="CaptureObj.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collider3D.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
@@ -357,6 +366,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="GameNetServer.cpp" />
     <ClCompile Include="GameNetThread.cpp" />
     <ClCompile Include="GameObj.cpp" />
+    <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="GoombaStateScript.cpp" />
     <ClCompile Include="GraphicDevice.cpp" />
     <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -368,6 +379,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelNode.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterAiScript.cpp" />
+    <ClCompile Include="MonsterStateScript.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="PaintShader.cpp" />
     <ClCompile Include="Panal.cpp" />

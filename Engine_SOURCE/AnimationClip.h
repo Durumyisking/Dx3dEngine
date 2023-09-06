@@ -23,6 +23,7 @@ public:
 	void Render(){};
 
 	void CreateAnimation(const std::wstring& name ,const std::wstring& path, double duration);
+	void CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount);
 	void SetBoneMatrix();
 	void Reset();
 

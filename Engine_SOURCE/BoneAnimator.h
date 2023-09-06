@@ -20,12 +20,17 @@ public:
 
 	// 애니메이션을 생성하는 함수
 	void CreateAnimation(const std::wstring& name, const std::wstring& path, double duration);
+	void CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount = 60);
 
 	// 애니메이션 Play
 	void Play(const std::wstring& name, bool loop = true);
 
 	// 애니메이션의 1 프레임 간격 세팅
 	void SetAnimationDruationTime(const std::wstring& name, float duration = 0.1f);
+
+	bool IsCompleate() { return mPlayAnimation == nullptr ? true :mPlayAnimation->IsCompleate(); }
+
+	const std::wstring PlayAnimationName() const;
 private:
 	std::map<std::wstring, AnimationClip*> mAnimationClips;
 	AnimationClip* mPlayAnimation;

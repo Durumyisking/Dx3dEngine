@@ -212,6 +212,27 @@
     <Filter Include="Common\Component\Animator3D">
       <UniqueIdentifier>{fabcf555-eba3-403d-88ef-e82bc3bc8461}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\GameObj\CaptureObj">
+      <UniqueIdentifier>{c158e1c5-01d1-4baf-8afc-442f8e61a979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Monster">
+      <UniqueIdentifier>{efca5680-0fb0-49d9-bd70-8dbb01abc334}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Monster\Goomba">
+      <UniqueIdentifier>{3ba99390-5373-4224-a294-2893411e32a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Script\AI">
+      <UniqueIdentifier>{65bd6dbe-7532-4e06-86b8-4a2d1fb0fda6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Script\AI\MonsterAI">
+      <UniqueIdentifier>{3b54a226-99f9-4515-ad54-f943dbcce1bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Script\MonsterState">
+      <UniqueIdentifier>{eab98cac-856a-48e2-b075-a5b6587e28f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Script\MonsterState\GoombaState">
+      <UniqueIdentifier>{c0ba9357-710f-45a1-a6b1-49dccfae9aaa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -520,6 +541,27 @@
     <ClInclude Include="Panal.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="CaptureObj.h">
+      <Filter>Common\GameObj\CaptureObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Common\GameObj\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Common\GameObj\Monster\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="AiScript.h">
+      <Filter>Common\Component\Script\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterAiScript.h">
+      <Filter>Common\Component\Script\AI\MonsterAI</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterStateScript.h">
+      <Filter>Common\Component\Script\MonsterState</Filter>
+    </ClInclude>
+    <ClInclude Include="GoombaStateScript.h">
+      <Filter>Common\Component\Script\MonsterState\GoombaState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -797,6 +839,27 @@
     <ClCompile Include="Panal.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="CaptureObj.cpp">
+      <Filter>Common\GameObj\CaptureObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Common\GameObj\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Common\GameObj\Monster\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="AiScript.cpp">
+      <Filter>Common\Component\Script\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterAiScript.cpp">
+      <Filter>Common\Component\Script\AI\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterStateScript.cpp">
+      <Filter>Common\Component\Script\MonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="GoombaStateScript.cpp">
+      <Filter>Common\Component\Script\MonsterState\GoombaState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

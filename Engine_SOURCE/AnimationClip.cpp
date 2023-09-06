@@ -140,6 +140,11 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 	file.close();
 }
 
+void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount)
+{
+	CreateAnimation(name, path, 1.0f / static_cast<float>(frameCount));
+}
+
 void AnimationClip::SetBoneMatrix()
 {
 	// 본 정보들을 변경.

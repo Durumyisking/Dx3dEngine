@@ -74,7 +74,7 @@ void BoneAnimator::LoadAnimations(const std::wstring& path)
 
 			if (L".SMD" == extension || L".Smd" == extension || L".smd" == extension)
 			{
-				CreateAnimation(fileName, entry.path(), 0.1f);
+				CreateAnimation(fileName, entry.path());
 			}
 		}
 	}
@@ -89,8 +89,22 @@ void BoneAnimator::CreateAnimation(const std::wstring& name, const std::wstring&
 	AnimationClip* clip = new AnimationClip();
 	mAnimationClips.insert(std::pair<std::wstring, AnimationClip*>(name, clip));
 
+	clip->SetAnimationName(name);
 	clip->SetAnimator(this);
 	clip->CreateAnimation(name, path, duration);
+}
+
+void BoneAnimator::CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount)
+{
+	// 중복된 애니메이션 이름
+	if (mAnimationClips.find(name) != mAnimationClips.end())
+		return;
+
+	AnimationClip* clip = new AnimationClip();
+	mAnimationClips.insert(std::pair<std::wstring, AnimationClip*>(name, clip));
+
+	clip->SetAnimator(this);
+	clip->CreateAnimation(name, path, frameCount);
 }
 
 void BoneAnimator::Play(const std::wstring& name, bool loop)
@@ -114,4 +128,12 @@ void BoneAnimator::SetAnimationDruationTime(const std::wstring& name, float dura
 		return;
 
 	iter->second->SetDuration(duration);
+}
+
+const std::wstring BoneAnimator::PlayAnimationName() const
+{
+	if (mPlayAnimation == nullptr)
+		return L"Empty";
+
+	return mPlayAnimation->GetAnimationName();
 }
