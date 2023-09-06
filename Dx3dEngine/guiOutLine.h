@@ -28,6 +28,8 @@ namespace gui
 		void InitializeTargetGameObject();
 		void InitializeTargetResource();
 
+		bool GetComponentType(eComponentType type);
+
 	private:
 		GameObj* mTargetGameObject;
 		Resource* mTargetResource;

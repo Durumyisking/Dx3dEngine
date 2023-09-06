@@ -41,8 +41,6 @@ namespace gui
 {
 	Editor::Editor()
 		: mEnable(false)
-		, mImguiEnable(true)
-
 	{
 	}
 	Editor::~Editor()
@@ -52,41 +50,45 @@ namespace gui
 	void Editor::Initialize()
 	{
 		mEnable = true;
-		mImguiEnable = true;
 
 		if (mEnable == false)
 			return;
 
 		GETSINGLE(EditorObjMgr)->Initialize();
 
-		if (mImguiEnable == false)
-			return;
-
 		GETSINGLE(WidgetMgr)->Initialize();
 	}
 
 	void Editor::Run()
 	{
+		if (KEY_TAP(N_8))
+		{
+			if (mEnable == false)
+			{
+				Initialize();
+				mEnable = true;
+			}
+			else
+			{
+				Release();
+				mEnable = false;
+			}
+		}
+
 		if (mEnable == false)
 			return;
 
 		GETSINGLE(EditorObjMgr)->Run();
 
-		if (mImguiEnable == false)
-			return;
-
-		GETSINGLE(WidgetMgr)->Render();
+		GETSINGLE(WidgetMgr)->Run();
 	}
 
 	void Editor::Release()
 	{
-		if (mImguiEnable == false)
+		if (mEnable == false)
 			return;
 
 		GETSINGLE(WidgetMgr)->Release();
-
-		if (mEnable == false)
-			return;
 
 		GETSINGLE(EditorObjMgr)->Release();
 	}

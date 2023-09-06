@@ -5,6 +5,7 @@
 #include "Graphics.h"
 #include "guiWidget.h"
 
+class GameObj;
 namespace gui
 {
 	class WidgetMgr
@@ -15,12 +16,13 @@ namespace gui
 
 		void Initialize();
 		void Release();
-		void Render();
+		void Run();
 
 		void ImGui_Initialize();
 		void ImGui_Run();
 		void ImGui_Release();
 
+		GameObj* GetHierachyTargetObject();
 		
 		template<typename T>
 		void Insert(std::string name, T* widget)
@@ -43,6 +45,7 @@ namespace gui
 	private:
 		std::map<std::string, Widget*> mWidgets;
 
+		class Hierarchy* mHierarchy;
 		class VisualEditor* mVisualEditor;
 	};
 

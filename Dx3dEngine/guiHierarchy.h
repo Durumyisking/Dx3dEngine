@@ -20,6 +20,8 @@ namespace gui
 		void AddGameObject(TreeWidget::Node* parent, GameObj* gameObject);
 		void MoveTarget();
 
+		GameObj* GetTargetObject() { return mTargetObject; }
+
 	private:
 		TreeWidget* mTreeWidget;
 		GameObj* mTargetObject;

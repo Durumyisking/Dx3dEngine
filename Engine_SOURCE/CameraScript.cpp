@@ -55,6 +55,7 @@ void CameraScript::Update()
 
 	mTransform->SetPosition(mLookAt);
 
+
 	if (KEY_TAP(LBTN))
 	{
 		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
@@ -63,7 +64,7 @@ void CameraScript::Update()
 		}
 	}
 
-	if (KEY_DOWN(LBTN))
+	if (KEY_DOWN(LCTRL) && KEY_DOWN(LBTN))
 	{
 		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
 		{

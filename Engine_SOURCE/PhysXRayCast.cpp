@@ -185,7 +185,6 @@ bool PhysXRayCast::MoveObject()
 	}
 	else
 	{
-
 		objPos += Up * -move.y * 0.1;
 	}
 	mPickingObject->GetComponent<Transform>()->SetPhysicalPosition(objPos);

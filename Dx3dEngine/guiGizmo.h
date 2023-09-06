@@ -1,22 +1,26 @@
 #pragma once
+#include "guiWidget.h"
+#include "ImGuizmo.h"
 #include "guiEditorObject.h"
+#include "SimpleMath.h"
 
 namespace gui
 {
     class Gizmo :
-        public EditorObject
+        public Widget
     {
 	public:
 		Gizmo();
 		virtual ~Gizmo();
 
-		virtual void Initialize() override;
-		virtual void update() override;
-		virtual void fixedUpdate() override;
-		virtual void render() override;
+		void Initialize();
 
-		void MoveTarget();
-		EditorObject* GetSelectedBasis();
+		virtual void FixedUpdate() override;
+		virtual void Update() override;
+		virtual void LateUpdate() override;
+		virtual void Render() override;
+		virtual void Close() override;
+
 
 		void ClearTarget();
 		void InitializeTargetGameObject();
@@ -25,11 +29,11 @@ namespace gui
 		void SetTargetGameObject(GameObj* target) { mTargetGameObject = target; }
 
 	private:
+		int mGizmoCount;
+		bool mbisOrthographic;
+		float mOrthographicViewWidth;
+		Camera* mCamera;
 		GameObj* mTargetGameObject;
-
-		EditorObject* mFoward;
-		EditorObject* mUp;
-		EditorObject* mRight;
     };
 }
 

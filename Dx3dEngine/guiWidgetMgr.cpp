@@ -24,6 +24,9 @@
 #include "guiTexture.h"
 #include "guiTreeWidget.h"
 #include "guiVisualEditor.h"
+#include "guiGizmo.h"
+
+#include "InputMgr.h"
 
 
 extern Application application;
@@ -33,6 +36,7 @@ namespace gui
 	WidgetMgr::WidgetMgr()
 		: mWidgets{}
 		, mVisualEditor(nullptr)
+		, mHierarchy(nullptr)
 	{
 
 	}
@@ -48,15 +52,15 @@ namespace gui
 		// Initialize Widget 
 		mVisualEditor = new VisualEditor();
 
+		mHierarchy = new Hierarchy();
+		mWidgets.insert(std::make_pair("Hierarchy", mHierarchy));
+
 		Inspector* inspector = new Inspector();
 		//Insert<Inspector>("Inspector", inspector);
 		mWidgets.insert(std::make_pair("Inspector", inspector));
 
 		//Game* game = new Game();
 		//mWidgets.insert(std::make_pair("Game", game));
-
-		Hierarchy* hierarchy = new Hierarchy();
-		mWidgets.insert(std::make_pair("Hierarchy", hierarchy));
 
 		Project* project = new Project();
 		mWidgets.insert(std::make_pair("Project", project));
@@ -67,6 +71,9 @@ namespace gui
 
 		ListWidget* listWidget = new ListWidget();
 		mWidgets.insert(std::make_pair("ListWidget", listWidget));
+
+		Gizmo* gizmo = new Gizmo();
+		mWidgets.insert(std::make_pair("Gizmo", gizmo));
 	}
 
 	void WidgetMgr::Release()
@@ -83,8 +90,25 @@ namespace gui
 		mVisualEditor = nullptr;
 	}
 
-	void WidgetMgr::Render()
+	void WidgetMgr::Run()
 	{
+		// Start the Dear ImGui frame
+		ImGui_ImplDX11_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
+
+		//for (Widget* widget : mWidgets) 
+		//{
+		//	widget->Update();
+		//}
+
+		mVisualEditor->Render();
+		for (auto iter : mWidgets)
+		{
+			iter.second->Render();
+		}
+
 		ImGui_Run();
 	}
 
@@ -147,32 +171,15 @@ namespace gui
 
 	void WidgetMgr::ImGui_Run()
 	{
-
 		bool show_demo_window = false;
 		bool show_another_window = false;
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 		ImGuiIO io = ImGui::GetIO();
 
-		// Start the Dear ImGui frame
-		ImGui_ImplDX11_NewFrame();
-		ImGui_ImplWin32_NewFrame();
-		ImGui::NewFrame();
-
 		//// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 		if (show_demo_window)
 			ImGui::ShowDemoWindow(&show_demo_window);
-
-		//for (Widget* widget : mWidgets) 
-		//{
-		//	widget->Update();
-		//}
-
-		mVisualEditor->Render();
-		for (auto iter : mWidgets)
-		{
-			iter.second->Render();
-		}
 
 #pragma region  SAMPLE
 		//2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
@@ -208,10 +215,10 @@ namespace gui
 	   //	ImGui::End();
 	   //}
 #pragma endregion
+
 		// Rendering
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
 
 		// Update and Render additional Platform Windows
 		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -227,5 +234,10 @@ namespace gui
 		ImGui_ImplDX11_Shutdown();
 		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
+	}
+
+	GameObj* WidgetMgr::GetHierachyTargetObject()
+	{
+		return mHierarchy->GetTargetObject();
 	}
 }

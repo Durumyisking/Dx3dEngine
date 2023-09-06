@@ -163,7 +163,7 @@
   <ItemGroup>
     <ClInclude Include="Dx3dEngine.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="guiBasisVectorObj.h" />
+    <ClInclude Include="guiGizmo.h" />
     <ClInclude Include="guiComponent.h" />
     <ClInclude Include="guiConsole.h" />
     <ClInclude Include="guiContentsBrowser.h" />
@@ -190,6 +190,7 @@
     <ClInclude Include="guiWidgetMgr.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
+    <ClInclude Include="ImGuizmo.h" />
     <ClInclude Include="imgui_impl_dx11.h" />
     <ClInclude Include="imgui_impl_win32.h" />
     <ClInclude Include="imgui_internal.h" />
@@ -201,7 +202,7 @@
     <ClInclude Include="guiWidget.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="guiBasisVectorObj.cpp" />
+    <ClCompile Include="guiGizmo.cpp" />
     <ClCompile Include="guiComponent.cpp" />
     <ClCompile Include="guiConsole.cpp" />
     <ClCompile Include="guiContentsBrowser.cpp" />
@@ -227,6 +228,7 @@
     <ClCompile Include="guiGroupWidget.cpp" />
     <ClCompile Include="guiWidgetMgr.cpp" />
     <ClCompile Include="imgui.cpp" />
+    <ClCompile Include="ImGuizmo.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
     <ClCompile Include="imgui_impl_dx11.cpp" />

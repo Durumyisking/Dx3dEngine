@@ -21,8 +21,6 @@ namespace gui
 
 
 	private:
-
 		bool mEnable;
-		bool mImguiEnable;
 	};
 }

@@ -53,6 +53,9 @@
     <Filter Include="Editor\Object\DebugObj">
       <UniqueIdentifier>{3bb725aa-1f5a-4285-9067-96347a346bbc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor\Object\Gizmo">
+      <UniqueIdentifier>{9e584343-48bd-4e1a-9ba2-01f3307409ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dx3dEngine.h" />
@@ -156,8 +159,11 @@
     <ClInclude Include="guiDebugObject.h">
       <Filter>Editor\Object\DebugObj</Filter>
     </ClInclude>
-    <ClInclude Include="guiBasisVectorObj.h">
-      <Filter>Editor\Object</Filter>
+    <ClInclude Include="guiGizmo.h">
+      <Filter>Editor\Object\Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuizmo.h">
+      <Filter>Editor\Object\Gizmo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -271,8 +277,11 @@
     <ClCompile Include="guiDebugObject.cpp">
       <Filter>Editor\Object\DebugObj</Filter>
     </ClCompile>
-    <ClCompile Include="guiBasisVectorObj.cpp">
-      <Filter>Editor\Object</Filter>
+    <ClCompile Include="guiGizmo.cpp">
+      <Filter>Editor\Object\Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuizmo.cpp">
+      <Filter>Editor\Object\Gizmo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

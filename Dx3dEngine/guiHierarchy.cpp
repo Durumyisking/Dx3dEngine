@@ -77,10 +77,8 @@ namespace gui
 		OutLine* outline = GETSINGLE(WidgetMgr)->GetWidget<OutLine>("Outline");
 		if (outline == nullptr)
 			return;
-
 		outline->SetTargetGameObject(renderer::inspectorGameObject);
-
-
+		outline->InitializeTargetGameObject();
 	}
 
 	void Hierarchy::InitializeScene()
