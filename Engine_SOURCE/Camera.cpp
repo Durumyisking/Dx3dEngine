@@ -90,17 +90,15 @@ void Camera::Render()
 	sortGameObjects();
 
 	// shadow	
-	Transform* directionLighttr = renderer::lights[0]->GetOwner()->GetComponent<Transform>();
+	Transform directionLighttr = *(renderer::lights[0]->GetOwner()->GetComponent<Transform>());
 	//tr->SetPosition(Transform()->GetWorldPos());
-	directionLighttr->SetRotation(DecomposeRotMat(directionLighttr->GetWorldRotationMatrix()));
-	View = CreateViewMatrix(directionLighttr);
-	Projection = CreateProjectionMatrix(eProjectionType::Orthographic, 1600, 900, 1.0f, 1000.0f);
+	directionLighttr.SetRotation(DecomposeRotMat(directionLighttr.GetWorldRotationMatrix()));
 
 	ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
 
 	LightMatrixCB data = {};
-	data.lightView = View;
-	data.lightProjection = Projection;
+	data.lightView = CreateViewMatrix(&directionLighttr);
+	data.lightProjection = CreateProjectionMatrix(eProjectionType::Orthographic, 1600, 900, 1.0f, 1000.0f);
 	lightCB->SetData(&data);
 	lightCB->Bind(eShaderStage::VS);	
 	lightCB->Bind(eShaderStage::PS);
@@ -130,10 +128,10 @@ void Camera::Render()
 	mergeMaterial->Bind();
 	rectMesh->Render();
 
-	//// Forward Render
-	//renderOpaque();
-	//renderCutout();
-	//renderTransparent();
+	// Forward Render
+	renderOpaque();
+	renderCutout();
+	renderTransparent();
 }
 
 void Camera::CreateViewMatrix()
@@ -164,24 +162,17 @@ void Camera::CreateViewMatrix()
 Matrix Camera::CreateViewMatrix(Transform* tr)
 {
 	Matrix view = Matrix::Identity;
-	Vector3 pos = tr->GetPosition();
-
-	// Crate Translate view matrix
-	view = Matrix::Identity;
-	view *= Matrix::CreateTranslation(-pos);
-	//회전 정보
 
 	Vector3 up = tr->Up();
 	Vector3 right = tr->Right();
-	Vector3 foward = tr->Forward();
+	Vector3 forward = tr->Forward();
 
-	Matrix viewRotate;
-	viewRotate._11 = right.x; viewRotate._12 = up.x; viewRotate._13 = foward.x;
-	viewRotate._21 = right.y; viewRotate._22 = up.y; viewRotate._23 = foward.y;
-	viewRotate._31 = right.z; viewRotate._32 = up.z; viewRotate._33 = foward.z;
+	Vector3 pos = forward * -20.f;
 
-	view *= viewRotate;
+	view *= Matrix::CreateTranslation(-pos);
 
+	view *= XMMatrixLookToLH(pos, forward, up);
+	
 	return view;
 }
 

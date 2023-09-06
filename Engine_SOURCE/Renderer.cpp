@@ -617,7 +617,7 @@ namespace renderer
 		}
 #pragma endregion
 
-#pragma region ShadowShader
+#pragma region DepthShader
 		{
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"DepthVS.hlsl", "main");
@@ -755,11 +755,6 @@ namespace renderer
 		postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PostProcessTexture", postProcessTexture);
-
-		dsTexture = new Texture();
-		dsTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
-		dsTexture->BindShaderResource(eShaderStage::PS, 19);
-		GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowTexture", dsTexture);
 	}
 
 
@@ -904,11 +899,6 @@ namespace renderer
 		deferredMaterial->SetRenderingMode(eRenderingMode::DeferredOpaque);
 		deferredMaterial->SetShader(deferredShader);
 
-		// specular map 추가 사용가능
-		Texture* defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Color");
-		deferredMaterial->SetTexture(eTextureSlot::Albedo, defferdTex); // albedo Texture
-		defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Normal");
-		deferredMaterial->SetTexture(eTextureSlot::Normal, defferdTex); // normal Texture
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", deferredMaterial);
 #pragma endregion
 
@@ -974,7 +964,6 @@ namespace renderer
 		Material* shadowMaterial = new Material();
 		shadowMaterial->SetRenderingMode(eRenderingMode::None);
 		shadowMaterial->SetShader(depthShader);
-		//shadowMaterial->SetTextureByKey(L"ShadowMapTexture", eTextureSlot::ShadowMap);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"ShadowMaterial", shadowMaterial);
 #pragma endregion
 
@@ -1059,7 +1048,7 @@ namespace renderer
 		}
 		vecRTTex.clear();
 		// Shadow MRT
-		{
+		{	
 			Texture* shadowMap = new Texture();
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapTexture", shadowMap);
 			vecRTTex.emplace_back(shadowMap);
