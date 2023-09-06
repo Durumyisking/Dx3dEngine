@@ -29,6 +29,7 @@ namespace renderer
 	StructedBuffer* lightBuffer = nullptr;
 
 	Texture* postProcessTexture = nullptr;
+	Texture* dsTexture = nullptr;
 	GameObj* inspectorGameObject = nullptr;
 
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
@@ -225,6 +226,13 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DepthShader");
+			GetDevice()->CreateInputLayout(arrLayout, 6
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		} 
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightDirShader");
 			GetDevice()->CreateInputLayout(arrLayout, 6
@@ -747,6 +755,11 @@ namespace renderer
 		postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PostProcessTexture", postProcessTexture);
+
+		dsTexture = new Texture();
+		dsTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
+		dsTexture->BindShaderResource(eShaderStage::PS, 19);
+		GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowTexture", dsTexture);
 	}
 
 
@@ -913,11 +926,13 @@ namespace renderer
 		lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
 		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"ShadowMapTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::ShadowMap, lightDirTex);
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
 #pragma endregion
 
-#pragma region LightDirMaterial
+#pragma region LightPointMaterial
 		Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
 		Material* lightPointMaterial = new Material();
 		lightPointMaterial->SetRenderingMode(eRenderingMode::None);
@@ -957,8 +972,9 @@ namespace renderer
 #pragma region Depth Material
 		Shader* depthShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DepthShader");
 		Material* shadowMaterial = new Material();
+		shadowMaterial->SetRenderingMode(eRenderingMode::None);
 		shadowMaterial->SetShader(depthShader);
-		shadowMaterial->SetTextureByKey(L"ShadowMapTexture", eTextureSlot::ShadowMap);
+		//shadowMaterial->SetTextureByKey(L"ShadowMapTexture", eTextureSlot::ShadowMap);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"ShadowMaterial", shadowMaterial);
 #pragma endregion
 

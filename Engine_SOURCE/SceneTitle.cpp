@@ -148,7 +148,7 @@ void SceneTitle::Enter()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(5.f, 5.f, 5.f));
+		player->SetPos(Vector3(2.5f, 5.f, 5.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
@@ -157,7 +157,7 @@ void SceneTitle::Enter()
 			L"gold_normal", 
 			L"gold_metallic", 
 			L"gold_roughness", 
-			L"PBRShader",
+			L"DeferredShader",
 			L"gold_dirt"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
@@ -176,7 +176,7 @@ void SceneTitle::Enter()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(-5.f, 5.f, 5.f));
+		player->SetPos(Vector3(-2.5f, 5.f, 5.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
@@ -185,7 +185,7 @@ void SceneTitle::Enter()
 			L"check_normal",
 			L"check_metallic",
 			L"check_roughness",
-			L"PBRShader",
+			L"DeferredShader",
 			L"check_dirt"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);

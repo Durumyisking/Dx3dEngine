@@ -89,24 +89,24 @@ void Camera::Render()
 
 	sortGameObjects();
 
-	//// shadow	
-	//Transform* directionLighttr = renderer::lights[0]->GetOwner()->GetComponent<Transform>();
-	////tr->SetPosition(Transform()->GetWorldPos());
-	//directionLighttr->SetRotation(DecomposeRotMat(directionLighttr->GetWorldRotationMatrix()));
-	//View = CreateViewMatrix(directionLighttr);
-	//Projection = CreateProjectionMatrix(eProjectionType::Orthographic, 1600, 900, 1.0f, 1000.0f);
+	// shadow	
+	Transform* directionLighttr = renderer::lights[0]->GetOwner()->GetComponent<Transform>();
+	//tr->SetPosition(Transform()->GetWorldPos());
+	directionLighttr->SetRotation(DecomposeRotMat(directionLighttr->GetWorldRotationMatrix()));
+	View = CreateViewMatrix(directionLighttr);
+	Projection = CreateProjectionMatrix(eProjectionType::Orthographic, 1600, 900, 1.0f, 1000.0f);
 
-	//ConstantBuffer* lightCB = renderer::constantBuffers[(UINT)eCBType::LightMatrix];
+	ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
 
-	//LightMatrixCB data = {};
-	//data.lightView = View;
-	//data.lightProjection = Projection;
-	//lightCB->SetData(&data);
-	//lightCB->Bind(eShaderStage::VS);
-	//lightCB->Bind(eShaderStage::PS);
+	LightMatrixCB data = {};
+	data.lightView = View;
+	data.lightProjection = Projection;
+	lightCB->SetData(&data);
+	lightCB->Bind(eShaderStage::VS);	
+	lightCB->Bind(eShaderStage::PS);
 
-	//renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->OMSetRenderTarget();
-	//renderShadow();
+	renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->OMSetRenderTarget();
+	renderShadow();
 
 	// Deferred Opaque Render 
 	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();

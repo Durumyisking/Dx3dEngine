@@ -57,7 +57,7 @@ PS_OUT main(VSOut vsin)
 
     // 샘플링을 하기 위해서 투영좌표계를 UV 좌표계로 변환
     float2 vDepthMapUV = float2((vLightProj.x * 0.5) + 0.5f, -(vLightProj.y * 0.5) + 0.5f);
-    float fDepth = ShadowMap.Sample(anisotropicSampler, vDepthMapUV).r;
+    float fDepth = ShadowMap.Sample(linearSampler, vDepthMapUV).r;
     float fShadowPow = 0.f;
 
     //// 광원에 기록된 깊이보다, 물체의 깊이가 더 멀 때, 그림자 판정
@@ -69,10 +69,9 @@ PS_OUT main(VSOut vsin)
         fShadowPow = 0.9f;
     }
     
-    
     {
         diffuse = CalculateLightPBR_Direct(vViewPos.xyz, albedo, normal.xyz, metallic, roughness);
-        output.vDiffuse.xyz = diffuse;
+        output.vDiffuse.xyz = diffuse * (1.f - fShadowPow);
     }
     
     output.vDiffuse.a = 1.f;
