@@ -18,6 +18,7 @@
 
 #include "Application.h"
 #include "Player.h"
+#include "MarioParts.h"
 
 #include "Physical.h"
 #include "PhysXRigidBody.h"
@@ -129,8 +130,6 @@ void SceneTitle::Enter()
 
 	}
 
-
-
 	{
 		GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
 
@@ -194,54 +193,44 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
-	////Ä¸½¶ Å×½ºÆ®¿ë ÄÚµå
+	{
+		MarioParts* player = object::Instantiate<MarioParts>(eLayerType::Player);
+		player->BoneInitialize();
+		player = object::AddToScene<MarioParts>(player->GetMario(), eLayerType::Player, this);
+	}
+
 	//{
-	//	GameObj* capsule = object::Instantiate<GameObj>(eLayerType::Monster);
-	//	capsule->SetPos(Vector3(500.f, 0.f, 0.f));
-	//	capsule->SetScale(Vector3(100.0f, 100.0f, 100.0f));
-	//	capsule->SetName(L"Capsule");
-	//	capsule->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMeshByKey(L"Capsulemesh");
-	//	capsule->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"FlatMaterial");
+	//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+	//	player->SetPos(Vector3(0.f, 0.f, 0.f));
+	//	player->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+	//	player->SetName(L"Player");
+	//	
+	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
+	//	player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-	//	capsule->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Capsule, Vector3(500.f, 0.25f, 500.f));
+	//	BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
-	//	PhysXRigidBody* rigid = capsule->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//	//animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
+	//	animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
+	//	animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
+	//	animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
+	//	animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
+	//	animator->Play(L"test");
 
-	//	capsule->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
+	//	player->AddComponent<PlayerScript>(eComponentType::Script);
+
+	//	Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+	//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
+
+	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	//}
 
 
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
-		player->SetScale(Vector3(1.0f, 1.0f, 1.0f));
-		player->SetName(L"Player");
-		
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
-		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
-
-		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-
-		//animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
-		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
-		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
-		animator->Play(L"test");
-
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
-
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
-
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-	}
-
-	{
+	/*{
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(0.f, 0.f, 0.f));
 		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
@@ -328,7 +317,7 @@ void SceneTitle::Enter()
 
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
 
-	}
+	}*/
 
 	{
 		/*Player* player = object::Instantiate<Player>(eLayerType::Player);

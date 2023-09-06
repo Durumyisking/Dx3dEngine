@@ -24,24 +24,24 @@ Player::~Player()
 void Player::Initialize()
 {
 
-	GameObj::Initialize();
+	DynamicObject::Initialize();
 }
 
 void Player::Update()
 {
 
-	GameObj::Update();
+	DynamicObject::Update();
 }
 
 void Player::FixedUpdate()
 {
-	GameObj::FixedUpdate();
+	DynamicObject::FixedUpdate();
 }
 
 void Player::Render()
 {
 		
-	GameObj::Render();
+	DynamicObject::Render();
 }
 
 void Player::FontRender()
@@ -62,6 +62,10 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)
+{
+}
+
+void Player::BoneInitialize()
 {
 }
 

@@ -21,7 +21,7 @@ public:
 private:
 
 public:
-	virtual void BoneInitialize();
+	virtual void BoneInitialize() {};
 	struct StateInfo {
 		UINT mState;
 		std::set<UINT> mLockState;
