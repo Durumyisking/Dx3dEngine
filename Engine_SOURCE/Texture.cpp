@@ -159,7 +159,7 @@ HRESULT Texture::Load(const std::wstring& path)
 
 
 	wchar_t szExtension[256] = {};
-	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // ê²½ë¡œì—ì„œ í™•ìž¥ìžë§Œ ë½‘ì•„ì˜¤ëŠ” ë…€ì„
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // °æ·Î¿¡¼­ È®ÀåÀÚ¸¸ »Ì¾Æ¿À´Â ³à¼®
 
 	std::wstring extension(szExtension);
 
@@ -200,7 +200,7 @@ HRESULT Texture::Load(const std::wstring& path)
 Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 {
 	wchar_t szExtension[256] = {};
-	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // ê²½ë¡œì—ì„œ í™•ìž¥ìžë§Œ ë½‘ì•„ì˜¤ëŠ” ë…€ì„
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // °æ·Î¿¡¼­ È®ÀåÀÚ¸¸ »Ì¾Æ¿À´Â ³à¼®
 
 	std::wstring extension(szExtension);
 
@@ -246,12 +246,12 @@ Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 
 		std::memcpy(image.GetImages()->pixels, pixels.data(), pixels.size());
 
-		{
-			const std::wstring folderName = L"./TEST/";
-			const std::wstring fileName = std::filesystem::path{ path }.filename().wstring();
-			HRESULT result = SaveToWICFile(*image.GetImages(), WIC_FLAGS_NONE, GetWICCodec(WIC_CODEC_PNG), (folderName + fileName).c_str());
-			assert(result == S_OK);
-		}
+		//{
+		//	const std::wstring folderName = L"./TEST/";
+		//	const std::wstring fileName = std::filesystem::path{ path }.filename().wstring();
+		//	HRESULT result = SaveToWICFile(*image.GetImages(), WIC_FLAGS_NONE, GetWICCodec(WIC_CODEC_PNG), (folderName + fileName).c_str());
+		//	assert(result == S_OK);
+		//}
 
 	}
 

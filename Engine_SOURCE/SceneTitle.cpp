@@ -162,7 +162,63 @@ void SceneTitle::Enter()
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
 		player->SetPos(Vector3(5.f, 5.f, 5.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->SetName(L"Player");
+		player->SetName(L"Player1");
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		(
+			L"check_albedo",
+			L"check_normal", 
+			L"check_metallic", 
+			L"check_roughness", 
+			L"PBRShader",
+			L"mat_dirt"
+		);
+		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+
+		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->AddComponent<PlayerScript>(eComponentType::Script);
+
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	}
+	{
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(-15.f, 5.f, 5.f));
+		player->SetScale(Vector3(3.f, 3.f, 3.f));
+		player->SetName(L"Player2");
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		(
+			L"check_albedo",
+			L"check_normal", 
+			L"check_metallic", 
+			L"check_roughness", 
+			L"PBRShader",
+			L"mat_dirt"
+		);
+		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+
+		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->AddComponent<PlayerScript>(eComponentType::Script);
+
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	}
+	{
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(15.f, 5.f, 5.f));
+		player->SetScale(Vector3(1.5f, 1.5f, 1.5f));
+		player->SetName(L"Player3");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
 			L"check_albedo",
@@ -187,108 +243,166 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
+	//{
+	//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+	//	player->SetPos(Vector3(15.f, 15.f, 5.f));
+	//	player->SetScale(Vector3(1.f, 1.f, 1.f));
+	//	player->SetName(L"Player2");
+	//	Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+	//	(
+	//		L"check_albedo",
+	//		L"check_normal",
+	//		L"check_metallic",
+	//		L"check_roughness",
+	//		L"PBRShader",
+	//		L"mat_dirt"
+	//	);
+	//	player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+
+	//	//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+	//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+	//	player->AddComponent<PlayerScript>(eComponentType::Script);
+
+	//	Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+	//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	//}
+
+	//{
+	//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+	//	player->SetPos(Vector3(-15.f, 5.f, 5.f));
+	//	player->SetScale(Vector3(1.f, 1.f, 1.f));
+	//	player->SetName(L"Player3");
+	//	Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+	//	(
+	//		L"check_albedo",
+	//		L"check_normal",
+	//		L"check_metallic",
+	//		L"check_roughness",
+	//		L"PBRShader",
+	//		L"mat_dirt"
+	//	);
+	//	player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+
+	//	//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+	//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+	//	player->AddComponent<PlayerScript>(eComponentType::Script);
+
+	//	Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+	//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	//}
+
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
-		player->SetScale(Vector3(1.0f, 1.0f, 1.0f));
-		player->SetName(L"Player");
-		
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
-		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		//Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//player->SetPos(Vector3(0.f, 0.f, 0.f));
+		//player->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+		//player->SetName(L"Player");
+		//
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
+		//player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		//BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
-		//animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
-		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
-		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
-		animator->Play(L"test");
+		////animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
+		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
+		//animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
+		//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
+		//animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
+		//animator->Play(L"test");
 	}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
-		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
-		player->SetName(L"Player");
+		//Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//player->SetPos(Vector3(0.f, 0.f, 0.f));
+		//player->SetScale(Vector3(1.0f, 1.f, 1.0f));
+		//player->SetName(L"Player");
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandL");
-		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandL");
+		//player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandL/Animation/Walk.smd", 0.05f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandL/Animation/Jump.smd", 0.05f);
-		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandL/Animation/Dead.smd", 0.05f);
-		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandL/Animation/Run.smd", 0.05f);
-		animator->Play(L"test");
+		//BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandL/Animation/Walk.smd", 0.05f);
+		//animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandL/Animation/Jump.smd", 0.05f);
+		//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandL/Animation/Dead.smd", 0.05f);
+		//animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandL/Animation/Run.smd", 0.05f);
+		//animator->Play(L"test");
 
-		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_HandL");
-		model->SetTargetBone(L"Armature_HandL");
-		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
+		//model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		//model->SetPrentTargetBone(L"Armature_HandL");
+		//model->SetTargetBone(L"Armature_HandL");
+		//model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
 	}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
-		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
-		player->SetName(L"Player");
+		//Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//player->SetPos(Vector3(0.f, 0.f, 0.f));
+		//player->SetScale(Vector3(1.0f, 1.f, 1.0f));
+		//player->SetName(L"Player");
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandR");
-		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandR");
+		//player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandR/Animation/Walk.smd", 0.05f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandR/Animation/Jump.smd", 0.05f);
-		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandR/Animation/Dead.smd", 0.05f);
-		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandR/Animation/Run.smd", 0.05f);
-		animator->Play(L"test");
+		//BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandR/Animation/Walk.smd", 0.05f);
+		//animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandR/Animation/Jump.smd", 0.05f);
+		//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandR/Animation/Dead.smd", 0.05f);
+		//animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandR/Animation/Run.smd", 0.05f);
+		//animator->Play(L"test");
 
-		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_HandR");
-		model->SetTargetBone(L"Armature_HandR");
-		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
+		//model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		//model->SetPrentTargetBone(L"Armature_HandR");
+		//model->SetTargetBone(L"Armature_HandR");
+		//model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
 	}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
-		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
-		player->SetName(L"Player");
+		//Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//player->SetPos(Vector3(0.f, 0.f, 0.f));
+		//player->SetScale(Vector3(1.0f, 1.f, 1.0f));
+		//player->SetName(L"Player");
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
-		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
+		//player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
-		animator->Play(L"test");
+		//BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
+		//animator->Play(L"test");
 
-		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_Head");
-		model->SetTargetBone(L"Armature_MarioHead");
+		//model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		//model->SetPrentTargetBone(L"Armature_Head");
+		//model->SetTargetBone(L"Armature_MarioHead");
 
-		model->SetOffsetRotation(Vector3(0.0f, 1.570796f , -1.570796f * 2));
+		//model->SetOffsetRotation(Vector3(0.0f, 1.570796f , -1.570796f * 2));
 	}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
-		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
-		player->SetName(L"Player");
+		//Player* player = object::Instantiate<Player>(eLayerType::Player);
+		//player->SetPos(Vector3(0.f, 0.f, 0.f));
+		//player->SetScale(Vector3(1.0f, 1.f, 1.0f));
+		//player->SetName(L"Player");
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioFace");
-		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioFace");
+		//player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioFace/Animation/Walk.smd", 0.02f);
-		animator->Play(L"test2");
+		//BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
+		//animator->CreateAnimation(L"test2", L"..//..//Resources/MarioFace/Animation/Walk.smd", 0.02f);
+		//animator->Play(L"test2");
 
-		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetPrentTargetBone(L"Armature_Head");
-		model->SetTargetBone(L"Armature_Face");
+		//model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		//model->SetPrentTargetBone(L"Armature_Head");
+		//model->SetTargetBone(L"Armature_Face");
 
-		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
+		//model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
 	}
 
 	{
@@ -426,15 +540,16 @@ void SceneTitle::Enter()
 	//testRender->SetMaterial(mat);
 	//testRender->SetMeshByKey(L"Cubemesh");
 
-	Panal* testObj = object::Instantiate<Panal>(eLayerType::Objects);
-	testObj->SetPos(Vector3(0.f, 5.f, 0.f));
-	testObj->SetScale({ 5.f, 5.f, 5.f });
-	Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"SpriteMaterial");
-	Texture* titleTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle"));
-	testMaterial->SetTexture(titleTexture);
-	testObj->GetComponent <SpriteRenderer>()->SetMaterial(testMaterial);
-	testObj->GetComponent<SpriteRenderer>()->SetMaterialByKey(L"SpriteMaterial");
-	testObj->GetComponent<SpriteRenderer>()->SetMeshByKey(L"Rectmesh");
+	//Panal* testObj = object::Instantiate<Panal>(eLayerType::Objects);
+	//testObj->SetName(L"Panal");
+	//testObj->SetPos(Vector3(0.f, 5.f, 0.f));
+	//testObj->SetScale({ 5.f, 5.f, 5.f });
+	//Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"SpriteMaterial");
+	//Texture* titleTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle"));
+	//testMaterial->SetTexture(titleTexture);
+	//testObj->GetComponent <SpriteRenderer>()->SetMaterial(testMaterial);
+	//testObj->GetComponent<SpriteRenderer>()->SetMaterialByKey(L"SpriteMaterial");
+	//testObj->GetComponent<SpriteRenderer>()->SetMeshByKey(L"Rectmesh");
 
 
 

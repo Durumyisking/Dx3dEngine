@@ -104,6 +104,8 @@ public:
 		return nullptr;
 	}
 
+	bool GetComponent(eComponentType type);
+
 	void Flip();
 		
 	bool IsRenderingBlock() const { return mbBlockRendering; }

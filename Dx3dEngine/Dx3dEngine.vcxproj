@@ -124,7 +124,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MinFilesInUnityFile>8</MinFilesInUnityFile>
       <UnityFilesDirectory>$(ProjectDir)\Unity\</UnityFilesDirectory>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClInclude Include="Dx3dEngine.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="guiBasisVectorObj.h" />
     <ClInclude Include="guiComponent.h" />
     <ClInclude Include="guiConsole.h" />
     <ClInclude Include="guiContentsBrowser.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="guiWidget.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="guiBasisVectorObj.cpp" />
     <ClCompile Include="guiComponent.cpp" />
     <ClCompile Include="guiConsole.cpp" />
     <ClCompile Include="guiContentsBrowser.cpp" />

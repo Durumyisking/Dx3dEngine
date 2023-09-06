@@ -26,11 +26,11 @@ void GetLastErrorPrint()
 		Text += message;
 
 		MessageBoxA(nullptr, (Text).c_str(), "Error", MB_OK);
-		// ìš´ì˜ì²´ì œê°€ ì¤€ê±´ í•´ì œí—¤ì•¼ í•œë‹¤.
-		// ì„œë²„ë©´ ë”ë”ë”ë”ë”ë”ìš±
-		// ì‹¤í–‰ì¤‘ ë°œìƒí•˜ëŠ” ë¦­ì´ ê°€ì¥ ìœ„í—˜í•˜ë‹¤.
-		// í™ì´ ë¹„ëŒ€í•´ì§€ê¸° ì‹œì‘í•©ë‹ˆë‹¤.
-		// ë¨ì„ ì´ˆê³¼í•˜ë©´ì„œ í„°ì§„ë‹¤.
+		// ¿î¿µÃ¼Á¦°¡ ÁØ°Ç ÇØÁ¦Çì¾ß ÇÑ´Ù.
+		// ¼­¹ö¸é ´õ´õ´õ´õ´õ´õ¿í
+		// ½ÇÇàÁß ¹ß»ıÇÏ´Â ¸¯ÀÌ °¡Àå À§ÇèÇÏ´Ù.
+		// ÈüÀÌ ºñ´ëÇØÁö±â ½ÃÀÛÇÕ´Ï´Ù.
+		// ·¥À» ÃÊ°úÇÏ¸é¼­ ÅÍÁø´Ù.
 		LocalFree(message);
 	}
 }
@@ -60,7 +60,7 @@ void AnsiToUniCode(const std::string& text, std::wstring& out)
 
 	if (Size == 0)
 	{
-		MsgBoxAssert("ìŠ¤íŠ¸ë§ ë³€í™˜ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+		MsgBoxAssert("½ºÆ®¸µ º¯È¯¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 		return;
 	}
 
@@ -70,7 +70,7 @@ void AnsiToUniCode(const std::string& text, std::wstring& out)
 
 	if (Size == 0)
 	{
-		MsgBoxAssert("ìŠ¤íŠ¸ë§ ë³€í™˜ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+		MsgBoxAssert("½ºÆ®¸µ º¯È¯¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 		return;
 	}
 }
@@ -88,7 +88,7 @@ void UniCodeToUTF8(const std::wstring& text, std::string& out)
 
 	if (Size == 0)
 	{
-		MsgBoxAssert("ìŠ¤íŠ¸ë§ ë³€í™˜ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+		MsgBoxAssert("½ºÆ®¸µ º¯È¯¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 		return;
 	}
 
@@ -98,7 +98,7 @@ void UniCodeToUTF8(const std::wstring& text, std::string& out)
 
 	if (Size == 0)
 	{
-		MsgBoxAssert("ìŠ¤íŠ¸ë§ ë³€í™˜ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+		MsgBoxAssert("½ºÆ®¸µ º¯È¯¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 		return;
 	}
 }
@@ -130,7 +130,7 @@ std::wstring StringToWStringReturn(const std::string& text)
 
 	if (Size == 0)
 	{
-		MsgBoxAssert("ìŠ¤íŠ¸ë§ ë³€í™˜ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+		MsgBoxAssert("½ºÆ®¸µ º¯È¯¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 		return L"";
 	}
 
@@ -140,7 +140,7 @@ std::wstring StringToWStringReturn(const std::string& text)
 
 	if (Size == 0)
 	{
-		MsgBoxAssert("ìŠ¤íŠ¸ë§ ë³€í™˜ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+		MsgBoxAssert("½ºÆ®¸µ º¯È¯¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 		return L"";
 	}
 
@@ -202,7 +202,7 @@ bool UTF8ToUniCode(const std::string& UTF8, std::wstring& uniCode)
 		0,
 		UTF8.c_str(),
 		static_cast<int32_t>(UTF8.size()),
-		nullptr, // ì´ë¶€ë¶„ì„ nullptrë¡œ ë„£ì–´ì£¼ë©´ ë³€í™˜ í•¨ìˆ˜ë¡œ ë™ì‘í•˜ëŠ”ê²Œ ì•„ë‹ˆê³ . ë³€í™˜ê¸¸ì´ë¥¼ ì²´í¬í•˜ëŠ” í•¨ìˆ˜ë¡œ ë™ì‘í•œë‹¤.
+		nullptr, // ÀÌºÎºĞÀ» nullptr·Î ³Ö¾îÁÖ¸é º¯È¯ ÇÔ¼ö·Î µ¿ÀÛÇÏ´Â°Ô ¾Æ´Ï°í. º¯È¯±æÀÌ¸¦ Ã¼Å©ÇÏ´Â ÇÔ¼ö·Î µ¿ÀÛÇÑ´Ù.
 		0
 	);
 

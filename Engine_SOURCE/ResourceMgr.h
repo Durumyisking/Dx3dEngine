@@ -16,7 +16,7 @@ public:
 	{
 		std::map<std::wstring, Resource*>::iterator iter = mResources.find(key);
 
-		// ì´ë¯¸ ë™ì¼í•œ í‚¤ê°’ìœ¼ë¡œ ë‹¤ë¥¸ ë¦¬ì†ŒìŠ¤ê°€ ë¨¼ì € ë“±ë¡ë˜ì–´ ìˆì—ˆë‹¤.
+		// ÀÌ¹Ì µ¿ÀÏÇÑ Å°°ªÀ¸·Î ´Ù¸¥ ¸®¼Ò½º°¡ ¸ÕÀú µî·ÏµÇ¾î ÀÖ¾ú´Ù.
 		if (iter != mResources.end())
 		{
 			return dynamic_cast<T*>(iter->second);
@@ -44,15 +44,15 @@ public:
 	template <typename T>
 	T* Load(const std::wstring& key, const std::wstring& path)
 	{
-		// í‚¤ê°’ìœ¼ë¡œ íƒìƒ‰
+		// Å°°ªÀ¸·Î Å½»ö
 		T* resource = GETSINGLE(ResourceMgr)->Find<T>(key);
 		if (nullptr != resource)
 		{
-			// í•´ë‹¹í‚¤ë¡œ ì´ë¯¸ ë¡œë”©ëœê²Œ ìˆìœ¼ë©´ í•´ë‹¹ ë¦¬ì†ŒìŠ¤ë¥¼ ë°˜í™˜
+			// ÇØ´çÅ°·Î ÀÌ¹Ì ·ÎµùµÈ°Ô ÀÖÀ¸¸é ÇØ´ç ¸®¼Ò½º¸¦ ¹İÈ¯
 			return resource;
 		}
 
-		// í•´ë‹¹ í‚¤ë¡œ ë¡œë”©ëœ ë¦¬ì†ŒìŠ¤ê°€ ì—†ë‹¤.
+		// ÇØ´ç Å°·Î ·ÎµùµÈ ¸®¼Ò½º°¡ ¾ø´Ù.
 		resource = new T();
 		if (FAILED(resource->Load(path)))
 		{

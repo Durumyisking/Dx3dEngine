@@ -12,6 +12,9 @@
 #include "InputMgr.h"
 
 #include "Physical.h"
+#include "Object.h"
+
+#include "PhysXRayCast.h"
 
 extern Application application;
 
@@ -70,18 +73,6 @@ void Camera::Update()
 		Dir.z = GetOwner()->GetPos().z;
 		(Dir).Normalize(mCamDir);
 	}
-
-	if (mbMouseClick)
-	{
-		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LBTN))
-		{
-			DrawRay();
-		}
-		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RBTN))
-		{
-
-		}
-	}
 }
 
 void Camera::FixedUpdate()
@@ -133,17 +124,18 @@ void Camera::CreateViewMatrix()
 {
 	Transform* transform = GetOwner()->GetComponent<Transform>();
 
-	// ì´ë™ì •ë³´
+	// ÀÌµ¿Á¤º¸
 	Vector3 translation = transform->GetPosition();
 
-	// create view translation matrix
-	mView = Matrix::Identity;
-	mView *= Matrix::CreateTranslation(-translation);
-
-	// íšŒì „ì •ë³´
+	
+	// È¸ÀüÁ¤º¸
 	Vector3 up = transform->Up();
 	Vector3 right = transform->Right();
 	Vector3 foward = transform->Forward();
+	
+	//create view translation matrix
+	mView = Matrix::Identity;
+	mView *= Matrix::CreateTranslation(-translation);
 
 	Matrix viewRotate;
 	viewRotate._11 = right.x; 		viewRotate._12 = up.x;		 viewRotate._13 = foward.x;
@@ -152,6 +144,9 @@ void Camera::CreateViewMatrix()
 
 	mView *= viewRotate;
 
+
+	////»õ·Î Àû¿ëÇÒ È¸ÀüÇà·Ä
+	//mView = XMMatrixLookAtLH(translation, foward, up);
 }
 
 void Camera::CreateProjectionMatrix()
@@ -181,15 +176,6 @@ void Camera::RegisterCameraInRenderer()
 	renderer::Cameras[type].push_back(this);
 }
 
-void Camera::DrawRay()
-{
-	Vector3 mousePos = GETSINGLE(InputMgr)->GetMousePosition_world();
-	mousePos.z = 100.f;
-
-	RayObject* ray = object::Instantiate<RayObject>(eLayerType::Player);
-	ray->SetRaycast(mousePos, mCamDir);
-}
-
 void Camera::TurnLayerMask(eLayerType layer, bool enable)
 {
 	mLayerMask.set(static_cast<UINT>(layer, enable));
@@ -207,6 +193,8 @@ void Camera::SetTarget(GameObj* target)
 
 bool Camera::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance)
 {
+
+
 	if (this == renderer::mainCamera)
 	{
 		Physical* physical = gameObject->GetComponent<Physical>();
@@ -274,6 +262,7 @@ bool Camera::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObj
 
 	return false;
 }
+
 
 void Camera::sortGameObjects()
 {

@@ -35,8 +35,8 @@ namespace gui
 			mBorderColor.w = a / 255.f;
 		}
 
-		void SetTexture(Texture* texture);
-		void SetTexture(const std::wstring& name);
+		void SetTexture(Texture* texture, ImVec4 color = ImVec4(1.f, 1.f, 1.f, 1.f));
+		void SetTexture(const std::wstring& name, ImVec4 color = ImVec4(1.f, 1.f, 1.f, 1.f));
 
 	private:
 		Texture*	mTexture;

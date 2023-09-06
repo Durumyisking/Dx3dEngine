@@ -52,8 +52,8 @@ namespace gui
 		//Insert<Inspector>("Inspector", inspector);
 		mWidgets.insert(std::make_pair("Inspector", inspector));
 
-		Game* game = new Game();
-		mWidgets.insert(std::make_pair("Game", game));
+		//Game* game = new Game();
+		//mWidgets.insert(std::make_pair("Game", game));
 
 		Hierarchy* hierarchy = new Hierarchy();
 		mWidgets.insert(std::make_pair("Hierarchy", hierarchy));

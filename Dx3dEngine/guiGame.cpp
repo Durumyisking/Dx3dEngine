@@ -8,7 +8,7 @@ namespace gui
 	Game::Game()
 		: mTexture(nullptr)
 	{
-		SetName("Game");
+		SetName("GameScene");
 
 		mTexture = new Texture();
 		mTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);

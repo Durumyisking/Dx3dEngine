@@ -18,7 +18,7 @@ class Camera : public Component
 public:
 
 	__forceinline static Matrix& GetGpuViewMatrix() { return View; }
-	__forceinline static Matrix& GetGpuInverseViewMatrix() { return View; }
+	__forceinline static Matrix& GetGpuInverseViewMatrix() { return InverseView; }
 	__forceinline static Matrix& GetGpuProjectionMatrix() { return Projection; }
 	__forceinline static void SetGpuViewMatrix(Matrix view) { View = view; }
 	__forceinline static void SetGpuProjectionMatrix(Matrix projection) { Projection = projection; }
@@ -36,12 +36,8 @@ public:
 		
 	void RegisterCameraInRenderer();
 
-	//Raycast
-	void MouseClickEnable(bool tf) { mbMouseClick = tf; }
-	void DrawRay();
-
 	void TurnLayerMask(eLayerType layer, bool enable = true);
-	void EnableLayerMasks() { mLayerMask.set(); } // ì „ë¶€ë‹¤ trueë¡œ }
+	void EnableLayerMasks() { mLayerMask.set(); } // ÀüºÎ´Ù true·Î }
 	void DisableLayerMasks() { mLayerMask.reset(); }
 
 	void SetProjectionType(eProjectionType type) { mType = type; }
@@ -82,14 +78,14 @@ private:
 private:
 	static Matrix View;
 	static Matrix InverseView;
-	static Matrix Projection; // ëª¨ë“  objë“¤ì˜ í•´ë‹¹ í–‰ë ¬ì€ ë™ì¼í•¨
+	static Matrix Projection; // ¸ğµç objµéÀÇ ÇØ´ç Çà·ÄÀº µ¿ÀÏÇÔ
 
 	Matrix mView;
 	Matrix mProjection;
 
 
 	eProjectionType mType;
-	float mAspectRatio; // ì¢…íš¡ë¹„
+	float mAspectRatio; // Á¾È¾ºñ
 
 	float mNear;
 	float mFar;
@@ -113,7 +109,5 @@ private:
 	float		mCamSpeed;
 	float		mTime;
 	bool		mSmooth;
-
-	bool		mbMouseClick;
 };
 

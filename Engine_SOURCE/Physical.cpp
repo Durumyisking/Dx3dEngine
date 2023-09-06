@@ -180,9 +180,9 @@ void Physical::createShape()
 		PxShape* shape = physics.createShape(PxSphereGeometry(1.0f), myMaterial, true);
 		myActor.attachShape(*shape);
 		shape->release();
-		이 코드는
+		�� �ڵ��
 
-		PxRigidActorExt::createExclusiveShape() 이것과 같다.
+		PxRigidActorExt::createExclusiveShape() �̰Ͱ� ����.
 	*/
 
 	switch (mGeometryType)
@@ -257,16 +257,16 @@ void Physical::initializeActor()
 	case eActorType::Kinematic:
 		/*
 			eSIMULATION_SHAPE 
-			해당 플래그를 키면 Kinematic Actor의 Shape가 물리시뮬레이션에 참여합니다.
+			�ش� �÷��׸� Ű�� Kinematic Actor�� Shape�� �����ùķ��̼ǿ� �����մϴ�.
 		
 			eSCENE_QUERY_SHAPE
-			해당 플래그를 키면 Kinematic Shape가 레이캐스트, 픽킹등의 작업에서 충돌을 확인할 수 있습니다.
+			�ش� �÷��׸� Ű�� Kinematic Shape�� ����ĳ��Ʈ, ��ŷ���� �۾����� �浹�� Ȯ���� �� �ֽ��ϴ�.
 
 			eTRIGGER_SHAPE
-			해당 플래그를 키면 Kinematic Shape가 트리거로 사용됩니다. 트리거를 통해서 충돌 이벤트를 설정 할 수 있게 됩니다.
+			�ش� �÷��׸� Ű�� Kinematic Shape�� Ʈ���ŷ� ���˴ϴ�. Ʈ���Ÿ� ���ؼ� �浹 �̺�Ʈ�� ���� �� �� �ְ� �˴ϴ�.
 
 			eVISUALIZATION
-			해당 플래그를 키면 Kinematic 객체가 시각화 목적으로 사용됩니다.
+			�ش� �÷��׸� Ű�� Kinematic ��ü�� �ð�ȭ �������� ���˴ϴ�.
 		*/
 
 

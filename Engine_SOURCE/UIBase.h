@@ -34,11 +34,11 @@ public:
 	void FontRender() override;
 
 
-	// UI가 활성화되면 불리는 함수
+	// UI�� Ȱ��ȭ�Ǹ� �Ҹ��� �Լ�
     void Active();
-	// UI가 비활성화되면 불리는 함수
+	// UI�� ��Ȱ��ȭ�Ǹ� �Ҹ��� �Լ�
     void InActive();
-	//UI가 사라질때 호출되는 함수
+	//UI�� ������� ȣ��Ǵ� �Լ�
 	void UIClear();
 
 	eUIType GetUIType() { return mUIType; }
@@ -76,7 +76,7 @@ private:
 	bool mUIbFullScreen;
 	bool mbUIEnable;
 
-	//백터가 더 메모리 친화적이기 떄문에 사용
+	//���Ͱ� �� �޸� ģȭ���̱� ������ ���
 	std::vector<UIBase*> mChilds;
 };
 

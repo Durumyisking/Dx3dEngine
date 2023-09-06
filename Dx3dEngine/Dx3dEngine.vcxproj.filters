@@ -47,6 +47,12 @@
     <Filter Include="Widget\Image">
       <UniqueIdentifier>{26ab6d6d-2dc2-4323-889c-70c8dd49955a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor\Object\Base">
+      <UniqueIdentifier>{c695783c-05bb-46a8-92e3-a2c1dc921dd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Object\DebugObj">
+      <UniqueIdentifier>{3bb725aa-1f5a-4285-9067-96347a346bbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dx3dEngine.h" />
@@ -122,12 +128,6 @@
     <ClInclude Include="guiComponent.h">
       <Filter>Widget\Components\Base</Filter>
     </ClInclude>
-    <ClInclude Include="guiDebugObject.h">
-      <Filter>Editor\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="guiEditorObject.h">
-      <Filter>Editor\Object</Filter>
-    </ClInclude>
     <ClInclude Include="guiVisualEditor.h" />
     <ClInclude Include="guiWidgetMgr.h">
       <Filter>Editor\Managers</Filter>
@@ -149,6 +149,15 @@
     </ClInclude>
     <ClInclude Include="guiImageWidget.h">
       <Filter>Widget\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="guiEditorObject.h">
+      <Filter>Editor\Object\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="guiDebugObject.h">
+      <Filter>Editor\Object\DebugObj</Filter>
+    </ClInclude>
+    <ClInclude Include="guiBasisVectorObj.h">
+      <Filter>Editor\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -234,12 +243,6 @@
     <ClCompile Include="guiMeshRenderer.cpp">
       <Filter>Widget\Components</Filter>
     </ClCompile>
-    <ClCompile Include="guiDebugObject.cpp">
-      <Filter>Editor\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="guiEditorObject.cpp">
-      <Filter>Editor\Object</Filter>
-    </ClCompile>
     <ClCompile Include="guiVisualEditor.cpp" />
     <ClCompile Include="guiWidgetMgr.cpp">
       <Filter>Editor\Managers</Filter>
@@ -261,6 +264,15 @@
     </ClCompile>
     <ClCompile Include="guiImageWidget.cpp">
       <Filter>Widget\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="guiEditorObject.cpp">
+      <Filter>Editor\Object\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="guiDebugObject.cpp">
+      <Filter>Editor\Object\DebugObj</Filter>
+    </ClCompile>
+    <ClCompile Include="guiBasisVectorObj.cpp">
+      <Filter>Editor\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

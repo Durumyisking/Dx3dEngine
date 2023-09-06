@@ -138,9 +138,9 @@ void Transform::SetConstantBuffer()
 	renderer::TransformCB trCb = {};
 	trCb.world = mWorld;
 	trCb.inverseWorld = mWorld.Invert();
-	trCb.view = Camera::GetGpuViewMatrix();
+	trCb.view = renderer::mainCamera->GetGpuViewMatrix();
 	trCb.inverseView = trCb.view.Invert();
-	trCb.projection = Camera::GetGpuProjectionMatrix();
+	trCb.projection = renderer::mainCamera->GetGpuProjectionMatrix();
 
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::Transform)];
 	cb->SetData(&trCb);

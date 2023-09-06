@@ -14,6 +14,9 @@
 #include "Physical.h"
 #include "Transform.h"
 
+#include "RigidBody.h"
+#include "Movement.h"
+#include "Collider.h"
 
 
 
@@ -242,6 +245,69 @@ void GameObj::SetMesh(Mesh* mesh)
 	if (nullptr != GetComponent<SpriteRenderer>())
 	{
 		GetComponent<SpriteRenderer>()->SetMesh(mesh);
+	}
+}
+
+bool GameObj::GetComponent(eComponentType type)
+{
+	switch (type)
+	{
+	case enums::eComponentType::None:
+		return false;
+	case enums::eComponentType::Transform:
+		if (GetComponent<Transform>())
+			return true;
+	case enums::eComponentType::Camera:
+		if (GetComponent<Camera>())
+			return true;
+	case enums::eComponentType::Mesh:
+		if (GetComponent<Mesh>())
+			return true;
+	case enums::eComponentType::RigidBody:
+		if (GetComponent<RigidBody>())
+			return true;
+	case enums::eComponentType::Movement:
+		if (GetComponent<Movement>())
+			return true;
+	case enums::eComponentType::Physical:
+		if (GetComponent<Physical>())
+			return true;
+	case enums::eComponentType::Collider:
+		if (GetComponent<Collider>())
+			return true;
+	case enums::eComponentType::Animator:
+		if (GetComponent<Animator>())
+			return true;
+	case enums::eComponentType::BoneAnimator:
+		if (GetComponent<BoneAnimator>())
+			return true;
+	case enums::eComponentType::MeshRenderer:
+		if (GetComponent<MeshRenderer>())
+			return true;
+	case enums::eComponentType::Renderer:
+		if (GetComponent<Renderer>())
+			return true;
+	case enums::eComponentType::Particle:
+		if (GetComponent<Particle>())
+			return true;
+	case enums::eComponentType::Light:
+		if (GetComponent<Light>())
+			return true;
+	case enums::eComponentType::UI:
+		if (GetComponent<UI>())
+			return true;
+	case enums::eComponentType::AudioListener:
+		if (GetComponent<AudioListener>())
+			return true;
+	case enums::eComponentType::AudioSource:
+		if (GetComponent<AudioSource>())
+			return true;
+	case enums::eComponentType::Script:
+		return false;
+	case enums::eComponentType::End:
+		return false;
+	default:
+		return false;
 	}
 }
 

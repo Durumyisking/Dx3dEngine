@@ -2,13 +2,15 @@
 #include "guiWidget.h"
 #include "guiTreeWidget.h"
 #include "GameObj.h"
-
+#include "guiComponent.h"
+#include "guiResource.h"
 
 namespace gui
 {
-    class OutLine :
-        public Widget
-    {
+	class GUIComponent;
+	class GUIResource;
+	class OutLine : public Widget
+	{
 	public:
 		OutLine();
 		~OutLine();
@@ -17,12 +19,20 @@ namespace gui
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		void InitializeInspector(void* data);
-		void InitializeScene();
-		void AddGameObject(TreeWidget::Node* parent, GameObj* gameObject);
+		GameObj* GetTargetGameObject() { return mTargetGameObject; }
+		void SetTargetGameObject(GameObj* target) { mTargetGameObject = target; }
+		Resource* GetTargetResource() { return mTargetResource; }
+		void SetTargetResource(Resource* target) { mTargetResource = target; }
+
+		void ClearTarget();
+		void InitializeTargetGameObject();
+		void InitializeTargetResource();
 
 	private:
-		TreeWidget* mTreeWidget;
-    };
+		GameObj* mTargetGameObject;
+		Resource* mTargetResource;
+		std::vector<GUIComponent*> mComponents;
+		std::vector<GUIResource*> mResources;
+	};
 }
 

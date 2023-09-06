@@ -40,6 +40,7 @@ private:
     Transform* mTransform;
     GameObj* mTarget;
     Vector3 mLookAt;
+    Vector3 mLookTo;
 
     float	mSpeed;
     float	mCamStep;

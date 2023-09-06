@@ -35,6 +35,7 @@ InputMgr::InputMgr()
 	: mKeys{}
 	, mMousePosition(Vector3::Zero)
 	, mPrevMousePosition(Vector3::Zero)
+	, mClientMousePosition(Vector2::Zero)
 	, mWorldMousePosition(Vector3::Zero)
 	, mMouseLClickPosition(Vector3::Zero)
 	, mMouseRClickPosition(Vector3::Zero)
@@ -132,10 +133,15 @@ void InputMgr::Render(HDC hdc)
 }
 void InputMgr::ComputeMousePos()
 {
+	mPrevClientMousePosition = mClientMousePosition;
 	mPrevMousePosition = mMousePosition;
 	POINT ptMouse = {};
 	GetCursorPos(&ptMouse);
+
 	ScreenToClient(application.GetHwnd(), &ptMouse);
+
+	mClientMousePosition.x = static_cast<float>(ptMouse.x);
+	mClientMousePosition.y = static_cast<float>(ptMouse.y);
 
 	RECT windowRect;
 	GetClientRect(application.GetHwnd(), &windowRect);
@@ -156,6 +162,7 @@ void InputMgr::ComputeMousePos()
 
 		mWorldMousePosition.x = (mMousePosition.x / 100.f) + camPos.x;
 		mWorldMousePosition.y = (mMousePosition.y / 100.f) + camPos.y;
+		mWorldMousePosition.z = camPos.z;
 	}
 
 	if (mKeys[static_cast<UINT>(eKeyCode::LBTN)].eState == eKeyState::TAP)
@@ -166,4 +173,6 @@ void InputMgr::ComputeMousePos()
 	{
 		mMouseRClickPosition = mMousePosition;
 	}
+
+	mMouseMove = mMousePosition - mPrevMousePosition;
 }

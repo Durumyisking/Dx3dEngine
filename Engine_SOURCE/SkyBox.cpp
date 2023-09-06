@@ -26,12 +26,12 @@ void SkyBox::Initialize()
 {
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
-	// êµ¬í˜• ë©”ì‰¬ ì„¸íŒ…
+	// ±¸Çü ¸Þ½¬ ¼¼ÆÃ
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
 	Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Spheremesh");
 	mr->SetMesh(mesh);
 
-	// ë¨¸í„°ë¦¬ì–¼ ì„¸íŒ…
+	// ¸ÓÅÍ¸®¾ó ¼¼ÆÃ
 	Material* mater = GETSINGLE(ResourceMgr)->Find<Material>(L"SkyBoxMaterial");
 	mr->SetMaterial(mater);
 

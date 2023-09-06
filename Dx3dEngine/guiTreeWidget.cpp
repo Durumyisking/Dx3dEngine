@@ -36,6 +36,11 @@ namespace gui
 		if (mbStem && mChilds.empty())
 			SetName("\t" + GetName());
 
+		if (GetName() == "")
+		{
+			return;
+		}
+
 		if (ImGui::TreeNodeEx(GetName().c_str(), flag))
 		{
 			if (!mbStem && ImGui::IsItemHovered(0) && ImGui::IsMouseClicked(0))

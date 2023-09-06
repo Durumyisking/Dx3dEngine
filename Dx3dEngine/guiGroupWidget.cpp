@@ -4,17 +4,20 @@ namespace gui
 {
 	GroupWidget::GroupWidget()
 		: Widget()
+		, mSpace{10.f, 0.f}
 		, mbCollapse(false)
 		, mbGroupOpen(false)
 	{
 	}
 	GroupWidget::GroupWidget(std::string name)
 		: Widget()
+		, mSpace(10.f, 0.f)
 		, mbCollapse(false)
 		, mbGroupOpen(false)
 	{
 		SetName(name);
 	}
+
 	GroupWidget::~GroupWidget()
 	{
 		for (size_t i = 0; i < mChilds.size(); ++i)
@@ -70,17 +73,33 @@ namespace gui
 		{
 			if (ImGui::CollapsingHeader(GetName().c_str(), &mbGroupOpen))
 			{
-				for (size_t i = 0; i < mChilds.size(); ++i)
+				for (size_t i = 0; i < mChilds.size(); i++)
 				{
 					mChilds[i]->Render();
+
+					if (i == mChilds.size() - 1)
+						continue;
+
+					ImGui::SameLine();
+					ImGui::Dummy(mSpace);
+					//ImGui::Indent(float);
+					ImGui::SameLine();
 				}
 			}
 		}
 		else
 		{
-			for (size_t i = 0; i < mChilds.size(); ++i)
+			for (size_t i = 0; i < mChilds.size(); i++)
 			{
 				mChilds[i]->Render();
+
+				if (i == mChilds.size() - 1)
+					continue;
+
+				ImGui::SameLine();
+				ImGui::Dummy(mSpace);
+				//ImGui::Indent(float);
+				ImGui::SameLine();
 			}
 		}
 

@@ -12,7 +12,7 @@ BaseRenderer::BaseRenderer(eComponentType type)
 	, mbUseLOD(false)
 	, mSpriteSize(Vector2::Zero)
 {
-	// ë””í´íŠ¸ ë§¤ì‹œ ì§€ì •
+	// µðÆúÆ® ¸Å½Ã ÁöÁ¤
 	Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
 	SetMesh(mesh);

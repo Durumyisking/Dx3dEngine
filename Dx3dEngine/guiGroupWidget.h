@@ -18,6 +18,8 @@ namespace gui
 		virtual void Render() override;
 
 
+		void SetSpacing(float spaceX = 10.f, float spaceY = 0.f) { mSpace.x = spaceX; mSpace.y = spaceY; }
+
 		void SetCollpase(bool enable, bool open = true)
 		{
 			mbCollapse = enable;
@@ -49,6 +51,7 @@ namespace gui
 		}
 
 	private:
+		ImVec2 mSpace;
 		bool mbCollapse;
 		bool mbGroupOpen;
     };

@@ -138,7 +138,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
       <AdditionalIncludeDirectories>$(SolutionDir)External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -280,6 +280,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PhysX.h" />
     <ClInclude Include="PhysXCollider.h" />
     <ClInclude Include="PhysXCollisionMgr.h" />
+    <ClInclude Include="PhysXRayCast.h" />
     <ClInclude Include="PhysXRigidBody.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
@@ -291,7 +292,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PxFilter.h" />
     <ClInclude Include="PxInitialization.h" />
     <ClInclude Include="PxEventCallback.h" />
-    <ClInclude Include="RayObject.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="EngineResource.h" />
     <ClInclude Include="ResourceMgr.h" />
@@ -383,6 +383,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PhysX.cpp" />
     <ClCompile Include="PhysXCollider.cpp" />
     <ClCompile Include="PhysXCollisionMgr.cpp" />
+    <ClCompile Include="PhysXRayCast.cpp" />
     <ClCompile Include="PhysXRigidBody.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
@@ -394,7 +395,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PxEventCallback.cpp" />
     <ClCompile Include="PxFilter.cpp" />
     <ClCompile Include="PxInitialization.cpp" />
-    <ClCompile Include="RayObject.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="EngineResource.cpp" />
     <ClCompile Include="ResourceMgr.cpp" />

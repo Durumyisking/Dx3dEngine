@@ -18,8 +18,10 @@ namespace gui
 		void InitializeInspector(void* data);
 		void InitializeScene();
 		void AddGameObject(TreeWidget::Node* parent, GameObj* gameObject);
+		void MoveTarget();
 
 	private:
 		TreeWidget* mTreeWidget;
+		GameObj* mTargetObject;
 	};
 }

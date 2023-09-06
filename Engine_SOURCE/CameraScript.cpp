@@ -9,6 +9,7 @@
 #include "SceneMgr.h"
 #include "SimpleMath.h"
 
+#include "PhysXRayCast.h"
 
 
 CameraScript::CameraScript()
@@ -38,6 +39,8 @@ void CameraScript::Initialize()
 
 void CameraScript::Update()
 {
+	
+
 	mLookAt = mTransform->GetPosition();
 
 	mTarget = mCameraObject->GetTarget();
@@ -51,6 +54,30 @@ void CameraScript::Update()
 	ShakeMove();
 
 	mTransform->SetPosition(mLookAt);
+
+	if (KEY_TAP(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->Raycast();
+		}
+	}
+
+	if (KEY_DOWN(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->MoveObject();
+		}
+	}
+
+	if (KEY_UP(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+		}
+	}
 }
 
 void CameraScript::FixedUpdate()
@@ -97,6 +124,14 @@ void CameraScript::KeyBoardMove()
 	{
 		mLookAt += speed * mTransform->Right() * DT;
 	}
+	if (KEY_DOWN(Q))
+	{
+		mLookAt -= 20.f * mTransform->Up() * DT;
+	}
+	if (KEY_DOWN(E))
+	{
+		mLookAt += 20.f * mTransform->Up() * DT;
+	}	
 	//if (KEY_DOWN(Q))
 	//{
 	//	mLookAt -= 20.f * mPxTransform->Forward() * DT;
@@ -155,8 +190,8 @@ void CameraScript::Shake(const ShakeParams& params)
 {
 	if (mbShaking) 
 	{
-		// ìƒˆë¡œìš´ í”ë“¤ê¸° íš¨ê³¼ ë“¤ì–´ê°€ë©´
-		// ì´ì „ í”ë“¤ë¦¼ íš¨ê³¼ë¥¼ ì·¨ì†Œ
+		// »õ·Î¿î Èçµé±â È¿°ú µé¾î°¡¸é
+		// ÀÌÀü Èçµé¸² È¿°ú¸¦ Ãë¼Ò
 		CancelShake();
 	}
 
@@ -179,11 +214,11 @@ void CameraScript::ShakeMove()
 		mShakeTimer += GETSINGLE(TimeMgr)->DeltaTimeConstant();
 		if (mShakeTimer >= mShakeParams.duration)
 		{
-			// í”ë“¤ë¦¼ ì§€ì† ì‹œê°„ì´ ì§€ë‚˜ë©´ íš¨ê³¼ ì¢…ë£Œ
+			// Èçµé¸² Áö¼Ó ½Ã°£ÀÌ Áö³ª¸é È¿°ú Á¾·á
 			CancelShake();
 		}
 		else {				
-			// í”ë“¤ë¦¼ íš¨ê³¼ ê³„ì‚°
+			// Èçµé¸² È¿°ú °è»ê
 			float magnitude = mShakeParams.magnitude *
 				(1.f - mShakeTimer / mShakeParams.duration);
 
