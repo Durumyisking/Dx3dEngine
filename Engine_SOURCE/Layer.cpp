@@ -137,6 +137,7 @@ void Layer::destroy()
 	{
 		Obj->Initialize();
 	}
+
 	if (!mAddedObjects.empty())
 	{
 		mAddedObjects.clear();

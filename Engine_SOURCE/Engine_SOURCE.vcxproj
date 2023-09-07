@@ -298,6 +298,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
+    <ClInclude Include="ScenePlay.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="ServerHeader.h" />
@@ -402,6 +403,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="ScenePlay.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="ServerMgr.cpp" />
