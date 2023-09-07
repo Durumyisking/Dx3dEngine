@@ -98,7 +98,7 @@ void Camera::Render()
 
 	LightMatrixCB data = {};
 	data.lightView = CreateViewMatrix(&directionLighttr);
-	data.lightProjection = CreateProjectionMatrix(eProjectionType::Orthographic, 1600, 900, 1.0f, 1000.0f);
+	data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, 1600, 900, 1.0f, 1000.0f);
 	lightCB->SetData(&data);
 	lightCB->Bind(eShaderStage::VS);	
 	lightCB->Bind(eShaderStage::PS);
@@ -162,16 +162,17 @@ void Camera::CreateViewMatrix()
 Matrix Camera::CreateViewMatrix(Transform* tr)
 {
 	Matrix view = Matrix::Identity;
-
+	//Vector3 up = Vector3(0.f, 1.f, 0.f);
 	Vector3 up = tr->Up();
 	Vector3 right = tr->Right();
 	Vector3 forward = tr->Forward();
 
-	Vector3 pos = forward * -20.f;
+	Vector3 pos = forward * -50.f;
 
 	view *= Matrix::CreateTranslation(-pos);
 
-	view *= XMMatrixLookToLH(pos, forward, up);
+	view *= XMMatrixLookToLH(pos, forward, up);	
+
 	
 	return view;
 }
@@ -206,10 +207,10 @@ Matrix Camera::CreateProjectionMatrix(eProjectionType type, float width, float h
 	float AspectRatio = width / height;
 	if (mType == eProjectionType::Perspective)
 	{
-		proj = Matrix::CreatePerspectiveFieldOfViewLH
+		proj = Matrix::CreatePerspectiveFieldOfView
 		(
-			XM_2PI / 6.0f
-			, 1.0f
+			XM_PI / 4.0f
+			, AspectRatio
 			, Near
 			, Far
 		);

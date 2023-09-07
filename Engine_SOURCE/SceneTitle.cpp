@@ -136,7 +136,7 @@ void SceneTitle::Enter()
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-		directionalLight->SetRotation(Vector3(0.f, -90.f, 45.f));
+		directionalLight->SetRotation(Vector3(45.f, -45.f, 0.f));
 		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
@@ -147,7 +147,7 @@ void SceneTitle::Enter()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(2.5f, 5.f, 5.f));
+		player->SetPos(Vector3(0.0f, 10.f, 0.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
@@ -165,7 +165,7 @@ void SceneTitle::Enter()
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
@@ -174,10 +174,11 @@ void SceneTitle::Enter()
 	}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(-2.5f, 5.f, 5.f));
+		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
+		player->SetPos(Vector3(-2.5f, 10.f, 5.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
+		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
 			L"check_albedo",
@@ -190,22 +191,19 @@ void SceneTitle::Enter()
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(0.f, 5.f, 5.f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
+		GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
+		player->SetPos(Vector3(0.f, 10.f, 5.f));
+		player->SetScale(Vector3(1.f, 30.f, 1.f));
 		player->SetName(L"Player");
+		MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
 			L"iron_albedo",
@@ -218,15 +216,11 @@ void SceneTitle::Enter()
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
 
@@ -246,7 +240,7 @@ void SceneTitle::Enter()
 	{
 		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		plane->SetScale({ 1000.f, 0.5f, 1000.f });
+		plane->SetScale({ 50.f, 0.5f, 50.f });
 		plane->SetName(L"Plane");
 		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial");
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));

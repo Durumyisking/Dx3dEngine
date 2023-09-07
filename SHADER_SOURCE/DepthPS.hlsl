@@ -25,7 +25,7 @@ PSOut main(VSOut vsIn) : SV_Target
     
     // 픽셀쉐이더로 넘어오기 전에는 깊이(z)는 원근나누기 처리 해주지 않고 넘어온다.
     // 따라서 지금 해줘야함
-    float depth = vsIn.ProjPosition.z / vsIn.ProjPosition.w;
+    float depth = vsIn.ProjPosition.z / vsIn.ProjPosition.w; // z값이 클수록 더 큰 값이 나온다
     //output = (depth.xxx, 1.0f);
     psOut.depthColor.rgb = depth;
     psOut.depthColor.w = 1.0f;

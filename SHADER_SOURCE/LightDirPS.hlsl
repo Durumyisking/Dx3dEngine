@@ -47,20 +47,29 @@ PS_OUT main(VSOut vsin)
     lightcolor.specular = 0.f;
     lightcolor.ambient = float4(0.25f, 0.25f, 0.25f, 1.f);
     CalculateLight3D(viewPos.xyz, normal.xyz, 0, lightcolor);
-    // 그림자 판정
+    
+    
+    // 현재 camera로 보고있는 projection 화면을
+    // light 입장에서 본 proejction으로 바꿔야 한다.
     // ViewPos -> WorldPos
     float3 worldPos = mul(float4(viewPos.xyz, 1.f), inverseView).xyz;
 
     // WorldPos -> Light 투영
     float4 lightProj = mul(float4(worldPos, 1.f), lightView);
-    lightProj = mul(float4(worldPos, 1.f), lightProjection);
+    lightProj = mul(float4(lightProj.xyz, 1.f), lightProjection);
 
-    // w 로 나눠서 실제 xy 투영좌표를 구함
-    lightProj .xy /=lightProj .w;
+    lightProj.xy /=lightProj .w;
+    
+    // 광원으로부터 픽셀까지의 거리 ( 해당 거리보다 shadowmap에 저장된 값이 더 커야 그림자 생성)
     lightProj.z /= lightProj.w;
 
     // 샘플링을 하기 위해서 투영좌표계를 UV 좌표계로 변환
-    float2 depthMapUV = float2((lightProj.x * 0.5) + 0.5f, -(lightProj.y * 0.5) + 0.5f);
+    float2 depthMapUV = 
+    float2(
+    (lightProj.x * 0.5) + 0.5f,
+    -(lightProj.y * 0.5) + 0.5f
+    );
+    
     float depth = ShadowMap.Sample(linearSampler, depthMapUV).r;
     float shadowPow = 0.f;
 
