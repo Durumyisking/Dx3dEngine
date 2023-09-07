@@ -7,6 +7,8 @@
 namespace gui
 {
 	Console::Console()
+		: mResources{}
+		, mTargetProjectPath()
 	{
 		SetName("Console");
 	}
@@ -86,6 +88,10 @@ namespace gui
 	}
 
 	void Console::Clear()
+	{
+	}
+
+	void Console::InitializeTargetProjectPath()
 	{
 	}
 

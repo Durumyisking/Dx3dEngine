@@ -31,7 +31,7 @@ namespace gui
 		AddWidget(mTreeWidget);
 
 		mTreeWidget->SetEvent(this
-			, std::bind(&Hierarchy::InitializeInspector, this, std::placeholders::_1));
+			, std::bind(&Hierarchy::InitializeOutline, this, std::placeholders::_1));
 
 		mTreeWidget->SetDummyRoot(true);
 
@@ -69,22 +69,22 @@ namespace gui
 	{
 	}
 
-	void Hierarchy::InitializeInspector(void* data)
+	void Hierarchy::InitializeOutline(void* data)
 	{
 		mTargetObject = static_cast<GameObj*>(data);
 
-		renderer::inspectorGameObject 
+		renderer::outlineGameObject
 			= static_cast<GameObj*>(data);
-
-		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
-		inspector->SetTargetGameObject(renderer::inspectorGameObject);
-		inspector->InitializeTargetGameObject();
 
 		OutLine* outline = GETSINGLE(WidgetMgr)->GetWidget<OutLine>("Outline");
 		if (outline == nullptr)
 			return;
-		outline->SetTargetGameObject(renderer::inspectorGameObject);
+		outline->SetTargetGameObject(renderer::outlineGameObject);
 		outline->InitializeTargetGameObject();
+
+		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
+		inspector->SetTargetGameObject(renderer::outlineGameObject);
+		inspector->InitializeTargetGameObject();
 	}
 
 	void Hierarchy::InitializeScene()

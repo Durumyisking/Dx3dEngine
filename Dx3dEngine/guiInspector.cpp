@@ -25,7 +25,7 @@ namespace gui
 		SetSize(ImVec2(300.0f, 100.0f));
 		
 		mComponents.resize(static_cast<UINT>(eComponentType::End));
-		mTargetGameObject = renderer::inspectorGameObject;
+		mTargetGameObject = renderer::outlineGameObject;
 
 		mComponents[static_cast<UINT>(eComponentType::Transform)] = new gui::GUITransform();
 		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetName("InspectorTransform");
@@ -68,6 +68,7 @@ namespace gui
 
 	void Inspector::Update()
 	{
+		//Camera Edit
 		/*ImGui::Text("Camera");
 		bool viewDirty = false;
 
@@ -113,9 +114,8 @@ namespace gui
 		}*/
 
 		//ImGui::Separator();
-
+		
 		//ImGuizmo::SetID(matId);
-
 		//EditTransform(cameraView, cameraProjection, objectMatrix[matId], lastUsing == matId);
 	}
 

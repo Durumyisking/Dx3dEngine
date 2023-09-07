@@ -19,17 +19,26 @@
 #include "AudioListener.h"
 #include "AudioSource.h"
 
+#include "guiInspector.h"
+#include "guiWidgetMgr.h"
+
 namespace gui
 {
 	OutLine::OutLine()
 		: Widget()
+		, mTreeWidget(nullptr)
 		, mTargetGameObject(nullptr)
 		, mTargetResource(nullptr)
 		, mComponents{}
 		, mResources{}
 	{
+		SetName("OutLine");
 		mComponents.resize(static_cast<UINT>(eComponentType::End));
 		mResources.resize(static_cast<UINT>(eResourceType::End));
+
+		mTreeWidget = new TreeWidget();
+		mTreeWidget->SetName("Resources");
+		AddWidget(mTreeWidget);
 	}
 	OutLine::~OutLine()
 	{
@@ -54,6 +63,30 @@ namespace gui
 	}
 	void OutLine::LateUpdate()
 	{
+	}
+
+	void OutLine::ResetContent()
+	{	//mTreeWidget->Close();
+		mTreeWidget->Clear();
+
+		TreeWidget::Node* pRootNode = mTreeWidget->AddNode(nullptr, "Resources", 0, true);
+
+		//enum class eResourceType
+		//{
+		//	GUIMesh,
+		//	GUITexture,
+		//	GUIMaterial,
+		//	Sound,
+		//	Prefab,
+		//	MeshData,
+		//	GraphicsShader,
+		//	ComputeShader,
+		//	End,
+		//};
+		AddResources<Mesh>(pRootNode, "Mesh");
+		AddResources<Texture>(pRootNode, "Texture");
+		AddResources<Material>(pRootNode, "Materials");
+		AddResources<Shader>(pRootNode, "Shaders");
 	}
 
 	void OutLine::ClearTarget()
@@ -135,5 +168,13 @@ namespace gui
 		default:
 			return false;
 		}
+	}
+	void OutLine::toInspector(void* data)
+	{
+		Resource* resource = static_cast<Resource*>(data);
+
+		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
+		inspector->SetTargetResource(resource);
+		inspector->InitializeTargetResource();
 	}
 }

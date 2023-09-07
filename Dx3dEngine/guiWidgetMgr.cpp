@@ -25,6 +25,7 @@
 #include "guiTreeWidget.h"
 #include "guiVisualEditor.h"
 #include "guiGizmo.h"
+#include "guiOutLine.h"
 
 #include "InputMgr.h"
 
@@ -52,15 +53,22 @@ namespace gui
 		// Initialize Widget 
 		mVisualEditor = new VisualEditor();
 
+		//Game* game = new Game();
+		//mWidgets.insert(std::make_pair("Game", game));
+
 		mHierarchy = new Hierarchy();
 		mWidgets.insert(std::make_pair("Hierarchy", mHierarchy));
+
+		Gizmo* gizmo = new Gizmo();
+		mWidgets.insert(std::make_pair("Gizmo", gizmo));
+
+		OutLine* outLine = new OutLine();
+		//Insert<Inspector>("Inspector", inspector);
+		mWidgets.insert(std::make_pair("OutLine", outLine));
 
 		Inspector* inspector = new Inspector();
 		//Insert<Inspector>("Inspector", inspector);
 		mWidgets.insert(std::make_pair("Inspector", inspector));
-
-		//Game* game = new Game();
-		//mWidgets.insert(std::make_pair("Game", game));
 
 		Project* project = new Project();
 		mWidgets.insert(std::make_pair("Project", project));
@@ -72,8 +80,6 @@ namespace gui
 		ListWidget* listWidget = new ListWidget();
 		mWidgets.insert(std::make_pair("ListWidget", listWidget));
 
-		Gizmo* gizmo = new Gizmo();
-		mWidgets.insert(std::make_pair("Gizmo", gizmo));
 	}
 
 	void WidgetMgr::Release()
@@ -106,8 +112,8 @@ namespace gui
 		mVisualEditor->Render();
 		for (auto iter : mWidgets)
 		{
-			if (iter.second->GetName() == "Gizmo")
-				int a = 0;
+			std::string debugName = iter.second->GetName();
+
 			iter.second->Render();
 		}
 

@@ -201,7 +201,7 @@ namespace renderer
 
 	extern StructedBuffer* lightBuffer;
 
-	extern GameObj* inspectorGameObject;
+	extern GameObj* outlineGameObject;
 
 	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
 

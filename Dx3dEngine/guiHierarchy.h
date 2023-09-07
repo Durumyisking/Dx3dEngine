@@ -15,7 +15,7 @@ namespace gui
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		void InitializeInspector(void* data);
+		void InitializeOutline(void* data);
 		void InitializeScene();
 		void AddGameObject(TreeWidget::Node* parent, GameObj* gameObject);
 		void MoveTarget();

@@ -9,6 +9,7 @@
 #include "guiResource.h"
 #include "guiEditor.h"
 #include "guiWidgetMgr.h"
+#include "guiConsole.h"
 
 extern gui::Editor editor;
 
@@ -17,6 +18,7 @@ namespace gui
 
 	Project::Project()
 		: mTreeWidget(nullptr)
+		, mTargetPath()
 	{
 		SetName("Project");
 		UINT width = 1600;
@@ -31,7 +33,7 @@ namespace gui
 		AddWidget(mTreeWidget);
 
 		mTreeWidget->SetEvent(this
-			, std::bind(&Project::toInspector, this, std::placeholders::_1));
+			, std::bind(&Project::toConsole, this));
 
 		mTreeWidget->SetDummyRoot(true);
 		ResetContent();
@@ -85,13 +87,13 @@ namespace gui
 		AddResources<Shader>(pRootNode, "Shaders");
 	}
 
-	void Project::toInspector(void* data)
+	void Project::toConsole()
 	{
-		Resource* resource = static_cast<Resource*>(data);
+		//Resource* resource = static_cast<Resource*>(data);
 
-		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
-		inspector->SetTargetResource(resource);
-		inspector->InitializeTargetResource();
+		Console* console = GETSINGLE(WidgetMgr)->GetWidget<Console>("Console");
+		console->SetTargetProjectPath(mTargetPath);
+		console->InitializeTargetProjectPath();
 	}
 
 }

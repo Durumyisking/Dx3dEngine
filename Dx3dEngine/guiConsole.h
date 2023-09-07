@@ -20,7 +20,13 @@ namespace gui
 		void SetProject(std::string path);
 		void Clear();
 
+		void InitializeTargetProjectPath();
+		
+		std::wstring GetTargetProjectPath() { return mTargetProjectPath; }
+		void SetTargetProjectPath(std::wstring path) { mTargetProjectPath = path; }
+
 	private:
 		std::map<std::string, Resource*> mResources;
+		std::wstring mTargetProjectPath;
 	};
 }

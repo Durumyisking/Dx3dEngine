@@ -34,11 +34,13 @@ namespace gui
 			}
 		}
 
-		void toInspector(void* data);
+		void toConsole();
 
 
 
 	private:
 		TreeWidget* mTreeWidget;
+		
+		std::wstring mTargetPath;
 	};
 }

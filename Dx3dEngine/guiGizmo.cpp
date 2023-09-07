@@ -121,7 +121,7 @@ namespace gui
             if (mGizmoOperation == ImGuizmo::TRANSLATE)
             {
                 if(isPhysical)
-                    tr->SetPhysicalPosition(objPos);
+                    tr->SetPhysicalPosition(position);
                 else
                     tr->SetPosition(position);
             }
@@ -153,7 +153,6 @@ namespace gui
 
                 Vector3 axisRotation(x, y, z);
                 tr->SetRotation(axisRotation);
-
             }
             else if (mGizmoOperation == ImGuizmo::SCALE)
             {
