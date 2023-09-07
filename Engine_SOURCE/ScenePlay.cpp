@@ -220,6 +220,7 @@ void ScenePlay::Initialize()
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+
 	}
 
 
