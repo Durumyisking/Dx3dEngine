@@ -18,7 +18,10 @@ Scene::~Scene()
 }
 void Scene::Initialize()
 {
-
+	for (Layer& layer : mLayers)
+	{
+		layer.Initialize();
+	}
 }
 
 void Scene::update()
@@ -39,6 +42,10 @@ void Scene::fixedUpdate()
 
 void Scene::render()
 {
+	for (Layer& layer : mLayers)
+	{
+		layer.render();
+	}
 }
 
 void Scene::fontRender()
@@ -61,11 +68,6 @@ void Scene::destroy()
 void Scene::Enter()
 {
 	//Initialize();
-	for (Layer& layer : mLayers)
-	{
-		layer.Initialize();
-		layer.GetAddedGameObjects().clear();
-	}
 }
 
 void Scene::Exit()
@@ -107,4 +109,3 @@ const std::vector<GameObj*>& Scene::GetGameObj(eLayerType _eLayer)
 
 	return mLayers[static_cast<UINT>(_eLayer)].GetGameObjects();
 }
-

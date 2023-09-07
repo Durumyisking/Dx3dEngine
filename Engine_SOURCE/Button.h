@@ -1,10 +1,14 @@
 #pragma once
 #include "UIBase.h"
 
+//#include "GLM/glm.hpp"
+//#include "GLM/gtc/matrix_transform.hpp"
+
 class Button : public UIBase
 {
 public:
 	Button();
+	Button(Vector3 pos);
 	Button(eUIType type);
 	virtual ~Button();
 
@@ -19,8 +23,12 @@ public:
 	
 	virtual void Click();
 
+
+//	glm::vec2 ScreenToCamera(const glm::vec2& screenCoord, const glm::mat4& viewProjectionMatrix, int screenWidth, int screenHeight);
+
 private:
 	Event mOnClick;
+	bool mbMouseOn;
 
 	Vector3 mScreenPos;
 };

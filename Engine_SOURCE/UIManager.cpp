@@ -79,7 +79,7 @@ void UIManager::OnComplete(UIBase* addUI)
 
 			if (uiBase->GetIsFullScreen())
 			{
-				uiBase->InActive();
+				uiBase->InActivate();
 			}
 		}
 	}

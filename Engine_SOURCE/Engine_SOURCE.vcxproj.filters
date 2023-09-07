@@ -528,6 +528,8 @@
     <ClInclude Include="CubeMap.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
+    <ClInclude Include="UIFactory.h" />
+    <ClInclude Include="ScenePlay.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -810,6 +812,8 @@
     <ClCompile Include="CubeMap.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
+    <ClCompile Include="UIFactory.cpp" />
+    <ClCompile Include="ScenePlay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

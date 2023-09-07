@@ -35,9 +35,9 @@ public:
 
 
 	// UI가 활성화되면 불리는 함수
-    void Active();
+	void Activate();
 	// UI가 비활성화되면 불리는 함수
-    void InActive();
+	void InActivate();
 	//UI가 사라질때 호출되는 함수
 	void UIClear();
 
@@ -79,4 +79,3 @@ private:
 	//백터가 더 메모리 친화적이기 떄문에 사용
 	std::vector<UIBase*> mChilds;
 };
-

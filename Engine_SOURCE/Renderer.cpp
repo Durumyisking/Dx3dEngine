@@ -117,6 +117,7 @@ namespace renderer
 		arrLayout[7].SemanticName = "BLENDWEIGHT";
 		arrLayout[7].SemanticIndex = 0;
 
+
 		//Vector3 tangent;
 		//Vector3 biNormal;
 		//Vector3 normal;
@@ -260,6 +261,12 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
+
+		Shader* uiSpriteShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UISpriteShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, uiSpriteShader->GetVSBlobBufferPointer()
+			, uiSpriteShader->GetVSBlobBufferSize()
+			, uiSpriteShader->GetInputLayoutAddr());
 
 #pragma endregion
 
@@ -644,6 +651,15 @@ namespace renderer
 		}
 #pragma endregion
 
+
+#pragma region UISprite Shader
+		Shader* uiSS = new Shader();
+		uiSS->Create(eShaderStage::VS, L"UISpriteVS.hlsl", "main");
+		uiSS->Create(eShaderStage::PS, L"UISpritePS.hlsl", "main");
+		uiSS->SetRSState(eRasterizerType::SolidNone);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UISpriteShader", uiSS);
+#pragma endregion
+
 	}
 
 	void LoadDefaultTexture()
@@ -708,6 +724,10 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"night12", L"Cube/night/DarkNight_Scenario12.dds");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"night13", L"Cube/night/DarkNight_Scenario13.dds");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"night14", L"Cube/night/DarkNight_Scenario14.dds");
+		
+
+		CreateUITexture();
+
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly1", L"Cube/people/SkyOnly_.dds");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly2", L"Cube/people/SkyOnly_Scenario2.dds");
@@ -718,8 +738,6 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly7", L"Cube/people/SkyOnly_Scenario7.dds");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly8", L"Cube/people/SkyOnly_Scenario8.dds");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly9", L"Cube/people/SkyOnly_Scenario9.dds");
-
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"MarioTitle", L"CmTitleLogo.png");
 
 		Texture* uavTexture = new Texture();
 		uavTexture->Create(1024, 1024,
@@ -753,7 +771,7 @@ namespace renderer
 		Material* SpriteMaterial = new Material();
 		SpriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		SpriteMaterial->SetShader(SpriteShader);
-		SpriteMaterial->SetTexture(Spritetexture);
+		SpriteMaterial->SetTexture(eTextureSlot::Albedo,Spritetexture);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"SpriteMaterial", SpriteMaterial);
 #pragma endregion
 
@@ -875,7 +893,7 @@ namespace renderer
 		deferredMaterial->SetRenderingMode(eRenderingMode::DeferredOpaque);
 		deferredMaterial->SetShader(deferredShader);
 
-		// specular map Ãß°¡ »ç¿ë°¡´É
+		// specular map ì¶”ê°€ ì‚¬ìš©ê°€ëŠ¥
 		Texture* defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Color");
 		deferredMaterial->SetTexture(eTextureSlot::Albedo, defferdTex); // albedo Texture
 		defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Normal");
@@ -920,7 +938,7 @@ namespace renderer
 #pragma endregion
 
 #pragma region MergeMRT_Material
-		// RenderTarget Merge ½Ã¿¡ »ç¿ëÇÒ ¸ÓÅ×¸®¾ó
+		// RenderTarget Merge ì‹œì— ì‚¬ìš©í•  ë¨¸í…Œë¦¬ì–¼
 		Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
 		Material* mergeMaterial = new Material();
 		mergeMaterial->SetRenderingMode(eRenderingMode::None);
@@ -946,6 +964,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"SkySphereMaterial", skySphereMaterial);
 #pragma endregion
 
+		CreateUIMaterial();
 	}
 
 	void CreateRenderTargets()
@@ -1270,7 +1289,7 @@ namespace renderer
 	{
 		Vertex arrCube[24] = {};
 
-		// À­¸é
+		// ìœ—ë©´
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
@@ -1300,7 +1319,7 @@ namespace renderer
 		arrCube[3].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 
-		// ¾Æ·§ ¸é	
+		// ì•„ëž« ë©´	
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
@@ -1329,7 +1348,7 @@ namespace renderer
 		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
 		arrCube[7].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// ¿ÞÂÊ ¸é
+		// ì™¼ìª½ ë©´
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
@@ -1358,7 +1377,7 @@ namespace renderer
 		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
 		arrCube[11].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// ¿À¸¥ÂÊ ¸é
+		// ì˜¤ë¥¸ìª½ ë©´
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].color = Vector4(0.f, 0.f, 1.f, 1.f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
@@ -1387,7 +1406,7 @@ namespace renderer
 		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
 		arrCube[15].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// µÞ ¸é
+		// ë’· ë©´
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].color = Vector4(1.f, 1.f, 0.f, 1.f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
@@ -1416,7 +1435,7 @@ namespace renderer
 		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
 		arrCube[19].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
-		// ¾Õ ¸é
+		// ì•ž ë©´
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].color = Vector4(1.f, 0.f, 1.f, 1.f);
 		arrCube[20].uv = Vector2(0.f, 0.f);
@@ -1684,6 +1703,155 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Capsulemesh", capsuleMesh);
 		capsuleMesh->CreateVertexBuffer(capsuleVtx.data(), static_cast<UINT>(capsuleVtx.size()));
 		capsuleMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
+	}
+
+	void CreateUIMaterial()
+	{
+#pragma region UISprite Material
+		Texture* mariotitle = GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle");
+		Shader* uiSpriteShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UISpriteShader");
+		Material* uiSpriteMaterial = new Material();
+		uiSpriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		uiSpriteMaterial->SetShader(uiSpriteShader);
+		uiSpriteMaterial->SetTexture(eTextureSlot::Albedo, mariotitle); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"UISpriteMaterial", uiSpriteMaterial);
+#pragma endregion
+
+#pragma region LifeHeartMaterial
+		Texture* lifeTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Lifeheart");
+		Material* lifeheartMaterial = new Material();
+		lifeheartMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		lifeheartMaterial->SetShader(uiSpriteShader);
+		lifeheartMaterial->SetTexture(eTextureSlot::Albedo, lifeTexture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"LifeheartMaterial", lifeheartMaterial);
+#pragma endregion
+
+#pragma region LifeGaugeMaterial
+		Texture* gaugeTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Gauge_3");
+		Material* gaugeMaterial = new Material();
+		gaugeMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		gaugeMaterial->SetShader(uiSpriteShader);
+		gaugeMaterial->SetTexture(eTextureSlot::Albedo, gaugeTexture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"LifeGauge_3Material", gaugeMaterial);
+#pragma endregion
+
+#pragma region CoinMaterial
+		Texture* coinTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Coin");
+		Material* coinMaterial = new Material();
+		coinMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		coinMaterial->SetShader(uiSpriteShader);
+		coinMaterial->SetTexture(eTextureSlot::Albedo, coinTexture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"CoinMaterial", coinMaterial);
+#pragma endregion
+
+#pragma region CityCoinMaterial
+		Texture* cityCoinTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"CityCoin");
+		Material* cityCoinMaterial = new Material();
+		cityCoinMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		cityCoinMaterial->SetShader(uiSpriteShader);
+		cityCoinMaterial->SetTexture(eTextureSlot::Albedo, cityCoinTexture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"CityCoinMaterial", cityCoinMaterial);
+#pragma endregion
+
+#pragma region BarMaterial
+		Texture* barTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Bar");
+		Material* barMaterial = new Material();
+		barMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		barMaterial->SetShader(uiSpriteShader);
+		barMaterial->SetTexture(eTextureSlot::Albedo, barTexture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"BarMaterial", barMaterial);
+#pragma endregion
+
+#pragma region DottedLineMaterial
+		Texture* dottedLine = GETSINGLE(ResourceMgr)->Find<Texture>(L"DottedLine");
+		Material* dottedLineMaterial = new Material();
+		dottedLineMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		dottedLineMaterial->SetShader(uiSpriteShader);
+		dottedLineMaterial->SetTexture(eTextureSlot::Albedo, dottedLine); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"DottedLineMaterial", dottedLineMaterial);
+#pragma endregion
+#pragma region LunaMaterial
+		Texture* luna = GETSINGLE(ResourceMgr)->Find<Texture>(L"CityLuna");
+		Material* lunaMaterial = new Material();
+		lunaMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		lunaMaterial->SetShader(uiSpriteShader);
+		lunaMaterial->SetTexture(eTextureSlot::Albedo, luna); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"LunaMaterial", lunaMaterial);
+#pragma endregion
+#pragma region WorldMaterial
+		Texture* worldMapTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"WorldMap");
+		Material* worldMapMaterial = new Material();
+		worldMapMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		worldMapMaterial->SetShader(uiSpriteShader);
+		worldMapMaterial->SetTexture(eTextureSlot::Albedo, worldMapTex); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"WorldMapMaterial", worldMapMaterial);
+#pragma endregion
+#pragma region FilterMaterial
+		Texture* filterTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"RedFilter");
+		Material* filterMaterial = new Material();
+		filterMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		filterMaterial->SetShader(uiSpriteShader);
+		filterMaterial->SetTexture(eTextureSlot::Albedo, filterTex); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"FilterMaterial", filterMaterial);
+#pragma endregion
+#pragma region TitleMaterial
+		Texture* titleTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle");
+		Material* titleMaterial = new Material();
+		titleMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		titleMaterial->SetShader(uiSpriteShader);
+		titleMaterial->SetTexture(eTextureSlot::Albedo, titleTex); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"TitleMaterial", titleMaterial);
+#pragma endregion
+#pragma region CapMaterial
+		Texture* capTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Cap");
+		Material* capMaterial = new Material();
+		capMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		capMaterial->SetShader(uiSpriteShader);
+		capMaterial->SetTexture(eTextureSlot::Albedo, capTex); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"CapMaterial", capMaterial);
+#pragma endregion
+#pragma region UIBarMaterial
+		Texture* uibarTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"UIBar");
+		Material* uibarMaterial = new Material();
+		uibarMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		uibarMaterial->SetShader(uiSpriteShader);
+		uibarMaterial->SetTexture(eTextureSlot::Albedo, uibarTex); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"UIBarMaterial", uibarMaterial);
+#pragma endregion
+#pragma region NumberMaterial
+		Texture* numberTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"0");
+		Material* numberMaterial = new Material();
+		numberMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		numberMaterial->SetShader(uiSpriteShader);
+		numberMaterial->SetTexture(eTextureSlot::Albedo, numberTex); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"NumberMaterial", numberMaterial);
+#pragma endregion
+	}
+
+	void CreateUITexture()
+	{
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"MarioTitle", L"Textures/UI/CmTitleLogo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Gauge_1", L"Textures/UI/Life/Gauge_1.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Gauge_2", L"Textures/UI/Life/Gauge_2.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Gauge_3", L"Textures/UI/Life/Gauge_3.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Lifeheart", L"Textures/UI/Life/heart.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Coin", L"Textures/UI/CoinUI/Coin.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CityCoin", L"Textures/UI/CoinUI/CityCoin.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Bar", L"Textures/UI/CoinUI/bar.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"DottedLine", L"Textures/UI/Luna/DottedLine.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CityLuna", L"Textures/UI/Luna/CityLuna.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"WorldMap", L"Textures/UI/WorldMap/CmImageWorld2.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"RedFilter", L"Textures/UI/WorldMap/RedFilter.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Cap", L"Textures/UI/CapUI/Cap.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapRotate", L"Textures/UI/CapUI/CapAnimation.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"UIBar", L"Textures/UI/UIBar.png");
+
+		for (size_t i = 0; i < 9; i++)
+		{
+			const std::wstring& key = std::to_wstring(i);
+			GETSINGLE(ResourceMgr)->Load<Texture>(key, L"Textures/UI/Number/" + key + L".png");
+		}
 	}
 
 	/////////////////////////////////////////////////////
