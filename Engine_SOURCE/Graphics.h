@@ -227,7 +227,7 @@ enum class eGPUParam
 	Bool_2,
 	Bool_3,
 };
-	
+
 
 enum class eSRVType
 {

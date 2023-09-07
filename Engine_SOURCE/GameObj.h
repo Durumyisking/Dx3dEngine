@@ -57,6 +57,26 @@ public:
 		return comp;
 	}
 
+	template <typename T>
+	T* AddComponent(eComponentType eType, Material* material, Mesh* mesh)
+	{
+		T* comp = new T(material, mesh);
+
+		if (eType != eComponentType::Script)
+		{
+			mComponents[static_cast<UINT>(eType)] = comp;
+			mComponents[static_cast<UINT>(eType)]->SetOwner(this);
+		}
+		else
+		{
+			mScripts.push_back(dynamic_cast<Script*>(comp));
+			comp->SetOwner(this);
+		}
+
+		return comp;
+	}
+
+
 	void AddComponent(Component* component);
 
 	template <typename T>

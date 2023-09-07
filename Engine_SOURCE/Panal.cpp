@@ -5,14 +5,12 @@
 Panal::Panal()
 	:UIBase(eUIType::HP)
 {
-	SpriteRenderer* spritreRender = AddComponent<SpriteRenderer>(eComponentType::UI);
 
 }
 
 Panal::Panal(eUIType type)
 	:UIBase(type)
 {
-	SpriteRenderer* spritreRender = AddComponent<SpriteRenderer>(eComponentType::UI);
 
 }
 
@@ -33,17 +31,25 @@ void Panal::OnActive()
 
 void Panal::OnInActive()
 {
+	this->Die();
+}
+
+void Panal::OnUpdate()
+{
 
 }
 
-void Panal::OnTick()
+void Panal::OnFixedUpdate()
 {
-
 }
 
 void Panal::OnRender()
 {
 
+}
+
+void Panal::OnFontRender()
+{
 }
 
 void Panal::OnClear()
