@@ -188,6 +188,12 @@ namespace renderer
 		Matrix matrix;
 	};
 
+	CBUFFER(LightMatrixCB, CBSLOT_LIGHTMATRIX)
+	{
+		Matrix lightView;
+		Matrix lightProjection;
+	};
+
 
 	// vertex data
 	extern Vertex	RectVertexes[4];

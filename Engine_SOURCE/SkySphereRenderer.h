@@ -3,11 +3,11 @@
 #include "Mesh.h"
 #include "Material.h"
 
-class SkyboxRenderer : public BaseRenderer
+class SkySphereRenderer : public BaseRenderer
 {
 public:
-	SkyboxRenderer();
-	virtual ~SkyboxRenderer();
+	SkySphereRenderer();
+	virtual ~SkySphereRenderer();
 
 	virtual void Initialize() final;
 	virtual void Update() final;

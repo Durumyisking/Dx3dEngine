@@ -29,6 +29,7 @@ namespace renderer
 	StructedBuffer* lightBuffer = nullptr;
 
 	Texture* postProcessTexture = nullptr;
+	Texture* dsTexture = nullptr;
 	GameObj* inspectorGameObject = nullptr;
 
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
@@ -226,6 +227,13 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DepthShader");
+			GetDevice()->CreateInputLayout(arrLayout, 6
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		} 
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightDirShader");
 			GetDevice()->CreateInputLayout(arrLayout, 6
@@ -426,6 +434,9 @@ namespace renderer
 		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)] = new ConstantBuffer(eCBType::CubeMapProj);
 		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Create(sizeof(SkyCB));
 
+		constantBuffers[static_cast<UINT>(eCBType::LightMatrix)] = new ConstantBuffer(eCBType::LightMatrix);
+		constantBuffers[static_cast<UINT>(eCBType::LightMatrix)]->Create(sizeof(LightMatrixCB));
+
 		lightBuffer = new StructedBuffer();
 		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
 	}
@@ -610,6 +621,19 @@ namespace renderer
 			shader->SetBSState(eBlendStateType::OneOne);
 
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"LightPointShader", shader);
+		}
+#pragma endregion
+
+#pragma region DepthShader
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"DepthVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"DepthPS.hlsl", "main");
+			shader->SetRSState(eRasterizerType::SolidBack);
+			shader->SetDSState(eDepthStencilType::Less);
+			shader->SetBSState(eBlendStateType::Default);
+
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"DepthShader", shader);
 		}
 #pragma endregion
 
@@ -892,12 +916,6 @@ namespace renderer
 		Material* deferredMaterial = new Material();
 		deferredMaterial->SetRenderingMode(eRenderingMode::DeferredOpaque);
 		deferredMaterial->SetShader(deferredShader);
-
-		// specular map 추가 사용가능
-		Texture* defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Color");
-		deferredMaterial->SetTexture(eTextureSlot::Albedo, defferdTex); // albedo Texture
-		defferdTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"Brick_Normal");
-		deferredMaterial->SetTexture(eTextureSlot::Normal, defferdTex); // normal Texture
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", deferredMaterial);
 #pragma endregion
 
@@ -915,11 +933,13 @@ namespace renderer
 		lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
 		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
 		lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
+		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"ShadowMapTexture");
+		lightDirMaterial->SetTexture(eTextureSlot::ShadowMap, lightDirTex);
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
 #pragma endregion
 
-#pragma region LightDirMaterial
+#pragma region LightPointMaterial
 		Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
 		Material* lightPointMaterial = new Material();
 		lightPointMaterial->SetRenderingMode(eRenderingMode::None);
@@ -955,6 +975,15 @@ namespace renderer
 
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"MergeMRT_Material", mergeMaterial);
 #pragma endregion
+
+#pragma region Depth Material
+		Shader* depthShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DepthShader");
+		Material* shadowMaterial = new Material();
+		shadowMaterial->SetRenderingMode(eRenderingMode::None);
+		shadowMaterial->SetShader(depthShader);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"ShadowMaterial", shadowMaterial);
+#pragma endregion
+
 
 #pragma region SkySphere Material
 		Shader* skySphereShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkySphereShader");
@@ -1034,6 +1063,24 @@ namespace renderer
 
 			renderTargets[static_cast<UINT>(eRenderTargetType::Light)] = new MultiRenderTarget();
 			renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->Create(vecRTTex, nullptr);
+		}
+		vecRTTex.clear();
+		// Shadow MRT
+		{	
+			Texture* shadowMap = new Texture();
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapTexture", shadowMap);
+			vecRTTex.emplace_back(shadowMap);
+			vecRTTex[0]->Create(1600, 900, DXGI_FORMAT_R32G32B32A32_FLOAT
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+
+
+			Texture* depthStencilTex = new Texture();
+			depthStencilTex->Create(1600, 900, DXGI_FORMAT_D32_FLOAT
+				, D3D11_BIND_DEPTH_STENCIL);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapDSTexture", depthStencilTex);
+
+			renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)] = new MultiRenderTarget();
+			renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->Create(vecRTTex, depthStencilTex);
 		}
 	}
 

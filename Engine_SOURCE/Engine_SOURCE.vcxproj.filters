@@ -514,7 +514,7 @@
     <ClInclude Include="Struct.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="SkyboxRenderer.h">
+    <ClInclude Include="SkySphereRenderer.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
     <ClInclude Include="SkySphere.h">
@@ -803,7 +803,7 @@
     <ClCompile Include="Panal.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIManager.cpp" />
-    <ClCompile Include="SkyboxRenderer.cpp">
+    <ClCompile Include="SkySphereRenderer.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
     <ClCompile Include="SkySphere.cpp">

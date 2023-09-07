@@ -133,6 +133,17 @@ void GameObj::Render()
 	}
 }
 
+void GameObj::PrevRender()
+{
+	for (Component* comp : mComponents)
+	{
+		if (comp == nullptr)
+			continue;
+
+		comp->PrevRender();
+	}
+}
+
 void GameObj::FontRender()
 {
 	for (Script* script : mScripts)

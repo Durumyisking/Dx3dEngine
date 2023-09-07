@@ -97,8 +97,7 @@ void SceneTitle::Initialize()
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1000.f, 0.f));
-		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
+		directionalLight->SetRotation(Vector3(45.f, -45.f, 0.f));
 		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);

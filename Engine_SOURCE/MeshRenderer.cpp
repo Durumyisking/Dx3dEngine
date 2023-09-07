@@ -17,8 +17,6 @@ MeshRenderer::~MeshRenderer()
 
 void MeshRenderer::Initialize()
 {
-	//t.loadFromFile("E:/Dev/3d-my/Dx3dEngine/Resources/environment.hdr");
-
 	BaseRenderer::Initialize();
 }
 
@@ -30,6 +28,20 @@ void MeshRenderer::Update()
 void MeshRenderer::FixedUpdate()
 {
 	BaseRenderer::FixedUpdate();
+}
+
+void MeshRenderer::PrevRender()
+{
+	Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"ShadowMaterial");
+
+	material->Bind();
+
+	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
+
+	GetMesh()->BindBuffer();
+	GetMesh()->Render();
+
+	material->Clear();
 }
 
 void MeshRenderer::Render()

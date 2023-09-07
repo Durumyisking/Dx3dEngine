@@ -89,27 +89,44 @@ void Camera::Render()
 
 	sortGameObjects();
 
-	//// Deferred Opaque Render 
-	//renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
-	//renderDeferred();
+	// shadow	
+	Transform directionLighttr = *(renderer::lights[0]->GetOwner()->GetComponent<Transform>());
+	//tr->SetPosition(Transform()->GetWorldPos());
+	directionLighttr.SetRotation(DecomposeRotMat(directionLighttr.GetWorldRotationMatrix()));
 
-	//// Deferred light Render
-	//renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
+	ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
 
-	//for (Light* light : renderer::lights)
-	//{
-	//	light->Render();
-	//}
+	LightMatrixCB data = {};
+	data.lightView = CreateViewMatrix(&directionLighttr);
+	data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, 1600, 900, 1.0f, 1000.0f);
+	lightCB->SetData(&data);
+	lightCB->Bind(eShaderStage::VS);	
+	lightCB->Bind(eShaderStage::PS);
 
-	////SwapChain
-	//renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+	renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->OMSetRenderTarget();
+	renderShadow();
 
-	//// Deferred + SwapChain Merge
-	//Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
-	//Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
-	//rectMesh->BindBuffer();
-	//mergeMaterial->Bind();
-	//rectMesh->Render();
+	// Deferred Opaque Render 
+	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
+	renderDeferred();
+
+	// Deferred light Render
+	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
+
+	for (Light* light : renderer::lights)
+	{
+		light->Render();
+	}
+
+	//SwapChain
+	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+
+	// Deferred + SwapChain Merge
+	Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
+	Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
+	rectMesh->BindBuffer();
+	mergeMaterial->Bind();
+	rectMesh->Render();
 
 	// Forward Render
 	renderOpaque();
@@ -142,6 +159,24 @@ void Camera::CreateViewMatrix()
 
 }
 
+Matrix Camera::CreateViewMatrix(Transform* tr)
+{
+	Matrix view = Matrix::Identity;
+	//Vector3 up = Vector3(0.f, 1.f, 0.f);
+	Vector3 up = tr->Up();
+	Vector3 right = tr->Right();
+	Vector3 forward = tr->Forward();
+
+	Vector3 pos = forward * -50.f;
+
+	view *= Matrix::CreateTranslation(-pos);
+
+	view *= XMMatrixLookToLH(pos, forward, up);	
+
+	
+	return view;
+}
+
 void Camera::CreateProjectionMatrix()
 {
 	RECT winRect;
@@ -163,6 +198,29 @@ void Camera::CreateProjectionMatrix()
 		mProjection = Matrix::CreateOrthographic(width, height, mNear, mFar);
 	}
 
+}
+
+Matrix Camera::CreateProjectionMatrix(eProjectionType type, float width, float height, float Near, float Far)
+{
+	Matrix proj = Matrix::Identity;
+
+	float AspectRatio = width / height;
+	if (mType == eProjectionType::Perspective)
+	{
+		proj = Matrix::CreatePerspectiveFieldOfView
+		(
+			XM_PI / 4.0f
+			, AspectRatio
+			, Near
+			, Far
+		);
+	}
+	else
+	{
+		proj = Matrix::CreateOrthographicLH(width /*/ 100.0f*/, height /*/ 100.0f*/, Near, Far);
+	}
+
+	return proj;
 }
 
 void Camera::RegisterCameraInRenderer()
@@ -283,6 +341,25 @@ void Camera::sortGameObjects()
 		}
 	}
 
+}
+
+void Camera::renderShadow()
+{
+	for (GameObj* obj : mDeferredOpaqueGameObjects)
+	{
+		if (obj == nullptr)
+			continue;
+
+		obj->PrevRender();
+	}
+
+	for (GameObj* obj : mOpaqueGameObjects)
+	{
+		if (obj == nullptr)
+			continue;
+
+		obj->PrevRender();
+	}
 }
 
 void Camera::renderDeferred()

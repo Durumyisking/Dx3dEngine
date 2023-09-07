@@ -4,7 +4,6 @@
 #include "Texture.h"
 #include "MeshRenderer.h"
 #include "Material.h"
-#include "SkyboxRenderer.h"
 
 //#define STB_IMAGE_IMPLEMENTATION
 //#include "../External/stb/stb_image.h"
@@ -203,7 +202,6 @@ void CubeMapHDR::bindPrefilterMap()
 
 void CubeMapHDR::Bind()
 {
-
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::IrradianceMap), &mIrradianceSRV);
     GetDevice()->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PrefilteredMap),  &mPreFilterSRV);
 

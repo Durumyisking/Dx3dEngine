@@ -4,6 +4,7 @@
 
 
 using namespace math;
+class Transform;
 
 enum class eProjectionType
 {
@@ -11,7 +12,6 @@ enum class eProjectionType
 	Orthographic,
 	End,
 };
-
 
 class Camera : public Component
 {
@@ -33,7 +33,9 @@ public:
 	virtual void Render() override;
 	
 	void CreateViewMatrix();
+	Matrix CreateViewMatrix(Transform* tr);
 	void CreateProjectionMatrix();
+	Matrix CreateProjectionMatrix(eProjectionType type, float width, float height, float Near, float Far);
 		
 	void RegisterCameraInRenderer();
 
@@ -65,6 +67,7 @@ public:
 
 private:
 	void sortGameObjects();
+	void renderShadow();
 	void renderDeferred();
 	void renderOpaque();
 	void renderCutout();

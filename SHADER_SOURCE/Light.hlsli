@@ -162,7 +162,7 @@ float3 CalculateLightPBR_Direct(float3 worldPos, float4 albedo, float3 worldNorm
                                         // 반사 관련된 x는 프레넬과 계산 y는 diffuse처럼 생각하는 듯 보임
     float3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
 
-    float3 result = (kd * diffuse + specular);
+    float3 result = (kd * diffuse + specular);// * NdotL;
 
     return result;
 }

@@ -28,6 +28,7 @@
 #define CBSLOT_NOISE			7
 #define CBSLOT_POSTPROCESS		8
 #define CBSLOT_SKY 9
+#define CBSLOT_LIGHTMATRIX 10
 
 
 enum class eValidationMode
@@ -163,6 +164,8 @@ enum class eTextureSlot
 
 	SkySphere = 18,
 
+	ShadowMap = 19,
+
 //	Atlas = 29,					// atlasTexture
 
 	End,
@@ -180,6 +183,7 @@ enum class eCBType
 	Noise, 
 	PostProcess,
 	CubeMapProj,
+	LightMatrix,
 	End,
 };
 

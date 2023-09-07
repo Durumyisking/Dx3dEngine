@@ -17,6 +17,7 @@ public:
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
+	virtual void PrevRender() override {};
 	virtual void Render() override;
 
 	void SetMesh(Mesh* mesh) { mMesh = mesh; }

@@ -20,10 +20,10 @@ float4 main(VSOut vsIn) : SV_Target
     float3 ambientLighting = (float3) 0.f;
     //float3 albedo = float3(1.0f, 0.6172f, 0.1384f); //GOLD
 
-    float4  albedo = float4(1.0f, 0.6172f, 0.1384f, 1.f);
+    float4  albedo = float4(0.25f, 0.25f, 0.25f, 1.f);
     float3  normal = vsIn.WorldNormal;
-    float   metallic = 0.99f; 
-    float   roughness = 0.01f;
+    float   metallic = 0.001f; 
+    float   roughness = 0.99f;
     float3  A0 = (float3) 1.f;
 
     if (1 == cbbAlbedo)

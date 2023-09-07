@@ -27,6 +27,8 @@ Texture2D BRDF : register(t15);
 
 Texture2D SkySphere : register(t18);
 
+Texture2D ShadowMap : register(t19);
+
 
 //StructuredBuffer<LightAttribute> lightAttributes : register(t22);
 

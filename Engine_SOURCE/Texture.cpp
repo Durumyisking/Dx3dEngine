@@ -20,7 +20,6 @@ void Texture::Clear(UINT startSlot)
 
 	if ((startSlot == static_cast<UINT>(eTextureSlot::BRDF)) ||
 		(startSlot == static_cast<UINT>(eTextureSlot::Cubemap)) ||
-		(startSlot == static_cast<UINT>(eTextureSlot::SkySphere)) ||
 		(startSlot == static_cast<UINT>(eTextureSlot::IrradianceMap)) ||
 		(startSlot == static_cast<UINT>(eTextureSlot::PrefilteredMap)))
 		return;
@@ -41,7 +40,6 @@ void Texture::Clears()
 
 		if ((i == static_cast<UINT>(eTextureSlot::BRDF)) ||
 			(i == static_cast<UINT>(eTextureSlot::Cubemap)) ||
-			(i == static_cast<UINT>(eTextureSlot::SkySphere)) ||
 			(i == static_cast<UINT>(eTextureSlot::IrradianceMap)) ||
 			(i == static_cast<UINT>(eTextureSlot::PrefilteredMap)))
 			continue;
@@ -62,19 +60,22 @@ void Texture::Clears()
 
 bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 {
-	mDesc.BindFlags = bindflag;
-	mDesc.Usage = D3D11_USAGE_DEFAULT;
-	mDesc.CPUAccessFlags = 0;
-	mDesc.Format = format;
-	mDesc.Width = width;
-	mDesc.Height = height;
-	mDesc.ArraySize = 1;
+	if (!mTexture)
+	{
+		mDesc.BindFlags = bindflag;
+		mDesc.Usage = D3D11_USAGE_DEFAULT;
+		mDesc.CPUAccessFlags = 0;
+		mDesc.Format = format;
+		mDesc.Width = width;
+		mDesc.Height = height;
+		mDesc.ArraySize = 1;
 
-	mDesc.SampleDesc.Count = 1;
-	mDesc.SampleDesc.Quality = 0;
+		mDesc.SampleDesc.Count = 1;
+		mDesc.SampleDesc.Quality = 0;
 
-	mDesc.MipLevels = 1;
-	mDesc.MiscFlags = 0;
+		mDesc.MipLevels = 1;
+		mDesc.MiscFlags = 0;
+	}
 
 	if (!GetDevice()->CreateTexture(&mDesc, mTexture.GetAddressOf()))
 	{
