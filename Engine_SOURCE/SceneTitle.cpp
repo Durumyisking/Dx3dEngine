@@ -164,39 +164,41 @@ void SceneTitle::Enter()
 	}
 	
 
+	//{
+	//	Player* player = object::Instantiate<Player>(eLayerType::Player);
+	//	player->SetPos(Vector3(5.f, 5.f, 5.f));
+	//	player->SetScale(Vector3(1.f, 1.f, 1.f));
+	//	player->SetName(L"Player");
+	//	Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+	//	(
+	//		L"check_albedo",
+	//		L"check_normal", 
+	//		L"check_metallic", 
+	//		L"check_roughness", 
+	//		L"PBRShader",
+	//		L"mat_dirt"
+	//	);
+	//	player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+
+	//	//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+	//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Capsulemesh");
+	//	player->AddComponent<PlayerScript>(eComponentType::Script);
+
+	//	Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+	//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	//}
+
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(5.f, 5.f, 5.f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->SetName(L"Player");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		(
-			L"check_albedo",
-			L"check_normal", 
-			L"check_metallic", 
-			L"check_roughness", 
-			L"PBRShader",
-			L"mat_dirt"
-		);
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+	/*	MarioParts* mHandL = object::Instantiate<MarioParts>(eLayerType::Player);
+		player->SetParts(mHandL);*/
+	
 
-		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Capsulemesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
-
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-	}
-
-	{
-		MarioParts* player = object::Instantiate<MarioParts>(eLayerType::Player);
-		player->BoneInitialize();
-		player = object::AddToScene<MarioParts>(player->GetMario(), eLayerType::Player, this);
 	}
 
 	//{

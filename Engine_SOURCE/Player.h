@@ -24,10 +24,16 @@ public:
 	virtual void OnTriggerExit(GameObj* gameObject) override;
 	virtual void BoneInitialize();
 
+	std::vector<MarioParts*> GetParts() { return mParts; }
+	void SetParts(MarioParts* part) { mParts.push_back(part); }
+
 
 private:
+	std::vector<MarioParts*> mParts;
+	Vector3 mMarioPhysicPos;
 
 public:
+
 
 
 };

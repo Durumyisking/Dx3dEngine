@@ -20,13 +20,15 @@ public:
 	virtual void BoneInitialize();
 
 public:
-	MarioParts* GetMario() { return mBody; }
+	//MarioParts* GetMario() { return mBody; }
+	//void SetName(std::wstring name) { mName = name; }
 
 
 private:
 	std::vector<MarioParts*> mMario;
-	Vector3 mMarioPhysicPos;
-	MarioParts* mBody;
+	//Vector3 mMarioPhysicPos;
+	//std::wstring mName;
+	//Player* mBody;
 	//MarioParts* mHandL;
 	//MarioParts* mHandR;
 	//MarioParts* mHead;
