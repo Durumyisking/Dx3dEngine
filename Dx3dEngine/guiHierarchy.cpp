@@ -46,6 +46,12 @@ namespace gui
 
 	void Hierarchy::FixedUpdate()
 	{
+		//ImVec2 defaultInit = ImVec2(100.f, 100.f);
+		//ImGui::SetNextWindowPos(defaultInit);
+		//ImGui::SetNextWindowSize(defaultInit);
+		//ImGui::SetNextWindowCollapsed(false);  // 윈도우를 접히지 않은 상태로 초기화
+		//ImGui::SetNextWindowFocus();  // 윈도우에 포커스 설정
+		//ImGui::SetNextWindowContentSize(ImVec2(10, 10));  // 컨텐츠 크기 초기화
 	}
 
 	void Hierarchy::Update()

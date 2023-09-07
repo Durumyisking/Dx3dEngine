@@ -41,6 +41,8 @@ namespace gui
 		mResources[static_cast<UINT>(eResourceType::Texture)] = new gui::GUITexture();
 		mResources[static_cast<UINT>(eResourceType::Texture)]->SetName("InspectorTexture");
 		AddWidget(mResources[static_cast<UINT>(eResourceType::Texture)]);
+
+		//bool firstFrame = true;
 	}
 
 	Inspector::~Inspector()
@@ -66,7 +68,55 @@ namespace gui
 
 	void Inspector::Update()
 	{
-		
+		/*ImGui::Text("Camera");
+		bool viewDirty = false;
+
+		if (ImGui::RadioButton("Perspective", isPerspective)) isPerspective = true;
+		ImGui::SameLine();
+		if (ImGui::RadioButton("Orthographic", !isPerspective)) isPerspective = false;
+		if (isPerspective)
+		{
+			ImGui::SliderFloat("Fov", &fov, 20.f, 110.f);
+		}
+		else
+		{
+			ImGui::SliderFloat("Ortho width", &viewWidth, 1, 20);
+		}
+		viewDirty |= ImGui::SliderFloat("Distance", &camDistance, 1.f, 10.f);
+		ImGui::SliderInt("Gizmo count", &gizmoCount, 1, 4);
+
+		if (viewDirty || firstFrame)
+		{
+			float eye[] = { cosf(camYAngle) * cosf(camXAngle) * camDistance, sinf(camXAngle) * camDistance, sinf(camYAngle) * cosf(camXAngle) * camDistance };
+			float at[] = { 0.f, 0.f, 0.f };
+			float up[] = { 0.f, 1.f, 0.f };
+			LookAt(eye, at, up, cameraView);
+			firstFrame = false;
+		}
+
+
+
+		ImGui::Text("X: %f Y: %f", io.MousePos.x, io.MousePos.y);
+		if (ImGuizmo::IsUsing())
+		{
+			ImGui::Text("Using gizmo");
+		}
+		else
+		{
+			ImGui::Text(ImGuizmo::IsOver() ? "Over gizmo" : "");
+			ImGui::SameLine();
+			ImGui::Text(ImGuizmo::IsOver(ImGuizmo::TRANSLATE) ? "Over translate gizmo" : "");
+			ImGui::SameLine();
+			ImGui::Text(ImGuizmo::IsOver(ImGuizmo::ROTATE) ? "Over rotate gizmo" : "");
+			ImGui::SameLine();
+			ImGui::Text(ImGuizmo::IsOver(ImGuizmo::SCALE) ? "Over scale gizmo" : "");
+		}*/
+
+		//ImGui::Separator();
+
+		//ImGuizmo::SetID(matId);
+
+		//EditTransform(cameraView, cameraProjection, objectMatrix[matId], lastUsing == matId);
 	}
 
 	void Inspector::LateUpdate()

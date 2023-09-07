@@ -106,6 +106,8 @@ namespace gui
 		mVisualEditor->Render();
 		for (auto iter : mWidgets)
 		{
+			if (iter.second->GetName() == "Gizmo")
+				int a = 0;
 			iter.second->Render();
 		}
 
@@ -234,10 +236,5 @@ namespace gui
 		ImGui_ImplDX11_Shutdown();
 		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
-	}
-
-	GameObj* WidgetMgr::GetHierachyTargetObject()
-	{
-		return mHierarchy->GetTargetObject();
 	}
 }

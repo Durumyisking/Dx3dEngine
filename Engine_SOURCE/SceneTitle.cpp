@@ -243,6 +243,26 @@ void SceneTitle::Enter()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
+	{
+		Player* player = object::Instantiate<Player>(eLayerType::Player);
+		player->SetPos(Vector3(5.f, 5.f, -5.f));
+		player->SetScale(Vector3(2.5f, 2.5f, 2.5f));
+		player->SetName(L"Player4_NoPhysical");
+		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		(
+			L"check_albedo",
+			L"check_normal", 
+			L"check_metallic", 
+			L"check_roughness", 
+			L"PBRShader",
+			L"mat_dirt"
+		);
+		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+
+		//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+	}
+
 	//{
 	//	Player* player = object::Instantiate<Player>(eLayerType::Player);
 	//	player->SetPos(Vector3(15.f, 15.f, 5.f));

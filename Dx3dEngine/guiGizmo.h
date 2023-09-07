@@ -27,9 +27,11 @@ namespace gui
 
 		GameObj* GetTargetGameObject() { return mTargetGameObject; }
 		void SetTargetGameObject(GameObj* target) { mTargetGameObject = target; }
+		ImGuizmo::OPERATION GetGizmoOperation() { return mGizmoOperation; }
+		void SetGizmoOperation(GameObj* target) { mGizmoOperation = ImGuizmo::TRANSLATE; }
 
 	private:
-		int mGizmoCount;
+		ImGuizmo::OPERATION mGizmoOperation;
 		bool mbisOrthographic;
 		float mOrthographicViewWidth;
 		Camera* mCamera;

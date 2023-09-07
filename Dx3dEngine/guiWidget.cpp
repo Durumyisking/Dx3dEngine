@@ -11,7 +11,6 @@ namespace gui
 		, mChilds{}
 		, mWindow_flags(ImGuiWindowFlags_None)
 	{
-		SetName("Gizmo");
 	}
 
 	Widget::~Widget()
