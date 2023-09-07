@@ -47,7 +47,7 @@ void Layer::Initialize()
 			continue;
 		Obj->Initialize();
 	}
-
+	mAddedObjects.clear();
 }
 
 void Layer::update()

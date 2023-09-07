@@ -66,11 +66,10 @@ void SceneTitle::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
 
 
-		//mDeleteObj = true;
+	//mDeleteObj = true;
 
 	{
-		mCamera = object::Instantiate<GameObj>(eLayerType::Camera,this);
-		mCamera->SetName(L"TitleMainCamera");
+		mCamera = object::Instantiate<GameObj>(eLayerType::Camera,this, L"MainCamera");
 		Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
 		cameraComp->TurnLayerMask(eLayerType::UI, false);
 		cameraComp->SmoothOn();
@@ -78,13 +77,11 @@ void SceneTitle::Initialize()
 		renderer::mainCamera = cameraComp;
 		cameraComp->SetProjectionType(eProjectionType::Perspective);
 		mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
-
 	}
 	  
 	{
 		// UI Camera
-		mUICamera = object::Instantiate<GameObj>(eLayerType::Camera,this);
-		mUICamera->SetName(L"TitleUICamera");
+		mUICamera = object::Instantiate<GameObj>(eLayerType::Camera,this, L"UICamera");
 		Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
 		mUICamera->AddComponent<CameraScript>(eComponentType::Script);
 
@@ -95,15 +92,6 @@ void SceneTitle::Initialize()
 		mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
 	}
 
-	{
-		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-		directionalLight->SetRotation(Vector3(45.f, -45.f, 0.f));
-		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
-		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-		lightComp->SetType(eLightType::Directional);
-		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
-		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
-	}
 
 	CreateMainMenu();
 
@@ -126,10 +114,8 @@ void SceneTitle::update()
 	if (KEY_TAP(N_1))
 	{
 		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
-		GETSINGLE(SceneMgr)->GetActiveScene()->Enter();
+		return;
 	}
-
-	Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 
 	Scene::update();
 }
@@ -152,6 +138,15 @@ void SceneTitle::Enter()
 	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
 	mUICamera->SetRotation(Vector3::Zero);
 
+	{
+		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLight");
+		directionalLight->SetRotation(Vector3(45.f, -45.f, 0.f));
+		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
+		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+		lightComp->SetType(eLightType::Directional);
+		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
+	}
 
 	Scene::Enter();
 }

@@ -1,11 +1,11 @@
 #include "Scene.h"
 #include "InputMgr.h"
 #include "Layer.h"
-
+#include "Renderer.h"
 
 
 Scene::Scene()
-	: mDeleteObj(false)
+	: mDeleteObj(true)
 	, mType(SceneMgr::eSceneType::End)
 	, mbPause(false)
 	, mDeadObjects{}
@@ -82,6 +82,8 @@ void Scene::Exit()
 	}
 
 	destroy();
+
+	renderer::lights.clear();
 }
 
 void Scene::AddGameObject(GameObj* gameObj, eLayerType eLayer)
