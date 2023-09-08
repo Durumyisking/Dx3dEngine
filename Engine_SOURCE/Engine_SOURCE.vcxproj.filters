@@ -529,7 +529,9 @@
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
     <ClInclude Include="UIFactory.h" />
-    <ClInclude Include="ScenePlay.h" />
+    <ClInclude Include="ScenePlay.h">
+      <Filter>Common\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -813,7 +815,9 @@
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
     <ClCompile Include="UIFactory.cpp" />
-    <ClCompile Include="ScenePlay.cpp" />
+    <ClCompile Include="ScenePlay.cpp">
+      <Filter>Common\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

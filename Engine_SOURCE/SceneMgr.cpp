@@ -29,12 +29,12 @@ void SceneMgr::Initialize()
 
 	mActiveScene = mScenes[static_cast<UINT>(eSceneType::Title)];
 
-
 	for (UINT i = 0; i < static_cast<UINT>(eSceneType::End); i++)
 	{
 		mScenes[i]->Initialize();
 	}
 
+	mActiveScene->Enter();
 
 	//for (Scene* scene : mScenes)
 	//{
@@ -64,7 +64,7 @@ void SceneMgr::FontRender()
 
 void SceneMgr::Destory()
 {
-	//mActiveScene->destroy();
+	mActiveScene->destroy();
 }
 
 void SceneMgr::Release()
@@ -78,8 +78,8 @@ void SceneMgr::Release()
 
 void SceneMgr::LoadScene(eSceneType type)
 {
-	//if (mActiveScene)
-	//	mActiveScene->Exit();
+	if (mActiveScene)
+		mActiveScene->Exit();
 
 	std::vector<GameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
 
@@ -90,22 +90,22 @@ void SceneMgr::LoadScene(eSceneType type)
 		mActiveScene->AddGameObject(obj, obj->GetLayerType());
 	}
 
-	//if (mActiveScene)
-	//	mActiveScene->Enter();
+	if (mActiveScene)
+		mActiveScene->Enter();
 }
 
 void SceneMgr::LateEvent()
 {
-	//if (mActiveScene == nullptr)
-	//	return;
+	if (mActiveScene == nullptr)
+		return;
 
-	//for (GameObj* obj : mLateEvent)
-	//{
-	//	enums::eLayerType type = obj->GetLayerType();
-	//	mActiveScene->GetLayer(type).AddGameObject(obj, type);
-	//}
+	for (GameObj* obj : mLateEvent)
+	{
+		enums::eLayerType type = obj->GetLayerType();
+		mActiveScene->GetLayer(type).AddGameObject(obj, type);
+	}
 
-	//mLateEvent.clear();
+	mLateEvent.clear();
 }
 
 void SceneMgr::DontDestroyOnLoad(GameObj* gameObj)

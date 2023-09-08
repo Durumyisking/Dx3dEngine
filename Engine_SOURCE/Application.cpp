@@ -83,10 +83,10 @@ void Application::Render()
 		renderer::ClearRenderTargets(); // mGraphicDevice::Clear 대신 렌더타겟 클리어
 		renderer::Render();
 		//UIManager::Render();
-		GETSINGLE(SceneMgr)->Render();
+		//GETSINGLE(SceneMgr)->Render();
 		GETSINGLE(SceneMgr)->FontRender();
 	}
-}
+}	
 
 void Application::Destroy()
 {

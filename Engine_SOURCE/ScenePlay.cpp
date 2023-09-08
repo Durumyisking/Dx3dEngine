@@ -77,7 +77,7 @@ ScenePlay::~ScenePlay()
 void ScenePlay::Initialize()
 {
 	{
-		mCamera = object::Instantiate<GameObj>(eLayerType::Camera, this);
+		mCamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"MainCamera");
 		Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
 		cameraComp->TurnLayerMask(eLayerType::UI, false);
 		cameraComp->SmoothOn();
@@ -89,7 +89,7 @@ void ScenePlay::Initialize()
 
 	{
 		// UI Camera
-		mUICamera = object::Instantiate<GameObj>(eLayerType::Camera, this);
+		mUICamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"UICamera");
 		Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
 		mUICamera->AddComponent<CameraScript>(eComponentType::Script);
 
@@ -98,17 +98,6 @@ void ScenePlay::Initialize()
 		cameraUIComp->DisableLayerMasks();
 		cameraUIComp->TurnLayerMask(eLayerType::UI, true);
 		mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
-	}
-
-	{
-		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1000.f, 0.f));
-		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
-		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
-		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-		lightComp->SetType(eLightType::Directional);
-		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
-		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
 
 
@@ -129,7 +118,7 @@ void ScenePlay::Initialize()
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
+		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
@@ -156,11 +145,11 @@ void ScenePlay::Initialize()
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.5f, 1.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
@@ -185,7 +174,7 @@ void ScenePlay::Initialize()
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
+		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
@@ -214,7 +203,7 @@ void ScenePlay::Initialize()
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial");
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
@@ -223,55 +212,6 @@ void ScenePlay::Initialize()
 	}
 
 
-	{
-		//Deferred
-		//{
-		//	GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);
-		//	test2->SetPos(Vector3(-10.f, 5.f, 0.f));
-		//	test2->SetScale({ 5.f, 5.f, 5.f });
-		//	test2->SetName(L"Test2");
-
-		//	test2->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//	MeshRenderer* testRender = test2->GetComponent<MeshRenderer>();
-		//	Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"DeferredMaterial");
-
-		//	testRender->SetMaterial(testMaterial);
-		//	testRender->SetMeshByKey(L"Cubemesh");
-		//}		
-	}
-	//   GameObj* test1 = object::Instantiate<GameObj>(eLayerType::Objects);
-	   //test1->SetPos(Vector3(-5.f, 5.f, 0.f));
-	   //test1->SetScale({ 5.f, 5.f, 5.f });
-
-	   //test1->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	   //MeshRenderer* testRender = test1->GetComponent<MeshRenderer>();
-
-	   ////SpriteRenderer* spriteRender = test1->AddComponent<SpriteRenderer>(eComponentType::UI);
-	   ////Texture* titleTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"MarioTitle"));
-
-	   //Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"RectMesh");
-	   //testRender->SetMesh(mesh);
-	   //Material* mat = GETSINGLE(ResourceMgr)->Find<Material>(L"UIMaterial");
-	   ////mat->SetTexture(titleTexture);
-	   //testRender->SetMaterial(mat);
-	   //testRender->SetMeshByKey(L"Cubemesh");
-	   // 
-	//UISpriteMaterial
-	{
-
-		//HUD* hud = object::Instantiate<HUD>(eLayerType::UI);
-		//hud->SetPos(Vector3(-5.f, 2.f, 10.f));
-		//hud->SetScale({ 1.f, 1.f, 1.f });
-		//hud->SetName(L"hud");
-		//
-		//MeshRenderer* hudRender = hud->AddComponent<MeshRenderer>(eComponentType::UI);
-		//hudRender->SetMeshByKey(L"Rectmesh");
-		//hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"UISpriteMaterial"));
-
-		//hud->GetComponent<Transform>()->SetParent(mUICamera);
-
-
-	}
 
 	CreatePlayerUI();
 
@@ -283,7 +223,7 @@ void ScenePlay::update()
 	if (KEY_TAP(N_1))
 	{
 		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Title);
-		GETSINGLE(SceneMgr)->GetActiveScene()->Enter();
+		return;
 	}
 
 
@@ -308,6 +248,17 @@ void ScenePlay::Enter()
 	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
 	mUICamera->SetRotation(Vector3::Zero);
 	renderer::mainCamera = mCamera->GetComponent<Camera>();
+
+	{
+		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLight");
+		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1000.f, 0.f));
+		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
+		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
+		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+		lightComp->SetType(eLightType::Directional);
+		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
+	}
 
 	Scene::Enter();
 }

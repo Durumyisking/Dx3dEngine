@@ -74,6 +74,7 @@ namespace enums
 		Line,
 		Box,
 		Sphere,
+		Capsule,
 		End,
 
 	};
