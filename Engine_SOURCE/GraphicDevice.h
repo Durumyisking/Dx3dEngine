@@ -66,7 +66,8 @@ public:
 	void Clear();
 	void ClearRenderTargetView(ID3D11RenderTargetView* renderTargetView, const FLOAT colorRGBA[4]);
 	void ClearDepthStencilView(ID3D11DepthStencilView* depthStencilView, UINT clearFlags);
-	void AdjustViewPorts();
+	void AdjustToDefaultResolutionViewPorts();
+	void ChangeViewPorts(D3D11_VIEWPORT& viewPort);
 	void OMSetRenderTarget();
 	void OMSetRenderTarget(UINT numViews, ID3D11RenderTargetView** renderTargetViews, ID3D11DepthStencilView* depthStencilView);
 

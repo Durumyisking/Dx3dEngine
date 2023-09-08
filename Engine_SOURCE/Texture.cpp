@@ -63,7 +63,11 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 	if (!mTexture)
 	{
 		mDesc.BindFlags = bindflag;
-		mDesc.Usage = D3D11_USAGE_DEFAULT;
+		mDesc.Usage = D3D11_USAGE_DEFAULT; 
+		// D3D11_USAGE_DEFAULT : gpu가 read/write access가능하다.
+		// D3D11_USAGE_IMMUTABLE : gpu가 read만 가능 cpu는 암것도 안됨
+		// D3D11_USAGE_DYNAMIC : gpu r/w, cpu w only
+		// D3D11_USAGE_STAGING : gpu -> cpu 데이터 전송할 때 사용
 		mDesc.CPUAccessFlags = 0;
 		mDesc.Format = format;
 		mDesc.Width = width;

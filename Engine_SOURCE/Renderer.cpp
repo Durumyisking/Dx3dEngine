@@ -343,14 +343,14 @@ namespace renderer
 #pragma region DepthStencilState
 
 		D3D11_DEPTH_STENCIL_DESC dsDesc = {};
-		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
-		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		dsDesc.DepthEnable = true; // 깊이값 사용할지 말지
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth 값이 작거나 같을때 그림
+		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer 껏다켰다할때 사용
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Less)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth 값이 크거나 같을때 그림
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Greater)].GetAddressOf());
@@ -1901,7 +1901,7 @@ namespace renderer
 		}
 	}
 
-	/////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 
 	void Initialize()
 	{
@@ -1914,7 +1914,7 @@ namespace renderer
 		LoadDefaultMaterial();
 		BindPBRProprerties();
 
-		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"blockBrick");
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"BlockBrick");
 	}
 
 	void release()

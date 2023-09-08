@@ -67,10 +67,10 @@ void CubeMapHDR::Initialize()
     mViewport.TopLeftY = 0;
     bindIrradianceMap();
     bindPrefilterMap();
-    GetDevice()->AdjustViewPorts();
+    GetDevice()->AdjustToDefaultResolutionViewPorts();
     renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
 
-    GetDevice()->AdjustViewPorts();
+    GetDevice()->AdjustToDefaultResolutionViewPorts();
 
     GameObj::Initialize();
 }

@@ -39,18 +39,28 @@ GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 		, nullptr, 0, D3D11_SDK_VERSION, mDevice.GetAddressOf()
 		, &FeatureLevel, mContext.GetAddressOf());
 
+	// nX MSAA 지원하는지 확인
+	UINT numQualityLevels;
+	mDevice->CheckMultisampleQualityLevels(DXGI_FORMAT_R8G8B8A8_UNORM, 4, &numQualityLevels); // 일단 4로 설정
+	if (numQualityLevels <= 0) {
+		std::cout << "MSAA not supported." << std::endl;
+	}
+
+
 	// SwapChain
 	DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
 
 	swapChainDesc.OutputWindow = hwnd; // 렌더될 윈도우의 핸들
 	swapChainDesc.Windowed = true; // 창모드 전체화면
 	swapChainDesc.BufferCount = 2; // 사용할 렌더링 버퍼개수 최대 8
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; // 버퍼 렌더타겟으로 쓸거임
 	swapChainDesc.BufferDesc.Width = application.GetWidth();
 	swapChainDesc.BufferDesc.Height = application.GetHeight();
-	swapChainDesc.BufferDesc.Format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM; // 컬러 포멧 타입
+	swapChainDesc.BufferDesc.Format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM; // 컬러 포멧 타입 unorm = unsigned normalized integer (0~255를 0~1.0 으로 본다는 뜻)
 	swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;// 프레임 비율 분자
 	swapChainDesc.BufferDesc.RefreshRate.Denominator = 1; // 프레임 비율 분모
 	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
@@ -61,6 +71,15 @@ GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 		멀티 샘플링은 렌더된 픽셀들의 평균 샘플을 사용하여 최종 컬러를 좀더 부드럽게 하는 기술이다.
 		샘플러와 관련된게 맞다.
 	*/
+	//if (numQualityLevels > 0) {
+	//	swapChainDesc.SampleDesc.Count = 4; // how many multisamples
+	//	swapChainDesc.SampleDesc.Quality = numQualityLevels - 1;
+	//}
+	//else {
+	//	swapChainDesc.SampleDesc.Count = 1; 
+	//	swapChainDesc.SampleDesc.Quality = 0;
+	//}
+
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.SampleDesc.Quality = 0;
 
@@ -69,22 +88,35 @@ GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 
 	mRenderTargetTexture =  new Texture();
 
-	Microsoft::WRL::ComPtr <ID3D11Texture2D> renderTarget;
+	Microsoft::WRL::ComPtr <ID3D11Texture2D> backBuffer;
 	// Get rendertarget for swapchain
-	//						0번 버퍼가 렌더타겟							렌더타겟 포인터
-	hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf());
-	mRenderTargetTexture->Create(renderTarget);
-	GETSINGLE(ResourceMgr)->Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
-	// Create Rendertarget View
+	// Create Rendertarget View 
+	// swapChain의 BackBuffer를 RT로 사용할 것이다.
+	// 
+	//						0번 버퍼가 우리 눈에 보여질 렌더타겟
+	hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)backBuffer.GetAddressOf()); // swapChain의 DESC를 RT에 복사한다.
+	if (backBuffer)
+	{
+		mRenderTargetTexture->Create(backBuffer);
+		GETSINGLE(ResourceMgr)->Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
+	}
 
 	mDepthStencilBufferTexture =  new Texture();
+													// depth 저장시에는 24비트 stencil에는 8비트
 	mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
 	GETSINGLE(ResourceMgr)->Insert<Texture>(L"DepthStencilBufferTexture", mDepthStencilBufferTexture);
 	
 	// Setting Viewport		
 	RECT winRect;
 	GetClientRect(application.GetHwnd(), &winRect);
-	mViewPort = { 0.f, 0.f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.f, 1.f };
+	ZeroMemory(&mViewPort, sizeof(mViewPort));
+	mViewPort.TopLeftX = 0.f;
+	mViewPort.TopLeftY = 0.f;
+	mViewPort.Width = FLOAT(winRect.right - winRect.left);
+	mViewPort.Height = FLOAT(winRect.bottom - winRect.top);
+	mViewPort.MinDepth = 0.f;
+	mViewPort.MaxDepth = 1.f;
+
 	BindViewports(&mViewPort);
 
 	// RenderTarget Set
@@ -108,7 +140,7 @@ bool GraphicDevice::CreateSwapChain(DXGI_SWAP_CHAIN_DESC* pDesc)
 												// 내 그래픽 카드 정보가져옴
 	if (FAILED(pDXGIDevice->GetParent(__uuidof(IDXGIAdapter), (void**)pDXGIAdapter.GetAddressOf())))
 		return false;
-												// 전체화면 전환 관리 (swapchain 만들기 위해 필요)
+
 	if (FAILED(pDXGIAdapter->GetParent(__uuidof(IDXGIFactory), (void**)pDXGIFactory.GetAddressOf())))
 		return false;
 
@@ -120,6 +152,7 @@ bool GraphicDevice::CreateSwapChain(DXGI_SWAP_CHAIN_DESC* pDesc)
 
 bool GraphicDevice::CreateTexture(D3D11_TEXTURE2D_DESC* pDesc, ID3D11Texture2D** ppTexture2D)
 {
+	// create 친구들은 gpu에 메모리를 할당하는 것
 	if (FAILED(mDevice->CreateTexture2D(pDesc, nullptr, ppTexture2D)))
 		return false;
 
@@ -474,13 +507,18 @@ void GraphicDevice::ClearDepthStencilView(ID3D11DepthStencilView* depthStencilVi
 	mContext->ClearDepthStencilView(depthStencilView, clearFlags, 1.0f, 0);
 }
 
-void GraphicDevice::AdjustViewPorts()
+void GraphicDevice::AdjustToDefaultResolutionViewPorts()
 {
 	RECT winRect;
 	GetClientRect(application.GetHwnd(), &winRect);
 	mViewPort = { 0.f, 0.f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.f, 1.f };
 	BindViewports(&mViewPort);
 	mContext->OMSetRenderTargets(1, mRenderTargetTexture->GetRTV().GetAddressOf(), mDepthStencilBufferTexture->GetDSV().Get());
+}
+
+void GraphicDevice::ChangeViewPorts(D3D11_VIEWPORT& viewPort)
+{
+	BindViewports(&viewPort);
 }
 
 void GraphicDevice::OMSetRenderTarget()
