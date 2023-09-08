@@ -5,6 +5,10 @@
 #include "ResourceMgr.h"
 #include "MeshRenderer.h"
 #include "GoombaStateScript.h"
+#include "PhysXRigidBody.h"
+#include "Physical.h"
+#include "PhysXCollider.h"
+#include "PhysicalMovement.h"
 
 
 Goomba::Goomba()
@@ -30,6 +34,17 @@ void Goomba::Initialize()
 
 	GoombaStateScript* goombaState = AddComponent<GoombaStateScript>(eComponentType::Script);
 	goombaState->Initialize();
+
+	//Phsical
+	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+	// Rigidbody
+	AddComponent<PhysXRigidBody>(eComponentType::RigidBody)->Initialize();
+
+	// MoveMent
+	//AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
+	AddComponent<PhysicalMovement>(eComponentType::Movement)->Initialize();
 
 	// √ ±‚»≠
 	Monster::Initialize();
