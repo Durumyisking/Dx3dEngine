@@ -23,9 +23,7 @@ public:
 	//MarioParts* GetMario() { return mBody; }
 	//void SetName(std::wstring name) { mName = name; }
 
-
 private:
-	std::vector<MarioParts*> mMario;
 	//Vector3 mMarioPhysicPos;
 	//std::wstring mName;
 	//Player* mBody;

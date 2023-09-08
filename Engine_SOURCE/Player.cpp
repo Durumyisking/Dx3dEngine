@@ -30,7 +30,7 @@ void Player::Initialize()
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	AddComponent<PlayerScript>(eComponentType::Script);
 	AddComponent<Transform>(eComponentType::Transform);
-	Physical* physical = AddComponent<Physical>(eComponentType::Physical);;
+	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	PhysXRigidBody* rigid =AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	AddComponent<PhysXCollider>(eComponentType::Collider);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
@@ -56,14 +56,18 @@ void Player::Initialize()
 
 	MarioParts* mHandL = object::Instantiate<MarioParts>(eLayerType::Player);
 	MarioParts* mHandR = object::Instantiate<MarioParts>(eLayerType::Player);
-	//MarioParts* mHead;
-	//MarioParts* mFace;
+	MarioParts* mHead = object::Instantiate<MarioParts>(eLayerType::Player);
+	MarioParts* mFace = object::Instantiate<MarioParts>(eLayerType::Player);
 
 	mHandL->SetName(L"HandL");
-	mHandL->SetName(L"HandR");
+	mHandR->SetName(L"HandR");
+	mHead->SetName(L"Head");
+	mFace->SetName(L"Face");
 
 	mParts.push_back(mHandL);
 	mParts.push_back(mHandR);
+	mParts.push_back(mHead);
+	mParts.push_back(mFace);
 
 	
 	for (auto i : mParts)
@@ -76,9 +80,11 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	mMarioPhysicPos = GetComponent<Transform>()->GetPosition();
 
 	for (auto i : mParts)
 	{
+		i->GetComponent<Transform>()->SetPosition(mMarioPhysicPos);
 		i->Update();
 	}
 

@@ -24,6 +24,11 @@ void MarioParts::Initialize()
 	
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+	//AddComponent<Physical>(eComponentType::Physical);
+	//AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	AddComponent<Transform>(eComponentType::Transform);
+	//AddComponent<PhysXCollider>(eComponentType::Collider);
+	//AddComponent<PhysicalMovement>(eComponentType::Movement);
 
 	BoneInitialize();
 	DynamicObject::Initialize();
@@ -32,11 +37,6 @@ void MarioParts::Initialize()
 void MarioParts::Update()
 {
 	DynamicObject::Update();
-	//mMarioPhysicPos = mBody->GetComponent<Transform>()->GetPhysicalPosition();
-	//for (auto& i : mMario)
-	//{
-	//	i->GetComponent<Transform>()->SetPhysicalPosition(mMarioPhysicPos);
-	//}
 
 }
 
@@ -68,10 +68,10 @@ void MarioParts::OnTriggerExit(GameObj* gameObject)
 
 void MarioParts::BoneInitialize()
 {
+	if(GetName()==L"HandL"){
 
 		SetPos(Vector3(0.f, 0.f, 0.f));
 		SetScale(Vector3(1.0f, 1.f, 1.0f));
-		SetName(L"parts");
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandL");
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
@@ -87,76 +87,66 @@ void MarioParts::BoneInitialize()
 		model->SetParentTargetBone(L"Armature_HandL");
 		model->SetTargetBone(L"Armature_HandL");
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
-
+	}
 	
+	if (GetName() == L"HandR") {
 
-	//{
-	//	MarioParts* parts = new MarioParts;
-	//	parts->SetPos(Vector3(0.f, 0.f, 0.f));
-	//	parts->SetScale(Vector3(1.0f, 1.f, 1.0f));
-	//	parts->SetName(L"parts");
+		SetPos(Vector3(0.f, 0.f, 0.f));
+		SetScale(Vector3(1.0f, 1.f, 1.0f));
 
-	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandR");
-	//	parts->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandR");
+		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-	//	BoneAnimator* animator = parts->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-	//	animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandR/Animation/Walk.smd", 0.05f);
-	//	animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandR/Animation/Jump.smd", 0.05f);
-	//	animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandR/Animation/Dead.smd", 0.05f);
-	//	animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandR/Animation/Run.smd", 0.05f);
-	//	animator->Play(L"test");
+		BoneAnimator* animator = GetComponent<BoneAnimator>();
+		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandR/Animation/Walk.smd", 0.05f);
+		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandR/Animation/Jump.smd", 0.05f);
+		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandR/Animation/Dead.smd", 0.05f);
+		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandR/Animation/Run.smd", 0.05f);
+		animator->Play(L"test");
 
-	//	model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-	//	model->SetParentTargetBone(L"Armature_HandR");
-	//	model->SetTargetBone(L"Armature_HandR");
-	//	model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
-	//	mMario.push_back(parts);
+		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		model->SetParentTargetBone(L"Armature_HandR");
+		model->SetTargetBone(L"Armature_HandR");
+		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
+	}
 
-	//}
 
-	//{
-	//	MarioParts* parts = new MarioParts;
-	//	parts->SetPos(Vector3(0.f, 0.f, 0.f));
-	//	parts->SetScale(Vector3(1.0f, 1.f, 1.0f));
-	//	parts->SetName(L"parts");
+	if (GetName() == L"Head") {
+		SetPos(Vector3(0.f, 0.f, 0.f));
+		SetScale(Vector3(1.0f, 1.f, 1.0f));
 
-	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
-	//	parts->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
+		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-	//	BoneAnimator* animator = parts->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-	//	animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
-	//	animator->Play(L"test");
+		BoneAnimator* animator = GetComponent<BoneAnimator>();
+		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
+		animator->Play(L"test");
 
-	//	model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-	//	model->SetParentTargetBone(L"Armature_Head");
-	//	model->SetTargetBone(L"Armature_MarioHead");
+		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		model->SetParentTargetBone(L"Armature_Head");
+		model->SetTargetBone(L"Armature_MarioHead");
+		model->SetOffsetRotation(Vector3(0.0f, 1.570796f, -1.570796f * 2));
 
-	//	model->SetOffsetRotation(Vector3(0.0f, 1.570796f, -1.570796f * 2));
-	//	mMario.push_back(parts);
+	}
 
-	//}
+	if (GetName() == L"Face") {
+		SetPos(Vector3(0.f, 0.f, 0.f));
+		SetScale(Vector3(1.0f, 1.f, 1.0f));
+		SetName(L"parts");
 
-	//{
-	//	MarioParts* parts = new MarioParts;
-	//	parts->SetPos(Vector3(0.f, 0.f, 0.f));
-	//	parts->SetScale(Vector3(1.0f, 1.f, 1.0f));
-	//	parts->SetName(L"parts");
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioFace");
+		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioFace");
-	//	parts->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		BoneAnimator* animator = GetComponent<BoneAnimator>();
+		animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
+		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioFace/Animation/Walk.smd", 0.02f);
+		animator->Play(L"test2");
 
-	//	BoneAnimator* animator = parts->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-	//	animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
-	//	animator->CreateAnimation(L"test2", L"..//..//Resources/MarioFace/Animation/Walk.smd", 0.02f);
-	//	animator->Play(L"test2");
+		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		model->SetParentTargetBone(L"Armature_Head");
+		model->SetTargetBone(L"Armature_Face");
+		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
 
-	//	model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-	//	model->SetParentTargetBone(L"Armature_Head");
-	//	model->SetTargetBone(L"Armature_Face");
-
-	//	model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
-	//	mMario.push_back(parts);
-
-	//}
+	}
 }
 
