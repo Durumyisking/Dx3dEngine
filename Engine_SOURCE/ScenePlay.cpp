@@ -118,7 +118,7 @@ void ScenePlay::Initialize()
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
+		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
@@ -145,11 +145,11 @@ void ScenePlay::Initialize()
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.5f, 1.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
@@ -174,7 +174,7 @@ void ScenePlay::Initialize()
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
+		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));

@@ -94,6 +94,13 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(sphereMesh);
 
+		Mesh* capsuleMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Capsulemesh");
+		mDebugObjects[static_cast<UINT>(eColliderType::Capsule)] = new DebugObject();
+		renderer
+			= mDebugObjects[static_cast<UINT>(eColliderType::Capsule)]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		renderer->SetMaterial(material);
+		renderer->SetMesh(capsuleMesh);
+
 		if (mImguiEnable == false)
 			return;
 		
@@ -195,6 +202,7 @@ namespace gui
 		delete mDebugObjects[static_cast<UINT>(eColliderType::Circle)];
 		delete mDebugObjects[static_cast<UINT>(eColliderType::Box)];
 		delete mDebugObjects[static_cast<UINT>(eColliderType::Sphere)];
+		delete mDebugObjects[static_cast<UINT>(eColliderType::Capsule)];
 
 		if (mImguiEnable == false)
 			return;
@@ -225,6 +233,9 @@ namespace gui
 			break;
 		case enums::eColliderType::Sphere:
 			tr->SetScale(Vector3(mesh.scale.x));
+			break;
+		case enums::eColliderType::Capsule:
+			tr->SetScale(mesh.scale);
 			break;
 		case enums::eColliderType::End:
 			break;

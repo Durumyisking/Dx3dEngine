@@ -86,7 +86,7 @@ void Application::Render()
 		//GETSINGLE(SceneMgr)->Render();
 		GETSINGLE(SceneMgr)->FontRender();
 	}
-}
+}	
 
 void Application::Destroy()
 {

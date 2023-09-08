@@ -106,6 +106,12 @@ void Camera::Render()
 	renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->OMSetRenderTarget();
 	renderShadow();
 
+	// Forward Render
+	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+	renderOpaque();
+	renderCutout();
+	renderTransparent();
+
 	// Deferred Opaque Render 
 	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
 	renderDeferred();
@@ -128,10 +134,6 @@ void Camera::Render()
 	mergeMaterial->Bind();
 	rectMesh->Render();
 
-	// Forward Render
-	renderOpaque();
-	renderCutout();
-	renderTransparent();
 }
 
 void Camera::CreateViewMatrix()

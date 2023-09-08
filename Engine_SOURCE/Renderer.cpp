@@ -1955,6 +1955,7 @@ namespace renderer
 				continue;
 
 			cam->Render();
+			break;
 		}
 		Cameras[type].clear();
 		renderer::lightAttributes.clear();
