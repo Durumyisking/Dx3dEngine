@@ -147,7 +147,7 @@
     <ClInclude Include="guiGroupWidget.h">
       <Filter>Widget\Group</Filter>
     </ClInclude>
-    <ClInclude Include="guiOutLine.h">
+    <ClInclude Include="guiOutLiner.h">
       <Filter>View</Filter>
     </ClInclude>
     <ClInclude Include="guiImageWidget.h">
@@ -165,6 +165,7 @@
     <ClInclude Include="ImGuizmo.h">
       <Filter>Editor\Object\Gizmo</Filter>
     </ClInclude>
+    <ClInclude Include="guiPhysical.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Dx3dEngine.rc">
@@ -265,7 +266,7 @@
     <ClCompile Include="guiGroupWidget.cpp">
       <Filter>Widget\Group</Filter>
     </ClCompile>
-    <ClCompile Include="guiOutLine.cpp">
+    <ClCompile Include="guiOutLiner.cpp">
       <Filter>View</Filter>
     </ClCompile>
     <ClCompile Include="guiImageWidget.cpp">
@@ -283,5 +284,6 @@
     <ClCompile Include="ImGuizmo.cpp">
       <Filter>Editor\Object\Gizmo</Filter>
     </ClCompile>
+    <ClCompile Include="guiPhysical.cpp" />
   </ItemGroup>
 </Project>

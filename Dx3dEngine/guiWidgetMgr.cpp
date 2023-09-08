@@ -25,7 +25,7 @@
 #include "guiTreeWidget.h"
 #include "guiVisualEditor.h"
 #include "guiGizmo.h"
-#include "guiOutLine.h"
+#include "guiOutLiner.h"
 
 #include "InputMgr.h"
 
@@ -62,9 +62,9 @@ namespace gui
 		Gizmo* gizmo = new Gizmo();
 		mWidgets.insert(std::make_pair("Gizmo", gizmo));
 
-		OutLine* outLine = new OutLine();
+		OutLiner* outLiner = new OutLiner();
 		//Insert<Inspector>("Inspector", inspector);
-		mWidgets.insert(std::make_pair("OutLine", outLine));
+		mWidgets.insert(std::make_pair("OutLiner", outLiner));
 
 		Inspector* inspector = new Inspector();
 		//Insert<Inspector>("Inspector", inspector);

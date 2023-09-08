@@ -94,6 +94,8 @@ namespace gui
 			const std::vector<Node*>& childs = mRoot->GetChilds();
 			for (Node* child : childs)
 			{
+				if (child == nullptr)
+					continue;
 				child->Update();
 			}
 		}

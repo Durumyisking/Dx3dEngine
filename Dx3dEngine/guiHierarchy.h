@@ -18,7 +18,8 @@ namespace gui
 		void InitializeOutline(void* data);
 		void InitializeScene();
 		void AddGameObject(TreeWidget::Node* parent, GameObj* gameObject);
-		void MoveTarget();
+
+		void InitializeTreeWidget();
 
 		GameObj* GetTargetObject() { return mTargetObject; }
 

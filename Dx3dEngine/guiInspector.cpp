@@ -31,7 +31,12 @@ namespace gui
 		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetName("InspectorTransform");
 		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetTarget(mTargetGameObject);
 		AddWidget(mComponents[static_cast<UINT>(eComponentType::Transform)]);
-		
+
+		mComponents[static_cast<UINT>(eComponentType::Physical)] = new gui::GUITransform();
+		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetName("InspectorPhysical");
+		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetTarget(mTargetGameObject);
+		AddWidget(mComponents[static_cast<UINT>(eComponentType::Physical)]);
+
 		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)] = new gui::GUIMeshRenderer();
 		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetName("InspectorMeshRenderer");
 		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetTarget(mTargetGameObject);
@@ -123,6 +128,28 @@ namespace gui
 	{
 	}
 
+	void Inspector::Render()
+	{
+		if (mState != eState::Active)
+			return;
+
+		bool open = (bool)GetState();
+		FixedUpdate();
+		if (!ImGui::Begin(GetName().c_str(), &open, mWindow_flags))
+			mState = eState::Paused;
+		Update();
+		for (Widget* child : mChilds)
+		{
+			child->Render();
+
+			ImGui::Separator();
+		}
+		LateUpdate();
+
+
+		ImGui::End();
+	}
+
 	void Inspector::ClearTarget()
 	{
 		for (gui::GUIComponent* comp : mComponents)
@@ -150,6 +177,8 @@ namespace gui
 
 		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetState(eState::Active);
 		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetTarget(mTargetGameObject);
+		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetState(eState::Active);
+		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetTarget(mTargetGameObject);
 		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetState(eState::Active);
 		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetTarget(mTargetGameObject);
 	}

@@ -179,7 +179,8 @@
     <ClInclude Include="guiMaterial.h" />
     <ClInclude Include="guiMesh.h" />
     <ClInclude Include="guiMeshRenderer.h" />
-    <ClInclude Include="guiOutLine.h" />
+    <ClInclude Include="guiOutLiner.h" />
+    <ClInclude Include="guiPhysical.h" />
     <ClInclude Include="guiProject.h" />
     <ClInclude Include="guiResource.h" />
     <ClInclude Include="guiTexture.h" />
@@ -218,7 +219,8 @@
     <ClCompile Include="guiMaterial.cpp" />
     <ClCompile Include="guiMesh.cpp" />
     <ClCompile Include="guiMeshRenderer.cpp" />
-    <ClCompile Include="guiOutLine.cpp" />
+    <ClCompile Include="guiOutLiner.cpp" />
+    <ClCompile Include="guiPhysical.cpp" />
     <ClCompile Include="guiProject.cpp" />
     <ClCompile Include="guiResource.cpp" />
     <ClCompile Include="guiTexture.cpp" />

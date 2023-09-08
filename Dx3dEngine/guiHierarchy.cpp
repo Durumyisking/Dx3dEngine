@@ -10,7 +10,7 @@
 
 #include "guiTreeWidget.h"
 #include "guiWidgetMgr.h"
-#include "guiOutLine.h"
+#include "guiOutLiner.h"
 
 #include "InputMgr.h"
 
@@ -56,13 +56,7 @@ namespace gui
 
 	void Hierarchy::Update()
 	{
-		if (KEY_DOWN(LCTRL))
-		{
-			if (KEY_TAP(LBTN))
-			{
-				MoveTarget();
-			}
-		}
+
 	}
 
 	void Hierarchy::LateUpdate()
@@ -76,7 +70,7 @@ namespace gui
 		renderer::outlineGameObject
 			= static_cast<GameObj*>(data);
 
-		OutLine* outline = GETSINGLE(WidgetMgr)->GetWidget<OutLine>("Outline");
+		OutLiner* outline = GETSINGLE(WidgetMgr)->GetWidget<OutLiner>("OutLiner");
 		if (outline == nullptr)
 			return;
 		outline->SetTargetGameObject(renderer::outlineGameObject);
@@ -85,6 +79,61 @@ namespace gui
 		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
 		inspector->SetTargetGameObject(renderer::outlineGameObject);
 		inspector->InitializeTargetGameObject();
+	}
+
+	void SetLayerTypeName(enums::eLayerType type, std::string& name)
+	{
+		switch (type)
+		{
+		case enums::eLayerType::None:
+			name = "eLayerType::None";
+			break;
+		case enums::eLayerType::Camera:
+			name = "eLayerType::Camera";
+			break;
+		case enums::eLayerType::Grid:
+			name = "eLayerType::Grid";
+			break;
+		case enums::eLayerType::BackGround:
+			name = "eLayerType::BackGround";
+			break;
+		case enums::eLayerType::Objects:
+			name = "eLayerType::Objects";
+			break;
+		case enums::eLayerType::PhysicalObject:
+			name = "eLayerType::PhysicalObject";
+			break;
+		case enums::eLayerType::Bullet:
+			name = "eLayerType::Bullet";
+			break;
+		case enums::eLayerType::Monster:
+			name = "eLayerType::Monster";
+			break;
+		case enums::eLayerType::Boss:
+			name = "eLayerType::Boss";
+			break;
+		case enums::eLayerType::Player:
+			name = "eLayerType::Player";
+			break;
+		case enums::eLayerType::AfterImage:
+			name = "eLayerType::AfterImage";
+			break;
+		case enums::eLayerType::Platforms:
+			name = "eLayerType::Platforms";
+			break;
+		case enums::eLayerType::Particle:
+			name = "eLayerType::Particle";
+			break;
+		case enums::eLayerType::FX:
+			name = "eLayerType::FX";
+			break;
+		case enums::eLayerType::UI:
+			name = "eLayerType::UI";
+			break;
+		case enums::eLayerType::PostProcess:
+			name = "eLayerType::PostProcess";
+			break;
+		}
 	}
 
 	void Hierarchy::InitializeScene()
@@ -96,15 +145,33 @@ namespace gui
 
 		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, sceneName, 0, true);
 
+
+		//for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
+		//{
+		//	Layer& layer = scene->GetLayer((enums::eLayerType)i);
+		//	const std::vector<GameObj*>& gameObjs
+		//		= layer.GetGameObjects();
+
+		//	for (GameObj* obj : gameObjs)
+		//	{
+		//		AddGameObject(root, obj);
+		//	}
+		//}
+
 		for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
 		{
 			Layer& layer = scene->GetLayer((enums::eLayerType)i);
-			const std::vector<GameObj*>& gameObjs
-				= layer.GetGameObjects();
+			const std::vector<GameObj*>& gameObjs = layer.GetGameObjects();
+
+			std::string layerName = {};
+
+			SetLayerTypeName(static_cast<enums::eLayerType>(i), layerName);
+
+			TreeWidget::Node* rootChild = mTreeWidget->AddNode(root, layerName, 0, false);
 
 			for (GameObj* obj : gameObjs)
 			{
-				AddGameObject(root, obj);
+				AddGameObject(rootChild, obj);
 			}
 		}
 
@@ -115,31 +182,6 @@ namespace gui
 		std::string name(gameObject->GetName().begin(), gameObject->GetName().end());
 
 		TreeWidget::Node* node = mTreeWidget->AddNode(parent, name, gameObject);
-	}
-
-	void Hierarchy::MoveTarget()
-	{
-		//POINT clientPoint;
-		//clientPoint.x = mouseX;
-		//clientPoint.y = mouseY;
-		//ScreenToClient(hwnd, &clientPoint);
-
-		//float clientX = static_cast<float>(clientPoint.x);
-		//float clientY = static_cast<float>(clientPoint.y);
-
-
-		//// 스크린 좌표를 NDC 좌표로 변환
-		//float ndcX = (2.0f * mouseX / screenWidth) - 1.0f;
-		//float ndcY = 1.0f - (2.0f * mouseY / screenHeight);
-
-		//// NDC 좌표를 월드 좌표로 변환
-		//XMMATRIX invViewProjection = XMMatrixInverse(nullptr, viewProjectionMatrix);
-		//XMVECTOR worldPosition = XMVector3TransformCoord(XMVectorSet(ndcX, ndcY, 0.0f, 1.0f), invViewProjection);
-		//XMFLOAT3 newPosition;
-		//XMStoreFloat3(&newPosition, worldPosition);
-
-		//// 물체 위치 업데이트
-		//objectPosition = newPosition;
 	}
 
 }

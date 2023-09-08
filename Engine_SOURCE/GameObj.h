@@ -104,7 +104,7 @@ public:
 		return nullptr;
 	}
 
-	bool GetComponent(eComponentType type);
+	const std::vector<Component*>& GetComponents() { return mComponents; }
 
 	void Flip();
 		
