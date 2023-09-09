@@ -26,9 +26,10 @@ void PackunStateScript::Idle()
 	if (animator == nullptr)
 		return;
 
-	if (animator->PlayAnimationName() != L"Wait")
+	if (!mbAnimationRunning)
 	{
 		animator->Play(L"Wait");
+		mbAnimationRunning = true;
 	}
 }
 
@@ -106,10 +107,11 @@ void PackunStateScript::Attack()
 	if (animator == nullptr)
 		return;
 
-	std::wstring animationName = L"Attack";
-	if (animator->PlayAnimationName() != animationName)
+	std::wstring animationName = L"AttackSign";
+	if (!mbAnimationRunning)
 	{
-		animator->Play(animationName);
+		animator->Play(animationName, false);
+		mbAnimationRunning = true;
 	}
 }
 

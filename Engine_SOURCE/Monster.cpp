@@ -33,3 +33,12 @@ void Monster::FixedUpdate()
 {
 	GameObj::FixedUpdate();
 }
+
+void Monster::SetMonsterState(eMonsterState monsterState)
+{
+	mMonsterState = monsterState;
+
+	MonsterStateScript* script = GetScript<MonsterStateScript>();
+	if (script)
+		script->Reset();
+}

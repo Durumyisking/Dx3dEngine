@@ -31,7 +31,8 @@ public:
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) {};
 public:
-	GETSET(eMonsterState, mMonsterState, MonsterState)
+	eMonsterState GetMonsterState() { return mMonsterState; }
+	void SetMonsterState(eMonsterState monsterState);
 
 private:
 	eMonsterState mMonsterState;

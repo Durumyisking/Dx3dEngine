@@ -103,7 +103,21 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 {
 	animator->LoadAnimations(L"..//Resources/Packun/Animation");
 
-	AnimationClip* cilp = animator->GetAnimationClip(L"Attack");
-	if (cilp)
-		cilp->SetCompleateEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+
+	// 어택 동작 연계
+	{
+		AnimationClip* cilp = animator->GetAnimationClip(L"AttackSign");
+		if (cilp)
+			cilp->SetCompleateEvent([=]() 
+				{
+					animator->Play(L"Attack", false);
+				});
+
+		cilp = animator->GetAnimationClip(L"Attack");
+		if (cilp)
+			cilp->SetCompleateEvent([this]() 
+				{
+					SetMonsterState(Monster::eMonsterState::Idle); 
+				});
+	}
 }

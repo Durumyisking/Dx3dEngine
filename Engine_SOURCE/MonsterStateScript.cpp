@@ -5,6 +5,7 @@ MonsterStateScript::MonsterStateScript()
 	: Script()
 	, mStateEventList{}
 	, mMonster(nullptr)
+	, mbAnimationRunning(false)
 {
 	// 메모리 공간 확보
 	mStateEventList.reserve(static_cast<UINT>(Monster::eMonsterState::Die));

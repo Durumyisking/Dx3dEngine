@@ -21,10 +21,14 @@ public:
 	virtual void Groggy() {};
 	virtual void Die() {};
 
+public:
+	void Reset() { mbAnimationRunning = false; }
+
 private:
 	std::vector<std::function<void()>> mStateEventList;
 
 protected:
 	Monster* mMonster;
+	bool mbAnimationRunning;
 };
 
