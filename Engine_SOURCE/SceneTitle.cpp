@@ -294,9 +294,9 @@ void SceneTitle::Enter()
 	//}
 
 	{
-		//Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster);
-		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster);
-		packun->GetComponent<Transform>()->SetPositionX(-500.f);
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster);
+		/*Packun* packun = object::Instantiate<Packun>(eLayerType::Monster);
+		packun->GetComponent<Transform>()->SetPositionX(-500.f);*/
 	}
 
 	

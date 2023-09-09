@@ -6,6 +6,7 @@ class GameObj;
 class CaptureObj
 {
 public:
+	CaptureObj() = default;
 	virtual ~CaptureObj();
 
 	void Update();
@@ -20,7 +21,7 @@ public:
 
 	bool IsCapture() { return mbCapture; }
 private:
-	GameObj* mPlayer					= nullptr;
-	bool mbCapture						= false;
+	GameObj* mPlayer	= nullptr;
+	bool mbCapture		= false;
 };
 

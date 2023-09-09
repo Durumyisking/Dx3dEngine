@@ -59,7 +59,7 @@ void Transform::FixedUpdate()
 
 
 		// 원래 코드
-		//Matrix matPxRotation = Matrix::CreateFromQuaternion(convert::PxQuatToQuaternion(mPxTransform.q));
+		Matrix matPxRotation = Matrix::CreateFromQuaternion(convert::PxQuatToQuaternion(mPxTransform.q));
 		Matrix matPxTranslation = Matrix::CreateTranslation(convert::PxVec3ToVector3(mPxTransform.p));
 		mRelativePosition = convert::PxVec3ToVector3(mPxTransform.p);
 		mPxWorld = matPxScale * Testrotation * matPxTranslation;

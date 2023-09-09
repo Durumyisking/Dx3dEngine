@@ -64,30 +64,36 @@ void PackunStateScript::Move()
 	{
 		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
 		{
-			tr->SetRotation(Vector3(0.0f, -135.f, 0.0f));
+			rigidbody->AddTorqueYForDynamic(-135.f);
+			//tr->SetRotation(Vector3(0.0f, -135.f, 0.0f));
 		}
 		else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
 		{
-			tr->SetRotation(Vector3(0.0f, -225.f, 0.0f));
+			//tr->SetRotation(Vector3(0.0f, -225.f, 0.0f));
+			rigidbody->AddTorqueYForDynamic(-225.f);
 		}
 		else
 		{
-			tr->SetRotation(Vector3(0.0f, -180.f, 0.0f));
+			rigidbody->AddTorqueYForDynamic(-180.f);
+			//tr->SetRotation(Vector3(0.0f, -180.f, 0.0f));
 		}
 	}
 	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN))
 	{
 		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
 		{
-			tr->SetRotation(Vector3(0.0f, -45.f, 0.0f));
+			//tr->SetRotation(Vector3(0.0f, -45.f, 0.0f));
+			rigidbody->AddTorqueYForDynamic(-45.f);
 		}
 		else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
 		{
-			tr->SetRotation(Vector3(0.0f, 45.f, 0.0f));
+			//tr->SetRotation(Vector3(0.0f, 45.f, 0.0f));
+			rigidbody->AddTorqueYForDynamic(45.f);
 		}
 		else
 		{
-			tr->SetRotation(Vector3(0.0f, 0.f, 0.0f));
+			//tr->SetRotation(Vector3(0.0f, 0.f, 0.0f));
+			rigidbody->AddTorqueYForDynamic(0.f);
 		}
 
 	}

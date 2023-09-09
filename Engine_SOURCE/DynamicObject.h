@@ -19,13 +19,14 @@ public:
 	virtual void FontRender() override;
 
 public:
-	virtual void OnCollisionEnter(GameObj* gameObject) override;
-	virtual void OnTriggerEnter(GameObj* gameObject) override;
-	virtual void OnTriggerExit(GameObj* gameObject) override;
+	virtual void OnCollisionEnter(GameObj* gameObject) override{};
+	virtual void OnTriggerEnter(GameObj* gameObject) override{};
+	virtual void OnTriggerExit(GameObj* gameObject) override{};
 
 
 public:
 	virtual void BoneInitialize() {};
+	void InsertLockState(UINT curState, UINT lockState);
 
 protected:
 	virtual void stateInfoInitalize() = 0;
