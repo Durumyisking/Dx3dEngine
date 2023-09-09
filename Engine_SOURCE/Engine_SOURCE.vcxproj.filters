@@ -574,6 +574,9 @@
     <ClInclude Include="PackunStateScript.h">
       <Filter>Common\Component\Script\MonsterState\PackunState</Filter>
     </ClInclude>
+    <ClInclude Include="MarioParts.h" />
+    <ClInclude Include="MarioHead.h" />
+    <ClInclude Include="DynamicObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -878,6 +881,9 @@
     <ClCompile Include="PackunStateScript.cpp">
       <Filter>Common\Component\Script\MonsterState\PackunState</Filter>
     </ClCompile>
+    <ClCompile Include="MarioHead.cpp" />
+    <ClCompile Include="MarioParts.cpp" />
+    <ClCompile Include="DynamicObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

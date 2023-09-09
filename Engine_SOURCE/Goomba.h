@@ -15,6 +15,7 @@ public:
 
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) final;
+	virtual void stateInfoInitalize() final;
 
 private:
 

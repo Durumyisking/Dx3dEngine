@@ -22,6 +22,9 @@ public:
 public:
 	MarioParts* GetMario() { return mBody; }
 
+protected:
+	virtual void stateInfoInitalize() override {};
+
 
 private:
 	std::vector<MarioParts*> mMario;

@@ -4,7 +4,7 @@
 #include "BoneAnimator.h"
 
 Monster::Monster()
-	: GameObj()
+	: DynamicObject()
 	, mMonsterState(eMonsterState::Idle)
 {
 }
@@ -15,6 +15,10 @@ Monster::~Monster()
 
 void Monster::Initialize()
 {
+	//StateInfoSetting
+	mStateInfo.resize(static_cast<int>(eMonsterState::Die) + 1);
+	
+
 	// Animator
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 	if (animator != nullptr)
@@ -36,6 +40,11 @@ void Monster::FixedUpdate()
 
 void Monster::SetMonsterState(eMonsterState monsterState)
 {
+	std::set<UINT>::iterator iter;
+	iter = mStateInfo[static_cast<UINT>(mMonsterState)].mLockState.find(static_cast<UINT>(monsterState));
+	if (iter != mStateInfo[static_cast<UINT>(mMonsterState)].mLockState.end())
+		return;
+
 	mMonsterState = monsterState;
 
 	MonsterStateScript* script = GetScript<MonsterStateScript>();

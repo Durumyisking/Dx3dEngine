@@ -4,6 +4,11 @@ class DynamicObject :
     public GameObj
 {
 public:
+	struct StateInfo {
+		std::set<UINT> mLockState;
+	};
+
+public:
 	DynamicObject();
 	virtual ~DynamicObject();
 
@@ -18,14 +23,15 @@ public:
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
 
-private:
 
 public:
 	virtual void BoneInitialize() {};
-	struct StateInfo {
-		UINT mState;
-		std::set<UINT> mLockState;
-	};
+
+protected:
+	virtual void stateInfoInitalize() = 0;
+
+protected:
+	std::vector<StateInfo> mStateInfo;
 
 };
 

@@ -1,9 +1,9 @@
 #pragma once
-#include "GameObj.h"
+#include "DynamicObject.h"
 #include "CaptureObj.h"
 
 class BoneAnimator;
-class Monster : public GameObj, public CaptureObj
+class Monster : public DynamicObject, public CaptureObj
 {
 public:
 	enum class eMonsterState : short
@@ -30,6 +30,7 @@ public:
 
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) {};
+	virtual void stateInfoInitalize() = 0;
 public:
 	eMonsterState GetMonsterState() { return mMonsterState; }
 	void SetMonsterState(eMonsterState monsterState);

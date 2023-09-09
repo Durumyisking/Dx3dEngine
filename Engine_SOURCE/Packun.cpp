@@ -99,6 +99,10 @@ void Packun::CaptureEvent()
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Attack);
 }
 
+void Packun::stateInfoInitalize()
+{
+}
+
 void Packun::boneAnimatorInit(BoneAnimator* animator)
 {
 	animator->LoadAnimations(L"..//Resources/Packun/Animation");
