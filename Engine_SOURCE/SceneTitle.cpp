@@ -40,6 +40,7 @@
 #include "BoneAnimator.h"
 
 #include "Panal.h"
+#include "Monster.h"
 
 extern Application application;
 
@@ -166,31 +167,9 @@ void SceneTitle::Enter()
 	//플레이어 호출, 호출시 알아서 모델 initialize
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		//player->GetComponent<Transform>()->SetPhysicalPosition();
 	}
 
 
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
-		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
-		player->SetName(L"Player");
-
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioFace");
-		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
-
-		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioFace/Animation/Walk.smd", 0.02f);
-		animator->Play(L"test2");
-
-		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
-		model->SetParentTargetBone(L"Armature_Head");
-		model->SetTargetBone(L"Armature_Face");
-
-		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
-
-	}
 
 	{
 		/*Player* player = object::Instantiate<Player>(eLayerType::Player);
@@ -221,12 +200,13 @@ void SceneTitle::Enter()
 	}
 
 	{
-		/*Player* player = object::Instantiate<Player>(eLayerType::Player);
+	/*	Monster* player = object::Instantiate<Monster>(eLayerType::Monster);
 		player->SetPos(Vector3(0.f, 0.f, 0.f));
 		player->SetScale(Vector3(1.0f, 1.f, 1.0f));
 		player->SetName(L"Player");
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
+		player->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 		player->GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = player->AddComponent<BoneAnimator>(eComponentType::BoneAnimator);

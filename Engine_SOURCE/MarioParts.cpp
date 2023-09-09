@@ -24,7 +24,8 @@ void MarioParts::Initialize()
 	
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-	//AddComponent<Physical>(eComponentType::Physical);
+	//Physical* physical = AddComponent<Physical>(eComponentType::Physical);
+	//physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.000001f, 0.000001f, 0.000001f));
 	//AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	AddComponent<Transform>(eComponentType::Transform);
 	//AddComponent<PhysXCollider>(eComponentType::Collider);
@@ -37,11 +38,11 @@ void MarioParts::Initialize()
 void MarioParts::Update()
 {
 	DynamicObject::Update();
-
 }
 
 void MarioParts::FixedUpdate()
 {
+	DynamicObject::FixedUpdate();
 }
 
 void MarioParts::Render()
@@ -68,7 +69,7 @@ void MarioParts::OnTriggerExit(GameObj* gameObject)
 
 void MarioParts::BoneInitialize()
 {
-	if(GetName()==L"HandL"){
+	if (GetName()==L"HandL"){
 
 		SetPos(Vector3(0.f, 0.f, 0.f));
 		SetScale(Vector3(1.0f, 1.f, 1.0f));
@@ -109,7 +110,6 @@ void MarioParts::BoneInitialize()
 		model->SetTargetBone(L"Armature_HandR");
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
 	}
-
 
 	if (GetName() == L"Head") {
 		SetPos(Vector3(0.f, 0.f, 0.f));

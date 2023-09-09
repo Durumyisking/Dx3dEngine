@@ -31,6 +31,7 @@ public:
 private:
 	std::vector<MarioParts*> mParts;
 	Vector3 mMarioPhysicPos;
+	Vector3 mMarioPhysicRot;
 
 public:
 

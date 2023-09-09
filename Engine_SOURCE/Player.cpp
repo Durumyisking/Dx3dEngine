@@ -27,11 +27,12 @@ Player::~Player()
 
 void Player::Initialize()
 {
+	//마리오 body 초기화
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	AddComponent<PlayerScript>(eComponentType::Script);
 	AddComponent<Transform>(eComponentType::Transform);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	PhysXRigidBody* rigid =AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	AddComponent<PhysXCollider>(eComponentType::Collider);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
@@ -51,9 +52,10 @@ void Player::Initialize()
 
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(1.0f, 1.0f, 1.0f));
 	mMarioPhysicPos = GetComponent<Transform>()->GetPhysicalPosition();
 
+	//마리오 파츠 관리
 	MarioParts* mHandL = object::Instantiate<MarioParts>(eLayerType::Player);
 	MarioParts* mHandR = object::Instantiate<MarioParts>(eLayerType::Player);
 	MarioParts* mHead = object::Instantiate<MarioParts>(eLayerType::Player);
@@ -80,12 +82,15 @@ void Player::Initialize()
 
 void Player::Update()
 {
-	mMarioPhysicPos = GetComponent<Transform>()->GetPosition();
+	mMarioPhysicPos = GetComponent<Transform>()->GetPhysicalPosition();
+	mMarioPhysicRot = GetComponent<Transform>()->GetPhysicalRotation();
 
 	for (auto i : mParts)
 	{
 		i->GetComponent<Transform>()->SetPosition(mMarioPhysicPos);
-		i->Update();
+		i->GetComponent<Transform>()->SetRotation(mMarioPhysicRot);
+		//i->GetComponent<Transform>()->SetPosition(Vector3(10.f, 10.f, 10.f));
+		//i->Update();
 	}
 
 	DynamicObject::Update();

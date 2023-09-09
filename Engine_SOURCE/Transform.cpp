@@ -176,6 +176,13 @@ Vector3 Transform::GetPhysicalPosition()
 	return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
 }
 
+Vector3 Transform::GetPhysicalRotation()
+{
+	assert(GetOwner()->GetComponent<Physical>());
+	return convert::PxQuatToQuaternion(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().q).ToEuler() / XM_PI * 180;
+}
+
+
 void Transform::SetPhysicalPosition(const Vector3& position)
 {
 	assert(GetOwner()->GetComponent<Physical>());

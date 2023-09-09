@@ -121,6 +121,7 @@ public:
 	}
 
 	Vector3 GetPhysicalPosition();
+	Vector3 GetPhysicalRotation();
 	void SetPhysicalPosition(const Vector3& vPosition);
 
 	//PxTransform GetPxTransform() const { return mPxTransform; }
