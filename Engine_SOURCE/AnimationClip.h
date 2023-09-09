@@ -36,6 +36,15 @@ public:
 	aiMatrix4x4 ToLeftHandMatrix(math::Vector3 pos, aiMatrix3x3 rotation);
 
 public:
+	std::function<void()> GetStartEvent() { return mStartEvent; }
+	std::function<void()> GetCompleateEvent() { return mCompleateEvent; }
+	std::function<void()> GetEndEvent() { return mEndEvent; }
+
+	void SetStartEvent(std::function<void()> inEvent) { mStartEvent = std::move(inEvent); }
+	void SetCompleateEvent(std::function<void()> inEvent) { mCompleateEvent = std::move(inEvent); }
+	void SetEndEvent(std::function<void()> inEvent) { mEndEvent = std::move(inEvent); }
+
+public:
 	GETSET(const std::wstring&, mName, AnimationName)
 	GETSET(double, mDuration, Duration)
 	GETSET(double, mTickPerSceond, TickPerSceond)
@@ -59,6 +68,10 @@ private:
 	bool		mCompleate;
 
 	BoneAnimator* mAnimator;
+
+	std::function<void()> mStartEvent;
+	std::function<void()> mCompleateEvent;
+	std::function<void()> mEndEvent;
 
 	std::wstring mName;
 };

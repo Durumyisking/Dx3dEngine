@@ -20,7 +20,7 @@ public:
 
 	// 애니메이션을 생성하는 함수
 	void CreateAnimation(const std::wstring& name, const std::wstring& path, double duration);
-	void CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount = 60);
+	void CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount = 30);
 
 	// 애니메이션 Play
 	void Play(const std::wstring& name, bool loop = true);
@@ -31,6 +31,8 @@ public:
 	bool IsCompleate() { return mPlayAnimation == nullptr ? true :mPlayAnimation->IsCompleate(); }
 
 	const std::wstring PlayAnimationName() const;
+
+	AnimationClip* GetAnimationClip(const std::wstring& animationName) const;
 private:
 	std::map<std::wstring, AnimationClip*> mAnimationClips;
 	AnimationClip* mPlayAnimation;

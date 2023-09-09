@@ -18,6 +18,7 @@
 #include "Application.h"
 #include "Player.h"
 #include "Goomba.h"
+#include "Packun.h"
 
 #include "Physical.h"
 #include "PhysXRigidBody.h"
@@ -98,7 +99,7 @@ void SceneTitle::Enter()
 		mCamera->AddComponent<CameraScript>(eComponentType::Script);
 		renderer::mainCamera = cameraComp;
 		cameraComp->SetProjectionType(eProjectionType::Perspective);
-		mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
+		mCamera->SetPos(Vector3(0.f, 200.f, -500.f));
 
 	}
 
@@ -293,8 +294,9 @@ void SceneTitle::Enter()
 	//}
 
 	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster);
-		
+		//Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster);
+		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster);
+		packun->GetComponent<Transform>()->SetPositionX(-500.f);
 	}
 
 	

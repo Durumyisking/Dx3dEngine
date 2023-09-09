@@ -116,8 +116,16 @@ void BoneAnimator::Play(const std::wstring& name, bool loop)
 	
 	mbLoop = loop;
 
+	// EndEvent호출
+	if (nullptr != mPlayAnimation && nullptr != mPlayAnimation->GetEndEvent())
+		mPlayAnimation->GetEndEvent()();
+
 	mPlayAnimation = iter->second;
 	mPlayAnimation->Reset();
+
+	// StartEvent호출
+	if (nullptr != mPlayAnimation && nullptr != mPlayAnimation->GetStartEvent())
+		mPlayAnimation->GetStartEvent()();
 }
 
 void BoneAnimator::SetAnimationDruationTime(const std::wstring& name, float duration)
@@ -136,4 +144,13 @@ const std::wstring BoneAnimator::PlayAnimationName() const
 		return L"Empty";
 
 	return mPlayAnimation->GetAnimationName();
+}
+
+AnimationClip* BoneAnimator::GetAnimationClip(const std::wstring& animationName) const
+{
+	const auto& iter = mAnimationClips.find(animationName);
+	if (iter == mAnimationClips.end())
+		return nullptr;
+
+	return iter->second;
 }

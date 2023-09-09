@@ -16,6 +16,9 @@ AnimationClip::AnimationClip()
 	, mCurIndex(0)
 	, mCompleate(false)
 	, mAnimator(nullptr)
+	, mStartEvent(nullptr)
+	, mCompleateEvent(nullptr)
+	, mEndEvent(nullptr)
 	, mName(L"")
 {
 }
@@ -42,6 +45,10 @@ void AnimationClip::Update()
 		// 애니메이션 종료시 리셋
 		Reset();
 		mCompleate = true;
+
+		if (mCompleateEvent)
+			mCompleateEvent();
+
 		return;
 	}
 

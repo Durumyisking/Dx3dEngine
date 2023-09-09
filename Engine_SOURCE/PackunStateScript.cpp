@@ -1,4 +1,4 @@
-#include "GoombaStateScript.h"
+#include "PackunStateScript.h"
 #include "Monster.h"
 #include "PhysXRigidBody.h"
 #include "PhysicalMovement.h"
@@ -6,22 +6,21 @@
 #include "InputMgr.h"
 #include "TimeMgr.h"
 
-
-GoombaStateScript::GoombaStateScript()
-	: MonsterStateScript()
+PackunStateScript::PackunStateScript()
+	:MonsterStateScript()
 {
 }
 
-GoombaStateScript::~GoombaStateScript()
+PackunStateScript::~PackunStateScript()
 {
 }
 
-void GoombaStateScript::Update()
+void PackunStateScript::Update()
 {
 	MonsterStateScript::Update();
 }
 
-void GoombaStateScript::Idle()
+void PackunStateScript::Idle()
 {
 	BoneAnimator* animator = mMonster->GetComponent<BoneAnimator>();
 	if (animator == nullptr)
@@ -33,7 +32,7 @@ void GoombaStateScript::Idle()
 	}
 }
 
-void GoombaStateScript::Move()
+void PackunStateScript::Move()
 {
 	BoneAnimator* animator = mMonster->GetComponent<BoneAnimator>();
 	if (animator == nullptr)
@@ -46,12 +45,6 @@ void GoombaStateScript::Move()
 	PhysicalMovement* moveMent = GetOwner()->GetComponent<PhysicalMovement>();
 	if (moveMent == nullptr)
 		return;
-
-	if (animator->PlayAnimationName() != L"Dash")
-	{
-		const std::wstring& test = animator->PlayAnimationName();
-		animator->Play(L"Dash");
-	}
 
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
@@ -105,64 +98,33 @@ void GoombaStateScript::Move()
 	{
 		tr->SetRotation(Vector3(0.0f, -90.f, 0.0f));
 	}
-	rigidbody->SetLinearMaxVelocityForDynamic(4000.f);
-	rigidbody->AddForceForDynamic((-tr->Forward() * 100000.f * DT), PxForceMode::Enum::eFORCE);
 }
 
-void GoombaStateScript::Jump()
+void PackunStateScript::Attack()
 {
 	BoneAnimator* animator = mMonster->GetComponent<BoneAnimator>();
 	if (animator == nullptr)
 		return;
 
-	PhysXRigidBody* rigidbody = mMonster->GetComponent<PhysXRigidBody>();
-	if (!rigidbody)
-		return;
-
-	PhysicalMovement* moveMent = mMonster->GetComponent<PhysicalMovement>();
-	if (!moveMent)
-		return;
-
-
-	if (animator->PlayAnimationName() != L"Jump")
+	std::wstring animationName = L"Attack";
+	if (animator->PlayAnimationName() != animationName)
 	{
-		const std::wstring& test = animator->PlayAnimationName();
-		animator->Play(L"Jump", false);
-
-		rigidbody->SetLinearMaxVelocityForDynamic(5000.f);
-		rigidbody->AddForce(math::Vector3(0.0f, 100000.f / 5.0f, 0.0f), physx::PxForceMode::eFORCE);
-		rigidbody->SetLinearDamping(1.0f);
-	}
-
-	if (animator->PlayAnimationName() == L"Jump" && animator->IsCompleate())
-	{
-		mMonster->SetMonsterState(Monster::eMonsterState::Idle);
-		rigidbody->SetLinearMaxVelocityForDynamic(5000.f);
+		animator->Play(animationName);
 	}
 }
 
-void GoombaStateScript::SpecialCast()
-{
-	BoneAnimator* animator = mMonster->GetComponent<BoneAnimator>();
-	if (animator == nullptr)
-		return;
-
-	std::wstring testName = L"Turn";
-
-	if (animator->PlayAnimationName() != testName)
-	{
-		animator->Play(testName);
-	}
-}
-
-void GoombaStateScript::Hit()
+void PackunStateScript::SpecialCast()
 {
 }
 
-void GoombaStateScript::Groggy()
+void PackunStateScript::Hit()
 {
 }
 
-void GoombaStateScript::Die()
+void PackunStateScript::Groggy()
+{
+}
+
+void PackunStateScript::Die()
 {
 }

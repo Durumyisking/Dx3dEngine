@@ -1,43 +1,42 @@
-#include "Goomba.h"
+#include "Packun.h"
 #include "InputMgr.h"
 #include "BoneAnimator.h"
 #include "Model.h"
 #include "ResourceMgr.h"
 #include "MeshRenderer.h"
-#include "GoombaStateScript.h"
+#include "PackunStateScript.h"
 #include "PhysXRigidBody.h"
 #include "Physical.h"
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
 
-Goomba::Goomba()
+Packun::Packun()
 	: Monster()
 {
-	//OnCapture();
+	OnCapture();
 }
 
-Goomba::~Goomba()
+Packun::~Packun()
 {
-
 }
 
-void Goomba::Initialize()
+void Packun::Initialize()
 {
 	// Add MeshRenderer
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 	// SetModel
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
-	if(model)
+	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
+	if (model)
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
-	GoombaStateScript* goombaState = AddComponent<GoombaStateScript>(eComponentType::Script);
-	goombaState->Initialize();
+	PackunStateScript* packunState = AddComponent<PackunStateScript>(eComponentType::Script);
+	packunState->Initialize();
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
 
 
 	// Rigidbody
@@ -52,17 +51,17 @@ void Goomba::Initialize()
 	Monster::Initialize();
 }
 
-void Goomba::Update()
+void Packun::Update()
 {
 	Monster::Update();
 }
 
-void Goomba::FixedUpdate()
+void Packun::FixedUpdate()
 {
 	Monster::FixedUpdate();
 }
 
-void Goomba::CaptureEvent()
+void Packun::CaptureEvent()
 {
 	// 캡처 이벤트 구현부
 	bool able = false;
@@ -76,13 +75,13 @@ void Goomba::CaptureEvent()
 	keyEvent[static_cast<UINT>(eKeyState::NONE)] = std::bind(&InputMgr::GetKeyNone, GETSINGLE(InputMgr), std::placeholders::_1);
 
 	// 키 입력 이벤트 처리하는 람다식
-	std::function<void(eKeyState, eKeyCode, eMonsterState)> stateEvent = 
+	std::function<void(eKeyState, eKeyCode, eMonsterState)> stateEvent =
 		[&]
-		(eKeyState keyState,eKeyCode curPress, eMonsterState nextState) ->void
+		(eKeyState keyState, eKeyCode curPress, eMonsterState nextState) ->void
 		{
 			if (able)
 				return;
-			if(keyEvent[static_cast<UINT>(keyState)](curPress))
+			if (keyEvent[static_cast<UINT>(keyState)](curPress))
 			{
 				SetMonsterState(nextState);
 				able = true;
@@ -93,20 +92,16 @@ void Goomba::CaptureEvent()
 	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::RIGHT, eMonsterState::Move);
 
-	// 점프
+	// 공격
 	able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Jump);
-
-	// 특수
-	//able = false;
-	//stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::SpecialCast);
+	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Attack);
 }
 
-void Goomba::boneAnimatorInit(BoneAnimator* animator)
+void Packun::boneAnimatorInit(BoneAnimator* animator)
 {
-	animator->LoadAnimations(L"..//Resources/goomba/Animation");
+	animator->LoadAnimations(L"..//Resources/Packun/Animation");
 
 	AnimationClip* cilp = animator->GetAnimationClip(L"Attack");
 	if (cilp)

@@ -1,11 +1,11 @@
 #pragma once
 #include "Monster.h"
 
-class Goomba : public Monster
+class Packun : public Monster
 {
 public:
-	Goomba();
-	virtual ~Goomba();
+	Packun();
+	virtual ~Packun();
 
 	virtual void Initialize() final;
 	virtual void Update() final;

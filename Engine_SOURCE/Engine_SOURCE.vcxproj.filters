@@ -233,6 +233,12 @@
     <Filter Include="Common\Component\Script\MonsterState\GoombaState">
       <UniqueIdentifier>{c0ba9357-710f-45a1-a6b1-49dccfae9aaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\GameObj\Monster\Packun">
+      <UniqueIdentifier>{f3452ec8-1b20-45ab-ac8a-4bfd4ca1280e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Script\MonsterState\PackunState">
+      <UniqueIdentifier>{ddf425c6-d06d-458f-9b4c-4dfffae95dc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -562,6 +568,12 @@
     <ClInclude Include="GoombaStateScript.h">
       <Filter>Common\Component\Script\MonsterState\GoombaState</Filter>
     </ClInclude>
+    <ClInclude Include="Packun.h">
+      <Filter>Common\GameObj\Monster\Packun</Filter>
+    </ClInclude>
+    <ClInclude Include="PackunStateScript.h">
+      <Filter>Common\Component\Script\MonsterState\PackunState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -859,6 +871,12 @@
     </ClCompile>
     <ClCompile Include="GoombaStateScript.cpp">
       <Filter>Common\Component\Script\MonsterState\GoombaState</Filter>
+    </ClCompile>
+    <ClCompile Include="Packun.cpp">
+      <Filter>Common\GameObj\Monster\Packun</Filter>
+    </ClCompile>
+    <ClCompile Include="PackunStateScript.cpp">
+      <Filter>Common\Component\Script\MonsterState\PackunState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

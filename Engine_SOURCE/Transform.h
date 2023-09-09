@@ -124,6 +124,7 @@ public:
 	void SetPhysicalPosition(const Vector3& vPosition);
 
 	PxTransform GetPxTransform() const { return mPxTransform; }
+	void SetPxTransform(PxTransform pxTransform) {mPxTransform = pxTransform;}
 
 private:
 	Transform* mParent;

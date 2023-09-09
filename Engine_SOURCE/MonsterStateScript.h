@@ -15,6 +15,7 @@ public:
 	virtual void Idle() {};
 	virtual void Move() {};
 	virtual void Jump() {};
+	virtual void Attack() {};
 	virtual void SpecialCast() {};
 	virtual void Hit() {};
 	virtual void Groggy() {};
