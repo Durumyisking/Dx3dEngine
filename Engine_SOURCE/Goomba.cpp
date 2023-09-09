@@ -120,35 +120,35 @@ void Goomba::stateInfoInitalize()
 
 	// Jump
 	mStateInfo[static_cast<UINT>(eMonsterState::Jump)].mLockState.insert(static_cast<UINT>(eMonsterState::Move));
-	mStateInfo[static_cast<UINT>(eMonsterState::Jump)].mLockState.insert(static_cast<UINT>(eMonsterState::SpecialCast));
+	mStateInfo[static_cast<UINT>(eMonsterState::Jump)].mLockState.insert(static_cast<UINT>(eMonsterState::SpecialSituation));
 	mStateInfo[static_cast<UINT>(eMonsterState::Jump)].mLockState.insert(static_cast<UINT>(eMonsterState::Groggy));
 	mStateInfo[static_cast<UINT>(eMonsterState::Jump)].mLockState.insert(static_cast<UINT>(eMonsterState::Die));
 
 	//Attack
 	mStateInfo[static_cast<UINT>(eMonsterState::Attack)].mLockState.insert(static_cast<UINT>(eMonsterState::Jump));
-	mStateInfo[static_cast<UINT>(eMonsterState::Attack)].mLockState.insert(static_cast<UINT>(eMonsterState::SpecialCast));
+	mStateInfo[static_cast<UINT>(eMonsterState::Attack)].mLockState.insert(static_cast<UINT>(eMonsterState::SpecialSituation));
 
 	//SpecialCast
-	mStateInfo[static_cast<UINT>(eMonsterState::SpecialCast)].mLockState.insert(static_cast<UINT>(eMonsterState::Attack));
+	mStateInfo[static_cast<UINT>(eMonsterState::SpecialSituation)].mLockState.insert(static_cast<UINT>(eMonsterState::Attack));
 
 	// Hit
 	mStateInfo[static_cast<UINT>(eMonsterState::Hit)].mLockState.insert(static_cast<UINT>(eMonsterState::Move));
 	mStateInfo[static_cast<UINT>(eMonsterState::Hit)].mLockState.insert(static_cast<UINT>(eMonsterState::Jump));
 	mStateInfo[static_cast<UINT>(eMonsterState::Hit)].mLockState.insert(static_cast<UINT>(eMonsterState::Attack));
-	mStateInfo[static_cast<UINT>(eMonsterState::Hit)].mLockState.insert(static_cast<UINT>(eMonsterState::SpecialCast));
+	mStateInfo[static_cast<UINT>(eMonsterState::Hit)].mLockState.insert(static_cast<UINT>(eMonsterState::SpecialSituation));
 
 	// Groggy
 	mStateInfo[static_cast<UINT>(eMonsterState::Groggy)].mLockState.insert(static_cast<UINT>(eMonsterState::Move));
 	mStateInfo[static_cast<UINT>(eMonsterState::Groggy)].mLockState.insert(static_cast<UINT>(eMonsterState::Jump));
 	mStateInfo[static_cast<UINT>(eMonsterState::Groggy)].mLockState.insert(static_cast<UINT>(eMonsterState::Attack));
-	mStateInfo[static_cast<UINT>(eMonsterState::Groggy)].mLockState.insert(static_cast<UINT>(eMonsterState::SpecialCast));
+	mStateInfo[static_cast<UINT>(eMonsterState::Groggy)].mLockState.insert(static_cast<UINT>(eMonsterState::SpecialSituation));
 
 	// Die
 	mStateInfo[static_cast<UINT>(eMonsterState::Die)].mLockState.insert(static_cast<UINT>(eMonsterState::Idle));
 	mStateInfo[static_cast<UINT>(eMonsterState::Die)].mLockState.insert(static_cast<UINT>(eMonsterState::Move));
 	mStateInfo[static_cast<UINT>(eMonsterState::Die)].mLockState.insert(static_cast<UINT>(eMonsterState::Jump));
 	mStateInfo[static_cast<UINT>(eMonsterState::Die)].mLockState.insert(static_cast<UINT>(eMonsterState::Attack));
-	mStateInfo[static_cast<UINT>(eMonsterState::Die)].mLockState.insert(static_cast<UINT>(eMonsterState::SpecialCast));
+	mStateInfo[static_cast<UINT>(eMonsterState::Die)].mLockState.insert(static_cast<UINT>(eMonsterState::SpecialSituation));
 	mStateInfo[static_cast<UINT>(eMonsterState::Die)].mLockState.insert(static_cast<UINT>(eMonsterState::Groggy));
 
 }

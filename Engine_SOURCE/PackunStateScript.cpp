@@ -115,7 +115,7 @@ void PackunStateScript::Attack()
 	}
 }
 
-void PackunStateScript::SpecialCast()
+void PackunStateScript::SpecialSituation()
 {
 }
 

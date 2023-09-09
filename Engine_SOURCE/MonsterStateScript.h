@@ -16,7 +16,7 @@ public:
 	virtual void Move() {};
 	virtual void Jump() {};
 	virtual void Attack() {};
-	virtual void SpecialCast() {};
+	virtual void SpecialSituation() {};
 	virtual void Hit() {};
 	virtual void Groggy() {};
 	virtual void Die() {};

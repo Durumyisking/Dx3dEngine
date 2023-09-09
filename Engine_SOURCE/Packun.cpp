@@ -101,6 +101,7 @@ void Packun::CaptureEvent()
 
 void Packun::stateInfoInitalize()
 {
+
 }
 
 void Packun::boneAnimatorInit(BoneAnimator* animator)

@@ -15,7 +15,7 @@ MonsterStateScript::MonsterStateScript()
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Move, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Jump, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Attack, this));
-	mStateEventList.emplace_back(std::bind(&MonsterStateScript::SpecialCast, this));
+	mStateEventList.emplace_back(std::bind(&MonsterStateScript::SpecialSituation, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Hit, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Groggy, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Die, this));

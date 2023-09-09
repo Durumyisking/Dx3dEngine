@@ -12,7 +12,7 @@ public:
 		Move,
 		Jump,
 		Attack,
-		SpecialCast,
+		SpecialSituation,
 		Hit,
 		Groggy,
 		Die,

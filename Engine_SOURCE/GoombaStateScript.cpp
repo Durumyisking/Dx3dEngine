@@ -141,7 +141,7 @@ void GoombaStateScript::Jump()
 	}
 }
 
-void GoombaStateScript::SpecialCast()
+void GoombaStateScript::SpecialSituation()
 {
 	BoneAnimator* animator = mMonster->GetComponent<BoneAnimator>();
 	if (animator == nullptr)
