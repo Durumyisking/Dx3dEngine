@@ -26,26 +26,11 @@ float4 main(VSOut vsIn) : SV_Target
     float   roughness = cbRoughness;
     float3  A0 = (float3) 1.f;
 
-    if (1 == cbbAlbedo)
-    {
-        albedo = TextureMapping_albedo(vsIn.UV);
-    }
-    if (1 == cbbNormal)
-    {
-        normal = TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, vsIn.WorldBiNormal);
-    }
-    if (1 == cbbMetallic)
-    {
-        metallic  = TextureMapping_metallic(vsIn.UV);
-    }
-    if (1 == cbbRoughness)
-    {
-        roughness = TextureMapping_roughness(vsIn.UV);
-    }
-    if (1 == cbbEmissive)
-    {
-        //normal = TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, vsIn.WorldBiNormal);
-    }
+    albedo = cbbAlbedo ? TextureMapping_albedo(vsIn.UV) : albedo;
+    normal = cbbNormal ? TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, vsIn.WorldBiNormal) : normal;
+    metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV) : metallic;
+    roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV) : roughness;
+    //albedo = cbbEmissive ? TextureMapping_albedo(vsIn.UV) : albedo;
 
     
     outColor.xyz = CalculateLightPBR_Direct(vsIn.WorldPos, albedo, normal, metallic, roughness);

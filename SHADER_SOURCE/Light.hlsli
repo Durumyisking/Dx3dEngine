@@ -227,6 +227,36 @@ float4 CombineLights(float4 color, LightColor lightColor)
     return color;
 }
 
+float3 DiffuseIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
+                  float metallic)
+{
+    float3 F0 = lerp(Fdielectric, albedo, metallic);
+    float3 F = fresnelSchlick(F0, max(0.0, dot(normalWorld, pixelToEye)));
+    float3 kd = lerp(1.0 - F, 0.0, metallic);
+    float3 irradiance = irradianceMap.SampleLevel(linearSampler, normalWorld, 0).rgb;
+    
+    return kd * albedo * irradiance;
+}
+
+float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
+                   float metallic, float roughness)
+{
+    float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(dot(normalWorld, pixelToEye), 1.0 - roughness), 0.0f).rg;
+    float3 specularIrradiance = prefilteredMap.SampleLevel(linearSampler, reflect(-pixelToEye, normalWorld),
+                                                            2 + roughness * 5.0f).rgb;
+    const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
+    float3 F0 = lerp(Fdielectric, albedo, metallic);
+
+    return (F0 * specularBRDF.x + specularBRDF.y) * specularIrradiance;
+}
+float3 AmbientLightingByIBL(float3 albedo, float3 normalW, float3 pixelToEye, float ao,
+                            float metallic, float roughness)
+{
+    float3 diffuseIBL = DiffuseIBL(albedo, normalW, pixelToEye, metallic);
+    float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness);
+    
+    return (diffuseIBL + specularIBL) * ao;
+}
 
 
 //3D
