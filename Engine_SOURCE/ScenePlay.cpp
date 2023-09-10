@@ -110,8 +110,6 @@ void ScenePlay::Initialize()
 		(
 			L"gold_albedo",
 			L"gold_normal",
-			L"gold_metallic",
-			L"gold_roughness",
 			L"PBRShader",
 			L"gold_dirt"
 		);
@@ -138,8 +136,6 @@ void ScenePlay::Initialize()
 		(
 			L"check_albedo",
 			L"check_normal",
-			L"check_metallic",
-			L"check_roughness",
 			L"PBRShader",
 			L"check_dirt"
 		);
@@ -166,8 +162,6 @@ void ScenePlay::Initialize()
 		(
 			L"iron_albedo",
 			L"iron_normal",
-			L"iron_metallic",
-			L"iron_roughness",
 			L"PBRShader",
 			L"wood_dirt"
 		);

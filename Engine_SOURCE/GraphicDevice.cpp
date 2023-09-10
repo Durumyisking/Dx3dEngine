@@ -40,9 +40,8 @@ GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 		, &FeatureLevel, mContext.GetAddressOf());
 
 	// nX MSAA 지원하는지 확인
-	UINT numQualityLevels;
-	mDevice->CheckMultisampleQualityLevels(DXGI_FORMAT_R8G8B8A8_UNORM, 4, &numQualityLevels); // 일단 4로 설정
-	if (numQualityLevels <= 0) {
+	mDevice->CheckMultisampleQualityLevels(DXGI_FORMAT_R8G8B8A8_UNORM, 4, &mNumQualityLevels); // 일단 4로 설정
+	if (mNumQualityLevels <= 0) {
 		std::cout << "MSAA not supported." << std::endl;
 	}
 
@@ -71,41 +70,22 @@ GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 		멀티 샘플링은 렌더된 픽셀들의 평균 샘플을 사용하여 최종 컬러를 좀더 부드럽게 하는 기술이다.
 		샘플러와 관련된게 맞다.
 	*/
-	//if (numQualityLevels > 0) {
-	//	swapChainDesc.SampleDesc.Count = 4; // how many multisamples
-	//	swapChainDesc.SampleDesc.Quality = numQualityLevels - 1;
-	//}
-	//else {
-	//	swapChainDesc.SampleDesc.Count = 1; 
-	//	swapChainDesc.SampleDesc.Quality = 0;
-	//}
-
-	swapChainDesc.SampleDesc.Count = 1;
-	swapChainDesc.SampleDesc.Quality = 0;
+	if (mbUseMSAA && mNumQualityLevels)
+	{
+		swapChainDesc.SampleDesc.Count = 4; // how many multisamples
+		swapChainDesc.SampleDesc.Quality = mNumQualityLevels - 1;
+	}
+	else
+	{
+		swapChainDesc.SampleDesc.Count = 1; 
+		swapChainDesc.SampleDesc.Quality = 0;
+	}
 
 	if (!CreateSwapChain(&swapChainDesc))
 		return;
-
-	mRenderTargetTexture =  new Texture();
-
-	Microsoft::WRL::ComPtr <ID3D11Texture2D> backBuffer;
-	// Get rendertarget for swapchain
-	// Create Rendertarget View 
-	// swapChain의 BackBuffer를 RT로 사용할 것이다.
-	// 
-	//						0번 버퍼가 우리 눈에 보여질 렌더타겟
-	hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)backBuffer.GetAddressOf()); // swapChain의 DESC를 RT에 복사한다.
-	if (backBuffer)
-	{
-		mRenderTargetTexture->Create(backBuffer);
-		GETSINGLE(ResourceMgr)->Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
-	}
-
-	mDepthStencilBufferTexture =  new Texture();
-													// depth 저장시에는 24비트 stencil에는 8비트
-	mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
-	GETSINGLE(ResourceMgr)->Insert<Texture>(L"DepthStencilBufferTexture", mDepthStencilBufferTexture);
 	
+	CreateDefaultBuffers();
+
 	// Setting Viewport		
 	RECT winRect;
 	GetClientRect(application.GetHwnd(), &winRect);
@@ -488,6 +468,83 @@ void GraphicDevice::BindBlendState(ID3D11BlendState* blendState)
 	mContext->OMSetBlendState(blendState, nullptr, 0xffffff);
 }
 
+void GraphicDevice::CreateDefaultBuffers()
+{
+	// create buffer
+
+	Microsoft::WRL::ComPtr <ID3D11Texture2D> backBuffer;
+	// Get rendertarget for swapchain
+	// Create Rendertarget View 
+	// swapChain의 BackBuffer를 RT로 사용할 것이다.
+	// 
+	//						0번 버퍼가 우리 눈에 보여질 렌더타겟
+	HRESULT hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)backBuffer.GetAddressOf()); // swapChain의 DESC를 RT에 복사한다. (RTV 플래그 딸려들어간다)
+	if (backBuffer)
+	{
+		if (mRenderTargetTexture)
+		{
+			CreateRenderTargetView(backBuffer.Get(), NULL, mRenderTargetTexture->GetRTV().GetAddressOf());
+		}
+		else
+		{
+			mRenderTargetTexture = new Texture();
+			mRenderTargetTexture->Create(backBuffer); // 그래서 여기서 RTV 생성함
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
+		}
+	}
+	//// FLOAT MSAA RenderTargetView/ShaderResourceView
+	ThrowIfFailed(mDevice->CheckMultisampleQualityLevels(
+		DXGI_FORMAT_R16G16B16A16_FLOAT, 4, &mNumQualityLevels));
+
+	D3D11_TEXTURE2D_DESC desc;
+	backBuffer->GetDesc(&desc);
+	desc.MipLevels = desc.ArraySize = 1;
+	desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	desc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+	desc.Usage = D3D11_USAGE_DEFAULT; // 스테이징 텍스춰로부터 복사 가능
+	desc.MiscFlags = 0;
+	desc.CPUAccessFlags = 0;
+	if (mbUseMSAA && mNumQualityLevels)
+	{
+		desc.SampleDesc.Count = 4;
+		desc.SampleDesc.Quality = mNumQualityLevels - 1;
+	}
+	else
+	{
+		desc.SampleDesc.Count = 1;
+		desc.SampleDesc.Quality = 0;
+	}
+
+	if (mFloatBuffer)
+	{
+		CreateTexture(&desc, mFloatBuffer->GetTexture().GetAddressOf());
+
+		CreateShaderResourceView(mFloatBuffer->GetTexture().Get(), NULL, mFloatBuffer->GetSRV().GetAddressOf());
+
+		CreateRenderTargetView(mFloatBuffer->GetTexture().Get(), NULL, mFloatBuffer->GetRTV().GetAddressOf());
+	}
+	else
+	{
+		mFloatBuffer = new Texture();
+		mFloatBuffer->Create(backBuffer); // 그래서 여기서 RTV 생성함
+		GETSINGLE(ResourceMgr)->Insert<Texture>(L"MSAATexture", mFloatBuffer);
+	}
+
+	if (mDepthStencilBufferTexture)
+	{
+		mDepthStencilBufferTexture->Create(application.GetWidth(), application.GetHeight(), DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT,
+			UINT(mbUseMSAA ? mNumQualityLevels : 0), D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
+	}
+	else
+	{
+		mDepthStencilBufferTexture = new Texture();
+		// depth 저장시에는 24비트 stencil에는 8비트
+		mDepthStencilBufferTexture->Create(application.GetWidth(), application.GetHeight(), DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT,
+			UINT(mbUseMSAA ? mNumQualityLevels : 0), D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
+		GETSINGLE(ResourceMgr)->Insert<Texture>(L"DepthStencilBufferTexture", mDepthStencilBufferTexture);
+	}
+}
+
 
 void GraphicDevice::Clear()
 {
@@ -553,4 +610,12 @@ void GraphicDevice::Present()
 {
 	mSwapChain->Present(0, 0); // 두번째 인자는 윈도우가 아예 표시되지않을때 렌더링 할까말까 고르는거
 	//mSwapChain->Present(1, 0); // 수직동기화 on
+}
+
+Microsoft::WRL::ComPtr<ID3D11RenderTargetView> GraphicDevice::GetBackBufferRTV() const
+{
+	if(mRenderTargetTexture)
+		return mRenderTargetTexture->GetRTV(); 
+
+	return nullptr;
 }

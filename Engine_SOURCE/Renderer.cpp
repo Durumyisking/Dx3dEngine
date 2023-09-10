@@ -322,6 +322,9 @@ namespace renderer
 #pragma region RasterizerState
 		D3D11_RASTERIZER_DESC  reDesc = {};
 
+		//reDesc.DepthClipEnable = true;
+		//reDesc.FrontCounterClockwise = false;
+
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
 		GetDevice()->CreateRasterizerState(&reDesc, rasterizerState[static_cast<UINT>(eRasterizerType::SolidBack)].GetAddressOf());
@@ -1070,12 +1073,12 @@ namespace renderer
 			Texture* shadowMap = new Texture();
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapTexture", shadowMap);
 			vecRTTex.emplace_back(shadowMap);
-			vecRTTex[0]->Create(1600, 900, DXGI_FORMAT_R32G32B32A32_FLOAT
+			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 
 			Texture* depthStencilTex = new Texture();
-			depthStencilTex->Create(1600, 900, DXGI_FORMAT_D32_FLOAT
+			depthStencilTex->Create(width, height, DXGI_FORMAT_D32_FLOAT
 				, D3D11_BIND_DEPTH_STENCIL);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapDSTexture", depthStencilTex);
 

@@ -22,8 +22,8 @@ float4 main(VSOut vsIn) : SV_Target
 
     float4  albedo = float4(0.25f, 0.25f, 0.25f, 1.f);
     float3  normal = vsIn.WorldNormal;
-    float   metallic = 0.001f; 
-    float   roughness = 0.99f;
+    float   metallic = cbMetallic; 
+    float   roughness = cbRoughness;
     float3  A0 = (float3) 1.f;
 
     if (1 == cbbAlbedo)
