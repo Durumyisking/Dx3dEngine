@@ -132,10 +132,12 @@ void ScenePlay::Initialize()
 		player->SetPos(Vector3(-5.f, 5.f, 5.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
+		;		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
 			L"check_albedo",
 			L"check_normal",
+			L"check_metallic",
+			L"check_roughness",
 			L"PBRShader",
 			L"check_dirt"
 		);
