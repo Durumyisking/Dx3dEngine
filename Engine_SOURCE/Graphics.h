@@ -67,6 +67,7 @@ enum class eSamplerType
 	Anisotropic,
 	Skybox,
 	Clamp,
+	ShadowPoint,
 	End,
 };
 

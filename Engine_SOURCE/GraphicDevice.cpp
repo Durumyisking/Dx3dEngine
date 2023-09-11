@@ -350,7 +350,7 @@ void GraphicDevice::BindBuffer(ID3D11Buffer* buffer, void* data, UINT size)
 	D3D11_MAPPED_SUBRESOURCE sub = {};
 	mContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub); // 다른 애들이 Buffer를 사용 못하게 점유하도록 함		
 	memcpy(sub.pData, data, size); // GPU로 값 복사해줌
-	mContext->Unmap(buffer, 0); // 점유 해제
+	mContext->Unmap(buffer, 0); // 점유 해제	
 }
 
 void GraphicDevice::ClearConstantBuffer(ID3D11Buffer* buffer, UINT size)
