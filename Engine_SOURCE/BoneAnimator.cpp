@@ -39,6 +39,7 @@ void BoneAnimator::Update()
 		}
 
 		mPlayAnimation->Reset();
+		mPlayAnimation->SetCurIndex(0);
 	}
 
 	mPlayAnimation->Update();
@@ -120,7 +121,21 @@ void BoneAnimator::Play(const std::wstring& name, bool loop)
 	if (nullptr != mPlayAnimation && nullptr != mPlayAnimation->GetEndEvent())
 		mPlayAnimation->GetEndEvent()();
 
+	//if (nullptr != mPlayAnimation)
+	//{
+	//	// 이전 애니메이션의 마지막 프레임 정보
+	//	UINT frame = mPlayAnimation->GetCurIndex();
+	//	const animation::SkeletonData* preveAnimation = mPlayAnimation->GetCurFrameAnimation(frame);
+
+	//	// 다음 애니메이션의 이전 애니메이션 정보 세팅
+	//	iter->second->SetPreveAnimationData(preveAnimation, 0.1f);
+	//}
+
+	// Next Animation
 	mPlayAnimation = iter->second;
+	
+	// 애니메이션 인덱스 초기화
+	mPlayAnimation->SetCurIndex(0);
 	mPlayAnimation->Reset();
 
 	// StartEvent호출

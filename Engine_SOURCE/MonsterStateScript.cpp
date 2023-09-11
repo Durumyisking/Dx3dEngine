@@ -8,7 +8,7 @@ MonsterStateScript::MonsterStateScript()
 	, mbAnimationRunning(false)
 {
 	// 메모리 공간 확보
-	mStateEventList.reserve(static_cast<UINT>(Monster::eMonsterState::Die));
+	mStateEventList.reserve(static_cast<UINT>(Monster::eMonsterState::Die) + 1);
 
 	// 이벤트 바인딩
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Idle, this));

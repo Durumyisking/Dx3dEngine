@@ -49,6 +49,9 @@ void Packun::Initialize()
 
 	// 초기화
 	Monster::Initialize();
+
+	// state초기화
+	stateInfoInitalize();
 }
 
 void Packun::Update()
@@ -112,6 +115,7 @@ void Packun::stateInfoInitalize()
 
 	//Attack
 	InsertLockState(static_cast<UINT>(eMonsterState::Attack), static_cast<UINT>(eMonsterState::Jump));
+	InsertLockState(static_cast<UINT>(eMonsterState::Attack), static_cast<UINT>(eMonsterState::Move));
 	InsertLockState(static_cast<UINT>(eMonsterState::Attack), static_cast<UINT>(eMonsterState::SpecialSituation));
 
 	//SpecialCast
@@ -158,7 +162,14 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 		if (cilp)
 			cilp->SetCompleateEvent([this]() 
 				{
-					SetMonsterState(Monster::eMonsterState::Idle); 
+					SetMonsterState(Monster::eMonsterState::Idle);
 				});
+
+		/*cilp = animator->GetAnimationClip(L"AttackHit");
+		if (cilp)
+			cilp->SetCompleateEvent([this]()
+				{
+					SetMonsterState(Monster::eMonsterState::Idle);
+				});*/
 	}
 }

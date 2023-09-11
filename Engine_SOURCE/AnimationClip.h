@@ -24,8 +24,10 @@ public:
 
 	void CreateAnimation(const std::wstring& name ,const std::wstring& path, double duration);
 	void CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount);
-	void SetBoneMatrix();
+	void SetBoneMatrix(const animation::SkeletonData& inCurData, const animation::SkeletonData& inNextData, float drutation = 1.f/ 60.f);
 	void Reset();
+
+	void InterpolationPrveToCurAnimation();
 
 	bool IsCompleate() { return mCompleate; }
 
@@ -50,6 +52,12 @@ public:
 	GETSET(double, mTickPerSceond, TickPerSceond)
 	GETSET(bool, mCompleate, Compleate)
 	GETSET(BoneAnimator*, mAnimator, Animator)
+	GETSET(const animation::SkeletonData*, mPreveAnimationData, PreveAnimationData)
+	GETSET(float , mConnectionDuration, ConnectionDuration)
+	GETSET(UINT, mCurIndex, CurIndex)
+
+	const animation::SkeletonData* GetCurFrameAnimation(UINT index) const;
+	void SetPreveAnimationData(const animation::SkeletonData* data, float connectionDuration = 1.0f);
 private:
 	const std::string parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const;
 	const std::string::size_type startStringPos(std::string& buf, const std::string& delValue) const;
@@ -61,6 +69,9 @@ private:
 private:
 	std::vector<animation::NodeData>     mNodeData;
 	std::vector<animation::SkeletonData> mSkeletonData;
+
+	const animation::SkeletonData* mPreveAnimationData;
+	float mConnectionDuration;
 
 	double	    mDuration;
 	double      mTickPerSceond;
