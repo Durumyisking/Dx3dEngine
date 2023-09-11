@@ -65,8 +65,8 @@ void BoneAnimator::LoadAnimations(const std::wstring& path)
 			if (sfileName.find("Demo") != std::string::npos)
 				continue;
 
-			startPos = sfileName.find_last_of("\\");
-			EndPos = sfileName.find_last_of(".");
+			startPos = static_cast<int>(sfileName.find_last_of("\\"));
+			EndPos = static_cast<int>(sfileName.find_last_of("."));
 
 			startPos += 1;
 			std::wstring wfileName = ConvertToW_String(sfileName.c_str());
