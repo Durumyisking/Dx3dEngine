@@ -279,6 +279,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MonsterStateScript.h" />
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Packun.h" />
+    <ClInclude Include="PackunStateScript.h" />
     <ClInclude Include="Panal.h" />
     <ClInclude Include="ParticleShader.h" />
     <ClInclude Include="ParticleSystem.h" />
@@ -394,6 +396,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MonsterAiScript.cpp" />
     <ClCompile Include="MonsterStateScript.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
+    <ClCompile Include="Packun.cpp" />
+    <ClCompile Include="PackunStateScript.cpp" />
     <ClCompile Include="Panal.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
