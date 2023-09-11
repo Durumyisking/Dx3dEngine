@@ -94,6 +94,20 @@ public:
 
 	const Vector3& GetWorldPosition();
 	const Vector3& GetWorldRotation() const { return mWorldRotation; }
+	Matrix GetWorldRotationMatrix()
+	{
+		Matrix rotation;
+
+		Vector3 radian(mWorldRotation.x * (XM_PI / 180)
+			, mWorldRotation.y * (XM_PI / 180)
+			, mWorldRotation.z * (XM_PI / 180));
+
+		rotation = Matrix::CreateRotationX(radian.x);
+		rotation *= Matrix::CreateRotationY(radian.y);
+		rotation *= Matrix::CreateRotationZ(radian.z);
+
+		return rotation;
+	}
 	const Vector3& GetWorldScale() const { return mWorldScale; }
 
 	float GetWorldPositionX() const { return mWorldPosition.x; }

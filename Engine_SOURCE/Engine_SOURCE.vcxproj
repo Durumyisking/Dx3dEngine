@@ -141,6 +141,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <IncludeInUnityFile>true</IncludeInUnityFile>
       <AdditionalIncludeDirectories>$(SolutionDir)External\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -234,6 +235,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="ConstantBuffer.h" />
+    <ClInclude Include="CubeMap.h" />
     <ClInclude Include="CursorScript.h" />
     <ClInclude Include="def.h" />
     <ClInclude Include="druEnums.h" />
@@ -277,9 +279,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MonsterStateScript.h" />
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Packun.h" />
-    <ClInclude Include="PackunStateScript.h" />
-    <ClInclude Include="PaintShader.h" />
     <ClInclude Include="Panal.h" />
     <ClInclude Include="ParticleShader.h" />
     <ClInclude Include="ParticleSystem.h" />
@@ -309,6 +308,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
+    <ClInclude Include="ScenePlay.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="ServerHeader.h" />
@@ -317,7 +317,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ServerToClient.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimpleMath.h" />
-    <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="SkySphere.h" />
+    <ClInclude Include="SkySphereRenderer.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="StringFunctions.h" />
@@ -328,6 +329,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="TimerMgr.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIFactory.h" />
     <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -354,6 +356,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
+    <ClCompile Include="CubeMap.cpp" />
     <ClCompile Include="CursorScript.cpp" />
     <ClCompile Include="druEnums.cpp" />
     <ClCompile Include="druMath.cpp" />
@@ -391,9 +394,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MonsterAiScript.cpp" />
     <ClCompile Include="MonsterStateScript.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
-    <ClCompile Include="Packun.cpp" />
-    <ClCompile Include="PackunStateScript.cpp" />
-    <ClCompile Include="PaintShader.cpp" />
     <ClCompile Include="Panal.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -423,13 +423,15 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="ScenePlay.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="ServerMgr.cpp" />
     <ClCompile Include="PacketSendScript.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
-    <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="SkySphere.cpp" />
+    <ClCompile Include="SkySphereRenderer.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="StringFunctions.cpp" />
@@ -439,6 +441,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="TimerMgr.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIFactory.cpp" />
     <ClCompile Include="UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -30,6 +30,20 @@ void MeshRenderer::FixedUpdate()
 	BaseRenderer::FixedUpdate();
 }
 
+void MeshRenderer::PrevRender()
+{
+	Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"ShadowMaterial");
+
+	material->Bind();
+
+	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
+
+	GetMesh()->BindBuffer();
+	GetMesh()->Render();
+
+	material->Clear();
+}
+
 void MeshRenderer::Render()
 {
 	BaseRenderer::Render();

@@ -8,10 +8,8 @@ namespace enums
 		None = 0,
 		Camera,
 		Grid,
-		BackGround,
 		Objects,
 		PhysicalObject,
-		Bullet,
 		Monster,
 		Boss,
 		Player,
@@ -19,6 +17,8 @@ namespace enums
 		Platforms,
 		Particle,
 		FX,
+		SkySphere,
+		CubeMap,
 		UI,
 		PostProcess,
 		End = 16,
@@ -74,6 +74,7 @@ namespace enums
 		Line,
 		Box,
 		Sphere,
+		Capsule,
 		End,
 
 	};
@@ -160,6 +161,16 @@ namespace enums
 		Z,
 	};
 
+	enum class HUDState
+	{
+		None,
+		MoveBlink,
+		MoveTowards,
+		Rotate,
+		Size,
+		GoAndReturn,
+		End
+	};
 
 	extern const char* charComponentType[(int)eComponentType::End];
 	extern const wchar_t* wcharComponentType[(int)eComponentType::End];

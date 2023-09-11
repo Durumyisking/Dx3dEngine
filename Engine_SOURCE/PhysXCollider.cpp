@@ -62,6 +62,8 @@ void PhysXCollider::FixedUpdate()
 	case physx::PxGeometryType::eCAPSULE:
 		scale.x = shape->getGeometry().capsule().radius;
 		scale.y = shape->getGeometry().capsule().halfHeight;
+		scale.z = shape->getGeometry().capsule().radius;
+		colType = eColliderType::Capsule;
 		break;
 	case physx::PxGeometryType::eBOX:
 		scale = shape->getGeometry().box().halfExtents;

@@ -57,6 +57,8 @@ namespace renderer
 		Matrix view;
 		Matrix inverseView;
 		Matrix projection;
+		Matrix fovForSkySphere;
+		Vector4 cameraWorldPos;
 	};
 
 	CBUFFER(MaterialCB, CBSLOT_MATERIAL)
@@ -102,8 +104,8 @@ namespace renderer
 		int bAlbedo;
 		int bNormal;
 		int bMetallic;
-
 		int bRoughness;
+
 		int bEmissive;
 		int bool1;
 		int bool2;
@@ -181,6 +183,16 @@ namespace renderer
 		float wave_distortion;
 	};
 
+	CBUFFER(SkyCB, CBSLOT_SKY)
+	{
+		Matrix matrix;
+	};
+
+	CBUFFER(LightMatrixCB, CBSLOT_LIGHTMATRIX)
+	{
+		Matrix lightView;
+		Matrix lightProjection;
+	};
 
 
 	// vertex data
@@ -233,5 +245,8 @@ namespace renderer
 	void CreateCubeMesh();
 	void CreateSphereMesh();
 	void CreateCapsuleMesh();
+
+	void CreateUIMaterial();
+	void CreateUITexture();
 }
 

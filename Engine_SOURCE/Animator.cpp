@@ -1,7 +1,5 @@
 #include "Animator.h"
 
-
-
 Animator::Animator()
 	: Component(eComponentType::Animator)
 	, mAnimations{}

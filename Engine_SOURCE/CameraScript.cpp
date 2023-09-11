@@ -9,8 +9,6 @@
 #include "SceneMgr.h"
 #include "SimpleMath.h"
 
-
-
 CameraScript::CameraScript()
 	: mCameraObject(nullptr)
 	, mTransform(nullptr)
@@ -33,11 +31,11 @@ void CameraScript::Initialize()
 {
 	mCameraObject = GetOwner()->GetComponent<Camera>();
 	mTransform = GetOwner()->GetComponent<Transform>();
-
 }
 
 void CameraScript::Update()
 {
+
 	mLookAt = mTransform->GetPosition();
 
 	mTarget = mCameraObject->GetTarget();

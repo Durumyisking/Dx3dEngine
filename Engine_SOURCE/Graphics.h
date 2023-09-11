@@ -27,6 +27,8 @@
 #define CBSLOT_PARTICLESYSTEM 6
 #define CBSLOT_NOISE			7
 #define CBSLOT_POSTPROCESS		8
+#define CBSLOT_SKY 9
+#define CBSLOT_LIGHTMATRIX 10
 
 
 enum class eValidationMode
@@ -63,6 +65,7 @@ enum class eSamplerType
 	Point,
 	Linear,
 	Anisotropic,
+	Skybox,
 	End,
 };
 
@@ -150,16 +153,18 @@ enum class eTextureSlot
 	DiffuseLightTarget = 10,		// diffuseLightTarget
 	SpecularLightTarget,		// specularLightTarget
 
-	IrradianceMap = 12,		
+	Cubemap = 12,
+	IrradianceMap,
 	PrefilteredMap,		
 
-	BRDF = 14,		
+	BRDF = 15,		
 
-	ParticleStructuredBuffer = 15,		
+	ParticleStructuredBuffer = 16,		
 	NoiseTexture,		
 
-	Skybox = 17,
+	SkySphere = 18,
 
+	ShadowMap = 19,
 
 //	Atlas = 29,					// atlasTexture
 
@@ -177,7 +182,8 @@ enum class eCBType
 	ParticleSystem,
 	Noise, 
 	PostProcess,
-	PBR,
+	CubeMapProj,
+	LightMatrix,
 	End,
 };
 
@@ -221,7 +227,7 @@ enum class eGPUParam
 	Bool_2,
 	Bool_3,
 };
-	
+
 
 enum class eSRVType
 {

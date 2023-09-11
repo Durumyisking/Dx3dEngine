@@ -34,7 +34,7 @@ PSOut main(VSOut vsIn) : SV_Target
     PSOut vsOutColor;
     
     float4 albedo = float4(1.0f, 1.0f, 1.0f, 1.0f);
-    float3 normal = (float3) 0.f;
+    float3 normal = vsIn.ViewNormal;
     float metallic = 0.04f;
     float roughness = 0.5f;
     
@@ -48,11 +48,11 @@ PSOut main(VSOut vsIn) : SV_Target
     }
     if (1 == cbbMetallic)
     {
-        metallic = TextureMapping_metallic(vsIn.UV);
+        //metallic = TextureMapping_metallic(vsIn.UV);
     }
     if (1 == cbbRoughness)
     {
-        roughness = TextureMapping_roughness(vsIn.UV);
+        //roughness = TextureMapping_roughness(vsIn.UV);
     }
     
     vsOutColor.Position = float4(vsIn.ViewPos, 1.0f);

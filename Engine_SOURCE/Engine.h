@@ -6,10 +6,18 @@
 #include "druEnums.h"
 #include "StringFunctions.h"
 #include "Macro.h"
-#include "druMath.h"
 
 //#include <PxPhysicsAPI.h>
+#pragma warning( push )
+#pragma warning( disable : 4705 )
+#pragma warning( disable : 4706 )
+#pragma warning( disable : 4707 )
+#pragma warning( disable : 26495 )
+#pragma warning( disable : 26812 )
+#pragma warning( disable : 33010 )
 #include "../External/PhysX/Include/PxPhysicsAPI.h"
+#include "druMath.h"
+#pragma warning( pop ) 
 
 
 #ifdef _DEBUG
