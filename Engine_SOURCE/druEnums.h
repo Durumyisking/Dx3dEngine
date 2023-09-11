@@ -150,7 +150,7 @@ namespace enums
 		Option,
 		Crosshair,
 		Button,
-
+		Image,
 		End,
 	};
 

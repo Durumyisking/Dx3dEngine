@@ -59,6 +59,7 @@
 #include "Panal.h"
 #include "HUD.h"
 #include "Button.h"
+#include "ImageUI.h"
 #include "UIFactory.h"
 #include "Animator.h"
 
@@ -287,7 +288,7 @@ void ScenePlay::CreatePlayerUI()
 		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this));
 		HUD* coin = (GETSINGLE(UIFactory)->CreateHud(L"Coin", L"CoinMaterial", Vector3(-7.f, 3.5f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
 		HUD* cityCoin = (GETSINGLE(UIFactory)->CreateHud(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
-		HUD* bar = (GETSINGLE(UIFactory)->CreateHud(L"Bar", L"BarMaterial", Vector3(-5.4f, 2.9f, 0.f), Vector3(4.2f, 1.4f, 1.f), mCoinPanal, this));
+		ImageUI* bar = (GETSINGLE(UIFactory)->CreateImage(L"Bar", L"BarMaterial", Vector3(-5.4f, 2.9f, 0.f), Vector3(4.2f, 1.4f, 1.f), mCoinPanal, this));
 		mCoinPanal->Addchild(coin);
 		mCoinPanal->Addchild(cityCoin);
 		mCoinPanal->Addchild(bar);
@@ -304,14 +305,14 @@ void ScenePlay::CreatePlayerUI()
 				Vector3 position = Vector3(-7.f + (0.33f * i), (2.5f - (0.35f * j)) + (0.01f * i), 0.f);
 
 
-				HUD* luna = (GETSINGLE(UIFactory)->CreateHud(L"Luna" + std::to_wstring(i) + std::to_wstring(j * 10), L"LunaMaterial",
+				ImageUI* luna = (GETSINGLE(UIFactory)->CreateImage(L"Luna" + std::to_wstring(i) + std::to_wstring(j * 10), L"LunaMaterial",
 					position,
 					Vector3(0.3f, 0.3f, 1.f),
 					mLunaPanal, this));
 				luna->Die();
 				mLunaPanal->Addchild(luna);
 
-				HUD* dottedLine = (GETSINGLE(UIFactory)->CreateHud(L"DottedLine" + std::to_wstring(i) + std::to_wstring(j * 10), L"DottedLineMaterial",
+				ImageUI* dottedLine = (GETSINGLE(UIFactory)->CreateImage(L"DottedLine" + std::to_wstring(i) + std::to_wstring(j * 10), L"DottedLineMaterial",
 					position,
 					Vector3(0.3f, 0.3f, 1.f),
 					mLunaPanal, this));

@@ -258,6 +258,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GridScript.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="ImageUI.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Light.h" />
@@ -365,6 +366,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="GraphicDevice.cpp" />
     <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Light.cpp" />

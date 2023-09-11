@@ -532,6 +532,7 @@
     <ClInclude Include="ScenePlay.h">
       <Filter>Common\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="ImageUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -818,6 +819,7 @@
     <ClCompile Include="ScenePlay.cpp">
       <Filter>Common\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="ImageUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

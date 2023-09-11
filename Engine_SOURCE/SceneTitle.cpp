@@ -44,6 +44,7 @@
 #include "UIFactory.h"
 #include "Animator.h"
 
+#include "ImageUI.h"
 
 extern Application application;
 
@@ -165,17 +166,20 @@ void SceneTitle::Exit()
 
 void SceneTitle::CreateMainMenu()
 {
-	MainMenuPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(0.0f, 0.0f, 0.f), Vector3(1.0f, 1.0f, 1.0f), L"WorldMapPanal", this));
+	MainMenuPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"WorldMapPanal", this));
 
-	HUD* worldMap = (GETSINGLE(UIFactory)->CreateHud(L"WorldMap", L"WorldMapMaterial", Vector3(0.f, 450.0f, 100.f), Vector3(2000.f, 2000.f, 1.f), MainMenuPanal, this));
-	HUD* filter = (GETSINGLE(UIFactory)->CreateHud(L"RedFilter", L"FilterMaterial", Vector3(0.f, 450.0f, 99.f), Vector3(2000.f, 2000.f, 1.f), MainMenuPanal, this));
+	HUD* worldMap = (GETSINGLE(UIFactory)->CreateHud(L"WorldMap", L"WorldMapMaterial", Vector3(0.f, 4.5f, 100.f), Vector3(20.f, 20.f, 1.f), MainMenuPanal, this));
+	ImageUI* filter = (GETSINGLE(UIFactory)->CreateImage(L"RedFilter", L"FilterMaterial", Vector3(0.f, 4.5f, 99.f), Vector3(20.f, 20.f, 1.f), MainMenuPanal, this));
 	worldMap->SetState(HUDState::Rotate);
 	worldMap->SetSpeed(1);
-	HUD* title = (GETSINGLE(UIFactory)->CreateHud(L"MarioTitle", L"TitleMaterial", Vector3(-650.f, 300.f, 98.f), Vector3(200.f, 200.f, 1.f), MainMenuPanal, this));
-	HUD* bar = (GETSINGLE(UIFactory)->CreateHud(L"UIBar", L"UIBarMaterial", Vector3(-500.f, 0.f, 98.f), Vector3(600.f, 100.f, 1.f), MainMenuPanal, this));
+	ImageUI* title = (GETSINGLE(UIFactory)->CreateImage(L"MarioTitle", L"TitleMaterial", Vector3(-6.5f, 3.f, 98.f), Vector3(2.f, 2.f, 1.f), MainMenuPanal, this));
+	HUD* bar = (GETSINGLE(UIFactory)->CreateHud(L"UIBar", L"UIBarMaterial", Vector3(-5.f, 0.f, 98.f), Vector3(6.f, 1.f, 1.f), MainMenuPanal, this));
 	bar->SetRotation(Vector3(0.0f, 0.0f, 2.0f));
+	bar->SetChangeSize(Vector3(1.f, 0.9f, 1.0f));
 	bar->SetState(HUDState::MoveBlink);
 	HUD* cap = (GETSINGLE(UIFactory)->CreateHud(L"Cap", L"CapMaterial", Vector3(-0.3f, 0.f, -1.f), Vector3(0.2f, 0.6f, 1.f), bar, this));
+	cap->SetState(HUDState::GoAndReturn);
+	cap->SetTargetPos(cap->GetComponent<Transform>()->GetPosition() + Vector3(0.2f, 0.0f, 0.0f));
 	//Animator* capAni = cap->AddComponent<Animator>(eComponentType::Animator);
 	//Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(L"CapRotate"));
 	//capAni->Create(L"CapAni", tex, Vector2::Zero, Vector2(84.0f, 50.0f), Vector2::One, 5, Vector2(100.0f, 80.0f), 0.1f);
