@@ -94,6 +94,11 @@ float TextureMapping_roughness(float2 uv)
     return roughnessTexture.Sample(linearSampler, uv).r;
 }
 
+float TextureMapping_emissive(float2 uv)
+{
+    return emissiveTexture.Sample(linearSampler, uv).rgb;
+}
+
 
 // 3d위치나 방향을 구면 매핑 좌표로 변환합니다.
 // 해당 좌표를 텍스처의 샘플링에 사용합니다.

@@ -44,7 +44,13 @@ public:
 	eRenderingMode GetRenderingMode() const { return mMode; }
 	void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
 
+	void SetMetallic(const float metallic) { mMaterialConstantBuffer.metallic = metallic; }
+	void SetRoughness(const float roughness) { mMaterialConstantBuffer.roughness= roughness; }
+	void SetFresnelCoeff (const Vector3 value) { mMaterialConstantBuffer.FresnelCoeff = value; }
 
+	float GetMetallic() const { return mMaterialConstantBuffer.metallic; }
+	float GetRoughness() const { return mMaterialConstantBuffer.roughness ; }
+	Vector3 GetFresnelCoeff() const { return mMaterialConstantBuffer.FresnelCoeff ; }
 	//void BindingTextures();
 
 

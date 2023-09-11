@@ -219,7 +219,6 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		pos.z = mesh->mVertices[i].z;
 		vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
 
-
 		
 		math::Vector3 normal = {};
 		normal.x = mesh->mNormals[i].x;

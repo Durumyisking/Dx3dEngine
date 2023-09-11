@@ -16,6 +16,8 @@
 
 #include "Application.h"
 #include "Player.h"
+#include "Goomba.h"
+#include "Packun.h"
 
 #include "Physical.h"
 #include "PhysXRigidBody.h"

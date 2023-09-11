@@ -98,7 +98,7 @@ void Camera::Render()
 
 	LightMatrixCB data = {};
 	data.lightView = CreateViewMatrix(&directionLighttr);
-	data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, 1600, 900, 1.0f, 1000.0f);
+	data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, application.GetWidth(), application.GetHeight(), 1.0f, 1000.0f);
 	lightCB->SetData(&data);
 	lightCB->Bind(eShaderStage::VS);	
 	lightCB->Bind(eShaderStage::PS);

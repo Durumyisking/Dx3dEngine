@@ -70,25 +70,13 @@ PS_OUT main(VSOut vsin)
     -(lightProj.y * 0.5) + 0.5f
     );
     
-    float depth = ShadowMap.Sample(linearSampler, depthMapUV).r;
-    float shadowPow = 0.f;
-
-    //// 광원에 기록된 깊이보다, 물체의 깊이가 더 멀 때, 그림자 판정
-    if (0.f != depth
-        && 0.f <= depthMapUV.x && depthMapUV.x <= 1.f
-        && 0.f <= depthMapUV.y && depthMapUV.y <= 1.f
-        && lightProj.z >= depth + 0.0001f)
-    {
-        shadowPow = 0.9f;
-    }
+    float lit = VSM_FILTER(ShadowMap.Sample(shadowPointSampler, depthMapUV).rg, lightProj.z);
     
-    {
-        //diffuse = CalculateLightPBR_Direct(viewPos.xyz, albedo, normal.xyz, metallic, roughness);
-        //output.vDiffuse.xyz = diffuse * (1.f - shadowPow);
-        
-        output.vDiffuse = lightcolor.diffuse * (1.f - shadowPow) + lightcolor.ambient;
+    float shadowPow = 0.f;
+    
+    {        
+        output.vDiffuse = lightcolor.diffuse * lit + lightcolor.ambient;
         output.vSpecular = lightcolor.specular;
-
     }
     
     output.vDiffuse.a = 1.f;
