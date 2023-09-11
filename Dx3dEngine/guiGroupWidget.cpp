@@ -5,6 +5,7 @@ namespace gui
 	GroupWidget::GroupWidget()
 		: Widget()
 		, mSpace{10.f, 0.f}
+		, mNextLine(10)
 		, mbCollapse(false)
 		, mbGroupOpen(false)
 	{
@@ -12,6 +13,7 @@ namespace gui
 	GroupWidget::GroupWidget(std::string name)
 		: Widget()
 		, mSpace(10.f, 0.f)
+		, mNextLine(10)
 		, mbCollapse(false)
 		, mbGroupOpen(false)
 	{
@@ -34,35 +36,14 @@ namespace gui
 
 	void GroupWidget::FixedUpdate()
 	{
-		if (mState != eState::Active)
-			return;
-
-		//for (Widget* child : mChilds)
-		//{
-		//	child->FixedUpdate();
-		//}
 	}
 
 	void GroupWidget::Update()
 	{
-		if (mState != eState::Active)
-			return;
-
-		//for (Widget* child : mChilds)
-		//{
-		//	child->Update();
-		//}
 	}
 
 	void GroupWidget::LateUpdate()
 	{
-		if (mState != eState::Active)
-			return;
-
-		//for (Widget* child : mChilds)
-		//{
-		//	child->LateUpdate();
-		//}
 	}
 
 	void GroupWidget::Render()
@@ -77,13 +58,15 @@ namespace gui
 				{
 					mChilds[i]->Render();
 
-					if (i == mChilds.size() - 1)
-						continue;
-
-					ImGui::SameLine();
-					ImGui::Dummy(mSpace);
-					//ImGui::Indent(float);
-					ImGui::SameLine();
+					if (i != 0)
+					{
+						if (i % mNextLine == 0)
+							continue;
+					}
+						ImGui::SameLine();
+						ImGui::Dummy(mSpace);
+						//ImGui::Indent(float);
+						ImGui::SameLine();
 				}
 			}
 		}
@@ -93,8 +76,11 @@ namespace gui
 			{
 				mChilds[i]->Render();
 
-				if (i == mChilds.size() - 1)
-					continue;
+				if (i != 0) 
+				{
+					if (i % mNextLine == 0)
+						continue;
+				}
 
 				ImGui::SameLine();
 				ImGui::Dummy(mSpace);
@@ -104,5 +90,18 @@ namespace gui
 		}
 
 		ImGui::EndGroup();
+	}
+	void GroupWidget::Clear()
+	{
+		for (size_t i = 0; i < mChilds.size(); ++i)
+		{
+			if (mChilds[i])
+			{
+				delete mChilds[i];
+				mChilds[i] = nullptr;
+			}
+		}
+
+		mChilds.clear();
 	}
 }

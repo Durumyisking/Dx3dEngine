@@ -18,6 +18,10 @@ HRESULT Mesh::Load(const std::wstring& path)
 {
 	return E_NOTIMPL;
 }
+HRESULT Mesh::LoadFullpath(const std::wstring& path)
+{
+	return E_NOTIMPL;
+}
 bool Mesh::CreateVertexBuffer(void* data, UINT count)
 {
 	mVBDesc.ByteWidth = sizeof(renderer::Vertex) * count;

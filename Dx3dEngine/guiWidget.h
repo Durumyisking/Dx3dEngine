@@ -35,9 +35,11 @@ namespace gui
 		Widget* GetParent() { return mParent; }
 		void SetSize(ImVec2 size) { mSize = size; }
 		void SetSize(float x, float y) { mSize = ImVec2(x, y); }
+		ImVec2 GetSize() { return mSize; }
 		void SetColor(ImVec4 color) { mColor = color; }
 		void SetColor(float r, float g, float b, float a) { mColor = ImVec4(r, g, b, a); }
-		ImVec2 GetSize() { return mSize; }
+		void SetIndex(UINT index) { mIndex = index; }
+		UINT GetIndex() { return mIndex; }
 
 	protected:
 		ImGuiWindowFlags mWindow_flags;
@@ -45,6 +47,7 @@ namespace gui
 		ImVec4 mColor;
 		eState mState;
 		std::vector<Widget*> mChilds;
+		UINT mIndex;
 
 	private:
 		Widget* mParent;

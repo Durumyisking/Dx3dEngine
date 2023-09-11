@@ -22,11 +22,11 @@ namespace gui
 
 		void InitializeTargetProjectPath();
 		
-		std::wstring GetTargetProjectPath() { return mTargetProjectPath; }
-		void SetTargetProjectPath(std::wstring path) { mTargetProjectPath = path; }
+		std::string GetTargetProjectPath() { return mTargetProjectPath; }
+		void SetTargetProjectPath(std::string path) { mTargetProjectPath = path; }
 
 	private:
 		std::map<std::string, Resource*> mResources;
-		std::wstring mTargetProjectPath;
+		std::string mTargetProjectPath;
 	};
 }

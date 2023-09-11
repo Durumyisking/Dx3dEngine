@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClInclude Include="Dx3dEngine.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="guiButtonWidget.h" />
     <ClInclude Include="guiGizmo.h" />
     <ClInclude Include="guiComponent.h" />
     <ClInclude Include="guiConsole.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="guiPhysical.h" />
     <ClInclude Include="guiProject.h" />
     <ClInclude Include="guiResource.h" />
+    <ClInclude Include="guiResourceView.h" />
     <ClInclude Include="guiTexture.h" />
     <ClInclude Include="guiTransform.h" />
     <ClInclude Include="guiTreeWidget.h" />
@@ -203,6 +205,7 @@
     <ClInclude Include="guiWidget.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="guiButtonWidget.cpp" />
     <ClCompile Include="guiGizmo.cpp" />
     <ClCompile Include="guiComponent.cpp" />
     <ClCompile Include="guiConsole.cpp" />
@@ -223,6 +226,7 @@
     <ClCompile Include="guiPhysical.cpp" />
     <ClCompile Include="guiProject.cpp" />
     <ClCompile Include="guiResource.cpp" />
+    <ClCompile Include="guiResourceView.cpp" />
     <ClCompile Include="guiTexture.cpp" />
     <ClCompile Include="guiTransform.cpp" />
     <ClCompile Include="guiTreeWidget.cpp" />

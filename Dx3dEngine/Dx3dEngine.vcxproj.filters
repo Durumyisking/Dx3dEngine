@@ -56,6 +56,9 @@
     <Filter Include="Editor\Object\Gizmo">
       <UniqueIdentifier>{9e584343-48bd-4e1a-9ba2-01f3307409ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Widget\Button">
+      <UniqueIdentifier>{53ac0268-fdd9-4f33-a94e-ac65fc1eb058}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dx3dEngine.h" />
@@ -166,6 +169,10 @@
       <Filter>Editor\Object\Gizmo</Filter>
     </ClInclude>
     <ClInclude Include="guiPhysical.h" />
+    <ClInclude Include="guiResourceView.h" />
+    <ClInclude Include="guiButtonWidget.h">
+      <Filter>Widget\Button</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Dx3dEngine.rc">
@@ -285,5 +292,9 @@
       <Filter>Editor\Object\Gizmo</Filter>
     </ClCompile>
     <ClCompile Include="guiPhysical.cpp" />
+    <ClCompile Include="guiResourceView.cpp" />
+    <ClCompile Include="guiButtonWidget.cpp">
+      <Filter>Widget\Button</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

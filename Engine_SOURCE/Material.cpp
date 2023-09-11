@@ -135,6 +135,10 @@ HRESULT Material::Load(const std::wstring& path)
 {
 	return E_NOTIMPL;
 }
+HRESULT Material::LoadFullpath(const std::wstring& path)
+{
+	return E_NOTIMPL;
+}
 void Material::SetData(eGPUParam param, void* data)
 {
 	switch (param)

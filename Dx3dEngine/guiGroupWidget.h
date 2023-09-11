@@ -17,13 +17,39 @@ namespace gui
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
+		void Clear();
+
 
 		void SetSpacing(float spaceX = 10.f, float spaceY = 0.f) { mSpace.x = spaceX; mSpace.y = spaceY; }
+		void SetNextLine(UINT lineNum) { mNextLine = lineNum; }
 
 		void SetCollpase(bool enable, bool open = true)
 		{
 			mbCollapse = enable;
 			mbGroupOpen = open;
+		}
+
+		template<typename T>
+		T* CreateWidget()
+		{
+			T* Widget = new T;
+
+			UINT size = mChilds.size();
+
+			Widget->SetName(GetName().c_str() + '_' + std::to_string(size));	
+			Widget->SetParent(this);
+			Widget->SetIndex(size);
+
+			if (Widget == nullptr)
+			{
+				delete Widget;
+				Widget = nullptr;
+				return nullptr;
+			}
+
+			mChilds.push_back(Widget);
+
+			return Widget;
 		}
 
 		template<typename T>
@@ -35,13 +61,10 @@ namespace gui
 			Widget->SetParent(this);
 			Widget->SetSize(width, height);
 
-			if (!Widget->Initialize())
+			if (Widget == nullptr)
 			{
-				if (Widget)
-				{
-					delete Widget;
-					Widget = nullptr;
-				}
+				delete Widget;
+				Widget = nullptr;
 				return nullptr;
 			}
 
@@ -50,8 +73,10 @@ namespace gui
 			return Widget;
 		}
 
+
 	private:
 		ImVec2 mSpace;
+		UINT mNextLine;
 		bool mbCollapse;
 		bool mbGroupOpen;
     };

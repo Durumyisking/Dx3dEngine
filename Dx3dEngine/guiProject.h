@@ -2,6 +2,7 @@
 #include "guiWidget.h"
 #include "ResourceMgr.h"
 #include "guiTreeWidget.h"
+#include "guiGroupWidget.h"
 
 namespace gui
 {
@@ -18,29 +19,32 @@ namespace gui
 		void ResetContent();
 
 	private:
-		template <typename T>
-		void AddResources(TreeWidget::Node* rootNode, const char* name)
-		{
-			const std::vector<T*> resources
-				= GETSINGLE(ResourceMgr)->Finds<T>();
+		//template <typename T>
+		//void AddResources(TreeWidget::Node* rootNode, const char* name)
+		//{
+		//	const std::vector<T*> resources
+		//		= GETSINGLE(ResourceMgr)->Finds<T>();
 
-			TreeWidget::Node* stemNode
-				= mTreeWidget->AddNode(rootNode, name, 0, true);
+		//	TreeWidget::Node* stemNode
+		//		= mTreeWidget->AddNode(rootNode, name, 0, true);
 
-			for (T* resource : resources)
-			{
-				std::string name(resource->GetName().begin(), resource->GetName().end());
-				mTreeWidget->AddNode(stemNode, name, resource);
-			}
-		}
+		//	for (T* resource : resources)
+		//	{
+		//		std::string name(resource->GetName().begin(), resource->GetName().end());
+		//		mTreeWidget->AddNode(stemNode, name, resource);
+		//	}
+		//}
 
-		void toConsole();
-
+		void FolderClickCallback(UINT index, std::string path); 
+		void OpenFolderCallback(); //폴더 오픈 버튼 
+		void SelectFolder(std::string& path);
+		void toConsole(); //폴더 클릭 시
 
 
 	private:
-		TreeWidget* mTreeWidget;
+		GroupWidget* mFolders;
 		
-		std::wstring mTargetPath;
+		std::string mTargetPath;
+		std::vector<std::string> mTargetFolders;
 	};
 }

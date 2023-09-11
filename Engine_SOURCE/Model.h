@@ -46,6 +46,7 @@ public:
 	virtual ~Model();
 
 	virtual HRESULT Load(const std::wstring& path) override;
+	virtual HRESULT LoadFullpath(const std::wstring& path) override;
 
 	ModelNode* FindNode(const std::wstring& nodeName);
 	Bone* FindBone(const std::wstring& nodeName);

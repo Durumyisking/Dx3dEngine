@@ -69,6 +69,33 @@ public:
 	}
 
 	template <typename T>
+	T* LoadFullpath(const std::wstring& key, const std::wstring& path)
+	{
+		// 키값으로 탐색
+		T* resource = GETSINGLE(ResourceMgr)->Find<T>(key);
+		if (nullptr != resource)
+		{
+			// 해당키로 이미 로딩된게 있으면 해당 리소스를 반환
+			return resource;
+		}
+
+		// 해당 키로 로딩된 리소스가 없다.
+		resource = new T();
+		if (FAILED(resource->LoadFullpath(path)))
+		{
+			MessageBox(nullptr, L"Image Load Failed!", L"Error", MB_OK);
+			assert(false);
+			return nullptr;
+		}
+
+		resource->SetKey(key);
+		resource->SetPath(path);
+		mResources.insert(std::make_pair(key, resource));
+
+		return resource;
+	}
+
+	template <typename T>
 	void Insert(const std::wstring& key, T* resource)
 	{
 		if (Find<T>(key))

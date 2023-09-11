@@ -556,6 +556,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise3", L"noise/noise_03.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"default", L"default.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"FolderImage", L"folderImage.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
 
