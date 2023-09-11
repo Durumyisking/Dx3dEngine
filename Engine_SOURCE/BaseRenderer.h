@@ -28,6 +28,8 @@ public:
 
 	
 	void SetModel(Model* model, Material* mater) { mModel = model, mMaterial = mater; }
+	void SetModelByKey(std::wstring key);
+	void SetModelByKey(std::wstring modelKey, std::wstring materialKey);
 	GETSET(Model*, mModel, Model)
 
 

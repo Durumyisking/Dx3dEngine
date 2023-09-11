@@ -44,7 +44,7 @@ float4 main(VSOut vsIn) : SV_Target
     float NdotH = max(0.0, dot(normal, halfway));
     float NdotO = max(0.0, dot(normal, pixelToEye));
         
-    const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
+    const float3 Fdielectric = fresnelcoeff; // 비금속(Dielectric) 재질의 F0
     float3 F0 = lerp(Fdielectric, albedo.xyz, metallic);
     float3 F = fresnelSchlick(F0, max(0.0, dot(halfway, pixelToEye)));
     float3 kd = lerp(float3(1, 1, 1) - F, float3(0, 0, 0), metallic);
@@ -58,7 +58,6 @@ float4 main(VSOut vsIn) : SV_Target
 
     directLighting += (diffuseBRDF + specularBRDF) * radiance * NdotI;
     
-
     //outColor.xyz = CalculateLightPBR_Direct(vsIn.WorldPos, albedo, normal, metallic, roughness);
     outColor.xyz = ambientLighting + directLighting + emission;
 

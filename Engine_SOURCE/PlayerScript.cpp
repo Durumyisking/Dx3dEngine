@@ -59,14 +59,43 @@ void PlayerScript::FixedUpdate()
 		mPhyXRigidBody->AddTorqueZForDynamic(100.f * DT);
 	}
 
+	// 카메라의 forward와 player의 forward내적
+	float cDotp = camForward.Dot(mTransform->Forward());
+	float cDotp_degree = toDegree(cDotp);
+
 
 	if (KEY_DOWN(LEFT))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * -1000.f * DT), PxForceMode::Enum::eFORCE);
+		if (camForward.x < mTransform->Forward().x)
+		{
+			mTransform->SetPhysicalRotation(Vector3(0.f, -90.f - cDotp_degree, 0.f));
+		}
+		else if (camForward.x > mTransform->Forward().x)
+		{
+			mTransform->SetPhysicalRotation(Vector3(0.f, -90.f + cDotp_degree, 0.f));
+		}
+		else
+		{
+			mTransform->SetPhysicalRotation(Vector3(0.f, -90.f, 0.f));
+		}
+
+		// mPhyXRigidBody->AddForceForDynamic((camRight * -1000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(RIGHT))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * 1000.f * DT), PxForceMode::Enum::eFORCE);
+		if (camForward.x < mTransform->Forward().x)
+		{
+			mTransform->SetPhysicalRotation(Vector3(0.f, 90.f - cDotp_degree, 0.f));
+		}
+		else if (camForward.x > mTransform->Forward().x)
+		{
+			mTransform->SetPhysicalRotation(Vector3(0.f, 90.f + cDotp_degree, 0.f));
+		}
+		else
+		{
+			mTransform->SetPhysicalRotation(Vector3(0.f, 90.f, 0.f));
+		}
+		//mPhyXRigidBody->AddForceForDynamic((camRight * 1000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(UP))
 	{
@@ -80,20 +109,6 @@ void PlayerScript::FixedUpdate()
 	{
 		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((mTransform->Up() * 500000.f * DT), PxForceMode::Enum::eFORCE);
 	}
-	
-
-	if (KEY_DOWN(Z))
-	{
-		const auto& gameObjects = GETSINGLE(SceneMgr)->GetActiveScene()->GetLayer(eLayerType::Objects).GetGameObjects();
-		for (const auto& pGameObject : gameObjects)
-			renderer::mainCamera->Raycast(renderer::mainCamera->GetOwnerWorldPos(), Vector3(0.f, 0.f, 1.f), pGameObject);
-	}
-
-	if (KEY_DOWN(R))
-	{
-		mTransform->SetPhysicalPosition(Vector3(-5.f, 5.f, 5.f));
-	}
-
 }
 void PlayerScript::Render()
 {
