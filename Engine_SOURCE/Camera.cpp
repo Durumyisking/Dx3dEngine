@@ -47,7 +47,7 @@ Camera::~Camera()
 }
 void Camera::Initialize()
 {
-	RegisterCameraInRenderer();
+	//RegisterCameraInRenderer();
 }
 
 void Camera::Update()
@@ -479,4 +479,20 @@ bool Camera::renderPassCheck(GameObj* obj)
 	}
 
 	return true;
+}
+
+void Camera::SetLayerMaskOn(eLayerType type)
+{
+	if (mLayerMask.test((UINT)type))
+		return;
+
+	mLayerMask.flip((UINT)type);
+}
+
+void Camera::SetLayerMaskOFF(eLayerType type)
+{
+	if (!mLayerMask.test((UINT)type))
+		return;
+
+	mLayerMask.flip((UINT)type);
 }

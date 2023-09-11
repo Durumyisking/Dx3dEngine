@@ -207,6 +207,7 @@ namespace renderer
 	extern std::vector<Camera*> Cameras[];
 
 	extern Camera* mainCamera;
+	extern Camera* UICamera;
 	extern std::vector<DebugMesh> debugMeshes;
 	extern std::vector<Light*> lights;
 	extern std::vector<LightAttribute> lightAttributes;

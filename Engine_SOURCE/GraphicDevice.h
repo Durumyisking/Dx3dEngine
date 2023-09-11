@@ -60,6 +60,7 @@ public:
 
 	void BindRasterizerState(ID3D11RasterizerState* rasterizerState);
 	void BindDepthStencilState(ID3D11DepthStencilState* depthStencilState);
+	void BindDepthStencilState(ID3D11DepthStencilState* depthStencilState,int depthINT);
 	void BindBlendState(ID3D11BlendState* blendState);
 
 

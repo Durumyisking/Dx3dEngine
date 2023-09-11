@@ -22,6 +22,7 @@ namespace renderer
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendState[static_cast<UINT>(eBlendStateType::End)];
 
 	Camera* mainCamera = nullptr;
+	Camera* UICamera = nullptr;
 	std::vector<Camera*> Cameras[static_cast<UINT>(SceneMgr::eSceneType::End)];
 	std::vector<DebugMesh> debugMeshes;
 	std::vector<Light*> lights;
@@ -343,6 +344,13 @@ namespace renderer
 #pragma region DepthStencilState
 
 		D3D11_DEPTH_STENCIL_DESC dsDesc = {};
+
+		dsDesc.DepthEnable = true;
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_NEVER;
+		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		dsDesc.StencilEnable = false;
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::UI)].GetAddressOf());
+
 		dsDesc.DepthEnable = true;
 		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
@@ -681,6 +689,8 @@ namespace renderer
 		uiSS->Create(eShaderStage::VS, L"UISpriteVS.hlsl", "main");
 		uiSS->Create(eShaderStage::PS, L"UISpritePS.hlsl", "main");
 		uiSS->SetRSState(eRasterizerType::SolidNone);
+		uiSS->SetDSState(eDepthStencilType::UI);
+		uiSS->SetBSState(eBlendStateType::AlphaBlend);
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UISpriteShader", uiSS);
 #pragma endregion
 
@@ -1955,7 +1965,7 @@ namespace renderer
 				continue;
 
 			cam->Render();
-			break;
+			//break;
 		}
 		Cameras[type].clear();
 		renderer::lightAttributes.clear();

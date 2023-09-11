@@ -19,8 +19,8 @@ namespace enums
 		FX,
 		SkySphere,
 		CubeMap,
-		UI,
 		PostProcess,
+		UI,
 		End = 16,
 	};
 

@@ -450,6 +450,11 @@ void GraphicDevice::BindDepthStencilState(ID3D11DepthStencilState* depthStencilS
 	mContext->OMSetDepthStencilState(depthStencilState, 0);
 }
 
+void GraphicDevice::BindDepthStencilState(ID3D11DepthStencilState* depthStencilState, int depthINT)
+{
+	mContext->OMSetDepthStencilState(depthStencilState, depthINT);
+}
+
 void GraphicDevice::BindBlendState(ID3D11BlendState* blendState)
 {
 	mContext->OMSetBlendState(blendState, nullptr, 0xffffff);

@@ -80,6 +80,7 @@ enum class eRasterizerType
 
 enum class eDepthStencilType
 {
+	UI,
 	Less, // 일반적인 원근
 	Greater, // 원근 거꾸로
 	NoWrite, // 겹치면 아예 안그림
