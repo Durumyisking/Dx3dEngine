@@ -45,6 +45,7 @@ void PhysicalMovement::Move(const Vector3& velocity)
 	if (eActorType::Kinematic == physical->GetActorType())
 	{
 		physical->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
+		return;
 	}
 
 }

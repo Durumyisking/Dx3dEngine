@@ -39,6 +39,7 @@ void BoneAnimator::Update()
 		}
 
 		mPlayAnimation->Reset();
+		mPlayAnimation->SetCurIndex(0);
 	}
 
 	mPlayAnimation->Update();
@@ -74,7 +75,7 @@ void BoneAnimator::LoadAnimations(const std::wstring& path)
 
 			if (L".SMD" == extension || L".Smd" == extension || L".smd" == extension)
 			{
-				CreateAnimation(fileName, entry.path(), 0.1f);
+				CreateAnimation(fileName, entry.path());
 			}
 		}
 	}
@@ -89,8 +90,22 @@ void BoneAnimator::CreateAnimation(const std::wstring& name, const std::wstring&
 	AnimationClip* clip = new AnimationClip();
 	mAnimationClips.insert(std::pair<std::wstring, AnimationClip*>(name, clip));
 
+	clip->SetAnimationName(name);
 	clip->SetAnimator(this);
 	clip->CreateAnimation(name, path, duration);
+}
+
+void BoneAnimator::CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount)
+{
+	// 중복된 애니메이션 이름
+	if (mAnimationClips.find(name) != mAnimationClips.end())
+		return;
+
+	AnimationClip* clip = new AnimationClip();
+	mAnimationClips.insert(std::pair<std::wstring, AnimationClip*>(name, clip));
+
+	clip->SetAnimator(this);
+	clip->CreateAnimation(name, path, frameCount);
 }
 
 void BoneAnimator::Play(const std::wstring& name, bool loop)
@@ -102,8 +117,30 @@ void BoneAnimator::Play(const std::wstring& name, bool loop)
 	
 	mbLoop = loop;
 
+	// EndEvent호출
+	if (nullptr != mPlayAnimation && nullptr != mPlayAnimation->GetEndEvent())
+		mPlayAnimation->GetEndEvent()();
+
+	//if (nullptr != mPlayAnimation)
+	//{
+	//	// 이전 애니메이션의 마지막 프레임 정보
+	//	UINT frame = mPlayAnimation->GetCurIndex();
+	//	const animation::SkeletonData* preveAnimation = mPlayAnimation->GetCurFrameAnimation(frame);
+
+	//	// 다음 애니메이션의 이전 애니메이션 정보 세팅
+	//	iter->second->SetPreveAnimationData(preveAnimation, 0.1f);
+	//}
+
+	// Next Animation
 	mPlayAnimation = iter->second;
+	
+	// 애니메이션 인덱스 초기화
+	mPlayAnimation->SetCurIndex(0);
 	mPlayAnimation->Reset();
+
+	// StartEvent호출
+	if (nullptr != mPlayAnimation && nullptr != mPlayAnimation->GetStartEvent())
+		mPlayAnimation->GetStartEvent()();
 }
 
 void BoneAnimator::SetAnimationDruationTime(const std::wstring& name, float duration)
@@ -114,4 +151,21 @@ void BoneAnimator::SetAnimationDruationTime(const std::wstring& name, float dura
 		return;
 
 	iter->second->SetDuration(duration);
+}
+
+const std::wstring BoneAnimator::PlayAnimationName() const
+{
+	if (mPlayAnimation == nullptr)
+		return L"Empty";
+
+	return mPlayAnimation->GetAnimationName();
+}
+
+AnimationClip* BoneAnimator::GetAnimationClip(const std::wstring& animationName) const
+{
+	const auto& iter = mAnimationClips.find(animationName);
+	if (iter == mAnimationClips.end())
+		return nullptr;
+
+	return iter->second;
 }

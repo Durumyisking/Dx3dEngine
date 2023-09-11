@@ -49,10 +49,20 @@ void Transform::FixedUpdate()
 		Physical* physical = GetOwner()->GetComponent<Physical>();
 		mPxTransform = physical->GetActor<PxRigidActor>()->getGlobalPose();
 		Matrix matPxScale = Matrix::CreateScale(physical->GetGeometrySize());
+
+		// Test
+		Vector3 rot = mRelativeRotation * XM_PI / 180; // to radian
+		Matrix Testrotation;
+		Testrotation = Matrix::CreateRotationX(rot.x);
+		Testrotation *= Matrix::CreateRotationY(rot.y);
+		Testrotation *= Matrix::CreateRotationZ(rot.z);
+
+
+		// 원래 코드
 		Matrix matPxRotation = Matrix::CreateFromQuaternion(convert::PxQuatToQuaternion(mPxTransform.q));
 		Matrix matPxTranslation = Matrix::CreateTranslation(convert::PxVec3ToVector3(mPxTransform.p));
 		mRelativePosition = convert::PxVec3ToVector3(mPxTransform.p);
-		mPxWorld = matPxScale * matPxRotation * matPxTranslation;
+		mPxWorld = matPxScale * Testrotation * matPxTranslation;
 
 		//Vector3 vLocalTranslation = Vector3(
 		//	mPxTransform.p.x + m_vGlobalOffset.x,
@@ -67,7 +77,11 @@ void Transform::FixedUpdate()
 		Matrix matScale = Matrix::CreateScale(mRelativeScale);
 
 //			m_matOldWorld = mWorld;
-		mWorld = matScale * matPxRotation * matTranslation;
+		mWorld = matScale * Testrotation * matTranslation;
+
+		mWorldForward = mRelativeForward = Vector3::TransformNormal(Vector3::Forward, Testrotation);
+		mWorldRight = mRelativeRight = Vector3::TransformNormal(Vector3::Right, Testrotation);
+		mWorldUp = mRelativeUp = Vector3::TransformNormal(Vector3::Up, Testrotation);
 	}
 	else
 	{	

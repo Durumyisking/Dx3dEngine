@@ -9,6 +9,7 @@ Mesh::Mesh()
 	, mVBDesc{}
 	, mIBDesc{}
 	, mIndexCount(0)
+	, mbRender(true)
 {
 }
 Mesh::~Mesh()
@@ -64,10 +65,16 @@ void Mesh::BindBuffer()
 
 void Mesh::Render()
 {
+	if (!IsRender())
+		return;
+
 	GetDevice()->DrawIndexed(mIndexCount, 0, 0);
 }
 
 void Mesh::RenderInstanced(UINT count)
 {
+	if (!IsRender())
+		return;
+
 	GetDevice()->DrawIndexedInstanced(mIndexCount, count, 0, 0, 0);
 }
