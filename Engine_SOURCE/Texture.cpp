@@ -63,7 +63,11 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 	if (!mTexture)
 	{
 		mDesc.BindFlags = bindflag;
-		mDesc.Usage = D3D11_USAGE_DEFAULT;
+		mDesc.Usage = D3D11_USAGE_DEFAULT; 
+		// D3D11_USAGE_DEFAULT : gpu가 read/write access가능하다.
+		// D3D11_USAGE_IMMUTABLE : gpu가 read만 가능 cpu는 암것도 안됨
+		// D3D11_USAGE_DYNAMIC : gpu r/w, cpu w only
+		// D3D11_USAGE_STAGING : gpu -> cpu 데이터 전송할 때 사용
 		mDesc.CPUAccessFlags = 0;
 		mDesc.Format = format;
 		mDesc.Width = width;
@@ -76,6 +80,76 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 		mDesc.MipLevels = 1;
 		mDesc.MiscFlags = 0;
 	}
+
+	if (!GetDevice()->CreateTexture(&mDesc, mTexture.GetAddressOf()))
+	{
+		return false;
+	}
+	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
+	{
+		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), nullptr, mDSV.GetAddressOf()))
+		{
+			return false;
+		}
+	}
+	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE)
+	{
+		D3D11_SHADER_RESOURCE_VIEW_DESC tSRVdesc = {};
+		tSRVdesc.Format = format;
+		tSRVdesc.Texture2D.MipLevels = 0;
+		tSRVdesc.Texture2D.MostDetailedMip = 0;
+		tSRVdesc.ViewDimension = D3D11_SRV_DIMENSION::D3D_SRV_DIMENSION_TEXTURE2D;
+
+		if (!GetDevice()->CreateShaderResourceView(mTexture.Get(), nullptr, mSRV.GetAddressOf()))
+		{
+			return false;
+		}
+	}
+	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS)
+	{
+		D3D11_UNORDERED_ACCESS_VIEW_DESC tUAVdesc = {};
+		tUAVdesc.Format = format;
+		tUAVdesc.Texture2D.MipSlice = 0;
+		tUAVdesc.ViewDimension = D3D11_UAV_DIMENSION::D3D11_UAV_DIMENSION_TEXTURE2D;
+
+		if (!GetDevice()->CreateUnorderedAccessView(mTexture.Get(), nullptr, mUAV.GetAddressOf()))
+		{
+			return false;
+		}
+	}
+	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET)
+	{
+		if (!GetDevice()->CreateRenderTargetView(mTexture.Get(), nullptr, mRTV.GetAddressOf()))
+			return false;
+	}
+
+
+	return true;
+}
+
+bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT numQualityLevels, UINT bindflag)
+{
+	mDesc.BindFlags = bindflag;
+	mDesc.Usage = D3D11_USAGE_DEFAULT;
+	mDesc.CPUAccessFlags = 0;
+	mDesc.Format = format;
+	mDesc.Width = width;
+	mDesc.Height = height;
+	mDesc.ArraySize = 1;
+
+	mDesc.SampleDesc.Count = 1;
+	if (numQualityLevels > 0) {
+		mDesc.SampleDesc.Count = 4; // how many multisamples
+		mDesc.SampleDesc.Quality = numQualityLevels - 1;
+	}
+	else {
+		mDesc.SampleDesc.Count = 1; // how many multisamples
+		mDesc.SampleDesc.Quality = 0;
+	}
+
+	mDesc.MipLevels = 1;
+	mDesc.MiscFlags = 0;
+	
 
 	if (!GetDevice()->CreateTexture(&mDesc, mTexture.GetAddressOf()))
 	{

@@ -30,6 +30,7 @@ public:
 	static void Clears();
 
 	bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag);
+	bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT numQualityLevels, UINT bindflag);
 	bool Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture);
 	bool Create(D3D11_TEXTURE2D_DESC& desc);
 

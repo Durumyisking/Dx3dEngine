@@ -79,7 +79,7 @@ void Application::Render()
 		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::Render();
-		mGraphicDevice->AdjustViewPorts();
+		mGraphicDevice->AdjustToDefaultResolutionViewPorts();
 		renderer::ClearRenderTargets(); // mGraphicDevice::Clear 대신 렌더타겟 클리어
 		renderer::Render();
 		//UIManager::Render();

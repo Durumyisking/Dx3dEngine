@@ -1,7 +1,7 @@
 #pragma once
 #include "Graphics.h"
 
-
+class Texture;
 class GraphicDevice
 {
 public:
@@ -62,11 +62,13 @@ public:
 	void BindDepthStencilState(ID3D11DepthStencilState* depthStencilState);
 	void BindBlendState(ID3D11BlendState* blendState);
 
+	void CreateDefaultBuffers();
 
 	void Clear();
 	void ClearRenderTargetView(ID3D11RenderTargetView* renderTargetView, const FLOAT colorRGBA[4]);
 	void ClearDepthStencilView(ID3D11DepthStencilView* depthStencilView, UINT clearFlags);
-	void AdjustViewPorts();
+	void AdjustToDefaultResolutionViewPorts();
+	void ChangeViewPorts(D3D11_VIEWPORT& viewPort);
 	void OMSetRenderTarget();
 	void OMSetRenderTarget(UINT numViews, ID3D11RenderTargetView** renderTargetViews, ID3D11DepthStencilView* depthStencilView);
 
@@ -84,7 +86,9 @@ public:
 	float ViewportWidth() { return (float)mViewPort.Width; }
 	float ViewportHeight() { return (float)mViewPort.Height; }
 
+	Microsoft::WRL::ComPtr <IDXGISwapChain> GetSwapChain() const { return mSwapChain; }
 
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> GetBackBufferRTV() const;
 private:
 	// GPU 객체 생성 그래픽카드와 연결되는 기본적인 객체 
 	Microsoft::WRL::ComPtr <ID3D11Device> mDevice; // ComPtr : 이 멤버를 가지고 있는 클래스의 소멸자가 호출될때 해당 멤버의 타입의 소멸자가 자동으로 호출된다.
@@ -94,18 +98,22 @@ private:
 
 	// 최종적으로 그려지는 도화지
 
-	class Texture* mRenderTargetTexture;
-	class Texture* mDepthStencilBufferTexture;
+	Texture* mRenderTargetTexture;
+	Texture* mDepthStencilBufferTexture;
 
-
+	// 삼각형 레스터화 -> float(MSAA) -> resolved(No MSAA)
+	// -> 후처리(블룸, 톤매핑) -> backBuffer(최종 SwapChain Present)
+	Texture* mFloatBuffer;
+	bool mbUseMSAA = false;
+	UINT mNumQualityLevels = 0;
 
 	// 화면에 최종적으로 그려지는 
 	// 백버퍼(Frame buffer)를 관리하고, 실제로 화면에 렌더링 하는 
 	// 역할을 담당하는 객체
 	Microsoft::WRL::ComPtr <IDXGISwapChain> mSwapChain;
 
-	//텍스처 로딩할때 사용된다.
-	// ID3D11SamplerState* mSampler[];
+\
+
 
 	D3D11_VIEWPORT mViewPort;
 };
@@ -122,5 +130,12 @@ template <class T> void SafeRelease(T** ppT)
 	{
 		(*ppT)->Release();
 		*ppT = NULL;
+	}
+}
+
+inline void ThrowIfFailed(HRESULT hr) {
+	if (FAILED(hr)) {
+		// 디버깅할 때 여기에 breakpoint 설정
+		throw std::exception();
 	}
 }

@@ -312,15 +312,33 @@ namespace renderer
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Skybox)].GetAddressOf());
 
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Clamp)].GetAddressOf());
+
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+		samplerDesc.BorderColor[0] = 100.f;
+		samplerDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
+		samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::ShadowPoint)].GetAddressOf());
+
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Point), 1, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Linear), 1, samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Anisotropic), 1, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Skybox), 1, samplerState[static_cast<UINT>(eSamplerType::Skybox)].GetAddressOf());
+		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Clamp), 1, samplerState[static_cast<UINT>(eSamplerType::Clamp)].GetAddressOf());
+		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::ShadowPoint), 1, samplerState[static_cast<UINT>(eSamplerType::ShadowPoint)].GetAddressOf());
 
 #pragma endregion
 
 #pragma region RasterizerState
 		D3D11_RASTERIZER_DESC  reDesc = {};
+
+		//reDesc.DepthClipEnable = true;
+		//reDesc.FrontCounterClockwise = false;
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
@@ -343,14 +361,14 @@ namespace renderer
 #pragma region DepthStencilState
 
 		D3D11_DEPTH_STENCIL_DESC dsDesc = {};
-		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
-		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		dsDesc.DepthEnable = true; // 깊이값 사용할지 말지
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth 값이 작거나 같을때 그림
+		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer 껏다켰다할때 사용
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Less)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth 값이 크거나 같을때 그림
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Greater)].GetAddressOf());
@@ -1070,12 +1088,11 @@ namespace renderer
 			Texture* shadowMap = new Texture();
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapTexture", shadowMap);
 			vecRTTex.emplace_back(shadowMap);
-			vecRTTex[0]->Create(1600, 900, DXGI_FORMAT_R32G32B32A32_FLOAT
+			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
-
 			Texture* depthStencilTex = new Texture();
-			depthStencilTex->Create(1600, 900, DXGI_FORMAT_D32_FLOAT
+			depthStencilTex->Create(width, height, DXGI_FORMAT_D32_FLOAT
 				, D3D11_BIND_DEPTH_STENCIL);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapDSTexture", depthStencilTex);
 
@@ -1901,7 +1918,7 @@ namespace renderer
 		}
 	}
 
-	/////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 
 	void Initialize()
 	{
@@ -1914,7 +1931,7 @@ namespace renderer
 		LoadDefaultMaterial();
 		BindPBRProprerties();
 
-		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"blockBrick");
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"BlockBrick");
 	}
 
 	void release()

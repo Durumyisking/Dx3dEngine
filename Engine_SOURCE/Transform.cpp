@@ -199,3 +199,16 @@ void Transform::SetPhysicalPosition(const Vector3& position)
 	mPxTransform.p = convert::Vector3ToPxVec3(position);
 	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 }
+
+void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
+{
+	assert(GetOwner()->GetComponent<Physical>());
+
+	PxQuat rotationX(PxPi * rotation_degrees.x / 180.0f, PxVec3(1.0f, 0.0f, 0.0f));
+	PxQuat rotationY(PxPi * rotation_degrees.y / 180.0f, PxVec3(0.0f, 1.0f, 0.0f));
+	PxQuat rotationZ(PxPi * rotation_degrees.z / 180.0f, PxVec3(0.0f, 0.0f, 1.0f));
+	// 회전을 적용합니다.
+	PxQuat finalRotation = rotationX * rotationY * rotationZ;
+	mPxTransform.q = finalRotation;
+	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+}
