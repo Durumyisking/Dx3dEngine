@@ -97,8 +97,7 @@ void CubeMapHDR::createEnvMap()
     // Create the TextureCube for enviroment mapping rendertarget
     D3D11_TEXTURE2D_DESC textureDesc = {};
 
-
-    textureDesc.MipLevels = 1;
+    textureDesc.MipLevels = 6;
     textureDesc.ArraySize = 6;
     textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
     textureDesc.CPUAccessFlags = 0;
@@ -106,8 +105,7 @@ void CubeMapHDR::createEnvMap()
     textureDesc.SampleDesc.Quality = 0;
     textureDesc.Usage = D3D11_USAGE_DEFAULT;
     textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-    //textureDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS | D3D11_RESOURCE_MISC_TEXTURECUBE;
-    textureDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+    textureDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS | D3D11_RESOURCE_MISC_TEXTURECUBE;
 
     textureDesc.Width = SIZE_IRRADIANCE;
     textureDesc.Height = SIZE_IRRADIANCE;
@@ -122,26 +120,29 @@ void CubeMapHDR::createEnvMap()
     srvDesc.Format = textureDesc.Format;
     srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURECUBE;
     srvDesc.TextureCube.MostDetailedMip = 0;
-    srvDesc.TextureCube.MipLevels = 1;
+    srvDesc.TextureCube.MipLevels = 6;
     GetDevice()->CreateShaderResourceView(mIrradianceTex, &srvDesc, &mIrradianceSRV);
     GetDevice()->CreateShaderResourceView(mPreFilterTex, &srvDesc, &mPreFilterSRV);
 
-    for (uint32_t i = 0; i < 6; i++)
+    for (uint32_t m = 0; m < 6; m++)
     {
-        D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-        rtvDesc.Format = textureDesc.Format;
-        rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY; 
-        rtvDesc.Texture2DArray.MipSlice = 0;
-        rtvDesc.Texture2DArray.FirstArraySlice = i;
-        rtvDesc.Texture2DArray.ArraySize = 1;
+        for (uint32_t i = 0; i < 6; i++)
+        {
+            D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+            rtvDesc.Format = textureDesc.Format;
+            rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+            rtvDesc.Texture2DArray.MipSlice = 0;
+            rtvDesc.Texture2DArray.FirstArraySlice = i;
+            rtvDesc.Texture2DArray.ArraySize = 1;
 
-        ID3D11RenderTargetView* rtv2 = nullptr;
-        GetDevice()->CreateRenderTargetView(mIrradianceTex, &rtvDesc, &rtv2);
-        ID3D11RenderTargetView* rtv3 = nullptr;
-        GetDevice()->CreateRenderTargetView(mPreFilterTex, &rtvDesc, &rtv3);
+            ID3D11RenderTargetView* rtv2 = nullptr;
+            GetDevice()->CreateRenderTargetView(mIrradianceTex, &rtvDesc, &rtv2);
+            ID3D11RenderTargetView* rtv3 = nullptr;
+            GetDevice()->CreateRenderTargetView(mPreFilterTex, &rtvDesc, &rtv3);
 
-        mRTVs2.emplace_back(rtv2);
-        mRTVs3.emplace_back(rtv3);
+            mRTVs2.emplace_back(rtv2);
+            mRTVs3.emplace_back(rtv3);
+        }
     }
     mIrradianceTex->Release();
     mPreFilterTex->Release();
@@ -186,7 +187,7 @@ void CubeMapHDR::bindPrefilterMap()
 
     for (uint32_t i = 0; i < 6; ++i)
     {
-        float clearColor[4] = { 0.0f, 0.f, 1.f, 1.0f };
+        float clearColor[4] = { 1.0f, 0.f, 0.f, 1.0f };
         GetDevice()->GetDeviceContext()->ClearRenderTargetView(mRTVs3[i], clearColor);
         XMMATRIX d = XMMatrixTranspose(captureViews[i] * captureProjection);
         mProjConstantBuffer.matrix = d;

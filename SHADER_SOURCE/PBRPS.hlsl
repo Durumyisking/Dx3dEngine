@@ -26,15 +26,16 @@ float4 main(VSOut vsIn) : SV_Target
     float3  emission = (float3) 0.f;
     float3  A0 = (float3) 1.f;
 
-    albedo = cbbAlbedo ? TextureMapping_albedo(vsIn.UV) : albedo;
-    normal = cbbNormal ? TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, vsIn.WorldBiNormal) : normal;
-    metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV) : metallic;
-    roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV) : roughness;
-    emission = cbbEmissive ? TextureMapping_emissive(vsIn.UV) : emission;
+    float pixelToCam = distance(cameraWorldPos.xyz, vsIn.WorldPos);
+
+    albedo = cbbAlbedo ? TextureMapping_albedo(vsIn.UV, pixelToCam) : albedo;
+    normal = cbbNormal ? TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, vsIn.WorldBiNormal, pixelToCam) : normal;
+    metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV, pixelToCam) : metallic;
+    roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV, pixelToCam) : roughness;
+    emission = cbbEmissive ? TextureMapping_emissive(vsIn.UV, pixelToCam) : emission;
 
     float3 pixelToEye = normalize(cameraWorldPos.xyz - vsIn.WorldPos);
-    
-    ambientLighting = AmbientLightingByIBL(albedo.xyz, normal, pixelToEye, metallic, roughness);
+    ambientLighting = AmbientLightingByIBL(albedo.xyz, normal, pixelToEye, metallic, roughness, pixelToCam);
     
     // 빛 타입에 따라 다르게 적용되도록해야함 현재는 dir light만 적용중
     
@@ -59,10 +60,13 @@ float4 main(VSOut vsIn) : SV_Target
 
     float3 radiance = lightAttributes[0].color.diffuse.xyz;
     
-
+  
     directLighting += (diffuseBRDF + specularBRDF) * radiance * NdotI;
     
     //outColor.xyz = CalculateLightPBR_Direct(vsIn.WorldPos, albedo, normal, metallic, roughness);
+    //outColor.xyz = DiffuseIBL(albedo.xyz, normal, pixelToEye, metallic);
+    //outColor.xyz = SpecularIBL(albedo.xyz, normal, pixelToEye, metallic, roughness);
+    //outColor.xyz = directLighting;
     outColor.xyz = ambientLighting + directLighting + emission;
 
     

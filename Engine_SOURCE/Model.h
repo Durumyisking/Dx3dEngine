@@ -70,9 +70,10 @@ public:
 	math::Matrix ConvertMatrix(aiMatrix4x4 aimat);
 	Material* GetVariableMaterials(UINT index);
 	void SetVariableMaterials(UINT index, Material* mater);
+	void SetVariableMaterialsByKey(UINT index, const std::wstring& key);
 	void Bind_Render();
 
-	UINT GetMeshCounts() const { return mMeshes.size(); }
+	size_t GetMeshCounts() const { return mMeshes.size(); }
 
 public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)

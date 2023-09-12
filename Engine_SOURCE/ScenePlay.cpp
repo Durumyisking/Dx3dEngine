@@ -101,82 +101,35 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(5.f, 5.f, 9.5f));
+		Player* player = object::Instantiate<Player>(eLayerType::Monster, this);
+		player->SetPos(Vector3(5.f, 15.f, 9.5f));
 		player->SetScale(Vector3(0.1f, 0.1f, 0.1f));
 		player->SetName(L"Player");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		(
-			L"BrickBlockBody_alb",
-			L"BrickBlockBody_nrm",
-			L"BrickBlockBody_mtl",
-			L"BrickBlockBody_rgh",
-			L"BrickBlockBody_emm",
-			L"PBRShader",
-			L"gold_dirt2"
-		);
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
-		int i = model->GetMeshCounts();
-		model->SetVariableMaterials(0, mat);
+		model->SetVariableMaterialsByKey(0, L"goombaBodyMaterial");
+		model->SetVariableMaterialsByKey(1, L"goombaEye2Material");
+		model->SetVariableMaterialsByKey(2, L"goombaEye2Material");
+		model->SetVariableMaterialsByKey(7, L"goombaBodyMaterial");
+		model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
+		model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
 		player->GetComponent<MeshRenderer>()->SetModel(model);
-		//player->AddComponent<PlayerScript>(eComponentType::Script);
-
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-	}
-
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(-5.f, 5.f, 5.f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->SetName(L"TESTSTST");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		(
-			L"BrickBlockBody_alb",
-			L"BrickBlockBody_nrm",
-			L"BrickBlockBody_mtl",
-			L"BrickBlockBody_rgh",
-			L"BrickBlockBody_emm",
-			L"DeferredShader",
-			L"check_dirt"
-		);
-
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"check_dirt");
-		//player->GetComponent<MeshRenderer>()->SetModelByKey(L"BlockBrick", L"check_dirt");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 1.5f, 0.5f));
+		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
-
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(0.f, 5.f, 5.f));
+		player->SetPos(Vector3(-15.f, 10.f, 9.5f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		(
-			L"iron_albedo",
-			L"iron_normal",
-			L"iron_metallic",
-			L"iron_roughness",
-			L"DeferredShader",
-			L"wood_dirt"
-		);
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"DeferredMaterial");
 
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 		//player->AddComponent<PlayerScript>(eComponentType::Script);
@@ -189,6 +142,8 @@ void ScenePlay::Initialize()
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
+
+
 
 
 	{
