@@ -83,6 +83,7 @@ void Transform::FixedUpdate()
 		mWorldRight = mRelativeRight = Vector3::TransformNormal(Vector3::Right, Testrotation);
 		mWorldUp = mRelativeUp = Vector3::TransformNormal(Vector3::Up, Testrotation);
 	}
+
 	else
 	{	
 		// 렌더링에 사용될 위치값을 업데이트.
@@ -192,6 +193,13 @@ Vector3 Transform::GetPhysicalPosition()
 	assert(GetOwner()->GetComponent<Physical>());
 	return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
 }
+
+Vector3 Transform::GetPhysicalRotation()
+{
+	assert(GetOwner()->GetComponent<Physical>());
+	return convert::PxQuatToQuaternion(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().q).ToEuler() / XM_PI * 180;
+}
+
 
 void Transform::SetPhysicalPosition(const Vector3& position)
 {

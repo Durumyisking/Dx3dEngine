@@ -1663,7 +1663,7 @@ namespace renderer
 	{
 		Vertex v = {};
 		float fRadius = 0.5f;
-		float fHeight = 1.0f; // Total height of the capsule
+		float fHeight = 100.0f; // Total height of the capsule
 		float fHalfHeight = fHeight * 0.5f; // Half of the capsule height
 		UINT iStackCount = 40;
 		UINT iSliceCount = 40;

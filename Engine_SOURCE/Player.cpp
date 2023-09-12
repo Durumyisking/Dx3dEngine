@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "MarioParts.h"
 #include "InputMgr.h"
 #include "TimeMgr.h"
 #include "PlayerScript.h"
@@ -137,6 +138,10 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)
+{
+}
+
+void Player::BoneInitialize()
 {
 }
 

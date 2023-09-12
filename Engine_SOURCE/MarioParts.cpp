@@ -11,6 +11,11 @@
 
 MarioParts::MarioParts()
 {
+<<<<<<< HEAD
+	SetLayerType(eLayerType::Player);
+
+=======
+>>>>>>> 255dec6e611b73f6e438073350714e0bf2481d2d
 }
 
 MarioParts::~MarioParts()

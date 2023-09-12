@@ -21,6 +21,10 @@ public:
 	virtual void OnCollisionEnter(GameObj* gameObject) override;
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
+	virtual void BoneInitialize();
+
+	std::vector<MarioParts*> GetParts() { return mParts; }
+	void SetParts(MarioParts* part) { mParts.push_back(part); }
 
 
 private:
@@ -30,5 +34,7 @@ protected:
 	virtual void stateInfoInitalize() override {};
 
 public:
+
+
 
 };
