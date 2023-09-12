@@ -26,7 +26,11 @@ namespace gui
 	}
 
 	void ButtonWidget::FixedUpdate()
-	{/*
+	{
+	}
+
+	void ButtonWidget::Update()
+	{
 		if (mTexture == nullptr)
 			mClick = ImGui::Button(GetName().c_str(), mSize);
 		else
@@ -35,13 +39,12 @@ namespace gui
 		if (mbText)
 			ImGui::Text(mText.c_str());
 
-		if (mClick && mClickCallback)
-			mClickCallback();*/
-	}
+		//mClick = ImGui::Button(GetName().c_str(), mSize);
 
-	void ButtonWidget::Update()
-	{
-		mClick = ImGui::Button(GetName().c_str(), mSize);
+		if (mClick && mCallback)
+		{
+			mCallback();
+		}
 	}
 
 	void ButtonWidget::LateUpdate()

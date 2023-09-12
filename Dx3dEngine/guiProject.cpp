@@ -44,14 +44,6 @@ namespace gui
 		mFolders->SetSpacing();
 		mFolders->SetNextLine(5);
 
-		//folder button
-		ButtonWidget* folderButton = new ButtonWidget("OpenFolder");
-		folderButton->SetSize(100.f, 50.f);
-
-		folderButton->SetClickCallback(this, &Project::OpenFolderCallback);
-
-		AddWidget(folderButton);
-
 		ResetContent();
 	}
 
@@ -90,10 +82,18 @@ namespace gui
 		//SetDefaultPath;
 		std::filesystem::path parentPath = std::filesystem::current_path().parent_path().parent_path();
 		mTargetPath = parentPath.string() + "\\Resources";
+		
+		//folder button
+		ButtonWidget* folderButton = new ButtonWidget("OpenFolder");
+		folderButton->SetSize(100.f, 50.f);
 
+
+		folderButton->SetClickCallback(this, &Project::FolderClickCallback, mTargetPath);
+
+		AddWidget(folderButton);
 	}
 
-	void Project::FolderClickCallback(UINT index, std::string path)
+	void Project::FolderClickCallback(std::string path)
 	{
 		ResetContent();
 
@@ -109,7 +109,7 @@ namespace gui
 		SelectFolder(mTargetPath);
 	}
 	
-	void Project::SelectFolder(std::string& path)
+	void Project::SelectFolder(std::string path)
 	{
 		TCHAR	FilePath[MAX_PATH] = {};
 
@@ -220,15 +220,15 @@ namespace gui
 			Texture* folderImage = GETSINGLE(ResourceMgr)->Find<Texture>(L"FolderImage");
 			UINT index = 0;
 			// Now, folderNames vector contains the names of folders in the selected directory
-			for (const std::string& folderName : mTargetFolders)
+			for (std::string folderName : mTargetFolders)
 			{
 				ButtonWidget* button = mFolders->CreateWidget<ButtonWidget>();
 
 				button->SetText(folderName);
 				button->SetTexture(folderImage);
 
-				button->SetClickCallback([this, index, folderName]() {
-					FolderClickCallback(index, folderName);
+				button->SetClickCallback([=]() {
+					FolderClickCallback(folderName);
 					});
 
 				index++;

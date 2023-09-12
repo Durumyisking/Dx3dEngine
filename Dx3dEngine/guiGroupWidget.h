@@ -38,7 +38,6 @@ namespace gui
 
 			Widget->SetName(GetName().c_str() + '_' + std::to_string(size));	
 			Widget->SetParent(this);
-			Widget->SetIndex(size);
 
 			if (Widget == nullptr)
 			{

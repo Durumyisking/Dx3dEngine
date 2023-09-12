@@ -35,9 +35,9 @@ namespace gui
 		//	}
 		//}
 
-		void FolderClickCallback(UINT index, std::string path); 
+		void FolderClickCallback(std::string path); 
 		void OpenFolderCallback(); //폴더 오픈 버튼 
-		void SelectFolder(std::string& path);
+		void SelectFolder(std::string path);
 		void toConsole(); //폴더 클릭 시
 
 
