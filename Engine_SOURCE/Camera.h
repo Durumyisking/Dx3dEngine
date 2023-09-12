@@ -2,7 +2,6 @@
 #include "Component.h"
 
 
-
 using namespace math;
 class Transform;
 
@@ -81,7 +80,7 @@ private:
 private:
 	static Matrix View;
 	static Matrix InverseView;
-	static Matrix Projection; // ëª¨ë“  objë“¤ì˜ í•´ë‹¹ í–‰ë ¬ì€ ë™ì¼í•¨
+	static Matrix Projection; // ¸ğµç objµéÀÇ ÇØ´ç Çà·ÄÀº µ¿ÀÏÇÔ
 	static Matrix SkyFov;
 
 	Matrix mView;
