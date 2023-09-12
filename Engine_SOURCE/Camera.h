@@ -42,6 +42,9 @@ public:
 	void EnableLayerMasks() { mLayerMask.set(); }
 	void DisableLayerMasks() { mLayerMask.reset(); }
 
+	void SetLayerMaskOn(eLayerType type);
+	void SetLayerMaskOFF(eLayerType type);
+
 	void SetProjectionType(eProjectionType type) { mType = type; }
 	eProjectionType GetProjectionType() { return mType; }
 
@@ -61,6 +64,8 @@ public:
 	void SmoothOn() { mSmooth = true; }
 	void SmoothOff() { mSmooth = false; }
 
+	void SetNear(float value) { mNear = value; }
+
 	bool Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance = 100.f);
 
 
@@ -75,7 +80,6 @@ private:
 		
 	void pushGameObjectToRenderingModes(GameObj* obj);
 	bool renderPassCheck(GameObj* obj);
-
 
 private:
 	static Matrix View;

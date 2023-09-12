@@ -547,6 +547,7 @@
     <ClInclude Include="ScenePlay.h">
       <Filter>Common\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="ImageUI.h" />
     <ClInclude Include="MarioHead.h" />
     <ClInclude Include="MarioParts.h" />
     <ClInclude Include="DynamicObject.h">
@@ -862,6 +863,7 @@
     <ClCompile Include="ScenePlay.cpp">
       <Filter>Common\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="MarioHead.cpp" />
     <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="DynamicObject.cpp">

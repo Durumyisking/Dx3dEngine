@@ -3,8 +3,10 @@
 #include "UIFactory.h"
 #include "Panal.h"
 #include "HUD.h"
+#include "ImageUI.h"
 #include "Button.h"
 #include "SpriteRenderer.h"
+
 
 UIFactory::UIFactory()
 {
@@ -42,6 +44,21 @@ HUD* UIFactory::CreateHud(const std::wstring& name, const std::wstring& key, Vec
 	hud->GetComponent<Transform>()->SetParent(parent);
 
 	return hud;
+}
+
+ImageUI* UIFactory::CreateImage(const std::wstring& name, const std::wstring& key, Vector3 pos, Vector3 scale, GameObj* parent, Scene* sceene)
+{
+	ImageUI* image = object::Instantiate<ImageUI>(eLayerType::UI, sceene);
+	image->SetPos(pos);
+	image->SetScale(scale);
+	image->SetName(name);
+	SpriteRenderer* imageRender = image->AddComponent<SpriteRenderer>(eComponentType::UI);
+	imageRender->SetMeshByKey(L"Rectmesh");
+	imageRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(key));
+	image->GetComponent<Transform>()->SetParent(parent);
+
+
+	return image;
 }
 
 HUD* UIFactory::CreateHud(const std::wstring& name, const std::wstring& key, Vector3 pos, Vector3 scale, Scene* sceene)

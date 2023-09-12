@@ -34,9 +34,11 @@ public:
     void CancelShake();
     void ShakeMove();
 
-
+    void SetUICameraObject(GameObj* obj) { mUICameraObject = obj; }
 private:
     Camera* mCameraObject;
+    GameObj* mUICameraObject;
+
     Transform* mTransform;
     GameObj* mTarget;
     Vector3 mLookAt;
