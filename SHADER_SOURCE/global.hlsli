@@ -94,7 +94,7 @@ float TextureMapping_roughness(float2 uv)
     return roughnessTexture.Sample(linearSampler, uv).r;
 }
 
-float TextureMapping_emissive(float2 uv)
+float3 TextureMapping_emissive(float2 uv)
 {
     return emissiveTexture.Sample(linearSampler, uv).rgb;
 }
