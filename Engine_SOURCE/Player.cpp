@@ -52,14 +52,14 @@ void Player::Initialize()
 
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(1.0f, 1.0f, 1.0f));
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(1.0f, 1.0f, 1.0f));
 	mMarioPhysicPos = GetComponent<Transform>()->GetPhysicalPosition();
 
 	//付府坷 颇明 包府
-	MarioParts* mHandL = object::Instantiate<MarioParts>(eLayerType::Player);
-	MarioParts* mHandR = object::Instantiate<MarioParts>(eLayerType::Player);
-	MarioParts* mHead = object::Instantiate<MarioParts>(eLayerType::Player);
-	MarioParts* mFace = object::Instantiate<MarioParts>(eLayerType::Player);
+	MarioParts* mHandL = new MarioParts();//object::Instantiate<MarioParts>(eLayerType::Player);
+	MarioParts* mHandR = new MarioParts();//object::Instantiate<MarioParts>(eLayerType::Player);
+	MarioParts* mHead = new MarioParts();//object::Instantiate<MarioParts>(eLayerType::Player);
+	MarioParts* mFace = new MarioParts();//object::Instantiate<MarioParts>(eLayerType::Player);
 
 	mHandL->SetName(L"HandL");
 	mHandR->SetName(L"HandR");
@@ -82,29 +82,46 @@ void Player::Initialize()
 
 void Player::Update()
 {
+
+	DynamicObject::Update();
+
 	mMarioPhysicPos = GetComponent<Transform>()->GetPhysicalPosition();
 	mMarioPhysicRot = GetComponent<Transform>()->GetPhysicalRotation();
 
 	for (auto i : mParts)
 	{
-		i->GetComponent<Transform>()->SetPosition(mMarioPhysicPos);
-		i->GetComponent<Transform>()->SetRotation(mMarioPhysicRot);
-		//i->GetComponent<Transform>()->SetPosition(Vector3(10.f, 10.f, 10.f));
-		//i->Update();
+		i->Update();
 	}
 
-	DynamicObject::Update();
 }
 
 void Player::FixedUpdate()
 {
 	DynamicObject::FixedUpdate();
+
+	for (auto i : mParts)
+	{
+		i->FixedUpdate();
+	}
+
+
+	for (auto i : mParts)
+	{
+		i->GetComponent<Transform>()->SetWorldMatrix(GetComponent<Transform>()->GetWorldMatrix());
+	}
+
+
 }
 
 void Player::Render()
 {
-		
 	DynamicObject::Render();
+
+	for (auto i : mParts)
+	{
+		i->Render();
+	}
+
 }
 
 void Player::FontRender()

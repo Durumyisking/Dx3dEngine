@@ -69,6 +69,7 @@ void Transform::FixedUpdate()
 //			m_matOldWorld = mWorld;
 		mWorld = matScale * matPxRotation * matTranslation;
 	}
+
 	else
 	{	
 		// 렌더링에 사용될 위치값을 업데이트.
