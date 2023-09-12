@@ -35,6 +35,17 @@ namespace gui
 
 		SetSize(ImVec2((float)size.x / 2 + size.x / 5, size.y / 4));
 
+		ResetContent();
+
+		//folder button
+		ButtonWidget* folderButton = new ButtonWidget("OpenFolder");
+		folderButton->SetSize(80.f, 20.f); 
+
+		folderButton->SetClickCallback(&Project::OpenFolderCallback, this, mTargetPath);
+
+		AddWidget(folderButton);
+
+
 		mFolders = new GroupWidget();
 		mFolders->SetName("ProjectFolderGroup");
 		AddWidget(mFolders);
@@ -43,8 +54,6 @@ namespace gui
 		//mFolders->SetCollpase(true);
 		mFolders->SetSpacing();
 		mFolders->SetNextLine(5);
-
-		ResetContent();
 	}
 
 	Project::~Project()
@@ -67,6 +76,8 @@ namespace gui
 		Widget::Update();
 
 		ImGui::Text(mTargetPath.c_str());
+
+		ImGui::SameLine();
 	}
 
 	void Project::LateUpdate()
@@ -76,37 +87,28 @@ namespace gui
 
 	void Project::ResetContent()
 	{
-		//mTreeWidget->Close();
-		mFolders->Clear();
+		if(mFolders)
+			mFolders->Clear();
 
 		//SetDefaultPath;
 		std::filesystem::path parentPath = std::filesystem::current_path().parent_path().parent_path();
 		mTargetPath = parentPath.string() + "\\Resources";
-		
-		//folder button
-		ButtonWidget* folderButton = new ButtonWidget("OpenFolder");
-		folderButton->SetSize(100.f, 50.f);
-
-
-		folderButton->SetClickCallback(this, &Project::FolderClickCallback, mTargetPath);
-
-		AddWidget(folderButton);
 	}
 
 	void Project::FolderClickCallback(std::string path)
 	{
 		ResetContent();
 
-		//std::string path = mTargetFolders[index];
+		std::string fullpath = mTargetPath + "\\" + path;
 
-		SelectFolder(path);
+		SelectFolder(fullpath);
 	}
 
-	void Project::OpenFolderCallback()
+	void Project::OpenFolderCallback(std::string path)
 	{
 		ResetContent();
 
-		SelectFolder(mTargetPath);
+		SelectFolder(path);
 	}
 	
 	void Project::SelectFolder(std::string path)
@@ -186,12 +188,12 @@ namespace gui
 					Directory[i] = '/';
 			}
 
-			// TCHAR 문자열을 std::wstring으로 변환
-			std::wstring wstr(FilePath);
-			// std::wstring을 std::string으로 변환 (UTF-8 인코딩으로)
-			std::string utf8String(wstr.begin(), wstr.end());
+			//// TCHAR 문자열을 std::wstring으로 변환
+			//std::wstring wstr(FilePath);
+			//// std::wstring을 std::string으로 변환 (UTF-8 인코딩으로)
+			//std::string utf8String(wstr.begin(), wstr.end());
 
-			mTargetPath = utf8String;
+			mTargetPath = path;
 
 			mTargetFolders.clear();
 
@@ -207,7 +209,7 @@ namespace gui
 					if (startPos != std::string::npos)
 					{
 						std::string folderName = folderPath.substr(startPos + DirectoryLength);
-						// 폴더의 깊이를 추적하여 하위 폴더를 제외합니다.
+						// 폴더의 깊이를 추적하여 하위 폴더를 제외
 						int folderDepth = std::count(folderName.begin(), folderName.end(), '/');
 						if (folderDepth == 0) // 상위 폴더만 저장
 						{
@@ -218,8 +220,7 @@ namespace gui
 			}
 
 			Texture* folderImage = GETSINGLE(ResourceMgr)->Find<Texture>(L"FolderImage");
-			UINT index = 0;
-			// Now, folderNames vector contains the names of folders in the selected directory
+
 			for (std::string folderName : mTargetFolders)
 			{
 				ButtonWidget* button = mFolders->CreateWidget<ButtonWidget>();
@@ -227,33 +228,11 @@ namespace gui
 				button->SetText(folderName);
 				button->SetTexture(folderImage);
 
-				button->SetClickCallback([=]() {
-					FolderClickCallback(folderName);
-					});
+				button->SetClickCallback(&Project::FolderClickCallback, this, folderName);
 
-				index++;
 			}
 		}
 	}
-
-	//void Project::OpenFolderCallback()
-	//{
-	//	CoInitialize(NULL);
-
-	//	BROWSEINFO bi = { 0 };
-	//	bi.lpszTitle = TEXT("Select a folder");
-	//	LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
-	//	if (pidl != nullptr) {
-	//		TCHAR path[MAX_PATH];
-	//		if (SHGetPathFromIDList(pidl, path)) {
-	//			// 선택한 폴더 경로가 path에 저장됩니다.
-	//			// 이제 선택한 폴더를 사용할 수 있습니다.
-	//		}
-	//		CoTaskMemFree(pidl); // 메모리 해제
-	//	}
-
-	//	CoUninitialize();
-	//}
 
 	void Project::toConsole()
 	{

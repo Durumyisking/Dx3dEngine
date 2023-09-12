@@ -36,17 +36,11 @@ namespace gui
 
 			UINT size = mChilds.size();
 
-			Widget->SetName(GetName().c_str() + '_' + std::to_string(size));	
-			Widget->SetParent(this);
+			std::string name = GetName().c_str() + '_' + std::to_string(size);
+			Widget->SetName(name);
+			Widget->SetSize(50.f, 50.f);
 
-			if (Widget == nullptr)
-			{
-				delete Widget;
-				Widget = nullptr;
-				return nullptr;
-			}
-
-			mChilds.push_back(Widget);
+			AddWidget(Widget);
 
 			return Widget;
 		}

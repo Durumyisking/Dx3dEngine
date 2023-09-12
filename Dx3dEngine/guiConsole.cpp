@@ -3,6 +3,7 @@
 #include "guiImageWidget.h"
 #include "guiTexture.h"
 #include "ResourceMgr.h"
+#include "guiButtonWidget.h"
 
 namespace gui
 {
@@ -29,27 +30,42 @@ namespace gui
 
 	void Console::Initialize()
 	{
+
 		GroupWidget* group1 = new GroupWidget("ConsoleGroup1");
 		AddWidget(group1);
 
-		ImageWidget* image1 = new ImageWidget("Image1");
-		image1->SetSize(100.f, 100.f);
-		group1->AddWidget(image1);
+		{
+			ImageWidget* image1 = new ImageWidget("Image1");
+			image1->SetSize(100.f, 100.f);
+			group1->AddWidget(image1);
 
-		ImageWidget* image2 = new ImageWidget("Image2");
-		image2->SetTexture(L"default");
-		image2->SetSize(100.f, 100.f);
-		group1->AddWidget(image2);
+			ImageWidget* image2 = new ImageWidget("Image2");
+			image2->SetTexture(L"default");
+			image2->SetSize(100.f, 100.f);
+			group1->AddWidget(image2);
 
-		ImageWidget* image3 = new ImageWidget("Image3");
-		image3->SetTexture(L"default");
-		image3->SetSize(100.f, 100.f);
-		group1->AddWidget(image3);
+			ImageWidget* image3 = new ImageWidget("Image3");
+			image3->SetTexture(L"default");
+			image3->SetSize(100.f, 100.f);
+			group1->AddWidget(image3);
 
-		ImageWidget* image4 = new ImageWidget("Image4");
-		image4->SetTexture(L"default");
-		image4->SetSize(100.f, 100.f);
-		group1->AddWidget(image4);
+			ImageWidget* image4 = new ImageWidget("Image4");
+			image4->SetTexture(L"default");
+			image4->SetSize(100.f, 100.f);
+			group1->AddWidget(image4);
+		}
+
+		{
+			Texture* folderImage = GETSINGLE(ResourceMgr)->Find<Texture>(L"FolderImage");
+
+			ButtonWidget* button = group1->CreateWidget<ButtonWidget>();
+
+			button->SetText("NAME");
+			button->SetTexture(folderImage);
+			button->SetSize(100.f, 100.f);
+
+			//button->SetClickCallback(&Project::FolderClickCallback, this, folderName);
+		}
 
 
 		//GUITexture* image2 = new gui::GUITexture();
