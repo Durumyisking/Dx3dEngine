@@ -66,14 +66,19 @@ PS_OUT main(VSOut vsin)
     // 샘플링을 하기 위해서 투영좌표계를 UV 좌표계로 변환
     float2 depthMapUV = 
     float2(
-    (lightProj.x * 0.5) + 0.5f,
-    -(lightProj.y * 0.5) + 0.5f
+        (lightProj.x * 0.5) + 0.5f,
+        -(lightProj.y * 0.5) + 0.5f
     );
-    
-    float lit = VSM_FILTER(ShadowMap.Sample(shadowPointSampler, depthMapUV).rg, lightProj.z);
-    
-    float shadowPow = 0.f;
-    
+    float lit = 1.f;
+    if (depthMapUV.x < 0.f || depthMapUV.x > 1.f || depthMapUV.y < 0.f || depthMapUV.y > 1.f)
+    {
+        lit = 1.f;
+    }
+    else
+    {
+        lit = VSM_FILTER(ShadowMap.Sample(linearSampler, depthMapUV).rg, lightProj.z);        
+    }
+        
     {        
         output.vDiffuse = lightcolor.diffuse * lit + lightcolor.ambient;
         output.vSpecular = lightcolor.specular;

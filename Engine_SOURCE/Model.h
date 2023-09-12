@@ -68,10 +68,13 @@ private:
 	void release();
 public:
 	math::Matrix ConvertMatrix(aiMatrix4x4 aimat);
-
-public:
+	Material* GetVariableMaterials(UINT index);
+	void SetVariableMaterials(UINT index, Material* mater);
 	void Bind_Render();
 
+	UINT GetMeshCounts() const { return mMeshes.size(); }
+
+public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
 	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
 	GETSET(GameObj*, mOwner, Owner)
@@ -88,6 +91,7 @@ private:
 	ModelVector<Bone*> mBones;
 	ModelVector<Mesh*> mMeshes;
 	ModelVector<Material*> mMaterials;
+	ModelVector<Material*> mVariableMaterials;
 
 	std::vector<std::vector<TextureInfo>> mTextures;
 

@@ -56,7 +56,7 @@ void AnimationClip::Update()
 		// 애니메이션 종료시 리셋
 		Reset();
 		mCompleate = true;
-		mCurIndex = mSkeletonData.size() - 1;
+		mCurIndex = static_cast<UINT>(mSkeletonData.size() - 1);
 
 		if (mCompleateEvent)
 			mCompleateEvent();
@@ -120,7 +120,7 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 		else if (buf.find("time") != std::string::npos)
 		{
 			mSkeletonData.emplace_back(animation::SkeletonData{});
-			frame = mSkeletonData.size() - 1;
+			frame = static_cast<int>(mSkeletonData.size() - 1);
 			mSkeletonData[frame].Translation.resize(mNodeData.size());
 			mSkeletonData[frame].Rotation.resize(mNodeData.size());
 
@@ -147,10 +147,10 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 		}
 
 		animation::SkeletonData data = {};
-		data = readSkeleton(buf, mNodeData.size());
+		data = readSkeleton(buf, static_cast<int>(mNodeData.size()));
 		data.Time = static_cast<float>(frame);
 
-		mSkeletonData[frame].Time = frame;
+		mSkeletonData[frame].Time = static_cast<float>(frame);
 
 		mSkeletonData[frame].Translation[data.Translation[0].first].second = data.Translation[0].second;
 		mSkeletonData[frame].Rotation[data.Rotation[0].first].second = data.Rotation[0].second;
@@ -165,7 +165,7 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 	CreateAnimation(name, path, 1.0f / static_cast<float>(frameCount));
 }
 
-void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, const animation::SkeletonData& inNextData, float drutation )
+void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, const animation::SkeletonData& inNextData, double drutation )
 {
 	// 본 정보들을 변경.
 	if (!mAnimator)
@@ -186,7 +186,7 @@ void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, cons
 	animation::SkeletonData curData = inCurData;
 	animation::SkeletonData nextData = inNextData;
 
-	int size = curData.Translation.size();
+	int size = static_cast<int>(curData.Translation.size());
 	for (int i = 0; i < size; ++i)
 	{
 		ModelNode* node = model->FindNode(mNodeData[curData.Translation[i].first].Name);
@@ -204,7 +204,7 @@ void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, cons
 		aiQuaternion qNextRotation(-eNextRotation.y, eNextRotation.z, -eNextRotation.x);
 
 		aiQuaternion result = {};
-		result.Interpolate(result, qRotation, qNextRotation, mTickPerSceond / drutation);
+		result.Interpolate(result, qRotation, qNextRotation, static_cast<float>(mTickPerSceond / drutation));
 
 		// T * R
 		node->SetTransformation(ToLeftHandMatrix(positionVec, result.GetMatrix()));

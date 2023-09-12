@@ -104,50 +104,28 @@ void ScenePlay::Initialize()
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetPos(Vector3(5.f, 5.f, 9.5f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
+		player->SetScale(Vector3(0.1f, 0.1f, 0.1f));
 		player->SetName(L"Player");
 		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
 		(
-			L"gold_albedo",
-			L"gold_normal",
-			L"gold_metallic",
-			L"gold_roughness",
-			L"DeferredShader",
+			L"BrickBlockBody_alb",
+			L"BrickBlockBody_nrm",
+			L"BrickBlockBody_mtl",
+			L"BrickBlockBody_rgh",
+			L"BrickBlockBody_emm",
+			L"PBRShader",
 			L"gold_dirt2"
 		);
 		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
+		int i = model->GetMeshCounts();
+		model->SetVariableMaterials(0, mat);
+		player->GetComponent<MeshRenderer>()->SetModel(model);
 		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-	}
-
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(5.f, 5.f, 5.f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->SetName(L"Player");
-		Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-		(
-			L"gold_albedo",
-			L"gold_normal",
-			L"DeferredShader",
-			L"gold_dirt"
-		);
-		player->GetComponent<MeshRenderer>()->SetMaterial(mat);
-
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		//player->AddComponent<PlayerScript>(eComponentType::Script);
-
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 

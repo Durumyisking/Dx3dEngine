@@ -57,9 +57,8 @@ float4 main(VSOut vsIn) : SV_Target
     float3 G = gaSchlickGGX(NdotI, NdotO, roughness);
     float3 specularBRDF = (F * D * G) / max(1e-5, 4.0 * NdotI * NdotO);
 
-    float3 radiance = lightAttributes[0].color.diffuse;
+    float3 radiance = lightAttributes[0].color.diffuse.xyz;
     
-
 
     directLighting += (diffuseBRDF + specularBRDF) * radiance * NdotI;
     

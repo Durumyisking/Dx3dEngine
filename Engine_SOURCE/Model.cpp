@@ -62,7 +62,7 @@ HRESULT Model::Load(const std::wstring& path)
 		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
 	}
 
-
+	mVariableMaterials.resize(mMaterials.size());
 	mAssimpImporter.FreeScene();
 
 	return S_OK;
@@ -132,10 +132,13 @@ void Model::Bind_Render()
 		if (mMaterials[i] == nullptr)
 			continue;
 
+		// 아직 미구현
+		// 예외처리 구간 여기서 모델의 렌더를 껏다켰다하는 함수를 작성해야함
 		if (mMeshes[i]->GetName().find(L"Press") != std::wstring::npos)
 			continue;
+		/////////////////////////////////////////////////////////////////////
 
-		std::vector<Texture*> Textures = GetTexture(i);
+		std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
 		for (int slot = 0; slot < Textures.size(); ++slot)
 		{
 			if (Textures[slot] == nullptr)
@@ -144,12 +147,12 @@ void Model::Bind_Render()
 			mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
 		}
 
-		mMaterials[i]->Bind();
+		mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
-		mMaterials[i]->Clear();
+		mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
 	}
 
 	mStructure->Clear();
@@ -261,7 +264,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	}
 
 
-	for (int i = 0; i < mesh->mNumBones; ++i)
+	for (unsigned int i = 0; i < mesh->mNumBones; ++i)
 	{
 		Bone* bone = nullptr;
 		aiBone* aiBone = mesh->mBones[i];
@@ -273,7 +276,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 			bone = new Bone();
 			bone->mName = ConvertToW_String(aiBone->mName.C_Str());
 			bone->mOffsetMatrix = aiBone->mOffsetMatrix;
-			bone->mIndex = mBones.size();
+			bone->mIndex = static_cast<UINT>(mBones.size());
 			mBones.emplace_back(bone);
 			mBoneMap.insert(std::pair<std::wstring, Bone*>(bone->mName, bone));
 
@@ -289,29 +292,29 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		}
 
 
-		for (int j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
+		for (unsigned int j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
 		{
 			UINT vertexID = mesh->mBones[i]->mWeights[j].mVertexId;
 			float weight = mesh->mBones[i]->mWeights[j].mWeight;
 
 			if (vertexes[vertexID].BlendWeight.x == 0.0f)
 			{
-				vertexes[vertexID].BlendID.x = bonIndex;
+				vertexes[vertexID].BlendID.x = static_cast<float>(bonIndex);
 				vertexes[vertexID].BlendWeight.x = weight;
 			}
 			else if (vertexes[vertexID].BlendWeight.y == 0.0f)
 			{
-				vertexes[vertexID].BlendID.y = bonIndex;
+				vertexes[vertexID].BlendID.y = static_cast<float>(bonIndex);
 				vertexes[vertexID].BlendWeight.y = weight;
 			}
 			else if (vertexes[vertexID].BlendWeight.z == 0.0f)
 			{
-				vertexes[vertexID].BlendID.z = bonIndex;
+				vertexes[vertexID].BlendID.z = static_cast<float>(bonIndex);
 				vertexes[vertexID].BlendWeight.z = weight;
 			}
 			else if (vertexes[vertexID].BlendWeight.w == 0.0f)
 			{
-				vertexes[vertexID].BlendID.w = bonIndex;
+				vertexes[vertexID].BlendID.w = static_cast<float>(bonIndex);
 				vertexes[vertexID].BlendWeight.w = weight;
 			}
 		}
@@ -561,4 +564,17 @@ math::Matrix Model::ConvertMatrix(aiMatrix4x4 aimat)
 	outMat._41 = aimat.d1, outMat._42 = aimat.d2, outMat._43 = aimat.d3, outMat._44 = aimat.d4;
 
 	return outMat;
+}
+
+Material* Model::GetVariableMaterials(UINT index)
+{
+	return index >= mVariableMaterials.size() ? nullptr : mVariableMaterials[index];
+}
+
+void Model::SetVariableMaterials(UINT index, Material* mater)
+{
+	if (index >= mVariableMaterials.size())
+		return;
+
+	mVariableMaterials[index] = mater;
 }
