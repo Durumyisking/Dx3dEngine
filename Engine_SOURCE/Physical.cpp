@@ -184,23 +184,30 @@ void Physical::createShape()
 
 		PxRigidActorExt::createExclusiveShape() 이것과 같다.
 	*/
+	PxPhysics* physics = PhysicsMgr::GetInstance()->GetEnvironment()->GetPhysics();
 
-	switch (mGeometryType)
+	if (physics)
 	{
-	case eGeometryType::Box:
-		mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->boxGeom, *mProperties->GetMaterial());
-		break;
-	case eGeometryType::Capsule:
-		mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->capsuleGeom, *mProperties->GetMaterial());
-		break;
-	case eGeometryType::Sphere:
-		mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->sphereGeom, *mProperties->GetMaterial());
-		break;
-	case eGeometryType::Plane:
-		mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial());
-		break;
+		switch (mGeometryType)
+		{
+		case eGeometryType::Box:
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->boxGeom, *mProperties->GetMaterial());
+			break;
+		case eGeometryType::Capsule:	
+		{
+			PxTransform relativePose(PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->capsuleGeom, *mProperties->GetMaterial());
+			mShape->setLocalPose(relativePose);
+		}
+			break;
+		case eGeometryType::Sphere:
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->sphereGeom, *mProperties->GetMaterial());
+			break;
+		case eGeometryType::Plane:
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial());
+			break;
+		}
 	}
-		
 }
 
 void Physical::createActor()

@@ -5,7 +5,6 @@
 
 
 
-
 using namespace math;
 
 class Material;
@@ -31,6 +30,7 @@ public:
 	virtual void Update();
 	virtual void FixedUpdate();
 	virtual void Render();
+	virtual void PrevRender();
 	virtual void FontRender();
 
 public:
@@ -40,7 +40,7 @@ public:
 
 	template <typename T>
 	T* AddComponent(eComponentType eType)
-	{			
+	{
 		T* comp = new T();
 
 		if (eType != eComponentType::Script)
@@ -56,6 +56,26 @@ public:
 
 		return comp;
 	}
+
+	template <typename T>
+	T* AddComponent(eComponentType eType, Material* material, Mesh* mesh)
+	{
+		T* comp = new T(material, mesh);
+
+		if (eType != eComponentType::Script)
+		{
+			mComponents[static_cast<UINT>(eType)] = comp;
+			mComponents[static_cast<UINT>(eType)]->SetOwner(this);
+		}
+		else
+		{
+			mScripts.push_back(dynamic_cast<Script*>(comp));
+			comp->SetOwner(this);
+		}
+
+		return comp;
+	}
+
 
 	void AddComponent(Component* component);
 
@@ -105,8 +125,6 @@ public:
 		return nullptr;
 	}
 
-	void Flip();
-		
 	bool IsRenderingBlock() const { return mbBlockRendering; }
 	void RenderingBlockOn() { mbBlockRendering = true; }
 	void RenderingBlockOff() { mbBlockRendering = false; }
@@ -124,8 +142,7 @@ private:
 	eState mState;
 	std::vector<Script*> mScripts;
 	bool mbDestroy;
-	bool mbIsLeft;
-	bool mbOnFloor;
+
 	bool mbBlockRendering;
 
 public:
@@ -139,6 +156,7 @@ public:
 	Vector3 GetPos();
 	Vector3 GetWorldPos();
 
+	// ui           
 	Vector3 GetUIWorldPos();
 
 	Vector3 GetScale();
@@ -189,13 +207,4 @@ public:
 	eLayerType GetLayerType() const { return mType; }
 	void SetLayerType(eLayerType type) { mType = type; }
 
-	bool IsLeft() { return mbIsLeft; }
-	void SetLeft() { mbIsLeft = true; }
-
-	void SetRight() { mbIsLeft = false; }
-
-	bool IsOnFloor() const { return mbOnFloor; }
-	void SetFloorOn() { mbOnFloor = true; }
-	void SetFloorOff() { mbOnFloor = false; }
 };
-

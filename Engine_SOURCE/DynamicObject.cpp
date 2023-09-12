@@ -1,6 +1,10 @@
 #include "DynamicObject.h"
 
 DynamicObject::DynamicObject()
+<<<<<<< HEAD
+=======
+	: GameObj()
+>>>>>>> 255dec6e611b73f6e438073350714e0bf2481d2d
 {
 }
 
@@ -33,6 +37,7 @@ void DynamicObject::FontRender()
 	GameObj::FontRender();
 }
 
+<<<<<<< HEAD
 void DynamicObject::OnCollisionEnter(GameObj* gameObject)
 {
 }
@@ -43,6 +48,14 @@ void DynamicObject::OnTriggerEnter(GameObj* gameObject)
 
 void DynamicObject::OnTriggerExit(GameObj* gameObject)
 {
+=======
+void DynamicObject::InsertLockState(UINT curState, UINT lockState)
+{
+	if (curState >= mStateInfo.size())
+		return;
+
+	mStateInfo[curState].mLockState.insert(lockState);
+>>>>>>> 255dec6e611b73f6e438073350714e0bf2481d2d
 }
 
 

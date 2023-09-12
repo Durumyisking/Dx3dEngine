@@ -19,7 +19,7 @@ float4 main(VSOut vsIn) : SV_Target
 
     if (1 == cbbAlbedo)
     {
-        //albedo = TextureMapping_albedo(vsIn.UV);
+        albedo = TextureMapping_albedo(vsIn.UV);
     }
     
     if (1 == cbbNormal)
@@ -36,15 +36,15 @@ float4 main(VSOut vsIn) : SV_Target
     albedo = CombineLights(albedo, lightColor);
     
     
-    if (albedo.w == 0)
+    if (albedo.w <= 0.1f)
         discard;
     
-    if (cbxyzw1.w != 0)
+    if (cbxyzw1.w != 0.f)
     {
         albedo *= cbxyzw1; // 곱할 색        
     }
     
-    if (cbxyzw2.w != 0)
+    if (cbxyzw2.w != 0.f)
     {
         albedo += cbxyzw2; // 더할 색    
     }

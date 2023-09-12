@@ -1,7 +1,12 @@
 #pragma once
 #include "EngineResource.h"
 #include "ResourceMgr.h"
+
+#pragma warning( push )
+#pragma warning( disable : 4099 )
 #include "../External/DirectXTex/include/DirectXTex.h"
+#pragma warning( pop ) 
+
 #include "GraphicDevice.h"
 #include "Model.h"
 
@@ -25,9 +30,13 @@ public:
 	static void Clears();
 
 	bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag);
+	bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT numQualityLevels, UINT bindflag);
 	bool Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture);
+	bool Create(D3D11_TEXTURE2D_DESC& desc);
+
 	virtual HRESULT Load(const std::wstring& path) override;
 	Texture* Load(const std::wstring& path, const Model::TextureInfo& info);
+
 
 	void BindShaderResource(eShaderStage stage, UINT slot);
 	void BindShaderResource_VP(UINT slot);
@@ -35,10 +44,9 @@ public:
 	void BindUnorderedAccessview(UINT slot);
 	void ClearUnorderedAccessview(UINT slot);
 
-	void Clear();
 
 	void SetTexture(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture) { mTexture = texture; }
-	void MakeCropTexture(UINT DstSubresource, UINT DstX, UINT DstY, UINT DstZ, ID3D11Resource* pSrcResource, UINT SrcSubresource, const D3D11_BOX* pSrcBox);
+	//void MakeCropTexture(UINT DstSubresource, UINT DstX, UINT DstY, UINT DstZ, ID3D11Resource* pSrcResource, UINT SrcSubresource, const D3D11_BOX* pSrcBox);
 	ScratchImage& GetScratchImage() { return mImage; }
 
 	UINT GetHeight() { return mDesc.Height; }

@@ -23,6 +23,6 @@ struct ParticleShared
     uint gActiveCount;
 };
 
-StructuredBuffer<Particle> particleBuffer : register(t15);
+StructuredBuffer<Particle> particleBuffer : register(t16);
 RWStructuredBuffer<Particle> ParticleBufferUAV : register(u0);
 RWStructuredBuffer<ParticleShared> ParticleSharedBufferUAV : register(u1);

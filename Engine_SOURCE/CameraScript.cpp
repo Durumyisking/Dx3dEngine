@@ -9,8 +9,6 @@
 #include "SceneMgr.h"
 #include "SimpleMath.h"
 
-
-
 CameraScript::CameraScript()
 	: mCameraObject(nullptr)
 	, mTransform(nullptr)
@@ -33,11 +31,11 @@ void CameraScript::Initialize()
 {
 	mCameraObject = GetOwner()->GetComponent<Camera>();
 	mTransform = GetOwner()->GetComponent<Transform>();
-
 }
 
 void CameraScript::Update()
 {
+
 	mLookAt = mTransform->GetPosition();
 
 	mTarget = mCameraObject->GetTarget();
@@ -80,7 +78,7 @@ void CameraScript::KeyBoardMove()
 {
 	// Keyboard Move
 
-	float speed = 100.f;
+	float speed = 50.f;
 	if (KEY_DOWN(W))
 	{
 		mLookAt += speed * mTransform->Forward() * DT;

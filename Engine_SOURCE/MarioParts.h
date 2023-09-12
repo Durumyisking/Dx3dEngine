@@ -20,6 +20,7 @@ public:
 	virtual void BoneInitialize();
 
 public:
+<<<<<<< HEAD
 	//MarioParts* GetMario() { return mBody; }
 	//void SetName(std::wstring name) { mName = name; }
 
@@ -27,6 +28,18 @@ private:
 	//Vector3 mMarioPhysicPos;
 	//std::wstring mName;
 	//Player* mBody;
+=======
+	MarioParts* GetMario() { return mBody; }
+
+protected:
+	virtual void stateInfoInitalize() override {};
+
+
+private:
+	std::vector<MarioParts*> mMario;
+	Vector3 mMarioPhysicPos;
+	MarioParts* mBody;
+>>>>>>> 255dec6e611b73f6e438073350714e0bf2481d2d
 	//MarioParts* mHandL;
 	//MarioParts* mHandR;
 	//MarioParts* mHead;

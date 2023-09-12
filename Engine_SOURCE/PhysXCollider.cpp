@@ -62,6 +62,8 @@ void PhysXCollider::FixedUpdate()
 	case physx::PxGeometryType::eCAPSULE:
 		scale.x = shape->getGeometry().capsule().radius;
 		scale.y = shape->getGeometry().capsule().halfHeight;
+		scale.z = shape->getGeometry().capsule().radius;
+		colType = eColliderType::Capsule;
 		break;
 	case physx::PxGeometryType::eBOX:
 		scale = shape->getGeometry().box().halfExtents;
@@ -97,7 +99,14 @@ void PhysXCollider::Render()
 void PhysXCollider::OnCollisionEnter(PhysXCollider* otherCollider)
 {
 	GetOwner()->OnCollisionEnter(otherCollider->GetOwner());
+
+	if (otherCollider->GetOwner()->GetLayerType() == eLayerType::Platforms)
+	{
+		// 이부분에서 dynamicObject 의 Idle() 함수를 호출하면된다.
+		// DynamicObject 의 Idle함수는 가상함수로 상속받은 객체 내부에서 구현하면된다.
+	}
 }
+
 void PhysXCollider::OnCollisionExit(PhysXCollider* otherCollider)
 {
 }

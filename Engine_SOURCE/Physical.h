@@ -89,6 +89,7 @@ public:
     void RemoveActorToPxScene();
 
     void SetGeometrySize(const Vector3& newSize);
+    void SetActorType(eActorType type) { mActorType = type; }
 
 private:
     void createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize);

@@ -61,6 +61,11 @@ namespace math
 
 		return Result;
 	}
+
+	Vector3 DecomposeRotMat(const Matrix _matRot);
+	bool closeEnough(const float& a, const float& b, const float& epsilon = std::numeric_limits<float>::epsilon());
+
+
 }
 
 namespace convert

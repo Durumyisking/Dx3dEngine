@@ -47,7 +47,7 @@ void Layer::Initialize()
 			continue;
 		Obj->Initialize();
 	}
-
+	mAddedObjects.clear();
 }
 
 void Layer::update()
@@ -137,6 +137,7 @@ void Layer::destroy()
 	{
 		Obj->Initialize();
 	}
+
 	if (!mAddedObjects.empty())
 	{
 		mAddedObjects.clear();

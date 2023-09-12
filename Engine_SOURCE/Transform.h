@@ -95,6 +95,20 @@ public:
 
 	const Vector3& GetWorldPosition();
 	const Vector3& GetWorldRotation() const { return mWorldRotation; }
+	Matrix GetWorldRotationMatrix()
+	{
+		Matrix rotation;
+
+		Vector3 radian(mWorldRotation.x * (XM_PI / 180)
+			, mWorldRotation.y * (XM_PI / 180)
+			, mWorldRotation.z * (XM_PI / 180));
+
+		rotation = Matrix::CreateRotationX(radian.x);
+		rotation *= Matrix::CreateRotationY(radian.y);
+		rotation *= Matrix::CreateRotationZ(radian.z);
+
+		return rotation;
+	}
 	const Vector3& GetWorldScale() const { return mWorldScale; }
 
 	float GetWorldPositionX() const { return mWorldPosition.x; }
@@ -122,11 +136,19 @@ public:
 	}
 
 	Vector3 GetPhysicalPosition();
+<<<<<<< HEAD
 	Vector3 GetPhysicalRotation();
 	void SetPhysicalPosition(const Vector3& vPosition);
 
 	//PxTransform GetPxTransform() const { return mPxTransform; }
 	GETSET(PxTransform, mPxTransform, PxTransform)
+=======
+	void SetPhysicalPosition(const Vector3& position);
+	void SetPhysicalRotation(const Vector3& rotation_degrees);
+
+	PxTransform GetPxTransform() const { return mPxTransform; }
+	void SetPxTransform(PxTransform pxTransform) {mPxTransform = pxTransform;}
+>>>>>>> 255dec6e611b73f6e438073350714e0bf2481d2d
 
 private:
 	Transform* mParent;

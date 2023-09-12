@@ -2,8 +2,8 @@
 #include "Component.h"
 
 
-
 using namespace math;
+class Transform;
 
 enum class eProjectionType
 {
@@ -12,7 +12,6 @@ enum class eProjectionType
 	End,
 };
 
-
 class Camera : public Component
 {
 public:
@@ -20,6 +19,7 @@ public:
 	__forceinline static Matrix& GetGpuViewMatrix() { return View; }
 	__forceinline static Matrix& GetGpuInverseViewMatrix() { return View; }
 	__forceinline static Matrix& GetGpuProjectionMatrix() { return Projection; }
+	__forceinline static Matrix& GetSkySphereFov() { return SkyFov; }
 	__forceinline static void SetGpuViewMatrix(Matrix view) { View = view; }
 	__forceinline static void SetGpuProjectionMatrix(Matrix projection) { Projection = projection; }
 
@@ -32,12 +32,14 @@ public:
 	virtual void Render() override;
 	
 	void CreateViewMatrix();
+	Matrix CreateViewMatrix(Transform* tr);
 	void CreateProjectionMatrix();
+	Matrix CreateProjectionMatrix(eProjectionType type, float width, float height, float Near, float Far);
 		
 	void RegisterCameraInRenderer();
 
 	void TurnLayerMask(eLayerType layer, bool enable = true);
-	void EnableLayerMasks() { mLayerMask.set(); } // 전부다 true로 }
+	void EnableLayerMasks() { mLayerMask.set(); }
 	void DisableLayerMasks() { mLayerMask.reset(); }
 
 	void SetProjectionType(eProjectionType type) { mType = type; }
@@ -45,9 +47,8 @@ public:
 
 	float GetScale() const { return mScale; }
 
-	Matrix& GetViewMatrix() { return mView; }
-	Matrix& GetProjectionMatrix() { return mProjection; }
-
+	const Matrix& GetViewMatrix() { return mView; }
+	const Matrix& GetProjectionMatrix() { return mProjection; }
 
 	void SetTarget(GameObj* target);
 	GameObj* GetTarget() const { return mTargetObj; }
@@ -65,6 +66,7 @@ public:
 
 private:
 	void sortGameObjects();
+	void renderShadow();
 	void renderDeferred();
 	void renderOpaque();
 	void renderCutout();
@@ -79,13 +81,14 @@ private:
 	static Matrix View;
 	static Matrix InverseView;
 	static Matrix Projection; // 모든 obj들의 해당 행렬은 동일함
+	static Matrix SkyFov;
 
 	Matrix mView;
 	Matrix mProjection;
 
 
 	eProjectionType mType;
-	float mAspectRatio; // 종횡비
+	float mAspectRatio; // 
 
 	float mNear;
 	float mFar;
@@ -110,4 +113,3 @@ private:
 	float		mTime;
 	bool		mSmooth;
 };
-
