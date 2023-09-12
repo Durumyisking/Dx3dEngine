@@ -1,10 +1,10 @@
 #pragma once
-#include "GameObj.h"
-
+#include "DynamicObject.h"
+#include "MarioParts.h"
 
 
 class Player :
-	public GameObj
+	public DynamicObject
 {
 
 public:
@@ -24,6 +24,10 @@ public:
 
 
 private:
+	std::vector<MarioParts*> mParts;
+
+protected:
+	virtual void stateInfoInitalize() override {};
 
 public:
 

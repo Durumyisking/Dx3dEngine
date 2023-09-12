@@ -91,6 +91,7 @@ public:
 	void SetInheritParentScale(bool inherit) { mInheritParentScale = inherit; }
 
 	const Matrix& GetWorldMatrix() const { return mWorld; }
+	void SetWorldMatrix(const Matrix& world) { mWorld = world; }
 
 	const Vector3& GetWorldPosition();
 	const Vector3& GetWorldRotation() const { return mWorldRotation; }
