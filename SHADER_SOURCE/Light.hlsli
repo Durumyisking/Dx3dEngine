@@ -216,7 +216,7 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
     //float3 lightVec = light.type & 0
     //                  ? -light.direction
     //                  : light.position.xyz - posWorld;
-    float3 lightVec = -light.direction;
+    float3 lightVec = -light.direction.xyz;
                               
     float lightDist = length(lightVec);
     lightVec /= lightDist;
@@ -257,15 +257,17 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
     return radiance;
 }
 
+
+
 float VSM_FILTER(float2 moments, float fragDepth)
 {
-    float lit = (float) 0.0f;
+    float lit = (float) 1.0f;
     float E_x2 = moments.y;
     float Ex_2 = moments.x * moments.x;
     float variance = E_x2 - Ex_2;
-    variance = max(variance, 0.0005f);
+    variance = max(variance, 0.0000005f);
 
-    float mD = moments.x - fragDepth;
+    float mD = fragDepth - moments.x;
     float mD_2 = mD * mD;
     float p = variance / (variance + mD_2);
 
