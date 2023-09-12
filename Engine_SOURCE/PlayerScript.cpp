@@ -66,13 +66,6 @@ void PlayerScript::FixedUpdate()
 
 	if (KEY_DOWN(LEFT))
 	{
-<<<<<<< HEAD
-		mPhyXRigidBody->AddForceForDynamic((camRight * -50000.f * DT), PxForceMode::Enum::eFORCE);
-	}
-	if (KEY_DOWN(RIGHT))
-	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * 50000.f * DT), PxForceMode::Enum::eFORCE);
-=======
 		if (camForward.x < mTransform->Forward().x)
 		{
 			mTransform->SetPhysicalRotation(Vector3(0.f, -90.f - cDotp_degree, 0.f));
@@ -103,7 +96,7 @@ void PlayerScript::FixedUpdate()
 			mTransform->SetPhysicalRotation(Vector3(0.f, 90.f, 0.f));
 		}
 		//mPhyXRigidBody->AddForceForDynamic((camRight * 1000.f * DT), PxForceMode::Enum::eFORCE);
->>>>>>> 255dec6e611b73f6e438073350714e0bf2481d2d
+
 	}
 	if (KEY_DOWN(UP))
 	{

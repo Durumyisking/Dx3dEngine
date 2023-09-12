@@ -59,17 +59,19 @@ void Player::Initialize()
 	MarioParts* mHandR = new MarioParts();//object::Instantiate<MarioParts>(eLayerType::Player);
 	MarioParts* mHead = new MarioParts();//object::Instantiate<MarioParts>(eLayerType::Player);
 	MarioParts* mFace = new MarioParts();//object::Instantiate<MarioParts>(eLayerType::Player);
+	MarioParts* mEye = new MarioParts();
 
 	mHandL->SetName(L"HandL");
 	mHandR->SetName(L"HandR");
 	mHead->SetName(L"Head");
 	mFace->SetName(L"Face");
+	mEye->SetName(L"Eye");
 
 	mParts.push_back(mHandL);
 	mParts.push_back(mHandR);
 	mParts.push_back(mHead);
 	mParts.push_back(mFace);
-
+	mParts.push_back(mEye);
 
 	for (auto i : mParts)
 	{

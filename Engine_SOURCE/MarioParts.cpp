@@ -11,11 +11,8 @@
 
 MarioParts::MarioParts()
 {
-<<<<<<< HEAD
 	SetLayerType(eLayerType::Player);
 
-=======
->>>>>>> 255dec6e611b73f6e438073350714e0bf2481d2d
 }
 
 MarioParts::~MarioParts()
@@ -146,6 +143,25 @@ void MarioParts::BoneInitialize()
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
 		model->SetParentTargetBone(L"Armature_Head");
 		model->SetTargetBone(L"Armature_Face");
+		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
+
+	}
+
+	if (GetName() == L"Eye") {
+		SetPos(Vector3(0.f, 0.f, 0.f));
+		SetScale(Vector3(1.0f, 1.f, 1.0f));
+
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioEye");
+		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+
+		BoneAnimator* animator = GetComponent<BoneAnimator>();
+		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
+		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioEye/Animation/Wait.smd", 0.02f);
+		animator->Play(L"test2");
+
+		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
+		model->SetParentTargetBone(L"Armature_Head");
+		model->SetTargetBone(L"Armature_nw4f_root");
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
 
 	}

@@ -136,6 +136,7 @@ public:
 	}
 
 	Vector3 GetPhysicalPosition();
+	Vector3 GetPhysicalRotation();
 	void SetPhysicalPosition(const Vector3& position);
 	void SetPhysicalRotation(const Vector3& rotation_degrees);
 
