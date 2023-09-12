@@ -74,9 +74,6 @@
     <Filter Include="Common\Component\Script\Grid">
       <UniqueIdentifier>{07391d1a-6255-4748-b831-1c8a300fc277}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Component\Script\Fade">
-      <UniqueIdentifier>{8f1ca778-f3ef-4a39-9eeb-8739549585e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\Component\Collider">
       <UniqueIdentifier>{01ea66c5-b9ca-49ae-a581-fd103eafd344}</UniqueIdentifier>
     </Filter>
@@ -324,9 +321,6 @@
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Common\GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="FadeScript.h">
-      <Filter>Common\Component\Script\Fade</Filter>
     </ClInclude>
     <ClInclude Include="Layer.h">
       <Filter>Common\Scene\Layer</Filter>
@@ -658,9 +652,6 @@
     </ClCompile>
     <ClCompile Include="GridScript.cpp">
       <Filter>Common\Component\Script\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="FadeScript.cpp">
-      <Filter>Common\Component\Script\Fade</Filter>
     </ClCompile>
     <ClCompile Include="Layer.cpp">
       <Filter>Common\Scene\Layer</Filter>

@@ -19,7 +19,7 @@ struct PSOut
 
 PSOut main(VSOut vsIn) : SV_Target
 {
-    PSOut psOut;
+    PSOut psOut = (PSOut) 0.f;
     
     float4 output = float4(0.0f, 0.0f, 0.0f, 1.0f);
     
