@@ -4,6 +4,7 @@
 #include "Physical.h"
 
 
+constexpr float OffsetScale = 0.01f;
 
 Transform::Transform()
 	: Component(eComponentType::Transform)
@@ -66,10 +67,19 @@ void Transform::FixedUpdate()
 			mPxTransform.p.z);
 
 		Matrix matTranslation = Matrix::CreateTranslation(vLocalTranslation);
-		Matrix matScale = Matrix::CreateScale(mRelativeScale);
+		Matrix matScale = Matrix::CreateScale(mRelativeScale * OffsetScale);
 
 //			m_matOldWorld = mWorld;
 		mWorld = matScale * matPxRotation * matTranslation;
+
+		// 기저세팅
+		mWorldForward = mRelativeForward = Vector3::TransformNormal(Vector3::Forward, matPxRotation);
+		mWorldRight = mRelativeRight = Vector3::TransformNormal(Vector3::Right, matPxRotation);
+		mWorldUp = mRelativeUp = Vector3::TransformNormal(Vector3::Up, matPxRotation);
+
+		mWorldForward.Normalize();
+		mWorldRight.Normalize();
+		mWorldUp .Normalize();
 	}
 	else
 	{	
@@ -185,5 +195,18 @@ void Transform::SetPhysicalPosition(const Vector3& position)
 {
 	assert(GetOwner()->GetComponent<Physical>());
 	mPxTransform.p = convert::Vector3ToPxVec3(position);
+	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+}
+
+void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
+{
+	assert(GetOwner()->GetComponent<Physical>());
+
+	PxQuat rotationX(PxPi * rotation_degrees.x / 180.0f, PxVec3(1.0f, 0.0f, 0.0f));
+	PxQuat rotationY(PxPi * rotation_degrees.y / 180.0f, PxVec3(0.0f, 1.0f, 0.0f));
+	PxQuat rotationZ(PxPi * rotation_degrees.z / 180.0f, PxVec3(0.0f, 0.0f, 1.0f));
+	// 회전을 적용합니다.
+	PxQuat finalRotation = rotationX * rotationY * rotationZ;
+	mPxTransform.q = finalRotation;
 	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 }

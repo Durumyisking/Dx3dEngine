@@ -36,7 +36,7 @@ void Packun::Initialize()
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
 
 
 	// Rigidbody
@@ -147,29 +147,27 @@ void Packun::stateInfoInitalize()
 void Packun::boneAnimatorInit(BoneAnimator* animator)
 {
 	animator->LoadAnimations(L"..//Resources/Packun/Animation");
-
+	AnimationClip* cilp = nullptr;
 
 	// 어택 동작 연계
 	{
-		AnimationClip* cilp = animator->GetAnimationClip(L"AttackSign");
-		if (cilp)
-			cilp->SetCompleateEvent([=]() 
-				{
-					animator->Play(L"Attack", false);
-				});
-
 		cilp = animator->GetAnimationClip(L"Attack");
 		if (cilp)
 			cilp->SetCompleateEvent([this]() 
 				{
 					SetMonsterState(Monster::eMonsterState::Idle);
 				});
+	}
 
-		/*cilp = animator->GetAnimationClip(L"AttackHit");
+	// 피격 동작 연계
+	{
+		cilp = animator->GetAnimationClip(L"AttackHit");
 		if (cilp)
 			cilp->SetCompleateEvent([this]()
 				{
 					SetMonsterState(Monster::eMonsterState::Idle);
-				});*/
+				});
 	}
+
+
 }

@@ -32,15 +32,15 @@ VSOut main(VSIn vsIn)
     VSOut vsOut = (VSOut) 0.f;
     
     
-    //float4 weights = vsIn.BlendWeight;
-    //weights.w = 1.f - (weights.x + weights.y + weights.z);
+    float4 weights = vsIn.BlendWeight;
+    weights.w = 1.f - (weights.x + weights.y + weights.z);
   
     float4 pos = mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.x].bMatrix) * vsIn.BlendWeight.x;
-    //pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.y].bMatrix) * vsIn.BlendWeight.y;
-    //pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.z].bMatrix) * vsIn.BlendWeight.z;
-    //pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.w].bMatrix) * weights.w;
+    pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.y].bMatrix) * vsIn.BlendWeight.y;
+    pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.z].bMatrix) * vsIn.BlendWeight.z;
+    pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.w].bMatrix) * weights.w;
 
-    //if (weights.x + weights.y + weights.z + weights.w == 0.0f)
+    if (vsIn.BlendWeight.x + vsIn.BlendWeight.y + vsIn.BlendWeight.z + vsIn.BlendWeight.w == 0.0f)
         pos = vsIn.Position;
     
     float4 worldPosition = mul(pos, world);

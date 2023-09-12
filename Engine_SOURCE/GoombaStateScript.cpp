@@ -53,10 +53,8 @@ void GoombaStateScript::Move()
 		animator->Play(L"Dash");
 	}
 
-	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
+	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
 	{
 		mMonster->SetMonsterState(Monster::eMonsterState::Idle);
 		return;
@@ -66,47 +64,40 @@ void GoombaStateScript::Move()
 	if (nullptr == tr)
 		return;
 
-	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP))
-	{
-		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+	bool able = false;
+	auto Input_DownFunC = [&](eKeyCode key, eKeyCode mult_key, math::Vector3 rotation)
 		{
-			tr->SetRotation(Vector3(0.0f, -135.f, 0.0f));
-		}
-		else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
-		{
-			tr->SetRotation(Vector3(0.0f, -225.f, 0.0f));
-		}
-		else
-		{
-			tr->SetRotation(Vector3(0.0f, -180.f, 0.0f));
-		}
-	}
-	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN))
-	{
-		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
-		{
-			tr->SetRotation(Vector3(0.0f, -45.f, 0.0f));
-		}
-		else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
-		{
-			tr->SetRotation(Vector3(0.0f, 45.f, 0.0f));
-		}
-		else
-		{
-			tr->SetRotation(Vector3(0.0f, 0.f, 0.0f));
-		}
+			if (able)
+				return;
 
-	}
-	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
-	{
-		tr->SetRotation(Vector3(0.0f, 90.f, 0.0f));
-	}
-	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
-	{
-		tr->SetRotation(Vector3(0.0f, -90.f, 0.0f));
-	}
-	rigidbody->SetLinearMaxVelocityForDynamic(4000.f);
-	rigidbody->AddForceForDynamic((-tr->Forward() * 100000.f * DT), PxForceMode::Enum::eFORCE);
+			if (GETSINGLE(InputMgr)->GetKeyDown(key))
+			{
+				if (mult_key == eKeyCode::END)
+				{ 
+					tr->SetPhysicalRotation(rotation);
+					able = true;
+				}
+				else if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
+				{
+					tr->SetPhysicalRotation(rotation);
+					able = true;
+				}
+			}
+		};
+
+	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::END, math::Vector3(0.0f, -180.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::END, math::Vector3(0.0f, 0.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::LEFT, eKeyCode::END, math::Vector3(0.0f, 90.f, 0.0f));
+	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::END, math::Vector3(0.0f, -90.f, 0.0f));
+
+	rigidbody->SetLinearMaxVelocityForDynamic(1000.f);
+	rigidbody->AddForceForDynamic((-tr->WorldForward() * 5000.f * DT), PxForceMode::Enum::eFORCE);
 }
 
 void GoombaStateScript::Jump()
@@ -129,15 +120,15 @@ void GoombaStateScript::Jump()
 		const std::wstring& test = animator->PlayAnimationName();
 		animator->Play(L"Jump", false);
 
-		rigidbody->SetLinearMaxVelocityForDynamic(5000.f);
-		rigidbody->AddForce(math::Vector3(0.0f, 100000.f / 5.0f, 0.0f), physx::PxForceMode::eFORCE);
+		rigidbody->SetLinearMaxVelocityForDynamic(1000.f);
+		rigidbody->AddForce(math::Vector3(0.0f, 5000.f, 0.0f), physx::PxForceMode::eFORCE);
 		rigidbody->SetLinearDamping(1.0f);
 	}
 
 	if (animator->PlayAnimationName() == L"Jump" && animator->IsCompleate())
 	{
 		mMonster->SetMonsterState(Monster::eMonsterState::Idle);
-		rigidbody->SetLinearMaxVelocityForDynamic(5000.f);
+		rigidbody->SetLinearMaxVelocityForDynamic(100.f);
 	}
 }
 

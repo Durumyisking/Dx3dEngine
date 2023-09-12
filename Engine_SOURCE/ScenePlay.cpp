@@ -62,6 +62,9 @@
 #include "UIFactory.h"
 #include "Animator.h"
 
+#include "Packun.h"
+#include "Goomba.h"
+
 
 
 ScenePlay::ScenePlay()
@@ -211,6 +214,11 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
+
+	{
+		//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster,this);
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	}
 
 
 	CreatePlayerUI();
