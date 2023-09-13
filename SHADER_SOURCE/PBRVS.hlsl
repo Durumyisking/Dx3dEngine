@@ -57,7 +57,7 @@ VSOut main(VSIn vsIn)
     float3 biNormal = cross(vsIn.Normal, vsIn.Tangent);
     float3 BiNormal = normalize(mul(float4(biNormal, 0.f), world).xyz);
     
-    vsOut.WorldPos = worldPosition.xyz;
+    vsOut.WorldPos = viewPosition.xyz;
     vsOut.WorldNormal = Normal.xyz;
     vsOut.WorldTangent = Tangent.xyz;
     vsOut.WorldBiNormal = BiNormal.xyz;
