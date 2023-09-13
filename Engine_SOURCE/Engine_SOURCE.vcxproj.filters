@@ -580,6 +580,8 @@
     <ClInclude Include="CaptureObj.h">
       <Filter>Common\GameObj\Capture</Filter>
     </ClInclude>
+    <ClInclude Include="CapEyeUI.h" />
+    <ClInclude Include="CapUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -896,6 +898,8 @@
     <ClCompile Include="CaptureObj.cpp">
       <Filter>Common\GameObj\Capture</Filter>
     </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp" />
+    <ClCompile Include="CapUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

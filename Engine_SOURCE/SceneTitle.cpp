@@ -47,6 +47,9 @@
 #include "Animator.h"
 
 #include "ImageUI.h"
+#include "CapUI.h"
+#include "CapEyeUI.h"
+
 
 extern Application application;
 
@@ -179,9 +182,16 @@ void SceneTitle::CreateMainMenu()
 	bar->SetRotation(Vector3(0.0f, 0.0f, 2.0f));
 	bar->SetChangeSize(Vector3(1.f, 0.9f, 1.0f));
 	bar->SetState(HUDState::MoveBlink);
-	HUD* cap = (GETSINGLE(UIFactory)->CreateHud(L"Cap", L"CapMaterial", Vector3(-0.3f, 0.f, -1.f), Vector3(0.2f, 0.6f, 1.f), bar, this));
-	cap->SetState(HUDState::GoAndReturn);
-	cap->SetTargetPos(cap->GetComponent<Transform>()->GetPosition() + Vector3(0.2f, 0.0f, 0.0f));
+	CapUI* cap = (GETSINGLE(UIFactory)->CreateUI<CapUI>(L"Cap", L"CapMaterial", eUIType::Image, Vector3(-0.33f, 0.0f, -0.1f), Vector3(0.2f, 0.6f, 1.f), bar, this));
+	cap->SetState(HUDState::TitleCapMove);
+	cap->SetTargetPos(cap->GetComponent<Transform>()->GetPosition() + Vector3(0.05f, 0.0f, 0.0f));
+	CapEyeUI* capEye = (GETSINGLE(UIFactory)->CreateUI<CapEyeUI>(L"CapEye", L"CapMaterial", eUIType::Image, Vector3(-0.3f, 0.1f, -0.2f), Vector3(0.2f, 1.f, 1.f), bar, this));
+	capEye->SetTargetPos(capEye->GetComponent<Transform>()->GetPosition() + Vector3(0.05f, 0.0f, 0.0f));
+	Animator* capEyeAni = capEye->AddComponent<Animator>(eComponentType::Animator);
+	Texture* capEyeTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"CapEye"));
+	capEyeAni->Create(L"CapEyeAni", capEyeTexture, Vector2::Zero, Vector2(40.0f, 40.0f), Vector2::One, 8, Vector2(80.0f, 80.0f), 0.1f);
+	capEyeAni->Play(L"CapEyeAni", false);
+
 	//Animator* capAni = cap->AddComponent<Animator>(eComponentType::Animator);
 	//Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(L"CapRotate"));
 	//capAni->Create(L"CapAni", tex, Vector2::Zero, Vector2(84.0f, 50.0f), Vector2::One, 5, Vector2(100.0f, 80.0f), 0.1f);
