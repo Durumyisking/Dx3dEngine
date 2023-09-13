@@ -35,7 +35,9 @@ namespace gui
 
 		SetSize(ImVec2((float)size.x / 2 + size.x / 5, size.y / 4));
 
-		ResetContent();
+		//SetDefaultPath;
+		std::filesystem::path parentPath = std::filesystem::current_path().parent_path().parent_path();
+		mTargetPath = parentPath.string() + "\\Resources";
 
 		//folder button
 		ButtonWidget* folderButton = new ButtonWidget("OpenFolder");
@@ -46,14 +48,15 @@ namespace gui
 		AddWidget(folderButton);
 
 
+		////GroupWidget Template
 		mFolders = new GroupWidget();
 		mFolders->SetName("ProjectFolderGroup");
 		AddWidget(mFolders);
 
-		////GroupWidget Template
 		//mFolders->SetCollpase(true);
 		mFolders->SetSpacing();
 		mFolders->SetNextLine(5);
+
 	}
 
 	Project::~Project()
@@ -85,33 +88,24 @@ namespace gui
 
 	}
 
-	void Project::ResetContent()
-	{
-		if(mFolders)
-			mFolders->Clear();
-
-		//SetDefaultPath;
-		std::filesystem::path parentPath = std::filesystem::current_path().parent_path().parent_path();
-		mTargetPath = parentPath.string() + "\\Resources";
-	}
-
 	void Project::FolderClickCallback(std::string path)
 	{
-		ResetContent();
+		mFolders->Clear();
 
-		std::string fullpath = mTargetPath + "\\" + path;
+		std::string fullpath = mTargetPath + path;
 
 		SelectFolder(fullpath);
 	}
 
-	void Project::OpenFolderCallback(std::string path)
+	void Project::OpenFolderCallback(const std::string& path)
 	{
-		ResetContent();
+		if(mFolders)
+			mFolders->Clear();
 
 		SelectFolder(path);
 	}
 	
-	void Project::SelectFolder(std::string path)
+	void Project::SelectFolder(const std::string& path)
 	{
 		TCHAR	FilePath[MAX_PATH] = {};
 
@@ -188,12 +182,12 @@ namespace gui
 					Directory[i] = '/';
 			}
 
-			//// TCHAR 문자열을 std::wstring으로 변환
-			//std::wstring wstr(FilePath);
-			//// std::wstring을 std::string으로 변환 (UTF-8 인코딩으로)
-			//std::string utf8String(wstr.begin(), wstr.end());
+			// TCHAR 문자열을 std::wstring으로 변환
+			std::wstring wstr(FilePath);
+			// std::wstring을 std::string으로 변환 (UTF-8 인코딩으로)
+			std::string utf8String(wstr.begin(), wstr.end());
 
-			mTargetPath = path;
+			mTargetPath = utf8String;
 
 			mTargetFolders.clear();
 

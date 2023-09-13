@@ -58,15 +58,13 @@ namespace gui
 				{
 					mChilds[i]->Render();
 
-					if (i != 0)
-					{
-						if (i % mNextLine == 0)
-							continue;
-					}
-						ImGui::SameLine();
-						ImGui::Dummy(mSpace);
-						//ImGui::Indent(float);
-						ImGui::SameLine();
+					if ((i+1) % mNextLine == 0)
+						continue;
+
+					ImGui::SameLine();
+					ImGui::Dummy(mSpace);
+					//ImGui::Indent(float);
+					ImGui::SameLine();
 				}
 			}
 		}
@@ -76,11 +74,8 @@ namespace gui
 			{
 				mChilds[i]->Render();
 
-				if (i != 0) 
-				{
-					if (i % mNextLine == 0)
-						continue;
-				}
+				if ((i + 1) % mNextLine == 0)
+					continue;
 
 				ImGui::SameLine();
 				ImGui::Dummy(mSpace);

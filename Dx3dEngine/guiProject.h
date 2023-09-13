@@ -16,8 +16,6 @@ namespace gui
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		void ResetContent();
-
 	private:
 		//template <typename T>
 		//void AddResources(TreeWidget::Node* rootNode, const char* name)
@@ -35,9 +33,9 @@ namespace gui
 		//	}
 		//}
 
-		void FolderClickCallback(std::string path); 
-		void OpenFolderCallback(std::string path); //폴더 오픈 버튼 
-		void SelectFolder(std::string path);
+		void FolderClickCallback(std::string path);
+		void OpenFolderCallback(const std::string& path); //폴더 오픈 버튼 
+		void SelectFolder(const std::string& path);
 		void toConsole(); //폴더 클릭 시
 
 
