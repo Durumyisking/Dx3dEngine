@@ -4,7 +4,7 @@
 #include "Physical.h"
 
 
-constexpr float OffsetScale = 0.01f;
+constexpr float OffsetScale = 1.0f;
 
 Transform::Transform()
 	: Component(eComponentType::Transform)
