@@ -209,16 +209,6 @@
     <Filter Include="Common\Component\Animator3D">
       <UniqueIdentifier>{fabcf555-eba3-403d-88ef-e82bc3bc8461}</UniqueIdentifier>
     </Filter>
-<<<<<<< HEAD
-    <Filter Include="Common\GameObj\DynamicObject">
-      <UniqueIdentifier>{490394fb-5193-498a-b432-f2dcc741810c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\GameObj\DynamicObject\Player">
-      <UniqueIdentifier>{58ec3c23-b57e-47a8-a2b2-2ae5eca9e2a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\GameObj\DynamicObject\MarioParts">
-      <UniqueIdentifier>{2f811f8e-0942-4460-973e-b57aa2a1b313}</UniqueIdentifier>
-=======
     <Filter Include="Common\Component\Renderer\Skybox">
       <UniqueIdentifier>{b410bcf3-ae25-480a-b5b4-bd17195ed68c}</UniqueIdentifier>
     </Filter>
@@ -242,7 +232,6 @@
     </Filter>
     <Filter Include="Common\GameObj\Capture">
       <UniqueIdentifier>{790b30db-905b-439a-b52c-e830791d7c44}</UniqueIdentifier>
->>>>>>> 255dec6e611b73f6e438073350714e0bf2481d2d
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -554,19 +543,6 @@
     <ClInclude Include="Panal.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIManager.h" />
-<<<<<<< HEAD
-    <ClInclude Include="DynamicObject.h">
-      <Filter>Common\GameObj\DynamicObject</Filter>
-    </ClInclude>
-    <ClInclude Include="MarioParts.h">
-      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Common\GameObj\DynamicObject</Filter>
-    </ClInclude>
-    <ClInclude Include="MarioHead.h">
-      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
-=======
     <ClInclude Include="CubeMap.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
@@ -605,7 +581,6 @@
     </ClInclude>
     <ClInclude Include="CaptureObj.h">
       <Filter>Common\GameObj\Capture</Filter>
->>>>>>> 255dec6e611b73f6e438073350714e0bf2481d2d
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -880,19 +855,6 @@
     <ClCompile Include="Panal.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIManager.cpp" />
-<<<<<<< HEAD
-    <ClCompile Include="DynamicObject.cpp">
-      <Filter>Common\GameObj\DynamicObject</Filter>
-    </ClCompile>
-    <ClCompile Include="MarioParts.cpp">
-      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Common\GameObj\DynamicObject</Filter>
-    </ClCompile>
-    <ClCompile Include="MarioHead.cpp">
-      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
-=======
     <ClCompile Include="SkySphereRenderer.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
@@ -937,7 +899,6 @@
     </ClCompile>
     <ClCompile Include="CaptureObj.cpp">
       <Filter>Common\GameObj\Capture</Filter>
->>>>>>> 255dec6e611b73f6e438073350714e0bf2481d2d
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
