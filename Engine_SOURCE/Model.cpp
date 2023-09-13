@@ -134,8 +134,10 @@ void Model::Bind_Render()
 
 		// 아직 미구현
 		// 예외처리 구간 여기서 모델의 렌더를 껏다켰다하는 함수를 작성해야함
-		if (mMeshes[i]->GetName().find(L"Press") != std::wstring::npos)
+		if ((mMeshes[i]->GetName().find(L"Press") != std::wstring::npos) || (mMeshes[i]->GetName().find(L"Close") != std::wstring::npos) || (mMeshes[i]->GetName().find(L"Mustache") != std::wstring::npos))
+		{
 			continue;
+		}
 		/////////////////////////////////////////////////////////////////////
 
 		std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
@@ -577,4 +579,17 @@ void Model::SetVariableMaterials(UINT index, Material* mater)
 		return;
 
 	mVariableMaterials[index] = mater;
+}
+
+void Model::SetVariableMaterialsByKey(UINT index, const std::wstring& key)
+{
+	if (index >= mVariableMaterials.size())
+		return;
+
+	Material* mater = GETSINGLE(ResourceMgr)->Find<Material>(key);
+
+	if (mater)
+	{
+		mVariableMaterials[index] = mater;
+	}
 }

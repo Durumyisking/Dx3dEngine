@@ -178,7 +178,7 @@ const Vector3& Transform::GetWorldPosition()
 {
 	if (GetOwner()->GetComponent<Physical>())
 	{
-		return GetPhysicalPosition();
+		return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
 	}
 	else
 	{

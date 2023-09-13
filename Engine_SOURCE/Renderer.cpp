@@ -715,7 +715,7 @@ namespace renderer
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_alb", L"goomba/Image/KuriboBody_alb.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_nrm", L"goomba/Image/KuriboBody_nrm.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_rgh", L"goomba/Image/KuriboBody_alb.rgh");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_rgh", L"goomba/Image/KuriboBody_rgh.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_alb0", L"goomba/Image/KuriboEye_alb.0.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_alb1", L"goomba/Image/KuriboEye_alb.1.png");
@@ -1013,6 +1013,69 @@ namespace renderer
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"SkySphereMaterial", material);
 		}
 #pragma endregion
+
+	
+
+// object materials
+
+#pragma region goombaBody Material
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"goombaBody_alb", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"goombaBody_nrm", eTextureSlot::Normal);
+			material->SetTextureByKey(L"goombaBody_rgh", eTextureSlot::Roughness);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaBodyMaterial", material);
+		}
+#pragma endregion
+#pragma region goombaEye0 Material
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"goombaEye_alb0", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"goombaEye_nrm0", eTextureSlot::Normal);
+			material->SetTextureByKey(L"goombaEye_rgh0", eTextureSlot::Roughness);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye0Material", material);
+		}
+#pragma endregion
+#pragma region goombaEye1 Material
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"goombaEye_alb1", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"goombaEye_nrm1", eTextureSlot::Normal);
+			material->SetTextureByKey(L"goombaEye_rgh1", eTextureSlot::Roughness);
+			material->SetTextureByKey(L"goombaEye_emm", eTextureSlot::Emissive);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye1Material", material);
+		}
+#pragma endregion
+#pragma region goombaEye2 Material
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"goombaEye_alb2", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"goombaEye_nrm2", eTextureSlot::Normal);
+			material->SetTextureByKey(L"goombaEye_rgh2", eTextureSlot::Roughness);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye2Material", material);
+		}
+#pragma endregion
+#pragma region MarioMustache Material
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"goombaHairFace_alb", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"goombaHairFace_nrm", eTextureSlot::Normal);
+			material->SetTextureByKey(L"goombaHairFace_rgh", eTextureSlot::Roughness);
+			material->SetTextureByKey(L"goombaHairFace_emm", eTextureSlot::Emissive);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"MarioMustacheMaterial", material);
+		}
+#pragma endregion
+
 
 
 		CreateUIMaterial();

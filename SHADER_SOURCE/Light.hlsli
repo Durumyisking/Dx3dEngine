@@ -191,21 +191,24 @@ float3 DiffuseIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
 }
 
 float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
-                   float metallic, float roughness)
+                   float metallic, float roughness, float pixelToCam)
 {
+    float mip = pixelToCam / 1.2f;
+    if(mip > 6)
+        mip = 6;
     float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(dot(normalWorld, pixelToEye), 1.0 - roughness), 0.0f).rg;
     float3 specularIrradiance = prefilteredMap.SampleLevel(linearSampler, reflect(-pixelToEye, normalWorld),
-                                                            2 + roughness * 5.0f).rgb;
+                                                            0.f).rgb;
     const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
     float3 F0 = lerp(Fdielectric, albedo, metallic);
 
     return (F0 * specularBRDF.x + specularBRDF.y) * specularIrradiance;
 }
 float3 AmbientLightingByIBL(float3 albedo, float3 normalW, float3 pixelToEye,
-                            float metallic, float roughness)
+                            float metallic, float roughness, float pixelToCam)
 {
     float3 diffuseIBL = DiffuseIBL(albedo, normalW, pixelToEye, metallic);
-    float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness);
+    float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCam);
     
     return (diffuseIBL + specularIBL);
 }
@@ -268,10 +271,15 @@ float VSM_FILTER(float2 moments, float fragDepth)
     variance = max(variance, 0.0000005f);
 
     float mD = fragDepth - moments.x;
-    float mD_2 = mD * mD;
-    float p = variance / (variance + mD_2);
-
-    lit = max(p, fragDepth <= moments.x);
+    
+    float p = 1.f;
+    if (mD > 0.f)
+    {
+        float mD_2 = mD * mD;
+        p = variance / (variance + mD_2);
+    }
+        
+    lit = max(p, 0.4f);
 
     return lit;
 }

@@ -35,24 +35,28 @@ PSOut main(VSOut vsIn) : SV_Target
     
     float4 albedo = float4(1.0f, 1.0f, 1.0f, 1.0f);
     float3 normal = vsIn.ViewNormal;
-    float metallic = 0.04f;
-    float roughness = 0.5f;
+    float metallic = cbMetallic;
+    float roughness = cbRoughness;
+    
+    float3 worldPos = mul(float4(vsIn.ViewPos, 1.f), inverseWorld).xyz;
+    float pixelToCam = distance(cameraWorldPos.xyz, worldPos);
+
     
     if (1 == cbbAlbedo)
     {
-        albedo = TextureMapping_albedo(vsIn.UV);
+        albedo = TextureMapping_albedo(vsIn.UV, pixelToCam);
     }
     if (1 == cbbNormal)
     {
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal, pixelToCam);
     }
     if (1 == cbbMetallic)
     {
-        //metallic = TextureMapping_metallic(vsIn.UV);
+        metallic = TextureMapping_metallic(vsIn.UV, pixelToCam);
     }
     if (1 == cbbRoughness)
     {
-        //roughness = TextureMapping_roughness(vsIn.UV);
+        roughness = TextureMapping_roughness(vsIn.UV, pixelToCam);
     }
     
     vsOutColor.Position = float4(vsIn.ViewPos, 1.0f);

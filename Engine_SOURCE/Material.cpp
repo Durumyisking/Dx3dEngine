@@ -9,6 +9,7 @@ Material::Material()
 	, mShader(nullptr)
 	, mTexture{}
 {
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 }
 Material::Material(std::wstring shaderName)
 	: Resource(eResourceType::Material)
@@ -22,6 +23,7 @@ Material::Material(std::wstring shaderName)
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 }
 Material::Material(std::wstring textureColor, std::wstring shaderName)
 	: Resource(eResourceType::Material)
@@ -37,6 +39,7 @@ Material::Material(std::wstring textureColor, std::wstring shaderName)
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 }
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName)
 	: Resource(eResourceType::Material)
@@ -53,8 +56,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
-
-
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 }
 
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName)
@@ -73,6 +75,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 
 }
 
@@ -94,6 +97,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
 
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 
 }
 
@@ -117,6 +121,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
 
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 
 }
 
@@ -136,6 +141,7 @@ Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring sha
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 
 }
 
@@ -287,7 +293,9 @@ void Material::Bind()
 		mMaterialConstantBuffer.bMetallic = 1;
 	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Roughness)])
+	{
 		mMaterialConstantBuffer.bRoughness = 1;
+	}
 
 	ConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::Material];
 	pCB->SetData(&mMaterialConstantBuffer);
