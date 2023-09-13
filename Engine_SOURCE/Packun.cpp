@@ -29,7 +29,19 @@ void Packun::Initialize()
 	// SetModel
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
 	if (model)
+	{
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+
+
+		// ¿ÀÇÁ
+		model->MeshRenderSwtich(L"Head2__BodyMT", false);
+		model->MeshRenderSwtich(L"Head2__HeadMT", false);
+		model->MeshRenderSwtich(L"mustache__HairMT", false);
+
+		// ¿Â¤¤
+		model->MeshRenderSwtich(L"Head3__BodyMT");
+		model->MeshRenderSwtich(L"Head3__HeadMT");
+	}
 
 	PackunStateScript* packunState = AddComponent<PackunStateScript>(eComponentType::Script);
 	packunState->Initialize();

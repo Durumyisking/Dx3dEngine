@@ -27,7 +27,7 @@ Model::Model()
 	, mParentModel(nullptr)
 	, mParentTargetBone(L"")
 	, mTargetBone(L"")
-	, mOffsetRotation(math::Vector3(0.0f,0.0f,0.0f))
+	, mOffsetRotation(math::Vector3(0.0f, 0.0f, 0.0f))
 {
 
 }
@@ -132,6 +132,9 @@ void Model::Bind_Render()
 		if (mMaterials[i] == nullptr)
 			continue;
 
+		if (mMeshes[i]->IsRender() == false)
+			continue;
+
 		// 아직 미구현
 		// 예외처리 구간 여기서 모델의 렌더를 껏다켰다하는 함수를 작성해야함
 		if (mMeshes[i]->GetName().find(L"Press") != std::wstring::npos)
@@ -160,6 +163,18 @@ void Model::Bind_Render()
 }
 
 
+void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
+{
+	for (auto iter = mMeshes.begin(); iter != mMeshes.end(); ++iter)
+	{
+		if ((*iter)->GetName().find(name) == std::wstring::npos)
+			continue;
+
+		(*iter)->SetRender(renderSwitch);
+		return;
+	}
+}
+
 void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode)
 {
 	std::wstring wNodeName = ConvertToW_String(node->mName.C_Str());
@@ -176,7 +191,7 @@ void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* 
 		mNodes.insert(std::pair<std::wstring, ModelNode*>(modelnode->mName, modelnode));
 		curNode = mNodes.find(wNodeName)->second;
 	}
-	else 
+	else
 	{
 		curNode = iter->second;
 		if (curNode->mRootNode != nullptr)
@@ -208,7 +223,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
-	
+
 	vertexes.reserve(mesh->mNumVertices);
 
 	for (UINT i = 0; i < mesh->mNumVertices; ++i)
@@ -216,20 +231,20 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		renderer::Vertex vertex = {};
 		math::Vector3 pos = {};
 
-	
+
 		pos.x = mesh->mVertices[i].x;
 		pos.y = mesh->mVertices[i].y;
 		pos.z = mesh->mVertices[i].z;
 		vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
 
-		
+
 		math::Vector3 normal = {};
 		normal.x = mesh->mNormals[i].x;
 		normal.y = mesh->mNormals[i].y;
 		normal.z = mesh->mNormals[i].z;
 		vertex.normal = normal;
 
-	
+
 		math::Vector3 tangent = {};
 		tangent.x = mesh->mTangents[i].x;
 		tangent.y = mesh->mTangents[i].y;
@@ -282,7 +297,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 			bonIndex = bone->mIndex;
 		}
-		else 
+		else
 		{
 			bone = mBoneMap.find(ConvertToW_String(aiBone->mName.C_Str()))->second;
 			bone->mOffsetMatrix = aiBone->mOffsetMatrix;
@@ -462,11 +477,11 @@ std::vector<Texture*> Model::GetTexture(int index)
 	if (index >= mTextures.size())
 		return std::vector<Texture*>{};
 
-	std::vector<Texture*> outTexVector; 
+	std::vector<Texture*> outTexVector;
 	const std::vector<TextureInfo>& texInfos = mTextures[index];
 	for (const TextureInfo& tex : texInfos)
 	{
-		if(tex.pTex != nullptr)
+		if (tex.pTex != nullptr)
 			outTexVector.emplace_back(tex.pTex);
 	}
 
@@ -499,7 +514,7 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 		mBones[bone->mIndex]->mLocalMatrix = matrix;
 	}
 
- 	for (size_t i = 0; i < modelNode->mChilds.size(); ++i)
+	for (size_t i = 0; i < modelNode->mChilds.size(); ++i)
 	{
 		recursiveProcessBoneMatrix(matrix, modelNode->mChilds[i]->mName);
 	}

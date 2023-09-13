@@ -72,12 +72,7 @@ void GoombaStateScript::Move()
 
 			if (GETSINGLE(InputMgr)->GetKeyDown(key))
 			{
-				if (mult_key == eKeyCode::END)
-				{ 
-					tr->SetPhysicalRotation(rotation);
-					able = true;
-				}
-				else if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
+				if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
 				{
 					tr->SetPhysicalRotation(rotation);
 					able = true;
@@ -87,14 +82,14 @@ void GoombaStateScript::Move()
 
 	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
 	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::END, math::Vector3(0.0f, -180.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
 
 	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
 	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::END, math::Vector3(0.0f, 0.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::LEFT, eKeyCode::END, math::Vector3(0.0f, 90.f, 0.0f));
-	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::END, math::Vector3(0.0f, -90.f, 0.0f));
+	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
+	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
 
 	rigidbody->SetLinearMaxVelocityForDynamic(1000.f);
 	rigidbody->AddForceForDynamic((-tr->WorldForward() * 5000.f * DT), PxForceMode::Enum::eFORCE);
