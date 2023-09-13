@@ -48,33 +48,32 @@ namespace gui
 
 	void GroupWidget::Render()
 	{
+		//if (mState != eState::Active)
+		//	return;
+
 		ImGui::BeginGroup();
 
 		if (mbCollapse)
 		{
-			if (ImGui::CollapsingHeader(GetName().c_str(), &mbGroupOpen))
-			{
-				for (size_t i = 0; i < mChilds.size(); i++)
-				{
-					mChilds[i]->Render();
-
-					if ((i+1) % mNextLine == 0)
-						continue;
-
-					ImGui::SameLine();
-					ImGui::Dummy(mSpace);
-					//ImGui::Indent(float);
-					ImGui::SameLine();
-				}
-			}
+			ImGui::CollapsingHeader(GetName().c_str(), &mbGroupOpen);
 		}
-		else
-		{
-			for (size_t i = 0; i < mChilds.size(); i++)
-			{
-				mChilds[i]->Render();
 
-				if ((i + 1) % mNextLine == 0)
+		if (GetParent() == nullptr)
+		{
+			bool open = (bool)GetState();
+			FixedUpdate();
+			if (!ImGui::Begin(GetName().c_str(), &open, mWindow_flags | ImGuiWindowFlags_NoSavedSettings))
+				mState = eState::Paused;
+			Update();
+
+			UINT count = 0;
+			for (Widget* child : mChilds)
+			{
+				count++;
+
+				child->Render();
+
+				if (count % mNextLine == 0)
 					continue;
 
 				ImGui::SameLine();
@@ -82,7 +81,49 @@ namespace gui
 				//ImGui::Indent(float);
 				ImGui::SameLine();
 			}
+			LateUpdate();
+
+			ImGui::End();
 		}
+		else
+		{
+			FixedUpdate();
+			ImGui::BeginChild(GetName().c_str(), mSize);
+			//size 추가 해줘야한다.-
+			Update();
+
+			UINT count = 0;
+			for (Widget* child : mChilds)
+			{
+				count++;
+
+				child->Render();
+
+				if (count % mNextLine == 0)
+					continue;
+
+				ImGui::SameLine();
+				ImGui::Dummy(mSpace);
+				//ImGui::Indent(float);
+				ImGui::SameLine();
+			}
+			LateUpdate();
+			//std::string debug = GetName();
+			ImGui::EndChild();
+		}
+
+			//for (size_t i = 0; i < mChilds.size(); i++)
+			//{
+			//	mChilds[i]->Render();
+
+			//	if ((i + 1) % mNextLine == 0)
+			//		continue;
+
+			//	ImGui::SameLine();
+			//	ImGui::Dummy(mSpace);
+			//	//ImGui::Indent(float);
+			//	ImGui::SameLine();
+			//}
 
 		ImGui::EndGroup();
 	}

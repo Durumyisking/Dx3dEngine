@@ -30,15 +30,12 @@ namespace gui
 		}
 
 		template<typename T>
-		T* CreateWidget()
+		T* CreateWidget(float width = 100.f, float height = 100.f)
 		{
 			T* Widget = new T;
 
-			UINT size = mChilds.size();
-
-			std::string name = GetName().c_str() + '_' + std::to_string(size);
-			Widget->SetName(name);
-			Widget->SetSize(50.f, 50.f);
+			Widget->SetName(GetName().c_str() + '_' + std::to_string(Widget->GetID()));
+			Widget->SetSize(width, height);
 
 			AddWidget(Widget);
 

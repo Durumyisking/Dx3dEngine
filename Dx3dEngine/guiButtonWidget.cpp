@@ -8,6 +8,7 @@ namespace gui
 		, mClick()
 		, mbText(false)
 		, mText()
+		, mButtonText()
 		, mTexture(nullptr)
 	{
 	}
@@ -16,10 +17,10 @@ namespace gui
 		, mClick()
 		, mbText(false)
 		, mText()
+		, mButtonText()
 		, mTexture(nullptr)
 	{
 		SetName(name);
-		SetSize(100.f, 100.f);
 	}
 	ButtonWidget::~ButtonWidget()
 	{
@@ -30,13 +31,17 @@ namespace gui
 	{
 	}
 
-	void ButtonWidget::Update()
+	void ButtonWidget::Update() 
 	{
-
 		if (mbText)
 		{
 			if (mTexture == nullptr)
-				mClick = ImGui::Button(GetName().c_str(), ImVec2(mSize.x - 25.f, mSize.y - 25.f));
+			{
+				if (mButtonText == "")
+					mClick = ImGui::Button(GetName().c_str(), ImVec2(mSize.x - 25.f, mSize.y - 25.f));
+				else
+					mClick = ImGui::Button(mButtonText.c_str(), ImVec2(mSize.x - 25.f, mSize.y - 25.f));
+			}
 			else
 				mClick = ImGui::ImageButton(mTexture->GetSRV().Get(), ImVec2(mSize.x - 25.f, mSize.y - 25.f));
 
@@ -62,16 +67,14 @@ namespace gui
 	{
 	}
 
-	void ButtonWidget::SetTexture(Texture* tex, float sizeX, float sizeY)
+	void ButtonWidget::SetTexture(Texture* tex)
 	{
 		mTexture = tex;
-		mSize = ImVec2(sizeX, sizeY);
 	}
 
-	void ButtonWidget::SetTexture(std::wstring& name, float sizeX, float sizeY)
+	void ButtonWidget::SetTexture(const std::wstring& name)
 	{
-		GETSINGLE(ResourceMgr)->Find<Texture>(name);
-		mSize = ImVec2(sizeX, sizeY);
+		mTexture = GETSINGLE(ResourceMgr)->Find<Texture>(name);
 	}
 
 }

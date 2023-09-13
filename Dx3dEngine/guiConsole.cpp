@@ -1,17 +1,28 @@
 #include "guiConsole.h"
-#include "guiGroupWidget.h"
-#include "guiImageWidget.h"
-#include "guiTexture.h"
 #include "ResourceMgr.h"
+#include "Texture.h"
+
+#include "guiTexture.h"
+#include "guiImageWidget.h"
 #include "guiButtonWidget.h"
 
 namespace gui
 {
 	Console::Console()
 		: mResources{}
+		, mGroup(nullptr)
 		, mTargetProjectPath()
 	{
 		SetName("Console");
+
+		////GroupWidget Template
+		mGroup = new GroupWidget();
+		mGroup->SetName("ConsoleFileGroup");
+		AddWidget(mGroup);
+
+		//mFolders->SetCollpase(true);
+		mGroup->SetSpacing();
+		mGroup->SetNextLine(6);
 	}
 
 	Console::~Console()
@@ -31,48 +42,6 @@ namespace gui
 	void Console::Initialize()
 	{
 
-		GroupWidget* group1 = new GroupWidget("ConsoleGroup1");
-		AddWidget(group1);
-
-		{
-			ImageWidget* image1 = new ImageWidget("Image1");
-			image1->SetSize(100.f, 100.f);
-			group1->AddWidget(image1);
-
-			ImageWidget* image2 = new ImageWidget("Image2");
-			image2->SetTexture(L"default");
-			image2->SetSize(100.f, 100.f);
-			group1->AddWidget(image2);
-
-			ImageWidget* image3 = new ImageWidget("Image3");
-			image3->SetTexture(L"default");
-			image3->SetSize(100.f, 100.f);
-			group1->AddWidget(image3);
-
-			ImageWidget* image4 = new ImageWidget("Image4");
-			image4->SetTexture(L"default");
-			image4->SetSize(100.f, 100.f);
-			group1->AddWidget(image4);
-		}
-
-		{
-			Texture* folderImage = GETSINGLE(ResourceMgr)->Find<Texture>(L"FolderImage");
-
-			ButtonWidget* button = group1->CreateWidget<ButtonWidget>();
-
-			button->SetText("NAME");
-			button->SetTexture(folderImage);
-			button->SetSize(100.f, 100.f);
-
-			//button->SetClickCallback(&Project::FolderClickCallback, this, folderName);
-		}
-
-
-		//GUITexture* image2 = new gui::GUITexture();
-		//image2->SetName("Image2");
-		//AddWidget(image2);
-
-		//image2->SetTarget(GETSINGLE(ResourceMgr)->Find<Texture>(L"default"));
 	}
 
 	void Console::FixedUpdate()
@@ -107,8 +76,52 @@ namespace gui
 	{
 	}
 
-	void Console::InitializeTargetProjectPath()
+	void Console::InitializeTargetProject()
 	{
+		mGroup->Clear();
+
+		const std::string TextureExtArray[6] = { ".png" , ".PNG" , ".jpg" , ".jpeg" , ".JPG" , ".JPEG" };
+
+		for (std::string fileName : mTargetFiles)
+		{
+			std::string fileExtension;
+			eFileType type = eFileType::None;
+
+			for (size_t i = 0; i < fileName.length(); i++)
+			{
+				if (fileName[i] == '.')
+				{
+					fileExtension = fileName.substr(i);
+				}
+			}
+
+			ButtonWidget* button = mGroup->CreateWidget<ButtonWidget>(110.f, 110.f);
+
+			button->SetText(fileName);
+			button->SetButtonText(fileExtension);
+
+
+			for (int i = 0; i < 6; ++i)
+			{
+				if (fileExtension == TextureExtArray[i])
+				{
+					std::string str = mTargetProjectPath + fileName;
+					std::wstring wstr(str.begin(), str.end());
+					std::wstring wFileName(fileName.begin(), fileName.end());
+					Texture* tex = GETSINGLE(ResourceMgr)->LoadFullpath<Texture>(wFileName, wstr);
+					button->SetTexture(tex);
+
+					type = eFileType::Texture;
+				}
+			}
+
+			button->SetClickCallback(&Console::FileClickCallback, this, fileName, type);
+		}
+	}
+
+	void Console::FileClickCallback(const std::string& name, eFileType type)
+	{
+
 	}
 
 }

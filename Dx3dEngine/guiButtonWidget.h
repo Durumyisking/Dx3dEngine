@@ -18,9 +18,10 @@ namespace gui
 		virtual void LateUpdate() override;
 
 		void SetText(const std::string& text) { mText = text; mbText = true; }
+		void SetButtonText(const std::string& text) { mButtonText = text; }
 
-		void SetTexture(Texture* tex, float sizeX = 50.f, float sizeY = 50.f);
-		void SetTexture(std::wstring& name, float sizeX = 50.f, float sizeY = 50.f);
+		void SetTexture(Texture* tex);
+		void SetTexture(const std::wstring& name);
 
 	public:
 		template<typename Callback, typename... Args>
@@ -36,6 +37,7 @@ namespace gui
 
 		bool mbText;
 		std::string mText;
+		std::string mButtonText;
 		Texture* mTexture;
 	};
 }

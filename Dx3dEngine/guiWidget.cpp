@@ -62,8 +62,7 @@ namespace gui
 			ImGui::BeginChild(GetName().c_str(), mSize);
 			//size 추가 해줘야한다.-
 			Update();
-			std::string name = GetName().c_str();
-			UINT size = mChilds.size();
+			Widget* parent = GetParent();
 			for (Widget* child : mChilds)
 			{
 				child->Render();

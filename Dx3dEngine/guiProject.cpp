@@ -23,7 +23,8 @@ namespace gui
 {
 
 	Project::Project()
-		: mFolders(nullptr)
+		: mGroup(nullptr)
+		, mbTargetChanged(false)
 		, mTargetPath()
 		, mTargetFolders()
 	{
@@ -49,22 +50,22 @@ namespace gui
 
 
 		////GroupWidget Template
-		mFolders = new GroupWidget();
-		mFolders->SetName("ProjectFolderGroup");
-		AddWidget(mFolders);
+		mGroup = new GroupWidget();
+		mGroup->SetName("ProjectFolderGroup");
+		AddWidget(mGroup);
 
 		//mFolders->SetCollpase(true);
-		mFolders->SetSpacing();
-		mFolders->SetNextLine(5);
+		mGroup->SetSpacing();
+		mGroup->SetNextLine(5);
 
 	}
 
 	Project::~Project()
 	{
-		mFolders->Clear();
+		mGroup->Clear();
 
-		delete mFolders;
-		mFolders = nullptr;
+		delete mGroup;
+		mGroup = nullptr;
 	}
 
 	void Project::FixedUpdate()
@@ -85,24 +86,45 @@ namespace gui
 
 	void Project::LateUpdate()
 	{
+		if (mGroup)
+		{
+			if (mbTargetChanged)
+			{
+				mGroup->Clear();
 
+				Texture* folderImage = GETSINGLE(ResourceMgr)->Find<Texture>(L"FolderImage");
+
+				for (std::string folderName : mTargetFolders)
+				{
+					ButtonWidget* button = mGroup->CreateWidget<ButtonWidget>(50.f, 50.f);
+
+					button->SetText(folderName);
+					button->SetTexture(folderImage);
+
+					button->SetClickCallback(&Project::FolderClickCallback, this, folderName);
+				}
+
+				toConsole();
+
+				mbTargetChanged = false;
+			}
+		}
 	}
 
 	void Project::FolderClickCallback(std::string path)
 	{
-		mFolders->Clear();
-
-		std::string fullpath = mTargetPath + path;
+		const std::string& fullpath = mTargetPath + path;
 
 		SelectFolder(fullpath);
+
+		mbTargetChanged = true;
 	}
 
 	void Project::OpenFolderCallback(const std::string& path)
 	{
-		if(mFolders)
-			mFolders->Clear();
-
 		SelectFolder(path);
+
+		mbTargetChanged = true;
 	}
 	
 	void Project::SelectFolder(const std::string& path)
@@ -135,11 +157,9 @@ namespace gui
 
 			char	FilePathMultiByte[MAX_PATH] = {};
 
-			// #ifdef : 뒤에 있는 내용이 #define으로 정의되어 있는지를
-			// 판단하는 if문이다. 
-			// 컴파일 단계에서 뒤에 있는 내용이 #define으로 정의되어 있는지 판단.
+	// #ifdef 뒤에 있는 내용이 #define으로 정의되어 있는지를 판단하는 if문
+	// 컴파일 단계에서 뒤에 있는 내용이 #define으로 정의되어 있는지 판단
 #ifdef UNICODE
-
 	// 유니코드로 되어있는 문자열을 멀티바이트로 바꾸기 위한 수를
 	// 얻어온다.
 			int	PathLength = WideCharToMultiByte(CP_ACP, 0, FilePath, -1,
@@ -166,6 +186,7 @@ namespace gui
 				{
 					memcpy(FolderName, &FilePathMultiByte[i], 12);
 
+					//Resources폴더 위치를 받아오기위해 상위폴더인 프로젝트 폴더로 설정이 되어 있는데 변경될수도 있으니 Resources폴더 안에 폴더를 하나 더 만드는게 좋아보임
 					if (strcmp(FolderName, "\\Dx3dEngine\\") == 0)
 					{
 						strcpy_s(Directory, &FilePathMultiByte[i + 12]);
@@ -190,8 +211,9 @@ namespace gui
 			mTargetPath = utf8String;
 
 			mTargetFolders.clear();
+			mTargetFiles.clear();
 
-			int maxDepth = std::count(mTargetPath.begin(), mTargetPath.end(), '\\') + 1;
+			int maxDepth = std::count(mTargetPath.begin(), mTargetPath.end(), '\\') - 1;
 
 			for (const auto& entry : std::filesystem::recursive_directory_iterator(FilePathMultiByte))
 			{
@@ -211,19 +233,22 @@ namespace gui
 						}
 					}
 				}
-			}
+				else
+				{
+					std::string filePath = entry.path().generic_string();
+					size_t startPos = filePath.find(Directory);
 
-			Texture* folderImage = GETSINGLE(ResourceMgr)->Find<Texture>(L"FolderImage");
-
-			for (std::string folderName : mTargetFolders)
-			{
-				ButtonWidget* button = mFolders->CreateWidget<ButtonWidget>();
-
-				button->SetText(folderName);
-				button->SetTexture(folderImage);
-
-				button->SetClickCallback(&Project::FolderClickCallback, this, folderName);
-
+					if (startPos != std::string::npos)
+					{
+						std::string fileName = filePath.substr(startPos + DirectoryLength);
+						// 폴더의 깊이를 추적하여 하위 폴더를 제외
+						int folderDepth = std::count(fileName.begin(), fileName.end(), '/');
+						if (folderDepth == 0) // 상위 폴더만 저장
+						{
+							mTargetFiles.push_back(fileName);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -234,7 +259,8 @@ namespace gui
 
 		Console* console = GETSINGLE(WidgetMgr)->GetWidget<Console>("Console");
 		console->SetTargetProjectPath(mTargetPath);
-		console->InitializeTargetProjectPath();
+		console->SetTargetFiles(mTargetFiles);
+		console->InitializeTargetProject();
 	}
 
 }

@@ -40,9 +40,11 @@ namespace gui
 
 
 	private:
-		GroupWidget* mFolders;
+		GroupWidget* mGroup;
+		bool	mbTargetChanged;
 		
 		std::string mTargetPath;
 		std::vector<std::string> mTargetFolders;
+		std::vector<std::string> mTargetFiles;
 	};
 }
