@@ -308,7 +308,7 @@ void Material::Bind()
 
 void Material::Clear()
 {
-	for (size_t i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
+	for (UINT i = 0; i < static_cast<UINT>(eTextureSlot::End); i++)
 	{
 		if (mTexture[i] == nullptr)
 			continue;

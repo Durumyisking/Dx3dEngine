@@ -103,8 +103,8 @@ void ScenePlay::Initialize()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Monster, this);
-		player->SetPos(Vector3(-15.f, 15.f, 9.5f));
-		player->SetScale(Vector3(0.1f, 0.1f, 0.1f));
+		player->SetPos(Vector3(0.f, 0.f, 0.f));
+		player->SetScale(Vector3(0.01f, 0.01f, 0.01f));
 		player->SetName(L"Player");
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");

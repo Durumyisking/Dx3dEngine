@@ -9,7 +9,6 @@ struct VSIn
     float2 UV : TEXCOORD;
     float3 Tangent : TANGENT;
     float3 Normal : NORMAL;
-    float3 BiNormal : BINORMAL;
     
     float4 BlendID : BLENDINDICES;
     float4 BlendWeight : BLENDWEIGHT;

@@ -40,10 +40,8 @@ namespace renderer
 	struct Vertex
 	{
 		Vector4 pos;
-		Vector4	color;
 		Vector2 uv;
 		Vector3 tangent;
-		Vector3 biNormal;
 		Vector3 normal;
 
 		Vector4 BlendID;

@@ -25,33 +25,20 @@ float4 main(VSOut vsIn) : SV_Target
     float   roughness = cbRoughness;
     float3  emission = (float3) 0.f;
     float3  A0 = (float3) 1.f;
-    
-    
-    float3 Q1 = ddx(vsIn.WorldPos);
-    float3 Q2 = ddy(vsIn.WorldPos);
-    float3 st1 = ddx(float3(vsIn.UV, 0));
-    float3 st2 = ddy(float3(vsIn.UV, 0));
-
-    float3 Na = normalize(vsIn.WorldNormal);
-    float3 Ta = normalize(Q1 * st2.y - Q2 * st1.y);
-    float3 Ba = -normalize(cross(Na, Ta));
-    float3x3 TBN = float3x3(Ta, Ba, Na);
 
     float pixelToCam = distance(cameraWorldPos.xyz, vsIn.WorldPos);
 
     albedo = cbbAlbedo ? TextureMapping_albedo(vsIn.UV, pixelToCam) : albedo;
-    normal = cbbNormal ? TextureMapping_normal(vsIn.UV, Ta, Na, Ba, pixelToCam) : normal;
-    //normal = cbbNormal ? TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, vsIn.WorldBiNormal, pixelToCam) : normal;
+    normal = cbbNormal ? TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, vsIn.WorldBiNormal, pixelToCam) : normal;
     metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV, pixelToCam) : metallic;
     roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV, pixelToCam) : roughness;
     emission = cbbEmissive ? TextureMapping_emissive(vsIn.UV, pixelToCam) : emission;
-
     float3 pixelToEye = normalize(cameraWorldPos.xyz - vsIn.WorldPos);
     ambientLighting = AmbientLightingByIBL(albedo.xyz, normal, pixelToEye, metallic, roughness, pixelToCam);
     
     // 빛 타입에 따라 다르게 적용되도록해야함 현재는 dir light만 적용중
     
-    // dir light빛 방향 월드 기준일거임 일거임
+    // dir light빛 방향 월드 기준일거임
     float3 lightVec = -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz;
 
     float3 halfway = normalize(pixelToEye + lightVec);
