@@ -1,4 +1,5 @@
 #include "Packun.h"
+#include "Object.h"
 #include "InputMgr.h"
 #include "BoneAnimator.h"
 #include "Model.h"
@@ -10,6 +11,7 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
+#include "PackunPostionBall.h"
 
 Packun::Packun()
 	: Monster()
@@ -33,14 +35,14 @@ void Packun::Initialize()
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 
-		// 오프
-		model->MeshRenderSwtich(L"Head2__BodyMT", false);
-		model->MeshRenderSwtich(L"Head2__HeadMT", false);
-		model->MeshRenderSwtich(L"mustache__HairMT", false);
+		//// 오프
+		//model->MeshRenderSwtich(L"Head2__BodyMT", false);
+		//model->MeshRenderSwtich(L"Head2__HeadMT", false);
+		//model->MeshRenderSwtich(L"mustache__HairMT", false);
 
-		// 온ㄴ
-		model->MeshRenderSwtich(L"Head3__BodyMT");
-		model->MeshRenderSwtich(L"Head3__HeadMT");
+		//// 온ㄴ
+		//model->MeshRenderSwtich(L"Head3__BodyMT");
+		//model->MeshRenderSwtich(L"Head3__HeadMT");
 	}
 
 	PackunStateScript* packunState = AddComponent<PackunStateScript>(eComponentType::Script);
@@ -168,6 +170,16 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 			cilp->SetCompleateEvent([this]() 
 				{
 					SetMonsterState(Monster::eMonsterState::Idle);
+					PackunPostionBall* packunball = object::LateInstantiate<PackunPostionBall>(eLayerType::Objects);
+					PhysXRigidBody* rigidbody = packunball->GetComponent<PhysXRigidBody>();
+					if (rigidbody)
+					{
+						rigidbody->AddForceForDynamic(Vector3(50000.f, 50000.f, 0.f), PxForceMode::eFORCE);
+					}
+
+					Vector3 rotation = GetComponent<Transform>()->GetRotation();
+					packunball->GetComponent<Transform>()->SetPhysicalPosition(Vector3(50.f, 50.f, 0.0f));
+					packunball->GetComponent<Transform>()->SetPhysicalRotation(rotation);
 				});
 	}
 

@@ -4,8 +4,6 @@
 #include "Physical.h"
 
 
-constexpr float OffsetScale = 1.0f;
-
 Transform::Transform()
 	: Component(eComponentType::Transform)
 	, mParent(nullptr)
@@ -24,6 +22,7 @@ Transform::Transform()
 	, mWorldScale(Vector3::One)
 	, mPxWorld(Matrix::Identity)
 	, mPxTransform{}
+	, mOffsetScale(1.0f)
 {
 }
 
@@ -67,7 +66,7 @@ void Transform::FixedUpdate()
 			mPxTransform.p.z);
 
 		Matrix matTranslation = Matrix::CreateTranslation(vLocalTranslation);
-		Matrix matScale = Matrix::CreateScale(mRelativeScale * OffsetScale);
+		Matrix matScale = Matrix::CreateScale(mRelativeScale * mOffsetScale);
 
 //			m_matOldWorld = mWorld;
 		mWorld = matScale * matPxRotation * matTranslation;
@@ -201,6 +200,8 @@ void Transform::SetPhysicalPosition(const Vector3& position)
 void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 {
 	assert(GetOwner()->GetComponent<Physical>());
+
+	mRelativeRotation = rotation_degrees;
 
 	PxQuat rotationX(PxPi * rotation_degrees.x / 180.0f, PxVec3(1.0f, 0.0f, 0.0f));
 	PxQuat rotationY(PxPi * rotation_degrees.y / 180.0f, PxVec3(0.0f, 1.0f, 0.0f));

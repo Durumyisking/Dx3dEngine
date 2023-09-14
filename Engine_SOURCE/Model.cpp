@@ -346,16 +346,19 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
 		}
 
-		mTextures.emplace_back(textureBuff);
-
-		std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
-		for (auto& tex : texInfo)
+		if (textureBuff.size() > 0)
 		{
-			if (tex.texPath == L"")
-				continue;
+			mTextures.emplace_back(textureBuff);
 
-			tex.pTex = new Texture();
-			tex.pTex->Load(tex.texPath, tex);
+			std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
+			for (auto& tex : texInfo)
+			{
+				if (tex.texPath == L"")
+					continue;
+
+				tex.pTex = new Texture();
+				tex.pTex->Load(tex.texPath, tex);
+			}
 		}
 
 		//Material

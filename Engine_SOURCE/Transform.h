@@ -62,6 +62,8 @@ public:
 	void SetScaleZ(const float scaleZ) { mRelativeScale.z = scaleZ;}
 	void SetScaleXY(const Vector2& scale) { mRelativeScale.x = scale.x; mRelativeScale.y = scale.y; }
 
+	void SetOffsetScale(const float scale) { mOffsetScale = scale; }
+
 	void AddPosition(const Vector3& position) { mRelativePosition += position; }
 	void AddPositionX(const float posX) { mRelativePosition.x += posX; }
 	void AddPositionY(const float posY) { mRelativePosition.y += posY; }
@@ -122,6 +124,8 @@ public:
 	float GetWorldScaleY() const { return mWorldScale.y; }
 	float GetWorldScaleZ() const { return mWorldScale.z; }
 
+	float GetOffsetScale() const { return mOffsetScale; }
+
 	Vector2 GetWorldCenterUp() const { return Vector2(mWorldPosition.x, mWorldPosition.y + mWorldScale.y * 0.5f); }
 	Vector2 GetWorldCenterBottom() const { return Vector2(mWorldPosition.x, mWorldPosition.y - mWorldScale.y * 0.5f); }
 	Vector2 GetWorldLeftUp() const { return Vector2(mWorldPosition.x - mWorldScale.x * 0.5f, mWorldPosition.y + mWorldScale.y * 0.5f); }
@@ -168,6 +172,7 @@ private:
 
 	PxTransform mPxTransform;
 
+	float mOffsetScale;
 };
 
 

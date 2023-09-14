@@ -585,6 +585,8 @@
     <ClInclude Include="CaptureObj.h">
       <Filter>Common\GameObj\Capture</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectileObj.h" />
+    <ClInclude Include="PackunPostionBall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -903,6 +905,8 @@
     <ClCompile Include="CaptureObj.cpp">
       <Filter>Common\GameObj\Capture</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectileObj.cpp" />
+    <ClCompile Include="PackunPostionBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

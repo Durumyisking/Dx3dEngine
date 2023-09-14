@@ -64,6 +64,7 @@
 
 #include "Packun.h"
 #include "Goomba.h"
+#include "PackunPostionBall.h"
 
 
 
@@ -216,8 +217,10 @@ void ScenePlay::Initialize()
 
 
 	{
-		//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster,this);
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster,this);
+		//PackunPostionBall* packunball = object::Instantiate<PackunPostionBall>(eLayerType::Objects, this);
+
+		//Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 	}
 
 

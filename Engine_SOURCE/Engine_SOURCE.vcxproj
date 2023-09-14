@@ -280,6 +280,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Packun.h" />
+    <ClInclude Include="PackunPostionBall.h" />
     <ClInclude Include="PackunStateScript.h" />
     <ClInclude Include="Panal.h" />
     <ClInclude Include="ParticleShader.h" />
@@ -300,6 +301,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PostProcessRenderer.h" />
     <ClInclude Include="PostProcessWave.h" />
     <ClInclude Include="Prefab.h" />
+    <ClInclude Include="ProjectileObj.h" />
     <ClInclude Include="PxDispathcer.h" />
     <ClInclude Include="PxFilter.h" />
     <ClInclude Include="PxInitialization.h" />
@@ -397,6 +399,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MonsterStateScript.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="Packun.cpp" />
+    <ClCompile Include="PackunPostionBall.cpp" />
     <ClCompile Include="PackunStateScript.cpp" />
     <ClCompile Include="Panal.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
@@ -417,6 +420,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PostProcessRenderer.cpp" />
     <ClCompile Include="PostProcessWave.cpp" />
     <ClCompile Include="Prefab.cpp" />
+    <ClCompile Include="ProjectileObj.cpp" />
     <ClCompile Include="PxDispathcer.cpp" />
     <ClCompile Include="PxEventCallback.cpp" />
     <ClCompile Include="PxFilter.cpp" />
