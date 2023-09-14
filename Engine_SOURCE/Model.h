@@ -29,7 +29,7 @@ public:
 
 	struct TextureInfo
 	{
-		Texture*		pTex;
+		Texture* pTex;
 		UINT			texID;
 		aiTextureType	type;
 		std::wstring	texName;
@@ -57,6 +57,7 @@ public:
 	Material* GetMaterial(UINT index) { return mMaterials[index]; }
 
 	void AddMaterial(Material* mater) { mMaterials.emplace_back(mater); }
+	void MeshRenderSwtich(const std::wstring& name, bool renderSwitch = true);
 private:
 	void recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode);
 	void recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::wstring& nodeName);
@@ -73,12 +74,12 @@ public:
 	void Bind_Render();
 public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
-	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
-	GETSET(GameObj*, mOwner, Owner)
-	GETSET(Model*, mParentModel, ParentModel)
-	GETSET(const std::wstring&, mParentTargetBone, ParentTargetBone)
-	GETSET(const std::wstring&, mTargetBone, TargetBone)
-	GETSET(math::Vector3, mOffsetRotation, OffsetRotation)
+		GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
+		GETSET(GameObj*, mOwner, Owner)
+		GETSET(Model*, mParentModel, ParentModel)
+		GETSET(const std::wstring&, mParentTargetBone, ParentTargetBone)
+		GETSET(const std::wstring&, mTargetBone, TargetBone)
+		GETSET(math::Vector3, mOffsetRotation, OffsetRotation)
 private:
 	Assimp::Importer mAssimpImporter;
 

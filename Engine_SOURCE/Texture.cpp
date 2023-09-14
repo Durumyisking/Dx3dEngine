@@ -362,6 +362,31 @@ Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 			return nullptr;
 	}
 
+	/*TEST
+	{
+	   std::vector<std::uint8_t> pixels{};
+	   pixels.resize(mImage.GetPixelsSize());
+	   std::memcpy(pixels.data(), mImage.GetPixels(), pixels.size());
+	
+	   ScratchImage image;
+	   std::memcpy(&image, &mImage, sizeof(ScratchImage));
+	
+	   for (size_t i = 0; i < pixels.size(); ++i)
+	   {
+		  if (i % 4 == 0)
+			 pixels[i] = 255 - pixels[i];
+	   }
+	
+	   std::memcpy(image.GetImages()->pixels, pixels.data(), pixels.size());
+	
+	   {
+		  const std::wstring folderName = L"./TEST/";
+		  const std::wstring fileName = std::filesystem::path{ path }.filename().wstring();
+		  HRESULT result = SaveToWICFile(*image.GetImages(), WIC_FLAGS_NONE, GetWICCodec(WIC_CODEC_PNG), (folderName + fileName).c_str());
+		  assert(result == S_OK);
+	   }
+
+	}*/
 
 	CreateShaderResourceView(
 		GetDevice()->GetID3D11Device()
@@ -370,6 +395,7 @@ Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 		, mImage.GetMetadata()
 		, mSRV.GetAddressOf()
 	);
+
 
 
 	mSRV->GetResource((ID3D11Resource**)mTexture.GetAddressOf());
