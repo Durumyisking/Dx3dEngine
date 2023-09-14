@@ -54,12 +54,15 @@ public:
 	void SetRotationY(const float rotY) { mRelativeRotation.y = rotY; }
 	void SetRotationZ(const float rotZ) { mRelativeRotation.z = rotZ; }
 	void SetRotationXY(const Vector2& rotation) { mRelativeRotation.x = rotation.x; mRelativeRotation.y = rotation.y; }
+	void SetPhysicalRotation(const Vector3& rotation_degrees);
 
 	void SetScale(const Vector3& scale) { mRelativeScale = scale;  }
 	void SetScaleX(const float scaleX) { mRelativeScale.x = scaleX;}
 	void SetScaleY(const float scaleY) { mRelativeScale.y = scaleY;}
 	void SetScaleZ(const float scaleZ) { mRelativeScale.z = scaleZ;}
 	void SetScaleXY(const Vector2& scale) { mRelativeScale.x = scale.x; mRelativeScale.y = scale.y; }
+
+	void SetOffsetScale(const float scale) { mOffsetScale = scale; }
 
 	void AddPosition(const Vector3& position) { mRelativePosition += position; }
 	void AddPositionX(const float posX) { mRelativePosition.x += posX; }
@@ -121,6 +124,8 @@ public:
 	float GetWorldScaleY() const { return mWorldScale.y; }
 	float GetWorldScaleZ() const { return mWorldScale.z; }
 
+	float GetOffsetScale() const { return mOffsetScale; }
+
 	Vector2 GetWorldCenterUp() const { return Vector2(mWorldPosition.x, mWorldPosition.y + mWorldScale.y * 0.5f); }
 	Vector2 GetWorldCenterBottom() const { return Vector2(mWorldPosition.x, mWorldPosition.y - mWorldScale.y * 0.5f); }
 	Vector2 GetWorldLeftUp() const { return Vector2(mWorldPosition.x - mWorldScale.x * 0.5f, mWorldPosition.y + mWorldScale.y * 0.5f); }
@@ -168,6 +173,7 @@ private:
 
 	PxTransform mPxTransform;
 
+	float mOffsetScale;
 };
 
 
