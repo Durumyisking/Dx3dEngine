@@ -30,9 +30,8 @@ namespace renderer
 	StructedBuffer* lightBuffer = nullptr;
 
 	Texture* postProcessTexture = nullptr;
-	GameObj* outlineGameObject = nullptr;
 	Texture* dsTexture = nullptr;
-	GameObj* inspectorGameObject = nullptr;
+	GameObj* outlineGameObject = nullptr;
 
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
 

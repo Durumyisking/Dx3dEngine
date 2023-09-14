@@ -47,11 +47,18 @@ namespace gui
 	}
 	OutLiner::~OutLiner()
 	{
-		for (Component* comp : mComponents)
+		for (size_t i = 0; i < mChilds.size(); ++i)
 		{
-			delete comp;
-			comp = nullptr;
+			if (mChilds[i])
+			{
+				delete mChilds[i];
+				mChilds[i] = nullptr;
+			}
 		}
+
+		mChilds.clear();
+
+		ClearTarget();
 	}
 
 	void OutLiner::FixedUpdate()
@@ -149,7 +156,7 @@ namespace gui
 
 		root->ChildsResize(static_cast<UINT>(enums::eComponentType::End));
 
-		mComponents = mTargetGameObject->GetComponents();
+		mComponents = mTargetGameObject->GetComponentsVec();
 
 		for (size_t i = 0; i < static_cast<UINT>(enums::eComponentType::End); i++)
 		{

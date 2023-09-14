@@ -62,10 +62,16 @@ namespace gui
 
 	Project::~Project()
 	{
-		mGroup->Clear();
+		for (size_t i = 0; i < mChilds.size(); ++i)
+		{
+			if (mChilds[i])
+			{
+				delete mChilds[i];
+				mChilds[i] = nullptr;
+			}
+		}
 
-		delete mGroup;
-		mGroup = nullptr;
+		mChilds.clear();
 	}
 
 	void Project::FixedUpdate()

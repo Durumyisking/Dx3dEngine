@@ -76,10 +76,6 @@ namespace gui
 		Console* console = new Console();
 		mWidgets.insert(std::make_pair("Console", console));
 		console->Initialize();
-
-		ListWidget* listWidget = new ListWidget();
-		mWidgets.insert(std::make_pair("ListWidget", listWidget));
-
 	}
 
 	void WidgetMgr::Release()
@@ -94,6 +90,7 @@ namespace gui
 
 		delete mVisualEditor;
 		mVisualEditor = nullptr;
+		mHierarchy = nullptr;
 	}
 
 	void WidgetMgr::Run()
@@ -110,8 +107,10 @@ namespace gui
 		//}
 
 		mVisualEditor->Render();
+		UINT count = 0;
 		for (auto iter : mWidgets)
 		{
+			count++;
 			std::string debugName = iter.second->GetName();
 
 			iter.second->Render();

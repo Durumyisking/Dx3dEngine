@@ -3,6 +3,7 @@
 #include "guiTreeWidget.h"
 #include "GameObj.h"
 
+class Scene;
 namespace gui
 {
 	class Hierarchy : public Widget
@@ -24,6 +25,7 @@ namespace gui
 		GameObj* GetTargetObject() { return mTargetObject; }
 
 	private:
+		Scene* mCurrentScene;
 		TreeWidget* mTreeWidget;
 		GameObj* mTargetObject;
 	};

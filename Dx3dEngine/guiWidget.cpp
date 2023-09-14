@@ -15,6 +15,7 @@ namespace gui
 
 	Widget::~Widget()
 	{
+		
 	}
 
 	void Widget::FixedUpdate()

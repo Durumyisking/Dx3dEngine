@@ -124,7 +124,7 @@ namespace gui
 
 		return node;
 	}
-
+		
 	void TreeWidget::Clear()
 	{
 		if (nullptr != mRoot)

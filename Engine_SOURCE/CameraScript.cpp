@@ -80,7 +80,6 @@ void CameraScript::Update()
 			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
 		}
 	}
-}
 
 	if (mUICameraObject != nullptr)
 	{
