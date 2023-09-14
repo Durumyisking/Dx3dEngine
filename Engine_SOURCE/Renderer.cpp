@@ -31,7 +31,7 @@ namespace renderer
 
 	Texture* postProcessTexture = nullptr;
 	Texture* dsTexture = nullptr;
-	GameObj* inspectorGameObject = nullptr;
+	GameObj* outlineGameObject = nullptr;
 
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
 
@@ -343,14 +343,14 @@ namespace renderer
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::UI)].GetAddressOf());
 
-		dsDesc.DepthEnable = true; // ±íÀÌ°ª »ç¿ëÇÒÁö ¸»Áö
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth °ªÀÌ ÀÛ°Å³ª °°À»¶§ ±×¸²
-		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer ²¯´ÙÄ×´ÙÇÒ¶§ »ç¿ë
+		dsDesc.DepthEnable = true; // ê¹Šì´ê°’ ì‚¬ìš©í• ì§€ ë§ì§€
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth ê°’ì´ ìž‘ê±°ë‚˜ ê°™ì„ë•Œ ê·¸ë¦¼
+		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer ê»ë‹¤ì¼°ë‹¤í• ë•Œ ì‚¬ìš©
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Less)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth °ªÀÌ Å©°Å³ª °°À»¶§ ±×¸²
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth ê°’ì´ í¬ê±°ë‚˜ ê°™ì„ë•Œ ê·¸ë¦¼
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Greater)].GetAddressOf());
@@ -686,6 +686,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise3", L"noise/noise_03.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"default", L"default.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"FolderImage", L"folderImage.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
 
@@ -957,7 +958,7 @@ namespace renderer
 
 #pragma region MergeMRT_Material
 		{
-			// RenderTarget Merge ½Ã¿¡ »ç¿ëÇÒ ¸ÓÅ×¸®¾ó
+			// RenderTarget Merge ì‹œì— ì‚¬ìš©í•  ë¨¸í…Œë¦¬ì–¼
 			Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
 			Material* mergeMaterial = new Material();
 			mergeMaterial->SetRenderingMode(eRenderingMode::None);
@@ -1390,7 +1391,7 @@ namespace renderer
 	{
 		Vertex arrCube[24] = {};
 
-		// À­¸é
+		// ìœ—ë©´
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
 		arrCube[0].tangent = Vector3(1.0f, 0.0f, 0.0f);
@@ -1412,7 +1413,7 @@ namespace renderer
 		arrCube[3].tangent = Vector3(1.0f, 0.0f, 0.0f);
 
 
-		// ¾Æ·§ ¸é	
+		// ì•„ëž« ë©´	
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
 		arrCube[4].normal = Vector3(0.f, -1.f, 0.f);
@@ -1433,7 +1434,7 @@ namespace renderer
 		arrCube[7].normal = Vector3(0.f, -1.f, 0.f);
 		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
 
-		// ¿ÞÂÊ ¸é
+		// ì™¼ìª½ ë©´
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
 		arrCube[8].normal = Vector3(-1.f, 0.f, 0.f);
@@ -1454,7 +1455,7 @@ namespace renderer
 		arrCube[11].normal = Vector3(-1.f, 0.f, 0.f);
 		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
 
-		// ¿À¸¥ÂÊ ¸é
+		// ì˜¤ë¥¸ìª½ ë©´
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
 		arrCube[12].normal = Vector3(1.f, 0.f, 0.f);
@@ -1475,7 +1476,7 @@ namespace renderer
 		arrCube[15].normal = Vector3(1.f, 0.f, 0.f);
 		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
 
-		// µÞ ¸é
+		// ë’· ë©´
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
 		arrCube[16].normal = Vector3(0.f, 0.f, 1.f);
@@ -1496,7 +1497,7 @@ namespace renderer
 		arrCube[19].normal = Vector3(0.f, 0.f, 1.f);
 		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
 
-		// ¾Õ ¸é
+		// ì•ž ë©´
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].uv = Vector2(0.f, 0.f);
 		arrCube[20].normal = Vector3(0.f, 0.f, -1.f);
@@ -1742,7 +1743,7 @@ namespace renderer
 		capsuleMesh->CreateVertexBuffer(capsuleVtx.data(), static_cast<UINT>(capsuleVtx.size()));
 		capsuleMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
 	}
-
+  
 	void CreateUIMaterial()
 	{
 #pragma region UISprite Material
@@ -1883,6 +1884,9 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"RedFilter", L"Textures/UI/WorldMap/RedFilter.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Cap", L"Textures/UI/CapUI/Cap.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapRotate", L"Textures/UI/CapUI/CapAnimation.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapMove", L"Textures/UI/CapUI/CapAnimation2.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapMove2", L"Textures/UI/CapUI/CapAnimation3.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapEye", L"Textures/UI/CapUI/CapEyeAnimation.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"UIBar", L"Textures/UI/UIBar.png");
 
 		for (size_t i = 0; i < 9; i++)

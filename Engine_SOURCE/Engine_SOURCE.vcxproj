@@ -226,7 +226,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraScript.h" />
+    <ClInclude Include="CapEyeUI.h" />
     <ClInclude Include="CaptureObj.h" />
+    <ClInclude Include="CapUI.h" />
     <ClInclude Include="ClientToServer.h" />
     <ClInclude Include="Collider2D.h" />
     <ClInclude Include="Collider3D.h" />
@@ -280,6 +282,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Packun.h" />
+    <ClInclude Include="PackunPostionBall.h" />
     <ClInclude Include="PackunStateScript.h" />
     <ClInclude Include="Panal.h" />
     <ClInclude Include="ParticleShader.h" />
@@ -293,6 +296,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PhysX.h" />
     <ClInclude Include="PhysXCollider.h" />
     <ClInclude Include="PhysXCollisionMgr.h" />
+    <ClInclude Include="PhysXRayCast.h" />
     <ClInclude Include="PhysXRigidBody.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
@@ -300,6 +304,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PostProcessRenderer.h" />
     <ClInclude Include="PostProcessWave.h" />
     <ClInclude Include="Prefab.h" />
+    <ClInclude Include="ProjectileObj.h" />
     <ClInclude Include="PxDispathcer.h" />
     <ClInclude Include="PxFilter.h" />
     <ClInclude Include="PxInitialization.h" />
@@ -351,7 +356,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraScript.cpp" />
+    <ClCompile Include="CapEyeUI.cpp" />
     <ClCompile Include="CaptureObj.cpp" />
+    <ClCompile Include="CapUI.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collider3D.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
@@ -397,6 +404,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MonsterStateScript.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="Packun.cpp" />
+    <ClCompile Include="PackunPostionBall.cpp" />
     <ClCompile Include="PackunStateScript.cpp" />
     <ClCompile Include="Panal.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
@@ -410,6 +418,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PhysX.cpp" />
     <ClCompile Include="PhysXCollider.cpp" />
     <ClCompile Include="PhysXCollisionMgr.cpp" />
+    <ClCompile Include="PhysXRayCast.cpp" />
     <ClCompile Include="PhysXRigidBody.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
@@ -417,6 +426,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PostProcessRenderer.cpp" />
     <ClCompile Include="PostProcessWave.cpp" />
     <ClCompile Include="Prefab.cpp" />
+    <ClCompile Include="ProjectileObj.cpp" />
     <ClCompile Include="PxDispathcer.cpp" />
     <ClCompile Include="PxEventCallback.cpp" />
     <ClCompile Include="PxFilter.cpp" />

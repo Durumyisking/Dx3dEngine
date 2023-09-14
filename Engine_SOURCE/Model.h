@@ -46,6 +46,7 @@ public:
 	virtual ~Model();
 
 	virtual HRESULT Load(const std::wstring& path) override;
+	virtual HRESULT LoadFullpath(const std::wstring& path) override;
 
 	ModelNode* FindNode(const std::wstring& nodeName);
 	Bone* FindBone(const std::wstring& nodeName);
@@ -57,6 +58,7 @@ public:
 	Material* GetMaterial(UINT index) { return mMaterials[index]; }
 
 	void AddMaterial(Material* mater) { mMaterials.emplace_back(mater); }
+	void MeshRenderSwtich(const std::wstring& name, bool renderSwitch = true);
 private:
 	void recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode);
 	void recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::wstring& nodeName);

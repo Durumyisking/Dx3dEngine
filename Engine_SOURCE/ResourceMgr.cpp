@@ -81,6 +81,10 @@ void ResourceMgr::Initalize()
 
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWomans", L"CityWomans");
 
+	// Object
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/PoistionPackunBall", L"PackunBall");
+
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWomans", L"CityWomans");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"BlockBrick");
 
 }

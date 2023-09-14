@@ -30,7 +30,7 @@ VSOut main(VSIn vsIn)
     VSOut vsOut = (VSOut) 0.f;
     
     
-      float4 weights = vsIn.BlendWeight;
+    float4 weights = vsIn.BlendWeight;
     weights.w = 1.f - (weights.x + weights.y + weights.z);
   
     float4 pos = mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.x].bMatrix) * vsIn.BlendWeight.x;
@@ -49,7 +49,7 @@ VSOut main(VSIn vsIn)
 
     matrix worldIT = transpose(inverseWorld);
 
-    // ∑Œƒ√ ≥Î∏ª¿ª ∫‰∫Ø»Ø
+    // Î°úÏª¨ ÎÖ∏ÎßêÏùÑ Î∑∞Î≥ÄÌôò
     float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), worldIT).xyz);
     viewNormal = normalize(mul(float4(viewNormal, 0.f), view).xyz);
     

@@ -25,6 +25,11 @@ void Monster::Initialize()
 	{
 		boneAnimatorInit(animator);
 	}
+
+	// OffsetScale Setting
+	Transform* tr = GetComponent<Transform>();
+	if (tr)
+		tr->SetOffsetScale(0.01f);
 }
 
 void Monster::Update()

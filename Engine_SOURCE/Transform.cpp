@@ -4,7 +4,6 @@
 #include "Physical.h"
 
 
-
 Transform::Transform()
 	: Component(eComponentType::Transform)
 	, mParent(nullptr)
@@ -23,6 +22,7 @@ Transform::Transform()
 	, mWorldScale(Vector3::One)
 	, mPxWorld(Matrix::Identity)
 	, mPxTransform{}
+	, mOffsetScale(1.0f)
 {
 }
 
@@ -50,19 +50,11 @@ void Transform::FixedUpdate()
 		mPxTransform = physical->GetActor<PxRigidActor>()->getGlobalPose();
 		Matrix matPxScale = Matrix::CreateScale(physical->GetGeometrySize());
 
-		// Test
-		Vector3 rot = mRelativeRotation * XM_PI / 180; // to radian
-		Matrix Testrotation;
-		Testrotation = Matrix::CreateRotationX(rot.x);
-		Testrotation *= Matrix::CreateRotationY(rot.y);
-		Testrotation *= Matrix::CreateRotationZ(rot.z);
-
-
-		// ¿ø·¡ ÄÚµå
+		// ì›ëž˜ ì½”ë“œ
 		Matrix matPxRotation = Matrix::CreateFromQuaternion(convert::PxQuatToQuaternion(mPxTransform.q));
 		Matrix matPxTranslation = Matrix::CreateTranslation(convert::PxVec3ToVector3(mPxTransform.p));
 		mRelativePosition = convert::PxVec3ToVector3(mPxTransform.p);
-		mPxWorld = matPxScale * Testrotation * matPxTranslation;
+		mPxWorld = matPxScale * matPxRotation * matPxTranslation;
 
 		//Vector3 vLocalTranslation = Vector3(
 		//	mPxTransform.p.x + m_vGlobalOffset.x,
@@ -74,24 +66,29 @@ void Transform::FixedUpdate()
 			mPxTransform.p.z);
 
 		Matrix matTranslation = Matrix::CreateTranslation(vLocalTranslation);
-		Matrix matScale = Matrix::CreateScale(mRelativeScale);
+		Matrix matScale = Matrix::CreateScale(mRelativeScale * mOffsetScale);
 
 //			m_matOldWorld = mWorld;
-		mWorld = matScale * Testrotation * matTranslation;
+		mWorld = matScale * matPxRotation * matTranslation;
 
-		mWorldForward = mRelativeForward = Vector3::TransformNormal(Vector3::Forward, Testrotation);
-		mWorldRight = mRelativeRight = Vector3::TransformNormal(Vector3::Right, Testrotation);
-		mWorldUp = mRelativeUp = Vector3::TransformNormal(Vector3::Up, Testrotation);
+		// ê¸°ì €ì„¸íŒ…
+		mWorldForward = mRelativeForward = Vector3::TransformNormal(Vector3::Forward, matPxRotation);
+		mWorldRight = mRelativeRight = Vector3::TransformNormal(Vector3::Right, matPxRotation);
+		mWorldUp = mRelativeUp = Vector3::TransformNormal(Vector3::Up, matPxRotation);
+
+		mWorldForward.Normalize();
+		mWorldRight.Normalize();
+		mWorldUp .Normalize();
 	}
 	else
 	{	
-		// ·»´õ¸µ¿¡ »ç¿ëµÉ À§Ä¡°ªÀ» ¾÷µ¥ÀÌÆ®.
-		// 1. ¿ùµå Çà·Ä »ý¼º
-		// - Å©±â º¯È¯ Çà·Ä
+		// ë Œë”ë§ì— ì‚¬ìš©ë  ìœ„ì¹˜ê°’ì„ ì—…ë°ì´íŠ¸.
+		// 1. ì›”ë“œ í–‰ë ¬ ìƒì„±
+		// - í¬ê¸° ë³€í™˜ í–‰ë ¬
 		Matrix scale = Matrix::CreateScale(mRelativeScale);
 		mWorldScale = mRelativeScale;
 
-		// - È¸Àü º¯È¯ Çà·Ä
+		// - íšŒì „ ë³€í™˜ í–‰ë ¬
 		Vector3 rot = mRelativeRotation * XM_PI / 180; // to radian
 		Matrix rotation;
 		rotation = Matrix::CreateRotationX(rot.x);
@@ -100,7 +97,7 @@ void Transform::FixedUpdate()
 		mWorldRotation = rot;
 
 
-		// - ÀÌµ¿ º¯È¯ Çà·Ä
+		// - ì´ë™ ë³€í™˜ í–‰ë ¬
 		Matrix position;
 		position.Translation(mRelativePosition);
 		mWorldPosition = mRelativePosition;
@@ -127,7 +124,7 @@ void Transform::FixedUpdate()
 				mWorld *= parentWorld;
 			}
 
-			// - ¿ùµå ÁÂÇ¥, Å©±â, È¸Àü °»½Å
+			// - ì›”ë“œ ì¢Œí‘œ, í¬ê¸°, íšŒì „ ê°±ì‹ 
 			Quaternion worldRot;
 			mWorld.Decompose(mWorldScale, worldRot, mWorldPosition);
 			Vector3 quatToRadRot = worldRot.ToEuler();
@@ -157,9 +154,8 @@ void Transform::SetConstantBuffer()
 	//trCb.worldIT.Translation(Vector3::Zero);
 	trCb.worldIT = trCb.worldIT.Invert().Transpose();
 
-
-	trCb.view = Camera::GetGpuViewMatrix();
-	trCb.inverseView = trCb.view.Invert();
+	trCb.view = renderer::mainCamera->GetGpuViewMatrix();
+  trCb.inverseView = trCb.view.Invert();
 	trCb.projection = Camera::GetGpuProjectionMatrix();
 	trCb.fovForSkySphere= Camera::GetSkySphereFov();
 	Vector3 p = renderer::mainCamera->GetOwnerWorldPos();
@@ -210,10 +206,12 @@ void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 {
 	assert(GetOwner()->GetComponent<Physical>());
 
+	mRelativeRotation = rotation_degrees;
+
 	PxQuat rotationX(PxPi * rotation_degrees.x / 180.0f, PxVec3(1.0f, 0.0f, 0.0f));
 	PxQuat rotationY(PxPi * rotation_degrees.y / 180.0f, PxVec3(0.0f, 1.0f, 0.0f));
 	PxQuat rotationZ(PxPi * rotation_degrees.z / 180.0f, PxVec3(0.0f, 0.0f, 1.0f));
-	// È¸ÀüÀ» Àû¿ëÇÕ´Ï´Ù.
+	// íšŒì „ì„ ì ìš©í•©ë‹ˆë‹¤.
 	PxQuat finalRotation = rotationX * rotationY * rotationZ;
 	mPxTransform.q = finalRotation;
 	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
