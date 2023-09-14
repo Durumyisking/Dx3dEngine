@@ -63,6 +63,7 @@
 #include "UIFactory.h"
 #include "Animator.h"
 
+#include "Goomba.h"
 
 
 ScenePlay::ScenePlay()
@@ -102,29 +103,12 @@ void ScenePlay::Initialize()
 	//}
 
 	{
-		Player* player = object::Instantiate<Player>(eLayerType::Monster, this);
-		player->SetPos(Vector3(0.f, 5.f, -17.f));
-		player->SetScale(Vector3(0.01f, 0.01f, 0.01f));
-		player->SetName(L"Player");
-
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
-		model->SetVariableMaterialsByKey(0, L"goombaBodyMaterial");
-		model->SetVariableMaterialsByKey(1, L"goombaBodyMaterial");
-		model->SetVariableMaterialsByKey(2, L"goombaBodyMaterial");
-		model->SetVariableMaterialsByKey(7, L"goombaBodyMaterial");
-		model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
-		model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
-		player->GetComponent<MeshRenderer>()->SetModel(model);
-		player->AddComponent<PlayerScript>(eComponentType::Script);
-
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(0.f, 5.f, -17.f));
+		goomba->SetScale(Vector3(0.01f, 0.01f, 0.01f));
+		goomba->SetName(L"Goomba");
 	}
+
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetPos(Vector3(-15.f, 10.f, 9.5f));
@@ -157,7 +141,7 @@ void ScenePlay::Initialize()
 		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
