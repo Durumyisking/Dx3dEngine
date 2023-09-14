@@ -236,6 +236,12 @@
     <Filter Include="RayCast">
       <UniqueIdentifier>{873dbe93-ba2a-42a4-8bb8-de37d53d3cbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\GameObj\ProjectileObj">
+      <UniqueIdentifier>{01c45158-c4df-420d-9c65-dea7d13abc41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\ProjectileObj\PackunPoisonBall">
+      <UniqueIdentifier>{9aa31b0b-c969-47a8-a91e-e2123bb1624b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -591,6 +597,12 @@
     <ClInclude Include="PhysXRayCast.h">
       <Filter>RayCast</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectileObj.h">
+      <Filter>Common\GameObj\ProjectileObj</Filter>
+    </ClInclude>
+    <ClInclude Include="PackunPostionBall.h">
+      <Filter>Common\GameObj\ProjectileObj\PackunPoisonBall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -914,6 +926,12 @@
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="PhysXRayCast.cpp">
       <Filter>RayCast</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileObj.cpp">
+      <Filter>Common\GameObj\ProjectileObj</Filter>
+    </ClCompile>
+    <ClCompile Include="PackunPostionBall.cpp">
+      <Filter>Common\GameObj\ProjectileObj\PackunPoisonBall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

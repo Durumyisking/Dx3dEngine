@@ -1,4 +1,4 @@
-ï»¿#include "Model.h"
+#include "Model.h"
 #include "Mesh.h"
 #include "Renderer.h"
 #include "Texture.h"
@@ -45,7 +45,6 @@ HRESULT Model::Load(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// ÆÄÀÏ ·Îµå ½ÇÆĞ
 		return E_FAIL;
 	}
 
@@ -75,7 +74,7 @@ HRESULT Model::LoadFullpath(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
+		// ÆÄÀÏ ·Îµå ½ÇÆĞ
 		return E_FAIL;
 	}
 
@@ -84,7 +83,6 @@ HRESULT Model::LoadFullpath(const std::wstring& path)
 	std::wstring sceneName = ConvertToW_String(aiscene->mName.C_Str());
 	mRootNodeName = ConvertToW_String(aiscene->mRootNode->mName.C_Str());
 
-	// ï¿½ï¿½ï¿½ Å½ï¿½ï¿½ 
 	recursiveProcessNode(aiscene->mRootNode, aiscene, nullptr);
 
 	if (mStructure == nullptr)
@@ -166,8 +164,7 @@ void Model::Bind_Render()
 		if (mMeshes[i]->IsRender() == false)
 			continue;
 
-		// ¾ÆÁ÷ ¹Ì±¸Çö
-		// ¿¹¿ÜÃ³¸® ±¸°£ ¿©±â¼­ ¸ğµ¨ÀÇ ·»´õ¸¦ ²¯´ÙÄ×´ÙÇÏ´Â ÇÔ¼ö¸¦ ÀÛ¼ºÇØ¾ßÇÔ
+		
 		if ((mMeshes[i]->GetName().find(L"Press") != std::wstring::npos) || (mMeshes[i]->GetName().find(L"Close") != std::wstring::npos) || (mMeshes[i]->GetName().find(L"Mustache") != std::wstring::npos))
 		{
 			continue;
@@ -483,7 +480,7 @@ void Model::CreateMaterial()
 				matName = texInfo.texName;
 				std::size_t found = matName.find(L"_");
 				if (found != std::wstring::npos) {
-					matName = matName.substr(0, found); // _ ÀÌÀü±îÁöÀÇ ¹®ÀÚ¿­ ÃßÃâ
+					matName = matName.substr(0, found); 
 				}
 			}
 			break;
