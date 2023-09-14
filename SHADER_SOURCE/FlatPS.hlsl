@@ -8,7 +8,6 @@ struct VSOut
   
     nointerpolation float3 ViewTangent : TANGENT;
     nointerpolation float3 ViewNormal : NORMAL;
-    nointerpolation float3 ViewBiNormal : BINORMAL;
 
 };
 
@@ -29,7 +28,7 @@ float4 main(VSOut vsIn) : SV_Target
     
     if (1 == cbbNormal)
     {
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal, pixelToCam);
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, pixelToCam);
     }
 
 

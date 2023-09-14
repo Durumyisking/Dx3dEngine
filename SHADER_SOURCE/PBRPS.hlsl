@@ -8,8 +8,6 @@ struct VSOut
 
     float3 WorldTangent : TANGENT; // World Space tangent
     float3 WorldNormal : NORMAL; // World Space normal
-    float3 WorldBiNormal : BINORMAL; // World Space binormal
-
 };
 
 float4 main(VSOut vsIn) : SV_Target
@@ -29,7 +27,7 @@ float4 main(VSOut vsIn) : SV_Target
     float pixelToCam = distance(cameraWorldPos.xyz, vsIn.WorldPos);
 
     albedo = cbbAlbedo ? TextureMapping_albedo(vsIn.UV, pixelToCam) : albedo;
-    normal = cbbNormal ? TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, vsIn.WorldBiNormal, pixelToCam) : normal;
+    normal = cbbNormal ? TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, pixelToCam) : normal;
     metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV, pixelToCam) : metallic;
     roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV, pixelToCam) : roughness;
     emission = cbbEmissive ? TextureMapping_emissive(vsIn.UV, pixelToCam) : emission;
@@ -60,7 +58,7 @@ float4 main(VSOut vsIn) : SV_Target
     float3 radiance = lightAttributes[0].color.diffuse.xyz;
     
   
-    directLighting += (diffuseBRDF + specularBRDF) * radiance * NdotI;
+    directLighting += (diffuseBRDF + specularBRDF) * radiance;// * NdotI;
     
     //outColor.xyz = CalculateLightPBR_Direct(vsIn.WorldPos, albedo, normal, metallic, roughness);
     //outColor.xyz = DiffuseIBL(albedo.xyz, normal, pixelToEye, metallic);
@@ -69,6 +67,6 @@ float4 main(VSOut vsIn) : SV_Target
     outColor.xyz = ambientLighting + directLighting + emission;
 
     
-    return float4(outColor, 1.f);;
+    return float4(outColor.xyz, 1.f);;
 
 }

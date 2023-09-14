@@ -103,7 +103,7 @@ void ScenePlay::Initialize()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Monster, this);
-		player->SetPos(Vector3(0.f, 0.f, 0.f));
+		player->SetPos(Vector3(0.f, 5.f, -17.f));
 		player->SetScale(Vector3(0.01f, 0.01f, 0.01f));
 		player->SetName(L"Player");
 
@@ -149,8 +149,10 @@ void ScenePlay::Initialize()
 		player->SetPos(Vector3(15.f, 10.f, 9.5f));
 		player->SetScale(Vector3(5.f, 5.f, 5.f));
 		player->SetName(L"Player");
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
-
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
+		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
+			 
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		//player->AddComponent<PlayerScript>(eComponentType::Script);
 

@@ -2,6 +2,7 @@ cbuffer Transform : register(b0)
 {
     row_major matrix world;
     row_major matrix inverseWorld;
+    row_major matrix worldIT;
     row_major matrix view;
     row_major matrix inverseView;
     row_major matrix projection;

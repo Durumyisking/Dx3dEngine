@@ -153,7 +153,7 @@ float3 CalculateLightPBR_Direct(float3 worldPos, float4 albedo, float3 worldNorm
     float3 irradiance = irradianceMap.Sample(skyBoxSampler, N).rgb;    
     float3 diffuse = irradiance * albedo.xyz;
 
-    const float MAX_REFLECTION_LOD = 4.f;
+    const float MAX_REFLECTION_LOD = 6.f;
     float3 prefilteredColor = prefilteredMap.SampleLevel(skyBoxSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
     
     // brdf 텍스처를 x는 반사에 따라 y는 러프니스에 따라 샘플링한다.

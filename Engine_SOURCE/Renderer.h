@@ -52,6 +52,7 @@ namespace renderer
 	{
 		Matrix world;
 		Matrix inverseWorld;
+		Matrix worldIT; // world inverse and transpose
 		Matrix view;
 		Matrix inverseView;
 		Matrix projection;

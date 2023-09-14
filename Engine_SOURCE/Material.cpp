@@ -9,7 +9,7 @@ Material::Material()
 	, mShader(nullptr)
 	, mTexture{}
 {
-	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.04f, 0.04f, 0.04f);
 }
 Material::Material(std::wstring shaderName)
 	: Resource(eResourceType::Material)
@@ -23,7 +23,7 @@ Material::Material(std::wstring shaderName)
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
-	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.04f, 0.04f, 0.04f);
 }
 Material::Material(std::wstring textureColor, std::wstring shaderName)
 	: Resource(eResourceType::Material)
@@ -39,7 +39,7 @@ Material::Material(std::wstring textureColor, std::wstring shaderName)
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
-	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.04f, 0.04f, 0.04f);
 }
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName)
 	: Resource(eResourceType::Material)
@@ -56,7 +56,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
-	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.04f, 0.04f, 0.04f);
 }
 
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName)
@@ -75,7 +75,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
-	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.04f, 0.04f, 0.04f);
 
 }
 
@@ -97,7 +97,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
 
-	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.04f, 0.04f, 0.04f);
 
 }
 
@@ -121,7 +121,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
 
-	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.04f, 0.04f, 0.04f);
 
 }
 
@@ -141,7 +141,7 @@ Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring sha
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
-	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.04f, 0.04f, 0.04f);
 
 }
 

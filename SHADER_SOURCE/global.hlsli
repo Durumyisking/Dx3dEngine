@@ -68,20 +68,21 @@ float4 TextureMapping_albedo(float2 uv, float pixelToCam)
 }
 
 
-float3 TextureMapping_normal(float2 uv, float3 Tangent, float3 Normal, float3 BiNormal, float pixelToCam)
+float3 TextureMapping_normal(float2 uv, float3 Tangent, float3 Normal, float pixelToCam)
 {
-    float3 normal = normalTexture.SampleLevel(linearSampler, uv, 0.f).rgb;
-    
+    float3 normal = normalTexture.SampleLevel(linearSampler, uv, 0.f).rgb;    
     normal = (normal * 2.f) - 1.f;
-    normal.y = -normal.y;
-        
+    
+    // 마리오가 아마 vulkan으로 만든거라서 노말 y 뒤집어줘야할거임
+    //normal.y = -normal.y;
+    
     float3 N = Normal;
     float3 T = normalize(Tangent - dot(Tangent, N) * N);
     float3 B = cross(N, T);
         
-    float3x3 matTBN = {T,B,N};
+    float3x3 TBN = {T,B,N};
         
-    return normalize(float3(mul(normal, matTBN)));;
+    return normalize(mul(normal, TBN));
 }
 
 float TextureMapping_metallic(float2 uv, float pixelToCam)

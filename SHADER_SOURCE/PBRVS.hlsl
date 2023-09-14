@@ -22,7 +22,6 @@ struct VSOut
 
     float3 WorldTangent : TANGENT;
     float3 WorldNormal : NORMAL;
-    float3 WorldBiNormal : BINORMAL;
    
 };
 
@@ -47,11 +46,14 @@ VSOut main(VSIn vsIn)
     
     vsOut.Position = projPosition;
     vsOut.UV = vsIn.UV;
-
-    // 로컬 노말을 뷰변환
-    float3 Normal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), world).xyz);
     
-    float3 Tangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), world).xyz);
+    float4 Normal = float4(vsIn.Normal, 0.f);
+    Normal = mul(Normal, worldIT);
+    Normal = normalize(Normal);
+    
+    float4 Tangent = float4(vsIn.Tangent, 0.f);
+    Tangent = mul(Tangent, worldIT);
+    Tangent = normalize(Tangent);
             
     vsOut.WorldPos = worldPosition.xyz;
     vsOut.WorldNormal = Normal.xyz;

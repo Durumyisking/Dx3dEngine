@@ -152,6 +152,12 @@ void Transform::SetConstantBuffer()
 	renderer::TransformCB trCb = {};
 	trCb.world = mWorld;
 	trCb.inverseWorld = mWorld.Invert();
+
+	trCb.worldIT = mWorld;
+	//trCb.worldIT.Translation(Vector3::Zero);
+	trCb.worldIT = trCb.worldIT.Invert().Transpose();
+
+
 	trCb.view = Camera::GetGpuViewMatrix();
 	trCb.inverseView = trCb.view.Invert();
 	trCb.projection = Camera::GetGpuProjectionMatrix();

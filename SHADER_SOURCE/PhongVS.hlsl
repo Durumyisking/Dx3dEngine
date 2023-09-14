@@ -22,7 +22,6 @@ struct VSOut
 
     float3 ViewTangent : TANGENT;
     float3 ViewNormal : NORMAL;
-    float3 ViewBiNormal : BINORMAL;
    
 };
 
@@ -48,21 +47,18 @@ VSOut main(VSIn vsIn)
     vsOut.Position = projPosition;
     vsOut.UV = vsIn.UV;
 
+    matrix worldIT = transpose(inverseWorld);
+
     // 로컬 노말을 뷰변환
-    float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), world).xyz);
+    float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), worldIT).xyz);
     viewNormal = normalize(mul(float4(viewNormal, 0.f), view).xyz);
     
-    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), world).xyz);
+    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), worldIT).xyz);
     viewTangent = normalize(mul(float4(viewTangent, 0.f), view).xyz);
-    
-    float3 biNormal = cross(vsIn.Normal, vsIn.Tangent);
-    float3 viewBiNormal = normalize(mul(float4(biNormal, 0.f), world).xyz);
-    viewBiNormal = normalize(mul(float4(viewBiNormal, 0.f), view).xyz);
-    
+        
     vsOut.ViewPos = worldPosition.xyz;
     vsOut.ViewNormal     = viewNormal.xyz;
     vsOut.ViewTangent    = viewTangent.xyz;
-    vsOut.ViewBiNormal   = viewBiNormal.xyz;
         
     return vsOut;
 }
