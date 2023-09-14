@@ -8,7 +8,6 @@ struct VSOut
   
     float3 ViewTangent : TANGENT;
     float3 ViewNormal : NORMAL;
-    float3 ViewBiNormal : BINORMAL;
     
 };
 
@@ -28,7 +27,7 @@ float4 main(VSOut vsIn) : SV_Target
     
     if (1 == cbbNormal)
     {
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal, pixelToCam);
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, pixelToCam);
     }
     LightColor lightColor = (LightColor) 0.0f;
     

@@ -103,14 +103,14 @@ void ScenePlay::Initialize()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Monster, this);
-		player->SetPos(Vector3(5.f, 15.f, 9.5f));
-		player->SetScale(Vector3(0.1f, 0.1f, 0.1f));
+		player->SetPos(Vector3(0.f, 5.f, -17.f));
+		player->SetScale(Vector3(0.01f, 0.01f, 0.01f));
 		player->SetName(L"Player");
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
 		model->SetVariableMaterialsByKey(0, L"goombaBodyMaterial");
-		model->SetVariableMaterialsByKey(1, L"goombaEye2Material");
-		model->SetVariableMaterialsByKey(2, L"goombaEye2Material");
+		model->SetVariableMaterialsByKey(1, L"goombaBodyMaterial");
+		model->SetVariableMaterialsByKey(2, L"goombaBodyMaterial");
 		model->SetVariableMaterialsByKey(7, L"goombaBodyMaterial");
 		model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
 		model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
@@ -144,7 +144,26 @@ void ScenePlay::Initialize()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
+	{
+		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
+		player->SetPos(Vector3(15.f, 10.f, 9.5f));
+		player->SetScale(Vector3(5.f, 5.f, 5.f));
+		player->SetName(L"Player");
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
+		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
+			 
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	}
 
 
 	{
@@ -154,9 +173,9 @@ void ScenePlay::Initialize()
 		t->BindAllShaderResource(12);
 	}
 	{
-		//SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
-		//skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		//skySphere->SetName(L"SkySphere");
+		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		skySphere->SetName(L"SkySphere");
 	}
 
 	{
@@ -171,6 +190,7 @@ void ScenePlay::Initialize()
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
+
 
 
 
