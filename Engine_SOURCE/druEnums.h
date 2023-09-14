@@ -168,7 +168,7 @@ namespace enums
 		MoveTowards,
 		Rotate,
 		Size,
-		GoAndReturn,
+		TitleCapMove,
 		End
 	};
 

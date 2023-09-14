@@ -1977,6 +1977,9 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"RedFilter", L"Textures/UI/WorldMap/RedFilter.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Cap", L"Textures/UI/CapUI/Cap.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapRotate", L"Textures/UI/CapUI/CapAnimation.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapMove", L"Textures/UI/CapUI/CapAnimation2.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapMove2", L"Textures/UI/CapUI/CapAnimation3.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapEye", L"Textures/UI/CapUI/CapEyeAnimation.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"UIBar", L"Textures/UI/UIBar.png");
 
 		for (size_t i = 0; i < 9; i++)

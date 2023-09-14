@@ -538,11 +538,6 @@
     <ClInclude Include="SkySphere.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="HUD.h" />
-    <ClInclude Include="Panal.h" />
-    <ClInclude Include="UIBase.h" />
-    <ClInclude Include="UIManager.h" />
     <ClInclude Include="CubeMap.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
@@ -583,6 +578,8 @@
     <ClInclude Include="CaptureObj.h">
       <Filter>Common\GameObj\Capture</Filter>
     </ClInclude>
+    <ClInclude Include="CapEyeUI.h" />
+    <ClInclude Include="CapUI.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Panal.h" />
@@ -856,11 +853,6 @@
     <ClCompile Include="BoneAnimator.cpp">
       <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="Panal.cpp" />
-    <ClCompile Include="UIBase.cpp" />
-    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="SkySphereRenderer.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
@@ -907,6 +899,8 @@
     <ClCompile Include="CaptureObj.cpp">
       <Filter>Common\GameObj\Capture</Filter>
     </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp" />
+    <ClCompile Include="CapUI.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Panal.cpp" />
