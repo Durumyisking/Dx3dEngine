@@ -30,6 +30,8 @@ void Monster::Initialize()
 	Transform* tr = GetComponent<Transform>();
 	if (tr)
 		tr->SetOffsetScale(0.01f);
+
+	GameObj::Initialize();
 }
 
 void Monster::Update()
