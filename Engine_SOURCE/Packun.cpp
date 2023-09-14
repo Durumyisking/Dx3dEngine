@@ -1,4 +1,5 @@
 #include "Packun.h"
+#include "Object.h"
 #include "InputMgr.h"
 #include "BoneAnimator.h"
 #include "Model.h"
@@ -10,6 +11,7 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
+#include "PackunPostionBall.h"
 
 Packun::Packun()
 	: Monster()
@@ -24,19 +26,32 @@ Packun::~Packun()
 void Packun::Initialize()
 {
 	// Add MeshRenderer
-	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	MeshRenderer* mesh = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 	// SetModel
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
 	if (model)
-		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+	{
+		MeshRenderer* test = GetComponent<MeshRenderer>();
+		test->SetModel(model, model->GetMaterial(0));
+
+
+		//// 오프
+		//model->MeshRenderSwtich(L"Head2__BodyMT-mesh", false);
+		//model->MeshRenderSwtich(L"Head2__HeadMT-mesh", false);
+		//model->MeshRenderSwtich(L"mustache__HairMT-mesh", false);
+
+		//// 온ㄴ
+		//model->MeshRenderSwtich(L"Head3__BodyMT-mesh");
+		//model->MeshRenderSwtich(L"Head3__HeadMT-mesh");
+	}
 
 	PackunStateScript* packunState = AddComponent<PackunStateScript>(eComponentType::Script);
 	packunState->Initialize();
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
 
 
 	// Rigidbody
@@ -44,7 +59,7 @@ void Packun::Initialize()
 	rigidbody->Initialize();
 
 	// MoveMent
-	//AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
+	AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
 	AddComponent<PhysicalMovement>(eComponentType::Movement)->Initialize();
 
 	// 초기화
@@ -147,29 +162,37 @@ void Packun::stateInfoInitalize()
 void Packun::boneAnimatorInit(BoneAnimator* animator)
 {
 	animator->LoadAnimations(L"..//Resources/Packun/Animation");
-
+	AnimationClip* cilp = nullptr;
 
 	// 어택 동작 연계
 	{
-		AnimationClip* cilp = animator->GetAnimationClip(L"AttackSign");
-		if (cilp)
-			cilp->SetCompleateEvent([=]() 
-				{
-					animator->Play(L"Attack", false);
-				});
-
 		cilp = animator->GetAnimationClip(L"Attack");
 		if (cilp)
 			cilp->SetCompleateEvent([this]() 
 				{
 					SetMonsterState(Monster::eMonsterState::Idle);
-				});
+					PackunPostionBall* packunball = object::LateInstantiate<PackunPostionBall>(eLayerType::Objects);
+					PhysXRigidBody* rigidbody = packunball->GetComponent<PhysXRigidBody>();
+					if (rigidbody)
+					{
+						rigidbody->AddForceForDynamic(Vector3(50000.f, 50000.f, 0.f), PxForceMode::eFORCE);
+					}
 
-		/*cilp = animator->GetAnimationClip(L"AttackHit");
+					Vector3 rotation = GetComponent<Transform>()->GetRotation();
+					packunball->GetComponent<Transform>()->SetPhysicalPosition(Vector3(50.f, 50.f, 0.0f));
+					packunball->GetComponent<Transform>()->SetPhysicalRotation(rotation);
+				});
+	}
+
+	// 피격 동작 연계
+	{
+		cilp = animator->GetAnimationClip(L"AttackHit");
 		if (cilp)
 			cilp->SetCompleateEvent([this]()
 				{
 					SetMonsterState(Monster::eMonsterState::Idle);
-				});*/
+				});
 	}
+
+
 }

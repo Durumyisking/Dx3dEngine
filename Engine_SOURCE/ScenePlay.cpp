@@ -63,7 +63,10 @@
 #include "UIFactory.h"
 #include "Animator.h"
 
+#include "Packun.h"
 #include "Goomba.h"
+#include "PackunPostionBall.h"
+
 
 
 ScenePlay::ScenePlay()
@@ -103,10 +106,10 @@ void ScenePlay::Initialize()
 	//}
 
 	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		/*Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(0.f, 5.f, -17.f));
 		goomba->SetScale(Vector3(0.01f, 0.01f, 0.01f));
-		goomba->SetName(L"Goomba");
+		goomba->SetName(L"Goomba");*/
 	}
 
 	{
@@ -175,6 +178,13 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
+
+	{
+		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster,this);
+		//PackunPostionBall* packunball = object::Instantiate<PackunPostionBall>(eLayerType::Objects, this);
+
+		//Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	}
 
 
 

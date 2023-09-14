@@ -194,7 +194,7 @@ void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, cons
 			continue;
 
 		// T
-		Vector3 positionVec = Interpolation(curData.Translation[i].second, nextData.Translation[i].second, mTickPerSceond, drutation);
+		Vector3 positionVec = Interpolation(curData.Translation[i].second, nextData.Translation[i].second, static_cast<float>(mTickPerSceond), static_cast<float>(drutation));
 
 		// R
 		Vector3 eRotation = curData.Rotation[i].second;
