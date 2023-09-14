@@ -54,7 +54,6 @@ public:
 	void SetRotationY(const float rotY) { mRelativeRotation.y = rotY; }
 	void SetRotationZ(const float rotZ) { mRelativeRotation.z = rotZ; }
 	void SetRotationXY(const Vector2& rotation) { mRelativeRotation.x = rotation.x; mRelativeRotation.y = rotation.y; }
-	void SetPhysicalRotation(const Vector3& rotation_degrees);
 
 	void SetScale(const Vector3& scale) { mRelativeScale = scale;  }
 	void SetScaleX(const float scaleX) { mRelativeScale.x = scaleX;}

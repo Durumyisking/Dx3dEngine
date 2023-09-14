@@ -26,23 +26,24 @@ Packun::~Packun()
 void Packun::Initialize()
 {
 	// Add MeshRenderer
-	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	MeshRenderer* mesh = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 	// SetModel
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
 	if (model)
 	{
-		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		MeshRenderer* test = GetComponent<MeshRenderer>();
+		test->SetModel(model, model->GetMaterial(0));
 
 
 		//// 오프
-		//model->MeshRenderSwtich(L"Head2__BodyMT", false);
-		//model->MeshRenderSwtich(L"Head2__HeadMT", false);
-		//model->MeshRenderSwtich(L"mustache__HairMT", false);
+		//model->MeshRenderSwtich(L"Head2__BodyMT-mesh", false);
+		//model->MeshRenderSwtich(L"Head2__HeadMT-mesh", false);
+		//model->MeshRenderSwtich(L"mustache__HairMT-mesh", false);
 
 		//// 온ㄴ
-		//model->MeshRenderSwtich(L"Head3__BodyMT");
-		//model->MeshRenderSwtich(L"Head3__HeadMT");
+		//model->MeshRenderSwtich(L"Head3__BodyMT-mesh");
+		//model->MeshRenderSwtich(L"Head3__HeadMT-mesh");
 	}
 
 	PackunStateScript* packunState = AddComponent<PackunStateScript>(eComponentType::Script);
@@ -50,7 +51,7 @@ void Packun::Initialize()
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
 
 
 	// Rigidbody
@@ -58,7 +59,7 @@ void Packun::Initialize()
 	rigidbody->Initialize();
 
 	// MoveMent
-	//AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
+	AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
 	AddComponent<PhysicalMovement>(eComponentType::Movement)->Initialize();
 
 	// 초기화

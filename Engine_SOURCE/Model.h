@@ -46,6 +46,7 @@ public:
 	virtual ~Model();
 
 	virtual HRESULT Load(const std::wstring& path) override;
+	virtual HRESULT LoadFullpath(const std::wstring& path) override { return S_OK; }
 
 	ModelNode* FindNode(const std::wstring& nodeName);
 	Bone* FindBone(const std::wstring& nodeName);
@@ -58,6 +59,7 @@ public:
 
 	void AddMaterial(Material* mater) { mMaterials.emplace_back(mater); }
 	void MeshRenderSwtich(const std::wstring& name, bool renderSwitch = true);
+
 private:
 	void recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode);
 	void recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::wstring& nodeName);
@@ -67,6 +69,7 @@ private:
 	void recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& nodeName);
 
 	void release();
+
 public:
 	math::Matrix ConvertMatrix(aiMatrix4x4 aimat);
 	Material* GetVariableMaterials(UINT index);
@@ -74,12 +77,12 @@ public:
 	void Bind_Render();
 public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
-		GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
-		GETSET(GameObj*, mOwner, Owner)
-		GETSET(Model*, mParentModel, ParentModel)
-		GETSET(const std::wstring&, mParentTargetBone, ParentTargetBone)
-		GETSET(const std::wstring&, mTargetBone, TargetBone)
-		GETSET(math::Vector3, mOffsetRotation, OffsetRotation)
+	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
+	GETSET(GameObj*, mOwner, Owner)
+	GETSET(Model*, mParentModel, ParentModel)
+	GETSET(const std::wstring&, mParentTargetBone, ParentTargetBone)
+	GETSET(const std::wstring&, mTargetBone, TargetBone)
+	GETSET(math::Vector3, mOffsetRotation, OffsetRotation)
 private:
 	Assimp::Importer mAssimpImporter;
 
