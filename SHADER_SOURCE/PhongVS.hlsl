@@ -35,14 +35,15 @@ VSOut main(VSIn vsIn)
     //float4 weights = vsIn.BlendWeight;
     //weights.w = 1.f - (weights.x + weights.y + weights.z);
   
-    //float4 pos = mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.x].bMatrix) * vsIn.BlendWeight.x;
+    float4 pos = mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.x].bMatrix) * vsIn.BlendWeight.x;
     //pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.y].bMatrix) * vsIn.BlendWeight.y;
     //pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.z].bMatrix) * vsIn.BlendWeight.z;
     //pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.w].bMatrix) * weights.w;
 
-    //vsIn.Position = pos;
+    //if (weights.x + weights.y + weights.z + weights.w == 0.0f)
+        pos = vsIn.Position;
     
-    float4 worldPosition = mul(vsIn.Position, world);
+    float4 worldPosition = mul(pos, world);
     float4 viewPosition = mul(worldPosition, view);
     float4 projPosition = mul(viewPosition, projection);
     
@@ -60,10 +61,10 @@ VSOut main(VSIn vsIn)
     float3 viewBiNormal = normalize(mul(float4(biNormal, 0.f), world).xyz);
     viewBiNormal = normalize(mul(float4(viewBiNormal, 0.f), view).xyz);
     
-    vsOut.ViewPos = viewPosition.xyz;
+    vsOut.ViewPos = worldPosition.xyz;
     vsOut.ViewNormal     = viewNormal.xyz;
     vsOut.ViewTangent    = viewTangent.xyz;
     vsOut.ViewBiNormal   = viewBiNormal.xyz;
-    
+        
     return vsOut;
 }

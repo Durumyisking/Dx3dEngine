@@ -16,8 +16,15 @@ AnimationClip::AnimationClip()
 	, mCurIndex(0)
 	, mCompleate(false)
 	, mAnimator(nullptr)
+	, mStartEvent(nullptr)
+	, mCompleateEvent(nullptr)
+	, mEndEvent(nullptr)
 	, mName(L"")
+	, mPreveAnimationData(nullptr)
+	, mConnectionDuration(1.0f)
 {
+	mSkeletonData.reserve(100);
+	mNodeData.reserve(30);
 }
 
 AnimationClip::~AnimationClip()
@@ -31,6 +38,13 @@ void AnimationClip::Update()
 
 	mTickPerSceond += DT;
 
+	if (mPreveAnimationData)
+	{
+		InterpolationPrveToCurAnimation();
+		return;
+	}
+
+
 	if (mTickPerSceond >= mDuration)
 	{
 		mTickPerSceond -= mDuration;
@@ -42,10 +56,15 @@ void AnimationClip::Update()
 		// 애니메이션 종료시 리셋
 		Reset();
 		mCompleate = true;
+		mCurIndex = static_cast<UINT>(mSkeletonData.size() - 1);
+
+		if (mCompleateEvent)
+			mCompleateEvent();
+
 		return;
 	}
 
-	SetBoneMatrix();
+	SetBoneMatrix(mSkeletonData[mCurIndex], mSkeletonData[mCurIndex + 1], mDuration);
 }
 
 void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring& path, double duration)
@@ -101,7 +120,7 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 		else if (buf.find("time") != std::string::npos)
 		{
 			mSkeletonData.emplace_back(animation::SkeletonData{});
-			frame = mSkeletonData.size() - 1;
+			frame = static_cast<int>(mSkeletonData.size() - 1);
 			mSkeletonData[frame].Translation.resize(mNodeData.size());
 			mSkeletonData[frame].Rotation.resize(mNodeData.size());
 
@@ -128,19 +147,25 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 		}
 
 		animation::SkeletonData data = {};
-		data = readSkeleton(buf, mNodeData.size());
+		data = readSkeleton(buf, static_cast<int>(mNodeData.size()));
 		data.Time = static_cast<float>(frame);
 
-		mSkeletonData[frame].Time = frame;
+		mSkeletonData[frame].Time = static_cast<float>(frame);
 
 		mSkeletonData[frame].Translation[data.Translation[0].first].second = data.Translation[0].second;
 		mSkeletonData[frame].Rotation[data.Rotation[0].first].second = data.Rotation[0].second;
 	}
 
+
 	file.close();
 }
 
-void AnimationClip::SetBoneMatrix()
+void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount)
+{
+	CreateAnimation(name, path, 1.0f / static_cast<float>(frameCount));
+}
+
+void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, const animation::SkeletonData& inNextData, double drutation )
 {
 	// 본 정보들을 변경.
 	if (!mAnimator)
@@ -158,10 +183,10 @@ void AnimationClip::SetBoneMatrix()
 	if (!model)
 		return;
 
-	animation::SkeletonData curData = mSkeletonData[mCurIndex];
-	animation::SkeletonData nextData = mSkeletonData[mCurIndex + 1];
+	animation::SkeletonData curData = inCurData;
+	animation::SkeletonData nextData = inNextData;
 
-	int size = curData.Translation.size();
+	int size = static_cast<int>(curData.Translation.size());
 	for (int i = 0; i < size; ++i)
 	{
 		ModelNode* node = model->FindNode(mNodeData[curData.Translation[i].first].Name);
@@ -169,7 +194,7 @@ void AnimationClip::SetBoneMatrix()
 			continue;
 
 		// T
-		Vector3 positionVec = Interpolation(curData.Translation[i].second, nextData.Translation[i].second, mTickPerSceond, mDuration);
+		Vector3 positionVec = Interpolation(curData.Translation[i].second, nextData.Translation[i].second, mTickPerSceond, drutation);
 
 		// R
 		Vector3 eRotation = curData.Rotation[i].second;
@@ -179,7 +204,7 @@ void AnimationClip::SetBoneMatrix()
 		aiQuaternion qNextRotation(-eNextRotation.y, eNextRotation.z, -eNextRotation.x);
 
 		aiQuaternion result = {};
-		result.Interpolate(result, qRotation, qNextRotation, mTickPerSceond / mDuration);
+		result.Interpolate(result, qRotation, qNextRotation, static_cast<float>(mTickPerSceond / drutation));
 
 		// T * R
 		node->SetTransformation(ToLeftHandMatrix(positionVec, result.GetMatrix()));
@@ -189,8 +214,20 @@ void AnimationClip::SetBoneMatrix()
 void AnimationClip::Reset()
 {
 	mCompleate = false;
-	mCurIndex = 0;
 	mTickPerSceond = 0.0f;
+	// mCurIndex = 0;
+}
+
+void AnimationClip::InterpolationPrveToCurAnimation()
+{
+	if (mTickPerSceond >= mConnectionDuration)
+	{
+		mTickPerSceond = 0.0f;
+		mPreveAnimationData = nullptr;
+		return;
+	}
+
+	SetBoneMatrix(*mPreveAnimationData, mSkeletonData[mCurIndex], mConnectionDuration);
 }
 
 math::Vector3 AnimationClip::Interpolation(math::Vector3& startVec, math::Vector3& endVec, float accTime, float endTime)
@@ -201,7 +238,7 @@ math::Vector3 AnimationClip::Interpolation(math::Vector3& startVec, math::Vector
 	return Vector3(x, y, z);
 }
 
-aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, Vector3 rotation)
+aiMatrix4x4 AnimationClip::ToLeftHandMatrix(math::Vector3 pos, math::Vector3 rotation)
 {
 	// 이동 계산
 	aiMatrix4x4 traslation = {};
@@ -219,7 +256,7 @@ aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, Vector3 rotation)
 	return traslation * rotationmatrix;
 }
 
-aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, aiMatrix3x3 rotation)
+aiMatrix4x4 AnimationClip::ToLeftHandMatrix(math::Vector3 pos, aiMatrix3x3 rotation)
 {
 	// 이동 계산
 	aiMatrix4x4 traslation = {};
@@ -228,7 +265,7 @@ aiMatrix4x4 AnimationClip::ToLeftHandMatrix(Vector3 pos, aiMatrix3x3 rotation)
 	// 회전 계산 오일러
 	aiMatrix4x4 rotationmatrix(rotation);
 
-	// 아마? 닌텐도 만에 좌표계가 있는거같다
+	// 아마? 닌텐도 엔진 고유의 좌표계가 있는거같다
 	// x 오른손좌표계기준, 반시계
 	// y 오른손좌표계기준, 반시계
 	// z 포지션은 오른손좌표계기준, 회전은 시계방향
@@ -318,4 +355,18 @@ const animation::SkeletonData AnimationClip::readSkeleton(std::string& buf, int 
 	data.Rotation.emplace_back(index, math::Vector3(temp[0], temp[1], temp[2]));
 
 	return data;
+}
+
+const animation::SkeletonData* AnimationClip::GetCurFrameAnimation(UINT index) const
+{
+	if (index >= mSkeletonData.size())
+		return nullptr;
+
+	return &mSkeletonData[index];
+}
+
+void AnimationClip::SetPreveAnimationData(const animation::SkeletonData* data, float connectionDuration)
+{
+	mPreveAnimationData = data;
+	mConnectionDuration = connectionDuration; 
 }

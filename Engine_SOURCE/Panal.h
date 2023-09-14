@@ -11,8 +11,10 @@ public:
 	virtual void OnInit() final;
 	virtual void OnActive() final;
 	virtual void OnInActive() final;
-	virtual void OnTick() final;
+	virtual void OnUpdate() final;
+	virtual void OnFixedUpdate() final;
 	virtual void OnRender() final;
+	virtual void OnFontRender() final;
 	virtual void OnClear() final;
 
 

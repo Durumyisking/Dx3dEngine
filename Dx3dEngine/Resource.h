@@ -1,6 +1,6 @@
-ï»¿//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ì—ì„œ ìƒì„±í•œ í¬í•¨ íŒŒì¼ìž…ë‹ˆë‹¤.
-// ë‹¤ìŒì—ì„œ ì‚¬ìš© Dx2dEngine.rc
+//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++¿¡¼­ »ý¼ºÇÑ Æ÷ÇÔ ÆÄÀÏÀÔ´Ï´Ù.
+// ´ÙÀ½¿¡¼­ »ç¿ë Dx2dEngine.rc
 
 #define IDS_APP_TITLE			103
 
@@ -16,7 +16,7 @@
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1
 #endif
-// ë‹¤ìŒì€ ìƒˆ ê°œì²´ì— ì‚¬ìš©í•  ê¸°ë³¸ê°’ìž…ë‹ˆë‹¤.
+// ´ÙÀ½Àº »õ °³Ã¼¿¡ »ç¿ëÇÒ ±âº»°ªÀÔ´Ï´Ù.
 //
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS

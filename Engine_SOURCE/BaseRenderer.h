@@ -17,6 +17,7 @@ public:
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
+	virtual void PrevRender() override {};
 	virtual void Render() override;
 
 	void SetMesh(Mesh* mesh) { mMesh = mesh; }
@@ -27,6 +28,8 @@ public:
 
 	
 	void SetModel(Model* model, Material* mater) { mModel = model, mMaterial = mater; }
+	void SetModelByKey(std::wstring key);
+	void SetModelByKey(std::wstring modelKey, std::wstring materialKey);
 	GETSET(Model*, mModel, Model)
 
 

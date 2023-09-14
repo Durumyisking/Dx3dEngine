@@ -22,6 +22,9 @@ public:
 
 
 //		Microsoft::WRL::ComPtr<ID3D11Buffer> GetBuffer(eBufferStage _eStage);
+public:
+	bool IsRender() { return mbRender; }
+	void SetRender(bool render) { mbRender = render; }
 
 private:
 	// 메시 그릴때는 정점정보 인덱스 정보만 있으면 됨
@@ -33,5 +36,5 @@ private:
 
 
 	UINT			mIndexCount;
-
+	bool			mbRender;
 };

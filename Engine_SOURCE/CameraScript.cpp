@@ -14,6 +14,7 @@
 
 CameraScript::CameraScript()
 	: mCameraObject(nullptr)
+	, mUICameraObject(nullptr)
 	, mTransform(nullptr)
 	, mTarget(nullptr)
 	, mSpeed(0.f)
@@ -34,16 +35,16 @@ void CameraScript::Initialize()
 {
 	mCameraObject = GetOwner()->GetComponent<Camera>();
 	mTransform = GetOwner()->GetComponent<Transform>();
-
 }
 
 void CameraScript::Update()
 {
-	
 
+	this->GetOwner();
 	mLookAt = mTransform->GetPosition();
 
 	mTarget = mCameraObject->GetTarget();
+
 	mSpeed = mCameraObject->GetCamSpeed();
 	mCamStep = 0.f;
 
@@ -81,6 +82,13 @@ void CameraScript::Update()
 	}
 }
 
+	if (mUICameraObject != nullptr)
+	{
+		mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
+		mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());
+	}
+}
+
 void CameraScript::FixedUpdate()
 {
 }
@@ -108,7 +116,7 @@ void CameraScript::KeyBoardMove()
 {
 	// Keyboard Move
 
-	float speed = 100.f;
+	float speed = 50.f;
 	if (KEY_DOWN(W))
 	{
 		mLookAt += speed * mTransform->Forward() * DT;

@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "SceneTitle.h"
+#include "ScenePlay.h"
 #include "Layer.h"
 #include "GameObj.h"
 
@@ -23,15 +24,22 @@ void SceneMgr::Initialize()
 	mScenes[static_cast<UINT>(eSceneType::Title)] = new SceneTitle;
 	mScenes[static_cast<UINT>(eSceneType::Title)]->SetType(eSceneType::Title);
 
+	mScenes[static_cast<UINT>(eSceneType::Play)] = new ScenePlay;
+	mScenes[static_cast<UINT>(eSceneType::Play)]->SetType(eSceneType::Play);
+
+	mActiveScene = mScenes[static_cast<UINT>(eSceneType::Title)];
+
 	for (UINT i = 0; i < static_cast<UINT>(eSceneType::End); i++)
 	{
 		mScenes[i]->Initialize();
 	}
 
-	mActiveScene = mScenes[static_cast<UINT>(eSceneType::Title)];
 	mActiveScene->Enter();
 
-
+	//for (Scene* scene : mScenes)
+	//{
+	//	scene->Enter();
+	//}
 }
 
 void SceneMgr::Update()

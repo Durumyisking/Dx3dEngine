@@ -1,5 +1,6 @@
 #include "UIBase.h"
-
+#include "Material.h"
+#include "MeshRenderer.h"
 
 Vector3 mUIScreenPos;
 Vector3 mUIPos;
@@ -7,12 +8,12 @@ Vector3 mUISize;
 
 UIBase::UIBase(eUIType type)
 	:mUIType(type)
-	,mUIbFullScreen(false)
-	,mbUIEnable(true)
-	,mUIParent(nullptr)
-	,mUIScreenPos(Vector3::Zero)
-	,mUIPos(Vector3::Zero)
-	,mUISize(Vector3::One)
+	, mUIbFullScreen(false)
+	, mbUIEnable(true)
+	, mUIParent(nullptr)
+	, mUIScreenPos(Vector3::Zero)
+	, mUIPos(Vector3::Zero)
+	, mUISize(Vector3::One)
 {
 
 }
@@ -28,7 +29,7 @@ void UIBase::Initialize()
 	OnInit();
 }
 
-void UIBase::Active()
+void UIBase::Activate()
 {
 	mbUIEnable = true;
 	OnActive();
@@ -40,7 +41,7 @@ void UIBase::Active()
 	}
 }
 
-void UIBase::InActive()
+void UIBase::InActivate()
 {
 	for (UIBase* child : mChilds)
 	{
@@ -66,7 +67,7 @@ void UIBase::Update()
 void UIBase::FixedUpdate()
 {
 	if (mbUIEnable == false)
-		return; 
+		return;
 
 	GameObj::FixedUpdate();
 	OnFixedUpdate();

@@ -23,8 +23,11 @@ public:
 	void Render(){};
 
 	void CreateAnimation(const std::wstring& name ,const std::wstring& path, double duration);
-	void SetBoneMatrix();
+	void CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount);
+	void SetBoneMatrix(const animation::SkeletonData& inCurData, const animation::SkeletonData& inNextData, double drutation = 1.f/ 60.f);
 	void Reset();
+
+	void InterpolationPrveToCurAnimation();
 
 	bool IsCompleate() { return mCompleate; }
 
@@ -35,11 +38,26 @@ public:
 	aiMatrix4x4 ToLeftHandMatrix(math::Vector3 pos, aiMatrix3x3 rotation);
 
 public:
+	std::function<void()> GetStartEvent() { return mStartEvent; }
+	std::function<void()> GetCompleateEvent() { return mCompleateEvent; }
+	std::function<void()> GetEndEvent() { return mEndEvent; }
+
+	void SetStartEvent(std::function<void()> inEvent) { mStartEvent = std::move(inEvent); }
+	void SetCompleateEvent(std::function<void()> inEvent) { mCompleateEvent = std::move(inEvent); }
+	void SetEndEvent(std::function<void()> inEvent) { mEndEvent = std::move(inEvent); }
+
+public:
 	GETSET(const std::wstring&, mName, AnimationName)
 	GETSET(double, mDuration, Duration)
 	GETSET(double, mTickPerSceond, TickPerSceond)
 	GETSET(bool, mCompleate, Compleate)
 	GETSET(BoneAnimator*, mAnimator, Animator)
+	GETSET(const animation::SkeletonData*, mPreveAnimationData, PreveAnimationData)
+	GETSET(float , mConnectionDuration, ConnectionDuration)
+	GETSET(UINT, mCurIndex, CurIndex)
+
+	const animation::SkeletonData* GetCurFrameAnimation(UINT index) const;
+	void SetPreveAnimationData(const animation::SkeletonData* data, float connectionDuration = 1.0f);
 private:
 	const std::string parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const;
 	const std::string::size_type startStringPos(std::string& buf, const std::string& delValue) const;
@@ -52,12 +70,19 @@ private:
 	std::vector<animation::NodeData>     mNodeData;
 	std::vector<animation::SkeletonData> mSkeletonData;
 
+	const animation::SkeletonData* mPreveAnimationData;
+	float mConnectionDuration;
+
 	double	    mDuration;
 	double      mTickPerSceond;
 	UINT	    mCurIndex;
 	bool		mCompleate;
 
 	BoneAnimator* mAnimator;
+
+	std::function<void()> mStartEvent;
+	std::function<void()> mCompleateEvent;
+	std::function<void()> mEndEvent;
 
 	std::wstring mName;
 };

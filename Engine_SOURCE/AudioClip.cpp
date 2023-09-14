@@ -25,9 +25,10 @@ HRESULT AudioClip::Load(const std::wstring& path)
 	std::filesystem::path parentPath = std::filesystem::current_path().parent_path();
 	std::wstring fullPath = parentPath.wstring() + L"\\..\\Resources\\" + path;
 
-	std::string cPath(fullPath.begin(), fullPath.end());
-	if (!GETSINGLE(Fmod)->CreateSound(cPath, &mSound))
-		return S_FALSE;
+	// 빌드할때 오류 안뜨라고 주석해놓음
+	//std::string cPath(fullPath.begin(), fullPath.end());
+	//if (!GETSINGLE(Fmod)->CreateSound(cPath, &mSound))
+	//	return S_FALSE;
 
 	mSound->set3DMinMaxDistance(mMinDistance, mMaxDistance);
 

@@ -9,6 +9,21 @@ Material::Material()
 	, mShader(nullptr)
 	, mTexture{}
 {
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
+}
+Material::Material(std::wstring shaderName)
+	: Resource(eResourceType::Material)
+	, mMode(eRenderingMode::Opaque)
+	, mMaterialConstantBuffer{}
+	, mShader(nullptr)
+	, mTexture{}
+{
+	mShader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+	if (L"DeferredShader" == shaderName)
+	{
+		SetRenderingMode(eRenderingMode::DeferredOpaque);
+	}
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 }
 Material::Material(std::wstring textureColor, std::wstring shaderName)
 	: Resource(eResourceType::Material)
@@ -24,8 +39,7 @@ Material::Material(std::wstring textureColor, std::wstring shaderName)
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
-
-
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 }
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName)
 	: Resource(eResourceType::Material)
@@ -42,8 +56,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
-
-
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 }
 
 Material::Material(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName)
@@ -62,6 +75,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 
 }
 
@@ -83,6 +97,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
 
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 
 }
 
@@ -106,6 +121,7 @@ Material::Material(std::wstring textureColor, std::wstring textureNormal, std::w
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
 
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 
 }
 
@@ -125,6 +141,7 @@ Material::Material(std::wstring textureName, eTextureSlot slot, std::wstring sha
 	{
 		SetRenderingMode(eRenderingMode::DeferredOpaque);
 	}
+	mMaterialConstantBuffer.FresnelCoeff = Vector3(0.4f, 0.4f, 0.4f);
 
 }
 
@@ -167,6 +184,18 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::Float_4:
 		mMaterialConstantBuffer.fData4 = *static_cast<float*>(data);
 		break;
+	case eGPUParam::Float_5:
+		mMaterialConstantBuffer.fData5 = *static_cast<float*>(data);
+		break;
+	case eGPUParam::Float_6:
+		mMaterialConstantBuffer.fData6 = *static_cast<float*>(data);
+		break;
+	case eGPUParam::Metallic:
+		mMaterialConstantBuffer.metallic = *static_cast<float*>(data);
+		break;
+	case eGPUParam::Roughness:
+		mMaterialConstantBuffer.roughness = *static_cast<float*>(data);
+		break;
 	case eGPUParam::Vector2_1:
 		mMaterialConstantBuffer.xy1 = *static_cast<Vector2*>(data);
 		break;
@@ -185,8 +214,8 @@ void Material::SetData(eGPUParam param, void* data)
 	case eGPUParam::Vector3_2:
 		mMaterialConstantBuffer.xyz2 = *static_cast<Vector3*>(data);
 		break;
-	case eGPUParam::Vector3_3:
-		mMaterialConstantBuffer.xyz3 = *static_cast<Vector3*>(data);
+	case eGPUParam::FresnelCoeff:
+		mMaterialConstantBuffer.FresnelCoeff = *static_cast<Vector3*>(data);
 		break;
 	case eGPUParam::CamPosition:
 		mMaterialConstantBuffer.CamPosition = *static_cast<Vector3*>(data);
@@ -265,12 +294,12 @@ void Material::Bind()
 	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Metallic)])
 	{
-		renderer::BindPBRProprerties();
-
 		mMaterialConstantBuffer.bMetallic = 1;
 	}
 	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Roughness)])
+	{
 		mMaterialConstantBuffer.bRoughness = 1;
+	}
 
 	ConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::Material];
 	pCB->SetData(&mMaterialConstantBuffer);
@@ -288,13 +317,20 @@ void Material::Clear()
 		if (mTexture[i] == nullptr)
 			continue;
 
-		mTexture[i]->Clear();
+		Texture::Clear(i);
 	}
 }
 void Material::SetShaderByKey(std::wstring key)
 {
 	Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(key);
 	mShader = shader;
+}
+
+void Material::SetTextureByKey(std::wstring key, eTextureSlot slot)
+{
+	Texture* texture = GETSINGLE(ResourceMgr)->Find<Texture>(key);
+	mTexture[static_cast<UINT>(slot)] = texture;
+
 }
 
 

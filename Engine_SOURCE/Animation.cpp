@@ -1,8 +1,6 @@
 #include "Animation.h"
 #include "TimeMgr.h"
 
-
-
 Animation::Animation()
 	: mAnimator(nullptr)
 	, mAtlas(nullptr)
@@ -14,7 +12,6 @@ Animation::Animation()
 	, mbReversePlay(false)
 	, mbCompleteEventPlayed(false)
 {
-
 }
 
 Animation::~Animation()

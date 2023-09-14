@@ -57,6 +57,8 @@ namespace renderer
 		Matrix view;
 		Matrix inverseView;
 		Matrix projection;
+		Matrix fovForSkySphere;
+		Vector4 cameraWorldPos;
 	};
 
 	CBUFFER(MaterialCB, CBSLOT_MATERIAL)
@@ -72,8 +74,8 @@ namespace renderer
 		float fData4;
 		float fData5;
 		float fData6;
-		float fData7;
-		float fData8;
+		float metallic;
+		float roughness;
 
 		Vector2 xy1;
 		Vector2 xy2;
@@ -84,7 +86,7 @@ namespace renderer
 		float	xyzPadding1;
 		Vector3 xyz2;
 		float	xyzPadding2;
-		Vector3 xyz3;
+		Vector3 FresnelCoeff;
 		float	xyzPadding3;
 		Vector3 CamPosition;
 		float	xyzPadding4;
@@ -102,8 +104,8 @@ namespace renderer
 		int bAlbedo;
 		int bNormal;
 		int bMetallic;
-
 		int bRoughness;
+
 		int bEmissive;
 		int bool1;
 		int bool2;
@@ -181,6 +183,16 @@ namespace renderer
 		float wave_distortion;
 	};
 
+	CBUFFER(SkyCB, CBSLOT_SKY)
+	{
+		Matrix matrix;
+	};
+
+	CBUFFER(LightMatrixCB, CBSLOT_LIGHTMATRIX)
+	{
+		Matrix lightView;
+		Matrix lightProjection;
+	};
 
 
 	// vertex data
@@ -195,6 +207,7 @@ namespace renderer
 	extern std::vector<Camera*> Cameras[];
 
 	extern Camera* mainCamera;
+	extern Camera* UICamera;
 	extern std::vector<DebugMesh> debugMeshes;
 	extern std::vector<Light*> lights;
 	extern std::vector<LightAttribute> lightAttributes;
@@ -233,5 +246,8 @@ namespace renderer
 	void CreateCubeMesh();
 	void CreateSphereMesh();
 	void CreateCapsuleMesh();
+
+	void CreateUIMaterial();
+	void CreateUITexture();
 }
 

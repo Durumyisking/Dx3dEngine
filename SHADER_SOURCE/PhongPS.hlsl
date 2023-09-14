@@ -16,15 +16,19 @@ float4 main(VSOut vsIn) : SV_Target
 {
     float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.0f);
     float3 normal = vsIn.ViewNormal;
+    
+    float3 worldPos = mul(float4(vsIn.ViewPos, 1.f), inverseWorld).xyz;
+    float pixelToCam = distance(cameraWorldPos.xyz, worldPos);
+
 
     if (1 == cbbAlbedo)
     {
-        //albedo = TextureMapping_albedo(vsIn.UV);
+        albedo = TextureMapping_albedo(vsIn.UV, pixelToCam);
     }
     
     if (1 == cbbNormal)
     {
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal, pixelToCam);
     }
     LightColor lightColor = (LightColor) 0.0f;
     
@@ -36,15 +40,15 @@ float4 main(VSOut vsIn) : SV_Target
     albedo = CombineLights(albedo, lightColor);
     
     
-    if (albedo.w == 0)
+    if (albedo.w <= 0.1f)
         discard;
     
-    if (cbxyzw1.w != 0)
+    if (cbxyzw1.w != 0.f)
     {
         albedo *= cbxyzw1; // 곱할 색        
     }
     
-    if (cbxyzw2.w != 0)
+    if (cbxyzw2.w != 0.f)
     {
         albedo += cbxyzw2; // 더할 색    
     }

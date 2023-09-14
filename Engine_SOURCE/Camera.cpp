@@ -23,6 +23,7 @@ extern Application application;
 Matrix Camera::View = Matrix::Identity;
 Matrix Camera::InverseView = Matrix::Identity;
 Matrix Camera::Projection = Matrix::Identity;
+Matrix Camera::SkyFov = Matrix::Identity;
 
 Camera::Camera()
 	: Component(eComponentType::Camera)
@@ -50,12 +51,12 @@ Camera::~Camera()
 }
 void Camera::Initialize()
 {
-	RegisterCameraInRenderer();
+	//RegisterCameraInRenderer();
 }
 
 void Camera::Update()
 {
-	if (mTargetObj)
+	if (mTargetObj) // 타겟 오브젝트를 쫓아감
 	{
 
 		Vector2 v2Start = Vector2(GetOwner()->GetPos().x, GetOwner()->GetPos().y);
@@ -91,13 +92,35 @@ void Camera::Render()
 
 	sortGameObjects();
 
+	// shadow	
+	Transform directionLighttr = *(renderer::lights[0]->GetOwner()->GetComponent<Transform>());
+	//tr->SetPosition(Transform()->GetWorldPos());
+	directionLighttr.SetRotation(DecomposeRotMat(directionLighttr.GetWorldRotationMatrix()));
+
+	ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
+
+	LightMatrixCB data = {};
+	data.lightView = CreateViewMatrix(&directionLighttr);
+	data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, static_cast<float>(application.GetWidth()), static_cast<float>(application.GetHeight()), 1.0f, 1000.0f);
+	lightCB->SetData(&data);
+	lightCB->Bind(eShaderStage::VS);	
+	lightCB->Bind(eShaderStage::PS);
+
+	renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->OMSetRenderTarget();
+	renderShadow();
+
+	// Forward Render
+	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+	renderOpaque();
+	renderCutout();
+	renderTransparent();
+
 	// Deferred Opaque Render 
 	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
 	renderDeferred();
 
 	// Deferred light Render
 	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
-	renderer::BindPBRProprerties();
 
 	for (Light* light : renderer::lights)
 	{
@@ -114,10 +137,6 @@ void Camera::Render()
 	mergeMaterial->Bind();
 	rectMesh->Render();
 
-	// Forward Render
-	renderOpaque();
-	renderCutout();
-	renderTransparent();
 }
 
 void Camera::CreateViewMatrix()
@@ -144,6 +163,24 @@ void Camera::CreateViewMatrix()
 
 	mView *= viewRotate;
 
+}
+
+Matrix Camera::CreateViewMatrix(Transform* tr)
+{
+	Matrix view = Matrix::Identity;
+	//Vector3 up = Vector3(0.f, 1.f, 0.f);
+	Vector3 up = tr->Up();
+	Vector3 right = tr->Right();
+	Vector3 forward = tr->Forward();
+
+	Vector3 pos = forward * -50.f;
+
+	view *= Matrix::CreateTranslation(-pos);
+
+	view *= XMMatrixLookToLH(pos, forward, up);	
+
+	
+	return view;
 
 	////새로 적용할 회전행렬
 	//mView = XMMatrixLookAtLH(translation, foward, up);
@@ -158,16 +195,41 @@ void Camera::CreateProjectionMatrix()
 	float height = (winRect.bottom - winRect.top) * mScale;
 	mAspectRatio = width / height;
 
+	SkyFov = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f , mAspectRatio, mNear, mFar);
+
 
 	if (mType == eProjectionType::Perspective)
 	{
 		mProjection = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, mAspectRatio, mNear, mFar);
-	}
+	}	
 	else // (mType == eProjectionType::Orthographic)
 	{
 		mProjection = Matrix::CreateOrthographic(width, height, mNear, mFar);
 	}
 
+}
+
+Matrix Camera::CreateProjectionMatrix(eProjectionType type, float width, float height, float Near, float Far)
+{
+	Matrix proj = Matrix::Identity;
+
+	float AspectRatio = width / height;
+	if (mType == eProjectionType::Perspective)
+	{
+		proj = Matrix::CreatePerspectiveFieldOfView
+		(
+			XM_PI / 4.0f
+			, AspectRatio
+			, Near
+			, Far
+		);
+	}
+	else
+	{
+		proj = Matrix::CreateOrthographicLH(width /*/ 100.0f*/, height /*/ 100.0f*/, Near, Far);
+	}
+
+	return proj;
 }
 
 void Camera::RegisterCameraInRenderer()
@@ -293,6 +355,25 @@ void Camera::sortGameObjects()
 
 }
 
+void Camera::renderShadow()
+{
+	for (GameObj* obj : mDeferredOpaqueGameObjects)
+	{
+		if (obj == nullptr)
+			continue;
+
+		obj->PrevRender();
+	}
+
+	for (GameObj* obj : mOpaqueGameObjects)
+	{
+		if (obj == nullptr)
+			continue;
+
+		obj->PrevRender();
+	}
+}
+
 void Camera::renderDeferred()
 {
 	for (GameObj* obj : mDeferredOpaqueGameObjects)
@@ -354,6 +435,11 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 {
 	BaseRenderer* renderer = obj->GetComponent<BaseRenderer>();
 
+	if ( eLayerType::CubeMap== obj->GetLayerType())
+	{
+		obj->Render();
+	}
+
 	if (nullptr == renderer)
 		return;
 
@@ -403,4 +489,20 @@ bool Camera::renderPassCheck(GameObj* obj)
 	}
 
 	return true;
+}
+
+void Camera::SetLayerMaskOn(eLayerType type)
+{
+	if (mLayerMask.test((UINT)type))
+		return;
+
+	mLayerMask.flip((UINT)type);
+}
+
+void Camera::SetLayerMaskOFF(eLayerType type)
+{
+	if (!mLayerMask.test((UINT)type))
+		return;
+
+	mLayerMask.flip((UINT)type);
 }

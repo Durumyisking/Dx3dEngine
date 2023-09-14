@@ -74,9 +74,6 @@
     <Filter Include="Common\Component\Script\Grid">
       <UniqueIdentifier>{07391d1a-6255-4748-b831-1c8a300fc277}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Component\Script\Fade">
-      <UniqueIdentifier>{8f1ca778-f3ef-4a39-9eeb-8739549585e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\Component\Collider">
       <UniqueIdentifier>{01ea66c5-b9ca-49ae-a581-fd103eafd344}</UniqueIdentifier>
     </Filter>
@@ -212,6 +209,30 @@
     <Filter Include="Common\Component\Animator3D">
       <UniqueIdentifier>{fabcf555-eba3-403d-88ef-e82bc3bc8461}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Component\Renderer\Skybox">
+      <UniqueIdentifier>{b410bcf3-ae25-480a-b5b4-bd17195ed68c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\DynamicObject">
+      <UniqueIdentifier>{7302d270-8003-44a2-b03c-38a5d9176d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\DynamicObject\Monster">
+      <UniqueIdentifier>{e53018b3-7576-42e8-bf07-d84fba6bdd48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\DynamicObject\Monster\Goomba">
+      <UniqueIdentifier>{8fb39da3-0017-4e5f-9015-42ebc26287d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\DynamicObject\Monster\Packun">
+      <UniqueIdentifier>{2ff74918-b836-4ed1-b349-a8de4ecb8dbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Camera\Script\MonsterAI">
+      <UniqueIdentifier>{eb26debb-61ef-4731-b5ce-6bc0087a1e4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Camera\Script\MonsterState">
+      <UniqueIdentifier>{7fc415aa-289a-421e-a63b-360aca481669}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Capture">
+      <UniqueIdentifier>{790b30db-905b-439a-b52c-e830791d7c44}</UniqueIdentifier>
+    </Filter>
     <Filter Include="RayCast">
       <UniqueIdentifier>{873dbe93-ba2a-42a4-8bb8-de37d53d3cbe}</UniqueIdentifier>
     </Filter>
@@ -304,9 +325,6 @@
     <ClInclude Include="Object.h">
       <Filter>Common\GameObj</Filter>
     </ClInclude>
-    <ClInclude Include="FadeScript.h">
-      <Filter>Common\Component\Script\Fade</Filter>
-    </ClInclude>
     <ClInclude Include="Layer.h">
       <Filter>Common\Scene\Layer</Filter>
     </ClInclude>
@@ -348,9 +366,6 @@
     </ClInclude>
     <ClInclude Include="StructedBuffer.h" />
     <ClInclude Include="ComputeShader.h">
-      <Filter>Resource\Shader\ComputeShader</Filter>
-    </ClInclude>
-    <ClInclude Include="PaintShader.h">
       <Filter>Resource\Shader\ComputeShader</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
@@ -508,7 +523,6 @@
     <ClInclude Include="ModelNode.h">
       <Filter>Resource\Model\ModelNode</Filter>
     </ClInclude>
-    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="BoneAnimator.h">
       <Filter>Common\Component\Animator3D</Filter>
     </ClInclude>
@@ -517,6 +531,57 @@
     </ClInclude>
     <ClInclude Include="Struct.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="SkySphereRenderer.h">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClInclude>
+    <ClInclude Include="SkySphere.h">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="Panal.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="CubeMap.h">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClInclude>
+    <ClInclude Include="UIFactory.h" />
+    <ClInclude Include="ScenePlay.h">
+      <Filter>Common\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageUI.h" />
+    <ClInclude Include="MarioHead.h" />
+    <ClInclude Include="MarioParts.h" />
+    <ClInclude Include="DynamicObject.h">
+      <Filter>Common\GameObj\DynamicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Common\GameObj\DynamicObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Common\GameObj\DynamicObject\Monster\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="PackunStateScript.h">
+      <Filter>Common\GameObj\DynamicObject\Monster\Packun</Filter>
+    </ClInclude>
+    <ClInclude Include="Packun.h">
+      <Filter>Common\GameObj\DynamicObject\Monster\Packun</Filter>
+    </ClInclude>
+    <ClInclude Include="GoombaStateScript.h">
+      <Filter>Common\GameObj\DynamicObject\Monster\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterStateScript.h">
+      <Filter>Common\Component\Camera\Script\MonsterState</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterAiScript.h">
+      <Filter>Common\Component\Camera\Script\MonsterAI</Filter>
+    </ClInclude>
+    <ClInclude Include="AiScript.h">
+      <Filter>Common\Component\Camera\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptureObj.h">
+      <Filter>Common\GameObj\Capture</Filter>
     </ClInclude>
     <ClInclude Include="Button.h" />
     <ClInclude Include="HUD.h" />
@@ -600,9 +665,6 @@
     <ClCompile Include="GridScript.cpp">
       <Filter>Common\Component\Script\Grid</Filter>
     </ClCompile>
-    <ClCompile Include="FadeScript.cpp">
-      <Filter>Common\Component\Script\Fade</Filter>
-    </ClCompile>
     <ClCompile Include="Layer.cpp">
       <Filter>Common\Scene\Layer</Filter>
     </ClCompile>
@@ -644,9 +706,6 @@
     </ClCompile>
     <ClCompile Include="StructedBuffer.cpp" />
     <ClCompile Include="ComputeShader.cpp">
-      <Filter>Resource\Shader\ComputeShader</Filter>
-    </ClCompile>
-    <ClCompile Include="PaintShader.cpp">
       <Filter>Resource\Shader\ComputeShader</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
@@ -791,12 +850,62 @@
     <ClCompile Include="ModelNode.cpp">
       <Filter>Resource\Model\ModelNode</Filter>
     </ClCompile>
-    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="AnimationClip.cpp">
       <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
     <ClCompile Include="BoneAnimator.cpp">
       <Filter>Common\Component\Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Panal.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="SkySphereRenderer.cpp">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="SkySphere.cpp">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeMap.cpp">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFactory.cpp" />
+    <ClCompile Include="ScenePlay.cpp">
+      <Filter>Common\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUI.cpp" />
+    <ClCompile Include="MarioHead.cpp" />
+    <ClCompile Include="MarioParts.cpp" />
+    <ClCompile Include="DynamicObject.cpp">
+      <Filter>Common\GameObj\DynamicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Common\GameObj\DynamicObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Common\GameObj\DynamicObject\Monster\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="Packun.cpp">
+      <Filter>Common\GameObj\DynamicObject\Monster\Packun</Filter>
+    </ClCompile>
+    <ClCompile Include="PackunStateScript.cpp">
+      <Filter>Common\GameObj\DynamicObject\Monster\Packun</Filter>
+    </ClCompile>
+    <ClCompile Include="GoombaStateScript.cpp">
+      <Filter>Common\GameObj\DynamicObject\Monster\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterStateScript.cpp">
+      <Filter>Common\Component\Camera\Script\MonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterAiScript.cpp">
+      <Filter>Common\Component\Camera\Script\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="AiScript.cpp">
+      <Filter>Common\Component\Camera\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureObj.cpp">
+      <Filter>Common\GameObj\Capture</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="HUD.cpp" />

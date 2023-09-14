@@ -13,6 +13,7 @@
 #include "TimerMgr.h"
 #include "ServerMgr.h"
 #include "UIManager.h"
+#include "UIFactory.h"
 
 Application::Application()
 	: mbInitalized(false)
@@ -29,7 +30,6 @@ Application::~Application()
 {
 
 }
-
 void Application::Initialize()
 {
 	GETSINGLE(TimeMgr)->Initialize();
@@ -38,8 +38,9 @@ void Application::Initialize()
 	// GETSINGLE(CollisionMgr)->Initialize();
 	//UIManager::Initialize();
 	renderer::Initialize();
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
+	GETSINGLE(UIFactory)->Initialize();
 	GETSINGLE(ResourceMgr)->Initalize();
-
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();
 	GETSINGLE(SceneMgr)->Initialize();
@@ -73,18 +74,18 @@ void Application::Render()
 {
 	if (!GETSINGLE(TimeMgr)->IsUpdatePass())
 	{
+		
 		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::Render();
-
-		mGraphicDevice->AdjustViewPorts();
+		mGraphicDevice->AdjustToDefaultResolutionViewPorts();
 		renderer::ClearRenderTargets(); // mGraphicDevice::Clear ´ë½Å ·»´õÅ¸°Ù Å¬¸®¾î
 		renderer::Render();
 		//UIManager::Render();
-		GETSINGLE(SceneMgr)->Render();
+		//GETSINGLE(SceneMgr)->Render();
 		GETSINGLE(SceneMgr)->FontRender();
 	}
-}
+}	
 
 void Application::Destroy()
 {
@@ -133,6 +134,7 @@ void Application::DestroySingle()
 	GETSINGLE(server::ServerMgr)->DestroyInstance();
 	GETSINGLE(SceneMgr)->DestroyInstance();
 	GETSINGLE(FontWrapper)->DestroyInstance();
+	GETSINGLE(UIFactory)->DestroyInstance();
 //		GETSINGLE(CollisionMgr)->DestroyInstance();
 	GETSINGLE(PhysXCollisionMgr)->DestroyInstance();
 	GETSINGLE(Fmod)->DestroyInstance();
