@@ -149,6 +149,11 @@ void Transform::SetConstantBuffer()
 	renderer::TransformCB trCb = {};
 	trCb.world = mWorld;
 	trCb.inverseWorld = mWorld.Invert();
+	trCb.worldIT = mWorld;
+	//trCb.worldIT.Translation(Vector3::Zero);
+	trCb.worldIT = trCb.worldIT.Invert().Transpose();
+
+
 	trCb.view = Camera::GetGpuViewMatrix();
 	trCb.inverseView = trCb.view.Invert();
 	trCb.projection = Camera::GetGpuProjectionMatrix();
@@ -175,7 +180,7 @@ const Vector3& Transform::GetWorldPosition()
 {
 	if (GetOwner()->GetComponent<Physical>())
 	{
-		return GetPhysicalPosition();
+		return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
 	}
 	else
 	{

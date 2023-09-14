@@ -32,8 +32,16 @@ void Goomba::Initialize()
 	if(model)
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
+	model->SetVariableMaterialsByKey(0, L"goombaBodyMaterial");
+	model->SetVariableMaterialsByKey(1, L"goombaBodyMaterial");
+	model->SetVariableMaterialsByKey(2, L"goombaBodyMaterial");
+	model->SetVariableMaterialsByKey(7, L"goombaBodyMaterial");
+	model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
+	model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
+
+
 	GoombaStateScript* goombaState = AddComponent<GoombaStateScript>(eComponentType::Script);
-	goombaState->Initialize();
+	//goombaState->Initialize();
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
@@ -42,11 +50,11 @@ void Goomba::Initialize()
 
 	// Rigidbody
 	PhysXRigidBody* rigidbody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	rigidbody->Initialize();
+	//rigidbody->Initialize();
 
 	// MoveMent
-	//AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
-	AddComponent<PhysicalMovement>(eComponentType::Movement)->Initialize();
+	AddComponent<PhysXCollider>(eComponentType::Collider);
+	AddComponent<PhysicalMovement>(eComponentType::Movement);
 
 	// √ ±‚»≠
 	Monster::Initialize();

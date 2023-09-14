@@ -14,7 +14,7 @@
 #include "Physical.h"
 #include "Transform.h"
 
-
+#include "RigidBody.h"
 
 
 	

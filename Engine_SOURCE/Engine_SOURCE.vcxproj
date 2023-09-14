@@ -226,7 +226,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraScript.h" />
+    <ClInclude Include="CapEyeUI.h" />
     <ClInclude Include="CaptureObj.h" />
+    <ClInclude Include="CapUI.h" />
     <ClInclude Include="ClientToServer.h" />
     <ClInclude Include="Collider2D.h" />
     <ClInclude Include="Collider3D.h" />
@@ -243,7 +245,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="FadeScript.h" />
     <ClInclude Include="FileMgr.h" />
     <ClInclude Include="FMod.h" />
     <ClInclude Include="FontWrapper.h" />
@@ -263,6 +264,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GridScript.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="ImageUI.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Light.h" />
@@ -294,6 +296,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PhysX.h" />
     <ClInclude Include="PhysXCollider.h" />
     <ClInclude Include="PhysXCollisionMgr.h" />
+    <ClInclude Include="PhysXRayCast.h" />
     <ClInclude Include="PhysXRigidBody.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
@@ -353,7 +356,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraScript.cpp" />
+    <ClCompile Include="CapEyeUI.cpp" />
     <ClCompile Include="CaptureObj.cpp" />
+    <ClCompile Include="CapUI.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collider3D.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
@@ -366,7 +371,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="druMath.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="FadeScript.cpp" />
     <ClCompile Include="FileMgr.cpp" />
     <ClCompile Include="FMod.cpp" />
     <ClCompile Include="FontWrapper.cpp" />
@@ -384,6 +388,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="GraphicDevice.cpp" />
     <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -413,6 +418,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PhysX.cpp" />
     <ClCompile Include="PhysXCollider.cpp" />
     <ClCompile Include="PhysXCollisionMgr.cpp" />
+    <ClCompile Include="PhysXRayCast.cpp" />
     <ClCompile Include="PhysXRigidBody.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />

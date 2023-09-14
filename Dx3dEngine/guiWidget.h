@@ -34,15 +34,19 @@ namespace gui
 		void SetParent(Widget* parent) { mParent = parent; }
 		Widget* GetParent() { return mParent; }
 		void SetSize(ImVec2 size) { mSize = size; }
+		void SetSize(float x, float y) { mSize = ImVec2(x, y); }
 		ImVec2 GetSize() { return mSize; }
+		void SetColor(ImVec4 color) { mColor = color; }
+		void SetColor(float r, float g, float b, float a) { mColor = ImVec4(r, g, b, a); }
 
 	protected:
 		ImGuiWindowFlags mWindow_flags;
+		ImVec2 mSize;
+		ImVec4 mColor;
+		eState mState;
+		std::vector<Widget*> mChilds;
 
 	private:
-		eState mState;
 		Widget* mParent;
-		std::vector<Widget*> mChilds;
-		ImVec2 mSize;
 	};
 }

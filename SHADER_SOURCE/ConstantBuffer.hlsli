@@ -2,6 +2,7 @@ cbuffer Transform : register(b0)
 {
     row_major matrix world;
     row_major matrix inverseWorld;
+    row_major matrix worldIT;
     row_major matrix view;
     row_major matrix inverseView;
     row_major matrix projection;
@@ -22,8 +23,8 @@ cbuffer Material : register(b1)
     float cbfData4;
     float cbfData5;
     float cbfData6;
-    float cbfData7;
-    float cbfData8;
+    float cbMetallic;
+    float cbRoughness;
     
     float2 cbxy1;
     float2 cbxy2;
@@ -34,7 +35,7 @@ cbuffer Material : register(b1)
     float cbxyzPadding1;
     float3 cbxyz2;
     float cbxyzPadding2;
-    float3 cbxyz3;
+    float3 fresnelcoeff;
     float cbxyzPadding3;
     float3 camPosition;
     float cbxyzPadding4;

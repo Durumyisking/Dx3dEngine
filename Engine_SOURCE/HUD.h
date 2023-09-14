@@ -23,20 +23,29 @@ public:
 	void SetSpeed(float speed) { mSpeed = speed; }
 	void SetState(HUDState state) { mState = state; mActivate = true; }
 	void SetActive(bool isActive) { mActivate = isActive; }
+	void SetChangeSize(Vector3 size) { mChangeSize = size; }
+	void SetTargetPos(Vector3 pos) { mTargetPos = pos; }
+	void SetCount(int count) { mCount = count; }
 
-	void MoveBlink();
+	void MoveBlink(Vector3 changeSize);
 	void MoveTowards();
 	void Rotate();
 	void Size();
-	void GoAndReturn();
-
+	void TitleCapMove();
 	void PlayAnimation();
 
-private:
 
+protected:
 	Vector3 mOriginPos;
 	Vector3 mOriginScale;
+	Vector3 mChangeSize;
+	Vector3 mTargetPos;
 	float mSpeed;
 	float mCurrentTime;
 	bool mActivate;
+	bool mbGoAndReturn;
+
+	int mCount;
+
+private:
 };

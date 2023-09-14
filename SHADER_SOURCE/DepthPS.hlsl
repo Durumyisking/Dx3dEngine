@@ -19,7 +19,7 @@ struct PSOut
 
 PSOut main(VSOut vsIn) : SV_Target
 {
-    PSOut psOut;
+    PSOut psOut = (PSOut) 0.f;
     
     float4 output = float4(0.0f, 0.0f, 0.0f, 1.0f);
     
@@ -27,7 +27,8 @@ PSOut main(VSOut vsIn) : SV_Target
     // 따라서 지금 해줘야함
     float depth = vsIn.ProjPosition.z / vsIn.ProjPosition.w; // z값이 클수록 더 큰 값이 나온다
     //output = (depth.xxx, 1.0f);
-    psOut.depthColor.rgb = depth;
+    psOut.depthColor.r = depth;
+    psOut.depthColor.g = depth * depth;
     psOut.depthColor.w = 1.0f;
     //output.rgb = In.ProjPosition.z / In.ProjPosition.w;
     //output.rgb *= (900 / 1600);

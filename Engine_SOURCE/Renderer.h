@@ -40,10 +40,8 @@ namespace renderer
 	struct Vertex
 	{
 		Vector4 pos;
-		Vector4	color;
 		Vector2 uv;
 		Vector3 tangent;
-		Vector3 biNormal;
 		Vector3 normal;
 
 		Vector4 BlendID;
@@ -54,6 +52,7 @@ namespace renderer
 	{
 		Matrix world;
 		Matrix inverseWorld;
+		Matrix worldIT; // world inverse and transpose
 		Matrix view;
 		Matrix inverseView;
 		Matrix projection;
@@ -74,8 +73,8 @@ namespace renderer
 		float fData4;
 		float fData5;
 		float fData6;
-		float fData7;
-		float fData8;
+		float metallic;
+		float roughness;
 
 		Vector2 xy1;
 		Vector2 xy2;
@@ -86,7 +85,7 @@ namespace renderer
 		float	xyzPadding1;
 		Vector3 xyz2;
 		float	xyzPadding2;
-		Vector3 xyz3;
+		Vector3 FresnelCoeff;
 		float	xyzPadding3;
 		Vector3 CamPosition;
 		float	xyzPadding4;
@@ -207,13 +206,14 @@ namespace renderer
 	extern std::vector<Camera*> Cameras[];
 
 	extern Camera* mainCamera;
+	extern Camera* UICamera;
 	extern std::vector<DebugMesh> debugMeshes;
 	extern std::vector<Light*> lights;
 	extern std::vector<LightAttribute> lightAttributes;
 
 	extern StructedBuffer* lightBuffer;
 
-	extern GameObj* inspectorGameObject;
+	extern GameObj* outlineGameObject;
 
 	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
 

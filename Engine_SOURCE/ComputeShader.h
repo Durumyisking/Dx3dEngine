@@ -10,6 +10,7 @@ public:
 	virtual ~ComputeShader();
 
 	virtual HRESULT Load(const std::wstring& path);
+	virtual HRESULT LoadFullpath(const std::wstring& path);
 	void Create(const std::wstring& path, const std::string& funcName);
 	void OnExcute();
 
