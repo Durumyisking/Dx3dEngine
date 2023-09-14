@@ -45,6 +45,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
+		// ÆÄÀÏ ·Îµå ½ÇÆÐ
 		return E_FAIL;
 	}
 
@@ -62,36 +63,6 @@ HRESULT Model::Load(const std::wstring& path)
 	}
 
 	mVariableMaterials.resize(mMaterials.size());
-	mAssimpImporter.FreeScene();
-
-	return S_OK;
-}
-
-HRESULT Model::LoadFullpath(const std::wstring& path)
-{
-	std::string sPath = ConvertToString(path.c_str());
-	const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES);
-
-	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
-	{
-		// Ã†Ã„Ã€Ã Â·ÃŽÂµÃ¥ Â½Ã‡Ã†Ã
-		return E_FAIL;
-	}
-
-	aiscene->mRootNode->mTransformation = aiMatrix4x4();
-
-	std::wstring sceneName = ConvertToW_String(aiscene->mName.C_Str());
-	mRootNodeName = ConvertToW_String(aiscene->mRootNode->mName.C_Str());
-
-	recursiveProcessNode(aiscene->mRootNode, aiscene, nullptr);
-
-	if (mStructure == nullptr)
-	{
-		mStructure = new StructedBuffer();
-		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
-	}
-
-
 	mAssimpImporter.FreeScene();
 
 	return S_OK;
@@ -164,11 +135,10 @@ void Model::Bind_Render()
 		if (mMeshes[i]->IsRender() == false)
 			continue;
 
-
-		if ((mMeshes[i]->GetName().find(L"Press") != std::wstring::npos) || (mMeshes[i]->GetName().find(L"Close") != std::wstring::npos) || (mMeshes[i]->GetName().find(L"Mustache") != std::wstring::npos))
-		{
+		// ¾ÆÁ÷ ¹Ì±¸Çö
+		// ¿¹¿ÜÃ³¸® ±¸°£ ¿©±â¼­ ¸ðµ¨ÀÇ ·»´õ¸¦ ²¯´ÙÄ×´ÙÇÏ´Â ÇÔ¼ö¸¦ ÀÛ¼ºÇØ¾ßÇÔ
+		if (mMeshes[i]->GetName().find(L"Press") != std::wstring::npos)
 			continue;
-		}
 		/////////////////////////////////////////////////////////////////////
 
 		std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
@@ -480,7 +450,7 @@ void Model::CreateMaterial()
 				matName = texInfo.texName;
 				std::size_t found = matName.find(L"_");
 				if (found != std::wstring::npos) {
-					matName = matName.substr(0, found);
+					matName = matName.substr(0, found); // _ ÀÌÀü±îÁöÀÇ ¹®ÀÚ¿­ ÃßÃâ
 				}
 			}
 			break;
@@ -625,17 +595,4 @@ void Model::SetVariableMaterials(UINT index, Material* mater)
 		return;
 
 	mVariableMaterials[index] = mater;
-}
-
-void Model::SetVariableMaterialsByKey(UINT index, const std::wstring& key)
-{
-	if (index >= mVariableMaterials.size())
-		return;
-
-	Material* mater = GETSINGLE(ResourceMgr)->Find<Material>(key);
-
-	if (mater)
-	{
-		mVariableMaterials[index] = mater;
-	}
 }

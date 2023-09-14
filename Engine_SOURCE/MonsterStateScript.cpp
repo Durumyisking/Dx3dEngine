@@ -41,6 +41,6 @@ void MonsterStateScript::Update()
 void MonsterStateScript::Initialize()
 {
 	// Owner Çü º¯È¯
-	if (GetOwner())
+1	if (GetOwner())
 		mMonster = dynamic_cast<Monster*>(GetOwner());
 }

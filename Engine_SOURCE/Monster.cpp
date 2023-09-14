@@ -25,6 +25,7 @@ void Monster::Initialize()
 	{
 		boneAnimatorInit(animator);
 	}
+	GameObj::Initialize();
 }
 
 void Monster::Update()
