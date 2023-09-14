@@ -31,7 +31,7 @@ namespace renderer
 
 	Texture* postProcessTexture = nullptr;
 	Texture* dsTexture = nullptr;
-	GameObj* inspectorGameObject = nullptr;
+	GameObj* outlineGameObject = nullptr;
 
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
 
@@ -360,14 +360,14 @@ namespace renderer
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::UI)].GetAddressOf());
 
-		dsDesc.DepthEnable = true; // 깊이값 사용할지 말지
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth 값이 작거나 같을때 그림
-		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer 껏다켰다할때 사용
+		dsDesc.DepthEnable = true; // 깊이�??�용?��? 말�?
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth 값이 ?�거??같을??그림
+		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer 껏다켰다?�때 ?�용
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Less)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth 값이 크거나 같을때 그림
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth 값이 ?�거??같을??그림
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Greater)].GetAddressOf());
@@ -703,6 +703,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise3", L"noise/noise_03.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"default", L"default.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"FolderImage", L"folderImage.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
 
@@ -974,7 +975,7 @@ namespace renderer
 
 #pragma region MergeMRT_Material
 		{
-			// RenderTarget Merge 시에 사용할 머테리얼
+			// RenderTarget Merge ?�에 ?�용??머테리얼
 			Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
 			Material* mergeMaterial = new Material();
 			mergeMaterial->SetRenderingMode(eRenderingMode::None);
@@ -1420,7 +1421,7 @@ namespace renderer
 	{
 		Vertex arrCube[24] = {};
 
-		// 윗면
+		// ?�면
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
@@ -1450,7 +1451,7 @@ namespace renderer
 		arrCube[3].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 
-		// 아랫 면	
+		// ?�랫 �?
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
@@ -1479,7 +1480,7 @@ namespace renderer
 		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
 		arrCube[7].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// 왼쪽 면
+		// ?�쪽 �?
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
@@ -1508,7 +1509,7 @@ namespace renderer
 		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
 		arrCube[11].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// 오른쪽 면
+		// ?�른�?�?
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].color = Vector4(0.f, 0.f, 1.f, 1.f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
@@ -1537,7 +1538,7 @@ namespace renderer
 		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
 		arrCube[15].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// 뒷 면
+		// ??�?
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].color = Vector4(1.f, 1.f, 0.f, 1.f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
@@ -1566,7 +1567,7 @@ namespace renderer
 		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
 		arrCube[19].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
-		// 앞 면
+		// ??�?
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].color = Vector4(1.f, 0.f, 1.f, 1.f);
 		arrCube[20].uv = Vector2(0.f, 0.f);

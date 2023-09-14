@@ -10,6 +10,7 @@ public:
 	virtual ~Shader();
 
 	virtual HRESULT Load(const std::wstring& path) override;
+	virtual HRESULT LoadFullpath(const std::wstring& path) override;
 
 
 	void Create(eShaderStage eStage, const std::wstring& path, const std::string& funcName);

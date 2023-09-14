@@ -9,6 +9,9 @@
 #include "SceneMgr.h"
 #include "SimpleMath.h"
 
+#include "PhysXRayCast.h"
+
+
 CameraScript::CameraScript()
 	: mCameraObject(nullptr)
 	, mUICameraObject(nullptr)
@@ -52,6 +55,31 @@ void CameraScript::Update()
 	ShakeMove();
 
 	mTransform->SetPosition(mLookAt);
+
+
+	if (KEY_TAP(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->Raycast();
+		}
+	}
+
+	if (KEY_DOWN(LCTRL) && KEY_DOWN(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->MoveObject();
+		}
+	}
+
+	if (KEY_UP(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+		}
+	}
 
 	if (mUICameraObject != nullptr)
 	{
@@ -104,6 +132,14 @@ void CameraScript::KeyBoardMove()
 	{
 		mLookAt += speed * mTransform->Right() * DT;
 	}
+	if (KEY_DOWN(Q))
+	{
+		mLookAt -= 20.f * mTransform->Up() * DT;
+	}
+	if (KEY_DOWN(E))
+	{
+		mLookAt += 20.f * mTransform->Up() * DT;
+	}	
 	//if (KEY_DOWN(Q))
 	//{
 	//	mLookAt -= 20.f * mPxTransform->Forward() * DT;

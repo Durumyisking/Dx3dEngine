@@ -15,6 +15,7 @@ namespace gui
 		virtual void FixedUpdate() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;
+		virtual void Render() override;
 
 		GameObj* GetTargetGameObject() { return mTargetGameObject; }
 		void SetTargetGameObject(GameObj* target) { mTargetGameObject = target; }

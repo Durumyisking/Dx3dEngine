@@ -35,6 +35,7 @@ public:
 	bool Create(D3D11_TEXTURE2D_DESC& desc);
 
 	virtual HRESULT Load(const std::wstring& path) override;
+	virtual HRESULT LoadFullpath(const std::wstring& path) override;
 	Texture* Load(const std::wstring& path, const Model::TextureInfo& info);
 
 

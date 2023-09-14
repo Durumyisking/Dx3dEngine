@@ -71,6 +71,14 @@ public:
 	{
 		return mWorldMousePosition;
 	}
+	__forceinline math::Vector2 GetMousePosition_client()
+	{
+		return mClientMousePosition;
+	}
+	__forceinline math::Vector2 GetPrevMousePosition_client()
+	{
+		return mPrevClientMousePosition;
+	}
 
 	__forceinline math::Vector3 GetMouseLTapPosition()
 	{
@@ -80,7 +88,10 @@ public:
 	{
 		return mMouseRClickPosition;
 	}
-
+	__forceinline math::Vector3 GetMouseMove()
+	{
+		return mMouseMove;
+	}
 
 	__forceinline bool GetKeyDown(eKeyCode keyCode)
 	{
@@ -106,6 +117,7 @@ private:
 	std::vector<Key> mKeys;
 	math::Vector3 mMousePosition;
 	math::Vector3 mPrevMousePosition;
+	math::Vector3 mMouseMove;
 
 	math::Vector3 mWorldMousePosition;
 	math::Vector3 mMouseLClickPosition;
@@ -113,4 +125,7 @@ private:
 
 	float mWinWidthCenter;
 	float mWinHeightCenter;
+
+	math::Vector2 mClientMousePosition;
+	math::Vector2 mPrevClientMousePosition;
 };
