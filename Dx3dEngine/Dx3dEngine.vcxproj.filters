@@ -23,9 +23,6 @@
     <Filter Include="Widget">
       <UniqueIdentifier>{b9d620b3-168b-4a23-96fe-9b2dfad02f06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Widget\Components">
-      <UniqueIdentifier>{5b3a9758-c887-4f61-ab3a-2c88fe7b10c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Widget\ListWidget">
       <UniqueIdentifier>{84f26484-b717-4c2d-89fe-51164efe3531}</UniqueIdentifier>
     </Filter>
@@ -35,7 +32,31 @@
     <Filter Include="Widget\TreeWidget">
       <UniqueIdentifier>{61f71efc-7184-4101-a29b-f2496aa09923}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Widget\Components\Base">
+    <Filter Include="Editor\Managers">
+      <UniqueIdentifier>{ed97636b-69b6-431b-a8a5-53646a539d88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widget\Group">
+      <UniqueIdentifier>{1dbec8ca-ea62-41de-8c71-c38cc0268470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widget\Image">
+      <UniqueIdentifier>{26ab6d6d-2dc2-4323-889c-70c8dd49955a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Object\Base">
+      <UniqueIdentifier>{c695783c-05bb-46a8-92e3-a2c1dc921dd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Object\DebugObj">
+      <UniqueIdentifier>{3bb725aa-1f5a-4285-9067-96347a346bbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Object\Gizmo">
+      <UniqueIdentifier>{9e584343-48bd-4e1a-9ba2-01f3307409ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widget\Button">
+      <UniqueIdentifier>{53ac0268-fdd9-4f33-a94e-ac65fc1eb058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WidgetComponents">
+      <UniqueIdentifier>{ac29233a-6476-41f7-9b03-1972db88eeda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WidgetComponents\Base">
       <UniqueIdentifier>{7a74e626-791c-4f8d-9cf7-28ea863c9dbf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -104,25 +125,57 @@
     <ClInclude Include="guiProject.h">
       <Filter>View</Filter>
     </ClInclude>
-    <ClInclude Include="guiMeshRenderer.h">
-      <Filter>Widget\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="guiTransform.h">
-      <Filter>Widget\Components</Filter>
-    </ClInclude>
     <ClInclude Include="guiComponent.h">
-      <Filter>Widget\Components\Base</Filter>
+      <Filter>WidgetComponents\Base</Filter>
     </ClInclude>
-    <ClInclude Include="guiDebugObject.h">
-      <Filter>Editor\Object</Filter>
+    <ClInclude Include="guiWidgetMgr.h">
+      <Filter>Editor\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="guiEditorObject.h">
-      <Filter>Editor\Object</Filter>
+    <ClInclude Include="guiEditorObjMgr.h">
+      <Filter>Editor\Managers</Filter>
     </ClInclude>
     <ClInclude Include="guiEditor.h">
-      <Filter>Editor\Object</Filter>
+      <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="guiVisualEditor.h" />
+    <ClInclude Include="guiContentsBrowser.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="guiGroupWidget.h">
+      <Filter>Widget\Group</Filter>
+    </ClInclude>
+    <ClInclude Include="guiOutLiner.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="guiImageWidget.h">
+      <Filter>Widget\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="guiEditorObject.h">
+      <Filter>Editor\Object\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="guiDebugObject.h">
+      <Filter>Editor\Object\DebugObj</Filter>
+    </ClInclude>
+    <ClInclude Include="guiGizmo.h">
+      <Filter>Editor\Object\Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuizmo.h">
+      <Filter>Editor\Object\Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="guiButtonWidget.h">
+      <Filter>Widget\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="guiVisualEditor.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="guiMeshRenderer.h">
+      <Filter>WidgetComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="guiPhysical.h">
+      <Filter>WidgetComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="guiTransform.h">
+      <Filter>WidgetComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Dx3dEngine.rc">
@@ -198,24 +251,56 @@
     <ClCompile Include="guiProject.cpp">
       <Filter>View</Filter>
     </ClCompile>
-    <ClCompile Include="guiTransform.cpp">
-      <Filter>Widget\Components</Filter>
-    </ClCompile>
     <ClCompile Include="guiComponent.cpp">
-      <Filter>Widget\Components\Base</Filter>
+      <Filter>WidgetComponents\Base</Filter>
     </ClCompile>
-    <ClCompile Include="guiMeshRenderer.cpp">
-      <Filter>Widget\Components</Filter>
+    <ClCompile Include="guiWidgetMgr.cpp">
+      <Filter>Editor\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="guiDebugObject.cpp">
-      <Filter>Editor\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="guiEditorObject.cpp">
-      <Filter>Editor\Object</Filter>
+    <ClCompile Include="guiEditorObjMgr.cpp">
+      <Filter>Editor\Managers</Filter>
     </ClCompile>
     <ClCompile Include="guiEditor.cpp">
-      <Filter>Editor\Object</Filter>
+      <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="guiVisualEditor.cpp" />
+    <ClCompile Include="guiContentsBrowser.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="guiGroupWidget.cpp">
+      <Filter>Widget\Group</Filter>
+    </ClCompile>
+    <ClCompile Include="guiOutLiner.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="guiImageWidget.cpp">
+      <Filter>Widget\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="guiEditorObject.cpp">
+      <Filter>Editor\Object\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="guiDebugObject.cpp">
+      <Filter>Editor\Object\DebugObj</Filter>
+    </ClCompile>
+    <ClCompile Include="guiGizmo.cpp">
+      <Filter>Editor\Object\Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuizmo.cpp">
+      <Filter>Editor\Object\Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="guiButtonWidget.cpp">
+      <Filter>Widget\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="guiVisualEditor.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="guiMeshRenderer.cpp">
+      <Filter>WidgetComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="guiPhysical.cpp">
+      <Filter>WidgetComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="guiTransform.cpp">
+      <Filter>WidgetComponents</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

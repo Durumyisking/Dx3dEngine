@@ -11,6 +11,7 @@ HUD::HUD()
 	, mState(HUDState::None)
 	, mActivate(false)
 	, mbGoAndReturn(false)
+	, mCount(3)
 {
 
 }
@@ -24,6 +25,7 @@ HUD::HUD(eUIType type)
 	, mState(HUDState::None)
 	, mActivate(false)
 	, mbGoAndReturn(false)
+	, mCount(3)
 {
 
 }
@@ -73,8 +75,8 @@ void HUD::OnUpdate()
 	case enums::HUDState::Size:
 		Size();
 		break;
-	case enums::HUDState::GoAndReturn:
-		GoAndReturn();
+	case enums::HUDState::TitleCapMove:
+		TitleCapMove();
 		break;
 	case enums::HUDState::End:
 		break;
@@ -173,31 +175,9 @@ void HUD::Size()
 	}
 }
 
-void HUD::GoAndReturn()
+void HUD::TitleCapMove()
 {
-	if (mTargetPos == Vector3::Zero)
-		return;
 
-	Transform* tr = this->GetComponent<Transform>();
-
-	Vector3 a = tr->GetPosition();
-
-	Vector3 b = mTargetPos;
-
-	Vector3 dir = b - a;
-
-	Vector3 fabsDir = Vector3(dir.x, dir.y, 0);
-
-	double value = sqrt(pow(fabsDir.x, 2) + pow(fabsDir.y, 2)); //피타고라스 R값
-
-	Vector3 dirValue = Vector3(fabsDir.x / value, fabsDir.y / value, 0);
-
-	Vector3 pos = this->GetComponent<Transform>()->GetPosition();
-
-	pos.x += dirValue.x * 1 * DT;
-	pos.y += dirValue.y * 1 * DT;
-
-	this->GetComponent<Transform>()->SetPosition(pos);
 }
 
 void HUD::PlayAnimation()

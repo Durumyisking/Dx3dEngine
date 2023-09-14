@@ -19,6 +19,8 @@ namespace gui
 			void AddNode(Node* node);
 			const std::vector<Node*>& GetChilds() { return mChilds; }
 
+			void ChildsResize(UINT size) { mChilds.resize(size); }
+
 			TreeWidget* mTreeWidget;
 			void* mData;
 
@@ -47,6 +49,8 @@ namespace gui
 			mEventWidget = widget;
 			mEvent = func;
 		}
+
+		Node* GetRootNode() { return mRoot; }
 
 
 	private:

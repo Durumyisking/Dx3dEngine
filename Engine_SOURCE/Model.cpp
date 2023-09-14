@@ -1,4 +1,4 @@
-#include "Model.h"
+﻿#include "Model.h"
 #include "Mesh.h"
 #include "Renderer.h"
 #include "Texture.h"
@@ -63,6 +63,37 @@ HRESULT Model::Load(const std::wstring& path)
 	}
 
 	mVariableMaterials.resize(mMaterials.size());
+	mAssimpImporter.FreeScene();
+
+	return S_OK;
+}
+
+HRESULT Model::LoadFullpath(const std::wstring& path)
+{
+	std::string sPath = ConvertToString(path.c_str());
+	const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES);
+
+	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
+	{
+		// 파일 로드 실패
+		return E_FAIL;
+	}
+
+	aiscene->mRootNode->mTransformation = aiMatrix4x4();
+
+	std::wstring sceneName = ConvertToW_String(aiscene->mName.C_Str());
+	mRootNodeName = ConvertToW_String(aiscene->mRootNode->mName.C_Str());
+
+	// ��� Ž�� 
+	recursiveProcessNode(aiscene->mRootNode, aiscene, nullptr);
+
+	if (mStructure == nullptr)
+	{
+		mStructure = new StructedBuffer();
+		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
+	}
+
+
 	mAssimpImporter.FreeScene();
 
 	return S_OK;

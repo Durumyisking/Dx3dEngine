@@ -38,6 +38,11 @@ HRESULT ComputeShader::Load(const std::wstring& path)
 	return E_NOTIMPL;
 }
 
+HRESULT ComputeShader::LoadFullpath(const std::wstring& path)
+{
+	return E_NOTIMPL;
+}
+
 void ComputeShader::Create(const std::wstring& path, const std::string& funcName)
 {
 

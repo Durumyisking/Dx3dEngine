@@ -233,6 +233,9 @@
     <Filter Include="Common\GameObj\Capture">
       <UniqueIdentifier>{790b30db-905b-439a-b52c-e830791d7c44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RayCast">
+      <UniqueIdentifier>{873dbe93-ba2a-42a4-8bb8-de37d53d3cbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -535,11 +538,6 @@
     <ClInclude Include="SkySphere.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="HUD.h" />
-    <ClInclude Include="Panal.h" />
-    <ClInclude Include="UIBase.h" />
-    <ClInclude Include="UIManager.h" />
     <ClInclude Include="CubeMap.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
@@ -579,6 +577,16 @@
     </ClInclude>
     <ClInclude Include="CaptureObj.h">
       <Filter>Common\GameObj\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="CapEyeUI.h" />
+    <ClInclude Include="CapUI.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="Panal.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="PhysXRayCast.h">
+      <Filter>RayCast</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -845,11 +853,6 @@
     <ClCompile Include="BoneAnimator.cpp">
       <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="Panal.cpp" />
-    <ClCompile Include="UIBase.cpp" />
-    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="SkySphereRenderer.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
@@ -895,6 +898,16 @@
     </ClCompile>
     <ClCompile Include="CaptureObj.cpp">
       <Filter>Common\GameObj\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp" />
+    <ClCompile Include="CapUI.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Panal.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="PhysXRayCast.cpp">
+      <Filter>RayCast</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
