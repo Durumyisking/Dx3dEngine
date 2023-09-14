@@ -74,9 +74,6 @@
     <Filter Include="Common\Component\Script\Grid">
       <UniqueIdentifier>{07391d1a-6255-4748-b831-1c8a300fc277}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Component\Script\Fade">
-      <UniqueIdentifier>{8f1ca778-f3ef-4a39-9eeb-8739549585e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\Component\Collider">
       <UniqueIdentifier>{01ea66c5-b9ca-49ae-a581-fd103eafd344}</UniqueIdentifier>
     </Filter>
@@ -233,6 +230,9 @@
     <Filter Include="Common\GameObj\Capture">
       <UniqueIdentifier>{790b30db-905b-439a-b52c-e830791d7c44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RayCast">
+      <UniqueIdentifier>{873dbe93-ba2a-42a4-8bb8-de37d53d3cbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -321,9 +321,6 @@
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Common\GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="FadeScript.h">
-      <Filter>Common\Component\Script\Fade</Filter>
     </ClInclude>
     <ClInclude Include="Layer.h">
       <Filter>Common\Scene\Layer</Filter>
@@ -538,11 +535,6 @@
     <ClInclude Include="SkySphere.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="HUD.h" />
-    <ClInclude Include="Panal.h" />
-    <ClInclude Include="UIBase.h" />
-    <ClInclude Include="UIManager.h" />
     <ClInclude Include="CubeMap.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
@@ -550,6 +542,7 @@
     <ClInclude Include="ScenePlay.h">
       <Filter>Common\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="ImageUI.h" />
     <ClInclude Include="MarioHead.h" />
     <ClInclude Include="MarioParts.h" />
     <ClInclude Include="DynamicObject.h">
@@ -581,6 +574,16 @@
     </ClInclude>
     <ClInclude Include="CaptureObj.h">
       <Filter>Common\GameObj\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="CapEyeUI.h" />
+    <ClInclude Include="CapUI.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="Panal.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="PhysXRayCast.h">
+      <Filter>RayCast</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -655,9 +658,6 @@
     </ClCompile>
     <ClCompile Include="GridScript.cpp">
       <Filter>Common\Component\Script\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="FadeScript.cpp">
-      <Filter>Common\Component\Script\Fade</Filter>
     </ClCompile>
     <ClCompile Include="Layer.cpp">
       <Filter>Common\Scene\Layer</Filter>
@@ -850,11 +850,6 @@
     <ClCompile Include="BoneAnimator.cpp">
       <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="Panal.cpp" />
-    <ClCompile Include="UIBase.cpp" />
-    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="SkySphereRenderer.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
@@ -868,6 +863,7 @@
     <ClCompile Include="ScenePlay.cpp">
       <Filter>Common\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="MarioHead.cpp" />
     <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="DynamicObject.cpp">
@@ -899,6 +895,16 @@
     </ClCompile>
     <ClCompile Include="CaptureObj.cpp">
       <Filter>Common\GameObj\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp" />
+    <ClCompile Include="CapUI.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Panal.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="PhysXRayCast.cpp">
+      <Filter>RayCast</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

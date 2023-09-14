@@ -339,6 +339,50 @@ HRESULT Texture::Load(const std::wstring& path)
 	return S_OK;
 }
 
+HRESULT Texture::LoadFullpath(const std::wstring& path)
+{
+	std::wstring fullPath = path;
+
+
+	wchar_t szExtension[256] = {};
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // 경로에서 확장자만 뽑아오는 녀석
+
+	std::wstring extension(szExtension);
+
+	if (extension == L".dds" || extension == L".DDS")
+	{
+		if (FAILED(LoadFromDDSFile(fullPath.c_str(), DDS_FLAGS::DDS_FLAGS_NONE, nullptr, mImage)))
+			return S_FALSE;
+	}
+	else if (extension == L".tga" || extension == L".TGA")
+	{
+		if (FAILED(LoadFromTGAFile(fullPath.c_str(), nullptr, mImage)))
+			return S_FALSE;
+	}
+	else // WIC (png, jpg, jpeg, bmp )
+	{
+		if (FAILED(LoadFromWICFile(fullPath.c_str(), WIC_FLAGS::WIC_FLAGS_NONE, nullptr, mImage)))
+			return S_FALSE;
+	}
+
+
+	CreateShaderResourceView(
+		GetDevice()->GetID3D11Device()
+		, mImage.GetImages()
+		, mImage.GetImageCount()
+		, mImage.GetMetadata()
+		, mSRV.GetAddressOf()
+	);
+
+
+	mSRV->GetResource((ID3D11Resource**)mTexture.GetAddressOf());
+
+	mTexture->GetDesc(&mDesc);
+
+
+	return S_OK;
+}
+
 Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 {
 	wchar_t szExtension[256] = {};
@@ -362,23 +406,23 @@ Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 			return nullptr;
 	}
 
-	//TEST
+	////TEST
 	//{
 	//   std::vector<std::uint8_t> pixels{};
 	//   pixels.resize(mImage.GetPixelsSize());
 	//   std::memcpy(pixels.data(), mImage.GetPixels(), pixels.size());
-	//
+
 	//   ScratchImage image;
 	//   std::memcpy(&image, &mImage, sizeof(ScratchImage));
-	//
+
 	//   for (size_t i = 0; i < pixels.size(); ++i)
 	//   {
 	//	  if (i % 4 == 0)
 	//		 pixels[i] = 255 - pixels[i];
 	//   }
-	//
+
 	//   std::memcpy(image.GetImages()->pixels, pixels.data(), pixels.size());
-	//
+
 	//   {
 	//	  const std::wstring folderName = L"./TEST/";
 	//	  const std::wstring fileName = std::filesystem::path{ path }.filename().wstring();

@@ -24,6 +24,7 @@ public:
 	virtual ~Material();
 
 	virtual HRESULT Load(const std::wstring& path) override;
+	virtual HRESULT LoadFullpath(const std::wstring& path) override;
 
 	void SetData(eGPUParam param, void* data);
 	void Bind();

@@ -15,7 +15,6 @@
 #include "UIManager.h"
 #include "UIFactory.h"
 
-
 Application::Application()
 	: mbInitalized(false)
 	, mGraphicDevice(nullptr)
@@ -80,7 +79,7 @@ void Application::Render()
 		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::Render();
 		mGraphicDevice->AdjustToDefaultResolutionViewPorts();
-		renderer::ClearRenderTargets(); // mGraphicDevice::Clear ëŒ€ì‹  ë Œë”íƒ€ê²Ÿ í´ë¦¬ì–´
+		renderer::ClearRenderTargets(); // mGraphicDevice::Clear ´ë½Å ·»´õÅ¸°Ù Å¬¸®¾î
 		renderer::Render();
 		//UIManager::Render();
 		//GETSINGLE(SceneMgr)->Render();
@@ -111,7 +110,7 @@ void Application::Run()
 	FixedUpdate();
 	Render();
 
-	// í”„ë ˆì„ ì¢…ë£Œ í›„ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ ë° ì¶”ê°€
+	// ÇÁ·¹ÀÓ Á¾·á ÈÄ ¿ÀºêÁ§Æ® »èÁ¦ ¹× Ãß°¡
 	Destroy();
 	LateEvent();
 }

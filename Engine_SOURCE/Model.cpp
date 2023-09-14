@@ -68,6 +68,36 @@ HRESULT Model::Load(const std::wstring& path)
 	return S_OK;
 }
 
+HRESULT Model::LoadFullpath(const std::wstring& path)
+{
+	std::string sPath = ConvertToString(path.c_str());
+	const aiScene* aiscene = mAssimpImporter.ReadFile(sPath, ASSIMP_LOAD_FLAGES);
+
+	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
+	{
+		// 파일 로드 실패
+		return E_FAIL;
+	}
+
+	aiscene->mRootNode->mTransformation = aiMatrix4x4();
+
+	std::wstring sceneName = ConvertToW_String(aiscene->mName.C_Str());
+	mRootNodeName = ConvertToW_String(aiscene->mRootNode->mName.C_Str());
+
+	recursiveProcessNode(aiscene->mRootNode, aiscene, nullptr);
+
+	if (mStructure == nullptr)
+	{
+		mStructure = new StructedBuffer();
+		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
+	}
+
+	mVariableMaterials.resize(mMaterials.size());
+	mAssimpImporter.FreeScene();
+
+	return S_OK;
+}
+
 ModelNode* Model::FindNode(const std::wstring& nodeName)
 {
 
@@ -346,16 +376,19 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
 		}
 
-		mTextures.emplace_back(textureBuff);
-
-		std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
-		for (auto& tex : texInfo)
+		if (textureBuff.size() > 0)
 		{
-			if (tex.texPath == L"")
-				continue;
+			mTextures.emplace_back(textureBuff);
 
-			tex.pTex = new Texture();
-			tex.pTex->Load(tex.texPath, tex);
+			std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
+			for (auto& tex : texInfo)
+			{
+				if (tex.texPath == L"")
+					continue;
+
+				tex.pTex = new Texture();
+				tex.pTex->Load(tex.texPath, tex);
+			}
 		}
 
 		//Material
@@ -592,4 +625,18 @@ void Model::SetVariableMaterials(UINT index, Material* mater)
 		return;
 
 	mVariableMaterials[index] = mater;
+}
+
+void Model::SetVariableMaterialsByKey(UINT index, const std::wstring& key)
+{
+	if (index >= mVariableMaterials.size())
+		return;
+
+	Material* mater = GETSINGLE(ResourceMgr)->Find<Material>(key);
+
+	if (mater)
+	{
+		mVariableMaterials[index] = mater;
+	}
+
 }

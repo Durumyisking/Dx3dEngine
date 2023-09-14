@@ -8,7 +8,6 @@ struct VSOut
   
     nointerpolation float3 ViewTangent : TANGENT;
     nointerpolation float3 ViewNormal : NORMAL;
-    nointerpolation float3 ViewBiNormal : BINORMAL;
 
 };
 
@@ -18,14 +17,18 @@ float4 main(VSOut vsIn) : SV_Target
 
     float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.0f);
     float3 normal = vsIn.ViewNormal;
+    float3 worldPos = mul(float4(vsIn.ViewPos, 1.f), inverseWorld);
+    float pixelToCam = distance(cameraWorldPos.xyz, worldPos);
 
+    
     if (1 == cbbAlbedo)
     {
-        albedo = TextureMapping_albedo(vsIn.UV);
+        albedo = TextureMapping_albedo(vsIn.UV, pixelToCam);
     }
+    
     if (1 == cbbNormal)
     {
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, pixelToCam);
     }
 
 

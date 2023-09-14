@@ -153,7 +153,7 @@ float3 CalculateLightPBR_Direct(float3 worldPos, float4 albedo, float3 worldNorm
     float3 irradiance = irradianceMap.Sample(skyBoxSampler, N).rgb;    
     float3 diffuse = irradiance * albedo.xyz;
 
-    const float MAX_REFLECTION_LOD = 4.f;
+    const float MAX_REFLECTION_LOD = 6.f;
     float3 prefilteredColor = prefilteredMap.SampleLevel(skyBoxSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
     
     // brdf 텍스처를 x는 반사에 따라 y는 러프니스에 따라 샘플링한다.
@@ -172,7 +172,7 @@ float4 CombineLights(float4 color, LightColor lightColor)
 {
     color.rgb *= lightColor.diffuse.rgb;
 
-    color.rgb += lightColor.specular.rgb;
+    //color.rgb += lightColor.specular.rgb;
     
     color.rgb += color.rgb * lightColor.ambient.rgb;
 
@@ -191,21 +191,24 @@ float3 DiffuseIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
 }
 
 float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
-                   float metallic, float roughness)
+                   float metallic, float roughness, float pixelToCam)
 {
+    float mip = pixelToCam / 1.2f;
+    if(mip > 6)
+        mip = 6;
     float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(dot(normalWorld, pixelToEye), 1.0 - roughness), 0.0f).rg;
     float3 specularIrradiance = prefilteredMap.SampleLevel(linearSampler, reflect(-pixelToEye, normalWorld),
-                                                            2 + roughness * 5.0f).rgb;
+                                                            0 + roughness * 5.f).rgb;
     const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
     float3 F0 = lerp(Fdielectric, albedo, metallic);
 
     return (F0 * specularBRDF.x + specularBRDF.y) * specularIrradiance;
 }
 float3 AmbientLightingByIBL(float3 albedo, float3 normalW, float3 pixelToEye,
-                            float metallic, float roughness)
+                            float metallic, float roughness, float pixelToCam)
 {
     float3 diffuseIBL = DiffuseIBL(albedo, normalW, pixelToEye, metallic);
-    float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness);
+    float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCam);
     
     return (diffuseIBL + specularIBL);
 }
@@ -216,7 +219,7 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
     //float3 lightVec = light.type & 0
     //                  ? -light.direction
     //                  : light.position.xyz - posWorld;
-    float3 lightVec = -light.direction;
+    float3 lightVec = -light.direction.xyz;
                               
     float lightDist = length(lightVec);
     lightVec /= lightDist;
@@ -257,19 +260,26 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
     return radiance;
 }
 
+
+
 float VSM_FILTER(float2 moments, float fragDepth)
 {
-    float lit = (float) 0.0f;
+    float lit = (float) 1.0f;
     float E_x2 = moments.y;
     float Ex_2 = moments.x * moments.x;
     float variance = E_x2 - Ex_2;
-    variance = max(variance, 0.0005f);
+    variance = max(variance, 0.0000005f);
 
-    float mD = moments.x - fragDepth;
-    float mD_2 = mD * mD;
-    float p = variance / (variance + mD_2);
-
-    lit = max(p, fragDepth <= moments.x);
+    float mD = fragDepth - moments.x;
+    
+    float p = 1.f;
+    if (mD > 0.f)
+    {
+        float mD_2 = mD * mD;
+        p = variance / (variance + mD_2);
+    }
+        
+    lit = max(p, 0.4f);
 
     return lit;
 }

@@ -59,9 +59,11 @@
 #include "Panal.h"
 #include "HUD.h"
 #include "Button.h"
+#include "ImageUI.h"
 #include "UIFactory.h"
 #include "Animator.h"
 
+#include "Goomba.h"
 
 
 ScenePlay::ScenePlay()
@@ -76,30 +78,36 @@ ScenePlay::~ScenePlay()
 
 void ScenePlay::Initialize()
 {
+	//{
+	//	mCamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"MainCamera");
+	//	Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
+	//	cameraComp->TurnLayerMask(eLayerType::UI, false);
+	//	cameraComp->SmoothOn();
+	//	mCamera->AddComponent<CameraScript>(eComponentType::Script);
+	//	cameraComp->SetProjectionType(eProjectionType::Perspective);
+	//	mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
+
+	//}
+
+	//{
+	//	// UI Camera
+	//	mUICamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"UICamera");
+	//	Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
+	//	mUICamera->AddComponent<CameraScript>(eComponentType::Script);
+
+	//	cameraUIComp->SetProjectionType(eProjectionType::Perspective);
+	//	cameraUIComp->SmoothOn();
+	//	cameraUIComp->DisableLayerMasks();
+	//	cameraUIComp->TurnLayerMask(eLayerType::UI, true);
+	//	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
+	//}
+
 	{
-		mCamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"MainCamera");
-		Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
-		cameraComp->TurnLayerMask(eLayerType::UI, false);
-		cameraComp->SmoothOn();
-		mCamera->AddComponent<CameraScript>(eComponentType::Script);
-		cameraComp->SetProjectionType(eProjectionType::Perspective);
-		mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
-
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(0.f, 5.f, -17.f));
+		goomba->SetScale(Vector3(0.01f, 0.01f, 0.01f));
+		goomba->SetName(L"Goomba");
 	}
-
-	{
-		// UI Camera
-		mUICamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"UICamera");
-		Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
-		mUICamera->AddComponent<CameraScript>(eComponentType::Script);
-
-		cameraUIComp->SetProjectionType(eProjectionType::Perspective);
-		cameraUIComp->SmoothOn();
-		cameraUIComp->DisableLayerMasks();
-		cameraUIComp->TurnLayerMask(eLayerType::UI, true);
-		mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
-	}
-
 	//{
 	//	Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 	//	player->SetPos(Vector3(5.f, 5.f, 9.5f));
@@ -243,6 +251,7 @@ void ScenePlay::Initialize()
 		Player* player = object::Instantiate<Player>(eLayerType::Player,this);
 	}
 
+
 	CreatePlayerUI();
 
 	Scene::Initialize();
@@ -273,11 +282,11 @@ void ScenePlay::render()
 
 void ScenePlay::Enter()
 {
-	mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
-	mCamera->SetRotation(Vector3::Zero);
-	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
-	mUICamera->SetRotation(Vector3::Zero);
-	renderer::mainCamera = mCamera->GetComponent<Camera>();
+	//mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
+	//mCamera->SetRotation(Vector3::Zero);
+	//mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
+	//mUICamera->SetRotation(Vector3::Zero);
+	//renderer::mainCamera = mCamera->GetComponent<Camera>();
 
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLight");
@@ -302,11 +311,11 @@ void ScenePlay::CreatePlayerUI()
 {
 	//Life UI
 	{
-		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(6.4f, 3.1f, 10.f), Vector3(1.0f, 1.0f, 1.0f), L"LifePanal",this));
+		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 10.f), Vector3(100.0f, 100.0f, 1.0f), L"LifePanal", this));
 		//LifeGauge
-		HUD* hud = (GETSINGLE(UIFactory)->CreateHud(L"LifeGauge", L"LifeGauge_3Material", Vector3(0.f, 0.f, 0.f), Vector3::One, mLifePanal, this));
+		HUD* hud = (GETSINGLE(UIFactory)->CreateHud(L"LifeGauge", L"LifeGauge_3Material", Vector3(7.f, 3.6f, 0.f), Vector3::One, mLifePanal, this));
 		//Lifeheart
-		HUD* lifeheart = (GETSINGLE(UIFactory)->CreateHud(L"LifeHeart", L"LifeheartMaterial", Vector3(0.f, -0.03f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
+		HUD* lifeheart = (GETSINGLE(UIFactory)->CreateHud(L"LifeHeart", L"LifeheartMaterial", Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
 
 		mLifePanal->Addchild(hud);
 		mLifePanal->Addchild(lifeheart);
@@ -314,10 +323,10 @@ void ScenePlay::CreatePlayerUI()
 
 	//Left Coin UI
 	{
-		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(-6.4f, 3.1f, 10.f), Vector3(0.7f, 0.7f, 1.0f), L"CoinPanal", this));
-		HUD* coin = (GETSINGLE(UIFactory)->CreateHud(L"Coin", L"CoinMaterial", Vector3(0.f, 0.f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
-		HUD* cityCoin = (GETSINGLE(UIFactory)->CreateHud(L"CityCoin", L"CityCoinMaterial", Vector3(3.f, 0.1f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
-		HUD* bar = (GETSINGLE(UIFactory)->CreateHud(L"Bar", L"BarMaterial", Vector3(2.f, -0.55f, 0.f), Vector3(5.f, 1.4f, 1.f), mCoinPanal, this));
+		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this));
+		HUD* coin = (GETSINGLE(UIFactory)->CreateHud(L"Coin", L"CoinMaterial", Vector3(-7.f, 3.5f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
+		HUD* cityCoin = (GETSINGLE(UIFactory)->CreateHud(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
+		ImageUI* bar = (GETSINGLE(UIFactory)->CreateImage(L"Bar", L"BarMaterial", Vector3(-5.4f, 2.9f, 0.f), Vector3(4.2f, 1.4f, 1.f), mCoinPanal, this));
 		mCoinPanal->Addchild(coin);
 		mCoinPanal->Addchild(cityCoin);
 		mCoinPanal->Addchild(bar);
@@ -325,23 +334,23 @@ void ScenePlay::CreatePlayerUI()
 
 	//left Luna UI
 	{
-		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(-6.4f, 2.0f, 10.f), Vector3::One, L"LunaPanal", this));
+		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f,100.0f,1.0f), L"LunaPanal", this));
 
 		for (size_t i = 0; i < 10; i++)
 		{
 			for (size_t j = 0; j < 2; j++)
 			{
-				Vector3 position = Vector3(-0.11f + (0.33f * i), (0.40f - (0.35f * j)) + (0.01f * i), 0.f);
+				Vector3 position = Vector3(-7.f + (0.33f * i), (2.5f - (0.35f * j)) + (0.01f * i), 0.f);
 
 
-				HUD* luna = (GETSINGLE(UIFactory)->CreateHud(L"Luna" + std::to_wstring(i) + std::to_wstring(j * 10), L"LunaMaterial",
+				ImageUI* luna = (GETSINGLE(UIFactory)->CreateImage(L"Luna" + std::to_wstring(i) + std::to_wstring(j * 10), L"LunaMaterial",
 					position,
 					Vector3(0.3f, 0.3f, 1.f),
 					mLunaPanal, this));
 				luna->Die();
 				mLunaPanal->Addchild(luna);
 
-				HUD* dottedLine = (GETSINGLE(UIFactory)->CreateHud(L"DottedLine" + std::to_wstring(i) + std::to_wstring(j * 10), L"DottedLineMaterial",
+				ImageUI* dottedLine = (GETSINGLE(UIFactory)->CreateImage(L"DottedLine" + std::to_wstring(i) + std::to_wstring(j * 10), L"DottedLineMaterial",
 					position,
 					Vector3(0.3f, 0.3f, 1.f),
 					mLunaPanal, this));

@@ -15,7 +15,6 @@ Monster::~Monster()
 
 void Monster::Initialize()
 {
-
 	//StateInfoSetting
 	mStateInfo.resize(static_cast<int>(eMonsterState::Die) + 1);
 	
@@ -26,15 +25,13 @@ void Monster::Initialize()
 	{
 		boneAnimatorInit(animator);
 	}
-
+	GameObj::Initialize();
 }
 
 void Monster::Update()
 {
-
 	GameObj::Update();
 	CaptureObj::Update();
-
 }
 
 void Monster::FixedUpdate()

@@ -97,7 +97,6 @@ void CubeMapHDR::createEnvMap()
     // Create the TextureCube for enviroment mapping rendertarget
     D3D11_TEXTURE2D_DESC textureDesc = {};
 
-
     textureDesc.MipLevels = 1;
     textureDesc.ArraySize = 6;
     textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -126,23 +125,26 @@ void CubeMapHDR::createEnvMap()
     GetDevice()->CreateShaderResourceView(mIrradianceTex, &srvDesc, &mIrradianceSRV);
     GetDevice()->CreateShaderResourceView(mPreFilterTex, &srvDesc, &mPreFilterSRV);
 
-    for (uint32_t i = 0; i < 6; i++)
-    {
-        D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-        rtvDesc.Format = textureDesc.Format;
-        rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY; 
-        rtvDesc.Texture2DArray.MipSlice = 0;
-        rtvDesc.Texture2DArray.FirstArraySlice = i;
-        rtvDesc.Texture2DArray.ArraySize = 1;
+    //for (uint32_t m = 0; m < 6; m++)
+    //{
+        for (uint32_t i = 0; i < 6; i++)
+        {
+            D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+            rtvDesc.Format = textureDesc.Format;
+            rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+            rtvDesc.Texture2DArray.MipSlice = 0;
+            rtvDesc.Texture2DArray.FirstArraySlice = i;
+            rtvDesc.Texture2DArray.ArraySize = 1;
 
-        ID3D11RenderTargetView* rtv2 = nullptr;
-        GetDevice()->CreateRenderTargetView(mIrradianceTex, &rtvDesc, &rtv2);
-        ID3D11RenderTargetView* rtv3 = nullptr;
-        GetDevice()->CreateRenderTargetView(mPreFilterTex, &rtvDesc, &rtv3);
+            ID3D11RenderTargetView* rtv2 = nullptr;
+            GetDevice()->CreateRenderTargetView(mIrradianceTex, &rtvDesc, &rtv2);
+            ID3D11RenderTargetView* rtv3 = nullptr;
+            GetDevice()->CreateRenderTargetView(mPreFilterTex, &rtvDesc, &rtv3);
 
-        mRTVs2.emplace_back(rtv2);
-        mRTVs3.emplace_back(rtv3);
-    }
+            mRTVs2.emplace_back(rtv2);
+            mRTVs3.emplace_back(rtv3);
+        }
+    //}
     mIrradianceTex->Release();
     mPreFilterTex->Release();
 }
@@ -186,7 +188,7 @@ void CubeMapHDR::bindPrefilterMap()
 
     for (uint32_t i = 0; i < 6; ++i)
     {
-        float clearColor[4] = { 0.0f, 0.f, 1.f, 1.0f };
+        float clearColor[4] = { 1.0f, 0.f, 0.f, 1.0f };
         GetDevice()->GetDeviceContext()->ClearRenderTargetView(mRTVs3[i], clearColor);
         XMMATRIX d = XMMatrixTranspose(captureViews[i] * captureProjection);
         mProjConstantBuffer.matrix = d;

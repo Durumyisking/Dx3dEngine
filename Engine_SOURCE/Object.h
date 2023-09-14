@@ -42,6 +42,17 @@ namespace object
 	}
 
 	template <typename T>
+	static T* Instantiate(enums::eLayerType layerType, Scene* scene, const std::wstring& key, eUIType type)
+	{
+		T* gameObj = new T(key, type);
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
+
+		return gameObj;
+	}
+
+	template <typename T>
 	static T* Instantiate(enums::eLayerType layerType,eUIType uiType ,Scene* scene)
 	{
 		T* gameObj = new T(uiType);

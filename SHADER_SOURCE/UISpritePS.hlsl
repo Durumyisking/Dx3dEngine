@@ -4,7 +4,6 @@
 struct VSIn
 {
     float4 Pos : POSITION;
-    float4 Color : COLOR;
     float2 UV : TEXCOORD;
 };
 
@@ -12,7 +11,6 @@ struct VSOut
 {
     float4 Pos : SV_Position;
     float3 WorldPos : POSITION;
-    float4 Color : COLOR;
     float2 UV : TEXCOORD;
 };
 
@@ -52,7 +50,7 @@ float4 main(VSOut In) : SV_Target
         discard;
     
     LightColor lightColor = (LightColor) 0.0f;
-    for (int i = 0; i < lightCount; i++)
+    for (unsigned int i = 0; i < lightCount; i++)
     {
         CalculateLight(lightColor, In.WorldPos.xyz, i);
     }
