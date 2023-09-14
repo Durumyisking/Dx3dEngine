@@ -6,6 +6,7 @@
 #include "EngineResource.h"
 #include "guiInspector.h"
 #include "SpriteRenderer.h"
+#include "guiWidgetMgr.h"
 
 
 extern gui::Editor editor;
@@ -68,7 +69,7 @@ namespace gui
 		ImGui::SameLine();
 		if (ImGui::Button("##MeshBtn", ImVec2(15.0f, 15.0f)))
 		{
-			ListWidget* listUI = editor.GetWidget<ListWidget>("ListWidget");
+			ListWidget* listUI = GETSINGLE(WidgetMgr)->GetWidget<ListWidget>("ListWidget");
 			listUI->SetState(eState::Active);
 			
 
@@ -96,7 +97,7 @@ namespace gui
 		ImGui::SameLine();
 		if (ImGui::Button("##MaterialBtn", ImVec2(15.0f, 15.0f)))
 		{
-			ListWidget* listUI = editor.GetWidget<ListWidget>("ListWidget");
+			ListWidget* listUI = GETSINGLE(WidgetMgr)->GetWidget<ListWidget>("ListWidget");
 			listUI->SetState(eState::Active);
 			//모든 메쉬의 리소스를 가져와야한다.
 			std::vector<Material*> materials
@@ -124,7 +125,7 @@ namespace gui
 		std::wstring wKey(key.begin(), key.end());
 		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(wKey);
 
-		Inspector* inspector = editor.GetWidget<Inspector>("Inspector");
+		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
 		inspector->GetTargetGameObject()->GetComponent<MeshRenderer>()->SetMesh(mesh);
 	}
 
@@ -133,7 +134,7 @@ namespace gui
 		std::wstring wKey(key.begin(), key.end());
 		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(wKey);
 
-		Inspector* inspector = editor.GetWidget<Inspector>("Inspector");
+		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
 		inspector->GetTargetGameObject()->GetComponent<MeshRenderer>()->SetMaterial(material);
 	}
 }

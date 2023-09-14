@@ -9,8 +9,12 @@
 #include "TimeMgr.h"
 #include "Layer.h"
 #include "ResourceMgr.h"
+#include "InputMgr.h"
 
 #include "Physical.h"
+#include "Object.h"
+
+#include "PhysXRayCast.h"
 
 extern Application application;
 
@@ -47,7 +51,7 @@ Camera::~Camera()
 }
 void Camera::Initialize()
 {
-	RegisterCameraInRenderer();
+	//RegisterCameraInRenderer();
 }
 
 void Camera::Update()
@@ -70,7 +74,6 @@ void Camera::Update()
 		Dir.z = GetOwner()->GetPos().z;
 		(Dir).Normalize(mCamDir);
 	}
-
 }
 
 void Camera::FixedUpdate()
@@ -98,7 +101,7 @@ void Camera::Render()
 
 	LightMatrixCB data = {};
 	data.lightView = CreateViewMatrix(&directionLighttr);
-	data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, 1600, 900, 1.0f, 1000.0f);
+	data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, static_cast<float>(application.GetWidth()), static_cast<float>(application.GetHeight()), 1.0f, 1000.0f);
 	lightCB->SetData(&data);
 	lightCB->Bind(eShaderStage::VS);	
 	lightCB->Bind(eShaderStage::PS);
@@ -143,14 +146,15 @@ void Camera::CreateViewMatrix()
 	// 이동정보
 	Vector3 translation = transform->GetPosition();
 
-	// create view translation matrix
-	mView = Matrix::Identity;
-	mView *= Matrix::CreateTranslation(-translation);
-
+	
 	// 회전정보
 	Vector3 up = transform->Up();
 	Vector3 right = transform->Right();
 	Vector3 foward = transform->Forward();
+	
+	//create view translation matrix
+	mView = Matrix::Identity;
+	mView *= Matrix::CreateTranslation(-translation);
 
 	Matrix viewRotate;
 	viewRotate._11 = right.x; 		viewRotate._12 = up.x;		 viewRotate._13 = foward.x;
@@ -177,6 +181,9 @@ Matrix Camera::CreateViewMatrix(Transform* tr)
 
 	
 	return view;
+
+	////새로 적용할 회전행렬
+	//mView = XMMatrixLookAtLH(translation, foward, up);
 }
 
 void Camera::CreateProjectionMatrix()
@@ -248,6 +255,8 @@ void Camera::SetTarget(GameObj* target)
 
 bool Camera::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance)
 {
+
+
 	if (this == renderer::mainCamera)
 	{
 		Physical* physical = gameObject->GetComponent<Physical>();
@@ -315,6 +324,7 @@ bool Camera::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObj
 
 	return false;
 }
+
 
 void Camera::sortGameObjects()
 {
@@ -479,4 +489,20 @@ bool Camera::renderPassCheck(GameObj* obj)
 	}
 
 	return true;
+}
+
+void Camera::SetLayerMaskOn(eLayerType type)
+{
+	if (mLayerMask.test((UINT)type))
+		return;
+
+	mLayerMask.flip((UINT)type);
+}
+
+void Camera::SetLayerMaskOFF(eLayerType type)
+{
+	if (!mLayerMask.test((UINT)type))
+		return;
+
+	mLayerMask.flip((UINT)type);
 }

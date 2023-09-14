@@ -22,6 +22,7 @@ namespace renderer
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendState[static_cast<UINT>(eBlendStateType::End)];
 
 	Camera* mainCamera = nullptr;
+	Camera* UICamera = nullptr;
 	std::vector<Camera*> Cameras[static_cast<UINT>(SceneMgr::eSceneType::End)];
 	std::vector<DebugMesh> debugMeshes;
 	std::vector<Light*> lights;
@@ -30,7 +31,7 @@ namespace renderer
 
 	Texture* postProcessTexture = nullptr;
 	Texture* dsTexture = nullptr;
-	GameObj* inspectorGameObject = nullptr;
+	GameObj* outlineGameObject = nullptr;
 
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
 
@@ -138,13 +139,6 @@ namespace renderer
 		}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UIShader");
-			GetDevice()->CreateInputLayout(arrLayout, 3
-				, shader->GetVSBlobBufferPointer()
-				, shader->GetVSBlobBufferSize()
-				, shader->GetInputLayoutAddr());
-		}
-		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FadeShader");
 			GetDevice()->CreateInputLayout(arrLayout, 3
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
@@ -312,15 +306,32 @@ namespace renderer
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Skybox)].GetAddressOf());
 
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Clamp)].GetAddressOf());
+
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+		samplerDesc.BorderColor[0] = 1.f;
+		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::ShadowPoint)].GetAddressOf());
+
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Point), 1, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Linear), 1, samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Anisotropic), 1, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Skybox), 1, samplerState[static_cast<UINT>(eSamplerType::Skybox)].GetAddressOf());
+		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Clamp), 1, samplerState[static_cast<UINT>(eSamplerType::Clamp)].GetAddressOf());
+		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::ShadowPoint), 1, samplerState[static_cast<UINT>(eSamplerType::ShadowPoint)].GetAddressOf());
 
 #pragma endregion
 
 #pragma region RasterizerState
 		D3D11_RASTERIZER_DESC  reDesc = {};
+
+		//reDesc.DepthClipEnable = true;
+		//reDesc.FrontCounterClockwise = false;
 
 		reDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		reDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
@@ -344,13 +355,19 @@ namespace renderer
 
 		D3D11_DEPTH_STENCIL_DESC dsDesc = {};
 		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_NEVER;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		dsDesc.StencilEnable = false;
+		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::UI)].GetAddressOf());
+
+		dsDesc.DepthEnable = true; // 깊이�??�용?��? 말�?
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth 값이 ?�거??같을??그림
+		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer 껏다켰다?�때 ?�용
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Less)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth 값이 ?�거??같을??그림
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Greater)].GetAddressOf());
@@ -517,15 +534,6 @@ namespace renderer
 		}
 #pragma endregion
 
-#pragma region FadeShader
-		{
-			Shader* shader = new Shader();
-			shader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
-			shader->Create(eShaderStage::PS, L"FadePS.hlsl", "main");
-			GETSINGLE(ResourceMgr)->Insert<Shader>(L"FadeShader", shader);
-		}
-#pragma endregion
-
 #pragma region ColorShader
 		{
 			Shader* shader = new Shader();
@@ -681,6 +689,8 @@ namespace renderer
 		uiSS->Create(eShaderStage::VS, L"UISpriteVS.hlsl", "main");
 		uiSS->Create(eShaderStage::PS, L"UISpritePS.hlsl", "main");
 		uiSS->SetRSState(eRasterizerType::SolidNone);
+		uiSS->SetDSState(eDepthStencilType::UI);
+		uiSS->SetBSState(eBlendStateType::AlphaBlend);
 		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UISpriteShader", uiSS);
 #pragma endregion
 
@@ -693,11 +703,10 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"noise3", L"noise/noise_03.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"default", L"default.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"FolderImage", L"folderImage.png");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_color", L"Dirt/dirt_color.jpg");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"dirt_normal", L"Dirt/dirt_normal.jpg");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"brick/BlockBrickBody_alb.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"brick/BlockBrickBody_nrm.png");
@@ -705,32 +714,30 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"brick/BlockBrickBody_rgh.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"brick/BlockBrickBody_emm.png");
 
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_alb", L"goomba/Image/KuriboBody_alb.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_nrm", L"goomba/Image/KuriboBody_nrm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_rgh", L"goomba/Image/KuriboBody_rgh.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_albedo", L"Textures/Check/albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_normal", L"Textures/Check/normal.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_metallic", L"Textures/Check/metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"check_roughness", L"Textures/Check/roughness.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_alb0", L"goomba/Image/KuriboEye_alb.0.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_alb1", L"goomba/Image/KuriboEye_alb.1.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_alb2", L"goomba/Image/KuriboEye_alb.2.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_nrm0", L"goomba/Image/KuriboEye_nrm.0.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_nrm1", L"goomba/Image/KuriboEye_nrm.1.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_nrm2", L"goomba/Image/KuriboEye_nrm.2.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_rgh0", L"goomba/Image/KuriboEye_rgh.0.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_rgh1", L"goomba/Image/KuriboEye_rgh.1.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_rgh2", L"goomba/Image/KuriboEye_rgh.2.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_emm", L"goomba/Image/KuriboEye_emm.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaHairFace_alb", L"goomba/Image/KuriboHairFace_alb.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaHairFace_nrm", L"goomba/Image/KuriboHairFace_nrm.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaHairFace_rgh", L"goomba/Image/KuriboHairFace_rgh.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaHairFace_emm", L"goomba/Image/KuriboHairFace_emm.png");
 
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_albedo", L"Textures/Gold/albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_normal", L"Textures/Gold/normal.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_metallic", L"Textures/Gold/metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"gold_roughness", L"Textures/Gold/roughness.png");
-
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_albedo", L"Textures/Wood/albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_normal", L"Textures/Wood/normal.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_metallic", L"Textures/Wood/metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"wood_roughness", L"Textures/Wood/roughness.png");
-
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_albedo", L"Textures/Iron/albedo.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_normal", L"Textures/Iron/normal.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_metallic", L"Textures/Iron/metallic.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"iron_roughness", L"Textures/Iron/roughness.png");
 
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BRDF", L"Textures/BRDF.png");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"Brick_Color", L"Cube/Brick.jpg");
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"Brick_Normal", L"Cube/Brick_N.jpg");
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"SkySphereTexture", L"SkyCityNightStar_color.png");
 
@@ -780,127 +787,132 @@ namespace renderer
 	{
 
 #pragma region MeshMaterial
-		Texture* Meshtexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"default");
-		Shader* MeshShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
-		Material* MeshMaterial = new Material();
-		MeshMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		MeshMaterial->SetShader(MeshShader);
-		MeshMaterial->SetTexture(Meshtexture);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"MeshMaterial", MeshMaterial);
+		{
+			Texture* texture = GETSINGLE(ResourceMgr)->Find<Texture>(L"default");
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			material->SetTexture(texture);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"MeshMaterial", material);
+		}
 #pragma endregion
 
 #pragma region SpriteMaterial
-		Texture* Spritetexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"default");
-		Shader* SpriteShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
-		Material* SpriteMaterial = new Material();
-		SpriteMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		SpriteMaterial->SetShader(SpriteShader);
-		SpriteMaterial->SetTexture(eTextureSlot::Albedo,Spritetexture);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"SpriteMaterial", SpriteMaterial);
+		{
+			Texture* texture = GETSINGLE(ResourceMgr)->Find<Texture>(L"default");
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			material->SetTexture(texture);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"SpriteMaterial", material);
+		}
 #pragma endregion
 
 #pragma region UIMaterial
-		Texture* UItexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Title");
-		Shader* UIShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UIShader");
-		Material* UIMaterial = new Material();
-		UIMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		UIMaterial->SetShader(UIShader);
-		UIMaterial->SetTexture(UItexture);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"UIMaterial", UIMaterial);
+		{
+			Texture* texture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Title");
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UIShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			material->SetTexture(texture);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"UIMaterial", material);
+		}
 #pragma endregion
 
 #pragma region GridMaterial
-		Shader* GridShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"GridShader");
-		Material* GridMaterial = new Material();
-		GridMaterial->SetRenderingMode(eRenderingMode::Opaque);
-		GridMaterial->SetShader(GridShader);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"GridMaterial", GridMaterial);
-#pragma endregion
-
-#pragma region FadeMaterial
-		Texture* Fadetexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"default");
-		Shader* FadeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FadeShader");
-		Material* FadeMaterial = new Material();
-		FadeMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		FadeMaterial->SetShader(FadeShader);
-		FadeMaterial->SetTexture(Fadetexture);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"FadeMaterial", FadeMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"GridShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Opaque);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"GridMaterial", material);
+		}
 #pragma endregion
 
 #pragma region ColorMaterial
-		Texture* Colortexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Black");
-		Shader* ColorShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ColorShader");
-		Material* ColorMaterial = new Material();
-		ColorMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		ColorMaterial->SetShader(ColorShader);
-		ColorMaterial->SetTexture(Colortexture);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"ColorMaterial", ColorMaterial);
+		{
+			Texture* texture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Black");
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ColorShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			material->SetTexture(texture);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"ColorMaterial", material);
+		}
 #pragma endregion
 
-
 #pragma region ParticleMaterial
-		Shader* particleShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ParticleShader");
-		Material* particleMaterial = new Material();
-		particleMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		particleMaterial->SetShader(particleShader);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"ParticleMaterial", particleMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ParticleShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"ParticleMaterial", material);
+		}
 #pragma endregion
 
 #pragma region DebugMaterial
-		Shader* DebugShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugShader");
-		Material* DebugMaterial = new Material();
-		DebugMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		DebugMaterial->SetShader(DebugShader);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"DebugMaterial", DebugMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"DebugMaterial", material);
+		}
 #pragma endregion
 
 #pragma region PostProcessMaterial
-		Shader* postProcessShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PostProcessShader");
-		Material* postProcessMaterial = new Material();
-		postProcessMaterial->SetRenderingMode(eRenderingMode::PostProcess);
-		postProcessMaterial->SetShader(postProcessShader);
-		postProcessMaterial->SetTexture(postProcessTexture);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"PostProcessMaterial", postProcessMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PostProcessShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::PostProcess);
+			material->SetShader(shader);
+			material->SetTexture(postProcessTexture);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"PostProcessMaterial", material);
+		}
 #pragma endregion
 
 #pragma region DebugGeometryMaterial
-		Shader* debugGeometryShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugGeometryShader");
-		Material* debugGeometryMaterial = new Material();
-		debugGeometryMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		debugGeometryMaterial->SetShader(debugGeometryShader);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"DebugGeometryMaterial", debugGeometryMaterial);
-#pragma endregion
-
-#pragma region SunMaterial
-		Shader* sunShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
-		Material* sunMaterial = new Material();
-		sunMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		sunMaterial->SetShader(sunShader);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"SunMaterial", sunMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DebugGeometryShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"DebugGeometryMaterial", material);
+		}
 #pragma endregion
 
 #pragma region PhongMaterial
-		Shader* phongShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
-		Material* phongMaterial = new Material();
-		phongMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		phongMaterial->SetShader(phongShader);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"PhongMaterial", phongMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"PhongMaterial", material);
+		}
 #pragma endregion
 
 #pragma region FlatMaterial
-		Shader* flatShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FlatShader");
-		Material* flatMaterial = new Material();
-		flatMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		flatMaterial->SetShader(flatShader);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"FlatMaterial", flatMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"FlatShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"FlatMaterial", material);
+		}
 #pragma endregion
 
 #pragma region PBRMaterial
-		Shader* PBRShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
-		Material* PBRMaterial = new Material();
-		PBRMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		PBRMaterial->SetShader(PBRShader);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"PBRMaterial", PBRMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"PBRMaterial", material);
+		}
 #pragma endregion
 
 #pragma region CursorMat
@@ -911,87 +923,161 @@ namespace renderer
 #pragma endregion
 
 #pragma region DeferredMaterial
-		// Deferred Materials
-		Shader* deferredShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		Material* deferredMaterial = new Material();
-		deferredMaterial->SetRenderingMode(eRenderingMode::DeferredOpaque);
-		deferredMaterial->SetShader(deferredShader);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", deferredMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::DeferredOpaque);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", material);
+		}
 #pragma endregion
 
 #pragma region LightDirMaterial
-		Shader* lightDirShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightDirShader");
-		Material* lightDirMaterial = new Material();
-		lightDirMaterial->SetRenderingMode(eRenderingMode::None);
-		lightDirMaterial->SetShader(lightDirShader);
+		{
+			Shader* lightDirShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightDirShader");
+			Material* lightDirMaterial = new Material();
+			lightDirMaterial->SetRenderingMode(eRenderingMode::None);
+			lightDirMaterial->SetShader(lightDirShader);
 
-		Texture* lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::PositionTarget, lightDirTex);
-		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightDirTex);
-		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
-		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
-		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"ShadowMapTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::ShadowMap, lightDirTex);
+			Texture* lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
+			lightDirMaterial->SetTexture(eTextureSlot::PositionTarget, lightDirTex);
+			lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
+			lightDirMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightDirTex);
+			lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
+			lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
+			lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
+			lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
+			lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"ShadowMapTexture");
+			lightDirMaterial->SetTexture(eTextureSlot::ShadowMap, lightDirTex);
 
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"LightDirMaterial", lightDirMaterial);
+		}
 #pragma endregion
 
 #pragma region LightPointMaterial
-		Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
-		Material* lightPointMaterial = new Material();
-		lightPointMaterial->SetRenderingMode(eRenderingMode::None);
-		lightPointMaterial->SetShader(lightPointShader);
+		{
+			Shader* lightPointShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LightPointShader");
+			Material* lightPointMaterial = new Material();
+			lightPointMaterial->SetRenderingMode(eRenderingMode::None);
+			lightPointMaterial->SetShader(lightPointShader);
 
-		Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTarget");
-		lightPointMaterial->SetTexture(eTextureSlot::PositionTarget, lightPointTex);
-		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
-		lightPointMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightPointTex);
-		lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTarget");
-		lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
-		lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
-		lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
-
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
+			Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTarget");
+			lightPointMaterial->SetTexture(eTextureSlot::PositionTarget, lightPointTex);
+			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
+			lightPointMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightPointTex);
+			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTarget");
+			lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
+			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
+			lightPointMaterial->SetTexture(eTextureSlot::MRDTarget, lightPointTex);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
+		}
 #pragma endregion
 
 #pragma region MergeMRT_Material
-		// RenderTarget Merge 시에 사용할 머테리얼
-		Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
-		Material* mergeMaterial = new Material();
-		mergeMaterial->SetRenderingMode(eRenderingMode::None);
-		mergeMaterial->SetShader(mergeShader);
+		{
+			// RenderTarget Merge ?�에 ?�용??머테리얼
+			Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
+			Material* mergeMaterial = new Material();
+			mergeMaterial->SetRenderingMode(eRenderingMode::None);
+			mergeMaterial->SetShader(mergeShader);
 
-		Texture* mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
-		mergeMaterial->SetTexture(eTextureSlot::PositionTarget, mergeTex);
-		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
-		mergeMaterial->SetTexture(eTextureSlot::AlbedoTarget, mergeTex);
-		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DiffuseLightTargetTexture");
-		mergeMaterial->SetTexture(eTextureSlot::DiffuseLightTarget, mergeTex);
-		mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularLightTargetTexture");
-		mergeMaterial->SetTexture(eTextureSlot::SpecularLightTarget, mergeTex);
+			Texture* mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
+			mergeMaterial->SetTexture(eTextureSlot::PositionTarget, mergeTex);
+			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
+			mergeMaterial->SetTexture(eTextureSlot::AlbedoTarget, mergeTex);
+			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DiffuseLightTargetTexture");
+			mergeMaterial->SetTexture(eTextureSlot::DiffuseLightTarget, mergeTex);
+			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularLightTargetTexture");
+			mergeMaterial->SetTexture(eTextureSlot::SpecularLightTarget, mergeTex);
 
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"MergeMRT_Material", mergeMaterial);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"MergeMRT_Material", mergeMaterial);
+		}
 #pragma endregion
 
 #pragma region Depth Material
-		Shader* depthShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DepthShader");
-		Material* shadowMaterial = new Material();
-		shadowMaterial->SetRenderingMode(eRenderingMode::None);
-		shadowMaterial->SetShader(depthShader);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"ShadowMaterial", shadowMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DepthShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::None);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"ShadowMaterial", material);
+		}
 #pragma endregion
 
 
 #pragma region SkySphere Material
-		Shader* skySphereShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkySphereShader");
-		Material* skySphereMaterial = new Material();
-		skySphereMaterial->SetShader(skySphereShader);
-		skySphereMaterial->SetTextureByKey(L"SkySphereTexture", eTextureSlot::SkySphere);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"SkySphereMaterial", skySphereMaterial);
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SkySphereShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"SkySphereTexture", eTextureSlot::SkySphere);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"SkySphereMaterial", material);
+		}
 #pragma endregion
+
+	
+
+// object materials
+
+#pragma region goombaBody Material
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"goombaBody_alb", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"goombaBody_nrm", eTextureSlot::Normal);
+			material->SetTextureByKey(L"goombaBody_rgh", eTextureSlot::Roughness);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaBodyMaterial", material);
+		}
+#pragma endregion
+#pragma region goombaEye0 Material
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"goombaEye_alb0", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"goombaEye_nrm0", eTextureSlot::Normal);
+			material->SetTextureByKey(L"goombaEye_rgh0", eTextureSlot::Roughness);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye0Material", material);
+		}
+#pragma endregion
+#pragma region goombaEye1 Material
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"goombaEye_alb1", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"goombaEye_nrm1", eTextureSlot::Normal);
+			material->SetTextureByKey(L"goombaEye_rgh1", eTextureSlot::Roughness);
+			material->SetTextureByKey(L"goombaEye_emm", eTextureSlot::Emissive);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye1Material", material);
+		}
+#pragma endregion
+#pragma region goombaEye2 Material
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"goombaEye_alb2", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"goombaEye_nrm2", eTextureSlot::Normal);
+			material->SetTextureByKey(L"goombaEye_rgh2", eTextureSlot::Roughness);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye2Material", material);
+		}
+#pragma endregion
+#pragma region MarioMustache Material
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"goombaHairFace_alb", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"goombaHairFace_nrm", eTextureSlot::Normal);
+			material->SetTextureByKey(L"goombaHairFace_rgh", eTextureSlot::Roughness);
+			material->SetTextureByKey(L"goombaHairFace_emm", eTextureSlot::Emissive);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"MarioMustacheMaterial", material);
+		}
+#pragma endregion
+
+
 
 		CreateUIMaterial();
 	}
@@ -1070,12 +1156,11 @@ namespace renderer
 			Texture* shadowMap = new Texture();
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapTexture", shadowMap);
 			vecRTTex.emplace_back(shadowMap);
-			vecRTTex[0]->Create(1600, 900, DXGI_FORMAT_R32G32B32A32_FLOAT
+			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
-
 			Texture* depthStencilTex = new Texture();
-			depthStencilTex->Create(1600, 900, DXGI_FORMAT_D32_FLOAT
+			depthStencilTex->Create(width, height, DXGI_FORMAT_D32_FLOAT
 				, D3D11_BIND_DEPTH_STENCIL);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapDSTexture", depthStencilTex);
 
@@ -1336,7 +1421,7 @@ namespace renderer
 	{
 		Vertex arrCube[24] = {};
 
-		// 윗면
+		// ?�면
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
@@ -1366,7 +1451,7 @@ namespace renderer
 		arrCube[3].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
 
-		// 아랫 면	
+		// ?�랫 �?
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
@@ -1395,7 +1480,7 @@ namespace renderer
 		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
 		arrCube[7].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// 왼쪽 면
+		// ?�쪽 �?
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
@@ -1424,7 +1509,7 @@ namespace renderer
 		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
 		arrCube[11].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// 오른쪽 면
+		// ?�른�?�?
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].color = Vector4(0.f, 0.f, 1.f, 1.f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
@@ -1453,7 +1538,7 @@ namespace renderer
 		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
 		arrCube[15].biNormal = Vector3(0.0f, 0.0f, 1.0f);
 
-		// 뒷 면
+		// ??�?
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].color = Vector4(1.f, 1.f, 0.f, 1.f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
@@ -1482,7 +1567,7 @@ namespace renderer
 		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
 		arrCube[19].biNormal = Vector3(0.0f, -1.0f, 1.0f);
 
-		// 앞 면
+		// ??�?
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].color = Vector4(1.f, 0.f, 1.f, 1.f);
 		arrCube[20].uv = Vector2(0.f, 0.f);
@@ -1901,7 +1986,7 @@ namespace renderer
 		}
 	}
 
-	/////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 
 	void Initialize()
 	{
@@ -1913,8 +1998,6 @@ namespace renderer
 		LoadDefaultTexture();
 		LoadDefaultMaterial();
 		BindPBRProprerties();
-
-		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"blockBrick");
 	}
 
 	void release()
@@ -1955,7 +2038,7 @@ namespace renderer
 				continue;
 
 			cam->Render();
-			break;
+			//break;
 		}
 		Cameras[type].clear();
 		renderer::lightAttributes.clear();

@@ -4,9 +4,6 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)ColorPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)FadePS.hlsl">
-      <Filter>PS</Filter>
-    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)FlatPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
@@ -15,9 +12,6 @@
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)PhongPS.hlsl">
       <Filter>PS</Filter>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)FadeVS.hlsl">
-      <Filter>VS</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)FlatVS.hlsl">
       <Filter>VS</Filter>

@@ -66,6 +66,8 @@ enum class eSamplerType
 	Linear,
 	Anisotropic,
 	Skybox,
+	Clamp,
+	ShadowPoint,
 	End,
 };
 
@@ -80,6 +82,7 @@ enum class eRasterizerType
 
 enum class eDepthStencilType
 {
+	UI,
 	Less, // 일반적인 원근
 	Greater, // 원근 거꾸로
 	NoWrite, // 겹치면 아예 안그림
@@ -200,15 +203,15 @@ enum class eGPUParam
 	Float_4,
 	Float_5,
 	Float_6,
-	Float_7,
-	Float_8,
+	Metallic,
+	Roughness,
 	Vector2_1,
 	Vector2_2,
 	Vector2_3,
 	Vector2_4,
 	Vector3_1,
 	Vector3_2,
-	Vector3_3,
+	FresnelCoeff,
 	CamPosition,
 	Vector4_1,
 	Vector4_2,

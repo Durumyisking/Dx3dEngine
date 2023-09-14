@@ -149,7 +149,7 @@ void Transform::SetConstantBuffer()
 	renderer::TransformCB trCb = {};
 	trCb.world = mWorld;
 	trCb.inverseWorld = mWorld.Invert();
-	trCb.view = Camera::GetGpuViewMatrix();
+	trCb.view = renderer::mainCamera->GetGpuViewMatrix();
 	trCb.inverseView = trCb.view.Invert();
 	trCb.projection = Camera::GetGpuProjectionMatrix();
 	trCb.fovForSkySphere= Camera::GetSkySphereFov();
@@ -175,7 +175,7 @@ const Vector3& Transform::GetWorldPosition()
 {
 	if (GetOwner()->GetComponent<Physical>())
 	{
-		return GetPhysicalPosition();
+		return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
 	}
 	else
 	{

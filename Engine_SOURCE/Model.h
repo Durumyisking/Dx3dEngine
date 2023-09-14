@@ -46,6 +46,7 @@ public:
 	virtual ~Model();
 
 	virtual HRESULT Load(const std::wstring& path) override;
+	virtual HRESULT LoadFullpath(const std::wstring& path) override;
 
 	ModelNode* FindNode(const std::wstring& nodeName);
 	Bone* FindBone(const std::wstring& nodeName);
@@ -71,7 +72,11 @@ public:
 	math::Matrix ConvertMatrix(aiMatrix4x4 aimat);
 	Material* GetVariableMaterials(UINT index);
 	void SetVariableMaterials(UINT index, Material* mater);
+	void SetVariableMaterialsByKey(UINT index, const std::wstring& key);
 	void Bind_Render();
+
+	size_t GetMeshCounts() const { return mMeshes.size(); }
+
 public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
 	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)

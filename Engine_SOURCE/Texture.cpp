@@ -63,7 +63,11 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 	if (!mTexture)
 	{
 		mDesc.BindFlags = bindflag;
-		mDesc.Usage = D3D11_USAGE_DEFAULT;
+		mDesc.Usage = D3D11_USAGE_DEFAULT; 
+		// D3D11_USAGE_DEFAULT : gpu가 read/write access가능하다.
+		// D3D11_USAGE_IMMUTABLE : gpu가 read만 가능 cpu는 암것도 안됨
+		// D3D11_USAGE_DYNAMIC : gpu r/w, cpu w only
+		// D3D11_USAGE_STAGING : gpu -> cpu 데이터 전송할 때 사용
 		mDesc.CPUAccessFlags = 0;
 		mDesc.Format = format;
 		mDesc.Width = width;
@@ -76,6 +80,76 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 		mDesc.MipLevels = 1;
 		mDesc.MiscFlags = 0;
 	}
+
+	if (!GetDevice()->CreateTexture(&mDesc, mTexture.GetAddressOf()))
+	{
+		return false;
+	}
+	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
+	{
+		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), nullptr, mDSV.GetAddressOf()))
+		{
+			return false;
+		}
+	}
+	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE)
+	{
+		D3D11_SHADER_RESOURCE_VIEW_DESC tSRVdesc = {};
+		tSRVdesc.Format = format;
+		tSRVdesc.Texture2D.MipLevels = 0;
+		tSRVdesc.Texture2D.MostDetailedMip = 0;
+		tSRVdesc.ViewDimension = D3D11_SRV_DIMENSION::D3D_SRV_DIMENSION_TEXTURE2D;
+
+		if (!GetDevice()->CreateShaderResourceView(mTexture.Get(), nullptr, mSRV.GetAddressOf()))
+		{
+			return false;
+		}
+	}
+	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS)
+	{
+		D3D11_UNORDERED_ACCESS_VIEW_DESC tUAVdesc = {};
+		tUAVdesc.Format = format;
+		tUAVdesc.Texture2D.MipSlice = 0;
+		tUAVdesc.ViewDimension = D3D11_UAV_DIMENSION::D3D11_UAV_DIMENSION_TEXTURE2D;
+
+		if (!GetDevice()->CreateUnorderedAccessView(mTexture.Get(), nullptr, mUAV.GetAddressOf()))
+		{
+			return false;
+		}
+	}
+	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET)
+	{
+		if (!GetDevice()->CreateRenderTargetView(mTexture.Get(), nullptr, mRTV.GetAddressOf()))
+			return false;
+	}
+
+
+	return true;
+}
+
+bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT numQualityLevels, UINT bindflag)
+{
+	mDesc.BindFlags = bindflag;
+	mDesc.Usage = D3D11_USAGE_DEFAULT;
+	mDesc.CPUAccessFlags = 0;
+	mDesc.Format = format;
+	mDesc.Width = width;
+	mDesc.Height = height;
+	mDesc.ArraySize = 1;
+
+	mDesc.SampleDesc.Count = 1;
+	if (numQualityLevels > 0) {
+		mDesc.SampleDesc.Count = 4; // how many multisamples
+		mDesc.SampleDesc.Quality = numQualityLevels - 1;
+	}
+	else {
+		mDesc.SampleDesc.Count = 1; // how many multisamples
+		mDesc.SampleDesc.Quality = 0;
+	}
+
+	mDesc.MipLevels = 1;
+	mDesc.MiscFlags = 0;
+	
 
 	if (!GetDevice()->CreateTexture(&mDesc, mTexture.GetAddressOf()))
 	{
@@ -265,6 +339,50 @@ HRESULT Texture::Load(const std::wstring& path)
 	return S_OK;
 }
 
+HRESULT Texture::LoadFullpath(const std::wstring& path)
+{
+	std::wstring fullPath = path;
+
+
+	wchar_t szExtension[256] = {};
+	_wsplitpath_s(path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // 경로에서 확장자만 뽑아오는 녀석
+
+	std::wstring extension(szExtension);
+
+	if (extension == L".dds" || extension == L".DDS")
+	{
+		if (FAILED(LoadFromDDSFile(fullPath.c_str(), DDS_FLAGS::DDS_FLAGS_NONE, nullptr, mImage)))
+			return S_FALSE;
+	}
+	else if (extension == L".tga" || extension == L".TGA")
+	{
+		if (FAILED(LoadFromTGAFile(fullPath.c_str(), nullptr, mImage)))
+			return S_FALSE;
+	}
+	else // WIC (png, jpg, jpeg, bmp )
+	{
+		if (FAILED(LoadFromWICFile(fullPath.c_str(), WIC_FLAGS::WIC_FLAGS_NONE, nullptr, mImage)))
+			return S_FALSE;
+	}
+
+
+	CreateShaderResourceView(
+		GetDevice()->GetID3D11Device()
+		, mImage.GetImages()
+		, mImage.GetImageCount()
+		, mImage.GetMetadata()
+		, mSRV.GetAddressOf()
+	);
+
+
+	mSRV->GetResource((ID3D11Resource**)mTexture.GetAddressOf());
+
+	mTexture->GetDesc(&mDesc);
+
+
+	return S_OK;
+}
+
 Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 {
 	wchar_t szExtension[256] = {};
@@ -288,6 +406,31 @@ Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 			return nullptr;
 	}
 
+	////TEST
+	//{
+	//   std::vector<std::uint8_t> pixels{};
+	//   pixels.resize(mImage.GetPixelsSize());
+	//   std::memcpy(pixels.data(), mImage.GetPixels(), pixels.size());
+
+	//   ScratchImage image;
+	//   std::memcpy(&image, &mImage, sizeof(ScratchImage));
+
+	//   for (size_t i = 0; i < pixels.size(); ++i)
+	//   {
+	//	  if (i % 4 == 0)
+	//		 pixels[i] = 255 - pixels[i];
+	//   }
+
+	//   std::memcpy(image.GetImages()->pixels, pixels.data(), pixels.size());
+
+	//   {
+	//	  const std::wstring folderName = L"./TEST/";
+	//	  const std::wstring fileName = std::filesystem::path{ path }.filename().wstring();
+	//	  HRESULT result = SaveToWICFile(*image.GetImages(), WIC_FLAGS_NONE, GetWICCodec(WIC_CODEC_PNG), (folderName + fileName).c_str());
+	//	  assert(result == S_OK);
+	//   }
+
+	//}
 
 	CreateShaderResourceView(
 		GetDevice()->GetID3D11Device()

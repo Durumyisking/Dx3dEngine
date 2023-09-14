@@ -19,6 +19,7 @@ public:
 	virtual void Enter();
 	virtual void Exit();
 
+
 	void CreateMainMenu();
 private:
 	GameObj*	mCamera;

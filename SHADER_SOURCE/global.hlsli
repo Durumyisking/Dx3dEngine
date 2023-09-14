@@ -60,13 +60,17 @@ float4 DecodeColor(float _value)
 }
 
 
-float4 TextureMapping_albedo(float2 uv)
+float4 TextureMapping_albedo(float2 uv, float pixelToCam)
 {
+    float mip = pixelToCam / 10.f;
+    if (mip > 10)
+        mip = 10;
+
     return colorTexture.SampleLevel(linearSampler, uv, 0.f);
 }
 
 
-float3 TextureMapping_normal(float2 uv, float3 Tangent, float3 Normal, float3 BiNormal)
+float3 TextureMapping_normal(float2 uv, float3 Tangent, float3 Normal, float3 BiNormal, float pixelToCam)
 {
     float3 result = normalTexture.SampleLevel(linearSampler, uv, 0.f).rgb;
     
@@ -84,14 +88,19 @@ float3 TextureMapping_normal(float2 uv, float3 Tangent, float3 Normal, float3 Bi
     return result;
 }
 
-float TextureMapping_metallic(float2 uv)
+float TextureMapping_metallic(float2 uv, float pixelToCam)
 {
     return metallicTexture.Sample(linearSampler, uv).r;
 }
 
-float TextureMapping_roughness(float2 uv)
+float TextureMapping_roughness(float2 uv, float pixelToCam)
 {
     return roughnessTexture.Sample(linearSampler, uv).r;
+}
+
+float3 TextureMapping_emissive(float2 uv, float pixelToCam)
+{
+    return emissiveTexture.Sample(linearSampler, uv).rgb;
 }
 
 

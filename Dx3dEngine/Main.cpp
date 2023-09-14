@@ -11,7 +11,6 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
-
 //#include <dxgidebug.h>
 //#include <d3d11sdklayers.h>
 
@@ -69,7 +68,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
  
 
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(3121);
+    _CrtSetBreakAlloc(41010);
 
     if (!InitInstance (hInstance, nCmdShow))
     {
@@ -104,10 +103,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
     
     application.Release();
-    editor.Release();
-
-
     application.DestroySingle();
+
+    editor.Release();
+    editor.DestroySingle();
+
 
     return (int)msg.wParam;
 }
@@ -169,6 +169,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    application.Initialize();
    application.DivideMenu();
    editor.Initialize();
+   
+  
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
    //ShowCursor(false);
@@ -189,6 +191,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+        return true;
+
     switch (message)
     {
     case WM_COMMAND:
@@ -208,6 +213,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+    case WM_SIZE:
+        // 화면 해상도가 바뀌면 SwapChain을 다시 생성
+        //if (GetDevice()->GetSwapChain())
+        //{
+        //    application.SetResolution(math::Vector2(int(LOWORD(lParam)), int(HIWORD(lParam))));
+        //    //m_guiWidth = 0;
+        //    
+        //    GetDevice()->GetBackBufferRTV().Reset();
+  
+        //    GetDevice()->GetSwapChain()->ResizeBuffers(0, // 현재 개수 유지
+        //        (UINT)LOWORD(lParam), // 해상도 변경
+        //        (UINT)HIWORD(lParam),
+        //        DXGI_FORMAT_UNKNOWN, // 현재 포맷 유지
+        //        0);
+
+        //    GetDevice()->CreateDefaultBuffers();
+
+        //    GetDevice()->AdjustToDefaultResolutionViewPorts();
+        //    //m_camera.SetAspectRatio(this->GetAspectRatio());
+        //}
+        //break;
     case WM_PAINT:
         {
             PAINTSTRUCT ps;

@@ -11,6 +11,7 @@ public:
 	virtual ~Resource();
 
 	virtual HRESULT Load(const std::wstring& path) = 0;
+	virtual HRESULT LoadFullpath(const std::wstring& path) = 0;
 
 	const std::wstring& GetKey() const { return mKey; }
 	const std::wstring& GetPath() const { return mPath; }
