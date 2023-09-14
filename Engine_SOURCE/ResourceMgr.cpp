@@ -83,6 +83,8 @@ void ResourceMgr::Initalize()
 
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"BlockBrick");
 
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/CityWorldHomeGround/000", L"CityWorldHomeGround000");
+
 }
 
 void ResourceMgr::Release()

@@ -102,6 +102,23 @@ void ScenePlay::Initialize()
 	//}
 
 	{
+		GameObj* Ground = object::Instantiate<Player>(eLayerType::Monster, this);
+		Ground->SetPos(Vector3(5.f, 15.f, 9.5f));
+		Ground->SetScale(Vector3(0.1f, 0.1f, 0.1f));
+		Ground->SetName(L"CityWorldHomeGround000");
+
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeGround000");
+		Ground->GetComponent<MeshRenderer>()->SetModel(model);
+
+		Ground->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+
+		PhysXRigidBody* rigid = Ground->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		Ground->AddComponent<PhysXCollider>(eComponentType::Collider);
+	}
+
+
+	{
 		Player* player = object::Instantiate<Player>(eLayerType::Monster, this);
 		player->SetPos(Vector3(5.f, 15.f, 9.5f));
 		player->SetScale(Vector3(0.1f, 0.1f, 0.1f));
