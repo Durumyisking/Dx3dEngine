@@ -17,7 +17,7 @@ class Camera : public Component
 public:
 
 	__forceinline static Matrix& GetGpuViewMatrix() { return View; }
-	__forceinline static Matrix& GetGpuInverseViewMatrix() { return View; }
+	__forceinline static Matrix& GetGpuInverseViewMatrix() { return InverseView; }
 	__forceinline static Matrix& GetGpuProjectionMatrix() { return Projection; }
 	__forceinline static Matrix& GetSkySphereFov() { return SkyFov; }
 	__forceinline static void SetGpuViewMatrix(Matrix view) { View = view; }

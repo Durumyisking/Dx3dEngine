@@ -9,8 +9,12 @@
 #include "TimeMgr.h"
 #include "Layer.h"
 #include "ResourceMgr.h"
+#include "InputMgr.h"
 
 #include "Physical.h"
+#include "Object.h"
+
+#include "PhysXRayCast.h"
 
 extern Application application;
 
@@ -70,7 +74,6 @@ void Camera::Update()
 		Dir.z = GetOwner()->GetPos().z;
 		(Dir).Normalize(mCamDir);
 	}
-
 }
 
 void Camera::FixedUpdate()
@@ -143,14 +146,15 @@ void Camera::CreateViewMatrix()
 	// 이동정보
 	Vector3 translation = transform->GetPosition();
 
-	// create view translation matrix
-	mView = Matrix::Identity;
-	mView *= Matrix::CreateTranslation(-translation);
-
+	
 	// 회전정보
 	Vector3 up = transform->Up();
 	Vector3 right = transform->Right();
 	Vector3 foward = transform->Forward();
+	
+	//create view translation matrix
+	mView = Matrix::Identity;
+	mView *= Matrix::CreateTranslation(-translation);
 
 	Matrix viewRotate;
 	viewRotate._11 = right.x; 		viewRotate._12 = up.x;		 viewRotate._13 = foward.x;
@@ -177,6 +181,9 @@ Matrix Camera::CreateViewMatrix(Transform* tr)
 
 	
 	return view;
+
+	////새로 적용할 회전행렬
+	//mView = XMMatrixLookAtLH(translation, foward, up);
 }
 
 void Camera::CreateProjectionMatrix()
@@ -248,6 +255,8 @@ void Camera::SetTarget(GameObj* target)
 
 bool Camera::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance)
 {
+
+
 	if (this == renderer::mainCamera)
 	{
 		Physical* physical = gameObject->GetComponent<Physical>();
@@ -315,6 +324,7 @@ bool Camera::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObj
 
 	return false;
 }
+
 
 void Camera::sortGameObjects()
 {

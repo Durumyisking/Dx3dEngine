@@ -133,6 +133,8 @@ public:
 	Vector3 MoveToTarget_Smooth_vector3(GameObj* target, float speed, bool zOn, eDir dir = eDir::END);
 
 
+	std::vector<Component*> GetComponentsVec() { return mComponents; }
+
 protected:
 	std::vector<Component*> mComponents;
 

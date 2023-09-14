@@ -9,6 +9,7 @@ public:
 	virtual ~Mesh();
 
 	virtual HRESULT Load(const std::wstring& path) override;
+	virtual HRESULT LoadFullpath(const std::wstring& path) override;
 
 	bool CreateVertexBuffer(void* data, UINT count);
 	bool CreateIndexBuffer(void* data, UINT count);
