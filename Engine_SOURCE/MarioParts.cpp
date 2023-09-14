@@ -118,13 +118,15 @@ void MarioParts::BoneInitialize()
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
+		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/WaitHot.smd", 0.05f);
+		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
 		animator->Play(L"test");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
 		model->SetParentTargetBone(L"Armature_Head");
 		model->SetTargetBone(L"Armature_MarioHead");
 		model->SetOffsetRotation(Vector3(0.0f, 1.570796f, -1.570796f * 2));
+		model->MeshRenderSwtich(L"Hair__HairMT", false);
 
 
 	}
@@ -145,7 +147,6 @@ void MarioParts::BoneInitialize()
 		model->SetParentTargetBone(L"Armature_Head");
 		model->SetTargetBone(L"Armature_Face");
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
-
 	}
 
 	if (GetName() == L"Eye") {
@@ -156,8 +157,7 @@ void MarioParts::BoneInitialize()
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
-		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioEye/Animation/Wait.smd", 0.02f);
+		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioEye/Animation/WaitHot.smd", 0.02f);
 		animator->Play(L"test2");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"MarioFace"));

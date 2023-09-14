@@ -2,6 +2,18 @@
 <COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
   <asset />
   <library_images>
+    <image id="MarioCap_alb">
+      <init_from>MarioCap_alb.png</init_from>
+    </image>
+    <image id="MarioCap_nrm">
+      <init_from>MarioCap_nrm.png</init_from>
+    </image>
+    <image id="MarioCap_rgh">
+      <init_from>MarioCap_rgh.png</init_from>
+    </image>
+    <image id="MarioCap_mtl">
+      <init_from>MarioCap_mtl.png</init_from>
+    </image>
     <image id="MarioHair_alb">
       <init_from>MarioHair_alb.png</init_from>
     </image>
