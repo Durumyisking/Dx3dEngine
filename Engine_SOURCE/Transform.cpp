@@ -3,8 +3,6 @@
 #include "GameObj.h"
 #include "Physical.h"
 
-
-
 Transform::Transform()
 	: Component(eComponentType::Transform)
 	, mParent(nullptr)
@@ -58,7 +56,7 @@ void Transform::FixedUpdate()
 		Testrotation *= Matrix::CreateRotationZ(rot.z);
 
 
-		// ì›ëž˜ ì½”ë“œ
+		// ¿ø·¡ ÄÚµå
 		Matrix matPxRotation = Matrix::CreateFromQuaternion(convert::PxQuatToQuaternion(mPxTransform.q));
 		Matrix matPxTranslation = Matrix::CreateTranslation(convert::PxVec3ToVector3(mPxTransform.p));
 		mRelativePosition = convert::PxVec3ToVector3(mPxTransform.p);
@@ -85,13 +83,13 @@ void Transform::FixedUpdate()
 	}
 	else
 	{	
-		// ë Œë”ë§ì— ì‚¬ìš©ë  ìœ„ì¹˜ê°’ì„ ì—…ë°ì´íŠ¸.
-		// 1. ì›”ë“œ í–‰ë ¬ ìƒì„±
-		// - í¬ê¸° ë³€í™˜ í–‰ë ¬
+		// ·»´õ¸µ¿¡ »ç¿ëµÉ À§Ä¡°ªÀ» ¾÷µ¥ÀÌÆ®.
+		// 1. ¿ùµå Çà·Ä »ý¼º
+		// - Å©±â º¯È¯ Çà·Ä
 		Matrix scale = Matrix::CreateScale(mRelativeScale);
 		mWorldScale = mRelativeScale;
 
-		// - íšŒì „ ë³€í™˜ í–‰ë ¬
+		// - È¸Àü º¯È¯ Çà·Ä
 		Vector3 rot = mRelativeRotation * XM_PI / 180; // to radian
 		Matrix rotation;
 		rotation = Matrix::CreateRotationX(rot.x);
@@ -100,7 +98,7 @@ void Transform::FixedUpdate()
 		mWorldRotation = rot;
 
 
-		// - ì´ë™ ë³€í™˜ í–‰ë ¬
+		// - ÀÌµ¿ º¯È¯ Çà·Ä
 		Matrix position;
 		position.Translation(mRelativePosition);
 		mWorldPosition = mRelativePosition;
@@ -127,7 +125,7 @@ void Transform::FixedUpdate()
 				mWorld *= parentWorld;
 			}
 
-			// - ì›”ë“œ ì¢Œí‘œ, í¬ê¸°, íšŒì „ ê°±ì‹ 
+			// - ¿ùµå ÁÂÇ¥, Å©±â, È¸Àü °»½Å
 			Quaternion worldRot;
 			mWorld.Decompose(mWorldScale, worldRot, mWorldPosition);
 			Vector3 quatToRadRot = worldRot.ToEuler();
@@ -212,7 +210,7 @@ void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 	PxQuat rotationX(PxPi * rotation_degrees.x / 180.0f, PxVec3(1.0f, 0.0f, 0.0f));
 	PxQuat rotationY(PxPi * rotation_degrees.y / 180.0f, PxVec3(0.0f, 1.0f, 0.0f));
 	PxQuat rotationZ(PxPi * rotation_degrees.z / 180.0f, PxVec3(0.0f, 0.0f, 1.0f));
-	// íšŒì „ì„ ì ìš©í•©ë‹ˆë‹¤.
+	// È¸ÀüÀ» Àû¿ëÇÕ´Ï´Ù.
 	PxQuat finalRotation = rotationX * rotationY * rotationZ;
 	mPxTransform.q = finalRotation;
 	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);

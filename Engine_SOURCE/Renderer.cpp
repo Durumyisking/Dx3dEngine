@@ -343,14 +343,14 @@ namespace renderer
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::UI)].GetAddressOf());
 
-		dsDesc.DepthEnable = true; // ê¹Šì´ê°’ ì‚¬ìš©í• ì§€ ë§ì§€
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth ê°’ì´ ìž‘ê±°ë‚˜ ê°™ì„ë•Œ ê·¸ë¦¼
-		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer ê»ë‹¤ì¼°ë‹¤í• ë•Œ ì‚¬ìš©
+		dsDesc.DepthEnable = true; // ±íÀÌ°ª »ç¿ëÇÒÁö ¸»Áö
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth °ªÀÌ ÀÛ°Å³ª °°À»¶§ ±×¸²
+		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer ²¯´ÙÄ×´ÙÇÒ¶§ »ç¿ë
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Less)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth ê°’ì´ í¬ê±°ë‚˜ ê°™ì„ë•Œ ê·¸ë¦¼
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth °ªÀÌ Å©°Å³ª °°À»¶§ ±×¸²
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Greater)].GetAddressOf());
@@ -701,6 +701,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_nrm", L"goomba/Image/KuriboBody_nrm.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_rgh", L"goomba/Image/KuriboBody_rgh.png");
 
+
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_alb0", L"goomba/Image/KuriboEye_alb.0.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_alb1", L"goomba/Image/KuriboEye_alb.1.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaEye_alb2", L"goomba/Image/KuriboEye_alb.2.png");
@@ -958,7 +959,7 @@ namespace renderer
 
 #pragma region MergeMRT_Material
 		{
-			// RenderTarget Merge ì‹œì— ì‚¬ìš©í•  ë¨¸í…Œë¦¬ì–¼
+			// RenderTarget Merge ½Ã¿¡ »ç¿ëÇÒ ¸ÓÅ×¸®¾ó
 			Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
 			Material* mergeMaterial = new Material();
 			mergeMaterial->SetRenderingMode(eRenderingMode::None);
@@ -1386,12 +1387,11 @@ namespace renderer
 		Circlemesh->CreateVertexBuffer(CircleVertexes.data(), static_cast<UINT>(CircleVertexes.size()));
 		Circlemesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
 	}
-
 	void CreateCubeMesh()
 	{
 		Vertex arrCube[24] = {};
 
-		// ìœ—ë©´
+		// À­¸é
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
 		arrCube[0].tangent = Vector3(1.0f, 0.0f, 0.0f);
@@ -1413,7 +1413,7 @@ namespace renderer
 		arrCube[3].tangent = Vector3(1.0f, 0.0f, 0.0f);
 
 
-		// ì•„ëž« ë©´	
+		// ¾Æ·§ ¸é	
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
 		arrCube[4].normal = Vector3(0.f, -1.f, 0.f);
@@ -1434,7 +1434,7 @@ namespace renderer
 		arrCube[7].normal = Vector3(0.f, -1.f, 0.f);
 		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
 
-		// ì™¼ìª½ ë©´
+		// ¿ÞÂÊ ¸é
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
 		arrCube[8].normal = Vector3(-1.f, 0.f, 0.f);
@@ -1455,7 +1455,7 @@ namespace renderer
 		arrCube[11].normal = Vector3(-1.f, 0.f, 0.f);
 		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
 
-		// ì˜¤ë¥¸ìª½ ë©´
+		// ¿À¸¥ÂÊ ¸é
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
 		arrCube[12].normal = Vector3(1.f, 0.f, 0.f);
@@ -1476,7 +1476,7 @@ namespace renderer
 		arrCube[15].normal = Vector3(1.f, 0.f, 0.f);
 		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
 
-		// ë’· ë©´
+		// µÞ ¸é
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
 		arrCube[16].normal = Vector3(0.f, 0.f, 1.f);
@@ -1497,7 +1497,7 @@ namespace renderer
 		arrCube[19].normal = Vector3(0.f, 0.f, 1.f);
 		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
 
-		// ì•ž ë©´
+		// ¾Õ ¸é
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].uv = Vector2(0.f, 0.f);
 		arrCube[20].normal = Vector3(0.f, 0.f, -1.f);
@@ -1640,6 +1640,108 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Spheremesh", sphereMesh);
 		sphereMesh->CreateVertexBuffer(sphereVtx.data(), static_cast<UINT>(sphereVtx.size()));
 		sphereMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
+	}
+
+	void CreateCapsuleMesh()
+	{
+		Vertex v = {};
+		float fRadius = 0.5f;
+		float fHeight = 1.0f; // Total height of the capsule
+		float fHalfHeight = fHeight * 0.5f; // Half of the capsule height
+		UINT iStackCount = 40;
+		UINT iSliceCount = 40;
+		std::vector<Vertex> capsuleVtx;
+		std::vector<UINT> indices;
+
+
+		// Top
+		v.pos = Vector4(0.0f, fRadius, 0.0f, 1.0f);
+		v.uv = Vector2(0.5f, 0.f);
+		v.normal = Vector3(0.0f, 1.f, 0.0f);
+		v.normal.Normalize();
+		v.tangent = Vector3(1.f, 0.f, 0.f);
+		capsuleVtx.emplace_back(v);
+
+		// Bottom
+		v.pos = Vector4(0.f, -fRadius, 0.f, 1.0f);
+		v.uv = Vector2(0.5f, 1.f);
+		v.normal = Vector3(0.0f, -1.f, 0.0f);
+		v.normal.Normalize();
+
+		v.tangent = Vector3(1.f, 0.f, 0.f);
+		capsuleVtx.emplace_back(v);
+
+		// Create the cylindrical middle part of the capsule
+		float fStackStep = fHeight / static_cast<float>(iStackCount); // Height step for each stack
+		float fUVYStep = 1.0f / static_cast<float>(iStackCount); // UV step for each stack
+
+		for (UINT i = 0; i < iStackCount; ++i)
+		{
+			float phi = i * fStackStep - XM_PIDIV2; // Start from the bottom hemisphere's pole
+
+			for (UINT j = 0; j <= iSliceCount; ++j)
+			{
+				float theta = j * XM_2PI / iSliceCount;
+
+				v.pos = Vector4(fRadius * cosf(phi) * cosf(theta),
+					fRadius * sinf(phi) + fHalfHeight,
+					fRadius * cosf(phi) * sinf(theta), 1.0f);
+
+				v.uv = Vector2(static_cast<float>(j) / static_cast<float>(iSliceCount),
+					static_cast<float>(i) / static_cast<float>(iStackCount));
+
+				v.normal = Vector3(fRadius * cosf(phi) * cosf(theta),
+					fRadius * sinf(phi),
+					fRadius * cosf(phi) * sinf(theta));
+
+				v.tangent.x = -fRadius * sinf(phi) * sinf(theta);
+				v.tangent.y = 0.f;
+				v.tangent.z = fRadius * sinf(phi) * cosf(theta);
+				v.tangent.Normalize();
+
+
+				capsuleVtx.emplace_back(v);
+			}
+		}
+
+		// Connect the top hemisphere with the cylindrical middle part
+		for (UINT i = 0; i < iSliceCount; ++i)
+		{
+			indices.emplace_back(0);
+			indices.emplace_back(i + 2);
+			indices.emplace_back(i + 1);
+		}
+
+		// Connect the bottom hemisphere with the cylindrical middle part
+		UINT iBottomIdx = static_cast<UINT>(capsuleVtx.size()) - iSliceCount - 2;
+
+		for (UINT i = 0; i < iSliceCount; ++i)
+		{
+			indices.emplace_back(iBottomIdx);
+			indices.emplace_back(iBottomIdx + (i + 1));
+			indices.emplace_back(iBottomIdx + (i + 2));
+		}
+
+		// Create the cylindrical middle part of the capsule
+		for (UINT i = 0; i < iStackCount - 1; ++i)
+		{
+			for (UINT j = 0; j < iSliceCount; ++j)
+			{
+				indices.emplace_back((iSliceCount + 1) * i + j + 1);
+				indices.emplace_back((iSliceCount + 1) * i + j + 2);
+				indices.emplace_back((iSliceCount + 1) * (i + 1) + j + 2);
+
+				indices.emplace_back((iSliceCount + 1) * i + j + 1);
+				indices.emplace_back((iSliceCount + 1) * (i + 1) + j + 2);
+				indices.emplace_back((iSliceCount + 1) * (i + 1) + j + 1);
+			}
+		}
+
+		// Create the capsule mesh
+		Mesh* capsuleMesh = new Mesh();
+		GETSINGLE(ResourceMgr)->Insert<Mesh>(L"Capsulemesh", capsuleMesh);
+		capsuleMesh->CreateVertexBuffer(capsuleVtx.data(), static_cast<UINT>(capsuleVtx.size()));
+		capsuleMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
 	}
 
 	void CreateUIMaterial()
