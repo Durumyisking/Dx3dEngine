@@ -63,10 +63,7 @@
 #include "UIFactory.h"
 #include "Animator.h"
 
-#include "Packun.h"
 #include "Goomba.h"
-#include "PackunPostionBall.h"
-
 
 
 ScenePlay::ScenePlay()
@@ -106,10 +103,10 @@ void ScenePlay::Initialize()
 	//}
 
 	{
-		/*Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(0.f, 5.f, -17.f));
-		goomba->SetScale(Vector3(0.01f, 0.01f, 0.01f));
-		goomba->SetName(L"Goomba");*/
+		goomba->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+		goomba->SetName(L"Goomba");
 	}
 
 	{
@@ -139,12 +136,12 @@ void ScenePlay::Initialize()
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
 		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
-			 
+
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
@@ -178,13 +175,6 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-
-	{
-		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster,this);
-		//PackunPostionBall* packunball = object::Instantiate<PackunPostionBall>(eLayerType::Objects, this);
-
-		//Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	}
 
 
 
@@ -270,7 +260,7 @@ void ScenePlay::CreatePlayerUI()
 
 	//left Luna UI
 	{
-		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f,100.0f,1.0f), L"LunaPanal", this));
+		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaPanal", this));
 
 		for (size_t i = 0; i < 10; i++)
 		{

@@ -92,7 +92,7 @@ void GoombaStateScript::Move()
 	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
 
 	rigidbody->SetLinearMaxVelocityForDynamic(1000.f);
-	rigidbody->AddForceForDynamic((-tr->WorldForward() * 5000.f * DT), PxForceMode::Enum::eFORCE);
+	rigidbody->AddForceForDynamic((-tr->WorldForward() * 10000.f * DT), PxForceMode::Enum::eFORCE);
 }
 
 void GoombaStateScript::Jump()
