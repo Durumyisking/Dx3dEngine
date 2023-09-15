@@ -206,10 +206,12 @@ void GameObj::SetRotation(Vector3 value)
 
 Vector3 GameObj::GetPos()
 {
+	assert(GetComponent<Transform>());
 	return GetComponent<Transform>()->GetPosition();
 }
 Vector3 GameObj::GetWorldPos()
 {
+	assert(GetComponent<Transform>());
 	return GetComponent<Transform>()->GetWorldPosition();
 }
 
