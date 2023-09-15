@@ -30,7 +30,6 @@ namespace enums
 		None,
 		Transform,
 		Camera,
-		Mesh,
 		RigidBody,
 		Movement, 
 		Physical,

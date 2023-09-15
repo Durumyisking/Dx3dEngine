@@ -25,12 +25,13 @@ Goomba::~Goomba()
 void Goomba::Initialize()
 {
 	// Add MeshRenderer
-	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
 	// SetModel
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
-	if(model)
-		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+	assert(model);
+
+	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 	model->MeshRenderSwtich(L"EyeClose__BodyMT-mesh", false);
 	model->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
@@ -38,33 +39,35 @@ void Goomba::Initialize()
 	model->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", false);
 	model->MeshRenderSwtich(L"Mustache__HairMT-mesh", false);
 	model->MeshRenderSwtich(L"PressModel__BodyMT-mesh", false);
-	
+
 	model->SetVariableMaterialsByKey(0, L"goombaBodyMaterial");
 	model->SetVariableMaterialsByKey(1, L"goombaBodyMaterial");
 	model->SetVariableMaterialsByKey(2, L"goombaBodyMaterial");
 	model->SetVariableMaterialsByKey(7, L"goombaBodyMaterial");
 	model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
 	model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
-	
-
-	GoombaStateScript* goombaState = AddComponent<GoombaStateScript>(eComponentType::Script);
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
+	assert(physical);
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.1f, 0.1f, 0.5f));
 
 	// Rigidbody
-	PhysXRigidBody* rigidbody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
 
 	// MoveMent
-	AddComponent<PhysXCollider>(eComponentType::Collider);
-	AddComponent<PhysicalMovement>(eComponentType::Movement);
+	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
+	
+	// Collider
+	assert(AddComponent<PhysicalMovement>(eComponentType::Movement));
+
+	stateInfoInitalize();
+
+	assert(AddComponent<GoombaStateScript>(eComponentType::Script));
 
 	// 초기화
 	Monster::Initialize();
 
-	// 
-	stateInfoInitalize();
 }
 
 void Goomba::Update()
@@ -85,6 +88,7 @@ void Goomba::CaptureEvent()
 	std::vector<std::function<bool(eKeyCode)>> keyEvent;
 	keyEvent.resize((static_cast<UINT>(eKeyState::NONE) + 1));
 
+	// getkeytap의 첫번째 인자인 this는 inputmgr 싱글톤 포인터를 고정으로 사용, 두번째 인자는 유동적으로 사용하겠다.
 	keyEvent[static_cast<UINT>(eKeyState::TAP)] = std::bind(&InputMgr::GetKeyTap, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::DOWN)] = std::bind(&InputMgr::GetKeyDown, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::UP)] = std::bind(&InputMgr::GetKeyUp, GETSINGLE(InputMgr), std::placeholders::_1);

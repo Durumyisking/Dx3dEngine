@@ -95,9 +95,6 @@ namespace gui
 		case enums::eComponentType::Camera:
 			name = "eComponentType::Camera";
 			break;
-		case enums::eComponentType::Mesh:
-			name = "eComponentType::Mesh";
-			break;
 		case enums::eComponentType::RigidBody:
 			name = "eComponentType::RigidBody";
 			break;
