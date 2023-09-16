@@ -40,6 +40,7 @@ public:
 	virtual void OnCollisionEnter(GameObj* gameObject) override;
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
+	void KeyCheck();
 	virtual void BoneInitialize();
 
 	std::vector<MarioParts*> GetParts() { return mParts; }
@@ -48,7 +49,6 @@ public:
 
 private:
 	std::vector<MarioParts*> mParts;
-	void PlayerAnimation(std::wstring name);
 
 protected:
 	virtual void stateInfoInitalize() final;
@@ -56,6 +56,7 @@ protected:
 public:
 	ePlayerState GetPlayerState() { return mPlayerState; }
 	void SetPlayerState(ePlayerState playerState);
+	void PlayerAnimation(std::wstring name);
 
 private:
 	ePlayerState mPlayerState;

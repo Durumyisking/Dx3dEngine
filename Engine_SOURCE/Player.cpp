@@ -42,17 +42,19 @@ void Player::Initialize()
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
 	SetPos(Vector3(0.f, 0.f, 0.f));
-	SetScale(Vector3(1.0f, 1.0f, 1.0f));
+	SetScale(Vector3(0.01f, 0.01f, 0.01f));
 	SetName(L"Player");
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
 	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
-	animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
-	//animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
+	//animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
+	animator->CreateAnimation(L"Wait", L"..//..//Resources/MarioBody/Animation/Wait.smd", 0.05f);
+	animator->CreateAnimation(L"WaitHot", L"..//..//Resources/MarioBody/Animation/WaitHot.smd", 0.05f);
+	animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
 	///animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
 	//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
 	//animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
-	animator->Play(L"Walk");
+	animator->Play(L"Wait");
 
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 
@@ -82,6 +84,11 @@ void Player::Initialize()
 		i->Initialize();
 	}
 
+
+	mStateInfo.resize(static_cast<int>(ePlayerState::Die) + 1);
+	stateInfoInitalize();
+	//mPlayerState = ePlayerState::Idle;
+
 	DynamicObject::Initialize();
 }
 
@@ -100,6 +107,8 @@ void Player::Update()
 void Player::FixedUpdate()
 {
 	DynamicObject::FixedUpdate();
+
+	KeyCheck();
 
 	for (auto i : mParts)
 	{
@@ -145,6 +154,49 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 
 void Player::OnTriggerExit(GameObj* gameObject)
 {
+}
+
+void Player::KeyCheck()
+{
+	// 캡처 이벤트 구현부
+	bool able = false;
+
+	std::vector<std::function<bool(eKeyCode)>> keyEvent;
+	keyEvent.resize((static_cast<UINT>(eKeyState::NONE) + 1));
+
+	keyEvent[static_cast<UINT>(eKeyState::TAP)] = std::bind(&InputMgr::GetKeyTap, GETSINGLE(InputMgr), std::placeholders::_1);
+	keyEvent[static_cast<UINT>(eKeyState::DOWN)] = std::bind(&InputMgr::GetKeyDown, GETSINGLE(InputMgr), std::placeholders::_1);
+	keyEvent[static_cast<UINT>(eKeyState::UP)] = std::bind(&InputMgr::GetKeyUp, GETSINGLE(InputMgr), std::placeholders::_1);
+	keyEvent[static_cast<UINT>(eKeyState::NONE)] = std::bind(&InputMgr::GetKeyNone, GETSINGLE(InputMgr), std::placeholders::_1);
+
+	// 키 입력 이벤트 처리하는 람다식
+	std::function<void(eKeyState, eKeyCode, ePlayerState)> stateEvent =
+		[&]
+	(eKeyState keyState, eKeyCode curPress, ePlayerState nextState) ->void
+	{
+		if (able)
+			return;
+		if (keyEvent[static_cast<UINT>(keyState)](curPress))
+		{
+			SetPlayerState(nextState);
+			able = true;
+		}
+	};
+
+	// 대기
+ 
+	// 이동
+	stateEvent(eKeyState::DOWN, eKeyCode::UP, ePlayerState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, ePlayerState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, ePlayerState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::RIGHT, ePlayerState::Move);
+
+	// 점프
+	able = false;
+	stateEvent(eKeyState::TAP, eKeyCode::SPACE, ePlayerState::Jump);
+
+	// 특수
+
 }
 
 void Player::BoneInitialize()

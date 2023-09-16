@@ -54,6 +54,11 @@ void PlayerStateScript::Initialize()
 
 void PlayerStateScript::Idle()
 {
+	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
+	if (animator == nullptr)
+		return;
+	if(!(animator->PlayAnimationName()== L"Wait"))
+		animator->Play(L"Wait");
 }
 
 void PlayerStateScript::Move()
@@ -70,10 +75,11 @@ void PlayerStateScript::Move()
 	if (moveMent == nullptr)
 		return;
 
-	if (animator->PlayAnimationName() != L"Dash")
+	if (animator->PlayAnimationName() != L"Walk")
 	{
 		const std::wstring& test = animator->PlayAnimationName();
-		animator->Play(L"Dash");
+		animator->Play(L"Walk");
+		//mPlayer->PlayerAnimation(L"Walk");
 	}
 
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
@@ -129,7 +135,7 @@ void PlayerStateScript::Move()
 		tr->SetRotation(Vector3(0.0f, -90.f, 0.0f));
 	}
 	rigidbody->SetLinearMaxVelocityForDynamic(4000.f);
-	rigidbody->AddForceForDynamic((-tr->Forward() * 100000.f * DT), PxForceMode::Enum::eFORCE);
+	rigidbody->AddForceForDynamic((-tr->Forward() * 9000.f * DT), PxForceMode::Enum::eFORCE);
 }
 
 void PlayerStateScript::Jump()

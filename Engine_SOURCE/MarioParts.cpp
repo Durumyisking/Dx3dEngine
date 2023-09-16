@@ -71,7 +71,7 @@ void MarioParts::BoneInitialize()
 	if (GetName() == L"HandL") {
 
 		SetPos(Vector3(0.f, 0.f, 0.f));
-		SetScale(Vector3(1.0f, 1.f, 1.0f));
+		SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandL");
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
@@ -92,7 +92,7 @@ void MarioParts::BoneInitialize()
 	if (GetName() == L"HandR") {
 
 		SetPos(Vector3(0.f, 0.f, 0.f));
-		SetScale(Vector3(1.0f, 1.f, 1.0f));
+		SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandR");
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
@@ -113,7 +113,7 @@ void MarioParts::BoneInitialize()
 
 	if (GetName() == L"Head") {
 		SetPos(Vector3(0.f, 0.f, 0.f));
-		SetScale(Vector3(1.0f, 1.f, 1.0f));
+		SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
@@ -135,7 +135,7 @@ void MarioParts::BoneInitialize()
 
 	if (GetName() == L"Face") {
 		SetPos(Vector3(0.f, 0.f, 0.f));
-		SetScale(Vector3(1.0f, 1.f, 1.0f));
+		SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioFace");
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
@@ -154,7 +154,7 @@ void MarioParts::BoneInitialize()
 
 	if (GetName() == L"Eye") {
 		SetPos(Vector3(0.f, 0.f, 0.f));
-		SetScale(Vector3(1.0f, 1.f, 1.0f));
+		SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioEye");
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
