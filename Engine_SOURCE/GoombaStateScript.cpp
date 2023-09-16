@@ -6,6 +6,7 @@
 #include "InputMgr.h"
 #include "TimeMgr.h"
 
+#include "PhysXCollider.h"
 
 GoombaStateScript::GoombaStateScript()
 	: MonsterStateScript()
@@ -25,7 +26,10 @@ void GoombaStateScript::Initialize()
 	MonsterStateScript::Initialize();
 	mAnimator = mMonster->GetComponent<BoneAnimator>();
 	mRigidbody = mMonster->GetComponent<PhysXRigidBody>();
-	mRigidbody->SetLinearMaxVelocityForDynamic(100.f);
+	mRigidbody->SetLinearMaxVelocityForDynamic(GOOMBA_RUN_VELOCITY);
+	mRigidbody->SetMassForDynamic(GOOMBA_MASS);
+	mRigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	mRigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
 	mMovement = mMonster->GetComponent<PhysicalMovement>();
 	mTransform = mMonster->GetComponent<Transform>();
 }
@@ -42,7 +46,7 @@ void GoombaStateScript::Idle()
 		mAnimator->Play(L"Wait");
 	}
 
-	mRigidbody->AddForceForDynamic((Vector3(0.f, -1.f, 0.f) * 100.f * DT), PxForceMode::Enum::eIMPULSE);
+	//mRigidbody->AddForceForDynamic((Vector3(0.f, -1.f, 0.f) * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
 
 }
 
@@ -89,7 +93,9 @@ void GoombaStateScript::Move()
 	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
 
 
-	mRigidbody->AddForceForDynamic((-mTransform->Forward() * 100.f * DT), PxForceMode::Enum::eIMPULSE);
+	Vector3 moveDir = mTransform->Forward();
+	moveDir.y = 0.f;
+	mRigidbody->AddForceForDynamic((-moveDir * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
 }
 
 void GoombaStateScript::Jump()

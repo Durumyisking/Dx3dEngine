@@ -61,9 +61,11 @@ void Goomba::Initialize()
 	// Collider
 	assert(AddComponent<PhysicalMovement>(eComponentType::Movement));
 
-	stateInfoInitalize();
-
+	// Script
 	assert(AddComponent<GoombaStateScript>(eComponentType::Script));
+
+	// 상태 info 초기화	
+	stateInfoInitalize();
 
 	// 초기화
 	Monster::Initialize();

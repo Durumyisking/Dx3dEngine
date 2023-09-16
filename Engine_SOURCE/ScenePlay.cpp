@@ -69,6 +69,9 @@
 ScenePlay::ScenePlay()
 	: mCamera(nullptr)
 	, mUICamera(nullptr)
+	, mCoinPanal(nullptr)
+	, mLifePanal(nullptr)
+	, mLunaPanal(nullptr)
 {
 }
 
@@ -78,29 +81,6 @@ ScenePlay::~ScenePlay()
 
 void ScenePlay::Initialize()
 {
-	//{
-	//	mCamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"MainCamera");
-	//	Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
-	//	cameraComp->TurnLayerMask(eLayerType::UI, false);
-	//	cameraComp->SmoothOn();
-	//	mCamera->AddComponent<CameraScript>(eComponentType::Script);
-	//	cameraComp->SetProjectionType(eProjectionType::Perspective);
-	//	mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
-
-	//}
-
-	//{
-	//	// UI Camera
-	//	mUICamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"UICamera");
-	//	Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
-	//	mUICamera->AddComponent<CameraScript>(eComponentType::Script);
-
-	//	cameraUIComp->SetProjectionType(eProjectionType::Perspective);
-	//	cameraUIComp->SmoothOn();
-	//	cameraUIComp->DisableLayerMasks();
-	//	cameraUIComp->TurnLayerMask(eLayerType::UI, true);
-	//	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
-	//}
 
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
@@ -176,9 +156,7 @@ void ScenePlay::Initialize()
 	}
 
 
-
-
-	CreatePlayerUI();
+	//CreatePlayerUI();
 
 	Scene::Initialize();
 }
