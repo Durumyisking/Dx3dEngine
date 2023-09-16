@@ -1,6 +1,7 @@
 #include "UIBase.h"
 #include "Material.h"
-#include "MeshRenderer.h"
+#include "SpriteRenderer.h"
+
 
 Vector3 mUIScreenPos;
 Vector3 mUIPos;
@@ -99,4 +100,16 @@ void UIBase::Addchild(UIBase* uiBase)
 {
 	mChilds.push_back(uiBase);
 	uiBase->mUIParent = this;
+}
+
+void UIBase::SetColor(Vector4 color)
+{
+	SpriteRenderer* renderer = this->GetComponent<SpriteRenderer>();
+	Material* material = renderer->GetMaterial();
+
+	renderer::MaterialCB data = {};
+	data.bool3 = true;
+	data.xyzw1 = color;
+	material->SetData(eGPUParam::Bool_3, &data.bool3);
+	material->SetData(eGPUParam::Vector4_1, &data.xyzw1);
 }

@@ -246,6 +246,7 @@ namespace renderer
 	void CreateSphereMesh();
 	void CreateCapsuleMesh();
 
+	void CreateMaterial(const std::wstring& textureKey, const std::wstring& shaderKey, const std::wstring& keyName, eRenderingMode eRenderMode = eRenderingMode::Transparent);
 	void CreateUIMaterial();
 	void CreateUITexture();
 }
