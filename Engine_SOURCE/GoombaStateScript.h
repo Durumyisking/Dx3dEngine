@@ -5,6 +5,10 @@
 //class PhysXRigidBody;
 //class PhysicalMovement;
 //class Transform		;
+#define GOOMBA_SPPED 100.f
+#define GOOMBA_MASS 1.f
+#define GOOMBA_WALK_VELOCITY 2.5f
+#define GOOMBA_RUN_VELOCITY 5.f
 class GoombaStateScript : public MonsterStateScript
 {
 public:
