@@ -49,6 +49,11 @@ void AnimationClip::Update()
 	{
 		mTickPerSceond -= mDuration;
 		mCurIndex++;
+
+		// 프레임 이벤트를 실행시킨다
+		auto iter = mKeyFrameEvent.find(mCurIndex);
+		if (iter != mKeyFrameEvent.end() && iter->second != nullptr)
+			iter->second();
 	}
 
 	if (mCurIndex >= mSkeletonData.size() - 1)
@@ -127,6 +132,9 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 			GameObj* owner = mAnimator->GetOwner();
 			BaseRenderer* baseRenderer = mAnimator->GetOwner()->GetComponent<BaseRenderer>();
 			Model* model = mAnimator->GetOwner()->GetComponent<BaseRenderer>()->GetModel();
+
+			if (model == nullptr)
+				return;
 
 			for (int i = 0; i < mNodeData.size(); ++i)
 			{
@@ -272,6 +280,24 @@ aiMatrix4x4 AnimationClip::ToLeftHandMatrix(math::Vector3 pos, aiMatrix3x3 rotat
 	//rotationmatrix.FromEulerAnglesXYZ(-rotation.x, -rotation.y, rotation.z);
 
 	return traslation * rotationmatrix;
+}
+
+std::function<void()> AnimationClip::GetKeyFrameEvent(UINT index)
+{
+	auto iter = mKeyFrameEvent.find(index);
+	if (iter != mKeyFrameEvent.end())
+		return iter->second;
+
+	return nullptr;
+}
+
+void AnimationClip::SetKeyFrameEvent(UINT index, std::function<void()> inEvent)
+{
+	auto iter = mKeyFrameEvent.find(index);
+	if (iter == mKeyFrameEvent.end())
+		mKeyFrameEvent.insert(std::pair(index, inEvent));
+	else
+		iter->second = inEvent;
 }
 
 const std::string AnimationClip::parsingString(std::string& buf, const std::string& delValue, std::string::size_type& startPos) const
