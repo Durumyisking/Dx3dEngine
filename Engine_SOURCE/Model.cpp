@@ -197,11 +197,11 @@ void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
 {
 	for (auto iter = mMeshes.begin(); iter != mMeshes.end(); ++iter)
 	{
-		if ((*iter)->GetName().find(name) == std::wstring::npos)
-			continue;
-
-		(*iter)->SetRender(renderSwitch);
-		return;
+		if ((*iter)->GetName() == name)
+		{ 
+			(*iter)->SetRender(renderSwitch);
+			break;
+		}
 	}
 }
 

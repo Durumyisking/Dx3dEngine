@@ -233,6 +233,15 @@
     <Filter Include="RayCast">
       <UniqueIdentifier>{873dbe93-ba2a-42a4-8bb8-de37d53d3cbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\GameObj\DynamicObject\Player">
+      <UniqueIdentifier>{3ab5c27f-7b96-4e8f-a28b-b00764f2af27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\DynamicObject\MarioParts">
+      <UniqueIdentifier>{bf63e657-371d-497d-8f79-2299b95b3aa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\Camera\Script\PlayerState">
+      <UniqueIdentifier>{74ccf6c5-4bf5-40a0-996f-e716b637a26c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -346,9 +355,6 @@
     <ClInclude Include="CursorScript.h">
       <Filter>Common\GameObj\Cursor</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Common\GameObj\DynamicObject\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Animator.h">
       <Filter>Common\Component\Animator</Filter>
     </ClInclude>
@@ -398,9 +404,6 @@
     </ClInclude>
     <ClInclude Include="FontWrapper.h">
       <Filter>Common\Font</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerScript.h">
-      <Filter>Common\GameObj\DynamicObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="Macro.h" />
     <ClInclude Include="def.h">
@@ -543,8 +546,6 @@
       <Filter>Common\Scene</Filter>
     </ClInclude>
     <ClInclude Include="ImageUI.h" />
-    <ClInclude Include="MarioHead.h" />
-    <ClInclude Include="MarioParts.h" />
     <ClInclude Include="DynamicObject.h">
       <Filter>Common\GameObj\DynamicObject</Filter>
     </ClInclude>
@@ -584,6 +585,21 @@
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="PhysXRayCast.h">
       <Filter>RayCast</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Common\GameObj\DynamicObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioParts.h">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioHead.h">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerScript.h">
+      <Filter>Common\GameObj\DynamicObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateScript.h">
+      <Filter>Common\Component\Camera\Script\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -683,9 +699,6 @@
     <ClCompile Include="CursorScript.cpp">
       <Filter>Common\GameObj\Cursor</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Common\GameObj\DynamicObject\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Common\Component\Animator</Filter>
     </ClCompile>
@@ -735,9 +748,6 @@
     </ClCompile>
     <ClCompile Include="FontWrapper.cpp">
       <Filter>Common\Font</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerScript.cpp">
-      <Filter>Common\GameObj\DynamicObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="druEnums.cpp">
       <Filter>Common</Filter>
@@ -864,8 +874,6 @@
       <Filter>Common\Scene</Filter>
     </ClCompile>
     <ClCompile Include="ImageUI.cpp" />
-    <ClCompile Include="MarioHead.cpp" />
-    <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="DynamicObject.cpp">
       <Filter>Common\GameObj\DynamicObject</Filter>
     </ClCompile>
@@ -905,6 +913,21 @@
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="PhysXRayCast.cpp">
       <Filter>RayCast</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Common\GameObj\DynamicObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioParts.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioHead.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>Common\GameObj\DynamicObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateScript.cpp">
+      <Filter>Common\Component\Camera\Script\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

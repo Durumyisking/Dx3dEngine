@@ -98,11 +98,12 @@ void MarioParts::BoneInitialize()
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
+		//animator->LoadAnimations(L"..//Resources/MarioHandR/Animation");
 		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandR/Animation/Walk.smd", 0.05f);
 		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandR/Animation/Jump.smd", 0.05f);
 		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandR/Animation/Dead.smd", 0.05f);
 		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandR/Animation/Run.smd", 0.05f);
-		animator->Play(L"test");
+		animator->Play(L"Walk");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
 		model->SetParentTargetBone(L"Armature_HandR");
@@ -118,15 +119,16 @@ void MarioParts::BoneInitialize()
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
+		animator->LoadAnimations(L"..//Resources/MarioHead/Animation");
 		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/WaitHot.smd", 0.05f);
-		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
+		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
 		animator->Play(L"test");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
 		model->SetParentTargetBone(L"Armature_Head");
 		model->SetTargetBone(L"Armature_MarioHead");
 		model->SetOffsetRotation(Vector3(0.0f, 1.570796f, -1.570796f * 2));
-		model->MeshRenderSwtich(L"Hair__HairMT", false);
+		model->MeshRenderSwtich(L"Hair__HairMT-mesh", false);
 
 
 	}
@@ -139,6 +141,7 @@ void MarioParts::BoneInitialize()
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
+		//animator->LoadAnimations(L"..//Resources/MarioFace/Animation");
 		animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
 		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioFace/Animation/Walk.smd", 0.02f);
 		animator->Play(L"test2");
@@ -157,6 +160,7 @@ void MarioParts::BoneInitialize()
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
+		//animator->LoadAnimations(L"..//Resources/MarioEye/Animation");
 		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioEye/Animation/WaitHot.smd", 0.02f);
 		animator->Play(L"test2");
 
@@ -165,8 +169,8 @@ void MarioParts::BoneInitialize()
 		model->SetTargetBone(L"Armature_nw4f_root");
 		//model->SetOffsetRotation(Vector3(0.0f, -1.570796f, -1.570796f * 2));
 		model->SetOffsetRotation(Vector3(0.0f, -1.570796f, 0.0f));
-		model->MeshRenderSwtich(L"EyelidCloseLeft__EyeMT", false);
-		model->MeshRenderSwtich(L"EyelidCloseRight__EyeMT", false);
+		model->MeshRenderSwtich(L"EyelidCloseLeft__EyeMT-mesh", false);
+		model->MeshRenderSwtich(L"EyelidCloseRight__EyeMT-mesh", false);
 		//model->MeshRenderSwtich(L"EyelidLeft__EyeMT", false);
 		//model->MeshRenderSwtich(L"EyelidRight__EyeMT", false);
 	}

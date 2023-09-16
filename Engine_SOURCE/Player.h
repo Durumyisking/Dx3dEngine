@@ -6,6 +6,25 @@
 class Player :
 	public DynamicObject
 {
+public:
+	enum class ePlayerState : short
+	{
+		Idle,
+
+		Move,
+		Jump,
+		Crouch, //웅크리기
+		CrouchMove, 
+
+		Air, //공중에 있지만 다른 액션은 하지 않는 상태
+		Wall, //벽차기
+
+		Hit,
+		Groggy,
+
+		CapAction,
+		Die,
+	};
 
 public:
 	Player();
@@ -29,12 +48,17 @@ public:
 
 private:
 	std::vector<MarioParts*> mParts;
+	void PlayerAnimation(std::wstring name);
 
 protected:
-	virtual void stateInfoInitalize() override {};
+	virtual void stateInfoInitalize() final;
 
 public:
+	ePlayerState GetPlayerState() { return mPlayerState; }
+	void SetPlayerState(ePlayerState playerState);
 
+private:
+	ePlayerState mPlayerState;
 
 
 };

@@ -2,13 +2,16 @@
 #include "MarioParts.h"
 #include "InputMgr.h"
 #include "TimeMgr.h"
-#include "PlayerScript.h"
+
 #include "MeshRenderer.h"
 #include "PhysXRigidBody.h"
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 #include "BoneAnimator.h"
 #include "Object.h"
+
+#include "PlayerStateScript.h"
+#include "PlayerScript.h"
 
 
 Player::Player()
@@ -29,7 +32,8 @@ void Player::Initialize()
 {
 	//마리오 body 초기화
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	AddComponent<PlayerScript>(eComponentType::Script);
+	//AddComponent<PlayerScript>(eComponentType::Script);
+	AddComponent<PlayerStateScript>(eComponentType::Script);
 	AddComponent<Transform>(eComponentType::Transform);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
@@ -43,12 +47,12 @@ void Player::Initialize()
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
 	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
-
-	animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
-	animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
-	animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
-	animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
-	animator->Play(L"test");
+	animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
+	//animator->CreateAnimation(L"test", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
+	///animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
+	//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
+	//animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
+	animator->Play(L"Walk");
 
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 
@@ -147,3 +151,89 @@ void Player::BoneInitialize()
 {
 }
 
+void Player::PlayerAnimation(std::wstring name)
+{
+	//일괄적으로 애니메이션을 재생시켜주는 함수
+	BoneAnimator* animator = GetComponent<BoneAnimator>();
+	animator->Play(name);
+	for (auto i : mParts)
+	{
+		i->GetComponent<BoneAnimator>()->Play(name);
+	}
+}
+
+void Player::stateInfoInitalize()
+{
+	//Idle
+	// 현재는 대기상태에서 못가는상태가 없다
+
+	//Move
+	
+	// Jump
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Move));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::CrouchMove));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Groggy));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Die));
+
+	//Crouch - 원래는 웅크리기 상태에서는 일반 점프가 안된다. 하지만 간략화 할지 고민중
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Move));
+	//InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Jump));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Groggy));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Crouch));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Die));
+
+	//CrouchMove - 웅크리기 후 움직이는 상태, 이 상태에서만 할 수 있는 액션들이 존재한다.
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Move));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Wall));
+
+	//Air - 공중에 떠있는 상태에서는 마리오의 방향 회전만 가능하며, 이동하지는 못한다.
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Move));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Jump));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Crouch));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::CrouchMove));
+
+	//Wall -벽을 손으로 짚으면서 내려오는 상태, 이 상태에서 점프를 하면 벽차기가 된다. 
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Move));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::CrouchMove));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Air));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::CapAction));
+
+	//Hit
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Move));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Jump));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Crouch));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::CrouchMove));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Air));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Wall));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::CapAction));
+
+	//Groggy
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Hit));
+
+	//CapAction
+	
+	//Die
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Idle));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Move));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Jump));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Crouch));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::CrouchMove));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Air));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Wall));
+	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Hit));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Groggy));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::CapAction));
+}
+void Player::SetPlayerState(ePlayerState playerState)
+{
+	std::set<UINT>::iterator iter;
+	iter = mStateInfo[static_cast<UINT>(mPlayerState)].mLockState.find(static_cast<UINT>(playerState));
+	if (iter != mStateInfo[static_cast<UINT>(mPlayerState)].mLockState.end())
+		return;
+
+	mPlayerState = playerState;
+
+	PlayerStateScript* script = GetScript<PlayerStateScript>();
+	if (script)
+		script->Reset();
+}

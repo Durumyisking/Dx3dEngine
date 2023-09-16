@@ -277,10 +277,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelNode.h" />
     <ClInclude Include="Monster.h" />
-
     <ClInclude Include="MonsterAiScript.h" />
     <ClInclude Include="MonsterStateScript.h" />
-
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Packun.h" />
@@ -301,6 +299,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PhysXRigidBody.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
+    <ClInclude Include="PlayerStateScript.h" />
     <ClInclude Include="PostProcess.h" />
     <ClInclude Include="PostProcessRenderer.h" />
     <ClInclude Include="PostProcessWave.h" />
@@ -400,10 +399,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelNode.cpp" />
     <ClCompile Include="Monster.cpp" />
-
     <ClCompile Include="MonsterAiScript.cpp" />
     <ClCompile Include="MonsterStateScript.cpp" />
-
     <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="Packun.cpp" />
     <ClCompile Include="PackunStateScript.cpp" />
@@ -423,6 +420,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PhysXRigidBody.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="PlayerStateScript.cpp" />
     <ClCompile Include="PostProcess.cpp" />
     <ClCompile Include="PostProcessRenderer.cpp" />
     <ClCompile Include="PostProcessWave.cpp" />

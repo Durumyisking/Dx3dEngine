@@ -102,12 +102,12 @@ void ScenePlay::Initialize()
 	//	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
 	//}
 
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(0.f, 5.f, -17.f));
-		goomba->SetScale(Vector3(0.01f, 0.01f, 0.01f));
-		goomba->SetName(L"Goomba");
-	}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(0.f, 5.f, -17.f));
+	//	goomba->SetScale(Vector3(0.01f, 0.01f, 0.01f));
+	//	goomba->SetName(L"Goomba");
+	//}
 	//{
 	//	Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 	//	player->SetPos(Vector3(5.f, 5.f, 9.5f));
