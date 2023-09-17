@@ -25,12 +25,20 @@ Goomba::~Goomba()
 void Goomba::Initialize()
 {
 	// Add MeshRenderer
-	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
 	// SetModel
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
-	if(model)
-		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+	assert(model);
+
+	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+
+	model->MeshRenderSwtich(L"EyeClose__BodyMT-mesh", false);
+	model->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
+	model->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", false);
+	model->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", false);
+	model->MeshRenderSwtich(L"Mustache__HairMT-mesh", false);
+	model->MeshRenderSwtich(L"PressModel__BodyMT-mesh", false);
 
 	model->SetVariableMaterialsByKey(0, L"goombaBodyMaterial");
 	model->SetVariableMaterialsByKey(1, L"goombaBodyMaterial");
@@ -39,25 +47,29 @@ void Goomba::Initialize()
 	model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
 	model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
 
-
-	GoombaStateScript* goombaState = AddComponent<GoombaStateScript>(eComponentType::Script);
-	//goombaState->Initialize();
-
-	//Phsical
+	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
-
+	assert(physical);
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.5f));
 
 	// Rigidbody
-	PhysXRigidBody* rigidbody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	//rigidbody->Initialize();
+	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
 
 	// MoveMent
-	AddComponent<PhysXCollider>(eComponentType::Collider);
-	AddComponent<PhysicalMovement>(eComponentType::Movement);
+	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
+	
+	// Collider
+	assert(AddComponent<PhysicalMovement>(eComponentType::Movement));
+
+	// Script
+	assert(AddComponent<GoombaStateScript>(eComponentType::Script));
+
+	// 상태 info 초기화	
+	stateInfoInitalize();
 
 	// 초기화
 	Monster::Initialize();
+
 }
 
 void Goomba::Update()
@@ -78,6 +90,7 @@ void Goomba::CaptureEvent()
 	std::vector<std::function<bool(eKeyCode)>> keyEvent;
 	keyEvent.resize((static_cast<UINT>(eKeyState::NONE) + 1));
 
+	// getkeytap의 첫번째 인자인 this는 inputmgr 싱글톤 포인터를 고정으로 사용, 두번째 인자는 유동적으로 사용하겠다.
 	keyEvent[static_cast<UINT>(eKeyState::TAP)] = std::bind(&InputMgr::GetKeyTap, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::DOWN)] = std::bind(&InputMgr::GetKeyDown, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::UP)] = std::bind(&InputMgr::GetKeyUp, GETSINGLE(InputMgr), std::placeholders::_1);
@@ -126,6 +139,9 @@ void Goomba::stateInfoInitalize()
 	//Idle
 	// 현재는 대기상태에서 못가는상태가 없다
 
+	// Move
+	InsertLockState(static_cast<UINT>(eMonsterState::Move), static_cast<UINT>(eMonsterState::Move));
+
 	// Jump
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Move));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::SpecialSituation));
@@ -158,6 +174,7 @@ void Goomba::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Move));
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Jump));
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Attack));
+	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Hit));
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::SpecialSituation));
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Groggy));
 }

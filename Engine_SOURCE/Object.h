@@ -11,7 +11,7 @@ namespace object
 	static T* LateInstantiate(enums::eLayerType layerType)
 	{
 		T* gameObj = new T();
-		Scene* scene = GETSINGLE(SceneMgr)->AddEvent(gameObj);
+		GETSINGLE(SceneMgr)->AddEvent(gameObj);
 		gameObj->Initialize();
 		gameObj->SetLayerType(layerType);
 
@@ -169,6 +169,6 @@ namespace object
 		if (gameobj == nullptr)
 			return;
 
-		gameobj->DontDestroy();
+		gameobj->SetDestroyOff();
 	}
 }

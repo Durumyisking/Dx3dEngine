@@ -31,7 +31,8 @@ void SceneMgr::Initialize()
 
 	for (UINT i = 0; i < static_cast<UINT>(eSceneType::End); i++)
 	{
-		mScenes[i]->Initialize();
+		if(mScenes[i])
+			mScenes[i]->Initialize();
 	}
 
 	mActiveScene->Enter();
@@ -113,5 +114,5 @@ void SceneMgr::DontDestroyOnLoad(GameObj* gameObj)
 	if (nullptr == gameObj)
 		return;
 
-	gameObj->DontDestroy();
+	gameObj->SetDestroyOff();
 }

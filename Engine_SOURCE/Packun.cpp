@@ -1,4 +1,5 @@
 #include "Packun.h"
+#include "Object.h"
 #include "InputMgr.h"
 #include "BoneAnimator.h"
 #include "Model.h"
@@ -10,6 +11,7 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
+#include "PackunPostionBall.h"
 
 Packun::Packun()
 	: Monster()
@@ -24,15 +26,27 @@ Packun::~Packun()
 void Packun::Initialize()
 {
 	// Add MeshRenderer
-	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	MeshRenderer* mesh = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 	// SetModel
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
 	if (model)
-		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+	{
+		MeshRenderer* test = GetComponent<MeshRenderer>();
+		test->SetModel(model, model->GetMaterial(0));
+
+
+		//// 오프
+		//model->MeshRenderSwtich(L"Head2__BodyMT-mesh", false);
+		//model->MeshRenderSwtich(L"Head2__HeadMT-mesh", false);
+		//model->MeshRenderSwtich(L"mustache__HairMT-mesh", false);
+
+		//// 온ㄴ
+		//model->MeshRenderSwtich(L"Head3__BodyMT-mesh");
+		//model->MeshRenderSwtich(L"Head3__HeadMT-mesh");
+	}
 
 	PackunStateScript* packunState = AddComponent<PackunStateScript>(eComponentType::Script);
-	packunState->Initialize();
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
@@ -42,9 +56,8 @@ void Packun::Initialize()
 	// Rigidbody
 	PhysXRigidBody* rigidbody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigidbody->Initialize();
-
 	// MoveMent
-	//AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
+	AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
 	AddComponent<PhysicalMovement>(eComponentType::Movement)->Initialize();
 
 	// 초기화
@@ -114,6 +127,7 @@ void Packun::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Die));
 
 	//Attack
+	InsertLockState(static_cast<UINT>(eMonsterState::Attack), static_cast<UINT>(eMonsterState::Attack));
 	InsertLockState(static_cast<UINT>(eMonsterState::Attack), static_cast<UINT>(eMonsterState::Jump));
 	InsertLockState(static_cast<UINT>(eMonsterState::Attack), static_cast<UINT>(eMonsterState::Move));
 	InsertLockState(static_cast<UINT>(eMonsterState::Attack), static_cast<UINT>(eMonsterState::SpecialSituation));
@@ -147,29 +161,52 @@ void Packun::stateInfoInitalize()
 void Packun::boneAnimatorInit(BoneAnimator* animator)
 {
 	animator->LoadAnimations(L"..//Resources/Packun/Animation");
-
+	AnimationClip* cilp = nullptr;
 
 	// 어택 동작 연계
 	{
-		AnimationClip* cilp = animator->GetAnimationClip(L"AttackSign");
-		if (cilp)
-			cilp->SetCompleateEvent([=]() 
-				{
-					animator->Play(L"Attack", false);
-				});
-
 		cilp = animator->GetAnimationClip(L"Attack");
 		if (cilp)
-			cilp->SetCompleateEvent([this]() 
+		{
+			cilp->SetKeyFrameEvent(3, [this]()
 				{
-					SetMonsterState(Monster::eMonsterState::Idle);
+					PackunPostionBall* packunball = object::LateInstantiate<PackunPostionBall>(eLayerType::Objects);
+
+					Transform* tr = GetComponent<Transform>();
+					Vector3 position = tr->GetPhysicalPosition();
+			
+					Vector3 rotation = tr->GetRotation();
+
+					packunball->GetComponent<Transform>()->SetPhysicalPosition(position);
+					packunball->GetComponent<Transform>()->SetPhysicalRotation(rotation);
+					packunball->FixedUpdate();
+
+					Transform* test = packunball->GetComponent<Transform>();
+					Vector3 testfor = test->WorldForward();
+
+					PhysXRigidBody* rigidbody = packunball->GetComponent<PhysXRigidBody>();
+					if (rigidbody)
+					{
+						//rigidbody->AddForceForDynamic(Vector3(0.f,25.f,0.f), PxForceMode::eIMPULSE);
+						rigidbody->AddForceForDynamic(test->WorldForward() * 15.f, PxForceMode::eIMPULSE);
+					}
+
 				});
 
-		/*cilp = animator->GetAnimationClip(L"AttackHit");
+			cilp->SetCompleateEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+		}
+
+	}
+
+	// 피격 동작 연계
+	{
+		cilp = animator->GetAnimationClip(L"AttackHit");
 		if (cilp)
 			cilp->SetCompleateEvent([this]()
 				{
 					SetMonsterState(Monster::eMonsterState::Idle);
-				});*/
+				});
 	}
+
+
 }

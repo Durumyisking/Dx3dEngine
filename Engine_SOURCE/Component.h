@@ -5,6 +5,20 @@
 using namespace enums;
 
 class GameObj;
+class Transform;
+class Camera;
+class RigidBody;
+class PhysXRigidBody;
+class PhysicalMovement;
+class Physical;
+class PhysXCollider;
+class Animator;
+class BoneAnimator;
+class MeshRenderer;
+class SpriteRenderer;
+class ParticleSystem;
+class Light;
+
 class Component : public DruEntity
 {
 public:
@@ -32,6 +46,20 @@ public:
 
 	math::Vector3 GetOwnerPos() const; // component script에서 코드 사용 편하게 하기위함
 	math::Vector3 GetOwnerWorldPos() const; 
+
+	Transform* GetTransform() ;
+	Camera* GetCamera() ;
+	RigidBody* GetRigidBody() ;
+	PhysXRigidBody* GetPhysXRigidBody();
+	PhysicalMovement* GetMovement() ;
+	Physical* GetPhysical() ;
+	PhysXCollider* GetPhysXCollider();
+	Animator* GetAnimator() ;
+	BoneAnimator* GetBoneAnimator() ;
+	MeshRenderer* GetMeshRenderer() ;
+	SpriteRenderer* GetSpriteRenderer() ;
+	ParticleSystem* GetParticle() ;
+	Light* GetLight() ;
 
 private:
 	const eComponentType mType; // 타입이 바뀌면 안되기 때문

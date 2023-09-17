@@ -37,8 +37,13 @@ public:
 	eMonsterState GetMonsterState() { return mMonsterState; }
 	void SetMonsterState(eMonsterState monsterState);
 
+	GETSET(const float, mRecognizeRadius, GetRecognizeRadius)
+	GETSET(const bool, mFoundPlayer, IsFoundPlayer)
+
 private:
 	eMonsterState mMonsterState;
 
+	float mRecognizeRadius;
+	bool mFoundPlayer
 };
 

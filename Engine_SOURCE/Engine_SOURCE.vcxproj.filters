@@ -526,9 +526,6 @@
     <ClInclude Include="BoneAnimator.h">
       <Filter>Common\Component\Animator3D</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationClip.h">
-      <Filter>Common\Component\Animator3D</Filter>
-    </ClInclude>
     <ClInclude Include="Struct.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -600,6 +597,11 @@
     </ClInclude>
     <ClInclude Include="PlayerStateScript.h">
       <Filter>Common\Component\Camera\Script\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PackunPostionBall.h" />
+    <ClInclude Include="ProjectileObj.h" />
+    <ClInclude Include="AnimationClip.h">
+      <Filter>Common\Component\Animator3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -854,9 +856,6 @@
     <ClCompile Include="ModelNode.cpp">
       <Filter>Resource\Model\ModelNode</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationClip.cpp">
-      <Filter>Common\Component\Animator3D</Filter>
-    </ClCompile>
     <ClCompile Include="BoneAnimator.cpp">
       <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
@@ -928,6 +927,11 @@
     </ClCompile>
     <ClCompile Include="PlayerStateScript.cpp">
       <Filter>Common\Component\Camera\Script\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="PackunPostionBall.cpp" />
+    <ClCompile Include="ProjectileObj.cpp" />
+    <ClCompile Include="AnimationClip.cpp">
+      <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

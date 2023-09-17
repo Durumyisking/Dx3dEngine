@@ -237,6 +237,14 @@ void PhysXRigidBody::RemoveGravityForDynamic()
 	dynamicActor->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 }
 
+void PhysXRigidBody::SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum flag, bool value)
+{
+	assert(mPhysical);
+	PxRigidDynamic* dynamicActor = mPhysical->GetActor<PxRigidDynamic>();
+	assert(dynamicActor);
+	dynamicActor->setRigidDynamicLockFlag(flag, value);
+}
+
 void PhysXRigidBody::AddTorqueForDynamic(const math::Vector3& torque)
 {
 	assert(mPhysical);

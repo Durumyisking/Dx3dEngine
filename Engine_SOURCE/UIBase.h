@@ -49,10 +49,13 @@ public:
 	Vector3 GetUIScreenPos() { return mUIScreenPos; }
 	Vector3 GetUIPos() { return mUIPos; }
 	Vector3 GetUISize() { return mUISize; }
+	std::vector<UIBase*> GetChilds() { return mChilds; }
+
 	void SetUIScreenPos(Vector3 pos) { mUIScreenPos = pos; }
 	void SetUIPos(Vector3 pos) { mUIPos = pos; }
 	void SetUISize(Vector3 size) { mUISize = size; }
 	void Addchild(UIBase* uiBase);
+	void SetColor(Vector4 color);
 
 protected:
 	UIBase* mUIParent;

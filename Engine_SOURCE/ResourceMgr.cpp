@@ -73,15 +73,19 @@ void ResourceMgr::Initalize()
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHead", L"MarioHead");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioEye", L"MarioEye");
 
-	//// Monster
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Tank", L"Tank");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/BirdCity", L"BirdCity");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CapMan", L"CapMan");
+	// Monster
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Tank", L"Tank");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/BirdCity", L"BirdCity");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CapMan", L"CapMan");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/goomba", L"goomba");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Packun", L"Packun");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Packun", L"Packun");
 
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWomans", L"CityWomans");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWomans", L"CityWomans");
 
+	// Object
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/PoistionPackunBall", L"PackunBall");
+
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWomans", L"CityWomans");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"BlockBrick");
 
 }
