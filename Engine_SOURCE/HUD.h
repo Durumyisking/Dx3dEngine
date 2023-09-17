@@ -4,7 +4,7 @@
 class HUD : public UIBase
 {
 
-	HUDState mState;
+	eHUDState mState;
 
 public:
 	HUD();
@@ -21,7 +21,7 @@ public:
 	virtual void OnClear() override;
 
 	void SetSpeed(float speed) { mSpeed = speed; }
-	void SetState(HUDState state) { mState = state; mActivate = true; }
+	void SetState(eHUDState state) { mState = state; mActivate = true; }
 	void SetActive(bool isActive) { mActivate = isActive; }
 	void SetChangeSize(Vector3 size) { mChangeSize = size; }
 	void SetTargetPos(Vector3 pos) { mTargetPos = pos; }
@@ -34,6 +34,7 @@ public:
 	void TitleCapMove();
 	void PlayAnimation();
 
+	void SetColor();
 
 protected:
 	Vector3 mOriginPos;

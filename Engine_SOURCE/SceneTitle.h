@@ -25,7 +25,7 @@ private:
 	GameObj*	mCamera;
 	GameObj*    mUICamera;
 
-	Panal* MainMenuPanal;
-
+	Panal* mMainMenuPanal;
+	Panal* mStartTextPanal;
 };
 
