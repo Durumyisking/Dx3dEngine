@@ -1931,6 +1931,9 @@ namespace renderer
 			delete renderTargets[i];
 			renderTargets[i] = nullptr;
 		}
+
+		mainCamera = nullptr;
+		UICamera = nullptr;
 	}
 
 	void Render()

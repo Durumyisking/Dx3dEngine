@@ -21,10 +21,9 @@ public:
 
 
 	void CreateMainMenu();
-private:
-	GameObj*	mCamera;
-	GameObj*    mUICamera;
 
+
+private:
 	Panal* MainMenuPanal;
 
 };

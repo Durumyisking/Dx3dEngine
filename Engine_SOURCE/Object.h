@@ -160,6 +160,6 @@ namespace object
 		if (gameobj == nullptr)
 			return;
 
-		gameobj->DontDestroy();
+		gameobj->SetDestroyOff();
 	}
 }

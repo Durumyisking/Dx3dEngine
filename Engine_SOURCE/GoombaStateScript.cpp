@@ -8,6 +8,10 @@
 
 #include "PhysXCollider.h"
 
+#include "TimerMgr.h"
+#include "SceneMgr.h"
+#include "Scene.h"
+
 GoombaStateScript::GoombaStateScript()
 	: MonsterStateScript()
 	, mAnimator (nullptr)
@@ -32,10 +36,50 @@ void GoombaStateScript::Initialize()
 	mRigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
 	mMovement = mMonster->GetComponent<PhysicalMovement>();
 	mTransform = mMonster->GetComponent<Transform>();
+
+	Timer* antiGlideTimer = new Timer(0.1f);
+	antiGlideTimer->SetDestroy(false);
+	antiGlideTimer->Event() = [this]
+	{
+		mRigidbody->AddForceForDynamic((Vector3(0.f, -1.f, 0.f) * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
+	};
+	GETSINGLE(TimerMgr)->GetInstance()->AddTimer(antiGlideTimer);
 }
 
 void GoombaStateScript::Update()
 {
+	if (KEY_TAP(N_3))
+	{
+		mAnimator->Play(L"Find");
+	}
+	if (KEY_TAP(N_4))
+	{
+		mAnimator->Play(L"Turn");
+	}
+	if (KEY_TAP(N_5))
+	{
+		mAnimator->Play(L"Land");
+	}
+	if (KEY_TAP(N_6))
+	{
+		mAnimator->Play(L"Fall");
+	}
+	if (KEY_TAP(N_7))
+	{
+		mAnimator->Play(L"Slide");
+	}
+
+	float dist = Vector3::Distance(GETSINGLE(SceneMgr)->GetActiveScene()->GetPlayer()->GetWorldPos(), GetOwnerWorldPos());
+	if (10.f > dist)
+	{
+
+	}
+	else
+	{
+
+	}
+
+
 	MonsterStateScript::Update();
 }
 
@@ -46,16 +90,15 @@ void GoombaStateScript::Idle()
 		mAnimator->Play(L"Wait");
 	}
 
-	//mRigidbody->AddForceForDynamic((Vector3(0.f, -1.f, 0.f) * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
-
 }
 
 void GoombaStateScript::Move()
 {
-	if (mAnimator->PlayAnimationName() != L"Dash")
+	if (mAnimator->PlayAnimationName() != L"Walk")
 	{
-		const std::wstring& test = mAnimator->PlayAnimationName();
-		mAnimator->Play(L"Dash");
+		const std::wstring& anim = mAnimator->PlayAnimationName();
+		mRigidbody->SetLinearMaxVelocityForDynamic(GOOMBA_WALK_VELOCITY);
+		mAnimator->Play(L"Walk");
 	}
 
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)

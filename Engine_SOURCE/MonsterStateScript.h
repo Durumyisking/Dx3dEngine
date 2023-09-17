@@ -30,5 +30,7 @@ private:
 protected:
 	Monster* mMonster;
 	bool mbAnimationRunning;
+
+
 };
 

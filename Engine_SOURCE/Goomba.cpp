@@ -47,10 +47,10 @@ void Goomba::Initialize()
 	model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
 	model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
 
-	//Phsical
+	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.1f, 0.1f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.5f));
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
