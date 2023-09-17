@@ -99,15 +99,15 @@ void PlayerScript::FixedUpdate()
 	}
 	if (KEY_DOWN(UP))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * 1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camForward * 1000.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 	if (KEY_DOWN(DOWN))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * -1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camForward * -1000.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 	if (KEY_TAP(SPACE))
 	{
-		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((mTransform->Up() * 500000.f * DT), PxForceMode::Enum::eFORCE);
+		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((mTransform->Up() * 500000.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 }
 void PlayerScript::Render()
