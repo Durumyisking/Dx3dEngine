@@ -22,7 +22,7 @@ public:
 		Hit,
 		Groggy,
 
-		CapAction,
+		ThrowCap,
 		Die,
 	};
 

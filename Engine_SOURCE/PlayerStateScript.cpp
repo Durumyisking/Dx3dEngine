@@ -25,7 +25,7 @@ PlayerStateScript::PlayerStateScript()
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Wall, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Hit, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Groggy, this));
-	mStateEventList.emplace_back(std::bind(&PlayerStateScript::CapAction, this));
+	mStateEventList.emplace_back(std::bind(&PlayerStateScript::ThrowCap, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Die, this));
 }
 PlayerStateScript::~PlayerStateScript()
@@ -166,7 +166,7 @@ void PlayerStateScript::Groggy()
 {
 }
 
-void PlayerStateScript::CapAction()
+void PlayerStateScript::ThrowCap()
 {
 }
 

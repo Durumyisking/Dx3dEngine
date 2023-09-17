@@ -21,7 +21,7 @@ public:
 	virtual void Wall() final;
 	virtual void Hit() final;
 	virtual void Groggy() final;
-	virtual void CapAction() final;
+	virtual void ThrowCap() final;
 	virtual void Die() final;
 
 public:
