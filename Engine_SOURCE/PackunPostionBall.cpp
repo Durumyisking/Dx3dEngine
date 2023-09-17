@@ -6,6 +6,7 @@
 #include "PhysicalMovement.h"
 #include "PhysXRigidBody.h"
 #include "PhysXCollider.h"
+#include "TimeMgr.h"
 
 PackunPostionBall::PackunPostionBall()
 {
@@ -46,4 +47,19 @@ void PackunPostionBall::Initialize()
 
 	//test
 	//GetComponent<Transform>()->SetPhysicalPosition(Vector3(-500.f, 0.0f, 1.0f));
+}
+
+void PackunPostionBall::Update()
+{
+	ProjectileObj::Update();
+
+	Transform* tr = GetComponent<Transform>();
+	if (tr == nullptr)
+		return;
+
+	Vector3 foward = tr->Forward();
+	PhysXRigidBody* rigidbody = GetComponent<PhysXRigidBody>();
+
+	/*if(rigidbody)
+		rigidbody->AddForce((-foward * 100.f * DT), physx::PxForceMode::eFORCE);*/
 }
