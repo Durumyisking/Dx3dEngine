@@ -1,48 +1,71 @@
 #include "UIManager.h"
+#include "InputMgr.h"
+#include "SceneMgr.h"
+#include "Material.h"
 
-
-std::unordered_map<eUIType, UIBase*> UIManager::mUIs;
+std::unordered_map<eUIType, UIBase*> UIManager::mUIPanals;
 std::queue<eUIType> UIManager::mRequestUIQueue;
 std::stack<UIBase*> UIManager::mUIBases;
 UIBase* UIManager::mCurrentData = nullptr;
+currentUI UIManager::mCurrentUI = currentUI::End;
+int UIManager::mCount = 3;
+
+int UIManager::mCoin = 0;
+int UIManager::mCityCoin = 0;
+
+UIManager::UIManager()
+{
+}
+
+UIManager::~UIManager()
+{
+
+}
 
 void UIManager::Initialize()
 {
+	mCurrentUI = currentUI::MainMenu;
 	//ui 메모리에 할당
 
 	//UIBase* newUI = new UIBase(eUIType::HP);
-	//mUIs.insert(std::make_pair(eUIType::HP, newUI));
+	//mUIPanals.insert(std::make_pair(eUIType::HP, newUI));
 
 	//newUI = new UIBase(eUIType::Coin);
-	//mUIs.insert(std::make_pair(eUIType::Coin, newUI));
+	//mUIPanals.insert(std::make_pair(eUIType::Coin, newUI));
 
 	//newUI = new UIBase(eUIType::Crosshair);
-	//mUIs.insert(std::make_pair(eUIType::Crosshair, newUI));
-
+	//mUIPanals.insert(std::make_pair(eUIType::Crosshair, newUI));
 }
 
 void UIManager::OnLoad(eUIType type)
 {
-	//std::unordered_map<eUIType, UIBase*>::iterator iter = mUIs.find(type);
+	std::unordered_map<eUIType, UIBase*>::iterator iter = mUIPanals.find(type);
 
-	//if (iter == mUIs.end())
-	//{
-	//	OnFail();
-	//	return;
-	//}
-	//
-	//OnComplete(iter->second);
+	if (iter == mUIPanals.end())
+	{
+		OnFail();
+		return;
+	}
 
+	OnComplete(iter->second);
 }
 
-void UIManager::Tick()
+void UIManager::Update()
 {
-	if (mRequestUIQueue.size() > 0)
+	switch (mCurrentUI)
 	{
-		//UI 로드
-		eUIType requestUI = mRequestUIQueue.front();
-		mRequestUIQueue.pop();
-		OnLoad(requestUI);
+	case enums::currentUI::None:
+		break;
+	case enums::currentUI::MainMenu:
+		MainMenuUI();
+		break;
+	case enums::currentUI::Play:
+		GetCoin();
+		break;
+	case enums::currentUI::End:
+		break;
+	default:
+		break;
 	}
 }
 
@@ -65,9 +88,10 @@ void UIManager::OnComplete(UIBase* addUI)
 	if (addUI == nullptr)
 		return;
 
-	addUI->Initialize();
-	addUI->Active();
-	addUI->Update();
+	if (addUI->GetUIEnable())
+		return;
+
+	addUI->Activate();
 
 	if (addUI->GetIsFullScreen())
 	{
@@ -147,4 +171,116 @@ void UIManager::Pop(eUIType type)
 		tempStack.pop();
 		mUIBases.push(uiBase);
 	}
+}
+
+void UIManager::PushPanal(eUIType type, UIBase* base)
+{
+	mUIPanals.insert(std::make_pair(type, base));
+}
+
+void UIManager::UIActivate()
+{
+
+}
+
+UIBase* UIManager::GetPanal(eUIType type)
+{
+	std::unordered_map<eUIType, UIBase*>::iterator iter = mUIPanals.find(type);
+
+	if (iter == mUIPanals.end())
+	{
+		OnFail();
+		return nullptr;
+	}
+
+	return iter->second;
+}
+
+void UIManager::MainMenuUI()
+{
+	if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::UP)))
+	{
+		if (mCount >= 3)
+			return;
+
+		mCount++;
+
+		for (size_t i = 0; i < GetPanal(eUIType::TitleText)->GetChilds().size(); i++)
+		{
+			GetPanal(eUIType::TitleText)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false);
+		}
+
+		GetPanal(eUIType::TitleText)->GetChilds()[mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true);
+	}
+	else if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::DOWN)))
+	{
+		if (mCount <= 0)
+			return;
+
+		mCount--;
+
+		for (size_t i = 0; i < GetPanal(eUIType::TitleText)->GetChilds().size(); i++)
+		{
+			GetPanal(eUIType::TitleText)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false);
+		}
+
+		GetPanal(eUIType::TitleText)->GetChilds()[mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true);
+	}
+
+	if (KEY_TAP(N_1))
+	{
+		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
+		mCurrentUI = currentUI::Play;
+		mCount = 3;
+		return;
+	}
+}
+
+void UIManager::GetCoin()
+{
+	if (KEY_TAP(N_9))
+	{
+		mCoin++;
+
+
+		int ten = (mCoin / 10) % 10;
+		int hundreds = mCoin / 100;
+
+
+		GetPanal(eUIType::Coin)->GetChilds()[0]->SetColor(Vector4(1.f, 0.92f, 0.016f, 1.f), true);
+
+		for (size_t i = 0; i < GetPanal(eUIType::CoinText)->GetChilds().size(); i++)
+		{
+			GetPanal(eUIType::CoinText)->GetChilds()[i]->SetColor(Vector4(1.f, 0.92f, 0.016f, 1.f), true);
+
+		}
+
+		if (mCoin > 0)
+		{
+			int ones = mCoin % 10;
+			Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(std::to_wstring(ones)));
+			GetPanal(eUIType::CoinText)->GetChilds()[2]->GetMaterial()->SetTexture(tex);
+		}
+
+		if (ten > 0)
+		{
+
+			Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(std::to_wstring(ten)));
+
+			GetPanal(eUIType::CoinText)->GetChilds()[1]->GetMaterial()->SetTexture(tex);
+		}
+
+		if (hundreds > 0)
+		{
+
+			Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(std::to_wstring(hundreds)));
+
+			GetPanal(eUIType::CoinText)->GetChilds()[0]->GetMaterial()->SetTexture(tex);
+		}
+	}
+}
+
+void UIManager::GetLuna()
+{
+	mCityCoin++;
 }

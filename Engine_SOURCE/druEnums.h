@@ -144,12 +144,32 @@ namespace enums
 
 	enum class eUIType
 	{
+		None,
+		TitleImg,
+		MainMenu,
+		TitleText,
+		Start,
+		Start2P,
+		Option,
+		Exit,
+		Bar,
+
 		HP,
 		Coin,
-		Option,
-		Crosshair,
-		Button,
-		Image,
+		CoinText,
+		Luna,
+		LunaText,
+		End,
+	};
+
+	enum class currentUI
+	{
+		None,
+
+		MainMenu,
+		Play,
+
+
 		End,
 	};
 

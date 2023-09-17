@@ -1874,6 +1874,9 @@ namespace renderer
 			const std::wstring numberName = std::to_wstring(i);
 
 			CreateMaterial(numberName, L"UISpriteShader", numberName + L"Material", eRenderingMode::Transparent);
+
+			CreateMaterial(numberName, L"UISpriteShader", L"Coin" + numberName + L"Material", eRenderingMode::Transparent);
+			CreateMaterial(numberName, L"UISpriteShader", L"Luna" + numberName + L"Material", eRenderingMode::Transparent);
 		}
 
 		for (size_t i = 'a'; i <= 'z'; i++)
@@ -1889,6 +1892,11 @@ namespace renderer
 
 			CreateMaterial(numberName, L"UISpriteShader", numberName + L"Material", eRenderingMode::Transparent);
 		}
+
+		CreateMaterial(L"Exit", L"UISpriteShader", L"ExitMaterial", eRenderingMode::Transparent);
+		CreateMaterial(L"Resume", L"UISpriteShader", L"ResumeMaterial", eRenderingMode::Transparent);
+		CreateMaterial(L"Resume2P", L"UISpriteShader", L"Resume2PMaterial", eRenderingMode::Transparent);
+		CreateMaterial(L"Start", L"UISpriteShader", L"StartMaterial", eRenderingMode::Transparent);
 #pragma endregion
 	}
 
@@ -1932,6 +1940,12 @@ namespace renderer
 			const std::wstring& key = L"uppercase_" + std::to_wstring(i);
 			GETSINGLE(ResourceMgr)->Load<Texture>(key, L"Textures/UI/Alphabet/uppercase/" + key + L".png");
 		}
+
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Exit", L"Textures/UI/Text/Exit.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Resume", L"Textures/UI/Text/Resume.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Resume2P", L"Textures/UI/Text/Resume2P.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Start", L"Textures/UI/Text/Start.png");
 	}
 
 	////////////////////////////////////////////////////////

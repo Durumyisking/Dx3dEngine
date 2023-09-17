@@ -7,6 +7,7 @@
 #include "ImageUI.h"
 #include "Button.h"
 #include "SpriteRenderer.h"
+#include "UIManager.h"
 
 
 UIFactory::UIFactory()
@@ -22,7 +23,7 @@ void UIFactory::Initialize()
 {
 }
 
-Panal* UIFactory::CreatePanal(GameObj* parent, Vector3 pos, Vector3 scale, const std::wstring& name,Scene* sceene)
+Panal* UIFactory::CreatePanal(GameObj* parent, Vector3 pos, Vector3 scale, const std::wstring& name, Scene* sceene, eUIType type)
 {
 	Panal* panal = object::Instantiate<Panal>(eLayerType::UI, sceene);
 	panal->SetPos(pos);
@@ -30,6 +31,8 @@ Panal* UIFactory::CreatePanal(GameObj* parent, Vector3 pos, Vector3 scale, const
 	panal->SetName(name);
 	panal->GetComponent<Transform>()->SetParent(parent);
 
+
+	(GETSINGLE(UIManager)->PushPanal(type, panal));
 	return panal;
 }
 
@@ -96,8 +99,6 @@ void UIFactory::CreateButton()
 
 void UIFactory::CreateString(const std::wstring& string, Vector3 pos, Vector3 scale, float interval, UIBase* parent, Scene* scene)
 {
-
-
 	for (size_t i = 0; i < string.size(); i++)
 	{
 		if (isspace(string[i]))
@@ -108,19 +109,50 @@ void UIFactory::CreateString(const std::wstring& string, Vector3 pos, Vector3 sc
 			if (isupper(string[i]))
 			{
 				int a = (int)string[i];
-				parent->Addchild(CreateHud(L"Name" + string, L"uppercase_" + std::to_wstring(a) + L"Material", Vector3(pos.x + (interval * i), pos.y, pos.z), scale, parent, scene));
+				parent->Addchild(CreateImage(L"Name" + string, L"uppercase_" + std::to_wstring(a) + L"Material", Vector3(pos.x + (interval * i), pos.y, pos.z), scale, parent, scene));
 			}
 			else
 			{
 				int a = (int)string[i];
-				parent->Addchild(CreateHud(L"Name" + string, L"lowercase_" + std::to_wstring(a) + L"Material", Vector3(pos.x + (interval * i), pos.y, pos.z), scale, parent, scene));
+				parent->Addchild(CreateImage(L"Name" + string, L"lowercase_" + std::to_wstring(a) + L"Material", Vector3(pos.x + (interval * i), pos.y, pos.z), scale, parent, scene));
 			}
 		}
 		else if (iswdigit(string[i]))
 		{
 			int a = string[i];
 			a = a - '0';
-			parent->Addchild(CreateHud(L"Name" + string, std::to_wstring(a) + L"Material", Vector3(pos.x + (interval * i), pos.y, pos.z), scale, parent, scene));
+			parent->Addchild(CreateImage(L"Name" + string, std::to_wstring(a) + L"Material", Vector3(pos.x + (interval * i), pos.y, pos.z), scale, parent, scene));
+		}
+	}
+}
+
+void UIFactory::CreateString(const std::wstring& string, const std::wstring& matKey, Vector3 pos, Vector3 scale, Vector3 rot, float interval, UIBase* parent, Scene* scene)
+{
+	for (size_t i = 0; i < string.size(); i++)
+	{
+		if (isspace(string[i]))
+			continue;
+
+		if (!iswdigit(string[i]))
+		{
+			if (isupper(string[i]))
+			{
+				int a = (int)string[i];
+				parent->Addchild(CreateImage(L"Name" + string, L"uppercase_" + std::to_wstring(a) + L"Material", Vector3(pos.x + (interval * i), pos.y, pos.z), scale, parent, scene));
+			}
+			else
+			{
+				int a = (int)string[i];
+				parent->Addchild(CreateImage(L"Name" + string, L"lowercase_" + std::to_wstring(a) + L"Material", Vector3(pos.x + (interval * i), pos.y, pos.z), scale, parent, scene));
+			}
+		}
+		else if (iswdigit(string[i]))
+		{
+			int a = string[i];
+			a = a - '0';
+
+			parent->Addchild(CreateImage(L"Name" + string, matKey + std::to_wstring(a) + L"Material", Vector3(pos.x + (interval * i), pos.y + (i * 0.0f), pos.z), scale, parent, scene));
+			parent->GetChilds()[i]->GetComponent<Transform>()->SetRotation(rot);
 		}
 	}
 }

@@ -41,8 +41,10 @@ public:
 	//UI가 사라질때 호출되는 함수
 	void UIClear();
 
+
 	eUIType GetUIType() { return mUIType; }
 	bool GetIsFullScreen() { return mUIbFullScreen; }
+	bool GetUIEnable() { return mbUIEnable; }
 	void SetIsFullScreen(bool enable) { mUIbFullScreen = enable; }
 	void SetUIParent(UIBase* parent) { mUIParent = parent; }
 
@@ -55,7 +57,7 @@ public:
 	void SetUIPos(Vector3 pos) { mUIPos = pos; }
 	void SetUISize(Vector3 size) { mUISize = size; }
 	void Addchild(UIBase* uiBase);
-	void SetColor(Vector4 color);
+	void SetColor(Vector4 color, bool isColor);
 
 protected:
 	UIBase* mUIParent;

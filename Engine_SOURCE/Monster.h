@@ -42,6 +42,6 @@ private:
 	eMonsterState mMonsterState;
 
 	float mRecognizeRadius;
-	bool mFoundPlayer
+	bool mFoundPlayer;
 };
 

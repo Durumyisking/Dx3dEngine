@@ -102,13 +102,13 @@ void UIBase::Addchild(UIBase* uiBase)
 	uiBase->mUIParent = this;
 }
 
-void UIBase::SetColor(Vector4 color)
+void UIBase::SetColor(Vector4 color, bool isColor)
 {
 	SpriteRenderer* renderer = this->GetComponent<SpriteRenderer>();
 	Material* material = renderer->GetMaterial();
 
 	renderer::MaterialCB data = {};
-	data.bool3 = true;
+	data.bool3 = isColor;
 	data.xyzw1 = color;
 	material->SetData(eGPUParam::Bool_3, &data.bool3);
 	material->SetData(eGPUParam::Vector4_1, &data.xyzw1);

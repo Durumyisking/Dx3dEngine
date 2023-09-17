@@ -52,6 +52,11 @@ void BaseRenderer::SetMaterial(Material* material)
 	mMaterial = material;
 }
 
+Material* BaseRenderer::GetMaterial()
+{
+	return mMaterial;
+}
+
 void BaseRenderer::SetMaterialByKey(std::wstring key)
 {
 	mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);

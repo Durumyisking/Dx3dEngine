@@ -166,6 +166,8 @@ public:
 
 
 	void SetMaterial(Material* material);
+	Material* GetMaterial();
+
 	void SetMesh(Mesh* mesh);
 
 	bool IsDead()
