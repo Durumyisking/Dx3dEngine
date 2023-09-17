@@ -52,6 +52,8 @@ void GoombaStateScript::Idle()
 
 void GoombaStateScript::Move()
 {
+	mRigidbody->SetLinearMaxVelocityForDynamic(GOOMBA_RUN_VELOCITY);
+
 	if (mAnimator->PlayAnimationName() != L"Dash")
 	{
 		const std::wstring& test = mAnimator->PlayAnimationName();
@@ -81,21 +83,20 @@ void GoombaStateScript::Move()
 			}
 		};
 
-	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -225.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, -180.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, 0.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
-	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
+	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, -90.f, 0.0f));
+	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, 90.f, 0.0f));
 
 
 	Vector3 moveDir = mTransform->Forward();
-	moveDir.y = 0.f;
-	mRigidbody->AddForceForDynamic((-moveDir * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
+	mRigidbody->AddForceForDynamic((moveDir * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
 }
 
 void GoombaStateScript::Jump()
@@ -105,7 +106,7 @@ void GoombaStateScript::Jump()
 		const std::wstring& test = mAnimator->PlayAnimationName();
 		mAnimator->Play(L"Jump", false);
 
-		mRigidbody->SetLinearMaxVelocityForDynamic(1000.f);
+		mRigidbody->SetLinearMaxVelocityForDynamic(200.f);
 		mRigidbody->AddForce(math::Vector3(0.0f, 5000.f, 0.0f), physx::PxForceMode::eFORCE);
 		mRigidbody->SetLinearDamping(1.0f);
 	}
@@ -113,7 +114,6 @@ void GoombaStateScript::Jump()
 	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsCompleate())
 	{
 		mMonster->SetMonsterState(Monster::eMonsterState::Idle);
-		mRigidbody->SetLinearMaxVelocityForDynamic(100.f);
 	}
 }
 

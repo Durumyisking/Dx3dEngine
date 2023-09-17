@@ -50,7 +50,13 @@ void Goomba::Initialize()
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.1f, 0.1f, 0.5f));
+
+	MassProperties mass = {};
+	mass.mStaticFriction = 0.1f;
+	mass.mDynamicFriction = 1.0f;
+	mass.mRestitution = -2.0f;
+
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.1f, 0.1f, 0.5f), mass);
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
@@ -136,6 +142,8 @@ void Goomba::boneAnimatorInit(BoneAnimator* animator)
 
 void Goomba::stateInfoInitalize()
 {
+	mStateInfo.resize(static_cast<UINT>(eMonsterState::Die) + 1);
+
 	//Idle
 	// 현재는 대기상태에서 못가는상태가 없다
 

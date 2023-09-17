@@ -157,7 +157,8 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
 	}
 
 	//CreatePlayerUI();
@@ -206,6 +207,8 @@ void ScenePlay::Enter()
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
+
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Monster);
 
 	Scene::Enter();
 }
