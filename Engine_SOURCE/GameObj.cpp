@@ -22,7 +22,7 @@ GameObj::GameObj()
 	:mState(eState::Active)
 	, mType(eLayerType::None)
 	, mScripts{}
-	, mbDestroy(false)
+	, mbDestroy(true)
 	, mbBlockRendering(false)
 {
 	mComponents.resize(static_cast<UINT>(eComponentType::End));

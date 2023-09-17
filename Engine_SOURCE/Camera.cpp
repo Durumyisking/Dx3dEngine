@@ -94,7 +94,6 @@ void Camera::Render()
 
 	// shadow	
 	Transform directionLighttr = *(renderer::lights[0]->GetOwner()->GetComponent<Transform>());
-	//tr->SetPosition(Transform()->GetWorldPos());
 	directionLighttr.SetRotation(DecomposeRotMat(directionLighttr.GetWorldRotationMatrix()));
 
 	ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];

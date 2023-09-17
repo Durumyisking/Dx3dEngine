@@ -6,6 +6,8 @@
 Monster::Monster()
 	: DynamicObject()
 	, mMonsterState(eMonsterState::Idle)
+	, mRecognizeRadius(10.f)
+	, mFoundPlayer(false)
 {
 }
 

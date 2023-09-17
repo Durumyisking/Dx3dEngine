@@ -32,4 +32,7 @@ private:
 	Panal* mCoinPanal;
 	Panal* mLifePanal;
 	Panal* mLunaPanal;
+
+	Panal* mCoinTextPanal;
+	Panal* mLunaTextPanal;
 };

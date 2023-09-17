@@ -47,16 +47,11 @@ void Goomba::Initialize()
 	model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
 	model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
 
-	//Phsical
+	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
 
-	MassProperties mass = {};
-	mass.mStaticFriction = 0.1f;
-	mass.mDynamicFriction = 1.0f;
-	mass.mRestitution = -2.0f;
-
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.1f, 0.1f, 0.5f), mass);
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.5f));
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
@@ -70,10 +65,10 @@ void Goomba::Initialize()
 	// Script
 	assert(AddComponent<GoombaStateScript>(eComponentType::Script));
 
-	// »óÅÂ info ÃÊ±âÈ­	
+	// ìƒíƒœ info ì´ˆê¸°í™”	
 	stateInfoInitalize();
 
-	// ÃÊ±âÈ­
+	// ì´ˆê¸°í™”
 	Monster::Initialize();
 
 }
@@ -90,19 +85,19 @@ void Goomba::FixedUpdate()
 
 void Goomba::CaptureEvent()
 {
-	// Ä¸Ã³ ÀÌº¥Æ® ±¸ÇöºÎ
+	// ìº¡ì²˜ ì´ë²¤íŠ¸ êµ¬í˜„ë¶€
 	bool able = false;
 
 	std::vector<std::function<bool(eKeyCode)>> keyEvent;
 	keyEvent.resize((static_cast<UINT>(eKeyState::NONE) + 1));
 
-	// getkeytapÀÇ Ã¹¹øÂ° ÀÎÀÚÀÎ this´Â inputmgr ½Ì±ÛÅæ Æ÷ÀÎÅÍ¸¦ °íÁ¤À¸·Î »ç¿ë, µÎ¹øÂ° ÀÎÀÚ´Â À¯µ¿ÀûÀ¸·Î »ç¿ëÇÏ°Ú´Ù.
+	// getkeytapì˜ ì²«ë²ˆì§¸ ì¸ìì¸ thisëŠ” inputmgr ì‹±ê¸€í†¤ í¬ì¸í„°ë¥¼ ê³ ì •ìœ¼ë¡œ ì‚¬ìš©, ë‘ë²ˆì§¸ ì¸ìëŠ” ìœ ë™ì ìœ¼ë¡œ ì‚¬ìš©í•˜ê² ë‹¤.
 	keyEvent[static_cast<UINT>(eKeyState::TAP)] = std::bind(&InputMgr::GetKeyTap, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::DOWN)] = std::bind(&InputMgr::GetKeyDown, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::UP)] = std::bind(&InputMgr::GetKeyUp, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::NONE)] = std::bind(&InputMgr::GetKeyNone, GETSINGLE(InputMgr), std::placeholders::_1);
 
-	// Å° ÀÔ·Â ÀÌº¥Æ® Ã³¸®ÇÏ´Â ¶÷´Ù½Ä
+	// í‚¤ ì…ë ¥ ì´ë²¤íŠ¸ ì²˜ë¦¬í•˜ëŠ” ëŒë‹¤ì‹
 	std::function<void(eKeyState, eKeyCode, eMonsterState)> stateEvent = 
 		[&]
 		(eKeyState keyState,eKeyCode curPress, eMonsterState nextState) ->void
@@ -116,17 +111,17 @@ void Goomba::CaptureEvent()
 			}
 		};
 
-	// ÀÌµ¿
+	// ì´ë™
 	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
 	stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
 
-	// Á¡ÇÁ
+	// ì í”„
 	able = false;
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Jump);
 
-	// Æ¯¼ö
+	// íŠ¹ìˆ˜
 	//able = false;
 	//stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::SpecialCast);
 }
@@ -145,7 +140,7 @@ void Goomba::stateInfoInitalize()
 	mStateInfo.resize(static_cast<UINT>(eMonsterState::Die) + 1);
 
 	//Idle
-	// ÇöÀç´Â ´ë±â»óÅÂ¿¡¼­ ¸ø°¡´Â»óÅÂ°¡ ¾ø´Ù
+	// í˜„ì¬ëŠ” ëŒ€ê¸°ìƒíƒœì—ì„œ ëª»ê°€ëŠ”ìƒíƒœê°€ ì—†ë‹¤
 
 	// Move
 	InsertLockState(static_cast<UINT>(eMonsterState::Move), static_cast<UINT>(eMonsterState::Move));
