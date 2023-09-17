@@ -8,6 +8,7 @@ public:
 	virtual ~PackunPostionBall();
 
 	virtual void Initialize() override;
+	virtual void Update() override;
 
 private:
 

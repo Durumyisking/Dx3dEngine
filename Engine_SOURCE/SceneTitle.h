@@ -21,10 +21,10 @@ public:
 
 
 	void CreateMainMenu();
-
-
+  
 private:
 	Panal* MainMenuPanal;
+	Panal* mStartTextPanal;
 
 };
 

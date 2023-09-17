@@ -64,6 +64,7 @@
 #include "Animator.h"
 
 #include "Goomba.h"
+#include "Packun.h"
 
 
 ScenePlay::ScenePlay()
@@ -72,6 +73,8 @@ ScenePlay::ScenePlay()
 	, mCoinPanal(nullptr)
 	, mLifePanal(nullptr)
 	, mLunaPanal(nullptr)
+	, mCoinTextPanal(nullptr)
+	, mLunaTextPanal(nullptr)
 {
 }
 
@@ -83,10 +86,10 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		/*Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(0.f, 5.f, -17.f));
 		goomba->SetScale(Vector3(1.0f, 1.0f, 1.0f));
-		goomba->SetName(L"Goomba");
+		goomba->SetName(L"Goomba");*/
 	}
 
 	{
@@ -154,6 +157,9 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
+	{
+		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+	}
 
 	CreatePlayerUI();
 
@@ -210,6 +216,8 @@ void ScenePlay::CreatePlayerUI()
 	//Left Coin UI
 	{
 		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this));
+		mCoinTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this));
+
 		HUD* coin = (GETSINGLE(UIFactory)->CreateHud(L"Coin", L"CoinMaterial", Vector3(-7.f, 3.5f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
 		HUD* cityCoin = (GETSINGLE(UIFactory)->CreateHud(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
 		ImageUI* bar = (GETSINGLE(UIFactory)->CreateImage(L"Bar", L"BarMaterial", Vector3(-5.4f, 2.9f, 0.f), Vector3(4.2f, 1.4f, 1.f), mCoinPanal, this));
@@ -221,6 +229,7 @@ void ScenePlay::CreatePlayerUI()
 	//left Luna UI
 	{
 		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaPanal", this));
+		mLunaTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaTextPanal", this));
 
 		for (size_t i = 0; i < 10; i++)
 		{

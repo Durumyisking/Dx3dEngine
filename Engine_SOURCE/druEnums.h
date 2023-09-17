@@ -160,7 +160,7 @@ namespace enums
 		Z,
 	};
 
-	enum class HUDState
+	enum class eHUDState
 	{
 		None,
 		MoveBlink,

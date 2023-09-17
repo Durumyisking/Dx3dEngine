@@ -41,10 +41,12 @@ public:
 	std::function<void()> GetStartEvent() { return mStartEvent; }
 	std::function<void()> GetCompleateEvent() { return mCompleateEvent; }
 	std::function<void()> GetEndEvent() { return mEndEvent; }
+	std::function<void()> GetKeyFrameEvent(UINT index);
 
 	void SetStartEvent(std::function<void()> inEvent) { mStartEvent = std::move(inEvent); }
 	void SetCompleateEvent(std::function<void()> inEvent) { mCompleateEvent = std::move(inEvent); }
 	void SetEndEvent(std::function<void()> inEvent) { mEndEvent = std::move(inEvent); }
+	void SetKeyFrameEvent(UINT index, std::function<void()> inEvent);
 
 public:
 	GETSET(const std::wstring&, mName, AnimationName)
@@ -83,6 +85,8 @@ private:
 	std::function<void()> mStartEvent;
 	std::function<void()> mCompleateEvent;
 	std::function<void()> mEndEvent;
+
+	std::map<UINT, std::function<void()>> mKeyFrameEvent;
 
 	std::wstring mName;
 };

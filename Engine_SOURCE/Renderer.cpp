@@ -1744,6 +1744,17 @@ namespace renderer
 		capsuleMesh->CreateIndexBuffer(indices.data(), static_cast<UINT>(indices.size()));
 	}
 
+	void CreateMaterial(const std::wstring& textureKey, const std::wstring& shaderKey, const std::wstring& materialKeyName, eRenderingMode eRenderMode)
+	{
+		Texture* texture = GETSINGLE(ResourceMgr)->Find<Texture>(textureKey);
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderKey);
+		Material* material = new Material();
+		material->SetRenderingMode(eRenderMode);
+		material->SetShader(shader);
+		material->SetTexture(eTextureSlot::Albedo, texture); // albedo Texture
+		GETSINGLE(ResourceMgr)->Insert<Material>(materialKeyName, material);
+	}
+
 	void CreateUIMaterial()
 	{
 #pragma region UISprite Material
@@ -1858,12 +1869,26 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"UIBarMaterial", uibarMaterial);
 #pragma endregion
 #pragma region NumberMaterial
-		Texture* numberTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"0");
-		Material* numberMaterial = new Material();
-		numberMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		numberMaterial->SetShader(uiSpriteShader);
-		numberMaterial->SetTexture(eTextureSlot::Albedo, numberTex); // albedo Texture
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"NumberMaterial", numberMaterial);
+		for (size_t i = 0; i < 9; i++)
+		{
+			const std::wstring numberName = std::to_wstring(i);
+
+			CreateMaterial(numberName, L"UISpriteShader", numberName + L"Material", eRenderingMode::Transparent);
+		}
+
+		for (size_t i = 'a'; i <= 'z'; i++)
+		{
+			const std::wstring numberName = L"lowercase_" + std::to_wstring(i);
+
+			CreateMaterial(numberName, L"UISpriteShader", numberName + L"Material", eRenderingMode::Transparent);
+		}
+
+		for (size_t i = 'A'; i <= 'Z'; i++)
+		{
+			const std::wstring numberName = L"uppercase_" + std::to_wstring(i);
+
+			CreateMaterial(numberName, L"UISpriteShader", numberName + L"Material", eRenderingMode::Transparent);
+		}
 #pragma endregion
 	}
 
@@ -1893,6 +1918,19 @@ namespace renderer
 		{
 			const std::wstring& key = std::to_wstring(i);
 			GETSINGLE(ResourceMgr)->Load<Texture>(key, L"Textures/UI/Number/" + key + L".png");
+		}
+
+
+		for (size_t i = 'a'; i <= 'z'; i++)
+		{
+			const std::wstring& key = L"lowercase_" + std::to_wstring(i);
+			GETSINGLE(ResourceMgr)->Load<Texture>(key, L"Textures/UI/Alphabet/lowercase/" + key + L".png");
+		}
+
+		for (size_t i = 'A'; i <= 'Z'; i++)
+		{
+			const std::wstring& key = L"uppercase_" + std::to_wstring(i);
+			GETSINGLE(ResourceMgr)->Load<Texture>(key, L"Textures/UI/Alphabet/uppercase/" + key + L".png");
 		}
 	}
 
