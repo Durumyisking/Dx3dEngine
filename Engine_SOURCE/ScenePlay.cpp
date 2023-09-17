@@ -85,33 +85,13 @@ ScenePlay::~ScenePlay()
 void ScenePlay::Initialize()
 {
 	CreateCameras();
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(0.f, 5.f, -17.f));
-	}
 
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(-15.f, 10.f, 9.5f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"DeferredMaterial");
 
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-		//player->AddComponent<PlayerScript>(eComponentType::Script);
-
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-	}
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetPos(Vector3(15.f, 10.f, 9.5f));
-		player->SetScale(Vector3(5.f, 5.f, 5.f));
+		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
 		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
@@ -121,7 +101,30 @@ void ScenePlay::Initialize()
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	}
+
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(0.f, 5.f, -17.f));
+	}
+
+	{
+		Player* player = object::Instantiate<Player>(eLayerType::Objects, this);
+		player->SetPos(Vector3(-15.f, 10.f, 9.5f));
+		player->SetScale(Vector3(1.f, 1.f, 1.f));
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"DeferredMaterial");
+
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
+		//player->AddComponent<PlayerScript>(eComponentType::Script);
+
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 

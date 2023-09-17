@@ -28,7 +28,7 @@ public:
 	// 애니메이션의 1 프레임 간격 세팅
 	void SetAnimationDruationTime(const std::wstring& name, float duration = 0.1f);
 
-	bool IsCompleate() { return mPlayAnimation == nullptr ? true :mPlayAnimation->IsCompleate(); }
+	bool IsComplete() { return mPlayAnimation == nullptr ? true :mPlayAnimation->IsComplete(); }
 
 	const std::wstring PlayAnimationName() const;
 

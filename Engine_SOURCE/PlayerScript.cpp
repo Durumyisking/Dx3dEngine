@@ -66,48 +66,23 @@ void PlayerScript::FixedUpdate()
 
 	if (KEY_DOWN(LEFT))
 	{
-		if (camForward.x < mTransform->Forward().x)
-		{
-			mTransform->SetPhysicalRotation(Vector3(0.f, -90.f - cDotp_degree, 0.f));
-		}
-		else if (camForward.x > mTransform->Forward().x)
-		{
-			mTransform->SetPhysicalRotation(Vector3(0.f, -90.f + cDotp_degree, 0.f));
-		}
-		else
-		{
-			mTransform->SetPhysicalRotation(Vector3(0.f, -90.f, 0.f));
-		}
-
-		// mPhyXRigidBody->AddForceForDynamic((camRight * -1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camRight * -20.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 	if (KEY_DOWN(RIGHT))
 	{
-		if (camForward.x < mTransform->Forward().x)
-		{
-			mTransform->SetPhysicalRotation(Vector3(0.f, 90.f - cDotp_degree, 0.f));
-		}
-		else if (camForward.x > mTransform->Forward().x)
-		{
-			mTransform->SetPhysicalRotation(Vector3(0.f, 90.f + cDotp_degree, 0.f));
-		}
-		else
-		{
-			mTransform->SetPhysicalRotation(Vector3(0.f, 90.f, 0.f));
-		}
-		//mPhyXRigidBody->AddForceForDynamic((camRight * 1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camRight * 20.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 	if (KEY_DOWN(UP))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * 1000.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->AddForceForDynamic((camForward * 20.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 	if (KEY_DOWN(DOWN))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * -1000.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->AddForceForDynamic((camForward * -20.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 	if (KEY_TAP(SPACE))
 	{
-		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((mTransform->Up() * 500000.f * DT), PxForceMode::Enum::eIMPULSE);
+		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((mTransform->Up() * 500.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 }
 void PlayerScript::Render()

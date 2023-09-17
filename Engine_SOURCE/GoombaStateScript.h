@@ -22,6 +22,10 @@ public:
 	virtual void Idle() final;
 	virtual void Move() final;
 	virtual void Jump() final;
+	virtual void Fall()  final;
+	virtual void Turn()  final;
+	virtual void Chase() final;
+
 	virtual void SpecialSituation() final;
 	virtual void Hit() final;
 	virtual void Groggy() final;

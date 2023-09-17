@@ -34,7 +34,7 @@ void PhysXCollider::Initialize()
 		createDebugGeometry(mPhysical->GetGeometries());
 		mPhysical->GetShape()->setSimulationFilterData(mFilterData);
 	}
-	//mCallback = PhysicsMgr::GetInstance()->GetDispatcher()->GetSimulationCallback();
+	mCallback = PhysicsMgr::GetInstance()->GetDispatcher()->GetSimulationCallback();
 }
 void PhysXCollider::Update()
 {
