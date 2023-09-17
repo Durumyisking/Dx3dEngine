@@ -24,7 +24,7 @@ Goomba::~Goomba()
 
 void Goomba::Initialize()
 {
-	SetGetRecognizeRadius(10.f);
+	SetGetRecognizeRadius(15.f);
 
 
 	// Add MeshRenderer
@@ -142,11 +142,6 @@ void Goomba::boneAnimatorInit(BoneAnimator* animator)
 		cilp->SetCompleteEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
 
 
-	animator->GetAnimationClip(L"Land")->SetCompleteEvent
-	([animator]()
-	{
-		animator->Play(L"Dash");
-	});
 
 }
 

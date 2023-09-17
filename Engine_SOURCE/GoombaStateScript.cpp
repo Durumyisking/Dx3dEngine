@@ -152,43 +152,65 @@ void GoombaStateScript::Fall()
 
 void GoombaStateScript::Turn()
 {
-	if (mAnimator->PlayAnimationName() != L"Turn")
-	{
-		mAnimator->Play(L"Turn");
-	}
 	Vector3 dirToPlayer = GetOwnerWorldPos() - mPlayer->GetWorldPos();
 	dirToPlayer.Normalize();
 	float rotCosTheta = dirToPlayer.Dot(mTransform->WorldForward());
-	if (rotCosTheta < 0.9f)
+	if (rotCosTheta < 0.95f)
 	{		
-		mTransform->AddPhysicalRotation(Vector3(0.f, 90.f, 0.f) * DT);
+		if (mAnimator->PlayAnimationName() != L"Turn")
+		{
+			mAnimator->Play(L"Turn");
+		}
+		if (mbTurnLeft)
+		{
+			mTransform->AddPhysicalRotation(Vector3(0.f, -180.f, 0.f) * DT);
+		}
+		else
+		{
+			mTransform->AddPhysicalRotation(Vector3(0.f, 180.f, 0.f) * DT);
+		}
 	}
 	else
-	{
-		mMonster->SetMonsterState(Monster::eMonsterState::Chase);
+	{		
+		//mTransform->AddPhysicalRotation_Radian(Vector3(0.f, rotCosTheta, 0.f) * DT);
+		if (mAnimator->PlayAnimationName() != L"Find")
+		{
+			mMonster->SetMonsterState(Monster::eMonsterState::Chase);
+			mAnimator->Play(L"Find", false);
+		}
 	}
 }
 
 void GoombaStateScript::Chase()
 {
-	if (mAnimator->PlayAnimationName() != L"Dash")
+	if (mAnimator->PlayAnimationName() != L"Find" && mAnimator->IsComplete())
 	{
-		mRigidbody->SetLinearMaxVelocityForDynamic(10.f);
-		mAnimator->Play(L"Dash");
+		if (mAnimator->PlayAnimationName() != L"Dash")
+		{
+			mRigidbody->SetLinearMaxVelocityForDynamic(GOOMBA_RUN_VELOCITY);
+			mAnimator->Play(L"Dash");
+		}
 	}
 
-	Vector3 dirToPlayer = GetOwnerWorldPos() - mPlayer->GetWorldPos();
-	dirToPlayer.Normalize();
-	float rotCosTheta = dirToPlayer.Dot(mTransform->WorldForward());
-	if (rotCosTheta < 0.9f)
+	if (mAnimator->PlayAnimationName() == L"Dash")
 	{
-		mTransform->AddPhysicalRotation(Vector3(0.f, 90.f, 0.f) * DT);
+		if (mAnimator->IsComplete())
+		{
+
+		}
+		else
+		{
+			Vector3 dirToPlayer = GetOwnerWorldPos() - mPlayer->GetWorldPos();
+			dirToPlayer.Normalize();
+			float rotCosTheta = dirToPlayer.Dot(mTransform->WorldForward());
+			//mTransform->AddPhysicalRotation_Radian(Vector3(0.f, rotCosTheta, 0.f) * DT);
+
+			
+			Vector3 moveDir = mTransform->Forward();
+			moveDir.y = 0.f;
+			mRigidbody->AddForceForDynamic((-moveDir * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
+		}
 	}
-
-	Vector3 moveDir = mTransform->Forward();
-	moveDir.y = 0.f;
-	mRigidbody->AddForceForDynamic((-moveDir * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
-
 }
 
 void GoombaStateScript::SpecialSituation()

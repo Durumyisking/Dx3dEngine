@@ -26,8 +26,18 @@ void PlayerScript::Initialize()
 	mTransform = GetOwner()->GetComponent<Transform>();
 	mPhyXRigidBody = GetOwner()->GetComponent<PhysXRigidBody>();
 
+	mPhyXRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	mPhyXRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+
 	//mPhyXRigidBody->SetAngularMaxVelocityForDynamic(10.f);
 	//mPhyXRigidBody->SetLinearMaxVelocityForDynamic(10.f);
+	Timer* antiGlideTimer = new Timer(0.1f);
+	antiGlideTimer->SetDestroy(false);
+	antiGlideTimer->Event() = [this]
+	{
+		mPhyXRigidBody->AddForceForDynamic((Vector3(0.f, -1.f, 0.f) * 10.f * DT), PxForceMode::Enum::eIMPULSE);
+	};
+	GETSINGLE(TimerMgr)->GetInstance()->AddTimer(antiGlideTimer);
 
 }
 void PlayerScript::Update()
@@ -66,19 +76,19 @@ void PlayerScript::FixedUpdate()
 
 	if (KEY_DOWN(LEFT))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * -20.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->AddForceForDynamic((camRight * -40.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 	if (KEY_DOWN(RIGHT))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * 20.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->AddForceForDynamic((camRight * 40.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 	if (KEY_DOWN(UP))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * 20.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->AddForceForDynamic((camForward * 40.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 	if (KEY_DOWN(DOWN))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * -20.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->AddForceForDynamic((camForward * -40.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 	if (KEY_TAP(SPACE))
 	{

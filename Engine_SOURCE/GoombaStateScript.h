@@ -35,5 +35,7 @@ private:
 	PhysXRigidBody*		 mRigidbody; 
 	PhysicalMovement*	 mMovement ;
 	Transform*			 mTransform;
+
+	
 };
 

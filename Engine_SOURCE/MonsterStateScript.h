@@ -34,6 +34,6 @@ protected:
 	Monster* mMonster;
 	GameObj* mPlayer;
 	bool mbAnimationRunning;
-
+	bool mbTurnLeft;
 };
 

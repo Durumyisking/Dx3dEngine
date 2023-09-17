@@ -10,6 +10,7 @@ MonsterStateScript::MonsterStateScript()
 	, mMonster(nullptr)
 	, mPlayer(nullptr)
 	, mbAnimationRunning(false)
+	, mbTurnLeft(false)
 {
 	// 메모리 공간 확보
 	mStateEventList.reserve(static_cast<UINT>(Monster::eMonsterState::Die) + 1);
@@ -65,6 +66,14 @@ void MonsterStateScript::Idle()
 		{
 			mMonster->SetIsFoundPlayer(true);
 			mMonster->SetMonsterState(Monster::eMonsterState::Turn);
+
+			Vector3 dirToPlayer = GetOwnerWorldPos() - mPlayer->GetWorldPos();
+			dirToPlayer.Normalize();
+			float rotCosTheta = dirToPlayer.Dot(GetTransform()->WorldForward());
+			if (rotCosTheta > 0.f)
+			{
+				mbTurnLeft = true;
+			}
 		}
 		else
 		{
