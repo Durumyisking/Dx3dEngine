@@ -56,7 +56,7 @@ extern Application application;
 
 
 SceneTitle::SceneTitle()
-	: MainMenuPanal(nullptr)
+	: mMainMenuPanal(nullptr)
 
 {
 }
@@ -127,11 +127,11 @@ void SceneTitle::CreateMainMenu()
 	mMainMenuPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"WorldMapPanal", this));
   mStartTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"StartTextPanal", this));
 
-	HUD* worldMap = (GETSINGLE(UIFactory)->CreateHud(L"WorldMap", L"WorldMapMaterial", Vector3(0.f, 4.5f, 100.f), Vector3(20.f, 20.f, 1.f), MainMenuPanal, this));
+	HUD* worldMap = (GETSINGLE(UIFactory)->CreateHud(L"WorldMap", L"WorldMapMaterial", Vector3(0.f, 4.5f, 100.f), Vector3(20.f, 20.f, 1.f), mMainMenuPanal, this));
   	//worldMap->SetColor();
-	ImageUI* filter = (GETSINGLE(UIFactory)->CreateImage(L"RedFilter", L"FilterMaterial", Vector3(0.f, 4.5f, 99.f), Vector3(20.f, 20.f, 1.f), MainMenuPanal, this));
+	ImageUI* filter = (GETSINGLE(UIFactory)->CreateImage(L"RedFilter", L"FilterMaterial", Vector3(0.f, 4.5f, 99.f), Vector3(20.f, 20.f, 1.f), mMainMenuPanal, this));
   	//filter->SetColor();
-	worldMap->SetState(HUDState::Rotate);
+	worldMap->SetState(eHUDState::Rotate);
 
 	worldMap->SetSpeed(1);
 

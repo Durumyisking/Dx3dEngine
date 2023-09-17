@@ -1,5 +1,6 @@
 #include "PlayerStateScript.h"
 #include "Player.h"
+#include "Physical.h"
 #include "PhysXRigidBody.h"
 #include "PhysicalMovement.h"
 
@@ -75,7 +76,14 @@ void PlayerStateScript::Move()
 	if (moveMent == nullptr)
 		return;
 
-	if (animator->PlayAnimationName() != L"Walk")
+	Physical* physical = GetOwner()->GetComponent<Physical>();
+	if (physical == nullptr)
+		return;
+
+	if (animator->PlayAnimationName() == L"Brake")
+		return;
+
+	if (animator->PlayAnimationName() != L"Walk" && animator->PlayAnimationName() != L"Run")
 	{
 		const std::wstring& test = animator->PlayAnimationName();
 		animator->Play(L"Walk");
@@ -87,55 +95,67 @@ void PlayerStateScript::Move()
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT)
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
 	{
-		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
-		return;
+		if (!GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+		{
+			animator->Play(L"Brake");
+			//mPlayer->SetPlayerState(Player::ePlayerState::Idle);
+			//mMoveTime = 0.0f;
+			rigidbody->SetLinearMaxVelocityForDynamic(5.f);
+			mInitialForce = 33.f;
+			return;
+		}
 	}
 
 	Transform* tr = mPlayer->GetComponent<Transform>();
 	if (nullptr == tr)
 		return;
 
-	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP))
-	{
-		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
-		{
-			tr->SetRotation(Vector3(0.0f, -135.f, 0.0f));
-		}
-		else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
-		{
-			tr->SetRotation(Vector3(0.0f, -225.f, 0.0f));
-		}
-		else
-		{
-			tr->SetRotation(Vector3(0.0f, -180.f, 0.0f));
-		}
-	}
-	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN))
-	{
-		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
-		{
-			tr->SetRotation(Vector3(0.0f, -45.f, 0.0f));
-		}
-		else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
-		{
-			tr->SetRotation(Vector3(0.0f, 45.f, 0.0f));
-		}
-		else
-		{
-			tr->SetRotation(Vector3(0.0f, 0.f, 0.0f));
-		}
 
-	}
-	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
+	bool able = false;
+	auto Input_DownFunC = [&](eKeyCode key, eKeyCode mult_key, math::Vector3 rotation)
 	{
-		tr->SetRotation(Vector3(0.0f, 90.f, 0.0f));
-	}
-	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+		if (able)
+			return;
+
+		if (GETSINGLE(InputMgr)->GetKeyDown(key))
+		{
+			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
+			{
+				tr->SetPhysicalRotation(rotation);
+				able = true;
+			}
+		}
+	};
+
+	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
+	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
+
+	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+	rigidbody->SetLinearMaxVelocityForDynamic(10.f);
+
+
+	// 매 프레임마다 힘을 증가시킴
+	//if (mInitialForce < 40.f)
+	//mMoveTime += DT;
+	mInitialForce += mForceIncrement;
+	/*if (mMoveTime > 1.f)
 	{
-		tr->SetRotation(Vector3(0.0f, -90.f, 0.0f));
-	}
-	rigidbody->SetLinearMaxVelocityForDynamic(4000.f);
-	rigidbody->AddForceForDynamic((-tr->Forward() * 9000.f * DT), PxForceMode::Enum::eFORCE);
+		if (animator->PlayAnimationName() != L"Run")
+			animator->Play(L"Run");
+	}*/
+	rigidbody->AddForceForDynamic((-tr->Forward() * mInitialForce * DT), PxForceMode::Enum::eIMPULSE);
 }
 
 void PlayerStateScript::Jump()

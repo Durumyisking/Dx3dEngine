@@ -41,24 +41,21 @@ void Player::Initialize()
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
+	//기본 설정
 	SetPos(Vector3(0.f, 0.f, 0.f));
-	SetScale(Vector3(0.01f, 0.01f, 0.01f));
 	SetName(L"Player");
+	// OffsetScale Setting
+	Transform* tr = GetComponent<Transform>();
+	if (tr)
+		tr->SetOffsetScale(0.01f);
+
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
 	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
-	//animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
-	animator->CreateAnimation(L"Wait", L"..//..//Resources/MarioBody/Animation/Wait.smd", 0.05f);
-	animator->CreateAnimation(L"WaitHot", L"..//..//Resources/MarioBody/Animation/WaitHot.smd", 0.05f);
-	animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.05f);
-	///animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
-	//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
-	//animator->CreateAnimation(L"test4", L"..//..//Resources/MarioBody/Animation/Run.smd", 0.05f);
-	animator->Play(L"Wait");
-
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(1.0f, 1.0f, 1.0f));
+	boneAnimatorInit(animator);
+	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.01f, 2.0f, -2.0f));
 
 	//마리오 파츠 관리
 	MarioParts* mHandL = new MarioParts();//object::Instantiate<MarioParts>(eLayerType::Player);
@@ -88,6 +85,7 @@ void Player::Initialize()
 	mStateInfo.resize(static_cast<int>(ePlayerState::Die) + 1);
 	stateInfoInitalize();
 	//mPlayerState = ePlayerState::Idle;
+	
 
 	DynamicObject::Initialize();
 }
@@ -288,4 +286,74 @@ void Player::SetPlayerState(ePlayerState playerState)
 	PlayerStateScript* script = GetScript<PlayerStateScript>();
 	if (script)
 		script->Reset();
+}
+
+void Player::boneAnimatorInit(BoneAnimator* animator)
+{
+	AnimationClip* cilp = nullptr;
+
+	//animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
+	animator->CreateAnimation(L"Wait", L"..//..//Resources/MarioBody/Animation/Wait.smd");
+	animator->CreateAnimation(L"WaitHot", L"..//..//Resources/MarioBody/Animation/WaitHot.smd");
+	animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.020f);
+	animator->CreateAnimation(L"Brake", L"..//..//Resources/MarioBody/Animation/Brake.smd");
+	///animator->CreateAnimation(L"test2", L"..//..//Resources/MarioBody/Animation/Jump.smd", 0.05f);
+	//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
+	animator->CreateAnimation(L"Run", L"..//..//Resources/MarioBody/Animation/Run.smd");
+	animator->Play(L"Wait");
+
+	//// 어택 동작 연계
+	//{
+	//	cilp = animator->GetAnimationClip(L"Attack");
+	//	if (cilp)
+	//	{
+	//		cilp->SetKeyFrameEvent(3, [this]()
+	//		{
+	//			PackunPostionBall* packunball = object::LateInstantiate<PackunPostionBall>(eLayerType::Objects);
+
+	//			Transform* tr = GetComponent<Transform>();
+	//			Vector3 position = tr->GetPhysicalPosition();
+
+	//			Vector3 rotation = tr->GetRotation();
+
+	//			packunball->GetComponent<Transform>()->SetPhysicalPosition(position);
+	//			packunball->GetComponent<Transform>()->SetPhysicalRotation(rotation);
+	//			packunball->FixedUpdate();
+
+	//			Transform* test = packunball->GetComponent<Transform>();
+	//			Vector3 testfor = test->WorldForward();
+
+	//			PhysXRigidBody* rigidbody = packunball->GetComponent<PhysXRigidBody>();
+	//			if (rigidbody)
+	//			{
+	//				//rigidbody->AddForceForDynamic(Vector3(0.f,25.f,0.f), PxForceMode::eIMPULSE);
+	//				rigidbody->AddForceForDynamic(test->WorldForward() * 15.f, PxForceMode::eIMPULSE);
+	//			}
+
+	//		});
+
+	//		cilp->SetCompleateEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+	//	}
+
+	//}
+
+	// 달리기 후 run으로
+	{
+		cilp = animator->GetAnimationClip(L"Walk");
+		if (cilp)
+			cilp->SetCompleateEvent([animator]()
+		{
+			animator->Play(L"Run");
+		});
+	}
+
+	//멈추는 애니메이션 후 idle로 무조건 갔다가 가도록
+	{
+		cilp = animator->GetAnimationClip(L"Brake");
+		if (cilp)
+			cilp->SetCompleateEvent([this]()
+		{
+			SetPlayerState(Player::ePlayerState::Idle);
+		});
+	}
 }

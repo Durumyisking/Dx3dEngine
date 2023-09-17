@@ -92,11 +92,11 @@ void ScenePlay::Initialize()
 		goomba->SetName(L"Goomba");*/
 	}
 
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(-15.f, 10.f, 9.5f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"DeferredMaterial");
+	//{
+	//	Player* player = object::Instantiate<Player>(eLayerType::Player, this);
+	//	player->SetPos(Vector3(-15.f, 10.f, 9.5f));
+	//	player->SetScale(Vector3(1.f, 1.f, 1.f));
+	//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"DeferredMaterial");
 
 	//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 	//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"check_dirt");
@@ -112,17 +112,17 @@ void ScenePlay::Initialize()
 	//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	//}
 
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(15.f, 10.f, 9.5f));
-		player->SetScale(Vector3(5.f, 5.f, 5.f));
-		player->SetName(L"Player");
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
-		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
-		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
+	//{
+	//	Player* player = object::Instantiate<Player>(eLayerType::Player, this);
+	//	player->SetPos(Vector3(15.f, 10.f, 9.5f));
+	//	player->SetScale(Vector3(5.f, 5.f, 5.f));
+	//	player->SetName(L"Player");
+	//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
+	//	player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
+	//	player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
 
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
+	//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+	//	player->AddComponent<PlayerScript>(eComponentType::Script);
 
 	//	Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 	//	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
@@ -140,6 +140,7 @@ void ScenePlay::Initialize()
 		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
 		t->BindAllShaderResource(12);
 	}
+
 	{
 		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
 		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
@@ -165,7 +166,7 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+		//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
 	}
 
 	CreatePlayerUI();

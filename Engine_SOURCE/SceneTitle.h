@@ -23,7 +23,7 @@ public:
 	void CreateMainMenu();
   
 private:
-	Panal* MainMenuPanal;
+	Panal* mMainMenuPanal;
 	Panal* mStartTextPanal;
 
 };

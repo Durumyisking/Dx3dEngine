@@ -42,6 +42,7 @@ public:
 	virtual void OnTriggerExit(GameObj* gameObject) override;
 	void KeyCheck();
 	virtual void BoneInitialize();
+	void boneAnimatorInit(BoneAnimator* animator);
 
 	std::vector<MarioParts*> GetParts() { return mParts; }
 	void SetParts(MarioParts* part) { mParts.push_back(part); }

@@ -29,6 +29,9 @@ public:
 
 private:
 	std::vector<std::function<void()>> mStateEventList;
+	float mInitialForce = 33.0f; // 초기 힘
+	float mForceIncrement = 0.05f; // 시간에 따른 힘의 증가량
+	//float mMoveTime = 0.0f;
 
 protected:
 	Player* mPlayer;
