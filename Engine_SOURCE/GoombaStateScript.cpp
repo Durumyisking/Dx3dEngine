@@ -50,7 +50,7 @@ void GoombaStateScript::Update()
 {
 	if (KEY_TAP(N_3))
 	{
-		mAnimator->Play(L"Find");
+		mAnimator->Play(L"Find", false);
 	}
 	if (KEY_TAP(N_4))
 	{
@@ -58,21 +58,13 @@ void GoombaStateScript::Update()
 	}
 	if (KEY_TAP(N_5))
 	{
-		mAnimator->Play(L"Land");
-	}
-	if (KEY_TAP(N_6))
-	{
-		mAnimator->Play(L"Fall");
-	}
-	if (KEY_TAP(N_7))
-	{
-		mAnimator->Play(L"Slide");
+		mAnimator->Play(L"Attack");
 	}
 
 	float dist = Vector3::Distance(GETSINGLE(SceneMgr)->GetActiveScene()->GetPlayer()->GetWorldPos(), GetOwnerWorldPos());
 	if (10.f > dist)
 	{
-
+		
 	}
 	else
 	{
@@ -80,7 +72,7 @@ void GoombaStateScript::Update()
 	}
 
 
-	MonsterStateScript::Update();
+	//MonsterStateScript::Update();
 }
 
 void GoombaStateScript::Idle()

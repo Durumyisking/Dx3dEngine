@@ -15,11 +15,11 @@ Goomba::Goomba()
 	: Monster()
 {
 	OnCapture();
+	SetName(L"Goomba");
 }
 
 Goomba::~Goomba()
 {
-
 }
 
 void Goomba::Initialize()
@@ -131,7 +131,19 @@ void Goomba::boneAnimatorInit(BoneAnimator* animator)
 
 	AnimationClip* cilp = animator->GetAnimationClip(L"Attack");
 	if (cilp)
-		cilp->SetCompleateEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+		cilp->SetCompleteEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+
+	animator->GetAnimationClip(L"Find")->SetCompleteEvent
+	([animator]()
+	{
+		animator->Play(L"Land", false);
+	});
+	animator->GetAnimationClip(L"Land")->SetCompleteEvent
+	([animator]()
+	{
+		animator->Play(L"Dash");
+	});
+
 }
 
 void Goomba::stateInfoInitalize()
