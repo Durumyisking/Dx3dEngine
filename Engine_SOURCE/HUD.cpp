@@ -12,6 +12,7 @@ HUD::HUD()
 	, mTargetPos(Vector3::Zero)
 	, mState(eHUDState::None)
 	, mActivate(false)
+	, mbStop(false)
 	, mbGoAndReturn(false)
 	, mCount(3)
 {
@@ -26,6 +27,7 @@ HUD::HUD(eUIType type)
 	, mTargetPos(Vector3::Zero)
 	, mState(eHUDState::None)
 	, mActivate(false)
+	, mbStop(false)
 	, mbGoAndReturn(false)
 	, mCount(3)
 {
@@ -60,6 +62,8 @@ void HUD::OnUpdate()
 	if (mActivate == false)
 		return;
 
+	if (mbStop)
+		return;
 
 	switch (mState)
 	{
@@ -108,7 +112,6 @@ void HUD::OnClear()
 
 void HUD::MoveBlink(Vector3 changeSize)
 {
-
 	if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::UP)))
 	{
 		Vector3 pos = this->GetComponent<Transform>()->GetPosition() + Vector3(0.0f, 1.f, 0.0f);
@@ -172,11 +175,11 @@ void HUD::PlayAnimation()
 void HUD::SetColor()
 {
 
-SpriteRenderer* renderer = this->GetComponent<SpriteRenderer>();
-Material* material = renderer->GetMaterial();
+	SpriteRenderer* renderer = this->GetComponent<SpriteRenderer>();
+	Material* material = renderer->GetMaterial();
 
-renderer::ColorCB data = {};
+	renderer::ColorCB data = {};
 
-data.RGBA = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-material->SetData(eGPUParam::Vector4_1, &data.RGBA);
+	data.RGBA = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+	material->SetData(eGPUParam::Vector4_1, &data.RGBA);
 }

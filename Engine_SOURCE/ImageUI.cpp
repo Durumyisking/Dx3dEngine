@@ -1,7 +1,7 @@
 #include "ImageUI.h"
 
 ImageUI::ImageUI()
-	:UIBase(eUIType::Image)
+	:UIBase(eUIType::None)
 	, mActivate(false)
 {
 }

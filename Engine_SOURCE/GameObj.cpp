@@ -248,6 +248,11 @@ void GameObj::SetMaterial(Material* material)
 	}
 }
 
+Material* GameObj::GetMaterial()
+{
+	return this->GetComponent<SpriteRenderer>()->GetMaterial();
+}
+
 void GameObj::SetMesh(Mesh* mesh)
 {
 	if (nullptr != GetComponent<SpriteRenderer>())

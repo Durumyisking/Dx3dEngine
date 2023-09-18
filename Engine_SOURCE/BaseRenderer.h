@@ -23,6 +23,7 @@ public:
 	void SetMesh(Mesh* mesh) { mMesh = mesh; }
 	void SetMeshByKey(std::wstring key);
 	void SetMaterial(Material* material);
+	Material* GetMaterial();
 	void SetMaterialByKey(std::wstring key);
 	void SetAnimMaterial(Material* material, Vector2 spriteSize);
 
