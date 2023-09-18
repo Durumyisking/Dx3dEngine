@@ -4,6 +4,7 @@
 
 
 class Physical;
+class Transform;
 class PhysXRigidBody :
     public Component
 {
@@ -27,6 +28,8 @@ public:
     FORCEINLINE void        AddVelocity(const math::Vector3& velocity) { mVelocity += velocity; }
     FORCEINLINE void        SetVelocity(const math::Vector3& velocity) { mVelocity = velocity; }
 
+    FORCEINLINE void        AddForce(const math::Vector3& force) { mForce = force; }
+    FORCEINLINE math::Vector3        GetForce() const { return mForce; }
 
 public:
     // for kinematic actors
@@ -60,11 +63,16 @@ private:
     Physical* mPhysical;
 
     bool mGravityApplied;
+    math::Vector3 mFriction;
     math::Vector3 mGravityAccel;
     math::Vector3 mForce;
     math::Vector3 mVelocity;
     math::Vector3 mMaxVelocity;
+    math::Vector3 mAccelation;
 
     math::Vector3 mReserveVelocity;
     Timer mReserveTimer;
+
+    float mMass;
+    Transform* mOwnerTransform;
 };

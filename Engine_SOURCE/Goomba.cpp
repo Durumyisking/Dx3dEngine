@@ -53,10 +53,11 @@ void Goomba::Initialize()
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.5f));
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
+	//GetComponent<PhysXRigidBody>()->RemoveGravity();
 
 	// MoveMent
 	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
@@ -114,10 +115,10 @@ void Goomba::CaptureEvent()
 		};
 
 	// 이동
-	//stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
 
 	// 점프
 	able = false;
