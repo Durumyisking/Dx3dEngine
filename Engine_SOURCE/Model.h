@@ -109,4 +109,14 @@ private:
 	std::wstring mTargetBone;
 
 	math::Vector3 mOffsetRotation;
+
+
+//TEST ConvexMesh
+public:
+	const std::vector<Mesh*>& GetMeshes() { return mMeshes; }
+	const std::vector<std::vector<renderer::Vertex>>& GetVertexes() { return mVertexes; }
+
+private:
+	std::vector<std::vector<renderer::Vertex>> mVertexes;
+////////
 };

@@ -70,15 +70,13 @@ void PhysXRayCast::Raycast()
 
 		for (GameObj* obj : gameObjs)
 		{
-			if (CollisionCheck(RayOrigin, RayDirection, obj, mRayMaxDist))
+			if (!CollisionCheck(RayOrigin, RayDirection, obj, mRayMaxDist))
+				continue;
+
+			if (mPickDistance > static_cast<float>(mRaycastHit.distance))
 			{
-				int a = 0;
-				if (mPickDistance > static_cast<float>(mRaycastHit.distance))
-				{
-					mPickingObject = obj;
-					mPickDistance = static_cast<float>(mRaycastHit.distance);
-						
-				}
+				mPickingObject = obj;
+				mPickDistance = static_cast<float>(mRaycastHit.distance);
 			}
 		}
 	}

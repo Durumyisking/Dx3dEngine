@@ -74,32 +74,31 @@ PxConvexMesh* Physical::MakeConvexObject()
 	std::shared_ptr<PhysX>physX = GETSINGLE(PhysicsMgr)->GetEnvironment();
 
 	Model* model = GetOwner()->GetComponent<MeshRenderer>()->GetModel();
-	if (model)
+	if (model == nullptr)
+		return nullptr;
+
+	//vertexCount = model->GetNumberOfVertices(index);
+	const std::vector<Mesh*> meshes = model->GetMeshes();
+	std::vector<std::vector<renderer::Vertex>> meshVertices = model->GetVertexes();
+	PxU32 vertexCount = 0;
+	std::vector<PxVec3> vertices;
+
+	for (Mesh* mesh : meshes)
 	{
-		//vertexCount = model->GetNumberOfVertices(index);
-		const std::vector<Mesh*> meshes = model->GetMeshes();
-		PxU32 vertexCount = 0;
-		std::vector<PxVec3> vertices;
+		std::vector<renderer::Vertex> meshVertices = mesh->GetVertexes();
+		PxU32 count = mesh->GetVertexCount();
+		vertexCount += count;
 
-		for (Mesh* mesh : meshes)
+		// Copy from cvector array to PxVec3 array
+		for (PxU32 i = 0; i < count; i++)
 		{
-			std::vector<Vertex> meshVertices = mesh->GetVertexes();
-			PxU32 count = mesh->GetVertexCount();
-			vertexCount += count;
-
-			// Copy from cvector array to PxVec3 array
-			for (PxU32 i = 0; i < count; i++)
-			{
-				vertices.push_back(PxVec3(meshVertices[i].pos.x, meshVertices[i].pos.y, meshVertices[i].pos.z));
-			}
+			vertices.push_back(PxVec3(meshVertices[i].pos.x, meshVertices[i].pos.y, meshVertices[i].pos.z));
 		}
-
-		PxVec3* v = vertices.data();
-
-		return physX->CreateConvexMesh(v, vertexCount, physX->GetPhysics(), physX->GetCooking());
 	}
 
-	return nullptr;
+	PxVec3* v = vertices.data();
+
+	return physX->CreateConvexMesh(v, vertexCount, physX->GetPhysics(), physX->GetCooking());
 }
 
 void Physical::Update()
