@@ -154,6 +154,7 @@ void ScenePlay::Initialize()
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		rigid->RemoveGravity();
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}

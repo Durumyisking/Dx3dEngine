@@ -105,21 +105,20 @@ void GoombaStateScript::Move()
 			}
 		};
 
-	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, 0.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -225.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, -180.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
-	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
+	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, -90.f, 0.0f));
+	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, 90.f, 0.0f));
+	mTransform->FixedUpdate();
 
-
-	Vector3 moveDir = mTransform->Forward();
-	moveDir.y = 0.f;
-	mRigidbody->AddForce((-moveDir * 10.f));
+	Vector3 moveDir = mTransform->WorldForward();
+	mRigidbody->AddForce((moveDir * 50.f * DT));
 }
 
 void GoombaStateScript::Jump()
@@ -128,9 +127,11 @@ void GoombaStateScript::Jump()
 	{
 		mAnimator->Play(L"Jump", false);
 
-		mRigidbody->SetLinearMaxVelocityForDynamic(1000.f);
-		mRigidbody->AddForceForDynamic(math::Vector3(0.0f, 5000.f, 0.0f), physx::PxForceMode::eFORCE);
-		mRigidbody->SetLinearDamping(1.0f);
+		mRigidbody->ApplyGravity();
+		Vector3 velocity = mRigidbody->GetVelocity();
+		velocity.y = 0;
+		velocity.y += 20.f;
+		mRigidbody->SetVelocity(velocity);
 	}
 
 	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())

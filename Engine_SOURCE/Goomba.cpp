@@ -141,9 +141,6 @@ void Goomba::boneAnimatorInit(BoneAnimator* animator)
 	AnimationClip* cilp = animator->GetAnimationClip(L"Attack");
 	if (cilp)
 		cilp->SetCompleteEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
-
-
-
 }
 
 void Goomba::stateInfoInitalize()
@@ -155,6 +152,7 @@ void Goomba::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(eMonsterState::Move), static_cast<UINT>(eMonsterState::Move));
 
 	// Jump
+	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Jump));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Move));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::SpecialSituation));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Groggy));

@@ -10,10 +10,10 @@ PhysXRigidBody::PhysXRigidBody()
 	: Component(eComponentType::RigidBody)
 	, mPhysical(nullptr)
 	, mGravityApplied(true)
-	, mFriction(Vector3::Zero)
+	, mFriction(Vector3(20.f, 0.0f, 20.0f))
 	, mForce(Vector3::Zero)
-	, mGravityAccel(Vector3(0.f, -19.8f * 2.f, 0.f))
-	, mMaxVelocity(Vector3(40.f, 40.f, 40.f))
+	, mGravityAccel(Vector3(0.f, -9.8f * 4.f, 0.f))
+	, mMaxVelocity(Vector3(100.f, 200.f, 100.f))
 	, mReserveTimer(0.f)
 	, mAccelation(Vector3(0.f, 0.f, 0.f))
 	, mMass(1.0f)
@@ -75,33 +75,8 @@ void PhysXRigidBody::FixedUpdate()
 		mVelocity -= gravity * dot;
 	}
 
-	// 최대 속도 제한
-	Vector3 gravity = mGravityAccel;
-	gravity.Normalize();
-
-	Vector3 velocity = mVelocity;
-	velocity.Normalize();
-
-	float dot = velocity.Dot(gravity);
-	gravity = gravity * dot;
-
-	Vector3 sideVelocity = mVelocity - gravity;
-	if (mMaxVelocity.y < gravity.Length())
-	{
-		gravity.Normalize();
-		gravity *= mMaxVelocity.y;
-	}
-
-	if (mMaxVelocity.x < sideVelocity.Length())
-	{
-		sideVelocity.Normalize();
-		sideVelocity *= mMaxVelocity.x;
-	}
-
-	mVelocity = gravity + sideVelocity;
-
 	//마찰력 조건 (적용된 힘이 없고, 속도가 0 이 아닐때)
-	if (!(mVelocity == Vector3::Zero))
+	if (( mVelocity.x != 0.f || mVelocity.z != 0.f ))
 	{
 		// 속도 반대 방향으로 마찰력을 적용
 		math::Vector3 friction = -mVelocity;
@@ -110,12 +85,17 @@ void PhysXRigidBody::FixedUpdate()
 		friction = friction * mFriction * mMass * DT;
 
 		// 마찰력으로 인한 속도 감소량 현재 속도보다 더 큰 경우
-		float mVelocityLength = mVelocity.Length();
+		Vector3 sideVelo = mVelocity;
+		sideVelo.y = 0.f;
+
+		float mVelocityLength = sideVelo.Length();
 		float frictionLength = friction.Length();
 		if (mVelocityLength < frictionLength)
 		{
 			// 속도를 0 으로 만든다
+			float yForce = mVelocity.y;
 			mVelocity = Vector3::Zero;
+			mVelocity.y = yForce;
 		}
 		else
 		{
@@ -126,7 +106,7 @@ void PhysXRigidBody::FixedUpdate()
 
 	// 이동
 	Vector3 Pos = mOwnerTransform->GetPhysicalPosition();
-	Pos = Pos + mForce * DT;
+	Pos += mVelocity * DT;
 	mOwnerTransform->SetPhysicalPosition(Pos);
 
 	// 힘 초기화
