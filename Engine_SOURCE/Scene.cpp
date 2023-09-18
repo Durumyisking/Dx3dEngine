@@ -5,7 +5,7 @@
 #include "Object.h"
 #include "CameraScript.h"
 #include "Player.h"
-
+#include "TimerMgr.h"
 Scene::Scene()
 	: mDeleteObj(true)
 	, mType(SceneMgr::eSceneType::End)
@@ -100,6 +100,12 @@ void Scene::Exit()
 	}
 
 	destroy();
+
+
+	mCamera = nullptr;
+	mUICamera = nullptr;
+
+	GETSINGLE(TimerMgr)->GetInstance()->ChangeScene();
 
 	renderer::lights.clear();
 }
