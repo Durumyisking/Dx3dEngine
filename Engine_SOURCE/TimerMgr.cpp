@@ -16,6 +16,7 @@ TimerMgr::~TimerMgr()
 		delete timer;
 		timer = nullptr;
 	}
+	mTimers.clear();
 }
 
 void TimerMgr::Update()
@@ -47,4 +48,14 @@ void TimerMgr::AddTimer(Timer* timer)
 {
 	mTimers.push_back(timer);
 	timer->Start();
+}
+
+void TimerMgr::ChangeScene()
+{
+	for (Timer* timer : mTimers)
+	{
+		delete timer;
+		timer = nullptr;
+	}
+	mTimers.clear();
 }

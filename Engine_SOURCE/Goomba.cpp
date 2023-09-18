@@ -15,15 +15,18 @@ Goomba::Goomba()
 	: Monster()
 {
 	OnCapture();
+	SetName(L"Goomba");
 }
 
 Goomba::~Goomba()
 {
-
 }
 
 void Goomba::Initialize()
 {
+	SetGetRecognizeRadius(15.f);
+
+
 	// Add MeshRenderer
 	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
@@ -111,10 +114,10 @@ void Goomba::CaptureEvent()
 		};
 
 	// 이동
-	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
 
 	// 점프
 	able = false;
@@ -125,13 +128,21 @@ void Goomba::CaptureEvent()
 	//stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::SpecialCast);
 }
 
+void Goomba::OnCollisionEnter(GameObj* gameObject)
+{
+	int i = 0;
+}
+
 void Goomba::boneAnimatorInit(BoneAnimator* animator)
 {
 	animator->LoadAnimations(L"..//Resources/goomba/Animation");
 
 	AnimationClip* cilp = animator->GetAnimationClip(L"Attack");
 	if (cilp)
-		cilp->SetCompleateEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+		cilp->SetCompleteEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+
+
+
 }
 
 void Goomba::stateInfoInitalize()

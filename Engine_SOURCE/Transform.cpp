@@ -208,9 +208,42 @@ void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 
 	mRelativeRotation = rotation_degrees;
 
-	PxQuat rotationX(PxPi * rotation_degrees.x / 180.0f, PxVec3(1.0f, 0.0f, 0.0f));
-	PxQuat rotationY(PxPi * rotation_degrees.y / 180.0f, PxVec3(0.0f, 1.0f, 0.0f));
-	PxQuat rotationZ(PxPi * rotation_degrees.z / 180.0f, PxVec3(0.0f, 0.0f, 1.0f));
+	PxQuat rotationX(toRadian(mRelativeRotation.x), PxVec3(1.0f, 0.0f, 0.0f));
+	PxQuat rotationY(toRadian(mRelativeRotation.y), PxVec3(0.0f, 1.0f, 0.0f));
+	PxQuat rotationZ(toRadian(mRelativeRotation.z), PxVec3(0.0f, 0.0f, 1.0f));
+	// 회전을 적용합니다.
+	PxQuat finalRotation = rotationX * rotationY * rotationZ;
+	mPxTransform.q = finalRotation;
+	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+}
+
+void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)
+{
+	assert(GetOwner()->GetComponent<Physical>());
+
+	mRelativeRotation += rotation_degrees;
+
+	PxQuat rotationX(toRadian(mRelativeRotation.x), PxVec3(1.0f, 0.0f, 0.0f));
+	PxQuat rotationY(toRadian(mRelativeRotation.y), PxVec3(0.0f, 1.0f, 0.0f));
+	PxQuat rotationZ(toRadian(mRelativeRotation.z), PxVec3(0.0f, 0.0f, 1.0f));
+	// 회전을 적용합니다.
+	PxQuat finalRotation = rotationX * rotationY * rotationZ;
+	mPxTransform.q = finalRotation;
+	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+}
+
+void Transform::AddPhysicalRotation_Radian(const Vector3& rotation_radian)
+{
+	assert(GetOwner()->GetComponent<Physical>());
+
+	mRelativeRotation.x += toDegree(rotation_radian.x);
+	mRelativeRotation.y += toDegree(rotation_radian.y);
+	mRelativeRotation.z += toDegree(rotation_radian.z);
+
+	PxQuat rotationX(toRadian(mRelativeRotation.x), PxVec3(1.0f, 0.0f, 0.0f));
+	PxQuat rotationY(toRadian(mRelativeRotation.y), PxVec3(0.0f, 1.0f, 0.0f));
+	PxQuat rotationZ(toRadian(mRelativeRotation.z), PxVec3(0.0f, 0.0f, 1.0f));
+
 	// 회전을 적용합니다.
 	PxQuat finalRotation = rotationX * rotationY * rotationZ;
 	mPxTransform.q = finalRotation;

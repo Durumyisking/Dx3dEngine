@@ -193,7 +193,7 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 
 				});
 
-			cilp->SetCompleateEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+			cilp->SetCompleteEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
 		}
 
 	}
@@ -202,7 +202,7 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 	{
 		cilp = animator->GetAnimationClip(L"AttackHit");
 		if (cilp)
-			cilp->SetCompleateEvent([this]()
+			cilp->SetCompleteEvent([this]()
 				{
 					SetMonsterState(Monster::eMonsterState::Idle);
 				});

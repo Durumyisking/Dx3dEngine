@@ -1,11 +1,16 @@
 #include "MonsterStateScript.h"
 #include "Monster.h"
 
+#include "SceneMgr.h"
+#include "Scene.h"
+
 MonsterStateScript::MonsterStateScript()
 	: Script()
 	, mStateEventList{}
 	, mMonster(nullptr)
+	, mPlayer(nullptr)
 	, mbAnimationRunning(false)
+	, mbTurnLeft(false)
 {
 	// 메모리 공간 확보
 	mStateEventList.reserve(static_cast<UINT>(Monster::eMonsterState::Die) + 1);
@@ -14,6 +19,9 @@ MonsterStateScript::MonsterStateScript()
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Idle, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Move, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Jump, this));
+	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Fall, this));
+	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Turn, this));
+	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Chase, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Attack, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::SpecialSituation, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Hit, this));
@@ -31,6 +39,9 @@ void MonsterStateScript::Update()
 	if (mMonster == nullptr)
 		return;
 
+	if (!mPlayer)
+		mPlayer = GETSINGLE(SceneMgr)->GetActiveScene()->GetPlayer();
+
 	UINT iState = static_cast<UINT>(mMonster->GetMonsterState());
 	// enum 상태와 매칭되는 배열을 인덱스로 접근
 	mStateEventList[iState]();
@@ -43,4 +54,31 @@ void MonsterStateScript::Initialize()
 	// Owner 형 변환
 	if (GetOwner())
 		mMonster = dynamic_cast<Monster*>(GetOwner());
+
+}
+
+void MonsterStateScript::Idle()
+{	
+	if (mPlayer)
+	{
+		float dist = Vector3::Distance(GETSINGLE(SceneMgr)->GetActiveScene()->GetPlayer()->GetWorldPos(), GetOwnerWorldPos());
+		if (mMonster->GetGetRecognizeRadius() > dist)
+		{
+			mMonster->SetIsFoundPlayer(true);
+			mMonster->SetMonsterState(Monster::eMonsterState::Turn);
+
+			Vector3 dirToPlayer = GetOwnerWorldPos() - mPlayer->GetWorldPos();
+			dirToPlayer.Normalize();
+			float rotCosTheta = dirToPlayer.Dot(GetTransform()->WorldForward());
+			if (rotCosTheta > 0.f)
+			{
+				mbTurnLeft = true;
+			}
+		}
+		else
+		{
+			mMonster->SetIsFoundPlayer(false);
+			mMonster->SetMonsterState(Monster::eMonsterState::Idle);
+		}
+	}
 }

@@ -14,10 +14,10 @@ AnimationClip::AnimationClip()
 	: mDuration(0.0f)
 	, mTickPerSceond(0.0f)
 	, mCurIndex(0)
-	, mCompleate(false)
+	, mbComplete(false)
 	, mAnimator(nullptr)
 	, mStartEvent(nullptr)
-	, mCompleateEvent(nullptr)
+	, mCompleteEvent(nullptr)
 	, mEndEvent(nullptr)
 	, mName(L"")
 	, mPreveAnimationData(nullptr)
@@ -33,7 +33,7 @@ AnimationClip::~AnimationClip()
 
 void AnimationClip::Update()
 {
-	if (mCompleate)
+	if (mbComplete)
 		return;
 
 	mTickPerSceond += DT;
@@ -60,11 +60,11 @@ void AnimationClip::Update()
 	{
 		// 애니메이션 종료시 리셋
 		Reset();
-		mCompleate = true;
+		mbComplete = true;
 		mCurIndex = static_cast<UINT>(mSkeletonData.size() - 1);
 
-		if (mCompleateEvent)
-			mCompleateEvent();
+		if (mCompleteEvent)
+			mCompleteEvent();
 
 		return;
 	}
@@ -221,7 +221,7 @@ void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, cons
 
 void AnimationClip::Reset()
 {
-	mCompleate = false;
+	mbComplete = false;
 	mTickPerSceond = 0.0f;
 	// mCurIndex = 0;
 }

@@ -30,7 +30,7 @@ void BoneAnimator::Update()
 	if (mPlayAnimation == nullptr)
 		return;
 
-	if (mPlayAnimation->IsCompleate())
+	if (mPlayAnimation->IsComplete())
 	{
 		if (!mbLoop)
 		{
