@@ -29,7 +29,7 @@ public:
 
 	void InterpolationPrveToCurAnimation();
 
-	bool IsCompleate() { return mCompleate; }
+	bool IsComplete() { return mbComplete; }
 
 	// 보간함수
 	math::Vector3 Interpolation(math::Vector3& startVec,math::Vector3& endVec, float accTime, float endTime);
@@ -39,12 +39,12 @@ public:
 
 public:
 	std::function<void()> GetStartEvent() { return mStartEvent; }
-	std::function<void()> GetCompleateEvent() { return mCompleateEvent; }
+	std::function<void()> GetCompleteEvent() { return mCompleteEvent; }
 	std::function<void()> GetEndEvent() { return mEndEvent; }
 	std::function<void()> GetKeyFrameEvent(UINT index);
 
 	void SetStartEvent(std::function<void()> inEvent) { mStartEvent = std::move(inEvent); }
-	void SetCompleateEvent(std::function<void()> inEvent) { mCompleateEvent = std::move(inEvent); }
+	void SetCompleteEvent(std::function<void()> inEvent) { mCompleteEvent = std::move(inEvent); }
 	void SetEndEvent(std::function<void()> inEvent) { mEndEvent = std::move(inEvent); }
 	void SetKeyFrameEvent(UINT index, std::function<void()> inEvent);
 
@@ -52,7 +52,7 @@ public:
 	GETSET(const std::wstring&, mName, AnimationName)
 	GETSET(double, mDuration, Duration)
 	GETSET(double, mTickPerSceond, TickPerSceond)
-	GETSET(bool, mCompleate, Compleate)
+	GETSET(bool, mbComplete, Complete)
 	GETSET(BoneAnimator*, mAnimator, Animator)
 	GETSET(const animation::SkeletonData*, mPreveAnimationData, PreveAnimationData)
 	GETSET(float , mConnectionDuration, ConnectionDuration)
@@ -78,12 +78,12 @@ private:
 	double	    mDuration;
 	double      mTickPerSceond;
 	UINT	    mCurIndex;
-	bool		mCompleate;
+	bool		mbComplete;
 
 	BoneAnimator* mAnimator;
 
 	std::function<void()> mStartEvent;
-	std::function<void()> mCompleateEvent;
+	std::function<void()> mCompleteEvent;
 	std::function<void()> mEndEvent;
 
 	std::map<UINT, std::function<void()>> mKeyFrameEvent;

@@ -13,6 +13,8 @@ public:
 
 	virtual void CaptureEvent() final;
 
+	virtual void OnCollisionEnter(GameObj* gameObject) final;
+
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) final;
 	virtual void stateInfoInitalize() final;
