@@ -27,6 +27,7 @@ public:
     FORCEINLINE void        RemoveGravity() { mGravityApplied = false; }
     FORCEINLINE void        AddVelocity(const math::Vector3& velocity) { mVelocity += velocity; }
     FORCEINLINE void        SetVelocity(const math::Vector3& velocity) { mVelocity = velocity; }
+    void                    SetVelocity(AXIS axis, const math::Vector3& velocity);
 
     FORCEINLINE void        AddForce(const math::Vector3& force) { mForce = force; }
     FORCEINLINE math::Vector3        GetForce() const { return mForce; }
@@ -36,7 +37,6 @@ public:
     float GetVelocity(AXIS eAxis);
     void  SetVelocity(AXIS eAxis, float velocity);
     void  AddVelocity(AXIS eAxis, float velocity);
-    void  AddForce(const math::Vector3& force, PxForceMode::Enum eForceMode);
     void  ReserveSpeedForSeconds(const math::Vector3& velocity, float duration);
 
 public:

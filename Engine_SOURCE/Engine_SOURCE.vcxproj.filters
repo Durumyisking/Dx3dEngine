@@ -236,6 +236,9 @@
     <Filter Include="RayCast">
       <UniqueIdentifier>{873dbe93-ba2a-42a4-8bb8-de37d53d3cbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Component\CharacterController">
+      <UniqueIdentifier>{24dba119-05ba-4622-8b1b-98b06d1b79af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -590,6 +593,9 @@
     <ClInclude Include="AnimationClip.h">
       <Filter>Common\Component\Animator3D</Filter>
     </ClInclude>
+    <ClInclude Include="ChracterController.h">
+      <Filter>Common\Component\CharacterController</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -912,6 +918,9 @@
     <ClCompile Include="ProjectileObj.cpp" />
     <ClCompile Include="AnimationClip.cpp">
       <Filter>Common\Component\Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="ChracterController.cpp">
+      <Filter>Common\Component\CharacterController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

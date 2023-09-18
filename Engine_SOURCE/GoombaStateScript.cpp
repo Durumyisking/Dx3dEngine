@@ -32,8 +32,6 @@ void GoombaStateScript::Initialize()
 	mRigidbody = mMonster->GetComponent<PhysXRigidBody>();
 	mRigidbody->SetLinearMaxVelocityForDynamic(GOOMBA_RUN_VELOCITY);
 	mRigidbody->SetMassForDynamic(GOOMBA_MASS);
-	mRigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
-	mRigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
 	mMovement = mMonster->GetComponent<PhysicalMovement>();
 	mTransform = mMonster->GetComponent<Transform>();
 
@@ -61,7 +59,7 @@ void GoombaStateScript::Update()
 		mAnimator->Play(L"Attack");
 	}
 
-
+	GetOwner()->ReorganizePosition(eLayerType::Platforms);
 	MonsterStateScript::Update();
 }
 
@@ -131,7 +129,7 @@ void GoombaStateScript::Jump()
 		mAnimator->Play(L"Jump", false);
 
 		mRigidbody->SetLinearMaxVelocityForDynamic(1000.f);
-		mRigidbody->AddForce(math::Vector3(0.0f, 5000.f, 0.0f), physx::PxForceMode::eFORCE);
+		mRigidbody->AddForceForDynamic(math::Vector3(0.0f, 5000.f, 0.0f), physx::PxForceMode::eFORCE);
 		mRigidbody->SetLinearDamping(1.0f);
 	}
 
@@ -152,10 +150,10 @@ void GoombaStateScript::Fall()
 
 void GoombaStateScript::Turn()
 {
-	Vector3 dirToPlayer = GetOwnerWorldPos() - mPlayer->GetWorldPos();
+	Vector3 dirToPlayer = mPlayer->GetWorldPos() - GetOwnerWorldPos();
 	dirToPlayer.Normalize();
 	float rotCosTheta = dirToPlayer.Dot(mTransform->WorldForward());
-	if (rotCosTheta < 0.95f)
+	if (rotCosTheta < 0.99f)
 	{		
 		if (mAnimator->PlayAnimationName() != L"Turn")
 		{
@@ -172,7 +170,7 @@ void GoombaStateScript::Turn()
 	}
 	else
 	{		
-		//mTransform->AddPhysicalRotation_Radian(Vector3(0.f, rotCosTheta, 0.f) * DT);
+		mTransform->AddPhysicalRotation_Radian(Vector3(0.f, rotCosTheta, 0.f) * DT);
 		if (mAnimator->PlayAnimationName() != L"Find")
 		{
 			mMonster->SetMonsterState(Monster::eMonsterState::Chase);
@@ -200,15 +198,15 @@ void GoombaStateScript::Chase()
 		}
 		else
 		{
-			Vector3 dirToPlayer = GetOwnerWorldPos() - mPlayer->GetWorldPos();
+			Vector3 dirToPlayer = mPlayer->GetWorldPos() - GetOwnerWorldPos();
 			dirToPlayer.Normalize();
 			float rotCosTheta = dirToPlayer.Dot(mTransform->WorldForward());
 			//mTransform->AddPhysicalRotation_Radian(Vector3(0.f, rotCosTheta, 0.f) * DT);
 
 			
-			Vector3 moveDir = mTransform->Forward();
+			Vector3 moveDir = mTransform->WorldForward();
 			moveDir.y = 0.f;
-			mRigidbody->AddForceForDynamic((-moveDir * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
+			mRigidbody->AddForceForDynamic((moveDir * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
 		}
 	}
 }

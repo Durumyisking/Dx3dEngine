@@ -4,7 +4,7 @@
 struct MassProperties
 {
     // 정적마찰 (움직이기 전의 마찰:막 움직이기 시작할때 마찰계수                // 물체 충돌 전 후 속도 비율
-    MassProperties(float staticFriction = 0.5f, float dynamicFriction = 0.2f, float restitution = 0.603f)
+    MassProperties(float staticFriction = 0.5f, float dynamicFriction = 0.75f, float restitution = -0.0001f)
         : mStaticFriction(staticFriction)
         , mDynamicFriction(dynamicFriction)
         , mRestitution(restitution)
