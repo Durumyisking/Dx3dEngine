@@ -415,8 +415,7 @@ void GameObj::ReorganizePosition(eLayerType layerType)
 				GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
 			}
 
-			vResult.z = 0.f;
-			
+			vResult.z = 0.f;			
 			GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 
 			return;
