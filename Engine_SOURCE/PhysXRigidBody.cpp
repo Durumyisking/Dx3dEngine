@@ -45,46 +45,46 @@ void PhysXRigidBody::Update()
 
 void PhysXRigidBody::FixedUpdate()
 {
-	// ÀÌµ¿
+	// ì´ë™
 	//  F = M x A
 	//  A = F / M
 
-	// °¡¼Óµµ °è»ê
+	// ê°€ì†ë„ ê³„ì‚°
 	mAccelation = mForce / mMass;
 
-	// ¼Óµµ¿¡ °¡¼Óµµ¸¦´õÇÔ
+	// ì†ë„ì— ê°€ì†ë„ë¥¼ë”í•¨
 	mVelocity += mAccelation * DT;
 
-	if (mGravityApplied) // °øÁß¿¡ ÀÖÀ»¶§ Áß·Â ¿µÇâ 0
+	if (mGravityApplied) // ê³µì¤‘ì— ìˆì„ë•Œ ì¤‘ë ¥ ì˜í–¥ 0
 	{
 		mVelocity += mGravityAccel * DT;
 	}
-	else				// °øÁß X
+	else				// ê³µì¤‘ X
 	{
 
-		// °¡¼Óµµ, Áß·Â Á¤±ÔÈ­
+		// ê°€ì†ë„, ì¤‘ë ¥ ì •ê·œí™”
 		Vector3 gravity = mGravityAccel;
 		gravity.Normalize();
 
 		Vector3 velocity = mVelocity;
 		velocity.Normalize();
 
-		// ³»Àû
+		// ë‚´ì 
 		float dot = velocity.Dot(gravity);
 
 		mVelocity -= gravity * dot;
 	}
 
-	//¸¶Âû·Â Á¶°Ç (Àû¿ëµÈ ÈûÀÌ ¾ø°í, ¼Óµµ°¡ 0 ÀÌ ¾Æ´Ò¶§)
+	//ë§ˆì°°ë ¥ ì¡°ê±´ (ì ìš©ëœ í˜ì´ ì—†ê³ , ì†ë„ê°€ 0 ì´ ì•„ë‹ë•Œ)
 	if (( mVelocity.x != 0.f || mVelocity.z != 0.f ))
 	{
-		// ¼Óµµ ¹İ´ë ¹æÇâÀ¸·Î ¸¶Âû·ÂÀ» Àû¿ë
+		// ì†ë„ ë°˜ëŒ€ ë°©í–¥ìœ¼ë¡œ ë§ˆì°°ë ¥ì„ ì ìš©
 		math::Vector3 friction = -mVelocity;
 		friction.Normalize();
 
 		friction = friction * mFriction * mMass * DT;
 
-		// ¸¶Âû·ÂÀ¸·Î ÀÎÇÑ ¼Óµµ °¨¼Ò·® ÇöÀç ¼Óµµº¸´Ù ´õ Å« °æ¿ì
+		// ë§ˆì°°ë ¥ìœ¼ë¡œ ì¸í•œ ì†ë„ ê°ì†ŒëŸ‰ í˜„ì¬ ì†ë„ë³´ë‹¤ ë” í° ê²½ìš°
 		Vector3 sideVelo = mVelocity;
 		sideVelo.y = 0.f;
 
@@ -92,24 +92,24 @@ void PhysXRigidBody::FixedUpdate()
 		float frictionLength = friction.Length();
 		if (mVelocityLength < frictionLength)
 		{
-			// ¼Óµµ¸¦ 0 À¸·Î ¸¸µç´Ù
+			// ì†ë„ë¥¼ 0 ìœ¼ë¡œ ë§Œë“ ë‹¤
 			float yForce = mVelocity.y;
 			mVelocity = Vector3::Zero;
 			mVelocity.y = yForce;
 		}
 		else
 		{
-			// ¼Óµµ¿¡¼­ ¸¶Âû·«À¸·Î ÀÎÇÑ ¹İ´ë¹æÇâÀ¸·Î ¼Óµµ¸¦ Â÷°¨
+			// ì†ë„ì—ì„œ ë§ˆì°°ëµìœ¼ë¡œ ì¸í•œ ë°˜ëŒ€ë°©í–¥ìœ¼ë¡œ ì†ë„ë¥¼ ì°¨ê°
 			mVelocity += friction;
 		}
 	}
 
-	// ÀÌµ¿
+	// ì´ë™
 	Vector3 Pos = mOwnerTransform->GetPhysicalPosition();
 	Pos += mVelocity * DT;
 	mOwnerTransform->SetPhysicalPosition(Pos);
 
-	// Èû ÃÊ±âÈ­
+	// í˜ ì´ˆê¸°í™”
 	mForce = Vector3::Zero;
 	// TEST
 	return;

@@ -101,16 +101,11 @@ void PhysXCollider::Render()
 void PhysXCollider::OnCollisionEnter(PhysXCollider* otherCollider)
 {
 	GetOwner()->OnCollisionEnter(otherCollider->GetOwner());
-
-	if (otherCollider->GetOwner()->GetLayerType() == eLayerType::Platforms)
-	{
-		// 이부분에서 dynamicObject 의 Idle() 함수를 호출하면된다.
-		// DynamicObject 의 Idle함수는 가상함수로 상속받은 객체 내부에서 구현하면된다.
-	}
 }
 
 void PhysXCollider::OnCollisionExit(PhysXCollider* otherCollider)
 {
+	GetOwner()->OnCollisionEnter(otherCollider->GetOwner());
 }
 
 void PhysXCollider::OnTriggerEnter(PhysXCollider* otherCollider)

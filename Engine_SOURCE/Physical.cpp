@@ -260,6 +260,7 @@ void Physical::initializeActor()
 	switch (mActorType)
 	{
 	case eActorType::Static:
+		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 		break;
 	//case eActorType::MONSTER_DYNAMIC:
 	//case eActorType::PROJECTILE_DYNAMIC:
@@ -269,6 +270,7 @@ void Physical::initializeActor()
 		rigidBody->SetLinearDamping(0.5f);
 		rigidBody->SetLinearMaxVelocityForDynamic(100.f);
 		rigidBody->SetAngularMaxVelocityForDynamic(50.f);
+		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 	}
 		break;
 	case eActorType::Kinematic:
@@ -288,7 +290,7 @@ void Physical::initializeActor()
 
 
 		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true); 
-		mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+		//mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 		break;
 	}
 }

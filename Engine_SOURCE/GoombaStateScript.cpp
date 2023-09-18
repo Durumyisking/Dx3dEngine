@@ -30,18 +30,9 @@ void GoombaStateScript::Initialize()
 	MonsterStateScript::Initialize();
 	mAnimator = mMonster->GetComponent<BoneAnimator>();
 	mRigidbody = mMonster->GetComponent<PhysXRigidBody>();
-	mRigidbody->SetLinearMaxVelocityForDynamic(GOOMBA_RUN_VELOCITY);
-	mRigidbody->SetMassForDynamic(GOOMBA_MASS);
 	mMovement = mMonster->GetComponent<PhysicalMovement>();
 	mTransform = mMonster->GetComponent<Transform>();
 
-	Timer* antiGlideTimer = new Timer(0.1f);
-	antiGlideTimer->SetDestroy(false);
-	antiGlideTimer->Event() = [this]
-	{
-		mRigidbody->AddForceForDynamic((Vector3(0.f, -1.f, 0.f) * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
-	};
-	GETSINGLE(TimerMgr)->GetInstance()->AddTimer(antiGlideTimer);
 }
 
 void GoombaStateScript::Update()
@@ -75,10 +66,10 @@ void GoombaStateScript::Idle()
 
 void GoombaStateScript::Move()
 {
-	if (mAnimator->PlayAnimationName() != L"Walk")
+	/*if (mAnimator->PlayAnimationName() != L"Walk")
 	{
 		const std::wstring& anim = mAnimator->PlayAnimationName();
-		mRigidbody->SetLinearMaxVelocityForDynamic(GOOMBA_WALK_VELOCITY);
+		mRigidbody->SetMaxVelocity(GOOMBA_WALK_VELOCITY);
 		mAnimator->Play(L"Walk");
 	}
 
@@ -117,8 +108,10 @@ void GoombaStateScript::Move()
 	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, 90.f, 0.0f));
 	mTransform->FixedUpdate();
 
-	Vector3 moveDir = mTransform->WorldForward();
-	mRigidbody->AddForce((moveDir * 50.f * DT));
+	Vector3 moveDir = mTransform->Forward();
+	moveDir.y = 0.f;
+	mRigidbody->AddForce((-moveDir * 10.f));*/
+
 }
 
 void GoombaStateScript::Jump()
@@ -127,17 +120,14 @@ void GoombaStateScript::Jump()
 	{
 		mAnimator->Play(L"Jump", false);
 
-		mRigidbody->ApplyGravity();
-		Vector3 velocity = mRigidbody->GetVelocity();
-		velocity.y = 0;
-		velocity.y += 20.f;
-		mRigidbody->SetVelocity(velocity);
+
+		mRigidbody->AddForce(math::Vector3(0.0f, GOOMBA_JUMPFORCE, 0.0f));
+
 	}
 
 	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())
 	{
 		mMonster->SetMonsterState(Monster::eMonsterState::Fall);
-		mRigidbody->SetLinearMaxVelocityForDynamic(100.f);
 	}
 }
 
@@ -207,7 +197,7 @@ void GoombaStateScript::Chase()
 			
 			Vector3 moveDir = mTransform->WorldForward();
 			moveDir.y = 0.f;
-			mRigidbody->AddForceForDynamic((moveDir * GOOMBA_SPPED * DT), PxForceMode::Enum::eIMPULSE);
+			mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
 		}
 	}
 }

@@ -29,15 +29,21 @@ public:
 	FORCEINLINE void        SetVelocity(const math::Vector3& velocity) { mVelocity = velocity; }
 	void                    SetVelocity(AXIS axis, const math::Vector3& velocity);
 
-	FORCEINLINE void        AddForce(const math::Vector3& force) { mForce += force; }
-	FORCEINLINE math::Vector3        GetForce() const { return mForce; }
+
+  FORCEINLINE void        AddForce(const math::Vector3& force) { mForce = force; }
+  FORCEINLINE math::Vector3        GetForce() const { return mForce; }
+  FORCEINLINE math::Vector3        SetMaxVelocity(const math::Vector3& velocity) { mMaxVelocity = velocity; }
+  FORCEINLINE void                 SetMaxVelocity(const float& velocity) { mMaxVelocity = math::Vector3(velocity); }
+  FORCEINLINE void                 SetMaxVelocity_Y(const float& velocityY) { mMaxVelocity.y = velocityY; }
+  FORCEINLINE void                 SetMaxVelocity_XZ(const math::Vector2& velocityXZ) { mMaxVelocity.x = velocityXZ.x; mMaxVelocity.z = velocityXZ.y; }
 
 public:
-	// for kinematic actors
-	float GetVelocity(AXIS eAxis);
-	void  SetVelocity(AXIS eAxis, float velocity);
-	void  AddVelocity(AXIS eAxis, float velocity);
-	void  ReserveSpeedForSeconds(const math::Vector3& velocity, float duration);
+    // for kinematic actors
+    float GetVelocity(AXIS eAxis);
+    void  SetVelocity(AXIS eAxis, float velocity);
+    void  AddVelocity(AXIS eAxis, float velocity);
+    //void  ReserveSpeedForSeconds(const math::Vector3& velocity, float duration);
+
 
 public:
 	// for dynamic actors
