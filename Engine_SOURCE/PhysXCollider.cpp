@@ -182,6 +182,22 @@ bool PhysXCollider::Raycast(const Vector3& origin, const Vector3& dir, GameObj* 
 
 		return bResult;
 	}
+
+	case eGeometryType::ConvexMesh:
+	{
+		PxConvexMeshGeometry convexMeshGeom = physical->GetGeometries()->convexMeshGeom;
+
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			convexMeshGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		return bResult;
+	}
 	break;
 	}
 
@@ -218,6 +234,9 @@ void PhysXCollider::createDebugGeometry(std::shared_ptr<Geometry> geometries)
 	break;
 
 	case eGeometryType::Plane:
+		break;
+
+	case eGeometryType::ConvexMesh:
 		break;
 	}
 }

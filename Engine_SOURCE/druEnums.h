@@ -130,6 +130,7 @@ namespace enums
 		Capsule,
 		Sphere,
 		Plane,
+		ConvexMesh,
 		End,
 	};
 

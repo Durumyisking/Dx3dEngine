@@ -12,6 +12,9 @@ public:
 	PxFoundation* GetFoundation() { return mFoundation; }
 	PxPhysics* GetPhysics() { return mPhysics; }
 
+	PxCooking* GetCooking() { return mCooking; }
+	void CreateCooking();
+
 	void	CreateFoundation();
 	void	CreatePhysics();
 	void	CreateVisualDebugger();
@@ -28,6 +31,7 @@ private:
 	PxPvd* mPvd;
 	PxPvdTransport* mTransport;
 
+	PxCooking* mCooking;
 };
 
 

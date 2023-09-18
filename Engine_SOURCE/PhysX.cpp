@@ -32,6 +32,26 @@ void PhysX::Init()
 //	CreateSceneQuery();
 }
 
+PxConvexMesh* PhysX::CreateConvexMesh(const PxVec3* verts, const PxU32 numVerts, PxPhysics* physics, PxCooking* cooking)
+{
+	// Create descriptor for convex mesh
+	physx::PxConvexMeshDesc convexDesc;
+	convexDesc.points.count = numVerts;
+	convexDesc.points.stride = sizeof(physx::PxVec3);
+	convexDesc.points.data = verts;
+	convexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+
+	physx::PxConvexMesh* convexMesh = NULL;
+	physx::PxDefaultMemoryOutputStream buf;
+	if (cooking->cookConvexMesh(convexDesc, buf))
+	{
+		physx::PxDefaultMemoryInputData id(buf.getData(), buf.getSize());
+		convexMesh = physics->createConvexMesh(id);
+	}
+
+	return convexMesh;
+}
+
 void PhysX::CreatePhysicsScene(const PxSceneDesc& sceneDesc)
 {
 	assert(mInitialization->GetPhysics());

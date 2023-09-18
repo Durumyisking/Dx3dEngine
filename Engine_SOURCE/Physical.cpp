@@ -3,6 +3,8 @@
 #include "PhysicsMgr.h"
 #include "PhysXRigidBody.h"
 #include "PhysicsScene.h"
+#include "MeshRenderer.h"
+#include "Renderer.h"
 
 
 
@@ -30,6 +32,12 @@ void Physical::Initialize()
 
 void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, math::Vector3 geometrySize, MassProperties massProperties)
 {
+	if (geometryType == eGeometryType::ConvexMesh)
+	{
+		InitialConvexMeshProperties(actorType, geometrySize, massProperties);
+		return;
+	}
+
 	mActorType = actorType;
 	mGeometryType = geometryType;
 	mSize = geometrySize;
@@ -40,6 +48,58 @@ void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geom
 	createShape();
 	AddActorToPxScene();
 //		createUniversalShape();
+}
+
+void Physical::InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, MassProperties massProperties)
+{
+	PxConvexMesh* convexMesh = MakeConvexObject();
+
+	if (convexMesh == nullptr)
+		assert(false);
+
+	mActorType = actorType;
+	mGeometryType = eGeometryType::ConvexMesh;
+	mSize = geometrySize;
+	createPhysicsProperties(massProperties);
+	createConvexMeshGeometry(mGeometryType, convexMesh, mSize);
+	createActor();
+	createConvexShape(convexMesh);
+	AddActorToPxScene();
+	
+}
+
+PxConvexMesh* Physical::MakeConvexObject()
+{
+
+	std::shared_ptr<PhysX>physX = GETSINGLE(PhysicsMgr)->GetEnvironment();
+
+	Model* model = GetOwner()->GetComponent<MeshRenderer>()->GetModel();
+	if (model)
+	{
+		//vertexCount = model->GetNumberOfVertices(index);
+		const std::vector<Mesh*> meshes = model->GetMeshes();
+		PxU32 vertexCount = 0;
+		std::vector<PxVec3> vertices;
+
+		for (Mesh* mesh : meshes)
+		{
+			std::vector<Vertex> meshVertices = mesh->GetVertexes();
+			PxU32 count = mesh->GetVertexCount();
+			vertexCount += count;
+
+			// Copy from cvector array to PxVec3 array
+			for (PxU32 i = 0; i < count; i++)
+			{
+				vertices.push_back(PxVec3(meshVertices[i].pos.x, meshVertices[i].pos.y, meshVertices[i].pos.z));
+			}
+		}
+
+		PxVec3* v = vertices.data();
+
+		return physX->CreateConvexMesh(v, vertexCount, physX->GetPhysics(), physX->GetCooking());
+	}
+
+	return nullptr;
 }
 
 void Physical::Update()
@@ -85,6 +145,8 @@ void Physical::SetGeometrySize(const Vector3& newSize)
 		break;
 	case enums::eGeometryType::Plane:
 		break;
+	case enums::eGeometryType::ConvexMesh:
+		break;
 	case enums::eGeometryType::End:
 		break;
 	default:
@@ -118,6 +180,13 @@ void Physical::createSphereGeometry(eGeometryType geometryType, float radius)
 	assert(eGeometryType::Sphere == geometryType);
 	assert(nullptr == mGeometry);
 	mGeometry = std::make_shared<Geometry>(geometryType, radius);
+}
+
+void Physical::createConvexMeshGeometry(eGeometryType geometryType, PxConvexMesh* convexMesh, const Vector3& mScale)
+{
+	assert(eGeometryType::ConvexMesh == geometryType);
+	assert(nullptr == mGeometry);
+	mGeometry = std::make_shared<Geometry>(geometryType, convexMesh, mScale);
 }
 
 void Physical::createPhysicsProperties(const MassProperties& massProperties)
@@ -208,6 +277,12 @@ void Physical::createShape()
 			break;
 		}
 	}
+}
+
+void Physical::createConvexShape(PxConvexMeshGeometry convexMesh)
+{
+	PxShape* aConvexShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(),
+		mGeometry->convexMeshGeom, *mProperties->GetMaterial());
 }
 
 void Physical::createActor()

@@ -92,25 +92,31 @@ void ScenePlay::Initialize()
 		goomba->SetName(L"Goomba");*/
 	}
 
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(-15.f, 10.f, 9.5f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"DeferredMaterial");
-		GameObj* Ground = object::Instantiate<Player>(eLayerType::Monster, this);
-		Ground->SetPos(Vector3(5.f, 15.f, 9.5f));
-		Ground->SetScale(Vector3(0.1f, 0.1f, 0.1f));
-		Ground->SetName(L"CityWorldHomeGround000");
+	//{
+	//	GameObj* dirLight = object::Instantiate<GameObj>(eLayerType::Player, this);
+	//	dirLight->SetPos(Vector3(1000.f, 1000.f, 0.));
+	//	dirLight->SetScale(Vector3(1.f, 1.f, 1.f));
+	//	Light* light = dirLight->AddComponent<Light>(eComponentType::Light);
+	//	light->SetType(eLightType::Directional);
+	//	light->SetAngle(45.f);
+	//}
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeGround000");
-		Ground->GetComponent<MeshRenderer>()->SetModel(model);
+	//{
+	//	GameObj* Ground = object::Instantiate<Player>(eLayerType::Platforms, this);
+	//	Ground->SetPos(Vector3(5.f, -5.f, 9.5f));
+	//	Ground->SetScale(Vector3(0.1f, 0.1f, 0.1f));
+	//	Ground->SetName(L"CityWorldHomeGround000");
 
-		Ground->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeGround000");
+	//	Ground->GetComponent<MeshRenderer>()->SetModel(model);
 
-		PhysXRigidBody* rigid = Ground->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//	Physical* physical = Ground->AddComponent<Physical>(eComponentType::Physical);
+	//	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::ConvexMesh, Vector3(1.f, 1.f, 1.f));
 
-		Ground->AddComponent<PhysXCollider>(eComponentType::Collider);
-	}
+	//	PhysXRigidBody* rigid = Ground->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+	//	Ground->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//}
 
 
 	{
@@ -123,7 +129,7 @@ void ScenePlay::Initialize()
 		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
@@ -175,7 +181,7 @@ void ScenePlay::Initialize()
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
 	{

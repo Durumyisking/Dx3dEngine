@@ -13,6 +13,9 @@ public:
 	void Init();
 
 public:
+	static PxConvexMesh* CreateConvexMesh(const PxVec3* verts, const PxU32 numVerts, PxPhysics* physics, PxCooking* cooking);
+
+	PxCooking*				GetCooking() const { return mInitialization->GetCooking(); }
 	PxFoundation*			GetFoundation() const { return mInitialization->GetFoundation(); }
 	PxPhysics*				GetPhysics() const { return mInitialization->GetPhysics(); }
 	PxControllerManager*	GetControllerManager() const { return mControllerMgr; }
