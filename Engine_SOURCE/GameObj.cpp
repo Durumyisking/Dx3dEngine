@@ -416,6 +416,7 @@ void GameObj::ReorganizePosition(eLayerType layerType)
 			}
 
 			vResult.z = 0.f;
+			
 			GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 
 			return;

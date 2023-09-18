@@ -109,10 +109,10 @@ void ScenePlay::Initialize()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(0.f, 5.f, -17.f));
-	//}
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(0.f, 20.f, 0.f));
+	}
 
 	//{
 	//	Player* player = object::Instantiate<Player>(eLayerType::Objects, this);
