@@ -30,7 +30,6 @@ namespace enums
 		None,
 		Transform,
 		Camera,
-		Mesh,
 		RigidBody,
 		Movement, 
 		Physical,
@@ -161,14 +160,14 @@ namespace enums
 		Z,
 	};
 
-	enum class HUDState
+	enum class eHUDState
 	{
 		None,
 		MoveBlink,
 		MoveTowards,
 		Rotate,
 		Size,
-		GoAndReturn,
+		TitleCapMove,
 		End
 	};
 

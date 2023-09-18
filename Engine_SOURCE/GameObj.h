@@ -203,8 +203,9 @@ public:
 
 	eState GetState() const { return mState; }
 
-	bool IsDontDestroy() { return mbDestroy; }
-	void DontDestroy() { mbDestroy = true; }
+	bool IsDestroy() { return mbDestroy; }
+	void SetDestroyOff() { mbDestroy = false; }
+	void SetDestroyOn() { mbDestroy = true; }
 
 	eLayerType GetLayerType() const { return mType; }
 	void SetLayerType(eLayerType type) { mType = type; }

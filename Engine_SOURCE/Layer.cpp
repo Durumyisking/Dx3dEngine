@@ -148,7 +148,7 @@ void Layer::DeleteObject()
 {
 	for (GameObj* Obj : mGameObjs)
 	{
-		if (!Obj->IsDontDestroy())
+		if (Obj->IsDestroy())
 			Obj->Die();
 	}
 }
@@ -171,7 +171,7 @@ std::vector<GameObj*> Layer::GetDontDestroyObjects()
 		if (nullptr == (*iter))
 			continue;
 
-		if ((*iter)->IsDontDestroy())
+		if (!(*iter)->IsDestroy())
 		{
 			donts.push_back((*iter));
 			iter = mGameObjs.erase(iter);

@@ -109,7 +109,7 @@ void PhysXRayCast::Raycast()
 	//	invViewMatrix
 	//);
 
-	// Calculate the direction vector from camera position to unprojected position
+	// Calculate the direction vector from mCamera position to unprojected position
 	//DirectX::XMVECTOR cameraPos = renderer::mainCamera->GetOwnerWorldPos(); 
 
 	//math::Vector4 mouseViewPos = XMVector3TransformCoord(XMVectorSet(ndcPos.x, ndcPos.y, ndcPos.z, 1.f), invProjectionMatrix);
@@ -181,11 +181,11 @@ bool PhysXRayCast::MoveObject()
 
 	if (abs(move.x) > abs(move.y))
 	{
-		objPos += Right * move.x * 0.1;
+		objPos += Right * move.x * 0.1f;
 	}
 	else
 	{
-		objPos += Up * -move.y * 0.1;
+		objPos += Up * -move.y * 0.1f;
 	}
 	mPickingObject->GetComponent<Transform>()->SetPhysicalPosition(objPos);
 	

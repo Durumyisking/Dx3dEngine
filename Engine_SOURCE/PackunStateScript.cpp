@@ -47,10 +47,8 @@ void PackunStateScript::Move()
 	if (moveMent == nullptr)
 		return;
 
-	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
+	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
 	{
 		mMonster->SetMonsterState(Monster::eMonsterState::Idle);
 		return;
@@ -60,45 +58,32 @@ void PackunStateScript::Move()
 	if (nullptr == tr)
 		return;
 
-	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP))
-	{
-		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+	bool able = false;
+	auto Input_DownFunC = [&](eKeyCode key, eKeyCode mult_key, math::Vector3 rotation)
 		{
-			tr->SetRotation(Vector3(0.0f, -135.f, 0.0f));
-		}
-		else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
-		{
-			tr->SetRotation(Vector3(0.0f, -225.f, 0.0f));
-		}
-		else
-		{
-			tr->SetRotation(Vector3(0.0f, -180.f, 0.0f));
-		}
-	}
-	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN))
-	{
-		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
-		{
-			tr->SetRotation(Vector3(0.0f, -45.f, 0.0f));
-		}
-		else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
-		{
-			tr->SetRotation(Vector3(0.0f, 45.f, 0.0f));
-		}
-		else
-		{
-			tr->SetRotation(Vector3(0.0f, 0.f, 0.0f));
-		}
+			if (able)
+				return;
 
-	}
-	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
-	{
-		tr->SetRotation(Vector3(0.0f, 90.f, 0.0f));
-	}
-	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
-	{
-		tr->SetRotation(Vector3(0.0f, -90.f, 0.0f));
-	}
+			if (GETSINGLE(InputMgr)->GetKeyDown(key))
+			{
+				if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
+				{
+					tr->SetPhysicalRotation(rotation);
+					able = true;
+				}
+			}
+		};
+
+	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
+	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
 }
 
 void PackunStateScript::Attack()
@@ -117,10 +102,21 @@ void PackunStateScript::Attack()
 
 void PackunStateScript::SpecialSituation()
 {
+
 }
 
 void PackunStateScript::Hit()
 {
+	BoneAnimator* animator = mMonster->GetComponent<BoneAnimator>();
+	if (animator == nullptr)
+		return;
+
+	std::wstring animationName = L"AttackHit";
+	if (!mbAnimationRunning)
+	{
+		animator->Play(animationName);
+		mbAnimationRunning = true;
+	}
 }
 
 void PackunStateScript::Groggy()

@@ -49,6 +49,7 @@ public:
     void SetAngularMaxVelocityForDynamic(float maxVelocity);
     void ApplyGravityForDynamic();
     void RemoveGravityForDynamic();
+    void SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum flag, bool value);
 
     void AddTorqueForDynamic(const math::Vector3& torque);
     void AddTorqueXForDynamic(const float& torque);

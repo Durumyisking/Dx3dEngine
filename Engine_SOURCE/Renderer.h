@@ -40,10 +40,8 @@ namespace renderer
 	struct Vertex
 	{
 		Vector4 pos;
-		Vector4	color;
 		Vector2 uv;
 		Vector3 tangent;
-		Vector3 biNormal;
 		Vector3 normal;
 
 		Vector4 BlendID;
@@ -54,6 +52,7 @@ namespace renderer
 	{
 		Matrix world;
 		Matrix inverseWorld;
+		Matrix worldIT; // world inverse and transpose
 		Matrix view;
 		Matrix inverseView;
 		Matrix projection;
@@ -247,6 +246,7 @@ namespace renderer
 	void CreateSphereMesh();
 	void CreateCapsuleMesh();
 
+	void CreateMaterial(const std::wstring& textureKey, const std::wstring& shaderKey, const std::wstring& keyName, eRenderingMode eRenderMode = eRenderingMode::Transparent);
 	void CreateUIMaterial();
 	void CreateUITexture();
 }

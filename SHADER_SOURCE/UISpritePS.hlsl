@@ -4,7 +4,6 @@
 struct VSIn
 {
     float4 Pos : POSITION;
-    float4 Color : COLOR;
     float2 UV : TEXCOORD;
 };
 
@@ -12,7 +11,6 @@ struct VSOut
 {
     float4 Pos : SV_Position;
     float3 WorldPos : POSITION;
-    float4 Color : COLOR;
     float2 UV : TEXCOORD;
 };
 
@@ -50,6 +48,12 @@ float4 main(VSOut In) : SV_Target
     
     if (color.a <= 0.0f)
         discard;
+    
+    if (cbbBool3)
+    {
+        color *= cbxyzw1; // 곱할 색
+    }
+    //color += cbxyzw2; // 더할 색
     
     LightColor lightColor = (LightColor) 0.0f;
     for (unsigned int i = 0; i < lightCount; i++)

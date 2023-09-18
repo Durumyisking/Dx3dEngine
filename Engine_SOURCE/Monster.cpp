@@ -6,6 +6,8 @@
 Monster::Monster()
 	: DynamicObject()
 	, mMonsterState(eMonsterState::Idle)
+	, mRecognizeRadius(10.f)
+	, mFoundPlayer(false)
 {
 }
 
@@ -25,6 +27,13 @@ void Monster::Initialize()
 	{
 		boneAnimatorInit(animator);
 	}
+
+	// OffsetScale Setting
+	Transform* tr = GetComponent<Transform>();
+	if (tr)
+		tr->SetOffsetScale(0.01f);
+
+	GameObj::Initialize();
 }
 
 void Monster::Update()

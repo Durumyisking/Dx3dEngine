@@ -526,9 +526,6 @@
     <ClInclude Include="BoneAnimator.h">
       <Filter>Common\Component\Animator3D</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationClip.h">
-      <Filter>Common\Component\Animator3D</Filter>
-    </ClInclude>
     <ClInclude Include="Struct.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -538,11 +535,6 @@
     <ClInclude Include="SkySphere.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="HUD.h" />
-    <ClInclude Include="Panal.h" />
-    <ClInclude Include="UIBase.h" />
-    <ClInclude Include="UIManager.h" />
     <ClInclude Include="CubeMap.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
@@ -583,6 +575,8 @@
     <ClInclude Include="CaptureObj.h">
       <Filter>Common\GameObj\Capture</Filter>
     </ClInclude>
+    <ClInclude Include="CapEyeUI.h" />
+    <ClInclude Include="CapUI.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Panal.h" />
@@ -590,6 +584,11 @@
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="PhysXRayCast.h">
       <Filter>RayCast</Filter>
+    </ClInclude>
+    <ClInclude Include="PackunPostionBall.h" />
+    <ClInclude Include="ProjectileObj.h" />
+    <ClInclude Include="AnimationClip.h">
+      <Filter>Common\Component\Animator3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -850,17 +849,9 @@
     <ClCompile Include="ModelNode.cpp">
       <Filter>Resource\Model\ModelNode</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationClip.cpp">
-      <Filter>Common\Component\Animator3D</Filter>
-    </ClCompile>
     <ClCompile Include="BoneAnimator.cpp">
       <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="Panal.cpp" />
-    <ClCompile Include="UIBase.cpp" />
-    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="SkySphereRenderer.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
@@ -907,6 +898,8 @@
     <ClCompile Include="CaptureObj.cpp">
       <Filter>Common\GameObj\Capture</Filter>
     </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp" />
+    <ClCompile Include="CapUI.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Panal.cpp" />
@@ -914,6 +907,11 @@
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="PhysXRayCast.cpp">
       <Filter>RayCast</Filter>
+    </ClCompile>
+    <ClCompile Include="PackunPostionBall.cpp" />
+    <ClCompile Include="ProjectileObj.cpp" />
+    <ClCompile Include="AnimationClip.cpp">
+      <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

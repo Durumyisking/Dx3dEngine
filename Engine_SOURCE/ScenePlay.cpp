@@ -63,11 +63,18 @@
 #include "UIFactory.h"
 #include "Animator.h"
 
+#include "Goomba.h"
+#include "Packun.h"
 
 
 ScenePlay::ScenePlay()
 	: mCamera(nullptr)
 	, mUICamera(nullptr)
+	, mCoinPanal(nullptr)
+	, mLifePanal(nullptr)
+	, mLunaPanal(nullptr)
+	, mCoinTextPanal(nullptr)
+	, mLunaTextPanal(nullptr)
 {
 }
 
@@ -77,31 +84,19 @@ ScenePlay::~ScenePlay()
 
 void ScenePlay::Initialize()
 {
-	//{
-	//	mCamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"MainCamera");
-	//	Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
-	//	cameraComp->TurnLayerMask(eLayerType::UI, false);
-	//	cameraComp->SmoothOn();
-	//	mCamera->AddComponent<CameraScript>(eComponentType::Script);
-	//	cameraComp->SetProjectionType(eProjectionType::Perspective);
-	//	mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
-
-	//}
-
-	//{
-	//	// UI Camera
-	//	mUICamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"UICamera");
-	//	Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
-	//	mUICamera->AddComponent<CameraScript>(eComponentType::Script);
-
-	//	cameraUIComp->SetProjectionType(eProjectionType::Perspective);
-	//	cameraUIComp->SmoothOn();
-	//	cameraUIComp->DisableLayerMasks();
-	//	cameraUIComp->TurnLayerMask(eLayerType::UI, true);
-	//	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
-	//}
+	CreateCameras();
+	{
+		/*Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(0.f, 5.f, -17.f));
+		goomba->SetScale(Vector3(1.0f, 1.0f, 1.0f));
+		goomba->SetName(L"Goomba");*/
+	}
 
 	{
+		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
+		player->SetPos(Vector3(-15.f, 10.f, 9.5f));
+		player->SetScale(Vector3(1.f, 1.f, 1.f));
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"DeferredMaterial");
 		GameObj* Ground = object::Instantiate<Player>(eLayerType::Monster, this);
 		Ground->SetPos(Vector3(5.f, 15.f, 9.5f));
 		Ground->SetScale(Vector3(0.1f, 0.1f, 0.1f));
@@ -124,31 +119,6 @@ void ScenePlay::Initialize()
 		player->SetScale(Vector3(0.1f, 0.1f, 0.1f));
 		player->SetName(L"Player");
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
-		model->SetVariableMaterialsByKey(0, L"goombaBodyMaterial");
-		model->SetVariableMaterialsByKey(1, L"goombaEye2Material");
-		model->SetVariableMaterialsByKey(2, L"goombaEye2Material");
-		model->SetVariableMaterialsByKey(7, L"goombaBodyMaterial");
-		model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
-		model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
-		player->GetComponent<MeshRenderer>()->SetModel(model);
-		player->AddComponent<PlayerScript>(eComponentType::Script);
-
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-	}
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(-15.f, 10.f, 9.5f));
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->SetName(L"Player");
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"DeferredMaterial");
-
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
@@ -161,7 +131,26 @@ void ScenePlay::Initialize()
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
+	{
+		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
+		player->SetPos(Vector3(15.f, 10.f, 9.5f));
+		player->SetScale(Vector3(5.f, 5.f, 5.f));
+		player->SetName(L"Player");
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
+		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
+		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
 
+		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		player->AddComponent<PlayerScript>(eComponentType::Script);
+
+		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
+
+		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	}
 
 
 	{
@@ -171,9 +160,9 @@ void ScenePlay::Initialize()
 		t->BindAllShaderResource(12);
 	}
 	{
-		//SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
-		//skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		//skySphere->SetName(L"SkySphere");
+		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		skySphere->SetName(L"SkySphere");
 	}
 
 	{
@@ -181,7 +170,7 @@ void ScenePlay::Initialize()
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial");
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
@@ -189,7 +178,9 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-
+	{
+		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+	}
 
 	CreatePlayerUI();
 
@@ -201,7 +192,6 @@ void ScenePlay::update()
 	if (KEY_TAP(N_1))
 	{
 		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Title);
-		return;
 	}
 
 
@@ -221,22 +211,6 @@ void ScenePlay::render()
 
 void ScenePlay::Enter()
 {
-	//mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
-	//mCamera->SetRotation(Vector3::Zero);
-	//mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
-	//mUICamera->SetRotation(Vector3::Zero);
-	//renderer::mainCamera = mCamera->GetComponent<Camera>();
-
-	{
-		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLight");
-		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 1000.f, 0.f));
-		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
-		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
-		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-		lightComp->SetType(eLightType::Directional);
-		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
-		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
-	}
 
 	Scene::Enter();
 }
@@ -263,6 +237,8 @@ void ScenePlay::CreatePlayerUI()
 	//Left Coin UI
 	{
 		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this));
+		mCoinTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this));
+
 		HUD* coin = (GETSINGLE(UIFactory)->CreateHud(L"Coin", L"CoinMaterial", Vector3(-7.f, 3.5f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
 		HUD* cityCoin = (GETSINGLE(UIFactory)->CreateHud(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
 		ImageUI* bar = (GETSINGLE(UIFactory)->CreateImage(L"Bar", L"BarMaterial", Vector3(-5.4f, 2.9f, 0.f), Vector3(4.2f, 1.4f, 1.f), mCoinPanal, this));
@@ -273,7 +249,8 @@ void ScenePlay::CreatePlayerUI()
 
 	//left Luna UI
 	{
-		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f,100.0f,1.0f), L"LunaPanal", this));
+		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaPanal", this));
+		mLunaTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaTextPanal", this));
 
 		for (size_t i = 0; i < 10; i++)
 		{

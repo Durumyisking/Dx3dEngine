@@ -835,14 +835,14 @@ namespace IMGUIZMO_NAMESPACE
         vec_t startOfSegment = start;
         const matrix_t& mvp = localCoordinates ? gContext.mMVPLocal : gContext.mMVP;
         startOfSegment.TransformPoint(mvp);
-        if (fabsf(startOfSegment.w) > FLT_EPSILON) // check for axis aligned with camera direction
+        if (fabsf(startOfSegment.w) > FLT_EPSILON) // check for axis aligned with mCamera direction
         {
             startOfSegment *= 1.f / startOfSegment.w;
         }
 
         vec_t endOfSegment = end;
         endOfSegment.TransformPoint(mvp);
-        if (fabsf(endOfSegment.w) > FLT_EPSILON) // check for axis aligned with camera direction
+        if (fabsf(endOfSegment.w) > FLT_EPSILON) // check for axis aligned with mCamera direction
         {
             endOfSegment *= 1.f / endOfSegment.w;
         }
@@ -862,7 +862,7 @@ namespace IMGUIZMO_NAMESPACE
         for (unsigned int i = 0; i < 3; i++)
         {
             pts[i].TransformPoint(gContext.mMVP);
-            if (fabsf(pts[i].w) > FLT_EPSILON) // check for axis aligned with camera direction
+            if (fabsf(pts[i].w) > FLT_EPSILON) // check for axis aligned with mCamera direction
             {
                 pts[i] *= 1.f / pts[i].w;
             }
@@ -1075,7 +1075,7 @@ namespace IMGUIZMO_NAMESPACE
 
         gContext.mReversed = (nearPos.z / nearPos.w) > (farPos.z / farPos.w);
 
-        // compute scale from the size of camera right vector projected on screen at the matrix position
+        // compute scale from the size of mCamera right vector projected on screen at the matrix position
         vec_t pointRight = viewInverse.v.right;
         pointRight.TransformPoint(gContext.mViewProjection);
         gContext.mScreenFactor = gContext.mGizmoSizeClipSpace / (pointRight.x / pointRight.w - gContext.mMVP.v.position.x / gContext.mMVP.v.position.w);
@@ -2513,7 +2513,7 @@ namespace IMGUIZMO_NAMESPACE
             ((matrix_t*)deltaMatrix)->SetToIdentity();
         }
 
-        // behind camera
+        // behind mCamera
         vec_t camSpacePosition;
         camSpacePosition.TransformPoint(makeVect(0.f, 0.f, 0.f), gContext.mMVP);
         if (!gContext.mIsOrthographic && camSpacePosition.z < 0.001f)

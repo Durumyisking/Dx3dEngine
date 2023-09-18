@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 3.6.1 commit date:2023-07-17, commit time:12:50, hash:8bda729ef4dc</authoring_tool>
+    </contributor>
+    <created>2023-09-14T16:11:41</created>
+    <modified>2023-09-14T16:11:41</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_cameras>
+    <camera id="Camera-camera" name="Camera">
+      <optics>
+        <technique_common>
+          <perspective>
+            <xfov sid="xfov">39.59775</xfov>
+            <aspect_ratio>1.777778</aspect_ratio>
+            <znear sid="znear">0.1</znear>
+            <zfar sid="zfar">100</zfar>
+          </perspective>
+        </technique_common>
+      </optics>
+      <extra>
+        <technique profile="blender">
+          <shiftx sid="shiftx" type="float">0</shiftx>
+          <shifty sid="shifty" type="float">0</shifty>
+          <dof_distance sid="dof_distance" type="float">10</dof_distance>
+        </technique>
+      </extra>
+    </camera>
+  </library_cameras>
+  <library_lights>
+    <light id="Light-light" name="Light">
+      <technique_common>
+        <point>
+          <color sid="color">1000 1000 1000</color>
+          <constant_attenuation>1</constant_attenuation>
+          <linear_attenuation>0</linear_attenuation>
+          <quadratic_attenuation>0.00111109</quadratic_attenuation>
+        </point>
+      </technique_common>
+      <extra>
+        <technique profile="blender">
+          <type sid="type" type="int">0</type>
+          <flag sid="flag" type="int">0</flag>
+          <mode sid="mode" type="int">1</mode>
+          <gamma sid="blender_gamma" type="float">1</gamma>
+          <red sid="red" type="float">1</red>
+          <green sid="green" type="float">1</green>
+          <blue sid="blue" type="float">1</blue>
+          <shadow_r sid="blender_shadow_r" type="float">0</shadow_r>
+          <shadow_g sid="blender_shadow_g" type="float">0</shadow_g>
+          <shadow_b sid="blender_shadow_b" type="float">0</shadow_b>
+          <energy sid="blender_energy" type="float">1000</energy>
+          <dist sid="blender_dist" type="float">29.99998</dist>
+          <spotsize sid="spotsize" type="float">75</spotsize>
+          <spotblend sid="spotblend" type="float">0.15</spotblend>
+          <att1 sid="att1" type="float">0</att1>
+          <att2 sid="att2" type="float">1</att2>
+          <falloff_type sid="falloff_type" type="int">2</falloff_type>
+          <clipsta sid="clipsta" type="float">0.04999995</clipsta>
+          <clipend sid="clipend" type="float">30.002</clipend>
+          <bias sid="bias" type="float">1</bias>
+          <bufsize sid="bufsize" type="int">2880</bufsize>
+          <samp sid="samp" type="int">3</samp>
+          <buffers sid="buffers" type="int">1</buffers>
+          <radius sid="radius" type="float">0.1</radius>
+          <area_shape sid="area_shape" type="int">1</area_shape>
+          <area_size sid="area_size" type="float">0.1</area_size>
+          <area_sizey sid="area_sizey" type="float">0.1</area_sizey>
+          <area_sizez sid="area_sizez" type="float">1</area_sizez>
+        </technique>
+      </extra>
+    </light>
+  </library_lights>
+  <library_effects>
+    <effect id="BodyMT-effect">
+      <profile_COMMON>
+        <newparam sid="PaintBody_alb_png-surface">
+          <surface type="2D">
+            <init_from>PaintBody_alb_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="PaintBody_alb_png-sampler">
+          <sampler2D>
+            <source>PaintBody_alb_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="PaintBody_alb_png-sampler" texcoord="PackunPoisonBall__BodyMT-texcoord"/>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images>
+    <image id="PaintBody_alb_png" name="PaintBody_alb_png">
+      <init_from>PaintBody_alb.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="BodyMT-material" name="BodyMT">
+      <instance_effect url="#BodyMT-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="PackunPoisonBall__BodyMT-mesh" name="PackunPoisonBall__BodyMT">
+      <mesh>
+        <source id="PackunPoisonBall__BodyMT-mesh-positions">
+          <float_array id="PackunPoisonBall__BodyMT-mesh-positions-array" count="150">30.70776 -11.72932 0 18.97844 -18.97844 -18.97844 28.89398 0 -17.85746 30.70776 11.72932 0 28.89398 0 17.85745 18.97844 -18.97844 18.97844 17.85745 -28.89398 0 18.97844 -18.97844 -18.97844 11.72932 0 -30.70776 18.97844 18.97844 -18.97844 18.97844 18.97844 18.97844 11.72932 0 30.70776 18.97844 18.97844 -18.97844 17.85745 28.89398 0 0 -30.70776 11.72932 0 -17.85745 28.89398 0 -30.70776 11.72932 0 -30.70776 -11.72932 0 30.70776 11.72932 0 30.70776 11.72932 0 17.85745 28.89398 -11.72932 0 30.70776 -11.72932 0 30.70776 0 30.70776 -11.72932 -18.97844 -18.97844 18.97844 -18.97844 18.97844 18.97844 -28.89398 0 17.85746 -18.97844 18.97844 18.97844 -30.70776 -11.72932 0 -30.70776 11.72932 0 -17.85745 -28.89398 0 -18.97844 -18.97844 18.97844 -18.97844 -18.97844 -18.97844 -28.89398 0 -17.85746 -18.97844 18.97844 18.97844 -17.85745 28.89398 0 -18.97844 18.97844 -18.97844 0 -30.70776 11.72932 0 -30.70776 -11.72932 0 -17.85745 -28.89398 0 -30.70776 -11.72932 -11.72932 0 -30.70776 0 30.70776 11.72932 0 30.70776 -11.72932 0 17.85745 -28.89398 0 30.70776 -11.72932 18.97844 -18.97844 -18.97844 11.72932 0 -30.70776 11.72932 0 -30.70776 18.97844 18.97844 -18.97844</float_array>
+          <technique_common>
+            <accessor source="#PackunPoisonBall__BodyMT-mesh-positions-array" count="50" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="PackunPoisonBall__BodyMT-mesh-normals">
+          <float_array id="PackunPoisonBall__BodyMT-mesh-normals-array" count="150">0.9343376 -0.3563892 0 0.5773485 -0.5773363 -0.5773661 0.8504635 0 -0.5260341 0.9343376 0.3563891 0 0.8506509 0 0.525731 0.5773503 -0.5773503 0.5773503 0.525731 -0.850651 0 0.577337 -0.5773667 -0.5773473 0.3564901 1.809e-5 -0.9342992 0.5773665 0.5773474 -0.5773369 0.5773503 0.5773503 0.5773503 0.3563892 0 0.9343376 0.577337 0.5773666 -0.5773472 0.525731 0.850651 0 -8.00192e-6 -0.9342976 0.3564943 0 -0.525731 0.850651 1.81049e-5 -0.9342989 0.3564905 -8.05408e-6 -0.9342976 -0.3564943 -8.05408e-6 0.9342976 0.3564943 -1.81049e-5 0.9342989 0.3564905 0 0.525731 0.850651 -0.3564812 -3.74019e-6 0.9343025 -0.3564943 -8.00192e-6 0.9342976 -8.00192e-6 0.9342976 -0.3564943 -0.5773549 -0.5773533 0.5773426 -0.5773472 0.577337 0.5773666 -0.850401 0 0.5261351 -0.5773665 0.5773474 0.5773369 -0.9343376 -0.3563892 0 -0.9343376 0.3563892 0 -0.525731 -0.850651 0 -0.577337 -0.5773667 0.5773473 -0.5773503 -0.5773504 -0.5773503 -0.8504635 0 -0.5260341 -0.577337 0.5773666 0.5773472 -0.525731 0.850651 0 -0.5773503 0.5773504 -0.5773503 8.05408e-6 -0.9342976 0.3564943 8.00192e-6 -0.9342976 -0.3564943 0 -0.525731 -0.850651 -1.81049e-5 -0.9342989 -0.3564905 -0.3568221 0 -0.9341725 8.00192e-6 0.9342976 0.3564943 8.05408e-6 0.9342976 -0.3564943 0 0.525731 -0.850651 1.81049e-5 0.9342989 -0.3564905 0.5773472 -0.577337 -0.5773666 0.3564943 8.05408e-6 -0.9342976 0.3564943 -8.00192e-6 -0.9342976 0.5773472 0.577337 -0.5773666</float_array>
+          <technique_common>
+            <accessor source="#PackunPoisonBall__BodyMT-mesh-normals-array" count="50" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="PackunPoisonBall__BodyMT-mesh-map-0">
+          <float_array id="PackunPoisonBall__BodyMT-mesh-map-0-array" count="360">0.0216217 0.59375 -0.135376 0.7092285 -0.135376 0.5419922 0.0216217 0.59375 -0.135376 0.5419922 -0.03836059 0.4067383 0.0216217 0.59375 0.1187134 0.4584961 0.2156982 0.59375 0.0216217 0.59375 -0.03836059 0.4067383 0.1187134 0.4584961 0.0216217 0.59375 0.2156982 0.59375 0.1187134 0.7290039 0.0216217 0.59375 0.1187134 0.7290039 -0.03836059 0.7807617 -0.135376 0.7092285 -0.2924805 0.59375 -0.135376 0.5419922 -0.135376 0.5419922 -0.2924805 0.59375 -0.2325439 0.4067383 -0.135376 0.5419922 -0.2325439 0.4067383 -0.03836059 0.4067383 0.1187134 0.4584961 0.1187134 0.2910156 0.2756348 0.4067383 0.1187134 0.4584961 0.2756348 0.4067383 0.2156982 0.59375 0.1187134 0.4584961 -0.03836059 0.4067383 0.1187134 0.2910156 -0.03836059 0.4067383 -0.1954346 0.2910156 -0.03836059 0.2392578 -0.03836059 0.4067383 -0.03836059 0.2392578 0.1187134 0.2910156 0.2156982 0.59375 0.2756348 0.7807617 0.1187134 0.7290039 0.2156982 0.59375 0.3728027 0.5419922 0.3728027 0.7092285 0.2156982 0.59375 0.2756348 0.4067383 0.3728027 0.5419922 0.1187134 0.7290039 0.2756348 0.7807617 0.1187134 0.8963013 0.1187134 0.7290039 0.1187134 0.8963013 -0.03836059 0.7807617 0.1187134 0.2910156 -0.03836059 0.2392578 0.0586853 0.1040039 0.1187134 0.2910156 0.1787109 0.1040039 0.2756348 0.2392578 0.1187134 0.2910156 0.2756348 0.2392578 0.2756348 0.4067383 0.2756348 0.4067383 0.4699707 0.4067383 0.3728027 0.5419922 0.2756348 0.4067383 0.2756348 0.2392578 0.4328613 0.2910156 -0.1954346 0.2910156 -0.135376 0.1040039 -0.03836059 0.2392578 -0.03836059 0.2392578 -0.135376 0.1040039 0.0586853 0.1040039 0.3728027 0.5419922 0.4699707 0.4067383 0.5297852 0.59375 0.3728027 0.5419922 0.5297852 0.59375 0.3728027 0.7092285 0.1787109 0.1040039 0.3728027 0.1040039 0.2756348 0.2392578 0.2756348 0.2392578 0.3728027 0.1040039 0.4328613 0.2910156 0.4699707 0.4067383 0.6269531 0.4584961 0.5297852 0.59375 0.4699707 0.4067383 0.6269531 0.2910156 0.6269531 0.4584961 0.5297852 0.59375 0.6269531 0.4584961 0.7241211 0.59375 0.6269531 0.4584961 0.6269531 0.2910156 0.7841797 0.4067383 0.6269531 0.4584961 0.7841797 0.4067383 0.7241211 0.59375 0.7241211 0.59375 0.7241211 0.7609863 0.5668945 0.7092285 0.7241211 0.59375 0.8808594 0.7092285 0.7241211 0.7609863 0.7241211 0.59375 0.8808594 0.5419922 0.8808594 0.7092285 0.7241211 0.59375 0.7841797 0.4067383 0.8808594 0.5419922 0.7841797 0.4067383 0.7241211 0.2197266 0.8808594 0.2714844 0.7841797 0.4067383 0.8808594 0.2714844 0.9780273 0.4067383 0.7841797 0.4067383 0.9780273 0.4067383 0.8808594 0.5419922 0.7241211 0.7609863 0.6269531 0.8963013 0.5668945 0.7092285 0.7241211 0.7609863 0.8808594 0.7092285 0.8208008 0.8963013 0.7241211 0.7609863 0.8208008 0.8963013 0.6269531 0.8963013 0.8808594 0.7092285 1.038086 0.7609863 0.940918 0.8963013 0.8808594 0.7092285 1.038086 0.59375 1.038086 0.7609863 0.8808594 0.7092285 0.8808594 0.5419922 1.038086 0.59375 0.8808594 0.5419922 0.9780273 0.4067383 1.038086 0.59375 0.7241211 0.2197266 0.8808594 0.1040039 0.8808594 0.2714844 0.8808594 0.2714844 0.8808594 0.1040039 1.038086 0.2197266 0.8808594 0.2714844 1.038086 0.2197266 0.9780273 0.4067383 0.9780273 0.4067383 1.134766 0.4584961 1.038086 0.59375 0.9780273 0.4067383 1.134766 0.2910156 1.134766 0.4584961 1.038086 0.7609863 1.134766 0.8963013 0.940918 0.8963013 1.038086 0.7609863 1.038086 0.59375 1.195313 0.7092285 1.038086 0.7609863 1.195313 0.7092285 1.134766 0.8963013 1.038086 0.59375 1.134766 0.4584961 1.232422 0.59375 1.134766 0.4584961 1.134766 0.2910156 1.291992 0.4067383 1.134766 0.4584961 1.291992 0.4067383 1.232422 0.59375</float_array>
+          <technique_common>
+            <accessor source="#PackunPoisonBall__BodyMT-mesh-map-0-array" count="180" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="PackunPoisonBall__BodyMT-mesh-vertices">
+          <input semantic="POSITION" source="#PackunPoisonBall__BodyMT-mesh-positions"/>
+        </vertices>
+        <triangles material="BodyMT-material" count="60">
+          <input semantic="VERTEX" source="#PackunPoisonBall__BodyMT-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#PackunPoisonBall__BodyMT-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#PackunPoisonBall__BodyMT-mesh-map-0" offset="2" set="0"/>
+          <p>0 0 0 1 1 1 2 2 2 0 0 3 2 2 4 3 3 5 0 0 6 4 4 7 5 5 8 0 0 9 3 3 10 4 4 11 0 0 12 5 5 13 6 6 14 0 0 15 6 6 16 7 7 17 1 1 18 8 8 19 2 2 20 2 2 21 8 8 22 9 9 23 2 2 24 9 9 25 3 3 26 4 4 27 10 10 28 11 11 29 4 4 30 11 11 31 5 5 32 4 4 33 3 3 34 10 10 35 3 3 36 12 12 37 13 13 38 3 3 39 13 13 40 10 10 41 5 5 42 14 14 43 6 6 44 5 5 45 15 15 46 16 16 47 5 5 48 11 11 49 15 15 50 6 6 51 14 14 52 17 17 53 6 6 54 17 17 55 7 7 56 10 10 57 13 13 58 18 18 59 10 10 60 19 19 61 20 20 62 10 10 63 20 20 64 11 11 65 11 11 66 21 21 67 15 15 68 11 11 69 20 20 70 22 22 71 12 12 72 23 23 73 13 13 74 13 13 75 23 23 76 18 18 77 15 15 78 21 21 79 24 24 80 15 15 81 24 24 82 16 16 83 19 19 84 25 25 85 20 20 86 20 20 87 25 25 88 22 22 89 21 21 90 26 26 91 24 24 92 21 21 93 27 27 94 26 26 95 24 24 96 26 26 97 28 28 98 26 26 99 27 27 100 29 29 101 26 26 102 29 29 103 28 28 104 28 28 105 30 30 106 31 31 107 28 28 108 32 32 109 30 30 110 28 28 111 33 33 112 32 32 113 28 28 114 29 29 115 33 33 116 29 29 117 34 34 118 35 35 119 29 29 120 35 35 121 36 36 122 29 29 123 36 36 124 33 33 125 30 30 126 37 37 127 31 31 128 30 30 129 32 32 130 38 38 131 30 30 132 38 38 133 37 37 134 32 32 135 39 39 136 40 40 137 32 32 138 41 41 139 39 39 140 32 32 141 33 33 142 41 41 143 33 33 144 36 36 145 41 41 146 34 34 147 42 42 148 35 35 149 35 35 150 42 42 151 43 43 152 35 35 153 43 43 154 36 36 155 36 36 156 44 44 157 41 41 158 36 36 159 45 45 160 44 44 161 39 39 162 46 46 163 40 40 164 39 39 165 41 41 166 47 47 167 39 39 168 47 47 169 46 46 170 41 41 171 44 44 172 48 48 173 44 44 174 45 45 175 49 49 176 44 44 177 49 49 178 48 48 179</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_PackunPoisonBall__BodyMT-skin" name="Armature">
+      <skin source="#PackunPoisonBall__BodyMT-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="Armature_PackunPoisonBall__BodyMT-skin-joints">
+          <Name_array id="Armature_PackunPoisonBall__BodyMT-skin-joints-array" count="1">PackunPoisonBall</Name_array>
+          <technique_common>
+            <accessor source="#Armature_PackunPoisonBall__BodyMT-skin-joints-array" count="1" stride="1">
+              <param name="JOINT" type="name"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_PackunPoisonBall__BodyMT-skin-bind_poses">
+          <float_array id="Armature_PackunPoisonBall__BodyMT-skin-bind_poses-array" count="16">1 0 0 0 0 0 1 0 0 -1 0 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_PackunPoisonBall__BodyMT-skin-bind_poses-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_PackunPoisonBall__BodyMT-skin-weights">
+          <float_array id="Armature_PackunPoisonBall__BodyMT-skin-weights-array" count="50">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_PackunPoisonBall__BodyMT-skin-weights-array" count="50" stride="1">
+              <param name="WEIGHT" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#Armature_PackunPoisonBall__BodyMT-skin-joints"/>
+          <input semantic="INV_BIND_MATRIX" source="#Armature_PackunPoisonBall__BodyMT-skin-bind_poses"/>
+        </joints>
+        <vertex_weights count="50">
+          <input semantic="JOINT" source="#Armature_PackunPoisonBall__BodyMT-skin-joints" offset="0"/>
+          <input semantic="WEIGHT" source="#Armature_PackunPoisonBall__BodyMT-skin-weights" offset="1"/>
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 1 0 2 0 3 0 4 0 5 0 6 0 7 0 8 0 9 0 10 0 11 0 12 0 13 0 14 0 15 0 16 0 17 0 18 0 19 0 20 0 21 0 22 0 23 0 24 0 25 0 26 0 27 0 28 0 29 0 30 0 31 0 32 0 33 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0 41 0 42 0 43 0 44 0 45 0 46 0 47 0 48 0 49</v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 7.54979e-8 -1 0 0 1 7.54979e-8 0 0 0 0 1</matrix>
+        <node id="Armature_PackunPoisonBall" name="PackunPoisonBall" sid="PackunPoisonBall" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <extra>
+            <technique profile="blender">
+              <layer sid="layer" type="string">0</layer>
+              <tip_x sid="tip_x" type="float">0</tip_x>
+              <tip_y sid="tip_y" type="float">1</tip_y>
+              <tip_z sid="tip_z" type="float">0</tip_z>
+            </technique>
+          </extra>
+        </node>
+        <node id="PackunPoisonBall__BodyMT" name="PackunPoisonBall__BodyMT" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <instance_controller url="#Armature_PackunPoisonBall__BodyMT-skin">
+            <skeleton>#Armature_PackunPoisonBall</skeleton>
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="BodyMT-material" target="#BodyMT-material">
+                  <bind_vertex_input semantic="PackunPoisonBall__BodyMT-texcoord" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_controller>
+        </node>
+      </node>
+      <node id="Camera" name="Camera" type="NODE">
+        <matrix sid="transform">0.6859207 -0.3240135 0.6515582 7.358891 0.7276763 0.3054208 -0.6141704 -6.925791 0 0.8953956 0.4452714 4.958309 0 0 0 1</matrix>
+        <instance_camera url="#Camera-camera"/>
+      </node>
+      <node id="Light" name="Light" type="NODE">
+        <matrix sid="transform">-0.2908646 -0.7711008 0.5663932 4.076245 0.9551712 -0.1998834 0.2183912 1.005454 -0.05518906 0.6045247 0.7946723 5.903862 0 0 0 1</matrix>
+        <instance_light url="#Light-light"/>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

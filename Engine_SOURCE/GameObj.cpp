@@ -22,7 +22,7 @@ GameObj::GameObj()
 	:mState(eState::Active)
 	, mType(eLayerType::None)
 	, mScripts{}
-	, mbDestroy(false)
+	, mbDestroy(true)
 	, mbBlockRendering(false)
 {
 	mComponents.resize(static_cast<UINT>(eComponentType::End));
@@ -206,10 +206,12 @@ void GameObj::SetRotation(Vector3 value)
 
 Vector3 GameObj::GetPos()
 {
+	assert(GetComponent<Transform>());
 	return GetComponent<Transform>()->GetPosition();
 }
 Vector3 GameObj::GetWorldPos()
 {
+	assert(GetComponent<Transform>());
 	return GetComponent<Transform>()->GetWorldPosition();
 }
 

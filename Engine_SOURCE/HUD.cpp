@@ -2,15 +2,18 @@
 #include "TimeMgr.h"
 #include "InputMgr.h"
 
+#include "SpriteRenderer.h"
+
 HUD::HUD()
 	:UIBase(eUIType::HP)
 	, mSpeed(0)
 	, mCurrentTime(0)
 	, mChangeSize(Vector3::One)
 	, mTargetPos(Vector3::Zero)
-	, mState(HUDState::None)
+	, mState(eHUDState::None)
 	, mActivate(false)
 	, mbGoAndReturn(false)
+	, mCount(3)
 {
 
 }
@@ -21,9 +24,10 @@ HUD::HUD(eUIType type)
 	, mCurrentTime(0)
 	, mChangeSize(Vector3::One)
 	, mTargetPos(Vector3::Zero)
-	, mState(HUDState::None)
+	, mState(eHUDState::None)
 	, mActivate(false)
 	, mbGoAndReturn(false)
+	, mCount(3)
 {
 
 }
@@ -59,46 +63,28 @@ void HUD::OnUpdate()
 
 	switch (mState)
 	{
-	case enums::HUDState::None:
+	case enums::eHUDState::None:
 		break;
-	case enums::HUDState::MoveBlink:
+	case enums::eHUDState::MoveBlink:
 		MoveBlink(mChangeSize);
 		break;
-	case enums::HUDState::MoveTowards:
+	case enums::eHUDState::MoveTowards:
 		MoveTowards();
 		break;
-	case enums::HUDState::Rotate:
+	case enums::eHUDState::Rotate:
 		Rotate();
 		break;
-	case enums::HUDState::Size:
+	case enums::eHUDState::Size:
 		Size();
 		break;
-	case enums::HUDState::GoAndReturn:
-		GoAndReturn();
+	case enums::eHUDState::TitleCapMove:
+		TitleCapMove();
 		break;
-	case enums::HUDState::End:
+	case enums::eHUDState::End:
 		break;
 	default:
 		break;
 	}
-
-
-
-	//mElapsedTime += DT;
-
-	//BaseRenderer* renderer = GetOwner()->GetComponent<BaseRenderer>();
-	//Material* material = renderer->GetMaterial();
-
-	//renderer::MaterialCB data = {};
-
-	//data.fData1 = mFadeValue * (mElapsedTime / mTime);
-	//data.iData1 = mFadeType;
-	//data.iData2 = mFadeTextureType;
-
-
-	//material->SetData(eGPUParam::Float_1, &data.fData1);
-	//material->SetData(eGPUParam::Int_1, &data.iData1);
-	//material->SetData(eGPUParam::Int_2, &data.iData2);
 }
 
 void HUD::OnFixedUpdate()
@@ -130,7 +116,7 @@ void HUD::MoveBlink(Vector3 changeSize)
 
 		pos = mOriginScale * changeSize;  //Vector3(1.f, 0.9f, 1.0f)
 		this->GetComponent<Transform>()->SetScale(pos);
-		mState = HUDState::Size;
+		mState = eHUDState::Size;
 	}
 	else if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::DOWN)))
 	{
@@ -139,7 +125,7 @@ void HUD::MoveBlink(Vector3 changeSize)
 
 		pos = mOriginScale * changeSize;
 		this->GetComponent<Transform>()->SetScale(pos);
-		mState = HUDState::Size;
+		mState = eHUDState::Size;
 	}
 }
 
@@ -169,38 +155,28 @@ void HUD::Size()
 	{
 		this->GetComponent<Transform>()->SetScale(mOriginScale);
 		mCurrentTime = 0;
-		mState = HUDState::MoveBlink;
+		mState = eHUDState::MoveBlink;
 	}
 }
 
-void HUD::GoAndReturn()
+void HUD::TitleCapMove()
 {
-	if (mTargetPos == Vector3::Zero)
-		return;
 
-	Transform* tr = this->GetComponent<Transform>();
-
-	Vector3 a = tr->GetPosition();
-
-	Vector3 b = mTargetPos;
-
-	Vector3 dir = b - a;
-
-	Vector3 fabsDir = Vector3(dir.x, dir.y, 0);
-
-	double value = sqrt(pow(fabsDir.x, 2) + pow(fabsDir.y, 2)); //피타고라스 R값
-
-	Vector3 dirValue = Vector3(fabsDir.x / value, fabsDir.y / value, 0);
-
-	Vector3 pos = this->GetComponent<Transform>()->GetPosition();
-
-	pos.x += dirValue.x * 1 * DT;
-	pos.y += dirValue.y * 1 * DT;
-
-	this->GetComponent<Transform>()->SetPosition(pos);
 }
 
 void HUD::PlayAnimation()
 {
 
+}
+
+void HUD::SetColor()
+{
+
+SpriteRenderer* renderer = this->GetComponent<SpriteRenderer>();
+Material* material = renderer->GetMaterial();
+
+renderer::ColorCB data = {};
+
+data.RGBA = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+material->SetData(eGPUParam::Vector4_1, &data.RGBA);
 }

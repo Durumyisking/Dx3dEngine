@@ -1,4 +1,4 @@
-﻿#include "Model.h"
+#include "Model.h"
 #include "Mesh.h"
 #include "Renderer.h"
 #include "Texture.h"
@@ -27,7 +27,7 @@ Model::Model()
 	, mParentModel(nullptr)
 	, mParentTargetBone(L"")
 	, mTargetBone(L"")
-	, mOffsetRotation(math::Vector3(0.0f,0.0f,0.0f))
+	, mOffsetRotation(math::Vector3(0.0f, 0.0f, 0.0f))
 {
 
 }
@@ -203,7 +203,7 @@ void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* 
 		mNodes.insert(std::pair<std::wstring, ModelNode*>(modelnode->mName, modelnode));
 		curNode = mNodes.find(wNodeName)->second;
 	}
-	else 
+	else
 	{
 		curNode = iter->second;
 		if (curNode->mRootNode != nullptr)
@@ -235,7 +235,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
-	
+
 	vertexes.reserve(mesh->mNumVertices);
 
 	for (UINT i = 0; i < mesh->mNumVertices; ++i)
@@ -243,20 +243,20 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		renderer::Vertex vertex = {};
 		math::Vector3 pos = {};
 
-	
+
 		pos.x = mesh->mVertices[i].x;
 		pos.y = mesh->mVertices[i].y;
 		pos.z = mesh->mVertices[i].z;
 		vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
 
-		
+
 		math::Vector3 normal = {};
 		normal.x = mesh->mNormals[i].x;
 		normal.y = mesh->mNormals[i].y;
 		normal.z = mesh->mNormals[i].z;
 		vertex.normal = normal;
 
-	
+
 		math::Vector3 tangent = {};
 		tangent.x = mesh->mTangents[i].x;
 		tangent.y = mesh->mTangents[i].y;
@@ -309,7 +309,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 			bonIndex = bone->mIndex;
 		}
-		else 
+		else
 		{
 			bone = mBoneMap.find(ConvertToW_String(aiBone->mName.C_Str()))->second;
 			bone->mOffsetMatrix = aiBone->mOffsetMatrix;
@@ -459,7 +459,7 @@ void Model::CreateMaterial()
 				matName = texInfo.texName;
 				std::size_t found = matName.find(L"_");
 				if (found != std::wstring::npos) {
-					matName = matName.substr(0, found); 
+					matName = matName.substr(0, found);
 				}
 			}
 			break;
@@ -489,11 +489,11 @@ std::vector<Texture*> Model::GetTexture(int index)
 	if (index >= mTextures.size())
 		return std::vector<Texture*>{};
 
-	std::vector<Texture*> outTexVector; 
+	std::vector<Texture*> outTexVector;
 	const std::vector<TextureInfo>& texInfos = mTextures[index];
 	for (const TextureInfo& tex : texInfos)
 	{
-		if(tex.pTex != nullptr)
+		if (tex.pTex != nullptr)
 			outTexVector.emplace_back(tex.pTex);
 	}
 
@@ -526,7 +526,7 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 		mBones[bone->mIndex]->mLocalMatrix = matrix;
 	}
 
- 	for (size_t i = 0; i < modelNode->mChilds.size(); ++i)
+	for (size_t i = 0; i < modelNode->mChilds.size(); ++i)
 	{
 		recursiveProcessBoneMatrix(matrix, modelNode->mChilds[i]->mName);
 	}

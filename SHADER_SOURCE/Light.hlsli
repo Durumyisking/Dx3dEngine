@@ -153,7 +153,7 @@ float3 CalculateLightPBR_Direct(float3 worldPos, float4 albedo, float3 worldNorm
     float3 irradiance = irradianceMap.Sample(skyBoxSampler, N).rgb;    
     float3 diffuse = irradiance * albedo.xyz;
 
-    const float MAX_REFLECTION_LOD = 4.f;
+    const float MAX_REFLECTION_LOD = 6.f;
     float3 prefilteredColor = prefilteredMap.SampleLevel(skyBoxSampler, R, roughness * MAX_REFLECTION_LOD).rgb;
     
     // brdf 텍스처를 x는 반사에 따라 y는 러프니스에 따라 샘플링한다.
@@ -172,7 +172,7 @@ float4 CombineLights(float4 color, LightColor lightColor)
 {
     color.rgb *= lightColor.diffuse.rgb;
 
-    color.rgb += lightColor.specular.rgb;
+    //color.rgb += lightColor.specular.rgb;
     
     color.rgb += color.rgb * lightColor.ambient.rgb;
 
@@ -198,7 +198,7 @@ float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
         mip = 6;
     float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(dot(normalWorld, pixelToEye), 1.0 - roughness), 0.0f).rg;
     float3 specularIrradiance = prefilteredMap.SampleLevel(linearSampler, reflect(-pixelToEye, normalWorld),
-                                                            0.f).rgb;
+                                                            0 + roughness * 5.f).rgb;
     const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
     float3 F0 = lerp(Fdielectric, albedo, metallic);
 
