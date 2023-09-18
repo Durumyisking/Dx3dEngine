@@ -229,6 +229,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="CapEyeUI.h" />
     <ClInclude Include="CaptureObj.h" />
     <ClInclude Include="CapUI.h" />
+    <ClInclude Include="ChracterController.h" />
     <ClInclude Include="ClientToServer.h" />
     <ClInclude Include="Collider2D.h" />
     <ClInclude Include="Collider3D.h" />
@@ -359,6 +360,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="CapEyeUI.cpp" />
     <ClCompile Include="CaptureObj.cpp" />
     <ClCompile Include="CapUI.cpp" />
+    <ClCompile Include="ChracterController.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collider3D.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />

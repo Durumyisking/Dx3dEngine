@@ -28,9 +28,12 @@ public:
     void OnTriggerExit(PhysXCollider* otherCollider);
 
     bool Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance);
+    Vector3 ComputePenetration(GameObj* gameObject);
 
 
     PxFilterData& GetFilterData()  { return mFilterData; }
+
+
 
 private:
     void createDebugGeometry(std::shared_ptr<Geometry> geometries);
@@ -51,6 +54,10 @@ public:
 
     float  mRayMaxDist;
     UINT   mRayMaxHit;
+
+    PxVec3   mPenetDir;
+    float    mPenetDepth;
+
 
 
 };

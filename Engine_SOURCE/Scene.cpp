@@ -130,7 +130,7 @@ std::vector<GameObj*> Scene::GetDontDestroyObjects()
 	return allLayerDontDestroyObjs;
 }
 
-const std::vector<GameObj*>& Scene::GetGameObj(eLayerType _eLayer)
+const std::vector<GameObj*>& Scene::GetGameObjects(eLayerType _eLayer)
 {
 
 	return mLayers[static_cast<UINT>(_eLayer)].GetGameObjects();
