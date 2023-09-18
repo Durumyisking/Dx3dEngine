@@ -236,6 +236,9 @@
     <Filter Include="RayCast">
       <UniqueIdentifier>{873dbe93-ba2a-42a4-8bb8-de37d53d3cbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\GameObj\UI">
+      <UniqueIdentifier>{69d4d9a1-8fc1-4146-b0bf-08483f34218b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -538,11 +541,9 @@
     <ClInclude Include="CubeMap.h">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClInclude>
-    <ClInclude Include="UIFactory.h" />
     <ClInclude Include="ScenePlay.h">
       <Filter>Common\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="ImageUI.h" />
     <ClInclude Include="MarioHead.h" />
     <ClInclude Include="MarioParts.h" />
     <ClInclude Include="DynamicObject.h">
@@ -575,13 +576,6 @@
     <ClInclude Include="CaptureObj.h">
       <Filter>Common\GameObj\Capture</Filter>
     </ClInclude>
-    <ClInclude Include="CapEyeUI.h" />
-    <ClInclude Include="CapUI.h" />
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="HUD.h" />
-    <ClInclude Include="Panal.h" />
-    <ClInclude Include="UIBase.h" />
-    <ClInclude Include="UIManager.h" />
     <ClInclude Include="PhysXRayCast.h">
       <Filter>RayCast</Filter>
     </ClInclude>
@@ -589,6 +583,33 @@
     <ClInclude Include="ProjectileObj.h" />
     <ClInclude Include="AnimationClip.h">
       <Filter>Common\Component\Animator3D</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIFactory.h">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Panal.h">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageUI.h">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CapUI.h">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CapEyeUI.h">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Common\GameObj\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -861,11 +882,9 @@
     <ClCompile Include="CubeMap.cpp">
       <Filter>Common\Component\Renderer\Skybox</Filter>
     </ClCompile>
-    <ClCompile Include="UIFactory.cpp" />
     <ClCompile Include="ScenePlay.cpp">
       <Filter>Common\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="MarioHead.cpp" />
     <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="DynamicObject.cpp">
@@ -898,13 +917,6 @@
     <ClCompile Include="CaptureObj.cpp">
       <Filter>Common\GameObj\Capture</Filter>
     </ClCompile>
-    <ClCompile Include="CapEyeUI.cpp" />
-    <ClCompile Include="CapUI.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="Panal.cpp" />
-    <ClCompile Include="UIBase.cpp" />
-    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="PhysXRayCast.cpp">
       <Filter>RayCast</Filter>
     </ClCompile>
@@ -912,6 +924,33 @@
     <ClCompile Include="ProjectileObj.cpp" />
     <ClCompile Include="AnimationClip.cpp">
       <Filter>Common\Component\Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFactory.cpp">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Panal.cpp">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUI.cpp">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CapUI.cpp">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp">
+      <Filter>Common\GameObj\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Common\GameObj\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

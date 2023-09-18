@@ -17,6 +17,10 @@ public:
 	virtual void OnFontRender() override;
 	virtual void OnClear() override;
 
+
+	void SetColor(Vector4 color, bool isColor) override;
 private:
+
+	float mCurrentTime;
 	bool mActivate;
 };

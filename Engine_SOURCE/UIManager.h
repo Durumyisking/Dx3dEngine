@@ -26,6 +26,7 @@ public:
 
 	static void GetCoin();
 	static void GetLuna();
+	static void PlayScene();
 
 private:
 

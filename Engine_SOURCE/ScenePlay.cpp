@@ -215,21 +215,40 @@ void ScenePlay::CreatePlayerUI()
 	{
 		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this, eUIType::Coin));
 		mCoinTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this, eUIType::CoinText));
-		(GETSINGLE(UIFactory)->CreateString(L"000", L"Coin", Vector3(-6.35f, 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), Vector3(0.0f, 0.0f, 2.0f), 0.34f, mCoinTextPanal, this));
 
-		HUD* coin = (GETSINGLE(UIFactory)->CreateHud(L"Coin", L"CoinMaterial", Vector3(-7.f, 3.5f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
-		HUD* cityCoin = (GETSINGLE(UIFactory)->CreateHud(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
+
+
+		ImageUI* coin = (GETSINGLE(UIFactory)->CreateImage(L"Coin", L"CoinMaterial", Vector3(-7.f, 3.5f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
+		ImageUI* cityCoin = (GETSINGLE(UIFactory)->CreateImage(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
 		ImageUI* bar = (GETSINGLE(UIFactory)->CreateImage(L"Bar", L"BarMaterial", Vector3(-5.4f, 2.9f, 0.f), Vector3(4.2f, 1.4f, 1.f), mCoinPanal, this));
 		mCoinPanal->Addchild(coin);
-		mCoinPanal->Addchild(cityCoin);
 		mCoinPanal->Addchild(bar);
+
+		for (size_t i = 0; i < 3; i++)
+		{
+			ImageUI* image = (GETSINGLE(UIFactory)->CreateImage(L"CoinText", L"CoinTextMaterial_" + std::to_wstring(i), Vector3(-6.35f + (0.34f * i), 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), mCoinTextPanal, this));
+
+			mCoinTextPanal->Addchild(image);
+		}
+
+
+
+		Panal* cityCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CityCoinPanal", this, eUIType::CityCoin));
+		mLunaTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CityCoinTextPanal", this, eUIType::CityCoinText));
+
+		cityCoinPanal->Addchild(cityCoin);
+		for (size_t i = 0; i < 3; i++)
+		{
+			ImageUI* image = (GETSINGLE(UIFactory)->CreateImage(L"CoinText", L"CityCoinTextMaterial_" + std::to_wstring(i), Vector3(-4.35f + (0.34f * i), 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), mLunaTextPanal, this));
+
+			mLunaTextPanal->Addchild(image);
+		}
+
 	}
 
 	//left Luna UI
 	{
 		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaPanal", this, eUIType::Luna));
-		mLunaTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaTextPanal", this, eUIType::LunaText));
-		(GETSINGLE(UIFactory)->CreateString(L"000", L"Luna", Vector3(-4.35f, 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), Vector3(0.0f, 0.0f, 2.0f), 0.34f, mLunaTextPanal, this));
 
 
 		for (size_t i = 0; i < 10; i++)

@@ -157,6 +157,8 @@ namespace enums
 		HP,
 		Coin,
 		CoinText,
+		CityCoin,
+		CityCoinText,
 		Luna,
 		LunaText,
 		End,
