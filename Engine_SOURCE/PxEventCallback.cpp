@@ -30,6 +30,27 @@ void PxEventCallback::onContact(const PxContactPairHeader& pairHeader, const PxC
                 }
             }
         }
+        // on collision 부분 : ontrigger만 생각하면 되는게 맞다고 봄 (물리 충돌체끼리는 부딪히면 그 프레임에 서로 밀어내야함)
+        //else if (cp.events & PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
+        //{
+        //    if (pairHeader.actors[0]->userData && pairHeader.actors[1]->userData)
+        //    {
+        //        GameObj* contact = static_cast<GameObj*>(pairHeader.actors[0]->userData);
+        //        GameObj* other = static_cast<GameObj*>(pairHeader.actors[1]->userData);
+
+        //        if (contact && other)
+        //        {
+        //            PhysXCollider* contactColl = contact->GetComponent<PhysXCollider>();
+        //            PhysXCollider* otherColl = other->GetComponent<PhysXCollider>();
+
+        //            if (contactColl)
+        //                contactColl->OnCollisionEnter(otherColl);
+
+        //            if (otherColl)
+        //                otherColl->OnCollisionEnter(contactColl);
+        //        }
+        //    }
+        //}
 
         else if (cp.events & PxPairFlag::eNOTIFY_TOUCH_LOST)
         {
