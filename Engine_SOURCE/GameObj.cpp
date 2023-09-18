@@ -413,6 +413,9 @@ void GameObj::ReorganizePosition(eLayerType layerType)
 			if (vResult.y < 0.f)
 			{
 				GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+				GetPhysXRigidBody()->RemoveGravity();
+
+ 				vResult.y *= -1.f;
 			}
 
 			vResult.z = 0.f;			

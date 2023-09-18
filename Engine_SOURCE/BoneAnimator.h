@@ -20,7 +20,7 @@ public:
 
 	// 애니메이션을 생성하는 함수
 	void CreateAnimation(const std::wstring& name, const std::wstring& path, double duration);
-	void CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount = 45);
+	void CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount = 60);
 
 	// 애니메이션 Play
 	void Play(const std::wstring& name, bool loop = true);

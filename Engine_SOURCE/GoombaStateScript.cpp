@@ -96,21 +96,22 @@ void GoombaStateScript::Move()
 			}
 		};
 
-	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, 0.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -225.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, -180.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
-	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
-
+	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, -90.f, 0.0f));
+	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, 90.f, 0.0f));
+	mTransform->FixedUpdate();
 
 	Vector3 moveDir = mTransform->Forward();
 	moveDir.y = 0.f;
 	mRigidbody->AddForce((-moveDir * 10.f));*/
+
 }
 
 void GoombaStateScript::Jump()
@@ -119,7 +120,9 @@ void GoombaStateScript::Jump()
 	{
 		mAnimator->Play(L"Jump", false);
 
+
 		mRigidbody->AddForce(math::Vector3(0.0f, GOOMBA_JUMPFORCE, 0.0f));
+
 	}
 
 	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())
