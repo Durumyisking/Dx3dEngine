@@ -31,4 +31,5 @@ public:
 private:
 	Transform* mTransform;
 	PhysXRigidBody* mPhyXRigidBody;
+	PxController* mController;
 };

@@ -4,18 +4,22 @@
 #include "Scene.h"
 
 #include "Component.h"
-#include "Script.h"
+
+#include "Transform.h"
+#include "Camera.h"
 #include "Mesh.h"
-#include "Shader.h"
-#include "AudioListener.h"
-#include "AudioSource.h"
+#include "RigidBody.h"
+#include "PhysXRigidBody.h"
+#include "PhysicalMovement.h"
+#include "Physical.h"
+#include "PhysXCollider.h"
+#include "Animator.h"
+#include "BoneAnimator.h"
 #include "SpriteRenderer.h"
 #include "MeshRenderer.h"
-#include "Physical.h"
-#include "Transform.h"
-
-#include "RigidBody.h"
-
+#include "PostProcessRenderer.h"
+#include "ParticleSystem.h"
+#include "Light.h"
 
 	
 GameObj::GameObj()
@@ -385,4 +389,142 @@ Vector3 GameObj::MoveToTarget_Smooth_vector3(GameObj* target, float speed, bool 
 		
 	this->SetPos(result);
 	return result;
+}
+
+void GameObj::ReorganizePosition(eLayerType layerType)
+{
+	assert(GetComponent<Physical>());
+	assert(GetComponent<PhysXCollider>());
+	assert(GetComponent<PhysXRigidBody>());
+
+	const auto& gameObjects = GETSINGLE(SceneMgr)->GetActiveScene()->GetGameObjects(layerType);
+
+	Vector3 vResult = {};
+	for (const auto& gameObject : gameObjects)
+	{
+		vResult = GetPhysXCollider()->ComputePenetration(gameObject);
+		if (vResult != Vector3::Zero)
+		{
+			if (vResult.x > 0.f)
+				vResult.x += 1.f;
+			else if (vResult.x < 0.f)
+				vResult.x -= 1.f;
+
+			if (vResult.y < 0.f)
+			{
+				GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+			}
+
+			vResult.z = 0.f;
+			GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
+
+			return;
+		}
+	}
+}
+
+Transform* GameObj::GetTransform()
+{
+	
+	Transform* comp = GetComponent<Transform>();
+	assert(comp);
+	return comp;
+}
+
+Camera* GameObj::GetCamera()
+{
+	
+	Camera* comp = GetComponent<Camera>();
+	assert(comp);
+	return comp;
+}
+
+
+RigidBody* GameObj::GetRigidBody()
+{
+	
+	RigidBody* comp = GetComponent<RigidBody>();
+	assert(comp);
+	return comp;
+}
+
+PhysXRigidBody* GameObj::GetPhysXRigidBody()
+{
+	
+	PhysXRigidBody* comp = GetComponent<PhysXRigidBody>();
+	assert(comp);
+	return comp;
+}
+
+PhysicalMovement* GameObj::GetMovement()
+{
+	
+	PhysicalMovement* comp = GetComponent<PhysicalMovement>();
+	assert(comp);
+	return comp;
+}
+
+Physical* GameObj::GetPhysical()
+{
+	
+	Physical* comp = GetComponent<Physical>();
+	assert(comp);
+	return comp;
+}
+
+PhysXCollider* GameObj::GetPhysXCollider()
+{
+	
+	PhysXCollider* comp = GetComponent<PhysXCollider>();
+	assert(comp);
+	return comp;
+}
+
+Animator* GameObj::GetAnimator()
+{
+	
+	Animator* comp = GetComponent<Animator>();
+	assert(comp);
+	return comp;
+}
+
+BoneAnimator* GameObj::GetBoneAnimator()
+{
+	
+	BoneAnimator* comp = GetComponent<BoneAnimator>();
+	assert(comp);
+	return comp;
+}
+
+MeshRenderer* GameObj::GetMeshRenderer()
+{
+	
+	MeshRenderer* comp = GetComponent<MeshRenderer>();
+	assert(comp);
+	return comp;
+}
+
+SpriteRenderer* GameObj::GetSpriteRenderer()
+{
+	
+	SpriteRenderer* comp = GetComponent<SpriteRenderer>();
+	assert(comp);
+	return comp;
+}
+
+
+ParticleSystem* GameObj::GetParticle()
+{
+	
+	ParticleSystem* comp = GetComponent<ParticleSystem>();
+	assert(comp);
+	return comp;
+}
+
+Light* GameObj::GetLight()
+{
+	
+	Light* comp = GetComponent<Light>();
+	assert(comp);
+	return comp;
 }

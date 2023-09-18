@@ -11,6 +11,21 @@ class Material;
 class Mesh;
 class Component;
 
+class Transform;
+class Camera;
+class RigidBody;
+class PhysXRigidBody;
+class PhysicalMovement;
+class Physical;
+class PhysXCollider;
+class Animator;
+class BoneAnimator;
+class MeshRenderer;
+class SpriteRenderer;
+class ParticleSystem;
+class Light;
+
+
 class GameObj : public DruEntity
 {
 public:
@@ -134,6 +149,24 @@ public:
 
 
 	std::vector<Component*> GetComponentsVec() { return mComponents; }
+
+	void ReorganizePosition(eLayerType layerType); // 충돌체 겹친 크기만큼 밀어냄
+
+
+	Transform* GetTransform();
+	Camera* GetCamera();
+	RigidBody* GetRigidBody();
+	PhysXRigidBody* GetPhysXRigidBody();
+	PhysicalMovement* GetMovement();
+	Physical* GetPhysical();
+	PhysXCollider* GetPhysXCollider();
+	Animator* GetAnimator();
+	BoneAnimator* GetBoneAnimator();
+	MeshRenderer* GetMeshRenderer();
+	SpriteRenderer* GetSpriteRenderer();
+	ParticleSystem* GetParticle();
+	Light* GetLight();
+
 
 protected:
 	std::vector<Component*> mComponents;

@@ -6,13 +6,11 @@
 #include "PhysXRigidBody.h"
 
 
-
 Player::Player()
 {
 	SetLayerType(eLayerType::Player);
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
-
 	MeshRenderer* meshRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
 }
 
@@ -29,7 +27,6 @@ void Player::Initialize()
 
 void Player::Update()
 {
-
 	GameObj::Update();
 }
 

@@ -11,9 +11,8 @@ PhysXRigidBody::PhysXRigidBody()
 	, mPhysical(nullptr)
 	, mGravityApplied(true)
 	, mForce(Vector3::Zero)
-	, mGravityAccel(Vector3(0.f, -19.8f * 2.f, 0.f))
+	, mGravityAccel(Vector3(0.f, -9.8f, 0.f))
 	, mMaxVelocity(Vector3(40.f, -40.f, 40.f))
-	, mReserveTimer(0.f)
 {
 }
 
@@ -45,22 +44,48 @@ void PhysXRigidBody::FixedUpdate()
 			mVelocity += mGravityAccel * DT;
 	}
 
-	if (mReserveTimer.IsRunning())
-	{
-		mReserveTimer.Update(DT);
-		mVelocity = mReserveVelocity;
-
-		if (mReserveTimer.IsFinished())
-		{
-			mReserveTimer.Stop();
-			mReserveVelocity = Vector3::Zero;
-			mVelocity = Vector3::Zero;
-		}
-	}
 }
 
 void PhysXRigidBody::Render()
 {
+}
+
+void PhysXRigidBody::SetVelocity(AXIS axis, const math::Vector3& velocity)
+{
+	switch (axis)
+	{
+	case enums::AXIS::X:
+		mVelocity.x = velocity.x;
+		break;
+	case enums::AXIS::Y:
+		mVelocity.y = velocity.y;
+		break;
+	case enums::AXIS::Z:
+		mVelocity.z = velocity.z;
+		break;
+	case enums::AXIS::XY:
+		mVelocity.x = velocity.x;
+		mVelocity.y = velocity.y;
+		break;
+	case enums::AXIS::XZ:
+		mVelocity.x = velocity.x;
+		mVelocity.z = velocity.z;
+		break;
+	case enums::AXIS::YZ:
+		mVelocity.y = velocity.y;
+		mVelocity.z = velocity.z;
+		break;
+	case enums::AXIS::XYZ:
+		mVelocity.x = velocity.x;
+		mVelocity.y = velocity.y;
+		mVelocity.z = velocity.z;
+		break;
+	case enums::AXIS::END:
+		break;
+	default:
+		break;
+	}
+
 }
 
 // for kinematic actors
@@ -107,22 +132,6 @@ void PhysXRigidBody::AddVelocity(AXIS eAxis, float velocity)
 	}
 }
 
-void PhysXRigidBody::AddForce(const math::Vector3& force, PxForceMode::Enum eForceMode)
-{
-	PxRigidBodyExt::addForceAtPos(
-		*mPhysical->GetActor<PxRigidBody>(),
-		convert::Vector3ToPxVec3(force),
-		convert::Vector3ToPxVec3(GetOwner()->GetComponent<Transform>()->GetPhysicalPosition()),
-		eForceMode);
-
-}
-
-void PhysXRigidBody::ReserveSpeedForSeconds(const Vector3& velocity, float duration)
-{
-	mReserveVelocity = velocity;
-	mReserveTimer.SetEndTime(duration);
-	mReserveTimer.Start();
-}
 
 // for dynamic actors
 void PhysXRigidBody::SetMassForDynamic(float mass)

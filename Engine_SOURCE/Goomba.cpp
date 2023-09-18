@@ -53,7 +53,7 @@ void Goomba::Initialize()
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Monster, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.5f));
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));

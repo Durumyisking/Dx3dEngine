@@ -35,7 +35,7 @@ public:
 
 	std::vector<GameObj*> GetDontDestroyObjects();
 
-	const std::vector<GameObj*>& GetGameObj(eLayerType eLayer);
+	const std::vector<GameObj*>& GetGameObjects(eLayerType eLayer);
 
 	GameObj* GetPlayer();
 
