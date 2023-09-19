@@ -30,7 +30,7 @@ public:
 	void                    SetVelocity(AXIS axis, const math::Vector3& velocity);
 
 
-  FORCEINLINE void        AddForce(const math::Vector3& force) { mForce = force; }
+  FORCEINLINE void        AddForce(const math::Vector3& force) { mForce += force; }
   FORCEINLINE math::Vector3        GetForce() const { return mForce; }
   FORCEINLINE math::Vector3        SetMaxVelocity(const math::Vector3& velocity) { mMaxVelocity = velocity; }
   FORCEINLINE void                 SetMaxVelocity(const float& velocity) { mMaxVelocity = math::Vector3(velocity); }

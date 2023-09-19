@@ -12,6 +12,7 @@ public:
 		Move,
 		Jump,
 		Fall,
+		Land,
 		Turn,
 		Chase,
 		Attack,

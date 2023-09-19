@@ -53,12 +53,17 @@ void Player::OnCollisionEnter(GameObj* gameObject)
 
 void Player::OnTriggerEnter(GameObj* gameObject)
 {
-	PhysXRigidBody* rigid = GetComponent<PhysXRigidBody>();
-	rigid->RemoveGravity();
-	rigid->SetVelocity(AXIS::Y, 0.f);
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+	{
+		GetPhysXRigidBody()->SetAirOff();
+	}
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)
 {
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+	{
+		GetPhysXRigidBody()->SetAirOn();
+	}
 }
 

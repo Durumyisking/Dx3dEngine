@@ -53,7 +53,7 @@ void Goomba::Initialize()
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.05f));
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
@@ -79,6 +79,7 @@ void Goomba::Initialize()
 void Goomba::Update()
 {
 	Monster::Update();
+
 }
 
 void Goomba::FixedUpdate()
@@ -114,7 +115,7 @@ void Goomba::CaptureEvent()
 			}
 		};
 
-	//// 이동
+	// 이동
 	//stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
 	//stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
 	//stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
@@ -131,11 +132,32 @@ void Goomba::CaptureEvent()
 
 void Goomba::OnCollisionEnter(GameObj* gameObject)
 {
-	if (eMonsterState::Fall == GetMonsterState())
-	{
-		GetBoneAnimator()->Play(L"Land", false);
-	}
+}
 
+void Goomba::OnTriggerEnter(GameObj* gameObject)
+{
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+
+	{
+		if (eMonsterState::Fall == GetMonsterState())
+		{
+			SetMonsterState(Monster::eMonsterState::Land);
+		}
+		GetPhysXRigidBody()->SetAirOff();
+	}
+}
+
+void Goomba::OnTriggerStay(GameObj* gameObject)
+{
+}
+
+void Goomba::OnTriggerExit(GameObj* gameObject)
+{
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+	{
+		GetPhysXRigidBody()->ApplyGravity();
+		GetPhysXRigidBody()->SetAirOn();
+	}
 }
 
 void Goomba::boneAnimatorInit(BoneAnimator* animator)

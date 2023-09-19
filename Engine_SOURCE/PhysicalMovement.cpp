@@ -27,6 +27,7 @@ void PhysicalMovement::FixedUpdate()
 	if (eLayerType::Player== GetOwner()->GetLayerType())
 	{
 	}
+	GetOwner()->ReorganizePosition(AXIS::Y, eLayerType::Platforms);
 
 	Move(velocity);
 }
@@ -48,7 +49,7 @@ void PhysicalMovement::Move(const Vector3& velocity)
 	}
 	else
 	{
-		//physical->GetActor<PxRigidDynamic>()->setGlobalPose(transform);
+		physical->GetActor<PxRigidDynamic>()->setGlobalPose(transform);
 	}
 
 }
