@@ -120,9 +120,8 @@ void GoombaStateScript::Jump()
 	{
 		mAnimator->Play(L"Jump", false);
 
-
 		mRigidbody->AddForce(math::Vector3(0.0f, GOOMBA_JUMPFORCE, 0.0f));
-
+		mRigidbody->ApplyGravity();
 	}
 
 	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())
@@ -135,7 +134,7 @@ void GoombaStateScript::Fall()
 {
 	if (mAnimator->PlayAnimationName() != L"Fall")
 	{
-		mAnimator->Play(L"Fall", false);
+		mAnimator->Play(L"Fall");
 	}
 }
 

@@ -20,11 +20,11 @@ public:
 public:
 	// for kinematic actors
 	FORCEINLINE bool        IsAccelerating() const { return fabs(mVelocity.Length()) > 0.f; }
-	FORCEINLINE bool        IsGravityApplied() const { return mGravityApplied; }
+	FORCEINLINE bool        IsGravityApplied() const { return mbGravityApplied; }
 	FORCEINLINE const math::Vector3& GetGravityAccel()  const { return mGravityAccel; }
 	FORCEINLINE const math::Vector3& GetVelocity() const { return mVelocity; }
-	FORCEINLINE void        ApplyGravity() { mGravityApplied = true; }
-	FORCEINLINE void        RemoveGravity() { mGravityApplied = false; }
+	FORCEINLINE void        ApplyGravity() { mbGravityApplied = true; }
+	FORCEINLINE void        RemoveGravity() { mbGravityApplied = false; }
 	FORCEINLINE void        AddVelocity(const math::Vector3& velocity) { mVelocity += velocity; }
 	FORCEINLINE void        SetVelocity(const math::Vector3& velocity) { mVelocity = velocity; }
 	void                    SetVelocity(AXIS axis, const math::Vector3& velocity);
@@ -36,6 +36,10 @@ public:
   FORCEINLINE void                 SetMaxVelocity(const float& velocity) { mMaxVelocity = math::Vector3(velocity); }
   FORCEINLINE void                 SetMaxVelocity_Y(const float& velocityY) { mMaxVelocity.y = velocityY; }
   FORCEINLINE void                 SetMaxVelocity_XZ(const math::Vector2& velocityXZ) { mMaxVelocity.x = velocityXZ.x; mMaxVelocity.z = velocityXZ.y; }
+
+  FORCEINLINE void					SetAirOn() { mbAirborn = true; }
+  FORCEINLINE void					SetAirOff() { mbAirborn = false; }
+  FORCEINLINE bool					IsOnAir() const { return mbAirborn ; }
 
 public:
     // for kinematic actors
@@ -65,11 +69,15 @@ public:
 	void AddTorqueYForDynamic(const float& torque);
 	void AddTorqueZForDynamic(const float& torque);
 
+
 private:
 	Physical* mPhysical;
 
-	bool mGravityApplied;
+	bool mbGravityApplied;
+	bool mbAirborn;
+
 	math::Vector3 mFriction;
+	float mFricCoeff;
 	math::Vector3 mGravityAccel;
 	math::Vector3 mForce;
 	math::Vector3 mVelocity;
