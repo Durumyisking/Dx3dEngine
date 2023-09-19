@@ -9,10 +9,12 @@ using namespace math;
 PhysXRigidBody::PhysXRigidBody()
 	: Component(eComponentType::RigidBody)
 	, mPhysical(nullptr)
-	, mGravityApplied(true)
+	, mbGravityApplied(true)
+	, mbAirborn(true)
 	, mFriction(Vector3(20.f, 0.0f, 20.0f))
+	, mFricCoeff(20.f)
 	, mForce(Vector3::Zero)
-	, mGravityAccel(Vector3(0.f, -9.8f * 4.f, 0.f))
+	, mGravityAccel(Vector3(0.f, -9.8f , 0.f))
 	, mMaxVelocity(Vector3(100.f, 200.f, 100.f))
 	, mReserveTimer(0.f)
 	, mAccelation(Vector3(0.f, 0.f, 0.f))
@@ -45,75 +47,65 @@ void PhysXRigidBody::Update()
 
 void PhysXRigidBody::FixedUpdate()
 {
-	// 이동
-	//  F = M x A
-	//  A = F / M
+	// accel from force
+	float fForce = mForce.Length();
 
-	// 가속도 계산
-	mAccelation = mForce / mMass;
+	if (0.f != fForce)
+	{
+		mForce.Normalize();
 
-	// 속도에 가속도를더함
+		float Accel = fForce / mMass;
+
+		mAccelation = mForce * Accel;
+	}
+
+	if (mbAirborn && mbGravityApplied)
+	{
+		mAccelation += mGravityAccel;
+	}
+
 	mVelocity += mAccelation * DT;
 
-	if (mGravityApplied) // 공중에 있을때 중력 영향 0
+
+	// cal fric
+	if (mVelocity != Vector3::Zero && !mbAirborn)
 	{
-		mVelocity += mGravityAccel * DT;
-	}
-	else				// 공중 X
-	{
+		Vector3 FricDir = -mVelocity;
+		FricDir.Normalize();
 
-		// 가속도, 중력 정규화
-		Vector3 gravity = mGravityAccel;
-		gravity.Normalize();
+		Vector3 Friction = FricDir * mFricCoeff * DT;
 
-		Vector3 velocity = mVelocity;
-		velocity.Normalize();
+		mAccelation += Friction;
 
-		// 내적
-		float dot = velocity.Dot(gravity);
-
-		mVelocity -= gravity * dot;
-	}
-
-	//마찰력 조건 (적용된 힘이 없고, 속도가 0 이 아닐때)
-	if (( mVelocity.x != 0.f || mVelocity.z != 0.f ))
-	{
-		// 속도 반대 방향으로 마찰력을 적용
-		math::Vector3 friction = -mVelocity;
-		friction.Normalize();
-
-		friction = friction * mFriction * mMass * DT;
-
-		// 마찰력으로 인한 속도 감소량 현재 속도보다 더 큰 경우
-		Vector3 sideVelo = mVelocity;
-		sideVelo.y = 0.f;
-
-		float mVelocityLength = sideVelo.Length();
-		float frictionLength = friction.Length();
-		if (mVelocityLength < frictionLength)
+		if (mVelocity.Length() <= Friction.Length())
 		{
-			// 속도를 0 으로 만든다
-			float yForce = mVelocity.y;
-			mVelocity = Vector3::Zero;
-			mVelocity.y = yForce;
+			mVelocity = Vector3(0.f, 0.f, 0.f);
 		}
 		else
 		{
-			// 속도에서 마찰략으로 인한 반대방향으로 속도를 차감
-			mVelocity += friction;
+			mVelocity += Friction;
 		}
 	}
 
-	// 이동
-	Vector3 Pos = mOwnerTransform->GetPhysicalPosition();
-	Pos += mVelocity * DT;
-	mOwnerTransform->SetPhysicalPosition(Pos);
+	// check max speed
+	if (mMaxVelocity.x < fabs(mVelocity.x))
+	{
+		mVelocity.x /= fabs(mVelocity.x);
+		mVelocity.x *= mMaxVelocity.x;
+	}
+	if (mMaxVelocity.z < fabs(mVelocity.z))
+	{
+		mVelocity.z /= fabs(mVelocity.z);
+		mVelocity.z *= mMaxVelocity.z;
+	}
+	if (mMaxVelocity.y < fabs(mVelocity.y))
+	{
+		mVelocity.y /= fabs(mVelocity.y);
+		mVelocity.y *= mMaxVelocity.y;
+	}
 
-	// 힘 초기화
-	mForce = Vector3::Zero;
-	// TEST
-	return;
-
+	mForce = Vector3(0.f, 0.f, 0.f);
+	mAccelation = Vector3(0.f, 0.f, 0.f);
 }
 
 void PhysXRigidBody::Render()
