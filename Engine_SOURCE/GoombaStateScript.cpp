@@ -30,6 +30,7 @@ void GoombaStateScript::Initialize()
 	MonsterStateScript::Initialize();
 	mAnimator = mMonster->GetComponent<BoneAnimator>();
 	mRigidbody = mMonster->GetComponent<PhysXRigidBody>();
+	mRigidbody->SetMaxVelocity_XZ(10.f);
 	mMovement = mMonster->GetComponent<PhysicalMovement>();
 	mTransform = mMonster->GetComponent<Transform>();
 

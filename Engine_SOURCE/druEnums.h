@@ -28,10 +28,10 @@ namespace enums
 	enum class eComponentType
 	{
 		None,
-		Transform,
 		Camera,
 		RigidBody,
 		Movement, 
+		Transform,
 		Physical,
 		//Controller,
 		Collider,

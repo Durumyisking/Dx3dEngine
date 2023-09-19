@@ -45,9 +45,16 @@ void Transform::FixedUpdate()
 
 	if (GetOwner()->GetComponent<Physical>())
 	{
-
 		Physical* physical = GetPhysical();
-		mPxTransform = physical->GetActor<PxRigidActor>()->getGlobalPose();
+		if (eActorType::Kinematic == physical->GetActorType())
+		{
+			physical->GetActor<PxRigidDynamic>()->getKinematicTarget(mPxTransform);
+		}
+		else
+		{
+			mPxTransform = physical->GetActor<PxRigidActor>()->getGlobalPose();
+		}
+
 		Matrix matPxScale = Matrix::CreateScale(physical->GetGeometrySize());
 
 		// 원래 코드
@@ -180,7 +187,8 @@ const Vector3& Transform::GetWorldPosition()
 {
 	if (GetOwner()->GetComponent<Physical>())
 	{
-		return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
+		return convert::PxVec3ToVector3(mPxTransform.p);
+		//return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
 	}
 	else
 	{
@@ -192,14 +200,15 @@ const Vector3& Transform::GetWorldPosition()
 Vector3 Transform::GetPhysicalPosition()
 {
 	assert(GetPhysical());
-	return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
+	return convert::PxVec3ToVector3(mPxTransform.p);
+	//return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
 }
 
 void Transform::SetPhysicalPosition(const Vector3& position)
 {
 	assert(GetPhysical());
 	mPxTransform.p = convert::Vector3ToPxVec3(position);
-	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+	//GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 
 }
 
@@ -215,7 +224,7 @@ void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 	// 회전을 적용합니다.
 	PxQuat finalRotation = rotationX * rotationY * rotationZ;
 	mPxTransform.q = finalRotation;
-	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+	//GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 
 }
 
@@ -231,7 +240,7 @@ void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)
 	// 회전을 적용합니다.
 	PxQuat finalRotation = rotationX * rotationY * rotationZ;
 	mPxTransform.q = finalRotation;
-	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+	//GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 
 }
 
@@ -250,6 +259,6 @@ void Transform::AddPhysicalRotation_Radian(const Vector3& rotation_radian)
 	// 회전을 적용합니다.
 	PxQuat finalRotation = rotationX * rotationY * rotationZ;
 	mPxTransform.q = finalRotation;
-	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+	//GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 
 }
