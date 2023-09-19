@@ -35,7 +35,7 @@ public:
   FORCEINLINE math::Vector3        SetMaxVelocity(const math::Vector3& velocity) { mMaxVelocity = velocity; }
   FORCEINLINE void                 SetMaxVelocity(const float& velocity) { mMaxVelocity = math::Vector3(velocity); }
   FORCEINLINE void                 SetMaxVelocity_Y(const float& velocityY) { mMaxVelocity.y = velocityY; }
-  FORCEINLINE void                 SetMaxVelocity_XZ(const math::Vector2& velocityXZ) { mMaxVelocity.x = velocityXZ.x; mMaxVelocity.z = velocityXZ.y; }
+  FORCEINLINE void                 SetMaxVelocity_XZ(const float& velocityXZ) { mMaxVelocity.x = velocityXZ; mMaxVelocity.z = velocityXZ; }
 
   FORCEINLINE void					SetAirOn() { mbAirborn = true; }
   FORCEINLINE void					SetAirOff() { mbAirborn = false; }
