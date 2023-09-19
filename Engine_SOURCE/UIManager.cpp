@@ -25,7 +25,7 @@ UIManager::~UIManager()
 void UIManager::Initialize()
 {
 	mCurrentUI = currentUI::MainMenu;
-	//ui 메모리에 할당
+	//ui �޸𸮿� �Ҵ�
 
 	//UIBase* newUI = new UIBase(eUIType::HP);
 	//mUIPanals.insert(std::make_pair(eUIType::HP, newUI));
@@ -137,8 +137,8 @@ void UIManager::Pop(eUIType type)
 		uiBase = mUIBases.top();
 		mUIBases.pop();
 
-		// pop하는 ui가 전체화면 일경우에,
-		//남은 ui 중에 전체화면인 가장 상단의 ui를 활성화
+		// pop�ϴ� ui�� ��üȭ�� �ϰ�쿡,
+		//���� ui �߿� ��üȭ���� ���� ����� ui�� Ȱ��ȭ
 
 		if (uiBase->GetUIType() == type)
 		{
@@ -165,8 +165,8 @@ void UIManager::Pop(eUIType type)
 		}
 	}
 
-	//스택 이터레이터가 없으므로
-	//다시 넣어주는 작업을 하는것
+	//���� ���ͷ����Ͱ� �����Ƿ�
+	//�ٽ� �־��ִ� �۾��� �ϴ°�
 	while (tempStack.size())
 	{
 		uiBase = tempStack.top();

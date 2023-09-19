@@ -7,6 +7,7 @@
 #include "PhysXRigidBody.h"
 #include "TimerMgr.h"
 #include "PhysXCollider.h"
+#include "PhysicalMovement.h"
 
 //temp
 #include "SceneMgr.h"
@@ -42,10 +43,6 @@ void PlayerScript::Initialize()
 }
 void PlayerScript::Update()
 {
-
-}
-void PlayerScript::FixedUpdate()
-{
 	Vector3 pos = {};
 	Vector3 velocity = {};
 	Transform* camTransform = renderer::mainCamera->GetOwner()->GetComponent<Transform>();
@@ -76,24 +73,30 @@ void PlayerScript::FixedUpdate()
 
 	if (KEY_DOWN(LEFT))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * -40.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->SetVelocity(Vector3(-5.f, 0.f, 0.f));
 	}
 	if (KEY_DOWN(RIGHT))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camRight * 40.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->SetVelocity(Vector3(5.f, 0.f, 0.f));
 	}
 	if (KEY_DOWN(UP))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * 40.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->SetVelocity(Vector3(0.f, 0.f, 5.f));
 	}
 	if (KEY_DOWN(DOWN))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * -40.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->SetVelocity(Vector3(0.f, 0.f, -5.f));
 	}
 	if (KEY_TAP(SPACE))
 	{
-		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((mTransform->Up() * 500.f * DT), PxForceMode::Enum::eIMPULSE);
+		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((Vector3::Up * 5000.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
+
+	GetOwner()->ReorganizePosition(eLayerType::Platforms);
+}
+void PlayerScript::FixedUpdate()
+{
+
 }
 void PlayerScript::Render()
 {

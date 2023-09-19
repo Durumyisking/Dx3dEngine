@@ -238,6 +238,8 @@
     </Filter>
     <Filter Include="Common\GameObj\UI">
       <UniqueIdentifier>{69d4d9a1-8fc1-4146-b0bf-08483f34218b}</UniqueIdentifier>
+    <Filter Include="Common\Component\CharacterController">
+      <UniqueIdentifier>{24dba119-05ba-4622-8b1b-98b06d1b79af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -610,6 +612,8 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Common\GameObj\UI</Filter>
+    <ClInclude Include="ChracterController.h">
+      <Filter>Common\Component\CharacterController</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -951,6 +955,8 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Common\GameObj\UI</Filter>
+    <ClCompile Include="ChracterController.cpp">
+      <Filter>Common\Component\CharacterController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

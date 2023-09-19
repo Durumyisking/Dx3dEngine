@@ -46,7 +46,7 @@ void Transform::FixedUpdate()
 	if (GetOwner()->GetComponent<Physical>())
 	{
 
-		Physical* physical = GetOwner()->GetComponent<Physical>();
+		Physical* physical = GetPhysical();
 		mPxTransform = physical->GetActor<PxRigidActor>()->getGlobalPose();
 		Matrix matPxScale = Matrix::CreateScale(physical->GetGeometrySize());
 
@@ -191,15 +191,15 @@ const Vector3& Transform::GetWorldPosition()
 
 Vector3 Transform::GetPhysicalPosition()
 {
-	assert(GetOwner()->GetComponent<Physical>());
+	assert(GetPhysical());
 	return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
 }
 
 void Transform::SetPhysicalPosition(const Vector3& position)
 {
-	assert(GetOwner()->GetComponent<Physical>());
+	assert(GetPhysical());
 	mPxTransform.p = convert::Vector3ToPxVec3(position);
-	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+	GetPhysical()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 }
 
 void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)

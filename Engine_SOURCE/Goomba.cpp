@@ -53,10 +53,11 @@ void Goomba::Initialize()
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
+	//GetComponent<PhysXRigidBody>()->RemoveGravity();
 
 	// MoveMent
 	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
@@ -113,15 +114,15 @@ void Goomba::CaptureEvent()
 			}
 		};
 
-	// 이동
+	//// 이동
 	//stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
 	//stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
 	//stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
 	//stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
 
-	// 점프
-	able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Jump);
+	//// 점프
+	//able = false;
+	stateEvent(eKeyState::TAP, eKeyCode::Y, eMonsterState::Jump);
 
 	// 특수
 	//able = false;
@@ -130,7 +131,11 @@ void Goomba::CaptureEvent()
 
 void Goomba::OnCollisionEnter(GameObj* gameObject)
 {
-	int i = 0;
+	if (eMonsterState::Fall == GetMonsterState())
+	{
+		GetBoneAnimator()->Play(L"Land", false);
+	}
+
 }
 
 void Goomba::boneAnimatorInit(BoneAnimator* animator)
@@ -140,9 +145,6 @@ void Goomba::boneAnimatorInit(BoneAnimator* animator)
 	AnimationClip* cilp = animator->GetAnimationClip(L"Attack");
 	if (cilp)
 		cilp->SetCompleteEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
-
-
-
 }
 
 void Goomba::stateInfoInitalize()
@@ -154,6 +156,7 @@ void Goomba::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(eMonsterState::Move), static_cast<UINT>(eMonsterState::Move));
 
 	// Jump
+	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Jump));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Move));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::SpecialSituation));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Groggy));
