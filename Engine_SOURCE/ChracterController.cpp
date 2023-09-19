@@ -52,5 +52,5 @@ void ChracterController::Move(math::Vector3 displacement)
 
 	mController->getActor()->addForce(PxVec3(50.f, 50.f, 50.f), PxForceMode::eIMPULSE);
 	auto& controllerPos = mController->getPosition();
-	GetOwner()->SetPos(math::Vector3(controllerPos.x, controllerPos.y, controllerPos.z));
+	//GetOwner()->SetPos(math::Vector3(controllerPos.x, controllerPos.y, controllerPos.z));
 }

@@ -199,7 +199,8 @@ void Transform::SetPhysicalPosition(const Vector3& position)
 {
 	assert(GetPhysical());
 	mPxTransform.p = convert::Vector3ToPxVec3(position);
-	GetPhysical()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+
 }
 
 void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
@@ -215,6 +216,7 @@ void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 	PxQuat finalRotation = rotationX * rotationY * rotationZ;
 	mPxTransform.q = finalRotation;
 	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+
 }
 
 void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)
@@ -230,6 +232,7 @@ void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)
 	PxQuat finalRotation = rotationX * rotationY * rotationZ;
 	mPxTransform.q = finalRotation;
 	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+
 }
 
 void Transform::AddPhysicalRotation_Radian(const Vector3& rotation_radian)
@@ -248,4 +251,5 @@ void Transform::AddPhysicalRotation_Radian(const Vector3& rotation_radian)
 	PxQuat finalRotation = rotationX * rotationY * rotationZ;
 	mPxTransform.q = finalRotation;
 	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+
 }

@@ -114,6 +114,7 @@ void PhysXCollider::OnTriggerEnter(PhysXCollider* otherCollider)
 }
 void PhysXCollider::OnTriggerStay(PhysXCollider* otherCollider)
 {
+	GetOwner()->OnTriggerStay(otherCollider->GetOwner());
 }
 void PhysXCollider::OnTriggerExit(PhysXCollider* otherCollider)
 {
@@ -207,6 +208,7 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
+		break;
 		case eGeometryType::Capsule:
 		{
 			PxCapsuleGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->capsuleGeom;
@@ -214,6 +216,7 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
+		break;
 		case eGeometryType::Sphere:
 		{
 			PxSphereGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->sphereGeom;
@@ -221,6 +224,7 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
+		break;
 		default:
 			break;
 		}
@@ -242,6 +246,7 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
+		break;
 		case eGeometryType::Capsule:
 		{
 			PxCapsuleGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->capsuleGeom;
@@ -249,6 +254,7 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
+		break;
 		case eGeometryType::Sphere:
 		{
 			PxSphereGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->sphereGeom;
@@ -256,6 +262,7 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
+		break;
 		default:
 			break;
 		}
@@ -277,6 +284,7 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
+		break;
 		case eGeometryType::Capsule:
 		{
 			PxCapsuleGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->capsuleGeom;
@@ -284,6 +292,7 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
+		break;
 		case eGeometryType::Sphere:
 		{
 			PxSphereGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->sphereGeom;
