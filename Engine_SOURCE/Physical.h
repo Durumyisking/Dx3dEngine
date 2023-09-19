@@ -49,7 +49,8 @@ struct Geometry
     {
         if (eGeometryType::ConvexMesh == geometryType)
         {
-            convexMeshGeom = PxConvexMeshGeometry(convexMesh, PxMeshScale(PxVec3(scale.x, scale.y, scale.z)));
+            PxMeshScale meshScale(PxVec3(scale.x, scale.y, scale.z));
+            convexMeshGeom = PxConvexMeshGeometry(convexMesh, meshScale);
         }
     }
 

@@ -235,6 +235,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
+	std::vector<math::Vector4> posVec;
 
 	vertexes.reserve(mesh->mNumVertices);
 
@@ -278,6 +279,8 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		}
 
 		vertexes.emplace_back(vertex);
+
+		posVec.emplace_back(vertex.pos);
 	}
 
 	indexes.reserve(mesh->mNumFaces);
@@ -384,7 +387,10 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
 
-	mVertexes.emplace_back(vertexes);
+	inMesh->SetVertexes(posVec);
+
+	inMesh->SetVertexCount(static_cast<UINT>(vertexes.size()));
+	inMesh->SetIndexCount(static_cast<UINT>(indexes.size()));
 
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 	inMesh->SetName(wName);

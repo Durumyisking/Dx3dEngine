@@ -79,26 +79,26 @@ PxConvexMesh* Physical::MakeConvexObject()
 
 	//vertexCount = model->GetNumberOfVertices(index);
 	const std::vector<Mesh*> meshes = model->GetMeshes();
-	std::vector<std::vector<renderer::Vertex>> meshVertices = model->GetVertexes();
 	PxU32 vertexCount = 0;
 	std::vector<PxVec3> vertices;
 
 	for (Mesh* mesh : meshes)
 	{
-		std::vector<renderer::Vertex> meshVertices = mesh->GetVertexes();
+		//std::vector<renderer::Vertex> meshVertices = mesh->GetVerticesFromBuffer<renderer::Vertex>(GetDevice()->GetDeviceContext().Get());
+		std::vector<math::Vector4> meshVertices = mesh->GetVertexes();
 		PxU32 count = mesh->GetVertexCount();
 		vertexCount += count;
 
 		// Copy from cvector array to PxVec3 array
 		for (PxU32 i = 0; i < count; i++)
 		{
-			vertices.push_back(PxVec3(meshVertices[i].pos.x, meshVertices[i].pos.y, meshVertices[i].pos.z));
+			vertices.push_back(PxVec3(meshVertices[i].x, meshVertices[i].y, meshVertices[i].z));
 		}
 	}
 
 	PxVec3* v = vertices.data();
 
-	return physX->CreateConvexMesh(v, vertexCount, physX->GetPhysics(), physX->GetCooking());
+	return physX->CreateConvexMesh(vertices.data(), vertexCount, physX->GetPhysics(), physX->GetCooking());
 }
 
 void Physical::Update()
@@ -280,7 +280,7 @@ void Physical::createShape()
 
 void Physical::createConvexShape(PxConvexMeshGeometry convexMesh)
 {
-	PxShape* aConvexShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(),
+	mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(),
 		mGeometry->convexMeshGeom, *mProperties->GetMaterial());
 }
 

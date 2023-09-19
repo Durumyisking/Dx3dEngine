@@ -25,10 +25,10 @@ PhysX::~PhysX()
 void PhysX::Init()
 {
 	mInitialization->CreateFoundation();
+	mInitialization->CreateCooking();
 	mInitialization->CreateVisualDebugger();
 	mInitialization->ConntectVisualDebugger();
 	mInitialization->CreatePhysics();
-
 //	CreateSceneQuery();
 }
 
@@ -39,7 +39,7 @@ PxConvexMesh* PhysX::CreateConvexMesh(const PxVec3* verts, const PxU32 numVerts,
 	convexDesc.points.count = numVerts;
 	convexDesc.points.stride = sizeof(physx::PxVec3);
 	convexDesc.points.data = verts;
-	convexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
+	convexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX | PxConvexFlag::eSHIFT_VERTICES;
 
 	physx::PxConvexMesh* convexMesh = NULL;
 	physx::PxDefaultMemoryOutputStream buf;

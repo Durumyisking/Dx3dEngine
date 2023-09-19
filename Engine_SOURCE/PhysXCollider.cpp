@@ -28,7 +28,7 @@ void PhysXCollider::Initialize()
 
 	// 렌더링할 물체의 모양을 가진 콜라이더
 	mPhysical = GetOwner()->GetComponent<Physical>();
-
+	GameObj* obj = GetOwner();
 	if (mPhysical)
 	{
 		createDebugGeometry(mPhysical->GetGeometries());

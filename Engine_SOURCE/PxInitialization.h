@@ -12,7 +12,7 @@ public:
 	PxFoundation* GetFoundation() { return mFoundation; }
 	PxPhysics* GetPhysics() { return mPhysics; }
 
-	PxCooking* GetCooking() { return mCooking; }
+	physx::PxCooking* GetCooking() { return mCooking; }
 	void CreateCooking();
 
 	void	CreateFoundation();
