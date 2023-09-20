@@ -6,7 +6,7 @@
 //class PhysicalMovement;
 //class Transform		;
 #define GOOMBA_SPPED 7000.f
-#define GOOMBA_JUMPFORCE 3000.f
+#define GOOMBA_JUMPFORCE 7000.f
 #define GOOMBA_MASS 1.f
 #define GOOMBA_WALK_VELOCITY 20.f
 #define GOOMBA_RUN_VELOCITY 50.f
@@ -32,11 +32,19 @@ public:
 	virtual void Hit() final;
 	virtual void Groggy() final;
 	virtual void Die() final;
+
+
+private:
+	void setHalfCloseEyeModel();
+	void setOpenEyeModel();
+
 private:
 	BoneAnimator*		 mAnimator ;
 	PhysXRigidBody*		 mRigidbody; 
 	PhysicalMovement*	 mMovement ;
 	Transform*			 mTransform;
+
+	Model*				 mModel;
 
 	
 };

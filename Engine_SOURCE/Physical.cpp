@@ -12,7 +12,8 @@ Physical::Physical()
 	, mGeometryType(eGeometryType::End)
 	, mSize(math::Vector3::Zero)
 	, mActor(nullptr)
-	, mShape(nullptr)
+	, mMainShape(nullptr)
+	, mSubShapes{}
 	, mProperties(nullptr)
 	, mGeometry(nullptr)
 {
@@ -37,7 +38,7 @@ void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geom
 	createPhysicsProperties(massProperties);
 	createGeometry(mGeometryType, mSize);
 	createActor();
-	createShape();
+	CreateMainShape();
 	AddActorToPxScene();
 //		createUniversalShape();
 }
@@ -53,6 +54,7 @@ void Physical::FixedUpdate()
 
 void Physical::Render()
 {
+	
 }
 
 
@@ -72,16 +74,16 @@ void Physical::SetGeometrySize(const Vector3& newSize)
 	{
 	case enums::eGeometryType::Box:
 		mGeometry->boxGeom.halfExtents = convert::Vector3ToPxVec3(newSize * 0.5f);
-		mShape->setGeometry(mGeometry->boxGeom);
+		mMainShape->setGeometry(mGeometry->boxGeom);
 		break;
 	case enums::eGeometryType::Capsule:
 		mGeometry->capsuleGeom.halfHeight = newSize.y * 0.5f;
 		mGeometry->capsuleGeom.radius = newSize.x * 0.5f;
-		mShape->setGeometry(mGeometry->capsuleGeom);
+		mMainShape->setGeometry(mGeometry->capsuleGeom);
 		break;
 	case enums::eGeometryType::Sphere:
 		mGeometry->sphereGeom.radius = newSize.x * 0.5f;
-		mShape->setGeometry(mGeometry->sphereGeom);
+		mMainShape->setGeometry(mGeometry->sphereGeom);
 		break;
 	case enums::eGeometryType::Plane:
 		break;
@@ -162,22 +164,22 @@ void Physical::createUniversalShape()
 		switch (mGeometryType)
 		{
 		case eGeometryType::Box:
-			mShape = physics->createShape(mGeometry->boxGeom, *mProperties->GetMaterial());
+			mMainShape = physics->createShape(mGeometry->boxGeom, *mProperties->GetMaterial());
 			break;
 		case eGeometryType::Capsule:
-			mShape = physics->createShape(mGeometry->capsuleGeom, *mProperties->GetMaterial());
+			mMainShape = physics->createShape(mGeometry->capsuleGeom, *mProperties->GetMaterial());
 			break;
 		case eGeometryType::Plane:
-			mShape = physics->createShape(mGeometry->planeGeom, *mProperties->GetMaterial());
+			mMainShape = physics->createShape(mGeometry->planeGeom, *mProperties->GetMaterial());
 			break;
 		}
 	}
 }
 
-void Physical::createShape()
+void Physical::CreateMainShape()
 {
 	/*
-		PxShape* shape = physics.createShape(PxSphereGeometry(1.0f), myMaterial, true);
+		PxShape* shape = physics.CreateMainShape(PxSphereGeometry(1.0f), myMaterial, true);
 		myActor.attachShape(*shape);
 		shape->release();
 		이 코드는
@@ -191,22 +193,83 @@ void Physical::createShape()
 		switch (mGeometryType)
 		{
 		case eGeometryType::Box:
-			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->boxGeom, *mProperties->GetMaterial());
+			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->boxGeom, *mProperties->GetMaterial());
 			break;
 		case eGeometryType::Capsule:	
 		{
-			PxTransform relativePose(PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
-			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->capsuleGeom, *mProperties->GetMaterial());
-			mShape->setLocalPose(relativePose);
+			PxTransform tr(PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
+			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->capsuleGeom, *mProperties->GetMaterial());
+			mMainShape->setLocalPose(tr);
 		}
 			break;
 		case eGeometryType::Sphere:
-			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->sphereGeom, *mProperties->GetMaterial());
+			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->sphereGeom, *mProperties->GetMaterial());
 			break;
 		case eGeometryType::Plane:
-			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial());
+			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial());
 			break;
 		}
+	}
+}
+
+void Physical::CreateMainShape(Vector3 localPos)
+{
+	PxPhysics* physics = PhysicsMgr::GetInstance()->GetEnvironment()->GetPhysics();
+
+	if (physics)
+	{
+		PxTransform tr = {};
+		tr.p = convert::Vector3ToPxVec3(localPos);
+		switch (mGeometryType)
+		{
+		case eGeometryType::Box:
+			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->boxGeom, *mProperties->GetMaterial());
+			break;
+		case eGeometryType::Capsule:
+		{
+			tr.q = (PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
+			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->capsuleGeom, *mProperties->GetMaterial());
+		}
+		break;
+		case eGeometryType::Sphere:
+			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->sphereGeom, *mProperties->GetMaterial());
+			break;
+		case eGeometryType::Plane:
+			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial());
+			break;
+		}
+		mMainShape->setLocalPose(tr);
+	}
+}
+
+void Physical::CreateSubShape(Vector3 relativePos)
+{
+	PxPhysics* physics = PhysicsMgr::GetInstance()->GetEnvironment()->GetPhysics();
+
+	if (physics && mMainShape)
+	{
+		PxTransform relativePose = {};
+		relativePose.p = mMainShape->getLocalPose().p + convert::Vector3ToPxVec3(relativePos);
+		switch (mGeometryType)
+		{
+		case eGeometryType::Box:
+			mSubShapes.push_back(PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->boxGeom, *mProperties->GetMaterial()));
+			break;
+		case eGeometryType::Capsule:
+		{
+			relativePose.q = (PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
+			mSubShapes.push_back(PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->capsuleGeom, *mProperties->GetMaterial()));
+		}
+		break;
+		case eGeometryType::Sphere:
+			mSubShapes.push_back(PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->sphereGeom, *mProperties->GetMaterial()));
+			break;
+		case eGeometryType::Plane:
+			mSubShapes.push_back(PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial()));
+			break;
+		}
+		mSubShapes[mSubShapes.size() - 1]->setLocalPose(relativePose);
+
 	}
 }
 
@@ -260,8 +323,8 @@ void Physical::initializeActor()
 	switch (mActorType)
 	{
 	case eActorType::Static:
-		mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
-		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
+		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
+		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 		break;
 	//case eActorType::MONSTER_DYNAMIC:
 	//case eActorType::PROJECTILE_DYNAMIC:
@@ -271,8 +334,8 @@ void Physical::initializeActor()
 		rigidBody->SetLinearDamping(0.5f);
 		rigidBody->SetLinearMaxVelocityForDynamic(100.f);
 		rigidBody->SetAngularMaxVelocityForDynamic(50.f);
-		mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
-		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
+		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
+		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 	}
 		break;
 	case eActorType::Kinematic:
@@ -290,8 +353,8 @@ void Physical::initializeActor()
 			해당 플래그를 키면 Kinematic 객체가 시각화 목적으로 사용됩니다.
 		*/
 
-		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
-		mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
+		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 		break;
 	}
 }

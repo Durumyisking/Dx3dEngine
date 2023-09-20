@@ -72,7 +72,7 @@ public:
 public:
     eActorType                  GetActorType()     const { return mActorType; }
     eGeometryType               GetGeometryType()  const { return mGeometryType; }
-    PxShape*                    GetShape()         const { return mShape; }
+    PxShape*                    GetShape()         const { return mMainShape; }
     const Vector3&              GetGeometrySize()  const { return mSize; }
     std::shared_ptr<Geometry>   GetGeometries()    const { return mGeometry; }
     PxActor*                    GetActor()         const { return mActor; }
@@ -93,6 +93,13 @@ public:
 
     std::shared_ptr<PhysicalProperties> GetProperties() const { return mProperties; }
 
+    void CreateMainShape();
+    void CreateMainShape(Vector3 localPos);
+
+    void CreateSubShape();
+    void CreateSubShape(Vector3 localPos);
+
+
 private:
     void createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize);
     void createCapsuleGeometry(eGeometryType geometryType, float radius, float halfHeight);
@@ -103,7 +110,6 @@ private:
     void createPhysicsProperties(const MassProperties& massProperties = MassProperties());
     void createGeometry(eGeometryType geometryType, const Vector3& shapeSize); // 액터당 단일로 달아줄 지오메트리(shape)
     void createUniversalShape(); // 공용으로 사용 가능한 지오메트리 
-    void createShape();
     void createActor();
     void initializeActor();
 
@@ -132,7 +138,9 @@ private:
         - 입자 기반의 유체 시뮬레이션 수행        
     */
 
-    PxShape*                        mShape;
+    PxShape*                        mMainShape;
+    std::vector<PxShape*>           mSubShapes;
+
 
     std::shared_ptr<PhysicalProperties> mProperties;
     std::shared_ptr<Geometry>        mGeometry;
