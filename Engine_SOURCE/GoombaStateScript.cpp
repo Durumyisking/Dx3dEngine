@@ -11,6 +11,8 @@
 #include "TimerMgr.h"
 #include "SceneMgr.h"
 #include "Scene.h"
+#include "MeshRenderer.h"
+
 
 GoombaStateScript::GoombaStateScript()
 	: MonsterStateScript()
@@ -18,6 +20,7 @@ GoombaStateScript::GoombaStateScript()
 	, mRigidbody(nullptr)
 	, mMovement (nullptr)
 	, mTransform(nullptr)
+	, mModel(nullptr)
 {
 }
 
@@ -29,11 +32,21 @@ void GoombaStateScript::Initialize()
 {
 	MonsterStateScript::Initialize();
 	mAnimator = mMonster->GetComponent<BoneAnimator>();
+
+	mAnimator->GetAnimationClip(L"Land")->SetCompleteEvent(
+		[this]()
+	{
+		mMonster->SetMonsterState(Monster::eMonsterState::Idle);
+	}
+	);
+
 	mRigidbody = mMonster->GetComponent<PhysXRigidBody>();
-	mRigidbody->SetMaxVelocity_XZ(10.f);
+	mRigidbody->SetMaxVelocity_XZ(5.f);
+	mRigidbody->SetMaxVelocity_Y(30.f);
 	mMovement = mMonster->GetComponent<PhysicalMovement>();
 	mTransform = mMonster->GetComponent<Transform>();
 
+	mModel = GetMeshRenderer()->GetModel();
 }
 
 void GoombaStateScript::Update()
@@ -59,6 +72,7 @@ void GoombaStateScript::Idle()
 {
 	if (mAnimator->PlayAnimationName() != L"Wait")
 	{
+		setOpenEyeModel();
 		mAnimator->Play(L"Wait");
 	}
 
@@ -121,6 +135,7 @@ void GoombaStateScript::Jump()
 	{
 		mAnimator->Play(L"Jump", false);
 
+		mRigidbody->SetMaxVelocity_Y(20.f);
 		mRigidbody->AddForce(math::Vector3(0.0f, GOOMBA_JUMPFORCE, 0.0f));
 		mRigidbody->ApplyGravity();
 		mRigidbody->SetAirOn();
@@ -129,6 +144,7 @@ void GoombaStateScript::Jump()
 	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())
 	{
 		mMonster->SetMonsterState(Monster::eMonsterState::Fall);
+		mRigidbody->SetMaxVelocity_Y(30.f);
 	}
 }
 
@@ -144,7 +160,7 @@ void GoombaStateScript::Land()
 {
 	if (mAnimator->PlayAnimationName() != L"Land")
 	{
-		mAnimator->Play(L"Land");
+		mAnimator->Play(L"Land", false);
 	}
 }
 
@@ -163,11 +179,11 @@ void GoombaStateScript::Turn()
 		}
 		if (mbTurnLeft)
 		{
-			mTransform->AddPhysicalRotation(Vector3(0.f, 180.f, 0.f) * DT);
+			mTransform->AddPhysicalRotation(Vector3(0.f, 360.f, 0.f) * DT);
 		}
 		else
 		{
-			mTransform->AddPhysicalRotation(Vector3(0.f, -180.f, 0.f) * DT);
+			mTransform->AddPhysicalRotation(Vector3(0.f, -360.f, 0.f) * DT);
 		}
 	}
 	else
@@ -189,6 +205,9 @@ void GoombaStateScript::Chase()
 		{
 			mRigidbody->SetLinearMaxVelocityForDynamic(GOOMBA_RUN_VELOCITY);
 			mAnimator->Play(L"Dash");
+
+			setHalfCloseEyeModel();
+			
 		}
 	}
 
@@ -208,7 +227,7 @@ void GoombaStateScript::Chase()
 			
 			Vector3 moveDir = mTransform->WorldForward();
 			moveDir.y = 0.f;
-			mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
+			//mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
 		}
 	}
 }
@@ -237,4 +256,30 @@ void GoombaStateScript::Groggy()
 
 void GoombaStateScript::Die()
 {
+}
+
+void GoombaStateScript::setHalfCloseEyeModel()
+{
+	assert(mModel);
+
+	mModel->MeshRenderSwtich(L"EyeOpen__BodyMT-mesh", false);
+	mModel->MeshRenderSwtich(L"EyeOpen__EyeLMT-mesh", false);
+	mModel->MeshRenderSwtich(L"EyeOpen__EyeRMT-mesh", false);
+
+	mModel->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", true);
+}
+
+void GoombaStateScript::setOpenEyeModel()
+{
+	assert(mModel);
+
+	mModel->MeshRenderSwtich(L"EyeOpen__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeOpen__EyeLMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeOpen__EyeRMT-mesh", true);
+
+	mModel->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", false);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", false);
 }

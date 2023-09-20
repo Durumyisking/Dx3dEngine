@@ -90,7 +90,7 @@ void ScenePlay::Initialize()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(15.f, 20.f, 9.5f));
+		player->SetPos(Vector3(0.f, 80.f, 0.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
@@ -101,7 +101,7 @@ void ScenePlay::Initialize()
 		player->AddComponent<PlayerScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
+		physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
@@ -111,7 +111,7 @@ void ScenePlay::Initialize()
 
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(0.f, 20.f, 0.f));
+		goomba->SetPos(Vector3(0.f, 10.f, 0.f));
 	}
 
 	{
