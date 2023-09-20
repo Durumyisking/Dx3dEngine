@@ -92,18 +92,18 @@ bool Mesh::GetVerticesFromBuffer(std::vector<Vertex>* vertexVec)
 	desc.BindFlags = 0; // Remove any bind flags
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
 
-	ID3D11Buffer* stagingBuffer = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> stagingBuffer = nullptr;
 	GetDevice()->CreateBuffer(&desc, nullptr, &stagingBuffer);
 
 	// Copy data to staging buffer
-	GetDevice()->GetDeviceContext()->CopyResource(stagingBuffer, mVertexBuffer.Get());
+	GetDevice()->GetDeviceContext()->CopyResource(stagingBuffer.Get(), mVertexBuffer.Get());
 
 	D3D11_MAPPED_SUBRESOURCE mappedData;
 	vertexVec->clear();
 	vertexVec->resize(mVertexCount);
 
 	// Map the buffer
-	HRESULT hr = GetDevice()->GetDeviceContext()->Map(stagingBuffer, 0, D3D11_MAP_READ, 0, &mappedData);
+	HRESULT hr = GetDevice()->GetDeviceContext()->Map(stagingBuffer.Get(), 0, D3D11_MAP_READ, 0, &mappedData);
 	if (FAILED(hr))
 		return false;
 
@@ -115,7 +115,7 @@ bool Mesh::GetVerticesFromBuffer(std::vector<Vertex>* vertexVec)
 	}
 
 	// Unmap the buffer
-	GetDevice()->GetDeviceContext()->Unmap(stagingBuffer, 0);
+	GetDevice()->GetDeviceContext()->Unmap(stagingBuffer.Get(), 0);
 
 	return true;
 }
