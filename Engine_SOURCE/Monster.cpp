@@ -9,6 +9,8 @@ Monster::Monster()
 	, mRecognizeRadius(10.f)
 	, mFoundPlayer(false)
 {
+	//StateInfoSetting
+	mStateInfo.resize(static_cast<int>(eMonsterState::Die) + 1);
 }
 
 Monster::~Monster()
@@ -17,10 +19,6 @@ Monster::~Monster()
 
 void Monster::Initialize()
 {
-	//StateInfoSetting
-	mStateInfo.resize(static_cast<int>(eMonsterState::Die) + 1);
-	
-
 	// Animator
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 	if (animator != nullptr)

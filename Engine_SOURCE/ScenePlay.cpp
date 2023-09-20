@@ -114,6 +114,10 @@ void ScenePlay::Initialize()
 		goomba->SetPos(Vector3(0.f, 20.f, 0.f));
 	}
 
+	{
+		//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+
+	}
 	//{
 	//	Player* player = object::Instantiate<Player>(eLayerType::Objects, this);
 	//	player->SetPos(Vector3(-15.f, 10.f, 9.5f));

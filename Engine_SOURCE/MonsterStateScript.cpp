@@ -46,7 +46,7 @@ void MonsterStateScript::Update()
 	UINT iState = static_cast<UINT>(mMonster->GetMonsterState());
 	// enum 상태와 매칭되는 배열을 인덱스로 접근
 	mStateEventList[iState]();
-
+	
 	Script::Update();
 }
 
