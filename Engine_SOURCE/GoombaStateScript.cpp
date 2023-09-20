@@ -30,6 +30,7 @@ void GoombaStateScript::Initialize()
 	MonsterStateScript::Initialize();
 	mAnimator = mMonster->GetComponent<BoneAnimator>();
 	mRigidbody = mMonster->GetComponent<PhysXRigidBody>();
+	mRigidbody->SetMaxVelocity_XZ(10.f);
 	mMovement = mMonster->GetComponent<PhysicalMovement>();
 	mTransform = mMonster->GetComponent<Transform>();
 
@@ -50,8 +51,8 @@ void GoombaStateScript::Update()
 		mAnimator->Play(L"Attack");
 	}
 
-	GetOwner()->ReorganizePosition(eLayerType::Platforms);
 	MonsterStateScript::Update();
+
 }
 
 void GoombaStateScript::Idle()
@@ -66,12 +67,12 @@ void GoombaStateScript::Idle()
 
 void GoombaStateScript::Move()
 {
-	/*if (mAnimator->PlayAnimationName() != L"Walk")
-	{
-		const std::wstring& anim = mAnimator->PlayAnimationName();
-		mRigidbody->SetMaxVelocity(GOOMBA_WALK_VELOCITY);
-		mAnimator->Play(L"Walk");
-	}
+	//if (mAnimator->PlayAnimationName() != L"Walk")
+	//{
+	//	const std::wstring& anim = mAnimator->PlayAnimationName();
+	//	mRigidbody->SetMaxVelocity(GOOMBA_WALK_VELOCITY);
+	//	mAnimator->Play(L"Walk");
+	//}
 
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
@@ -80,37 +81,37 @@ void GoombaStateScript::Move()
 		return;
 	}
 
-	bool able = false;
-	auto Input_DownFunC = [&](eKeyCode key, eKeyCode mult_key, math::Vector3 rotation)
-		{
-			if (able)
-				return;
+	//bool able = false;
+	//auto Input_DownFunC = [&](eKeyCode key, eKeyCode mult_key, math::Vector3 rotation)
+	//	{
+	//		if (able)
+	//			return;
 
-			if (GETSINGLE(InputMgr)->GetKeyDown(key))
-			{
-				if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
-				{
-					mTransform->SetPhysicalRotation(rotation);
-					able = true;
-				}
-			}
-		};
+	//		if (GETSINGLE(InputMgr)->GetKeyDown(key))
+	//		{
+	//			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
+	//			{
+	//				mTransform->SetPhysicalRotation(rotation);
+	//				able = true;
+	//			}
+	//		}
+	//	};
 
-	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, 45.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -45.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, 0.f, 0.0f));
+	//Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, 45.f, 0.0f));
+	//Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -45.f, 0.0f));
+	//Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, 0.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -225.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, -135.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, -180.f, 0.0f));
+	//Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -225.f, 0.0f));
+	//Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, -135.f, 0.0f));
+	//Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, -180.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, -90.f, 0.0f));
-	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, 90.f, 0.0f));
-	mTransform->FixedUpdate();
+	//Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, -90.f, 0.0f));
+	//Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, 90.f, 0.0f));
+	//
 
-	Vector3 moveDir = mTransform->Forward();
-	moveDir.y = 0.f;
-	mRigidbody->AddForce((-moveDir * 10.f));*/
+	//Vector3 moveDir = mTransform->WorldForward();
+	//moveDir.y = 0.f;
+	//mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
 
 }
 
@@ -120,9 +121,9 @@ void GoombaStateScript::Jump()
 	{
 		mAnimator->Play(L"Jump", false);
 
-
 		mRigidbody->AddForce(math::Vector3(0.0f, GOOMBA_JUMPFORCE, 0.0f));
-
+		mRigidbody->ApplyGravity();
+		mRigidbody->SetAirOn();
 	}
 
 	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())
@@ -135,15 +136,25 @@ void GoombaStateScript::Fall()
 {
 	if (mAnimator->PlayAnimationName() != L"Fall")
 	{
-		mAnimator->Play(L"Fall", false);
+		mAnimator->Play(L"Fall");
+	}
+}
+
+void GoombaStateScript::Land()
+{
+	if (mAnimator->PlayAnimationName() != L"Land")
+	{
+		mAnimator->Play(L"Land");
 	}
 }
 
 void GoombaStateScript::Turn()
 {
-	Vector3 dirToPlayer = mPlayer->GetWorldPos() - GetOwnerWorldPos();
+	Vector3 dirToPlayer_XYZ = mPlayer->GetWorldPos() - GetTransform()->WorldForward();
+	Vector2 dirToPlayer = { dirToPlayer_XYZ.x, dirToPlayer_XYZ.z };
+	Vector2 worldForward = { GetTransform()->WorldForward().x, GetTransform()->WorldForward().z };
 	dirToPlayer.Normalize();
-	float rotCosTheta = dirToPlayer.Dot(mTransform->WorldForward());
+	float rotCosTheta = dirToPlayer.Dot(worldForward);
 	if (rotCosTheta < 0.99f)
 	{		
 		if (mAnimator->PlayAnimationName() != L"Turn")
@@ -152,11 +163,11 @@ void GoombaStateScript::Turn()
 		}
 		if (mbTurnLeft)
 		{
-			mTransform->AddPhysicalRotation(Vector3(0.f, -180.f, 0.f) * DT);
+			mTransform->AddPhysicalRotation(Vector3(0.f, 180.f, 0.f) * DT);
 		}
 		else
 		{
-			mTransform->AddPhysicalRotation(Vector3(0.f, 180.f, 0.f) * DT);
+			mTransform->AddPhysicalRotation(Vector3(0.f, -180.f, 0.f) * DT);
 		}
 	}
 	else

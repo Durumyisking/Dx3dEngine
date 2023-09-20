@@ -5,10 +5,10 @@
 //class PhysXRigidBody;
 //class PhysicalMovement;
 //class Transform		;
-#define GOOMBA_SPPED 700.f
-#define GOOMBA_JUMPFORCE 5000.f
+#define GOOMBA_SPPED 7000.f
+#define GOOMBA_JUMPFORCE 3000.f
 #define GOOMBA_MASS 1.f
-#define GOOMBA_WALK_VELOCITY 20f
+#define GOOMBA_WALK_VELOCITY 20.f
 #define GOOMBA_RUN_VELOCITY 50.f
 class GoombaStateScript : public MonsterStateScript
 {
@@ -24,6 +24,7 @@ public:
 	virtual void Move() final;
 	virtual void Jump() final;
 	virtual void Fall()  final;
+	virtual void Land()  final;
 	virtual void Turn()  final;
 	virtual void Chase() final;
 

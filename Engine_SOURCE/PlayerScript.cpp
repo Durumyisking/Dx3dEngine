@@ -32,14 +32,6 @@ void PlayerScript::Initialize()
 
 	//mPhyXRigidBody->SetAngularMaxVelocityForDynamic(10.f);
 	//mPhyXRigidBody->SetLinearMaxVelocityForDynamic(10.f);
-	Timer* antiGlideTimer = new Timer(0.1f);
-	antiGlideTimer->SetDestroy(false);
-	antiGlideTimer->Event() = [this]
-	{
-		mPhyXRigidBody->AddForceForDynamic((Vector3(0.f, -1.f, 0.f) * 10.f * DT), PxForceMode::Enum::eIMPULSE);
-	};
-	GETSINGLE(TimerMgr)->GetInstance()->AddTimer(antiGlideTimer);
-
 }
 void PlayerScript::Update()
 {
@@ -71,28 +63,28 @@ void PlayerScript::Update()
 	float cDotp_degree = toDegree(cDotp);
 
 
+
 	if (KEY_DOWN(LEFT))
 	{
-		mPhyXRigidBody->SetVelocity(Vector3(-5.f, 0.f, 0.f));
+		mPhyXRigidBody->AddForce(-camRight * 7000.f * DT);
 	}
 	if (KEY_DOWN(RIGHT))
 	{
-		mPhyXRigidBody->SetVelocity(Vector3(5.f, 0.f, 0.f));
+		mPhyXRigidBody->AddForce(camRight * 7000.f * DT);
 	}
 	if (KEY_DOWN(UP))
 	{
-		mPhyXRigidBody->SetVelocity(Vector3(0.f, 0.f, 5.f));
+		mPhyXRigidBody->AddForce(camForward * 7000.f * DT);
 	}
 	if (KEY_DOWN(DOWN))
 	{
-		mPhyXRigidBody->SetVelocity(Vector3(0.f, 0.f, -5.f));
+		mPhyXRigidBody->AddForce(-camForward * 7000.f * DT);
 	}
 	if (KEY_TAP(SPACE))
 	{
 		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((Vector3::Up * 5000.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
 
-	GetOwner()->ReorganizePosition(eLayerType::Platforms);
 }
 void PlayerScript::FixedUpdate()
 {

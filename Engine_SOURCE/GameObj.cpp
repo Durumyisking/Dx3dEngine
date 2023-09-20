@@ -391,7 +391,7 @@ Vector3 GameObj::MoveToTarget_Smooth_vector3(GameObj* target, float speed, bool 
 	return result;
 }
 
-void GameObj::ReorganizePosition(eLayerType layerType)
+void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 {
 	assert(GetComponent<Physical>());
 	assert(GetComponent<PhysXCollider>());
@@ -405,21 +405,57 @@ void GameObj::ReorganizePosition(eLayerType layerType)
 		vResult = GetPhysXCollider()->ComputePenetration(gameObject);
 		if (vResult != Vector3::Zero)
 		{
-			if (vResult.x > 0.f)
-				vResult.x += 1.f;
-			else if (vResult.x < 0.f)
-				vResult.x -= 1.f;
-
-			if (vResult.y < 0.f)
+			switch (axis)
 			{
-				GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-				GetPhysXRigidBody()->RemoveGravity();
+			case enums::AXIS::X:
+				vResult.y = 0.f;
+				vResult.z = 0.f;
+				GetPhysXRigidBody()->SetVelocity(AXIS::X, Vector3(0.f, 0.f, 0.f));
 
- 				vResult.y *= -1.f;
+				break;
+			case enums::AXIS::Y:
+				vResult.x = 0.f;
+				vResult.z = 0.f;
+				if (vResult.y < 0.f)
+				{
+					GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+					GetPhysXRigidBody()->RemoveGravity();
+					GetPhysXRigidBody()->SetAirOff();
+					vResult *= -1.f;
+					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
+				}
+				else
+				{
+					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
+				}
+
+				break;
+			case enums::AXIS::Z:
+				vResult.x = 0.f;
+				vResult.y = 0.f;
+				GetPhysXRigidBody()->SetVelocity(AXIS::Z, Vector3(0.f, 0.f, 0.f));
+				break;
+			case enums::AXIS::XY:
+				vResult.z = 0.f;
+				GetPhysXRigidBody()->SetVelocity(AXIS::XY, Vector3(0.f, 0.f, 0.f));
+				break;
+			case enums::AXIS::XZ:
+				vResult.y = 0.f;
+				GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
+				break;
+			case enums::AXIS::YZ:
+				vResult.x = 0.f;
+				GetPhysXRigidBody()->SetVelocity(AXIS::YZ, Vector3(0.f, 0.f, 0.f));
+				break;
+			case enums::AXIS::XYZ:
+				GetPhysXRigidBody()->SetVelocity(AXIS::XYZ, Vector3(0.f, 0.f, 0.f));
+				break;
+			case enums::AXIS::END:
+				break;
+			default:
+				break;
 			}
 
-			vResult.z = 0.f;			
-			GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 
 			return;
 		}

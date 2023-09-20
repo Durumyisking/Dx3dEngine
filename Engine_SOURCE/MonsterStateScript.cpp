@@ -20,6 +20,7 @@ MonsterStateScript::MonsterStateScript()
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Move, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Jump, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Fall, this));
+	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Land, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Turn, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Chase, this));
 	mStateEventList.emplace_back(std::bind(&MonsterStateScript::Attack, this));
@@ -67,9 +68,11 @@ void MonsterStateScript::Idle()
 			mMonster->SetIsFoundPlayer(true);
 			mMonster->SetMonsterState(Monster::eMonsterState::Turn);
 
-			Vector3 dirToPlayer = GetOwnerWorldPos() - mPlayer->GetWorldPos();
+			Vector3 dirToPlayer_XYZ = mPlayer->GetWorldPos() - GetTransform()->WorldForward();
+			Vector2 dirToPlayer = { dirToPlayer_XYZ.x, dirToPlayer_XYZ.z};
+			Vector2 worldForward = { GetTransform()->WorldForward().x, GetTransform()->WorldForward().z };
 			dirToPlayer.Normalize();
-			float rotCosTheta = dirToPlayer.Dot(GetTransform()->WorldForward());
+			float rotCosTheta = dirToPlayer.Dot(worldForward);
 			if (rotCosTheta > 0.f)
 			{
 				mbTurnLeft = true;

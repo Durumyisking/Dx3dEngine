@@ -148,7 +148,7 @@ GameObj* Scene::GetPlayer()
 		}
 	}
 
-	assert(player);
+	//assert(player);
 
 	return player;
 }

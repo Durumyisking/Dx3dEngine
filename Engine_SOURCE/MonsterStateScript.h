@@ -16,6 +16,7 @@ public:
 	virtual void Move() {};
 	virtual void Jump() {};
 	virtual void Fall() {};
+	virtual void Land() {};
 	virtual void Turn() {};
 	virtual void Chase() {};
 	virtual void Attack() {};

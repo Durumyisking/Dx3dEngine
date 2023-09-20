@@ -260,6 +260,7 @@ void Physical::initializeActor()
 	switch (mActorType)
 	{
 	case eActorType::Static:
+		mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
 		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 		break;
 	//case eActorType::MONSTER_DYNAMIC:
@@ -270,6 +271,7 @@ void Physical::initializeActor()
 		rigidBody->SetLinearDamping(0.5f);
 		rigidBody->SetLinearMaxVelocityForDynamic(100.f);
 		rigidBody->SetAngularMaxVelocityForDynamic(50.f);
+		mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
 		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 	}
 		break;
@@ -288,9 +290,8 @@ void Physical::initializeActor()
 			해당 플래그를 키면 Kinematic 객체가 시각화 목적으로 사용됩니다.
 		*/
 
-
-		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true); 
-		//mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
+		mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 		break;
 	}
 }
