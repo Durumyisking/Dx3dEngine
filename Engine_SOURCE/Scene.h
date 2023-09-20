@@ -35,13 +35,21 @@ public:
 
 	std::vector<GameObj*> GetDontDestroyObjects();
 
-	const std::vector<GameObj*>& GetGameObj(eLayerType eLayer);
+	const std::vector<GameObj*>& GetGameObjects(eLayerType eLayer);
+
+	GameObj* GetPlayer();
+
+protected:
+	void CreateCameras();
 
 protected :
 	std::vector<Layer> mLayers;
 	SceneMgr::eSceneType mType;
 
 	std::vector<GameObj*> mDeadObjects;
+
+	GameObj* mUICamera  ;
+	GameObj* mCamera;
 
 	bool mDeleteObj;
 

@@ -9,8 +9,11 @@
 BaseRenderer::BaseRenderer(eComponentType type)
 	:Component(type)
 	, mbIsAnim(false)
-	, mbUseLOD(true)
+	, mbUseLOD(false)
 	, mSpriteSize(Vector2::Zero)
+	, mMesh (nullptr)
+	, mModel (nullptr)
+	, mMaterial (nullptr)
 {
 	// 디폴트 매시 지정
 	Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
@@ -47,15 +50,16 @@ void BaseRenderer::SetMeshByKey(std::wstring key)
 void BaseRenderer::SetMaterial(Material* material)
 {
 	mMaterial = material;
+}
 
-	// adjustTexture();
+Material* BaseRenderer::GetMaterial()
+{
+	return mMaterial;
 }
 
 void BaseRenderer::SetMaterialByKey(std::wstring key)
 {
 	mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
-
-	// adjustTexture();
 }
 
 void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
@@ -63,7 +67,17 @@ void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
 	mMaterial = material;
 	mbIsAnim = true;
 	mSpriteSize = spriteSize;
-	// adjustTexture();
+}
+
+void BaseRenderer::SetModelByKey(std::wstring key)
+{
+	mModel = GETSINGLE(ResourceMgr)->Find<Model>(key);
+}
+
+void BaseRenderer::SetModelByKey(std::wstring modelKey, std::wstring materialKey)
+{
+	mModel = GETSINGLE(ResourceMgr)->Find<Model>(modelKey);
+	mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(materialKey);
 }
 
 

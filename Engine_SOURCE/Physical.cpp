@@ -24,7 +24,7 @@ Physical::~Physical()
 
 void Physical::Initialize()
 {
-	assert(GetOwner()->GetComponent<PhysXRigidBody>());
+	//assert(GetOwner()->GetComponent<PhysXRigidBody>());
 	initializeActor();
 }
 
@@ -184,23 +184,30 @@ void Physical::createShape()
 
 		PxRigidActorExt::createExclusiveShape() 이것과 같다.
 	*/
+	PxPhysics* physics = PhysicsMgr::GetInstance()->GetEnvironment()->GetPhysics();
 
-	switch (mGeometryType)
+	if (physics)
 	{
-	case eGeometryType::Box:
-		mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->boxGeom, *mProperties->GetMaterial());
-		break;
-	case eGeometryType::Capsule:
-		mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->capsuleGeom, *mProperties->GetMaterial());
-		break;
-	case eGeometryType::Sphere:
-		mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->sphereGeom, *mProperties->GetMaterial());
-		break;
-	case eGeometryType::Plane:
-		mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial());
-		break;
+		switch (mGeometryType)
+		{
+		case eGeometryType::Box:
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->boxGeom, *mProperties->GetMaterial());
+			break;
+		case eGeometryType::Capsule:	
+		{
+			PxTransform relativePose(PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->capsuleGeom, *mProperties->GetMaterial());
+			mShape->setLocalPose(relativePose);
+		}
+			break;
+		case eGeometryType::Sphere:
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->sphereGeom, *mProperties->GetMaterial());
+			break;
+		case eGeometryType::Plane:
+			mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mGeometry->planeGeom, *mProperties->GetMaterial());
+			break;
+		}
 	}
-		
 }
 
 void Physical::createActor()
@@ -213,6 +220,7 @@ void Physical::createActor()
 		{
 		case eActorType::Dynamic:
 			mActor = physics->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
+			//mActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
 			break;
 		case eActorType::Static:
 			mActor = physics->createRigidStatic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
@@ -223,11 +231,20 @@ void Physical::createActor()
 			mActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
 		}
 		break;
-
 		case eActorType::Character:
 		{
 		}
 		break;
+		case eActorType::Monster:
+		{
+			mActor = physics->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
+			mActor->is<PxRigidDynamic>()->setRigidDynamicLockFlags(
+				PxRigidDynamicLockFlag::eLOCK_ANGULAR_X |
+				PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
+			break;
+		}
+		break;
+
 		}
 	}
 }
@@ -243,6 +260,8 @@ void Physical::initializeActor()
 	switch (mActorType)
 	{
 	case eActorType::Static:
+		mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
+		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 		break;
 	//case eActorType::MONSTER_DYNAMIC:
 	//case eActorType::PROJECTILE_DYNAMIC:
@@ -250,8 +269,10 @@ void Physical::initializeActor()
 	{
 		PhysXRigidBody* rigidBody = GetOwner()->GetComponent<PhysXRigidBody>();
 		rigidBody->SetLinearDamping(0.5f);
-		rigidBody->SetLinearMaxVelocityForDynamic(1000.f);
-		rigidBody->SetAngularMaxVelocityForDynamic(500.f);
+		rigidBody->SetLinearMaxVelocityForDynamic(100.f);
+		rigidBody->SetAngularMaxVelocityForDynamic(50.f);
+		mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
+		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 	}
 		break;
 	case eActorType::Kinematic:
@@ -269,8 +290,7 @@ void Physical::initializeActor()
 			해당 플래그를 키면 Kinematic 객체가 시각화 목적으로 사용됩니다.
 		*/
 
-
-		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true); 
+		mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
 		mShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 		break;
 	}

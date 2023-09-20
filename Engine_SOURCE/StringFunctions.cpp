@@ -278,6 +278,16 @@ std::string Replace(const std::string& text, const std::string_view& oldText, co
 	// ".UserFBX"
 }
 
-	
-	
+std::wstring ConvertToW_String(const char* str)
+{
+	std::string sName = std::string(str);
+	std::wstring wName(sName.begin(), sName.end());
+	return wName;
+}
 
+std::string ConvertToString(const wchar_t* str)
+{
+	std::wstring sName = std::wstring(str);
+	std::string wName(sName.begin(), sName.end());
+	return wName;
+}

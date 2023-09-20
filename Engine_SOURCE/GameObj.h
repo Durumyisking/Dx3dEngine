@@ -11,6 +11,21 @@ class Material;
 class Mesh;
 class Component;
 
+class Transform;
+class Camera;
+class RigidBody;
+class PhysXRigidBody;
+class PhysicalMovement;
+class Physical;
+class PhysXCollider;
+class Animator;
+class BoneAnimator;
+class MeshRenderer;
+class SpriteRenderer;
+class ParticleSystem;
+class Light;
+
+
 class GameObj : public DruEntity
 {
 public:
@@ -30,16 +45,18 @@ public:
 	virtual void Update();
 	virtual void FixedUpdate();
 	virtual void Render();
+	virtual void PrevRender();
 	virtual void FontRender();
 
 public:
 	virtual void OnCollisionEnter(GameObj* gameObject) {};
 	virtual void OnTriggerEnter(GameObj* gameObject) {};
+	virtual void OnTriggerStay(GameObj* gameObject) {};
 	virtual void OnTriggerExit(GameObj* gameObject) {};
 
 	template <typename T>
 	T* AddComponent(eComponentType eType)
-	{			
+	{
 		T* comp = new T();
 
 		if (eType != eComponentType::Script)
@@ -55,6 +72,26 @@ public:
 
 		return comp;
 	}
+
+	template <typename T>
+	T* AddComponent(eComponentType eType, Material* material, Mesh* mesh)
+	{
+		T* comp = new T(material, mesh);
+
+		if (eType != eComponentType::Script)
+		{
+			mComponents[static_cast<UINT>(eType)] = comp;
+			mComponents[static_cast<UINT>(eType)]->SetOwner(this);
+		}
+		else
+		{
+			mScripts.push_back(dynamic_cast<Script*>(comp));
+			comp->SetOwner(this);
+		}
+
+		return comp;
+	}
+
 
 	void AddComponent(Component* component);
 
@@ -104,14 +141,32 @@ public:
 		return nullptr;
 	}
 
-	void Flip();
-		
 	bool IsRenderingBlock() const { return mbBlockRendering; }
 	void RenderingBlockOn() { mbBlockRendering = true; }
 	void RenderingBlockOff() { mbBlockRendering = false; }
 
 	bool MoveToTarget_Smooth_bool(GameObj* target, float speed, bool zOn, eDir dir = eDir::END);
 	Vector3 MoveToTarget_Smooth_vector3(GameObj* target, float speed, bool zOn, eDir dir = eDir::END);
+
+
+	std::vector<Component*> GetComponentsVec() { return mComponents; }
+
+	void ReorganizePosition(AXIS axis, eLayerType layerType); // 충돌체 겹친 크기만큼 밀어냄
+
+
+	Transform* GetTransform();
+	Camera* GetCamera();
+	RigidBody* GetRigidBody();
+	PhysXRigidBody* GetPhysXRigidBody();
+	PhysicalMovement* GetMovement();
+	Physical* GetPhysical();
+	PhysXCollider* GetPhysXCollider();
+	Animator* GetAnimator();
+	BoneAnimator* GetBoneAnimator();
+	MeshRenderer* GetMeshRenderer();
+	SpriteRenderer* GetSpriteRenderer();
+	ParticleSystem* GetParticle();
+	Light* GetLight();
 
 
 protected:
@@ -124,8 +179,6 @@ private:
 	std::vector<Script*> mScripts;
 	bool mbDestroy;
 
-	bool mbIsLeft;
-	bool mbOnFloor;
 	bool mbBlockRendering;
 
 public:
@@ -139,7 +192,7 @@ public:
 	Vector3 GetPos();
 	Vector3 GetWorldPos();
 
-	// ui만 사용 가능
+	// ui           
 	Vector3 GetUIWorldPos();
 
 	Vector3 GetScale();
@@ -147,6 +200,8 @@ public:
 
 
 	void SetMaterial(Material* material);
+	Material* GetMaterial();
+
 	void SetMesh(Mesh* mesh);
 
 	bool IsDead()
@@ -184,19 +239,11 @@ public:
 
 	eState GetState() const { return mState; }
 
-	bool IsDontDestroy() { return mbDestroy; }
-	void DontDestroy() { mbDestroy = true; }
+	bool IsDestroy() { return mbDestroy; }
+	void SetDestroyOff() { mbDestroy = false; }
+	void SetDestroyOn() { mbDestroy = true; }
 
 	eLayerType GetLayerType() const { return mType; }
 	void SetLayerType(eLayerType type) { mType = type; }
 
-	bool IsLeft() { return mbIsLeft; }
-	void SetLeft() { mbIsLeft = true; }
-
-	void SetRight() { mbIsLeft = false; }
-
-	bool IsOnFloor() const { return mbOnFloor; }
-	void SetFloorOn() { mbOnFloor = true; }
-	void SetFloorOff() { mbOnFloor = false; }
 };
-

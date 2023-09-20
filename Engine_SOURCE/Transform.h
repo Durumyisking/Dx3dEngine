@@ -61,6 +61,8 @@ public:
 	void SetScaleZ(const float scaleZ) { mRelativeScale.z = scaleZ;}
 	void SetScaleXY(const Vector2& scale) { mRelativeScale.x = scale.x; mRelativeScale.y = scale.y; }
 
+	void SetOffsetScale(const float scale) { mOffsetScale = scale; }
+
 	void AddPosition(const Vector3& position) { mRelativePosition += position; }
 	void AddPositionX(const float posX) { mRelativePosition.x += posX; }
 	void AddPositionY(const float posY) { mRelativePosition.y += posY; }
@@ -94,6 +96,20 @@ public:
 
 	const Vector3& GetWorldPosition();
 	const Vector3& GetWorldRotation() const { return mWorldRotation; }
+	Matrix GetWorldRotationMatrix()
+	{
+		Matrix rotation;
+
+		Vector3 radian(mWorldRotation.x * (XM_PI / 180)
+			, mWorldRotation.y * (XM_PI / 180)
+			, mWorldRotation.z * (XM_PI / 180));
+
+		rotation = Matrix::CreateRotationX(radian.x);
+		rotation *= Matrix::CreateRotationY(radian.y);
+		rotation *= Matrix::CreateRotationZ(radian.z);
+
+		return rotation;
+	}
 	const Vector3& GetWorldScale() const { return mWorldScale; }
 
 	float GetWorldPositionX() const { return mWorldPosition.x; }
@@ -106,6 +122,8 @@ public:
 	float GetWorldScaleX() const { return mWorldScale.x; }
 	float GetWorldScaleY() const { return mWorldScale.y; }
 	float GetWorldScaleZ() const { return mWorldScale.z; }
+
+	float GetOffsetScale() const { return mOffsetScale; }
 
 	Vector2 GetWorldCenterUp() const { return Vector2(mWorldPosition.x, mWorldPosition.y + mWorldScale.y * 0.5f); }
 	Vector2 GetWorldCenterBottom() const { return Vector2(mWorldPosition.x, mWorldPosition.y - mWorldScale.y * 0.5f); }
@@ -121,9 +139,13 @@ public:
 	}
 
 	Vector3 GetPhysicalPosition();
-	void SetPhysicalPosition(const Vector3& vPosition);
+	void SetPhysicalPosition(const Vector3& position);
+	void SetPhysicalRotation(const Vector3& rotation_degrees);
+	void AddPhysicalRotation(const Vector3& rotation_degrees);
+	void AddPhysicalRotation_Radian(const Vector3& rotation_radian);
 
 	PxTransform GetPxTransform() const { return mPxTransform; }
+	void SetPxTransform(PxTransform pxTransform) {mPxTransform = pxTransform;}
 
 private:
 	Transform* mParent;
@@ -152,6 +174,7 @@ private:
 
 	PxTransform mPxTransform;
 
+	float mOffsetScale;
 };
 
 

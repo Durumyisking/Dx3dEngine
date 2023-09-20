@@ -23,9 +23,9 @@ struct VSOut
 struct PSOut
 {
     float4 Position : SV_Target0;
-    float4 Normal : SV_Target1;
-    float4 Color : SV_Target2;
-    float4 Data : SV_Target3;
+    float4 Albedo : SV_Target1;
+    float4 Normal : SV_Target2;
+    float4 MRD    : SV_Target3;
 };
 
 
@@ -33,42 +33,39 @@ PSOut main(VSOut vsIn) : SV_Target
 {
     PSOut vsOutColor;
     
-    float3 directLighting = (float3) 0.f;
-    float3 ambientLighting = (float3) 0.f;
-
-    float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.f);
+    float4 albedo = float4(1.0f, 1.0f, 1.0f, 1.0f);
     float3 normal = vsIn.ViewNormal;
-    float metallic = 0.01f;
-    float roughness = 0.5f;
-    float3 A0 = (float3) 1.f;
+    float metallic = cbMetallic;
+    float roughness = cbRoughness;
+    
+    float3 worldPos = mul(float4(vsIn.ViewPos, 1.f), inverseWorld).xyz;
+    float pixelToCam = distance(cameraWorldPos.xyz, worldPos);
 
+    
     if (1 == cbbAlbedo)
     {
-        albedo = TextureMapping_albedo(vsIn.UV);
+        albedo = TextureMapping_albedo(vsIn.UV, pixelToCam);
     }
     if (1 == cbbNormal)
     {
-        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
+        normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, pixelToCam);
     }
     if (1 == cbbMetallic)
     {
-        metallic = TextureMapping_metallic(vsIn.UV);
+        metallic = TextureMapping_metallic(vsIn.UV, pixelToCam);
     }
     if (1 == cbbRoughness)
     {
-        roughness = TextureMapping_roughness(vsIn.UV);
+        roughness = TextureMapping_roughness(vsIn.UV, pixelToCam);
     }
-    if (1 == cbbEmissive)
-    {
-        //normal = TextureMapping_normal(vsIn.UV, vsIn.ViewTangent, vsIn.ViewNormal, vsIn.ViewBiNormal);
-    }
-
-//    albedo.xyz = CalculateLightPBR_Direct(vsIn.ViewPos, albedo, normal, metallic, roughness);
     
     vsOutColor.Position = float4(vsIn.ViewPos, 1.0f);
+    vsOutColor.Albedo = albedo;
     vsOutColor.Normal = float4(normal, 1.0f);
-    vsOutColor.Color = albedo;
-    vsOutColor.Data = (float4) 1.f;
+    vsOutColor.MRD.r = metallic;
+    vsOutColor.MRD.g = roughness;
+    vsOutColor.MRD.b = 0.f;
+    vsOutColor.MRD.w = 0.25f;
     
     return vsOutColor;
 }

@@ -8,7 +8,6 @@
 #include "SpriteRenderer.h"
 #include "Renderer.h"
 #include "Texture.h"
-#include "Camera.h"
 #include "CameraScript.h"
 #include "Model.h"
 #include "FontWrapper.h"
@@ -17,6 +16,8 @@
 
 #include "Application.h"
 #include "Player.h"
+#include "Goomba.h"
+#include "Packun.h"
 
 #include "Physical.h"
 #include "PhysXRigidBody.h"
@@ -34,11 +35,26 @@
 
 #include "InputMgr.h"
 
+#include "CubeMap.h"
+#include "SkySphere.h"
+
+#include "BoneAnimator.h"
+
+#include "Panal.h"
+#include "HUD.h"
+#include "Button.h"
+#include "UIFactory.h"
+#include "Animator.h"
+
+#include "ImageUI.h"
+#include "CapUI.h"
+#include "CapEyeUI.h"
+
+
 extern Application application;
 
 
 SceneTitle::SceneTitle()
-	: mCamera(nullptr)
 
 {
 }
@@ -51,6 +67,10 @@ SceneTitle::~SceneTitle()
 void SceneTitle::Initialize()
 {
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
+
+	CreateCameras();
+	CreateMainMenu();
+
 
 	Scene::Initialize();
 }
@@ -65,7 +85,6 @@ void SceneTitle::update()
 	{
 		GETSINGLE(server::ServerMgr)->ConnectAsClient();
 	}
-
 
 	Scene::update();
 }
@@ -82,151 +101,7 @@ void SceneTitle::render()
 
 void SceneTitle::Enter()
 {
-	//mDeleteObj = true;
 
-	{
-		mCamera = object::Instantiate<GameObj>(eLayerType::Camera, L"MainCam");
-		Camera* cameraComp = mCamera->AddComponent<Camera>(eComponentType::Camera);
-		cameraComp->TurnLayerMask(eLayerType::UI, false);
-		cameraComp->SmoothOn();
-		mCamera->AddComponent<CameraScript>(eComponentType::Script);
-		renderer::mainCamera = cameraComp;
-		cameraComp->SetProjectionType(eProjectionType::Perspective);
-		mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
-
-	}
-
-
-	//{
-	//	GameObj* gridObject = object::Instantiate<GameObj>(eLayerType::Grid, L"Grid");
-
-	//	MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-
-	//	gridMr->SetMesh(GETSINGLE(ResourceMgr)->Find<Mesh>(L"Gridmesh"));
-	//	gridMr->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(L"GridMaterial"));
-	//	gridMr->LODOff();
-
-	//	GridScript* gridScript = gridObject->AddComponent<GridScript>(eComponentType::Script);
-	//	gridScript->SetCamera(mainCamera);
-
-	//	float w = static_cast<float>(application.GetWidth());
-	//	float h = static_cast<float>(application.GetHeight());
-	//	gridObject->SetPos({ 0.f, 0.f, 0.f });
-	//	gridObject->SetScale(Vector3(1.f, 1.f, 1.f));
-	//}
-
-	{
-		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLightTitleScene");
-		directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.f, 500.f, -1000.f));
-		directionalLight->SetRotation(Vector3(45.f, 0.f, 0.f));
-		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
-		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-		lightComp->SetType(eLightType::Directional);
-		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
-		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
-//		lightComp->SetAmbient(Vector4(0.5f, 0.5f, 0.5f, 1.f));
-		//MeshRenderer* mr = directionalLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//mr->SetMaterialByKey(L"SunMaterial");
-		//mr->ChangeColor(Vector4(1.f, 1.f, 1.f, 1.f));
-	}
-	
-
-	//{
-	//	Player* player = object::Instantiate<Player>(eLayerType::Player);
-	//	player->SetPos(Vector3(5.f, 5.f, 5.f));
-	//	player->SetScale(Vector3(1.f, 1.f, 1.f));
-	//	player->SetName(L"Player");
-	//	//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"albedo", L"normal", L"PhongShader", L"mat_dirt");
-	//	//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"padded_leather_albedo", L"padded_leather_normal", L"padded_leather_metallic", L"padded_leather_roughness", L"PBRShader", L"mat_dirt");
-	//	Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial
-	//	(
-	//		L"check_albedo",
-	//		L"check_normal", 
-	//		L"check_metallic", 
-	//		L"check_roughness", 
-	//		L"PBRShader",
-	//		L"mat_dirt"
-	//	);
-	//	//Material* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"WanwanBig_Body_alb", L"WanwanBig_Body_nrm", L"WanwanBig_Body_mtl", L"WanwanBig_Body_rgh", L"PBRShader", L"mat_dirt");
-	//	player->GetComponent<MeshRenderer>()->SetMaterial(mat);
-
-	//	//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-	//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-	//	player->AddComponent<PlayerScript>(eComponentType::Script);
-
-	//	Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-	//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-
-	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
-	//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-	//}
-
-	//{
-	//	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
-	//	player->SetPos(Vector3(0.f, 0.f, 0.f));
-	//	player->SetScale({ 0.01f, 0.01f, 0.01f });
-	//	player->SetName(L"Object");
-
-	//	MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
-
-	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
-	//	meshRenderer->SetModel(model);
-	//	meshRenderer->SetMaterialByKey(L"BlockBrickBody");
-
-	//	player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
-	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
-	//}
-	//{
-	//	GameObj* player = object::Instantiate<GameObj>(eLayerType::Objects);
-	//	player->SetPos(Vector3(10.f, 0.f, 0.f));
-	//	player->SetScale({ 0.01f, 0.01f, 0.01f });
-	//	player->SetName(L"Object");
-
-	//	MeshRenderer* meshRenderer = player->AddComponent<MeshRenderer>(eComponentType::Renderer);
-
-	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"blockBrick");
-	//	meshRenderer->SetModel(model);
-	//	meshRenderer->SetMaterialByKey(L"BlockBrickBody");
-
-	//	player->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 1.f, 0.5f));
-	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
-	//}
-	//
-	//{
-	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms);
-	//	plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-	//	plane->SetScale({ 1000.f, 0.5f, 1000.f });
-	//	plane->SetName(L"Plane");
-	//	plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
-	//	plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
-
-	//	PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-	//	plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-	//}
-
-
-	// DebugTest
-	{ 
-		//Deferred
-		{
-			GameObj* test2 = object::Instantiate<GameObj>(eLayerType::Objects);
-			test2->SetPos(Vector3(-10.f, 5.f, 0.f));
-			test2->SetScale({ 5.f, 5.f, 5.f });
-			test2->SetName(L"Test2");
-
-			test2->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-			MeshRenderer* testRender = test2->GetComponent<MeshRenderer>();
-			Material* testMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"DeferredMaterial");
-
-			testRender->SetMaterial(testMaterial);
-			testRender->SetMeshByKey(L"Cubemesh");
-		}	
-	}
 
 	Scene::Enter();
 }
@@ -234,4 +109,87 @@ void SceneTitle::Enter()
 void SceneTitle::Exit()
 {
 	Scene::Exit();
+}
+
+void SceneTitle::CreateMainMenu()
+{
+	{
+		Panal* mMainMenuPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"WorldMapPanal", this, eUIType::TitleImg));
+		HUD* worldMap = (GETSINGLE(UIFactory)->CreateHud(L"WorldMap", L"WorldMapMaterial", Vector3(0.f, 4.5f, 100.f), Vector3(20.f, 20.f, 1.f), mMainMenuPanal, this));
+		//worldMap->SetColor();
+		ImageUI* filter = (GETSINGLE(UIFactory)->CreateImage(L"RedFilter", L"FilterMaterial", Vector3(0.f, 4.5f, 99.f), Vector3(20.f, 20.f, 1.f), mMainMenuPanal, this));
+		//filter->SetColor();
+		worldMap->SetState(eHUDState::Rotate);
+		worldMap->SetSpeed(1);
+		ImageUI* title = (GETSINGLE(UIFactory)->CreateImage(L"MarioTitle", L"TitleMaterial", Vector3(-6.5f, 3.f, 98.f), Vector3(2.f, 2.f, 1.f), mMainMenuPanal, this));
+
+		mMainMenuPanal->Addchild(worldMap);
+		mMainMenuPanal->Addchild(filter);
+		mMainMenuPanal->Addchild(title);
+	}
+
+	{
+		Panal* mBarPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"Start2PTextPanal", this, eUIType::Bar));
+
+		HUD* bar = (GETSINGLE(UIFactory)->CreateHud(L"UIBar", L"UIBarMaterial", Vector3(-5.f, 0.f, 98.f), Vector3(6.f, 1.f, 1.f), mBarPanal, this));
+		//bar->SetColor();
+		bar->SetRotation(Vector3(0.0f, 0.0f, 2.0f));
+		bar->SetChangeSize(Vector3(1.f, 0.9f, 1.0f));
+		bar->SetState(eHUDState::MoveBlink);
+
+		CapUI* cap = (GETSINGLE(UIFactory)->CreateUI<CapUI>(L"Cap", L"CapMaterial", eUIType::TitleImg, Vector3(-0.33f, 0.0f, -0.1f), Vector3(0.2f, 0.6f, 1.f), bar, this));
+		//cap->SetColor();
+		cap->SetState(eHUDState::TitleCapMove);
+		cap->SetTargetPos(cap->GetComponent<Transform>()->GetPosition() + Vector3(0.05f, 0.0f, 0.0f));
+
+		CapEyeUI* capEye = (GETSINGLE(UIFactory)->CreateUI<CapEyeUI>(L"CapEye", L"CapMaterial", eUIType::TitleImg, Vector3(-0.3f, 0.1f, -0.2f), Vector3(0.2f, 1.f, 1.f), bar, this));
+		capEye->SetTargetPos(capEye->GetComponent<Transform>()->GetPosition() + Vector3(0.05f, 0.0f, 0.0f));
+		//capEye->SetColor(); 
+		Animator* capEyeAni = capEye->AddComponent<Animator>(eComponentType::Animator);
+		Texture* capEyeTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"CapEye"));
+		capEyeAni->Create(L"CapEyeAni", capEyeTexture, Vector2::Zero, Vector2(40.0f, 40.0f), Vector2::One, 8, Vector2(80.0f, 80.0f), 0.1f);
+		capEyeAni->Play(L"CapEyeAni", false);
+
+		mBarPanal->Addchild(bar);
+		mBarPanal->Addchild(cap);
+
+	}
+
+
+	{
+		Panal* mStartTextPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"StartTextPanal", this, eUIType::TitleText));
+
+		ImageUI* start = (GETSINGLE(UIFactory)->CreateImage(L"Start", L"StartMaterial", Vector3(-5.5f, 0.f, 97.0f), Vector3(1.4f, 0.8f, 1.f), mStartTextPanal, this));
+		start->SetRotation(Vector3(0.0f, 0.0f, 1.0f));
+		start->SetColor(Vector4(0.4f, 0.4f, 0.4f, 1.0f), true);
+
+		ImageUI* resume = (GETSINGLE(UIFactory)->CreateImage(L"Resume", L"ResumeMaterial", Vector3(-5.4f, -1.f, 97.0f), Vector3(2.f, 0.8f, 1.f), mStartTextPanal, this));
+		resume->SetRotation(Vector3(0.0f, 0.0f, 1.0f));
+
+		ImageUI* resume2P = (GETSINGLE(UIFactory)->CreateImage(L"Resume2P", L"Resume2PMaterial", Vector3(-5.2f, -2.f, 97.0f), Vector3(2.f, 0.8f, 1.f), mStartTextPanal, this));
+		resume2P->SetRotation(Vector3(0.0f, 0.0f, 1.0f));
+
+		ImageUI* exit = (GETSINGLE(UIFactory)->CreateImage(L"Exit", L"ExitMaterial", Vector3(-5.55f, -3.f, 97.0f), Vector3(2.f, 0.8f, 1.f), mStartTextPanal, this));
+		exit->SetRotation(Vector3(0.0f, 0.0f, 1.0f));
+
+		mStartTextPanal->Addchild(exit);
+		mStartTextPanal->Addchild(resume2P);
+		mStartTextPanal->Addchild(resume);
+		mStartTextPanal->Addchild(start);
+	}
+	////HUD* zero = (GETSINGLE(UIFactory)->CreateHud(L"S", L"uppercase_18Material", Vector3(0.f, 0.f, 97.f), Vector3(0.8f, 0.8f, 1.f), MainMenuPanal, this));
+	//(GETSINGLE(UIFactory)->CreateString(L"Start", Vector3(-6.0f,0.0f,1.0f), Vector3(0.5f, 0.5f, 1.0f), 0.3f, mStartTextPanal, this));
+	//(GETSINGLE(UIFactory)->CreateString(L"2P Mode", Vector3(-6.0f, -1.0f, 1.0f), Vector3(0.5f, 0.5f, 1.0f), 0.3f, mStart2PTextPanal, this));
+	//(GETSINGLE(UIFactory)->CreateString(L"End", Vector3(-6.0f, -2.0f, 1.0f), Vector3(0.5f, 0.5f, 1.0f), 0.3f, mExitTextPanal, this));
+
+	//for (size_t i = 0; i < mStartTextPanal->GetChilds().size(); i++)
+	//{
+	//	mStartTextPanal->GetChilds()[i]->SetColor(Vector4(0.5f,0.5f,0.5f,1.0f),true);
+	//}
+
+
+	////Animator* capAni = cap->AddComponent<Animator>(eComponentType::Animator);
+	////Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(L"CapRotate"));
+	////capAni->Create(L"CapAni", tex, Vector2::Zero, Vector2(84.0f, 50.0f), Vector2::One, 5, Vector2(100.0f, 80.0f), 0.1f);
+	////capAni->Play(L"CapAni", true);
 }

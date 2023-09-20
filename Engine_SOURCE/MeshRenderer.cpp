@@ -30,15 +30,35 @@ void MeshRenderer::FixedUpdate()
 	BaseRenderer::FixedUpdate();
 }
 
+void MeshRenderer::PrevRender()
+{
+	Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"ShadowMaterial");
+
+	material->Bind();
+
+	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
+
+	GetMesh()->BindBuffer();
+	GetMesh()->Render();
+
+	material->Clear();
+}
+
 void MeshRenderer::Render()
 {
 	BaseRenderer::Render();
 
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-	GetMaterial()->Bind();
-
-	GetModel() != nullptr ? GetModel()->Bind_Render(GetMaterial()) : GetMesh()->BindBuffer(), GetMesh()->Render();
-
-	GetMaterial()->Clear();
+	if (GetModel() != nullptr)
+	{
+		GetModel()->Bind_Render();
+	}
+	else
+	{
+		GetMaterial()->Bind();
+		GetMesh()->BindBuffer();
+		GetMesh()->Render();
+		GetMaterial()->Clear();
+	}
 }

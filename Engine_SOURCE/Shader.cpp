@@ -22,6 +22,11 @@ HRESULT Shader::Load(const std::wstring& path)
 	return E_NOTIMPL;
 }
 
+HRESULT Shader::LoadFullpath(const std::wstring& path)
+{
+	return E_NOTIMPL;
+}
+
 
 
 void Shader::Create(eShaderStage eStage, const std::wstring& path, const std::string& funcName)
@@ -108,7 +113,7 @@ void Shader::CreateGS(const std::wstring& path, const std::string& funcName)
 		, nullptr
 		, mGS.GetAddressOf());
 }
-
+ 
 void Shader::CreatePS(const std::wstring& path, const std::string& funcName)
 {
 	D3DCompileFromFile(path.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
@@ -144,9 +149,16 @@ void Shader::Bind()
 	Microsoft::WRL::ComPtr<ID3D11BlendState>		bs = renderer::blendState		[static_cast<UINT>(mBSType)];
 
 	GetDevice()->BindRasterizerState(rs.Get());
-	GetDevice()->BindDepthStencilState(ds.Get());
+
+	if (mDSType == eDepthStencilType::UI)
+	{
+		GetDevice()->BindDepthStencilState(nullptr,0);
+	}
+
+	else
+	{
+		GetDevice()->BindDepthStencilState(ds.Get());
+	}
+
 	GetDevice()->BindBlendState(bs.Get());
-
-
 }
-

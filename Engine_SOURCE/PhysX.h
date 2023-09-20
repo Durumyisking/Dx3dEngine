@@ -3,6 +3,7 @@
 #include "PxInitialization.h"
 
 class PhysicsScene;
+class ChracterController;
 class PhysX
 {
 public:
@@ -20,14 +21,14 @@ public:
 	std::shared_ptr<PhysicsScene>	GetPhysicsScene() const { return mPhysicsScene; }
 
 	void CreatePhysicsScene(const PxSceneDesc& sceneDesc);
+	void ConnectDebuggerToScene();
 
-
+	void CreateCharacterController(ChracterController* controller, PxMaterial* material);
 
 private:
 	void CreateScene(const PxSceneDesc& sceneDesc);
 	void CreateControllerManager();
-	void CreateDebugger(const char* szHost, __int32 iPort);
-	void ConnectDebugger();
+
 
 private:
 	std::shared_ptr<PhysicsScene>		mPhysicsScene;
@@ -35,7 +36,6 @@ private:
 
 
 	PxPvdTransport*			mTransport;
-	PxPvd*					mPvd;
 	PxPvdSceneClient*		mSceneClient;
 	PxScene*				mScene;
 	PxControllerManager*	mControllerMgr;

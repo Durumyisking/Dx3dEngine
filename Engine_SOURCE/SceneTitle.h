@@ -1,8 +1,11 @@
 #pragma once
 #include "Scene.h"
 
+
+class Panal;
+class HUD;
 class SceneTitle :
-    public Scene
+	public Scene
 {
 public:
 	SceneTitle();
@@ -17,8 +20,15 @@ public:
 	virtual void Exit();
 
 
+	void CreateMainMenu();
+
 private:
-	GameObj*	mCamera;
 
+
+	//Panal* mMainMenuPanal;
+	//Panal* mStartTextPanal;
+	//Panal* mStart2PTextPanal;
+	//Panal* mOptionTextPanal;
+	//Panal* mExitTextPanal;
+	//Panal* mBarPanal;
 };
-

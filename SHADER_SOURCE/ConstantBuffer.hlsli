@@ -2,9 +2,12 @@ cbuffer Transform : register(b0)
 {
     row_major matrix world;
     row_major matrix inverseWorld;
+    row_major matrix worldIT;
     row_major matrix view;
     row_major matrix inverseView;
     row_major matrix projection;
+    row_major matrix fovForSkySphere;
+    float4 cameraWorldPos;
 }
 
 cbuffer Material : register(b1)
@@ -20,8 +23,8 @@ cbuffer Material : register(b1)
     float cbfData4;
     float cbfData5;
     float cbfData6;
-    float cbfData7;
-    float cbfData8;
+    float cbMetallic;
+    float cbRoughness;
     
     float2 cbxy1;
     float2 cbxy2;
@@ -32,7 +35,7 @@ cbuffer Material : register(b1)
     float cbxyzPadding1;
     float3 cbxyz2;
     float cbxyzPadding2;
-    float3 cbxyz3;
+    float3 fresnelcoeff;
     float cbxyzPadding3;
     float3 camPosition;
     float cbxyzPadding4;
@@ -119,6 +122,13 @@ cbuffer ParticleSystem : register(b6)
 // postprocess b8
 
 
-cbuffer vvvconstant : register(b9) // 쓸사람 쓰세요
+cbuffer Sky : register(b9)
 {
+    matrix cubemapMat;
 }
+
+cbuffer LightMatrix : register(b10)
+{
+    row_major Matrix lightView;
+    row_major Matrix lightProjection;
+};

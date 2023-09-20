@@ -16,7 +16,7 @@ struct VSOut
 
 float4 main(VSOut vsIn) : SV_Target
 {
-    float4 outColor = (float4) 0.0f;
+    float4 outColor = (float4) 1.0f;
     float2 UV = vsIn.Position.xy / float2(1600.0f, 900.0f);
     
     float4 viewPos = positionTarget.Sample(linearSampler, UV);

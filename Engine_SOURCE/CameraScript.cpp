@@ -9,10 +9,12 @@
 #include "SceneMgr.h"
 #include "SimpleMath.h"
 
+#include "PhysXRayCast.h"
 
 
 CameraScript::CameraScript()
 	: mCameraObject(nullptr)
+	, mUICameraObject(nullptr)
 	, mTransform(nullptr)
 	, mTarget(nullptr)
 	, mSpeed(0.f)
@@ -33,14 +35,16 @@ void CameraScript::Initialize()
 {
 	mCameraObject = GetOwner()->GetComponent<Camera>();
 	mTransform = GetOwner()->GetComponent<Transform>();
-
 }
 
 void CameraScript::Update()
 {
+
+	this->GetOwner();
 	mLookAt = mTransform->GetPosition();
 
 	mTarget = mCameraObject->GetTarget();
+
 	mSpeed = mCameraObject->GetCamSpeed();
 	mCamStep = 0.f;
 
@@ -51,6 +55,37 @@ void CameraScript::Update()
 	ShakeMove();
 
 	mTransform->SetPosition(mLookAt);
+
+
+	if (KEY_TAP(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->Raycast();
+		}
+	}
+
+	if (KEY_DOWN(LCTRL) && KEY_DOWN(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->MoveObject();
+		}
+	}
+
+	if (KEY_UP(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+		}
+	}
+
+	if (mUICameraObject != nullptr)
+	{
+		mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
+		mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());
+	}
 }
 
 void CameraScript::FixedUpdate()
@@ -80,29 +115,38 @@ void CameraScript::KeyBoardMove()
 {
 	// Keyboard Move
 
+	float speed = 50.f;
 	if (KEY_DOWN(W))
 	{
-		mLookAt += 20.f * mTransform->Forward() * DT;
+		mLookAt += speed * mTransform->Forward() * DT;
 	}
 	if (KEY_DOWN(S))
 	{
-		mLookAt -= 20.f * mTransform->Forward() * DT;
+		mLookAt -= speed * mTransform->Forward() * DT;
 	}
 	if (KEY_DOWN(A))
 	{
-		mLookAt -= 20.f * mTransform->Right() * DT;
+		mLookAt -= speed * mTransform->Right() * DT;
 	}
 	if (KEY_DOWN(D))
 	{
-		mLookAt += 20.f * mTransform->Right() * DT;
+		mLookAt += speed * mTransform->Right() * DT;
 	}
+	if (KEY_DOWN(Q))
+	{
+		mLookAt -= 20.f * mTransform->Up() * DT;
+	}
+	if (KEY_DOWN(E))
+	{
+		mLookAt += 20.f * mTransform->Up() * DT;
+	}	
 	//if (KEY_DOWN(Q))
 	//{
-	//	mLookAt -= 20.f * mTransform->Forward() * DT;
+	//	mLookAt -= 20.f * mPxTransform->Forward() * DT;
 	//}
 	//if (KEY_DOWN(E))
 	//{
-	//	mLookAt += 20.f * mTransform->Forward() * DT;
+	//	mLookAt += 20.f * mPxTransform->Forward() * DT;
 	//}
 
 	if (KEY_DOWN(RBTN))

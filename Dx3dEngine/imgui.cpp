@@ -8053,7 +8053,7 @@ void ImGui::SetNextWindowBgAlpha(float alpha)
 void ImGui::SetNextWindowViewport(ImGuiID id)
 {
     ImGuiContext& g = *GImGui;
-    g.NextWindowData.Flags |= ImGuiNextWindowDataFlags_HasViewport;
+    g.NextWindowData.Flags |= ImGuiNextWindowDataFlags_HasViewport; 
     g.NextWindowData.ViewportId = id;
 }
 

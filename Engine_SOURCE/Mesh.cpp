@@ -9,12 +9,17 @@ Mesh::Mesh()
 	, mVBDesc{}
 	, mIBDesc{}
 	, mIndexCount(0)
+	, mbRender(true)
 {
 }
 Mesh::~Mesh()
 {
 }
 HRESULT Mesh::Load(const std::wstring& path)
+{
+	return E_NOTIMPL;
+}
+HRESULT Mesh::LoadFullpath(const std::wstring& path)
 {
 	return E_NOTIMPL;
 }
@@ -64,10 +69,16 @@ void Mesh::BindBuffer()
 
 void Mesh::Render()
 {
+	if (!IsRender())
+		return;
+
 	GetDevice()->DrawIndexed(mIndexCount, 0, 0);
 }
 
 void Mesh::RenderInstanced(UINT count)
 {
+	if (!IsRender())
+		return;
+
 	GetDevice()->DrawIndexedInstanced(mIndexCount, count, 0, 0, 0);
 }

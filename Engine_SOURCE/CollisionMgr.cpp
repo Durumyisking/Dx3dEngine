@@ -66,8 +66,8 @@ void CollisionMgr::CollisionLayerCheck(eLayerType left, eLayerType right, bool b
 
 void CollisionMgr::LayerCollision(Scene* scene, eLayerType _left, eLayerType right)
 {
-	const std::vector<GameObj*>& lefts = scene->GetGameObj(_left);
-	const std::vector<GameObj*>& rights = scene->GetGameObj(right);
+	const std::vector<GameObj*>& lefts = scene->GetGameObjects(_left);
+	const std::vector<GameObj*>& rights = scene->GetGameObjects(right);
 
 	for (GameObj* left : lefts)
 	{

@@ -8,10 +8,8 @@ namespace enums
 		None = 0,
 		Camera,
 		Grid,
-		BackGround,
 		Objects,
 		PhysicalObject,
-		Bullet,
 		Monster,
 		Boss,
 		Player,
@@ -19,8 +17,10 @@ namespace enums
 		Platforms,
 		Particle,
 		FX,
-		UI,
+		SkySphere,
+		CubeMap,
 		PostProcess,
+		UI,
 		End = 16,
 	};
 
@@ -28,16 +28,17 @@ namespace enums
 	enum class eComponentType
 	{
 		None,
-		Transform,
 		Camera,
-		Mesh,
 		RigidBody,
 		Movement, 
+		Transform,
 		Physical,
+		//Controller,
 		Collider,
+		Animator,
+		BoneAnimator,
 		MeshRenderer,
 		Renderer,
-		Animator,
 		Particle,
 		Light, 
 		UI,
@@ -73,6 +74,7 @@ namespace enums
 		Line,
 		Box,
 		Sphere,
+		Capsule,
 		End,
 
 	};
@@ -120,6 +122,7 @@ namespace enums
 		Dynamic, // 동적인 물체 (물리엔진에 직접적인 영향을 받는다)
 		Kinematic, // 프로그래밍 운동제어 물리 시뮬레이션 영향을 받지 않고 스크립트로 움직인다.
 		Character, // 일반적인 액터들과 다른 움직임을 처리하기 위해 사용한다. (컨트롤러를 붙여줘야한다)
+		Monster, // 커스텀
 		End,
 	};
 
@@ -141,13 +144,59 @@ namespace enums
 		End,
 	};
 
+	enum class eUIType
+	{
+		None,
+		TitleImg,
+		MainMenu,
+		TitleText,
+		Start,
+		Start2P,
+		Option,
+		Exit,
+		Bar,
+
+		HP,
+		Coin,
+		CoinText,
+		Luna,
+		LunaText,
+		End,
+	};
+
+	enum class currentUI
+	{
+		None,
+
+		MainMenu,
+		Play,
+
+
+		End,
+	};
+
 	enum class AXIS
 	{
 		X,
 		Y,
 		Z,
+		XY,
+		XZ,
+		YZ,
+		XYZ,
+		END,
 	};
 
+	enum class eHUDState
+	{
+		None,
+		MoveBlink,
+		MoveTowards,
+		Rotate,
+		Size,
+		TitleCapMove,
+		End
+	};
 
 	extern const char* charComponentType[(int)eComponentType::End];
 	extern const wchar_t* wcharComponentType[(int)eComponentType::End];

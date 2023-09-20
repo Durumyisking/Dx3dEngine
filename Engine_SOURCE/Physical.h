@@ -89,6 +89,9 @@ public:
     void RemoveActorToPxScene();
 
     void SetGeometrySize(const Vector3& newSize);
+    void SetActorType(eActorType type) { mActorType = type; }
+
+    std::shared_ptr<PhysicalProperties> GetProperties() const { return mProperties; }
 
 private:
     void createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize);

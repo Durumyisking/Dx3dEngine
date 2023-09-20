@@ -27,6 +27,8 @@
 #define CBSLOT_PARTICLESYSTEM 6
 #define CBSLOT_NOISE			7
 #define CBSLOT_POSTPROCESS		8
+#define CBSLOT_SKY 9
+#define CBSLOT_LIGHTMATRIX 10
 
 
 enum class eValidationMode
@@ -63,6 +65,9 @@ enum class eSamplerType
 	Point,
 	Linear,
 	Anisotropic,
+	Skybox,
+	Clamp,
+	ShadowPoint,
 	End,
 };
 
@@ -70,17 +75,18 @@ enum class eRasterizerType
 {
 	SolidBack,
 	SolidFront,
-	SolidNone, // ì»¬ë§ ì•ˆí•¨
-	WireframeNone, // ì„ ìœ¼ë¡œë§Œ ê·¸ë¦¬ê¸° Topologyë‘ ê°™ì€ë° ê·¸ëƒ¥ gpuì—ì„œ ì²˜ë¦¬í•´ì£¼ëŠ”ê±°
+	SolidNone, // ÄÃ¸µ ¾ÈÇÔ
+	WireframeNone, // ¼±À¸·Î¸¸ ±×¸®±â Topology¶û °°Àºµ¥ ±×³É gpu¿¡¼­ Ã³¸®ÇØÁÖ´Â°Å
 	End,
 };
 
 enum class eDepthStencilType
 {
-	Less, // ì¼ë°˜ì ì¸ ì›ê·¼
-	Greater, // ì›ê·¼ ê±°ê¾¸ë¡œ
-	NoWrite, // ê²¹ì¹˜ë©´ ì•„ì˜ˆ ì•ˆê·¸ë¦¼
-	None, // ê¹Šì´ë²„í¼ ì‚¬ìš© ì•ˆí•¨
+	UI,
+	Less, // ÀÏ¹İÀûÀÎ ¿ø±Ù
+	Greater, // ¿ø±Ù °Å²Ù·Î
+	NoWrite, // °ãÄ¡¸é ¾Æ¿¹ ¾È±×¸²
+	None, // ±íÀÌ¹öÆÛ »ç¿ë ¾ÈÇÔ
 	End,
 };
 
@@ -88,7 +94,7 @@ enum class eBlendStateType
 {
 	Default,
 	AlphaBlend,
-	OneOne, // ì•ŒíŒŒê°’ ì—†ì´ ë¬¼ì²´ì— ìƒ‰ ì„ìŒ
+	OneOne, // ¾ËÆÄ°ª ¾øÀÌ ¹°Ã¼¿¡ »ö ¼¯À½
 	End,
 };
 
@@ -103,11 +109,11 @@ enum class eRenderTargetType
 
 enum class eRenderingMode
 {
-	DeferredOpaque, // ë¶ˆíˆ¬ëª…
+	DeferredOpaque, // ºÒÅõ¸í
 	DeferredMask,
-	Light, // ê´‘ì› ì²˜ë¦¬
-	Opaque, // ë¶ˆíˆ¬ëª…
-	Cutout, // ì¼ë¶€ë§Œ íˆ¬ëª…
+	Light, // ±¤¿ø Ã³¸®
+	Opaque, // ºÒÅõ¸í
+	Cutout, // ÀÏºÎ¸¸ Åõ¸í
 	Transparent,
 	PostProcess,
 
@@ -142,14 +148,28 @@ enum class eTextureSlot
 	Emissive,			// emissiveTexture
 
 	PositionTarget = 5,			// positionTarget
-	NormalTarget,				// normalTarget
 	AlbedoTarget,				// albedoTarget
-	SpecularTarget,				// specularTarget
+	NormalTarget,				// normalTarget
+	MRDTarget,					// metallic roughness Depth target
+	EmissiveTarget,				// emissivetarget
 
-	DiffuseLightTarget = 9,		// diffuseLightTarget
+	DiffuseLightTarget = 10,		// diffuseLightTarget
 	SpecularLightTarget,		// specularLightTarget
 
-	T12 = 12,					// atlasTexture
+	Cubemap = 12,
+	IrradianceMap,
+	PrefilteredMap,		
+
+	BRDF = 15,		
+
+	ParticleStructuredBuffer = 16,		
+	NoiseTexture,		
+
+	SkySphere = 18,
+
+	ShadowMap = 19,
+
+//	Atlas = 29,					// atlasTexture
 
 	End,
 };
@@ -165,7 +185,8 @@ enum class eCBType
 	ParticleSystem,
 	Noise, 
 	PostProcess,
-	PBR,
+	CubeMapProj,
+	LightMatrix,
 	End,
 };
 
@@ -182,15 +203,15 @@ enum class eGPUParam
 	Float_4,
 	Float_5,
 	Float_6,
-	Float_7,
-	Float_8,
+	Metallic,
+	Roughness,
 	Vector2_1,
 	Vector2_2,
 	Vector2_3,
 	Vector2_4,
 	Vector3_1,
 	Vector3_2,
-	Vector3_3,
+	FresnelCoeff,
 	CamPosition,
 	Vector4_1,
 	Vector4_2,
@@ -209,7 +230,7 @@ enum class eGPUParam
 	Bool_2,
 	Bool_3,
 };
-	
+
 
 enum class eSRVType
 {
@@ -246,7 +267,7 @@ struct LightAttribute
 		
 	enums::eLightType type;
 
-	int padding; // ìƒìˆ˜ë²„í¼ íŒ¨ë”©
+	int padding; // »ó¼ö¹öÆÛ ÆĞµù
 };
 
 struct Particle

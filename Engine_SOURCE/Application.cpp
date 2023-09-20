@@ -1,4 +1,4 @@
-ï»¿#include "Application.h"
+#include "Application.h"
 #include "Renderer.h"
 #include "TimeMgr.h"
 #include "InputMgr.h"
@@ -12,7 +12,8 @@
 #include "PhysicsMgr.h"
 #include "TimerMgr.h"
 #include "ServerMgr.h"
-
+#include "UIManager.h"
+#include "UIFactory.h"
 
 Application::Application()
 	: mbInitalized(false)
@@ -29,7 +30,6 @@ Application::~Application()
 {
 
 }
-
 void Application::Initialize()
 {
 	GETSINGLE(TimeMgr)->Initialize();
@@ -37,6 +37,10 @@ void Application::Initialize()
 	GETSINGLE(Fmod)->Initialize();
 	// GETSINGLE(CollisionMgr)->Initialize();
 	renderer::Initialize();
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
+	GETSINGLE(UIManager)->Initialize();
+	GETSINGLE(UIFactory)->Initialize();
+	GETSINGLE(ResourceMgr)->Initalize();
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();
 	GETSINGLE(SceneMgr)->Initialize();
@@ -52,8 +56,8 @@ void Application::Update()
 		GETSINGLE(InputMgr)->Update();
 		//		GETSINGLE(CollisionMgr)->Update();
 		GETSINGLE(SceneMgr)->Update();
+		GETSINGLE(UIManager)->Update();
 		GETSINGLE(PhysXCollisionMgr)->Update();
-		GETSINGLE(PhysicsMgr)->Update();
 	}
 }
 void Application::FixedUpdate()
@@ -63,24 +67,25 @@ void Application::FixedUpdate()
 		//GETSINGLE(CollisionMgr)->FixedUpdate();
 		GETSINGLE(server::ServerMgr)->FixedUpdate();
 		GETSINGLE(SceneMgr)->FixedUpdate();
+		GETSINGLE(PhysicsMgr)->Update();
 	}
 }
 void Application::Render()
 {
 	if (!GETSINGLE(TimeMgr)->IsUpdatePass())
 	{
+		
 		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::Render();
-
-		mGraphicDevice->AdjustViewPorts();
-		renderer::ClearRenderTargets(); // mGraphicDevice::Clear ëŒ€ì‹  ë Œë”íƒ€ê²Ÿ í´ë¦¬ì–´
-
+		mGraphicDevice->AdjustToDefaultResolutionViewPorts();
+		renderer::ClearRenderTargets(); // mGraphicDevice::Clear ´ë½Å ·»´õÅ¸°Ù Å¬¸®¾î
 		renderer::Render();
-		GETSINGLE(SceneMgr)->Render();
+		//UIManager::Render();
+		//GETSINGLE(SceneMgr)->Render();
 		GETSINGLE(SceneMgr)->FontRender();
 	}
-}
+}	
 
 void Application::Destroy()
 {
@@ -105,7 +110,7 @@ void Application::Run()
 	FixedUpdate();
 	Render();
 
-	// í”„ë ˆìž„ ì¢…ë£Œ í›„ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ ë° ì¶”ê°€
+	// ÇÁ·¹ÀÓ Á¾·á ÈÄ ¿ÀºêÁ§Æ® »èÁ¦ ¹× Ãß°¡
 	Destroy();
 	LateEvent();
 }
@@ -129,6 +134,8 @@ void Application::DestroySingle()
 	GETSINGLE(server::ServerMgr)->DestroyInstance();
 	GETSINGLE(SceneMgr)->DestroyInstance();
 	GETSINGLE(FontWrapper)->DestroyInstance();
+	GETSINGLE(UIManager)->DestroyInstance();
+	GETSINGLE(UIFactory)->DestroyInstance();
 //		GETSINGLE(CollisionMgr)->DestroyInstance();
 	GETSINGLE(PhysXCollisionMgr)->DestroyInstance();
 	GETSINGLE(Fmod)->DestroyInstance();

@@ -6,13 +6,11 @@
 #include "PhysXRigidBody.h"
 
 
-
 Player::Player()
 {
 	SetLayerType(eLayerType::Player);
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
-
 	MeshRenderer* meshRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
 }
 
@@ -29,7 +27,6 @@ void Player::Initialize()
 
 void Player::Update()
 {
-
 	GameObj::Update();
 }
 
@@ -56,12 +53,17 @@ void Player::OnCollisionEnter(GameObj* gameObject)
 
 void Player::OnTriggerEnter(GameObj* gameObject)
 {
-	PhysXRigidBody* rigid = GetComponent<PhysXRigidBody>();
-	rigid->RemoveGravity();
-	rigid->SetVelocity(AXIS::Y, 0.f);
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+	{
+		GetPhysXRigidBody()->SetAirOff();
+	}
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)
 {
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+	{
+		GetPhysXRigidBody()->SetAirOn();
+	}
 }
 
