@@ -11,7 +11,7 @@ Player::Player()
 	SetLayerType(eLayerType::Player);
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
-	MeshRenderer* meshRenderer = AddComponent<MeshRenderer>(eComponentType::Renderer);
+	MeshRenderer* meshRenderer = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 }
 
 Player::~Player()
