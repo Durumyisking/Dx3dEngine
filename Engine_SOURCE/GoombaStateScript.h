@@ -10,6 +10,8 @@
 #define GOOMBA_MASS 1.f
 #define GOOMBA_WALK_VELOCITY 20.f
 #define GOOMBA_RUN_VELOCITY 50.f
+
+class Model;
 class GoombaStateScript : public MonsterStateScript
 {
 public:

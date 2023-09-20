@@ -13,6 +13,7 @@
 #include "Scene.h"
 #include "MeshRenderer.h"
 
+
 GoombaStateScript::GoombaStateScript()
 	: MonsterStateScript()
 	, mAnimator (nullptr)
@@ -226,7 +227,7 @@ void GoombaStateScript::Chase()
 			
 			Vector3 moveDir = mTransform->WorldForward();
 			moveDir.y = 0.f;
-			mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
+			//mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
 		}
 	}
 }
