@@ -231,17 +231,15 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 {
 	std::map<std::wstring, ModelNode*>::iterator iter = mNodes.find(nodeName);
 
-	std::vector<renderer::Vertex> vertexes;
+	std::vector<Vertex> vertexes;
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
-
-	std::vector<math::Vector4> posVec;
 
 	vertexes.reserve(mesh->mNumVertices);
 
 	for (UINT i = 0; i < mesh->mNumVertices; ++i)
 	{
-		renderer::Vertex vertex = {};
+		Vertex vertex = {};
 		math::Vector3 pos = {};
 
 
@@ -279,8 +277,6 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		}
 
 		vertexes.emplace_back(vertex);
-
-		posVec.emplace_back(vertex.pos);
 	}
 
 	indexes.reserve(mesh->mNumFaces);
@@ -386,8 +382,6 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
 	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
-
-	inMesh->SetVertexes(posVec);
 
 	inMesh->SetVertexCount(static_cast<UINT>(vertexes.size()));
 	inMesh->SetIndexCount(static_cast<UINT>(indexes.size()));

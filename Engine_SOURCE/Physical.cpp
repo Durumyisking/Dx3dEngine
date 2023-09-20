@@ -70,7 +70,6 @@ void Physical::InitialConvexMeshProperties(eActorType actorType, Vector3 geometr
 
 PxConvexMesh* Physical::MakeConvexObject()
 {
-
 	std::shared_ptr<PhysX>physX = GETSINGLE(PhysicsMgr)->GetEnvironment();
 
 	Model* model = GetOwner()->GetComponent<MeshRenderer>()->GetModel();
@@ -84,15 +83,15 @@ PxConvexMesh* Physical::MakeConvexObject()
 
 	for (Mesh* mesh : meshes)
 	{
-		//std::vector<renderer::Vertex> meshVertices = mesh->GetVerticesFromBuffer<renderer::Vertex>(GetDevice()->GetDeviceContext().Get());
-		std::vector<math::Vector4> meshVertices = mesh->GetVertexes();
+		std::vector<Vertex> meshVertices;
+		mesh->GetVerticesFromBuffer(&meshVertices);
 		PxU32 count = mesh->GetVertexCount();
 		vertexCount += count;
 
 		// Copy from cvector array to PxVec3 array
 		for (PxU32 i = 0; i < count; i++)
 		{
-			vertices.push_back(PxVec3(meshVertices[i].x, meshVertices[i].y, meshVertices[i].z));
+			vertices.emplace_back(meshVertices[i].pos.x, meshVertices[i].pos.y, meshVertices[i].pos.z);
 		}
 	}
 

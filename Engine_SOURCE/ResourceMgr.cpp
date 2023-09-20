@@ -87,7 +87,12 @@ void ResourceMgr::Initalize()
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWomans", L"CityWomans");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"BlockBrick");
 
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/CityWorldHomeGround/000", L"CityWorldHomeGround000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeGround000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeGround003");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeBuilding000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeBuilding001");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeBuilding001Low");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeBuilding002");
 
 }
 

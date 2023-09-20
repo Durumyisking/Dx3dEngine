@@ -90,8 +90,6 @@ void ScenePlay::Initialize()
 		goomba->SetName(L"Goomba");*/
 	}
 
-	mCamera->GetComponent<Transform>()->SetPosition(Vector3(0.f, 150.f, -150.f));
-	renderer::mainCamera = mCamera->GetComponent<Camera>();
 	//{
 	//	GameObj* dirLight = object::Instantiate<GameObj>(eLayerType::Player, this);
 	//	dirLight->SetPos(Vector3(1000.f, 1000.f, 0.));
@@ -101,36 +99,64 @@ void ScenePlay::Initialize()
 	//	light->SetAngle(45.f);
 	//}
 
+	////CityWorld Model Test
+	//{
+	//	{
+	//		GameObj* Ground = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+	//		Ground->SetPos(Vector3(0.f, 10.f, 0.f));
+	//		Ground->SetScale(Vector3(1.f, 1.f, 1.f));
+	//		Ground->SetName(L"CityWorldHomeBuilding000");
+
+	//		// SetModel
+	//		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding000");
+	//		if (model)
+	//		{
+	//			MeshRenderer* test = Ground->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	//			test->SetModel(model, model->GetMaterial(0));
+	//		}
+
+	//		Physical* physical = Ground->AddComponent<Physical>(eComponentType::Physical);
+	//		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::ConvexMesh, Vector3(1.f, 1.f, 1.f));
+
+	//		PhysXRigidBody* rigid = Ground->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//		Ground->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//	}
+
+	//}
+
+	//ConvexMesh Test
 	{
-		GameObj* Ground = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		Ground->SetPos(Vector3(0.f, 1.f, 20.f));
-		Ground->SetScale(Vector3(0.1f, 0.1f, 0.1f));
-		Ground->SetName(L"CityWorldHomeGround000");
+		GameObj* ball = object::Instantiate<GameObj>(eLayerType::Monster, this);
+		ball->SetPos(Vector3(0.f, 50.f, 50.f));
+		//ball->SetScale(Vector3(0.2f, 0.2f, 0.2f));
+		ball->SetScale(Vector3(1.f, 1.f, 1.f));
+		ball->SetName(L"PackunBall");
 
 		// SetModel
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"PackunBall");
 		if (model)
 		{
-			MeshRenderer* test = Ground->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			MeshRenderer* test = ball->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 			test->SetModel(model, model->GetMaterial(0));
 		}
 
-		Physical* physical = Ground->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::ConvexMesh, Vector3(5.f, 5.f, 5.f));
+		Physical* physical = ball->AddComponent<Physical>(eComponentType::Physical);
+		//physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::ConvexMesh, Vector3(0.2f, 0.2f, 0.2f));
+		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::ConvexMesh, Vector3(1.f, 1.f, 1.f));
 
-		PhysXRigidBody* rigid = Ground->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		PhysXRigidBody* rigid = ball->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		Ground->AddComponent<PhysXCollider>(eComponentType::Collider);
+		ball->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Monster, this);
-		player->SetPos(Vector3(-12.f, 15.f, 9.5f));
+		player->SetPos(Vector3(-30.f, 55.f, -9.5f));
 		player->SetScale(Vector3(5.f, 5.f, 5.f));
 		player->SetName(L"Player");
 
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
 		//player->AddComponent<PlayerScript>(eComponentType::Script);
 
@@ -139,16 +165,16 @@ void ScenePlay::Initialize()
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//player->AddComponent<PhysXCollider>(eComponentType::Collider);
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(12.f, 15.f, 9.5f));
+		player->SetPos(Vector3(32.f, 55.f, -9.5f));
 		player->SetScale(Vector3(10.f, 10.f, 10.f));
 		player->SetName(L"Player");
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
 		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
 		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
 
@@ -160,7 +186,7 @@ void ScenePlay::Initialize()
 
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//player->AddComponent<PhysXCollider>(eComponentType::Collider);
 		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
 	}
 
@@ -182,17 +208,17 @@ void ScenePlay::Initialize()
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(1000.f, 0.25f, 1000.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-	{
-		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
-	}
+	//{
+	//	Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+	//}
 
 	CreatePlayerUI();
 
@@ -223,8 +249,10 @@ void ScenePlay::render()
 
 void ScenePlay::Enter()
 {
-
 	Scene::Enter();
+
+	mCamera->SetPos(Vector3(0.f, 150.f, -150.f));
+	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 }
 
 void ScenePlay::Exit()
