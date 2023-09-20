@@ -1906,6 +1906,8 @@ namespace renderer
 		CreateMaterial(L"Resume", L"UISpriteShader", L"ResumeMaterial", eRenderingMode::Transparent);
 		CreateMaterial(L"Resume2P", L"UISpriteShader", L"Resume2PMaterial", eRenderingMode::Transparent);
 		CreateMaterial(L"Start", L"UISpriteShader", L"StartMaterial", eRenderingMode::Transparent);
+
+		CreateMaterial(L"0", L"UISpriteShader", L"LifeTextMaterial", eRenderingMode::Transparent);
 #pragma endregion
 	}
 

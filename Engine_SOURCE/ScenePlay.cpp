@@ -207,8 +207,12 @@ void ScenePlay::CreatePlayerUI()
 		//Lifeheart
 		HUD* lifeheart = (GETSINGLE(UIFactory)->CreateHud(L"LifeHeart", L"LifeheartMaterial", Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
 
+		ImageUI* lifeText = (GETSINGLE(UIFactory)->CreateImage(L"LifeText", L"LifeTextMaterial", Vector3(7.f, 3.55f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
+		lifeText->SetColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f), true);
+
 		mLifePanal->Addchild(hud);
 		mLifePanal->Addchild(lifeheart);
+		mLifePanal->Addchild(lifeText);
 	}
 
 	//Left Coin UI
@@ -219,7 +223,9 @@ void ScenePlay::CreatePlayerUI()
 
 
 		ImageUI* coin = (GETSINGLE(UIFactory)->CreateImage(L"Coin", L"CoinMaterial", Vector3(-7.f, 3.5f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
+		coin->SetUIActive();
 		ImageUI* cityCoin = (GETSINGLE(UIFactory)->CreateImage(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
+		cityCoin->SetUIActive();
 		ImageUI* bar = (GETSINGLE(UIFactory)->CreateImage(L"Bar", L"BarMaterial", Vector3(-5.4f, 2.9f, 0.f), Vector3(4.2f, 1.4f, 1.f), mCoinPanal, this));
 		mCoinPanal->Addchild(coin);
 		mCoinPanal->Addchild(bar);
@@ -227,6 +233,7 @@ void ScenePlay::CreatePlayerUI()
 		for (size_t i = 0; i < 3; i++)
 		{
 			ImageUI* image = (GETSINGLE(UIFactory)->CreateImage(L"CoinText", L"CoinTextMaterial_" + std::to_wstring(i), Vector3(-6.35f + (0.34f * i), 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), mCoinTextPanal, this));
+			image->SetUIActive();
 
 			mCoinTextPanal->Addchild(image);
 		}
@@ -240,6 +247,7 @@ void ScenePlay::CreatePlayerUI()
 		for (size_t i = 0; i < 3; i++)
 		{
 			ImageUI* image = (GETSINGLE(UIFactory)->CreateImage(L"CoinText", L"CityCoinTextMaterial_" + std::to_wstring(i), Vector3(-4.35f + (0.34f * i), 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), mLunaTextPanal, this));
+			image->SetUIActive();
 
 			mLunaTextPanal->Addchild(image);
 		}

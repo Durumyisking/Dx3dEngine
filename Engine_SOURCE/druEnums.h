@@ -190,6 +190,7 @@ namespace enums
 		Rotate,
 		Size,
 		TitleCapMove,
+		Hit,
 		End
 	};
 

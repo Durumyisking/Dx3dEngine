@@ -5,14 +5,14 @@
 ImageUI::ImageUI()
 	:UIBase(eUIType::None)
 	, mCurrentTime(0.0f)
-	, mActivate(true)
+	, mActivate(false)
 {
 }
 
 ImageUI::ImageUI(eUIType type)
 	:UIBase(type)
 	, mCurrentTime(0.0f)
-	, mActivate(true)
+	, mActivate(false)
 {
 }
 
