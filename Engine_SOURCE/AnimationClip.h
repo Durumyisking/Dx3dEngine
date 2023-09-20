@@ -58,6 +58,8 @@ public:
 	GETSET(float , mConnectionDuration, ConnectionDuration)
 	GETSET(UINT, mCurIndex, CurIndex)
 
+	void SetDuration(int frame) { mDuration = static_cast<double>(1.f / static_cast<float>(frame)); }
+
 	const animation::SkeletonData* GetCurFrameAnimation(UINT index) const;
 	void SetPreveAnimationData(const animation::SkeletonData* data, float connectionDuration = 1.0f);
 private:

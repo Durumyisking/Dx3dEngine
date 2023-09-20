@@ -6,6 +6,7 @@ BoneAnimator::BoneAnimator()
 	, mAnimationClips{}
 	, mPlayAnimation(nullptr)
 	, mbLoop(true)
+	, mIntervalAnimation(0.1f)
 {
 }
 
@@ -121,15 +122,15 @@ void BoneAnimator::Play(const std::wstring& name, bool loop)
 	if (nullptr != mPlayAnimation && nullptr != mPlayAnimation->GetEndEvent())
 		mPlayAnimation->GetEndEvent()();
 
-	//if (nullptr != mPlayAnimation)
-	//{
-	//	// 이전 애니메이션의 마지막 프레임 정보
-	//	UINT frame = mPlayAnimation->GetCurIndex();
-	//	const animation::SkeletonData* preveAnimation = mPlayAnimation->GetCurFrameAnimation(frame);
+	if (nullptr != mPlayAnimation)
+	{
+		// 이전 애니메이션의 마지막 프레임 정보
+		UINT frame = mPlayAnimation->GetCurIndex();
+		const animation::SkeletonData* preveAnimation = mPlayAnimation->GetCurFrameAnimation(frame);
 
-	//	// 다음 애니메이션의 이전 애니메이션 정보 세팅
-	//	iter->second->SetPreveAnimationData(preveAnimation, 0.1f);
-	//}
+		// 다음 애니메이션의 이전 애니메이션 정보 세팅
+		iter->second->SetPreveAnimationData(preveAnimation, mIntervalAnimation);
+	}
 
 	// Next Animation
 	mPlayAnimation = iter->second;
