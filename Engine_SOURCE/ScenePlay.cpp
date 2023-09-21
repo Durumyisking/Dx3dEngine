@@ -86,11 +86,13 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(0.f, 80.f, 0.f));
+		player->SetPos(Vector3(30.f, 0.f, 0.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
@@ -111,7 +113,7 @@ void ScenePlay::Initialize()
 
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(0.f, 10.f, 0.f));
+		goomba->SetPos(Vector3(0.f, 0.f, 0.f));
 	}
 
 	{

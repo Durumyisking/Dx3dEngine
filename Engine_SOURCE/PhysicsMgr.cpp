@@ -30,13 +30,12 @@ void PhysicsMgr::Initialize()
 
 	PxSceneDesc sceneDesc(mPhysX->GetPhysics()->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
-	sceneDesc.simulationEventCallback = mDispatcher->GetSimulationCallback();
+	sceneDesc.cpuDispatcher = mDispatcher->GetCpuDispatcher();
 	sceneDesc.filterShader = PlayerFilter;
-	//sceneDesc.staticKineFilteringMode = PxPairFilteringMode::eKILL;
-	sceneDesc.kineKineFilteringMode = PxPairFilteringMode::eKEEP;
-	//sceneDesc.flags = PxSceneFlag::eADAPTIVE_FORCE;
-	sceneDesc.cpuDispatcher = mDispatcher->GetCpuDispatcher();	
-	
+	sceneDesc.simulationEventCallback = mDispatcher->GetSimulationCallback();
+	sceneDesc.kineKineFilteringMode = PxPairFilteringMode::Enum::eDEFAULT;
+	sceneDesc.staticKineFilteringMode = PxPairFilteringMode::Enum::eDEFAULT;
+
 	mPhysX->CreatePhysicsScene(sceneDesc);
 	mPhysX->ConnectDebuggerToScene();
 
