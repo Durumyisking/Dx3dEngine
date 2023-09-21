@@ -1,8 +1,9 @@
 #pragma once
 #include "guiComponent.h"
-#include "Material.h"
-#include "Mesh.h"
 
+
+class Material;
+class Mesh;
 
 namespace gui
 {

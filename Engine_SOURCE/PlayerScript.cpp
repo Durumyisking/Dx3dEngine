@@ -80,10 +80,12 @@ void PlayerScript::Update()
 	{
 		mPhyXRigidBody->AddForce(-camForward * 7000.f * DT);
 	}
+
 	if (KEY_TAP(SPACE))
 	{
 		mPhyXRigidBody->AddForce(Vector3::Up * 70000.f * DT);
 	}
+
 
 }
 void PlayerScript::FixedUpdate()

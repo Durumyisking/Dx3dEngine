@@ -70,12 +70,10 @@ void Goomba::Initialize()
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 10.6f, 0.f), eGeometryType::Box, Vector3(0.25f ,0.01f, 0.25f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
-	GetComponent<PhysXRigidBody>()->RemoveGravity();
-
 	// MoveMent
 	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
 	
