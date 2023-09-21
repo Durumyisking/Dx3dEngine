@@ -45,7 +45,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// ÆÄÀÏ ·Îµå ½ÇÆĞ
+		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
 		return E_FAIL;
 	}
 
@@ -75,7 +75,7 @@ HRESULT Model::LoadFullpath(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// ÆÄÀÏ ·Îµå ½ÇÆĞ
+		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
 		return E_FAIL;
 	}
 
@@ -164,12 +164,6 @@ void Model::Bind_Render(bool bindMaterial)
 
 		if (mMeshes[i]->IsRender() == false)
 			continue;
-
-		// ¾ÆÁ÷ ¹Ì±¸Çö
-		// ¿¹¿ÜÃ³¸® ±¸°£ ¿©±â¼­ ¸ğµ¨ÀÇ ·»´õ¸¦ ²¯´ÙÄ×´ÙÇÏ´Â ÇÔ¼ö¸¦ ÀÛ¼ºÇØ¾ßÇÔ
-		if (mMeshes[i]->GetName().find(L"Press") != std::wstring::npos)
-			continue;
-		/////////////////////////////////////////////////////////////////////
 
 		if (bindMaterial)
 		{
@@ -482,7 +476,7 @@ void Model::CreateMaterial()
 				matName = texInfo.texName;
 				std::size_t found = matName.find(L"_");
 				if (found != std::wstring::npos) {
-					matName = matName.substr(0, found); // _ ÀÌÀü±îÁöÀÇ ¹®ÀÚ¿­ ÃßÃâ
+					matName = matName.substr(0, found); // _ ì´ì „ê¹Œì§€ì˜ ë¬¸ìì—´ ì¶”ì¶œ
 				}
 			}
 			break;

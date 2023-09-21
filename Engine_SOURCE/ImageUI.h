@@ -17,6 +17,12 @@ public:
 	virtual void OnFontRender() override;
 	virtual void OnClear() override;
 
+
+	void SetColor(Vector4 color, bool isColor) override;
+	void SetUIActive() { mActivate = true; }
+	void SetUIInActive() { mActivate = false; }
 private:
+
+	float mCurrentTime;
 	bool mActivate;
 };

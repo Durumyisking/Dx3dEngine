@@ -34,7 +34,8 @@ public:
 	void TitleCapMove();
 	void PlayAnimation();
 
-	void SetColor();
+
+	void SetColor(Vector4 color, bool isColor) override;
 	void SetStop() { mbStop = true; }
 	void SetStart() { mbStop = false; }
 

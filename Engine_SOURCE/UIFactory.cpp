@@ -9,7 +9,6 @@
 #include "SpriteRenderer.h"
 #include "UIManager.h"
 
-
 UIFactory::UIFactory()
 {
 }
@@ -95,6 +94,7 @@ HUD* UIFactory::CreateHud(const std::wstring& name, const std::wstring& key, Vec
 void UIFactory::CreateButton()
 {
 }
+
 
 
 void UIFactory::CreateString(const std::wstring& string, Vector3 pos, Vector3 scale, float interval, UIBase* parent, Scene* scene)

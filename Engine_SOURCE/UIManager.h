@@ -9,33 +9,37 @@ class UIManager
 
 
 public:
-	static void Initialize();
-	static void OnLoad(eUIType type);
-	static void Update();
-	static void Render();
-	static void OnComplete(UIBase* addUI);
-	static void OnFail();
+	void Initialize();
+	void OnLoad(eUIType type);
+	void Update();
+	void Render();
+	void OnComplete(UIBase* addUI);
+	void OnFail();
 
-	static void Push(eUIType type);
-	static void Pop(eUIType type);
-	static void PushPanal(eUIType type, UIBase* base);
-	static void UIActivate();
-	static UIBase* GetPanal(eUIType type);
+	void Push(eUIType type);
+	void Pop(eUIType type);
+	void PushPanal(eUIType type, UIBase* base);
+	void UIActivate();
+	UIBase* GetPanal(eUIType type);
 
-	static void MainMenuUI();
+protected:
 
-	static void GetCoin();
-	static void GetLuna();
+	void MainMenuUI();
+	void GetCoin();
+	void GetLuna();
+	void PlayScene();
+	void PlayerHit();
+
 
 private:
 
-	static std::unordered_map<eUIType, UIBase*> mUIPanals;
-	static std::queue<eUIType> mRequestUIQueue;
-	static std::stack<UIBase*> mUIBases;
-	static UIBase* mCurrentData;
-	static currentUI mCurrentUI;
-	static int mCount;
+	std::unordered_map<eUIType, UIBase*> mUIPanals;
+	std::queue<eUIType> mRequestUIQueue;
+	std::stack<UIBase*> mUIBases;
+	UIBase* mCurrentData;
+	currentUI mCurrentUI;
+	int mCount;
 
-	static int mCoin;
-	static int mCityCoin;
+	int mCoin;
+	int mCityCoin;
 };

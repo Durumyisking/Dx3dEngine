@@ -1898,6 +1898,15 @@ namespace renderer
 			CreateMaterial(numberName, L"UISpriteShader", L"Luna" + numberName + L"Material", eRenderingMode::Transparent);
 		}
 
+		CreateMaterial(L"0", L"UISpriteShader", L"CoinTextMaterial_0", eRenderingMode::Transparent);
+		CreateMaterial(L"0", L"UISpriteShader", L"CoinTextMaterial_1", eRenderingMode::Transparent);
+		CreateMaterial(L"0", L"UISpriteShader", L"CoinTextMaterial_2", eRenderingMode::Transparent);
+
+		CreateMaterial(L"0", L"UISpriteShader", L"CityCoinTextMaterial_0", eRenderingMode::Transparent);
+		CreateMaterial(L"0", L"UISpriteShader", L"CityCoinTextMaterial_1", eRenderingMode::Transparent);
+		CreateMaterial(L"0", L"UISpriteShader", L"CityCoinTextMaterial_2", eRenderingMode::Transparent);
+
+
 		for (size_t i = 'a'; i <= 'z'; i++)
 		{
 			const std::wstring numberName = L"lowercase_" + std::to_wstring(i);
@@ -1916,6 +1925,8 @@ namespace renderer
 		CreateMaterial(L"Resume", L"UISpriteShader", L"ResumeMaterial", eRenderingMode::Transparent);
 		CreateMaterial(L"Resume2P", L"UISpriteShader", L"Resume2PMaterial", eRenderingMode::Transparent);
 		CreateMaterial(L"Start", L"UISpriteShader", L"StartMaterial", eRenderingMode::Transparent);
+
+		CreateMaterial(L"0", L"UISpriteShader", L"LifeTextMaterial", eRenderingMode::Transparent);
 #pragma endregion
 	}
 
@@ -1941,7 +1952,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapEye", L"Textures/UI/CapUI/CapEyeAnimation.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"UIBar", L"Textures/UI/UIBar.png");
 
-		for (size_t i = 0; i < 9; i++)
+		for (size_t i = 0; i <= 9; i++)
 		{
 			const std::wstring& key = std::to_wstring(i);
 			GETSINGLE(ResourceMgr)->Load<Texture>(key, L"Textures/UI/Number/" + key + L".png");

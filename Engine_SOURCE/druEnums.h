@@ -159,6 +159,8 @@ namespace enums
 		HP,
 		Coin,
 		CoinText,
+		CityCoin,
+		CityCoinText,
 		Luna,
 		LunaText,
 		End,
@@ -195,6 +197,7 @@ namespace enums
 		Rotate,
 		Size,
 		TitleCapMove,
+		Hit,
 		End
 	};
 

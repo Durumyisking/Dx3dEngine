@@ -10,7 +10,6 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
-
 Goomba::Goomba()
 	: Monster()
 {
