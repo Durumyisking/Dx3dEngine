@@ -206,16 +206,16 @@ void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, cons
 
 		// R
 		Vector3 eRotation = curData.Rotation[i].second;
-		aiQuaternion qRotation(eRotation.y, eRotation.z, eRotation.x);
+		//aiQuaternion qRotation(eRotation.y, eRotation.z, eRotation.x);
 
 		// 이전 코드
-		//aiQuaternion qRotation(-eRotation.y, eRotation.z, -eRotation.x);
+		aiQuaternion qRotation(-eRotation.y, eRotation.z, -eRotation.x);
 
 		Vector3 eNextRotation = nextData.Rotation[i].second;
-		aiQuaternion qNextRotation(eNextRotation.y, eNextRotation.z, eNextRotation.x);
+		//aiQuaternion qNextRotation(eNextRotation.y, eNextRotation.z, eNextRotation.x);
 
 		// 이전 코드
-		// aiQuaternion qNextRotation(-eNextRotation.y, eNextRotation.z, -eNextRotation.x);
+		aiQuaternion qNextRotation(-eNextRotation.y, eNextRotation.z, -eNextRotation.x);
 
 		aiQuaternion result = {};
 		result.Interpolate(result, qRotation, qNextRotation, static_cast<float>(mTickPerSceond / drutation));
@@ -280,10 +280,10 @@ aiMatrix4x4 AnimationClip::ToLeftHandMatrix(math::Vector3 pos, aiMatrix3x3 rotat
 {
 	// 이동 계산
 	aiMatrix4x4 traslation = {};
-	traslation.Translation(aiVector3D(pos.x, pos.y, pos.z), traslation);
+	//traslation.Translation(aiVector3D(pos.x, pos.y, pos.z), traslation);
 
 	// 이전 코드
-	// traslation.Translation(aiVector3D(pos.x, pos.y, -pos.z), traslation);
+	traslation.Translation(aiVector3D(pos.x, pos.y, -pos.z), traslation);
 	
 	// 회전 계산 오일러
 	aiMatrix4x4 rotationmatrix(rotation);

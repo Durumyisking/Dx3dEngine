@@ -13,8 +13,8 @@ public:
 
 		Move,
 		Jump,
-		Crouch, //웅크리기
-		CrouchMove, 
+		Squat, //웅크리기
+		SquatMove,
 
 		Air, //공중에 있지만 다른 액션은 하지 않는 상태
 		Wall, //벽차기

@@ -15,8 +15,8 @@ public:
 	virtual void Idle() final;
 	virtual void Move() final;
 	virtual void Jump() final;
-	virtual void Crouch() final;
-	virtual void CrouchMove() final;
+	virtual void Squat() final;
+	virtual void SquatMove() final;
 	virtual void Air() final;
 	virtual void Wall() final;
 	virtual void Hit() final;

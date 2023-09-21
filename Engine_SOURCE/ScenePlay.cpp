@@ -90,7 +90,7 @@ void ScenePlay::Initialize()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos(Vector3(0.f, 80.f, 0.f));
+	/*	player->SetPos(Vector3(0.f, 80.f, 0.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
@@ -106,12 +106,12 @@ void ScenePlay::Initialize()
 		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
 		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+		player->AddComponent<PhysicalMovement>(eComponentType::Movement);*/
 	}
 
 	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(0.f, 10.f, 0.f));
+		//Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		//goomba->SetPos(Vector3(0.f, 10.f, 0.f));
 	}
 
 	{
@@ -163,14 +163,14 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-	//플레이어 호출, 호출시 알아서 모델 initialize
-	{
-		Player* player = object::Instantiate<Player>(eLayerType::Player,this);
-	}
+	////플레이어 호출, 호출시 알아서 모델 initialize
+	//{
+	//	Player* player = object::Instantiate<Player>(eLayerType::Player,this);
+	//}
 
-	{
-		//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
-	}
+	//{
+	//	//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+	//}
 
 	CreatePlayerUI();
 

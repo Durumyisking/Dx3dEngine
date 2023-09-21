@@ -107,7 +107,7 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 	{
 		cilp = animator->GetAnimationClip(L"ThrowCap");
 		if (cilp)
-			cilp->SetCompleateEvent([animator]()
+			cilp->SetCompleteEvent([animator]()
 		{
 			animator->Play(L"FlyingStart");
 		});
@@ -117,7 +117,7 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 	{
 		cilp = animator->GetAnimationClip(L"FlyingStart");
 		if (cilp)
-			cilp->SetCompleateEvent([animator]()
+			cilp->SetCompleteEvent([animator]()
 		{
 			animator->Play(L"FlyingWait");
 		});

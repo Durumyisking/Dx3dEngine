@@ -20,8 +20,8 @@ PlayerStateScript::PlayerStateScript()
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Idle, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Move, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Jump, this));
-	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Crouch, this));
-	mStateEventList.emplace_back(std::bind(&PlayerStateScript::CrouchMove, this));
+	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Squat, this));
+	mStateEventList.emplace_back(std::bind(&PlayerStateScript::SquatMove, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Air, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Wall, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Hit, this));
@@ -177,11 +177,11 @@ void PlayerStateScript::Jump()
 		animator->Play(L"Jump", false);
 
 		rigidbody->SetLinearMaxVelocityForDynamic(1000.f);
-		rigidbody->AddForce(math::Vector3(0.0f, 5000.f, 0.0f), physx::PxForceMode::eFORCE);
+		//rigidbody->AddForce(math::Vector3(0.0f, 5000.f, 0.0f), physx::PxForceMode::eFORCE);
 		rigidbody->SetLinearDamping(1.0f);
 	}
 
-	if (animator->PlayAnimationName() == L"Jump" && animator->IsCompleate())
+	if (animator->PlayAnimationName() == L"Jump" && animator->IsComplete())
 	{
 		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
 		rigidbody->SetLinearMaxVelocityForDynamic(100.f);
@@ -189,11 +189,27 @@ void PlayerStateScript::Jump()
 
 }
 
-void PlayerStateScript::Crouch()
+void PlayerStateScript::Squat()
 {
+	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
+	if (animator == nullptr)
+		return;
+
+	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
+	if (!rigidbody)
+		return;
+
+	if (animator->PlayAnimationName() != L"SquatStart" 
+		&& animator->PlayAnimationName() != L"SquatMove"
+		&& animator->PlayAnimationName() != L"SquatWait")
+	{
+		const std::wstring& test = animator->PlayAnimationName();
+		animator->Play(L"SquatStart");
+	}
+
 }
 
-void PlayerStateScript::CrouchMove()
+void PlayerStateScript::SquatMove()
 {
 }
 
