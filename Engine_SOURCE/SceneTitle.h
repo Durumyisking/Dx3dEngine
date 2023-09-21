@@ -5,7 +5,7 @@
 class Panal;
 class HUD;
 class SceneTitle :
-    public Scene
+	public Scene
 {
 public:
 	SceneTitle();
@@ -21,10 +21,14 @@ public:
 
 
 	void CreateMainMenu();
-  
+
 private:
-	Panal* mMainMenuPanal;
-	Panal* mStartTextPanal;
 
+
+	//Panal* mMainMenuPanal;
+	//Panal* mStartTextPanal;
+	//Panal* mStart2PTextPanal;
+	//Panal* mOptionTextPanal;
+	//Panal* mExitTextPanal;
+	//Panal* mBarPanal;
 };
-

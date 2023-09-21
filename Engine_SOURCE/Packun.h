@@ -1,6 +1,7 @@
 #pragma once
 #include "Monster.h"
 
+class GameObj;
 class Packun : public Monster
 {
 public:
@@ -19,6 +20,5 @@ protected:
 	virtual void stateInfoInitalize() final;
 
 private:
-
 };
 

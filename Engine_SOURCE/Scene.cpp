@@ -5,7 +5,7 @@
 #include "Object.h"
 #include "CameraScript.h"
 #include "Player.h"
-
+#include "TimerMgr.h"
 Scene::Scene()
 	: mDeleteObj(true)
 	, mType(SceneMgr::eSceneType::End)
@@ -101,6 +101,12 @@ void Scene::Exit()
 
 	destroy();
 
+
+	mCamera = nullptr;
+	mUICamera = nullptr;
+
+	GETSINGLE(TimerMgr)->GetInstance()->ChangeScene();
+
 	renderer::lights.clear();
 }
 
@@ -124,7 +130,7 @@ std::vector<GameObj*> Scene::GetDontDestroyObjects()
 	return allLayerDontDestroyObjs;
 }
 
-const std::vector<GameObj*>& Scene::GetGameObj(eLayerType _eLayer)
+const std::vector<GameObj*>& Scene::GetGameObjects(eLayerType _eLayer)
 {
 
 	return mLayers[static_cast<UINT>(_eLayer)].GetGameObjects();
@@ -142,7 +148,7 @@ GameObj* Scene::GetPlayer()
 		}
 	}
 
-	assert(player);
+	//assert(player);
 
 	return player;
 }

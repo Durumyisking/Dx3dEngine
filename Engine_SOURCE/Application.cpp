@@ -36,9 +36,9 @@ void Application::Initialize()
 	GETSINGLE(InputMgr)->Initialize();
 	GETSINGLE(Fmod)->Initialize();
 	// GETSINGLE(CollisionMgr)->Initialize();
-	//UIManager::Initialize();
 	renderer::Initialize();
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
+	GETSINGLE(UIManager)->Initialize();
 	GETSINGLE(UIFactory)->Initialize();
 	GETSINGLE(ResourceMgr)->Initalize();
 	GETSINGLE(PhysicsMgr)->Initialize();
@@ -55,10 +55,9 @@ void Application::Update()
 		GETSINGLE(TimerMgr)->Update();
 		GETSINGLE(InputMgr)->Update();
 		//		GETSINGLE(CollisionMgr)->Update();
-		//UIManager::Tick();
 		GETSINGLE(SceneMgr)->Update();
+		GETSINGLE(UIManager)->Update();
 		GETSINGLE(PhysXCollisionMgr)->Update();
-		GETSINGLE(PhysicsMgr)->Update();
 	}
 }
 void Application::FixedUpdate()
@@ -68,6 +67,7 @@ void Application::FixedUpdate()
 		//GETSINGLE(CollisionMgr)->FixedUpdate();
 		GETSINGLE(server::ServerMgr)->FixedUpdate();
 		GETSINGLE(SceneMgr)->FixedUpdate();
+		GETSINGLE(PhysicsMgr)->Update();
 	}
 }
 void Application::Render()
@@ -134,6 +134,7 @@ void Application::DestroySingle()
 	GETSINGLE(server::ServerMgr)->DestroyInstance();
 	GETSINGLE(SceneMgr)->DestroyInstance();
 	GETSINGLE(FontWrapper)->DestroyInstance();
+	GETSINGLE(UIManager)->DestroyInstance();
 	GETSINGLE(UIFactory)->DestroyInstance();
 //		GETSINGLE(CollisionMgr)->DestroyInstance();
 	GETSINGLE(PhysXCollisionMgr)->DestroyInstance();

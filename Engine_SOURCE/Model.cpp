@@ -165,12 +165,6 @@ void Model::Bind_Render()
 		if (mMeshes[i]->IsRender() == false)
 			continue;
 
-		// 아직 미구현
-		// 예외처리 구간 여기서 모델의 렌더를 껏다켰다하는 함수를 작성해야함
-		if (mMeshes[i]->GetName().find(L"Press") != std::wstring::npos)
-			continue;
-		/////////////////////////////////////////////////////////////////////
-
 		std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
 		for (int slot = 0; slot < Textures.size(); ++slot)
 		{

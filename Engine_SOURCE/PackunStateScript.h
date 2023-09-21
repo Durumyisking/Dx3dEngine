@@ -21,6 +21,6 @@ public:
 	virtual void Die() final;
 
 private:
-
+	float mFindRadius;
 };
 

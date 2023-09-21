@@ -7,6 +7,21 @@ using namespace enums;
 
 struct Geometry
 {
+    Geometry(const Geometry& geom)
+        : eGeomType(geom.eGeomType)
+        , boxGeom(geom.boxGeom)
+        , capsuleGeom(geom.capsuleGeom)
+        , sphereGeom(geom.sphereGeom)
+        , planeGeom(geom.planeGeom)
+    {
+       
+    }
+    Geometry()
+        : eGeomType(eGeometryType::End)
+    {
+
+    }
+
     Geometry(eGeometryType geometryType, math::Vector3 boxHalfSize)
         : eGeomType(eGeometryType::Box)
     {
@@ -72,9 +87,9 @@ public:
 public:
     eActorType                  GetActorType()     const { return mActorType; }
     eGeometryType               GetGeometryType()  const { return mGeometryType; }
-    PxShape*                    GetShape()         const { return mShape; }
+    PxShape*                    GetShape()         const { return mMainShape; }
     const Vector3&              GetGeometrySize()  const { return mSize; }
-    std::shared_ptr<Geometry>   GetGeometries()    const { return mGeometry; }
+    std::shared_ptr<Geometry>   GetGeometries()    const { return mMainGeometry; }
     PxActor*                    GetActor()         const { return mActor; }
 
     template<typename T>
@@ -91,17 +106,24 @@ public:
     void SetGeometrySize(const Vector3& newSize);
     void SetActorType(eActorType type) { mActorType = type; }
 
+    std::shared_ptr<PhysicalProperties> GetProperties() const { return mProperties; }
+
+    void CreateMainShape();
+    void CreateMainShape(Vector3 localPos);
+
+    void CreateSubShape(Vector3 relativePos, eGeometryType geomType, Vector3 geomSize, PxShapeFlag::Enum shapeFlag);
+    std::vector<PxShape*> GetSubShapes() { return mSubShapes; }
+
 private:
-    void createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize);
-    void createCapsuleGeometry(eGeometryType geometryType, float radius, float halfHeight);
-    void createPlaneGeometry(eGeometryType geometryType);
-    void createSphereGeometry(eGeometryType geometryType, float radius);
+    Geometry createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize);
+    Geometry createCapsuleGeometry(eGeometryType geometryType, float radius, float halfHeight);
+    Geometry createPlaneGeometry(eGeometryType geometryType);
+    Geometry createSphereGeometry(eGeometryType geometryType, float radius);
 
 private:
     void createPhysicsProperties(const MassProperties& massProperties = MassProperties());
-    void createGeometry(eGeometryType geometryType, const Vector3& shapeSize); // 액터당 단일로 달아줄 지오메트리(shape)
+    Geometry createGeometry( eGeometryType geometryType, const Vector3& shapeSize); // 액터당 달아줄 지오메트리(shape)
     void createUniversalShape(); // 공용으로 사용 가능한 지오메트리 
-    void createShape();
     void createActor();
     void initializeActor();
 
@@ -130,9 +152,12 @@ private:
         - 입자 기반의 유체 시뮬레이션 수행        
     */
 
-    PxShape*                        mShape;
+    PxShape*                        mMainShape;
+    std::vector<PxShape*>           mSubShapes;
+
 
     std::shared_ptr<PhysicalProperties> mProperties;
-    std::shared_ptr<Geometry>        mGeometry;
+    std::shared_ptr<Geometry>        mMainGeometry;
+    std::vector<std::shared_ptr<Geometry> >           mSubGeometries;
 
 };

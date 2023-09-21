@@ -15,15 +15,18 @@ Goomba::Goomba()
 	: Monster()
 {
 	OnCapture();
+	SetName(L"Goomba");
 }
 
 Goomba::~Goomba()
 {
-
 }
 
 void Goomba::Initialize()
 {
+	SetGetRecognizeRadius(15.f);	
+
+
 	// Add MeshRenderer
 	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
@@ -50,7 +53,8 @@ void Goomba::Initialize()
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 1.6f, 0.f), eGeometryType::Box, Vector3(0.25f ,0.01f, 0.25f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
@@ -64,17 +68,24 @@ void Goomba::Initialize()
 	// Script
 	assert(AddComponent<GoombaStateScript>(eComponentType::Script));
 
-	// »óÅÂ info ÃÊ±âÈ­	
+	// ìƒíƒœ info ì´ˆê¸°í™”	
 	stateInfoInitalize();
 
-	// ÃÊ±âÈ­
+	// ì´ˆê¸°í™”
 	Monster::Initialize();
 
 }
 
 void Goomba::Update()
 {
+
+	PxGeometryType::Enum g =  GetPhysical()->GetSubShapes()[0]->getGeometryType();
+	PxActor* a = GetPhysical()->GetShape()->getActor();
+	PxActor* b = GetPhysical()->GetSubShapes()[0]->getActor();
+	PxTransform c=  GetPhysical()->GetSubShapes()[0]->getLocalPose();
+
 	Monster::Update();
+
 }
 
 void Goomba::FixedUpdate()
@@ -84,19 +95,19 @@ void Goomba::FixedUpdate()
 
 void Goomba::CaptureEvent()
 {
-	// Ä¸Ã³ ÀÌº¥Æ® ±¸ÇöºÎ
+	// ìº¡ì²˜ ì´ë²¤íŠ¸ êµ¬í˜„ë¶€
 	bool able = false;
 
 	std::vector<std::function<bool(eKeyCode)>> keyEvent;
 	keyEvent.resize((static_cast<UINT>(eKeyState::NONE) + 1));
 
-	// getkeytapÀÇ Ã¹¹øÂ° ÀÎÀÚÀÎ this´Â inputmgr ½Ì±ÛÅæ Æ÷ÀÎÅÍ¸¦ °íÁ¤À¸·Î »ç¿ë, µÎ¹øÂ° ÀÎÀÚ´Â À¯µ¿ÀûÀ¸·Î »ç¿ëÇÏ°Ú´Ù.
+	// getkeytapì˜ ì²«ë²ˆì§¸ ì¸ìì¸ thisëŠ” inputmgr ì‹±ê¸€í†¤ í¬ì¸í„°ë¥¼ ê³ ì •ìœ¼ë¡œ ì‚¬ìš©, ë‘ë²ˆì§¸ ì¸ìëŠ” ìœ ë™ì ìœ¼ë¡œ ì‚¬ìš©í•˜ê² ë‹¤.
 	keyEvent[static_cast<UINT>(eKeyState::TAP)] = std::bind(&InputMgr::GetKeyTap, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::DOWN)] = std::bind(&InputMgr::GetKeyDown, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::UP)] = std::bind(&InputMgr::GetKeyUp, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::NONE)] = std::bind(&InputMgr::GetKeyNone, GETSINGLE(InputMgr), std::placeholders::_1);
 
-	// Å° ÀÔ·Â ÀÌº¥Æ® Ã³¸®ÇÏ´Â ¶÷´Ù½Ä
+	// í‚¤ ì…ë ¥ ì´ë²¤íŠ¸ ì²˜ë¦¬í•˜ëŠ” ëŒë‹¤ì‹
 	std::function<void(eKeyState, eKeyCode, eMonsterState)> stateEvent = 
 		[&]
 		(eKeyState keyState,eKeyCode curPress, eMonsterState nextState) ->void
@@ -110,19 +121,56 @@ void Goomba::CaptureEvent()
 			}
 		};
 
-	// ÀÌµ¿
-	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
+	// ì´ë™
+	//stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
 
-	// Á¡ÇÁ
-	able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Jump);
+	//// ì í”„
+	//able = false;
+	stateEvent(eKeyState::TAP, eKeyCode::Y, eMonsterState::Jump);
 
-	// Æ¯¼ö
+	// íŠ¹ìˆ˜
 	//able = false;
 	//stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::SpecialCast);
+}
+
+void Goomba::OnCollisionEnter(GameObj* gameObject)
+{
+}
+
+void Goomba::OnTriggerEnter(GameObj* gameObject)
+{
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+
+	{
+		if (eMonsterState::Fall == GetMonsterState())
+		{
+			SetMonsterState(Monster::eMonsterState::Land);
+		}
+		GetPhysXRigidBody()->SetAirOff();
+	}
+
+	if (eLayerType::Player == gameObject->GetLayerType())
+
+	{
+
+		GetPhysXRigidBody()->SetAirOff();
+	}
+}
+
+void Goomba::OnTriggerStay(GameObj* gameObject)
+{
+}
+
+void Goomba::OnTriggerExit(GameObj* gameObject)
+{
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+	{
+		GetPhysXRigidBody()->ApplyGravity();
+		GetPhysXRigidBody()->SetAirOn();
+	}
 }
 
 void Goomba::boneAnimatorInit(BoneAnimator* animator)
@@ -131,18 +179,19 @@ void Goomba::boneAnimatorInit(BoneAnimator* animator)
 
 	AnimationClip* cilp = animator->GetAnimationClip(L"Attack");
 	if (cilp)
-		cilp->SetCompleateEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+		cilp->SetCompleteEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
 }
 
 void Goomba::stateInfoInitalize()
 {
 	//Idle
-	// ÇöÀç´Â ´ë±â»óÅÂ¿¡¼­ ¸ø°¡´Â»óÅÂ°¡ ¾ø´Ù
+	// í˜„ì¬ëŠ” ëŒ€ê¸°ìƒíƒœì—ì„œ ëª»ê°€ëŠ”ìƒíƒœê°€ ì—†ë‹¤
 
 	// Move
 	InsertLockState(static_cast<UINT>(eMonsterState::Move), static_cast<UINT>(eMonsterState::Move));
 
 	// Jump
+	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Jump));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Move));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::SpecialSituation));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Groggy));

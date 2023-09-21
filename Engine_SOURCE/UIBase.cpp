@@ -11,6 +11,7 @@ UIBase::UIBase(eUIType type)
 	:mUIType(type)
 	, mUIbFullScreen(false)
 	, mbUIEnable(true)
+	, mbColor(false)
 	, mUIParent(nullptr)
 	, mUIScreenPos(Vector3::Zero)
 	, mUIPos(Vector3::Zero)
@@ -100,16 +101,4 @@ void UIBase::Addchild(UIBase* uiBase)
 {
 	mChilds.push_back(uiBase);
 	uiBase->mUIParent = this;
-}
-
-void UIBase::SetColor(Vector4 color)
-{
-	SpriteRenderer* renderer = this->GetComponent<SpriteRenderer>();
-	Material* material = renderer->GetMaterial();
-
-	renderer::MaterialCB data = {};
-	data.bool3 = true;
-	data.xyzw1 = color;
-	material->SetData(eGPUParam::Bool_3, &data.bool3);
-	material->SetData(eGPUParam::Vector4_1, &data.xyzw1);
 }

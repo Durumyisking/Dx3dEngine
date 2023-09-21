@@ -12,7 +12,6 @@ namespace object
 	{
 		T* gameObj = new T();
 		GETSINGLE(SceneMgr)->AddEvent(gameObj);
-		gameObj->Initialize();
 		gameObj->SetLayerType(layerType);
 
 		return gameObj;

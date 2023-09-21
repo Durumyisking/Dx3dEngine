@@ -16,7 +16,7 @@
 Packun::Packun()
 	: Monster()
 {
-	OnCapture();
+	//OnCapture();
 }
 
 Packun::~Packun()
@@ -46,19 +46,22 @@ void Packun::Initialize()
 		//model->MeshRenderSwtich(L"Head3__HeadMT-mesh");
 	}
 
-	PackunStateScript* packunState = AddComponent<PackunStateScript>(eComponentType::Script);
+
+	assert(AddComponent<PackunStateScript>(eComponentType::Script));
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(0.5f, 0.5f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
 
 
 	// Rigidbody
-	PhysXRigidBody* rigidbody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	rigidbody->Initialize();
+	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
+
+
+
 	// MoveMent
-	AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
-	AddComponent<PhysicalMovement>(eComponentType::Movement)->Initialize();
+	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
+	assert(AddComponent<PhysicalMovement>(eComponentType::Movement));
 
 	// 초기화
 	Monster::Initialize();
@@ -117,6 +120,7 @@ void Packun::CaptureEvent()
 
 void Packun::stateInfoInitalize()
 {
+	mStateInfo.resize(static_cast<UINT>(eMonsterState::Die) + 1);
 	//Idle
 	// 현재는 대기상태에서 못가는상태가 없다
 
@@ -171,29 +175,39 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 			cilp->SetKeyFrameEvent(3, [this]()
 				{
 					PackunPostionBall* packunball = object::LateInstantiate<PackunPostionBall>(eLayerType::Objects);
+					packunball->Initialize();
 
 					Transform* tr = GetComponent<Transform>();
 					Vector3 position = tr->GetPhysicalPosition();
-			
 					Vector3 rotation = tr->GetRotation();
 
 					packunball->GetComponent<Transform>()->SetPhysicalPosition(position);
 					packunball->GetComponent<Transform>()->SetPhysicalRotation(rotation);
-					packunball->FixedUpdate();
-
-					Transform* test = packunball->GetComponent<Transform>();
-					Vector3 testfor = test->WorldForward();
 
 					PhysXRigidBody* rigidbody = packunball->GetComponent<PhysXRigidBody>();
 					if (rigidbody)
 					{
-						//rigidbody->AddForceForDynamic(Vector3(0.f,25.f,0.f), PxForceMode::eIMPULSE);
-						rigidbody->AddForceForDynamic(test->WorldForward() * 15.f, PxForceMode::eIMPULSE);
+						rigidbody->SetMaxVelocity_Y(15.f);
+						rigidbody->ApplyGravity();
+						rigidbody->SetAirOn();
+
+
+						Vector3 force = tr->WorldForward() * 550.f;
+						force.y = 999999.f;
+
+						rigidbody->AddForce(force);
 					}
 
 				});
 
-			cilp->SetCompleateEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+			cilp->SetCompleteEvent([this]() 
+				{
+					if(IsCapture())
+						SetMonsterState(Monster::eMonsterState::Idle);
+					else
+						SetMonsterState(Monster::eMonsterState::Groggy);
+
+				});
 		}
 
 	}
@@ -202,11 +216,20 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 	{
 		cilp = animator->GetAnimationClip(L"AttackHit");
 		if (cilp)
-			cilp->SetCompleateEvent([this]()
+			cilp->SetCompleteEvent([this]()
 				{
 					SetMonsterState(Monster::eMonsterState::Idle);
 				});
 	}
 
+	
+	{
+		cilp = animator->GetAnimationClip(L"HackWait");
+		if (cilp)
+			cilp->SetCompleteEvent([this]()
+				{
+					SetMonsterState(Monster::eMonsterState::Idle);
+				});
+	}
 
 }

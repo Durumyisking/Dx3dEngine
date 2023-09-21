@@ -14,10 +14,10 @@ AnimationClip::AnimationClip()
 	: mDuration(0.0f)
 	, mTickPerSceond(0.0f)
 	, mCurIndex(0)
-	, mCompleate(false)
+	, mbComplete(false)
 	, mAnimator(nullptr)
 	, mStartEvent(nullptr)
-	, mCompleateEvent(nullptr)
+	, mCompleteEvent(nullptr)
 	, mEndEvent(nullptr)
 	, mName(L"")
 	, mPreveAnimationData(nullptr)
@@ -33,7 +33,7 @@ AnimationClip::~AnimationClip()
 
 void AnimationClip::Update()
 {
-	if (mCompleate)
+	if (mbComplete)
 		return;
 
 	mTickPerSceond += DT;
@@ -60,11 +60,11 @@ void AnimationClip::Update()
 	{
 		// 애니메이션 종료시 리셋
 		Reset();
-		mCompleate = true;
+		mbComplete = true;
 		mCurIndex = static_cast<UINT>(mSkeletonData.size() - 1);
 
-		if (mCompleateEvent)
-			mCompleateEvent();
+		if (mCompleteEvent)
+			mCompleteEvent();
 
 		return;
 	}
@@ -206,10 +206,16 @@ void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, cons
 
 		// R
 		Vector3 eRotation = curData.Rotation[i].second;
-		aiQuaternion qRotation(-eRotation.y, eRotation.z, -eRotation.x);
+		aiQuaternion qRotation(eRotation.y, eRotation.z, eRotation.x);
+
+		// 이전 코드
+		//aiQuaternion qRotation(-eRotation.y, eRotation.z, -eRotation.x);
 
 		Vector3 eNextRotation = nextData.Rotation[i].second;
-		aiQuaternion qNextRotation(-eNextRotation.y, eNextRotation.z, -eNextRotation.x);
+		aiQuaternion qNextRotation(eNextRotation.y, eNextRotation.z, eNextRotation.x);
+
+		// 이전 코드
+		// aiQuaternion qNextRotation(-eNextRotation.y, eNextRotation.z, -eNextRotation.x);
 
 		aiQuaternion result = {};
 		result.Interpolate(result, qRotation, qNextRotation, static_cast<float>(mTickPerSceond / drutation));
@@ -221,7 +227,7 @@ void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, cons
 
 void AnimationClip::Reset()
 {
-	mCompleate = false;
+	mbComplete = false;
 	mTickPerSceond = 0.0f;
 	// mCurIndex = 0;
 }
@@ -248,6 +254,10 @@ math::Vector3 AnimationClip::Interpolation(math::Vector3& startVec, math::Vector
 
 aiMatrix4x4 AnimationClip::ToLeftHandMatrix(math::Vector3 pos, math::Vector3 rotation)
 {
+	// 사용 X
+	// 쿼터니언 회전이아닌 오일러 회전으로 애니메이션 재생함수
+	// 초기 구현시 사용하던 예제 코드입니다.
+	
 	// 이동 계산
 	aiMatrix4x4 traslation = {};
 	traslation.Translation(aiVector3D(pos.x, pos.y, -pos.z), traslation);
@@ -261,23 +271,22 @@ aiMatrix4x4 AnimationClip::ToLeftHandMatrix(math::Vector3 pos, math::Vector3 rot
 	// z 포지션은 오른손좌표계기준, 회전은 시계방향
 	rotationmatrix.FromEulerAnglesXYZ(-rotation.x, -rotation.y, rotation.z);
 
-	return traslation * rotationmatrix;
+	//return traslation * rotationmatrix;
+
+	return aiMatrix4x4();
 }
 
 aiMatrix4x4 AnimationClip::ToLeftHandMatrix(math::Vector3 pos, aiMatrix3x3 rotation)
 {
 	// 이동 계산
 	aiMatrix4x4 traslation = {};
-	traslation.Translation(aiVector3D(pos.x, pos.y, -pos.z), traslation);
+	traslation.Translation(aiVector3D(pos.x, pos.y, pos.z), traslation);
 
+	// 이전 코드
+	// traslation.Translation(aiVector3D(pos.x, pos.y, -pos.z), traslation);
+	
 	// 회전 계산 오일러
 	aiMatrix4x4 rotationmatrix(rotation);
-
-	// 아마? 닌텐도 엔진 고유의 좌표계가 있는거같다
-	// x 오른손좌표계기준, 반시계
-	// y 오른손좌표계기준, 반시계
-	// z 포지션은 오른손좌표계기준, 회전은 시계방향
-	//rotationmatrix.FromEulerAnglesXYZ(-rotation.x, -rotation.y, rotation.z);
 
 	return traslation * rotationmatrix;
 }
