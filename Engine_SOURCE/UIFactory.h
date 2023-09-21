@@ -6,6 +6,7 @@ class UIBase;
 class Panal;
 class HUD;
 class ImageUI;
+class ColorChangeUI;
 class UIFactory
 {
 	SINGLE(UIFactory)
@@ -20,6 +21,8 @@ public:
 	ImageUI* CreateImage(const std::wstring& name, const std::wstring& key, Vector3 pos, Vector3 scale, Scene* sceene);
 	HUD* CreateHud(const std::wstring& name, const std::wstring& key, Vector3 pos, Vector3 scale, Scene* sceene);
 	void CreateButton();
+
+
 
 	//void CreateString(const std::wstring& string, Vector3 pos, Vector3 scale, float interval, GameObj* parent, Scene* scene);
 	void CreateString(const std::wstring& string, Vector3 pos, Vector3 scale, float interval, UIBase* parent, Scene* scene);

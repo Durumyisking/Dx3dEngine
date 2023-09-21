@@ -86,6 +86,9 @@ void HUD::OnUpdate()
 		break;
 	case enums::eHUDState::End:
 		break;
+	case enums::eHUDState::Hit:
+
+		break;
 	default:
 		break;
 	}
@@ -172,14 +175,18 @@ void HUD::PlayAnimation()
 
 }
 
-void HUD::SetColor()
-{
 
+void HUD::SetColor(Vector4 color, bool isColor)
+{
 	SpriteRenderer* renderer = this->GetComponent<SpriteRenderer>();
 	Material* material = renderer->GetMaterial();
 
-	renderer::ColorCB data = {};
+	renderer::MaterialCB data = {};
+	data.bool3 = isColor;
+	data.xyzw1 = color;
+	material->SetData(eGPUParam::Bool_3, &data.bool3);
+	material->SetData(eGPUParam::Vector4_1, &data.xyzw1);
 
-	data.RGBA = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-	material->SetData(eGPUParam::Vector4_1, &data.RGBA);
+	mbColor = true;
+	mCurrentTime = 0;
 }
