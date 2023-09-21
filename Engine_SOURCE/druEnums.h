@@ -131,6 +131,7 @@ namespace enums
 		Sphere,
 		Plane,
 		ConvexMesh,
+		TriangleMesh,
 		End,
 	};
 

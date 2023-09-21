@@ -13,7 +13,9 @@ public:
 	void Init();
 
 public:
-	static PxConvexMesh* CreateConvexMesh(const PxVec3* verts, const PxU32 numVerts, PxPhysics* physics, PxCooking* cooking);
+	PxConvexMesh* CreateConvexMesh(const PxVec3* verts, const PxU32 numVerts, PxPhysics* physics, PxCooking* cooking);
+	PxTriangleMesh* CreateTriangleMesh(const PxVec3* verts, const PxU32 numVerts
+		, const PxU32* indexes, const PxU32 numIndexes, PxPhysics* physics, PxCooking* cooking);
 
 	PxCooking*				GetCooking() const { return mInitialization->GetCooking(); }
 	PxFoundation*			GetFoundation() const { return mInitialization->GetFoundation(); }

@@ -22,6 +22,7 @@ public:
 	void RenderInstanced(UINT count);
 
 	bool GetVerticesFromBuffer(std::vector<Vertex>* vertexVec);
+	bool GetIndexesFromBuffer(std::vector<UINT>* indexVec);
 
 public:
 	bool IsRender() { return mbRender; }

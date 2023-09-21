@@ -99,30 +99,31 @@ void ScenePlay::Initialize()
 	//	light->SetAngle(45.f);
 	//}
 
-	////CityWorld Model Test
-	//{
-	//	{
-	//		GameObj* Ground = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-	//		Ground->SetPos(Vector3(0.f, 10.f, 0.f));
-	//		Ground->SetScale(Vector3(1.f, 1.f, 1.f));
-	//		Ground->SetName(L"CityWorldHomeBuilding000");
+	//CityWorld Model Test
+	{
+		{
+			GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+			obj->SetPos(Vector3(0.f, 10.f, 300.f));
+			obj->SetScale(Vector3(0.1f, 0.1f, 0.1f));
+			obj->SetName(L"CityWorldHomeBuilding000");
 
-	//		// SetModel
-	//		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding000");
-	//		if (model)
-	//		{
-	//			MeshRenderer* test = Ground->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	//			test->SetModel(model, model->GetMaterial(0));
-	//		}
+			// SetModel
+			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding000");
+			if (model)
+			{
+				MeshRenderer* test = obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+				test->SetModel(model, model->GetMaterial(0));
+			}
 
-	//		Physical* physical = Ground->AddComponent<Physical>(eComponentType::Physical);
-	//		physical->InitialDefaultProperties(eActorType::Static, eGeometryType::ConvexMesh, Vector3(1.f, 1.f, 1.f));
+			//Physical* physical = obj->AddComponent<Physical>(eComponentType::Physical);
+			//physical->InitialConvexMeshProperties(eActorType::Static, Vector3(1.f, 1.f, 1.f));
+			////physical->InitialTriangleMeshProperties(Vector3(1.f, 1.f, 1.f));
 
-	//		PhysXRigidBody* rigid = Ground->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	//		Ground->AddComponent<PhysXCollider>(eComponentType::Collider);
-	//	}
+			//PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+			//obj->AddComponent<PhysXCollider>(eComponentType::Collider);
+		}
 
-	//}
+	}
 
 	//ConvexMesh Test
 	{
@@ -141,8 +142,7 @@ void ScenePlay::Initialize()
 		}
 
 		Physical* physical = ball->AddComponent<Physical>(eComponentType::Physical);
-		//physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::ConvexMesh, Vector3(0.2f, 0.2f, 0.2f));
-		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::ConvexMesh, Vector3(1.f, 1.f, 1.f));
+		physical->InitialConvexMeshProperties(eActorType::Dynamic, Vector3(1.f, 1.f, 1.f));
 
 		PhysXRigidBody* rigid = ball->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 

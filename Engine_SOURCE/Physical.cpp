@@ -32,11 +32,8 @@ void Physical::Initialize()
 
 void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, math::Vector3 geometrySize, MassProperties massProperties)
 {
-	if (geometryType == eGeometryType::ConvexMesh)
-	{
-		InitialConvexMeshProperties(actorType, geometrySize, massProperties);
-		return;
-	}
+	if (geometryType == eGeometryType::ConvexMesh || geometryType == eGeometryType::TriangleMesh)
+		assert(false);
 
 	mActorType = actorType;
 	mGeometryType = geometryType;
@@ -52,7 +49,7 @@ void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geom
 
 void Physical::InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, MassProperties massProperties)
 {
-	PxConvexMesh* convexMesh = MakeConvexObject();
+	PxConvexMesh* convexMesh = MakeConvexMesh();
 
 	if (convexMesh == nullptr)
 		assert(false);
@@ -63,12 +60,29 @@ void Physical::InitialConvexMeshProperties(eActorType actorType, Vector3 geometr
 	createPhysicsProperties(massProperties);
 	createConvexMeshGeometry(mGeometryType, convexMesh, mSize);
 	createActor();
-	createConvexShape(convexMesh);
+	createConvexMeshShape(convexMesh);
 	AddActorToPxScene();
 	
 }
 
-PxConvexMesh* Physical::MakeConvexObject()
+void Physical::InitialTriangleMeshProperties(Vector3 geometrySize, MassProperties massProperties)
+{
+	PxTriangleMesh* triangleMesh = MakeTriangleMesh();
+
+	if (triangleMesh == nullptr)
+		assert(false);
+
+	mActorType = eActorType::Static;
+	mGeometryType = eGeometryType::TriangleMesh;
+	mSize = geometrySize;
+	createPhysicsProperties(massProperties);
+	createTriangleMeshGeometry(mGeometryType, triangleMesh, mSize);
+	createActor();
+	createTriangleMeshShape(triangleMesh);
+	AddActorToPxScene();
+}
+
+PxConvexMesh* Physical::MakeConvexMesh()
 {
 	std::shared_ptr<PhysX>physX = GETSINGLE(PhysicsMgr)->GetEnvironment();
 
@@ -95,9 +109,50 @@ PxConvexMesh* Physical::MakeConvexObject()
 		}
 	}
 
-	PxVec3* v = vertices.data();
+	PxVec3* v = vertices.data(); // use for Debug can be delete
 
 	return physX->CreateConvexMesh(vertices.data(), vertexCount, physX->GetPhysics(), physX->GetCooking());
+}
+
+PxTriangleMesh* Physical::MakeTriangleMesh()
+{
+	std::shared_ptr<PhysX>physX = GETSINGLE(PhysicsMgr)->GetEnvironment();
+
+	Model* model = GetOwner()->GetComponent<MeshRenderer>()->GetModel();
+	if (model == nullptr)
+		return nullptr;
+
+	//vertexCount = model->GetNumberOfVertices(index);
+	const std::vector<Mesh*> meshes = model->GetMeshes();
+	PxU32 allVertexCount = 0;
+	PxU32 allIndexCount = 0;
+	std::vector<PxVec3> vertices;
+	std::vector<PxU32> indexes;
+
+	for (Mesh* mesh : meshes)
+	{
+		std::vector<Vertex> meshVertices;
+		std::vector<UINT> meshIndexes;
+		mesh->GetVerticesFromBuffer(&meshVertices);
+		mesh->GetIndexesFromBuffer(&meshIndexes);
+		PxU32 vertexCount = mesh->GetVertexCount();
+		PxU32 indexCount = mesh->GetIndexCount();
+		allVertexCount += vertexCount;
+		allIndexCount += indexCount;
+
+		// Copy from cvector array to PxVec3 array
+		for (PxU32 i = 0; i < vertexCount; i++)
+		{
+			vertices.emplace_back(meshVertices[i].pos.x, meshVertices[i].pos.y, meshVertices[i].pos.z);
+			indexes.emplace_back(meshIndexes[i]);
+		}
+	}
+
+	PxVec3* v = vertices.data(); // use for Debug can be delete
+	PxU32* v1 = indexes.data(); // use for Debug can be delete
+
+	return physX->CreateTriangleMesh(vertices.data(), allVertexCount
+		, indexes.data(), allIndexCount, physX->GetPhysics(), physX->GetCooking());
 }
 
 void Physical::Update()
@@ -185,6 +240,13 @@ void Physical::createConvexMeshGeometry(eGeometryType geometryType, PxConvexMesh
 	assert(eGeometryType::ConvexMesh == geometryType);
 	assert(nullptr == mGeometry);
 	mGeometry = std::make_shared<Geometry>(geometryType, convexMesh, mScale);
+}
+
+void Physical::createTriangleMeshGeometry(eGeometryType geometryType, PxTriangleMesh* triangleMesh, const Vector3& mScale)
+{
+	assert(eGeometryType::TriangleMesh == geometryType);
+	assert(nullptr == mGeometry);
+	mGeometry = std::make_shared<Geometry>(geometryType, triangleMesh, mScale);
 }
 
 void Physical::createPhysicsProperties(const MassProperties& massProperties)
@@ -277,10 +339,16 @@ void Physical::createShape()
 	}
 }
 
-void Physical::createConvexShape(PxConvexMeshGeometry convexMesh)
+void Physical::createConvexMeshShape(PxConvexMeshGeometry convexMeshGeom)
 {
 	mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(),
 		mGeometry->convexMeshGeom, *mProperties->GetMaterial());
+}
+
+void Physical::createTriangleMeshShape(PxTriangleMeshGeometry triangleMeshGeom)
+{
+	mShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(),
+		mGeometry->triangleMeshGeom, *mProperties->GetMaterial());
 }
 
 void Physical::createActor()

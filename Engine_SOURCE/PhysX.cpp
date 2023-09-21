@@ -52,6 +52,30 @@ PxConvexMesh* PhysX::CreateConvexMesh(const PxVec3* verts, const PxU32 numVerts,
 	return convexMesh;
 }
 
+PxTriangleMesh* PhysX::CreateTriangleMesh(const PxVec3* verts, const PxU32 numVerts
+	, const PxU32* indexs, const PxU32 numIndexes, PxPhysics* physics, PxCooking* cooking)
+{
+	// Create descriptor for triangle mesh
+	PxTriangleMeshDesc meshDesc;
+	meshDesc.points.count = numVerts;
+	meshDesc.points.stride = sizeof(PxVec3);
+	meshDesc.points.data = verts;
+
+	meshDesc.triangles.count = numIndexes / 3;
+	meshDesc.triangles.stride = 3 * sizeof(PxU32);
+	meshDesc.triangles.data = indexs;
+
+	PxDefaultMemoryOutputStream writeBuffer;
+	bool status = cooking->cookTriangleMesh(meshDesc, writeBuffer);
+	if (!status)
+		return nullptr; 
+
+	PxDefaultMemoryInputData readBuffer(writeBuffer.getData(), writeBuffer.getSize());
+	PxTriangleMesh* triangleMesh = physics->createTriangleMesh(readBuffer);
+
+	return triangleMesh;
+}
+
 void PhysX::CreatePhysicsScene(const PxSceneDesc& sceneDesc)
 {
 	assert(mInitialization->GetPhysics());

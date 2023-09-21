@@ -54,13 +54,23 @@ struct Geometry
         }
     }
 
+    Geometry(eGeometryType geometryType, PxTriangleMesh* triangleMesh, math::Vector3 scale)
+        : eGeomType(eGeometryType::TriangleMesh)
+    {
+        if (eGeometryType::TriangleMesh == geometryType)
+        {
+            PxMeshScale meshScale(PxVec3(scale.x, scale.y, scale.z));
+            triangleMeshGeom = PxTriangleMeshGeometry(triangleMesh, meshScale);
+        }
+    }
+
         PxBoxGeometry boxGeom;
         PxCapsuleGeometry capsuleGeom;
         PxSphereGeometry sphereGeom;
         PxPlaneGeometry planeGeom;
         PxConvexMeshGeometry convexMeshGeom;
+        PxTriangleMeshGeometry triangleMeshGeom;
         eGeometryType eGeomType;
-
 
 };
 
@@ -78,7 +88,9 @@ public:
     virtual void Initialize();
     virtual void InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, MassProperties massProperties = MassProperties());
     virtual void InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, MassProperties massProperties = MassProperties());
-    PxConvexMesh* MakeConvexObject();
+    virtual void InitialTriangleMeshProperties(Vector3 geometrySize, MassProperties massProperties = MassProperties());
+    PxConvexMesh* MakeConvexMesh();
+    PxTriangleMesh* MakeTriangleMesh();
     virtual void Update();
     virtual void FixedUpdate();
     virtual void Render();
@@ -111,13 +123,15 @@ private:
     void createPlaneGeometry(eGeometryType geometryType);
     void createSphereGeometry(eGeometryType geometryType, float radius);
     void createConvexMeshGeometry(eGeometryType geometryType, PxConvexMesh* convexMesh, const Vector3& mScale);
+    void createTriangleMeshGeometry(eGeometryType geometryType, PxTriangleMesh* triangleMesh, const Vector3& mScale);
 
 private:
     void createPhysicsProperties(const MassProperties& massProperties = MassProperties());
     void createGeometry(eGeometryType geometryType, const Vector3& shapeSize); // 액터당 단일로 달아줄 지오메트리(shape)
     void createUniversalShape(); // 공용으로 사용 가능한 지오메트리 
-    void createShape();
-    void createConvexShape(PxConvexMeshGeometry convexMesh);
+    void createShape(); 
+    void createConvexMeshShape(PxConvexMeshGeometry convexMeshGeom);
+    void createTriangleMeshShape(PxTriangleMeshGeometry triangleMeshGeom);
     void createActor();
     void initializeActor();
 

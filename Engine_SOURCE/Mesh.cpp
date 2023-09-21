@@ -119,3 +119,39 @@ bool Mesh::GetVerticesFromBuffer(std::vector<Vertex>* vertexVec)
 
 	return true;
 }
+
+bool Mesh::GetIndexesFromBuffer(std::vector<UINT>* indexVec)
+{
+	D3D11_BUFFER_DESC desc = {};
+	mIndexBuffer->GetDesc(&desc);
+	desc.Usage = D3D11_USAGE_STAGING;
+	desc.BindFlags = 0; // Remove any bind flags
+	desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+
+	Microsoft::WRL::ComPtr<ID3D11Buffer> stagingBuffer = nullptr;
+	GetDevice()->CreateBuffer(&desc, nullptr, &stagingBuffer);
+
+	// Copy data to staging buffer
+	GetDevice()->GetDeviceContext()->CopyResource(stagingBuffer.Get(), mIndexBuffer.Get());
+
+	D3D11_MAPPED_SUBRESOURCE mappedData;
+	indexVec->clear();
+	indexVec->resize(mIndexCount);
+
+	// Map the buffer
+	HRESULT hr = GetDevice()->GetDeviceContext()->Map(stagingBuffer.Get(), 0, D3D11_MAP_READ, 0, &mappedData);
+	if (FAILED(hr))
+		return false;
+
+	// Copy the vertices from the buffer to the vector
+	UINT* bufferData = reinterpret_cast<UINT*>(mappedData.pData);
+	for (UINT i = 0; i < mVertexCount; ++i)
+	{
+		(*indexVec)[i] = bufferData[i];
+	}
+
+	// Unmap the buffer
+	GetDevice()->GetDeviceContext()->Unmap(stagingBuffer.Get(), 0);
+
+	return true;
+}
