@@ -82,7 +82,11 @@ void PlayerScript::Update()
 	}
 	if (KEY_TAP(SPACE))
 	{
-		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((Vector3::Up * 5000.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->SetVelocity(AXIS::Y, Vector3(0.f, 100.f, 0.f));
+	}
+	if (KEY_TAP(M))
+	{
+		mPhyXRigidBody->SetVelocity(AXIS::Y, Vector3(0.f, -100.f, 0.f));
 	}
 
 }

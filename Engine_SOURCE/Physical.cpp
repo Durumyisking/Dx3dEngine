@@ -305,7 +305,8 @@ void Physical::createActor()
 		case eActorType::Kinematic:
 		{
 			mActor = physics->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
-			mActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
+			//mActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
+			mActor->is<PxRigidDynamic>()->setRigidBodyFlags(PxRigidBodyFlag::eKINEMATIC);
 		}
 		break;
 		case eActorType::Character:
@@ -367,7 +368,7 @@ void Physical::initializeActor()
 			해당 플래그를 키면 Kinematic 객체가 시각화 목적으로 사용됩니다.
 		*/
 
-		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
+		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 		break;
 	}

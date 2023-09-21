@@ -57,6 +57,7 @@ void Goomba::Initialize()
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
+	GetComponent<PhysXRigidBody>()->RemoveGravity();
 
 	// MoveMent
 	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
@@ -137,6 +138,7 @@ void Goomba::CaptureEvent()
 
 void Goomba::OnCollisionEnter(GameObj* gameObject)
 {
+
 }
 
 void Goomba::OnTriggerEnter(GameObj* gameObject)
@@ -157,6 +159,9 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 
 		GetPhysXRigidBody()->SetAirOff();
 	}
+
+	GetComponent<PhysXRigidBody>()->ApplyGravity();
+	GetComponent<PhysXRigidBody>()->SetAirOn();
 }
 
 void Goomba::OnTriggerStay(GameObj* gameObject)

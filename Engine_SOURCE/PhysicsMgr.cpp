@@ -34,6 +34,8 @@ void PhysicsMgr::Initialize()
 	//	sceneDesc.filterShader = PlayerFilter;
 	sceneDesc.filterShader = PlayerFilter;
 	sceneDesc.simulationEventCallback = mDispatcher->GetSimulationCallback();
+	sceneDesc.kineKineFilteringMode = PxPairFilteringMode::Enum::eDEFAULT;
+	sceneDesc.staticKineFilteringMode = PxPairFilteringMode::Enum::eDEFAULT;
 
 	mPhysX->CreatePhysicsScene(sceneDesc);
 	mPhysX->ConnectDebuggerToScene();
