@@ -1,7 +1,7 @@
 #pragma once
 #include "DynamicObject.h"
 #include "MarioParts.h"
-
+#include "MarioCap.h"
 
 class Player :
 	public DynamicObject
@@ -50,6 +50,7 @@ public:
 
 private:
 	std::vector<MarioParts*> mParts;
+	MarioCap* mMarioCap;
 
 protected:
 	virtual void stateInfoInitalize() final;

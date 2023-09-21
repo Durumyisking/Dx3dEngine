@@ -242,6 +242,9 @@
     <Filter Include="Common\Component\Camera\Script\PlayerState">
       <UniqueIdentifier>{74ccf6c5-4bf5-40a0-996f-e716b637a26c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\GameObj\DynamicObject\MarioCap">
+      <UniqueIdentifier>{f229747b-3e86-4548-a566-ec44c99099ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h">
@@ -589,9 +592,6 @@
     <ClInclude Include="MarioParts.h">
       <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
     </ClInclude>
-    <ClInclude Include="MarioHead.h">
-      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerScript.h">
       <Filter>Common\GameObj\DynamicObject\Player</Filter>
     </ClInclude>
@@ -602,6 +602,9 @@
     <ClInclude Include="ProjectileObj.h" />
     <ClInclude Include="AnimationClip.h">
       <Filter>Common\Component\Animator3D</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioCap.h">
+      <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -919,9 +922,6 @@
     <ClCompile Include="MarioParts.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
     </ClCompile>
-    <ClCompile Include="MarioHead.cpp">
-      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerScript.cpp">
       <Filter>Common\GameObj\DynamicObject\Player</Filter>
     </ClCompile>
@@ -932,6 +932,9 @@
     <ClCompile Include="ProjectileObj.cpp" />
     <ClCompile Include="AnimationClip.cpp">
       <Filter>Common\Component\Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioCap.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
