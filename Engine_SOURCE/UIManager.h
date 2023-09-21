@@ -24,12 +24,11 @@ public:
 
 protected:
 
-	static void MainMenuUI();
-
-	static void GetCoin();
-	static void GetLuna();
-	static void PlayScene();
-	static void PlayerHit();
+	void MainMenuUI();
+	void GetCoin();
+	void GetLuna();
+	void PlayScene();
+	void PlayerHit();
 
 
 private:
