@@ -29,7 +29,7 @@ void PlayerScript::Initialize()
 
 	mPhyXRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
 	mPhyXRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
-
+	mPhyXRigidBody->SetMaxVelocity_Y(100.f);
 	//mPhyXRigidBody->SetAngularMaxVelocityForDynamic(10.f);
 	//mPhyXRigidBody->SetLinearMaxVelocityForDynamic(10.f);
 }
@@ -82,7 +82,7 @@ void PlayerScript::Update()
 	}
 	if (KEY_TAP(SPACE))
 	{
-		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((Vector3::Up * 5000.f * DT), PxForceMode::Enum::eIMPULSE);
+		mPhyXRigidBody->AddForce(Vector3::Up * 70000.f * DT);
 	}
 
 }

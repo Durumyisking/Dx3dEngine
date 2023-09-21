@@ -54,7 +54,7 @@ void Goomba::Initialize()
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 1.6f, 0.f), eGeometryType::Box, Vector3(0.25f ,0.01f, 0.25f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->CreateSubShape(Vector3(0.f, 10.6f, 0.f), eGeometryType::Box, Vector3(0.25f ,0.01f, 0.25f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
@@ -78,11 +78,6 @@ void Goomba::Initialize()
 
 void Goomba::Update()
 {
-
-	PxGeometryType::Enum g =  GetPhysical()->GetSubShapes()[0]->getGeometryType();
-	PxActor* a = GetPhysical()->GetShape()->getActor();
-	PxActor* b = GetPhysical()->GetSubShapes()[0]->getActor();
-	PxTransform c=  GetPhysical()->GetSubShapes()[0]->getLocalPose();
 
 	Monster::Update();
 

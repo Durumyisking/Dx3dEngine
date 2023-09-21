@@ -36,7 +36,7 @@ void PhysX::CreatePhysicsScene(const PxSceneDesc& sceneDesc)
 {
 	assert(mInitialization->GetPhysics());
 	CreateScene(sceneDesc);
-	CreateControllerManager();
+	//CreateControllerManager();
 
 	mPhysicsScene = std::make_shared<PhysicsScene>(mScene);
 }
