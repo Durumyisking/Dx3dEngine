@@ -156,18 +156,6 @@ GameObj* Scene::GetPlayer()
 void Scene::CreateCameras()
 {
 	{
-		if (!mUICamera)
-		{
-			// UI Camera
-			mUICamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"UICamera");
-			mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
-			Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
-
-			cameraUIComp->SetProjectionType(eProjectionType::Orthographic);
-			cameraUIComp->SmoothOn();
-			cameraUIComp->DisableLayerMasks();
-			cameraUIComp->SetLayerMaskOn(eLayerType::UI);
-		}
 		if (!mCamera)
 		{
 			// main Camera
@@ -183,9 +171,22 @@ void Scene::CreateCameras()
 			cameraComp->SetNear(0.01f);
 
 			CameraScript* cameraScript = mCamera->AddComponent<CameraScript>(eComponentType::Script);
-			cameraScript->SetUICameraObject(mUICamera);
 
 		}
+		if (!mUICamera)
+		{
+			// UI Camera
+			mUICamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"UICamera");
+			mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
+			Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
+
+			cameraUIComp->SetProjectionType(eProjectionType::Orthographic);
+			cameraUIComp->SmoothOn();
+			cameraUIComp->DisableLayerMasks();
+			cameraUIComp->SetLayerMaskOn(eLayerType::UI);
+		}
+		mCamera->GetScript<CameraScript>()->SetUICameraObject(mUICamera);
+
 
 		renderer::UICamera = mUICamera->GetComponent<Camera>();
 		renderer::mainCamera = mCamera->GetComponent<Camera>();

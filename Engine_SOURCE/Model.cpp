@@ -45,7 +45,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// ÆÄÀÏ ·Îµå ½ÇÆÐ
+		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
 		return E_FAIL;
 	}
 
@@ -75,7 +75,7 @@ HRESULT Model::LoadFullpath(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// ÆÄÀÏ ·Îµå ½ÇÆÐ
+		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
 		return E_FAIL;
 	}
 
@@ -131,7 +131,7 @@ void Model::BindBoneMatrix()
 	}
 }
 
-void Model::Bind_Render()
+void Model::Bind_Render(bool bindMaterial)
 {
 	if (mStructure == nullptr)
 		return;
@@ -165,23 +165,19 @@ void Model::Bind_Render()
 		if (mMeshes[i]->IsRender() == false)
 			continue;
 
-		// ¾ÆÁ÷ ¹Ì±¸Çö
-		// ¿¹¿ÜÃ³¸® ±¸°£ ¿©±â¼­ ¸ðµ¨ÀÇ ·»´õ¸¦ ²¯´ÙÄ×´ÙÇÏ´Â ÇÔ¼ö¸¦ ÀÛ¼ºÇØ¾ßÇÔ
-		if (mMeshes[i]->GetName().find(L"Press") != std::wstring::npos)
-			continue;
-		/////////////////////////////////////////////////////////////////////
-
-		std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
-		for (int slot = 0; slot < Textures.size(); ++slot)
+		if (bindMaterial)
 		{
-			if (Textures[slot] == nullptr)
-				continue;
+			std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
+			for (int slot = 0; slot < Textures.size(); ++slot)
+			{
+				if (Textures[slot] == nullptr)
+					continue;
 
-			mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+				mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+			}
+
+			mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
-
-		mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
-
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
@@ -480,7 +476,7 @@ void Model::CreateMaterial()
 				matName = texInfo.texName;
 				std::size_t found = matName.find(L"_");
 				if (found != std::wstring::npos) {
-					matName = matName.substr(0, found); // _ ÀÌÀü±îÁöÀÇ ¹®ÀÚ¿­ ÃßÃâ
+					matName = matName.substr(0, found); // _ ì´ì „ê¹Œì§€ì˜ ë¬¸ìžì—´ ì¶”ì¶œ
 				}
 			}
 			break;
@@ -500,7 +496,7 @@ void Model::CreateMaterial()
 				break;
 			}
 		}
-		inMaterial->SetShaderByKey(L"PBRShader");
+		inMaterial->SetShaderByKey(L"DeferredShader");
 		GETSINGLE(ResourceMgr)->Insert<Material>(matName, inMaterial);
 	}
 }

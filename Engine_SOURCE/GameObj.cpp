@@ -426,8 +426,9 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 				}
 				else
 				{
-					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
+					//GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				}
+
 
 				break;
 			case enums::AXIS::Z:

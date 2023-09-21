@@ -10,7 +10,6 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
-
 Goomba::Goomba()
 	: Monster()
 {
@@ -34,8 +33,8 @@ void Goomba::Initialize()
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
 	assert(model);
 
-	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
-
+	MeshRenderer* mr =  GetComponent<MeshRenderer>();
+	mr->SetModel(model);
 	model->MeshRenderSwtich(L"EyeClose__BodyMT-mesh", false);
 	model->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
 	model->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", false);
@@ -43,22 +42,38 @@ void Goomba::Initialize()
 	model->MeshRenderSwtich(L"Mustache__HairMT-mesh", false);
 	model->MeshRenderSwtich(L"PressModel__BodyMT-mesh", false);
 
-	model->SetVariableMaterialsByKey(0, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(1, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(2, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(7, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
-	model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
+	// body
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 0);
+
+	// eyebrow
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 1);
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 2);
+
+	// close
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 3);
+
+	// halfclose
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 4);
+	mr->SetMaterialByKey(L"goombaEye0Material", 5);
+	mr->SetMaterialByKey(L"goombaEye0Material", 6);
+
+	// open
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 7);
+	mr->SetMaterialByKey(L"goombaEye0Material", 8);
+	mr->SetMaterialByKey(L"goombaEye0Material", 9);
+
+	// mustatch
+
+	// press
 
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
-	//GetComponent<PhysXRigidBody>()->RemoveGravity();
-
 	// MoveMent
 	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
 	
@@ -68,16 +83,17 @@ void Goomba::Initialize()
 	// Script
 	assert(AddComponent<GoombaStateScript>(eComponentType::Script));
 
-	// ìƒíƒœ info ì´ˆê¸°í™”	
+	// »óÅÂ info ÃÊ±âÈ­	
 	stateInfoInitalize();
 
-	// ì´ˆê¸°í™”
+	// ÃÊ±âÈ­
 	Monster::Initialize();
 
 }
 
 void Goomba::Update()
 {
+
 	Monster::Update();
 
 }
@@ -89,19 +105,19 @@ void Goomba::FixedUpdate()
 
 void Goomba::CaptureEvent()
 {
-	// ìº¡ì²˜ ì´ë²¤íŠ¸ êµ¬í˜„ë¶€
+	// Ä¸Ã³ ÀÌº¥Æ® ±¸ÇöºÎ
 	bool able = false;
 
 	std::vector<std::function<bool(eKeyCode)>> keyEvent;
 	keyEvent.resize((static_cast<UINT>(eKeyState::NONE) + 1));
 
-	// getkeytapì˜ ì²«ë²ˆì§¸ ì¸ìì¸ thisëŠ” inputmgr ì‹±ê¸€í†¤ í¬ì¸í„°ë¥¼ ê³ ì •ìœ¼ë¡œ ì‚¬ìš©, ë‘ë²ˆì§¸ ì¸ìëŠ” ìœ ë™ì ìœ¼ë¡œ ì‚¬ìš©í•˜ê² ë‹¤.
+	// getkeytapÀÇ Ã¹¹øÂ° ÀÎÀÚÀÎ this´Â inputmgr ½Ì±ÛÅæ Æ÷ÀÎÅÍ¸¦ °íÁ¤À¸·Î »ç¿ë, µÎ¹øÂ° ÀÎÀÚ´Â À¯µ¿ÀûÀ¸·Î »ç¿ëÇÏ°Ú´Ù.
 	keyEvent[static_cast<UINT>(eKeyState::TAP)] = std::bind(&InputMgr::GetKeyTap, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::DOWN)] = std::bind(&InputMgr::GetKeyDown, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::UP)] = std::bind(&InputMgr::GetKeyUp, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::NONE)] = std::bind(&InputMgr::GetKeyNone, GETSINGLE(InputMgr), std::placeholders::_1);
 
-	// í‚¤ ì…ë ¥ ì´ë²¤íŠ¸ ì²˜ë¦¬í•˜ëŠ” ëŒë‹¤ì‹
+	// Å° ÀÔ·Â ÀÌº¥Æ® Ã³¸®ÇÏ´Â ¶÷´Ù½Ä
 	std::function<void(eKeyState, eKeyCode, eMonsterState)> stateEvent = 
 		[&]
 		(eKeyState keyState,eKeyCode curPress, eMonsterState nextState) ->void
@@ -115,23 +131,24 @@ void Goomba::CaptureEvent()
 			}
 		};
 
-	// ì´ë™
+	// ÀÌµ¿
 	//stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
 	//stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
 	//stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
 	//stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
 
-	//// ì í”„
+	//// Á¡ÇÁ
 	//able = false;
 	stateEvent(eKeyState::TAP, eKeyCode::Y, eMonsterState::Jump);
 
-	// íŠ¹ìˆ˜
+	// Æ¯¼ö
 	//able = false;
 	//stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::SpecialCast);
 }
 
 void Goomba::OnCollisionEnter(GameObj* gameObject)
 {
+
 }
 
 void Goomba::OnTriggerEnter(GameObj* gameObject)
@@ -145,6 +162,16 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		}
 		GetPhysXRigidBody()->SetAirOff();
 	}
+
+	if (eLayerType::Player == gameObject->GetLayerType())
+
+	{
+
+		GetPhysXRigidBody()->SetAirOff();
+	}
+
+	GetComponent<PhysXRigidBody>()->ApplyGravity();
+	GetComponent<PhysXRigidBody>()->SetAirOn();
 }
 
 void Goomba::OnTriggerStay(GameObj* gameObject)
@@ -172,7 +199,7 @@ void Goomba::boneAnimatorInit(BoneAnimator* animator)
 void Goomba::stateInfoInitalize()
 {
 	//Idle
-	// í˜„ì¬ëŠ” ëŒ€ê¸°ìƒíƒœì—ì„œ ëª»ê°€ëŠ”ìƒíƒœê°€ ì—†ë‹¤
+	// ÇöÀç´Â ´ë±â»óÅÂ¿¡¼­ ¸ø°¡´Â»óÅÂ°¡ ¾ø´Ù
 
 	// Move
 	InsertLockState(static_cast<UINT>(eMonsterState::Move), static_cast<UINT>(eMonsterState::Move));

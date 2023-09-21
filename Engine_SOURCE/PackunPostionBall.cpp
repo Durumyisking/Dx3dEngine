@@ -34,17 +34,17 @@ void PackunPostionBall::Initialize()
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
 
 
 	// Rigidbody
-	PhysXRigidBody* rigidbody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	rigidbody->Initialize();
+	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
 
 	// MoveMent
-	AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
-	AddComponent<PhysicalMovement>(eComponentType::Movement)->Initialize();
+	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
+	assert(AddComponent<PhysicalMovement>(eComponentType::Movement));
 
+	GameObj::Initialize();
 	//test
 	//GetComponent<Transform>()->SetPhysicalPosition(Vector3(-500.f, 0.0f, 1.0f));
 }
@@ -52,14 +52,4 @@ void PackunPostionBall::Initialize()
 void PackunPostionBall::Update()
 {
 	ProjectileObj::Update();
-
-	Transform* tr = GetComponent<Transform>();
-	if (tr == nullptr)
-		return;
-
-	Vector3 foward = tr->Forward();
-	PhysXRigidBody* rigidbody = GetComponent<PhysXRigidBody>();
-
-	/*if(rigidbody)
-		rigidbody->AddForce((-foward * 100.f * DT), physx::PxForceMode::eFORCE);*/
 }

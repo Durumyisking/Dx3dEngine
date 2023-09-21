@@ -92,7 +92,7 @@ void Transform::FixedUpdate()
 		// 렌더링에 사용될 위치값을 업데이트.
 		// 1. 월드 행렬 생성
 		// - 크기 변환 행렬
-		Matrix scale = Matrix::CreateScale(mRelativeScale);
+		Matrix scale = Matrix::CreateScale(mRelativeScale * mOffsetScale);
 		mWorldScale = mRelativeScale;
 
 		// - 회전 변환 행렬

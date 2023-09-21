@@ -33,10 +33,13 @@ public:
 	const std::wstring PlayAnimationName() const;
 
 	AnimationClip* GetAnimationClip(const std::wstring& animationName) const;
+public:
+	GETSET(float, mIntervalAnimation, IntervalAnimation)
 private:
 	std::map<std::wstring, AnimationClip*> mAnimationClips;
 	AnimationClip* mPlayAnimation;
 
+	float mIntervalAnimation;
 	bool mbLoop;
 };
 

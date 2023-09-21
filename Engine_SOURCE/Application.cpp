@@ -57,7 +57,6 @@ void Application::Update()
 		//		GETSINGLE(CollisionMgr)->Update();
 		GETSINGLE(SceneMgr)->Update();
 		GETSINGLE(UIManager)->Update();
-		GETSINGLE(PhysXCollisionMgr)->Update();
 	}
 }
 void Application::FixedUpdate()
@@ -68,6 +67,7 @@ void Application::FixedUpdate()
 		GETSINGLE(server::ServerMgr)->FixedUpdate();
 		GETSINGLE(SceneMgr)->FixedUpdate();
 		GETSINGLE(PhysicsMgr)->Update();
+		GETSINGLE(PhysXCollisionMgr)->Update();
 	}
 }
 void Application::Render()

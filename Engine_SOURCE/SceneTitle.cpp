@@ -67,6 +67,8 @@ SceneTitle::~SceneTitle()
 void SceneTitle::Initialize()
 {
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Monster);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Player);
 
 	CreateCameras();
 	CreateMainMenu();
