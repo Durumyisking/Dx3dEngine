@@ -369,7 +369,6 @@ void Physical::initializeActor()
 		*/
 
 		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
-		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 		break;
 	}
 }
