@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 3.6.1 commit date:2023-07-17, commit time:12:50, hash:8bda729ef4dc</authoring_tool>
+    </contributor>
+    <created>2023-09-20T23:30:28</created>
+    <modified>2023-09-20T23:30:28</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_cameras>
+    <camera id="Camera-camera" name="Camera">
+      <optics>
+        <technique_common>
+          <perspective>
+            <xfov sid="xfov">39.59775</xfov>
+            <aspect_ratio>1.777778</aspect_ratio>
+            <znear sid="znear">0.1</znear>
+            <zfar sid="zfar">100</zfar>
+          </perspective>
+        </technique_common>
+      </optics>
+      <extra>
+        <technique profile="blender">
+          <shiftx sid="shiftx" type="float">0</shiftx>
+          <shifty sid="shifty" type="float">0</shifty>
+          <dof_distance sid="dof_distance" type="float">10</dof_distance>
+        </technique>
+      </extra>
+    </camera>
+  </library_cameras>
+  <library_lights>
+    <light id="Light-light" name="Light">
+      <technique_common>
+        <point>
+          <color sid="color">1000 1000 1000</color>
+          <constant_attenuation>1</constant_attenuation>
+          <linear_attenuation>0</linear_attenuation>
+          <quadratic_attenuation>0.00111109</quadratic_attenuation>
+        </point>
+      </technique_common>
+      <extra>
+        <technique profile="blender">
+          <type sid="type" type="int">0</type>
+          <flag sid="flag" type="int">0</flag>
+          <mode sid="mode" type="int">1</mode>
+          <gamma sid="blender_gamma" type="float">1</gamma>
+          <red sid="red" type="float">1</red>
+          <green sid="green" type="float">1</green>
+          <blue sid="blue" type="float">1</blue>
+          <shadow_r sid="blender_shadow_r" type="float">0</shadow_r>
+          <shadow_g sid="blender_shadow_g" type="float">0</shadow_g>
+          <shadow_b sid="blender_shadow_b" type="float">0</shadow_b>
+          <energy sid="blender_energy" type="float">1000</energy>
+          <dist sid="blender_dist" type="float">29.99998</dist>
+          <spotsize sid="spotsize" type="float">75</spotsize>
+          <spotblend sid="spotblend" type="float">0.15</spotblend>
+          <att1 sid="att1" type="float">0</att1>
+          <att2 sid="att2" type="float">1</att2>
+          <falloff_type sid="falloff_type" type="int">2</falloff_type>
+          <clipsta sid="clipsta" type="float">0.04999995</clipsta>
+          <clipend sid="clipend" type="float">30.002</clipend>
+          <bias sid="bias" type="float">1</bias>
+          <bufsize sid="bufsize" type="int">2880</bufsize>
+          <samp sid="samp" type="int">3</samp>
+          <buffers sid="buffers" type="int">1</buffers>
+          <radius sid="radius" type="float">0.1</radius>
+          <area_shape sid="area_shape" type="int">1</area_shape>
+          <area_size sid="area_size" type="float">0.1</area_size>
+          <area_sizey sid="area_sizey" type="float">0.1</area_sizey>
+          <area_sizez sid="area_sizez" type="float">1</area_sizez>
+        </technique>
+      </extra>
+    </light>
+  </library_lights>
+  <library_effects>
+    <effect id="PaintMT-effect">
+      <profile_COMMON>
+        <newparam sid="PaintBody_alb_png-surface">
+          <surface type="2D">
+            <init_from>PaintBody_alb_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="PaintBody_alb_png-sampler">
+          <sampler2D>
+            <source>PaintBody_alb_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="PaintBody_alb_png-sampler" texcoord="AllRoot__PaintMT-texcoord"/>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images>
+    <image id="PaintBody_alb_png" name="PaintBody_alb_png">
+      <init_from>PaintBody_alb.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="PaintMT-material" name="PaintMT">
+      <instance_effect url="#PaintMT-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="AllRoot__PaintMT-mesh" name="AllRoot__PaintMT">
+      <mesh>
+        <source id="AllRoot__PaintMT-mesh-positions">
+          <float_array id="AllRoot__PaintMT-mesh-positions-array" count="147">1554.588 0 -204.6651 1514.574 0 -405.8286 0 0 0 1568 0 0 1448.645 0 -600.0482 1554.586 0 204.6651 1357.93 0 -784.0008 1514.572 0 405.8283 1243.98 0 -954.5389 1448.643 0 600.0477 1108.745 0 -1108.745 1357.928 0 784.0001 954.5392 0 -1243.979 1243.978 0 954.5381 784.0012 0 -1357.929 1108.744 0 1108.744 600.0485 0 -1448.645 954.538 0 1243.978 405.8289 0 -1514.573 784.0001 0 1357.928 204.6655 0 -1554.587 600.0477 0 1448.644 2.10285e-4 0 -1568.002 405.8283 0 1514.572 -204.6651 0 -1554.587 204.665 0 1554.586 -405.8285 0 -1514.573 -1.16825e-4 0 1568.001 -600.0481 0 -1448.645 -204.6653 0 1554.586 -784.0007 0 -1357.929 -405.8286 0 1514.573 -954.5388 0 -1243.979 -600.0481 0 1448.644 -1108.745 0 -1108.745 -784.0006 0 1357.928 -1243.979 0 -954.5391 -954.5386 0 1243.979 -1357.929 0 -784.0009 -1108.744 0 1108.744 -1448.644 0 -600.0485 -1243.979 0 954.5385 -1514.573 0 -405.8289 -1357.929 0 784.0004 -1554.587 0 -204.6655 -1448.644 0 600.0479 -1568.001 0 -2.3365e-4 -1514.573 0 405.8284 -1554.587 0 204.665</float_array>
+          <technique_common>
+            <accessor source="#AllRoot__PaintMT-mesh-positions-array" count="49" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AllRoot__PaintMT-mesh-normals">
+          <float_array id="AllRoot__PaintMT-mesh-normals-array" count="3">0 1 0</float_array>
+          <technique_common>
+            <accessor source="#AllRoot__PaintMT-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AllRoot__PaintMT-mesh-map-0">
+          <float_array id="AllRoot__PaintMT-mesh-map-0-array" count="288">0.9960784 0.5647058 0.9843137 0.6274509 0.5019608 0.4980392 1 0.4980392 0.9960784 0.5647058 0.5019608 0.4980392 0.9843137 0.6274509 0.9607843 0.690196 0.5019608 0.4980392 0.9960784 0.4352941 1 0.4980392 0.5019608 0.4980392 0.9607843 0.690196 0.9333333 0.7490196 0.5019608 0.4980392 0.9843137 0.372549 0.9960784 0.4352941 0.5019608 0.4980392 0.9333333 0.7490196 0.8980392 0.8039216 0.5019608 0.4980392 0.9607843 0.3098039 0.9843137 0.372549 0.5019608 0.4980392 0.8980392 0.8039216 0.854902 0.854902 0.5019608 0.4980392 0.9333333 0.2509804 0.9607843 0.3098039 0.5019608 0.4980392 0.854902 0.854902 0.8039216 0.8980392 0.5019608 0.4980392 0.8980392 0.1960784 0.9333333 0.2509804 0.5019608 0.4980392 0.8039216 0.8980392 0.7490196 0.9333333 0.5019608 0.4980392 0.854902 0.145098 0.8980392 0.1960784 0.5019608 0.4980392 0.7490196 0.9333333 0.6901961 0.9607843 0.5019608 0.4980392 0.8039216 0.1019608 0.854902 0.145098 0.5019608 0.4980392 0.6901961 0.9607843 0.627451 0.9843137 0.5019608 0.4980392 0.7490196 0.06666666 0.8039216 0.1019608 0.5019608 0.4980392 0.627451 0.9843137 0.5647059 0.9960784 0.5019608 0.4980392 0.6901961 0.03921568 0.7490196 0.06666666 0.5019608 0.4980392 0.5647059 0.9960784 0.5019608 1 0.5019608 0.4980392 0.627451 0.01568627 0.6901961 0.03921568 0.5019608 0.4980392 0.5019608 1 0.4352941 0.9960784 0.5019608 0.4980392 0.5647059 0.003921568 0.627451 0.01568627 0.5019608 0.4980392 0.4352941 0.9960784 0.372549 0.9843137 0.5019608 0.4980392 0.5019608 0 0.5647059 0.003921568 0.5019608 0.4980392 0.372549 0.9843137 0.3098039 0.9607843 0.5019608 0.4980392 0.4352941 0.003921568 0.5019608 0 0.5019608 0.4980392 0.3098039 0.9607843 0.2509804 0.9333333 0.5019608 0.4980392 0.372549 0.01568627 0.4352941 0.003921568 0.5019608 0.4980392 0.2509804 0.9333333 0.1960784 0.8980392 0.5019608 0.4980392 0.3098039 0.03921568 0.372549 0.01568627 0.5019608 0.4980392 0.1960784 0.8980392 0.145098 0.854902 0.5019608 0.4980392 0.2509804 0.06666666 0.3098039 0.03921568 0.5019608 0.4980392 0.145098 0.854902 0.1019608 0.8039216 0.5019608 0.4980392 0.1960784 0.1019608 0.2509804 0.06666666 0.5019608 0.4980392 0.1019608 0.8039216 0.06666666 0.7490196 0.5019608 0.4980392 0.145098 0.145098 0.1960784 0.1019608 0.5019608 0.4980392 0.06666666 0.7490196 0.03921568 0.690196 0.5019608 0.4980392 0.1019608 0.1960784 0.145098 0.145098 0.5019608 0.4980392 0.03921568 0.690196 0.01568627 0.6274509 0.5019608 0.4980392 0.06666666 0.2509804 0.1019608 0.1960784 0.5019608 0.4980392 0.01568627 0.6274509 0.003921568 0.5647058 0.5019608 0.4980392 0.03921568 0.3098039 0.06666666 0.2509804 0.5019608 0.4980392 0.003921568 0.5647058 0 0.4980392 0.5019608 0.4980392 0.01568627 0.372549 0.03921568 0.3098039 0.5019608 0.4980392 0 0.4980392 0.003921568 0.4352941 0.5019608 0.4980392 0.003921568 0.4352941 0.01568627 0.372549 0.5019608 0.4980392</float_array>
+          <technique_common>
+            <accessor source="#AllRoot__PaintMT-mesh-map-0-array" count="144" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="AllRoot__PaintMT-mesh-vertices">
+          <input semantic="POSITION" source="#AllRoot__PaintMT-mesh-positions"/>
+        </vertices>
+        <triangles material="PaintMT-material" count="48">
+          <input semantic="VERTEX" source="#AllRoot__PaintMT-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#AllRoot__PaintMT-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#AllRoot__PaintMT-mesh-map-0" offset="2" set="0"/>
+          <p>0 0 0 1 0 1 2 0 2 3 0 3 0 0 4 2 0 5 1 0 6 4 0 7 2 0 8 5 0 9 3 0 10 2 0 11 4 0 12 6 0 13 2 0 14 7 0 15 5 0 16 2 0 17 6 0 18 8 0 19 2 0 20 9 0 21 7 0 22 2 0 23 8 0 24 10 0 25 2 0 26 11 0 27 9 0 28 2 0 29 10 0 30 12 0 31 2 0 32 13 0 33 11 0 34 2 0 35 12 0 36 14 0 37 2 0 38 15 0 39 13 0 40 2 0 41 14 0 42 16 0 43 2 0 44 17 0 45 15 0 46 2 0 47 16 0 48 18 0 49 2 0 50 19 0 51 17 0 52 2 0 53 18 0 54 20 0 55 2 0 56 21 0 57 19 0 58 2 0 59 20 0 60 22 0 61 2 0 62 23 0 63 21 0 64 2 0 65 22 0 66 24 0 67 2 0 68 25 0 69 23 0 70 2 0 71 24 0 72 26 0 73 2 0 74 27 0 75 25 0 76 2 0 77 26 0 78 28 0 79 2 0 80 29 0 81 27 0 82 2 0 83 28 0 84 30 0 85 2 0 86 31 0 87 29 0 88 2 0 89 30 0 90 32 0 91 2 0 92 33 0 93 31 0 94 2 0 95 32 0 96 34 0 97 2 0 98 35 0 99 33 0 100 2 0 101 34 0 102 36 0 103 2 0 104 37 0 105 35 0 106 2 0 107 36 0 108 38 0 109 2 0 110 39 0 111 37 0 112 2 0 113 38 0 114 40 0 115 2 0 116 41 0 117 39 0 118 2 0 119 40 0 120 42 0 121 2 0 122 43 0 123 41 0 124 2 0 125 42 0 126 44 0 127 2 0 128 45 0 129 43 0 130 2 0 131 44 0 132 46 0 133 2 0 134 47 0 135 45 0 136 2 0 137 46 0 138 48 0 139 2 0 140 48 0 141 47 0 142 2 0 143</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_AllRoot__PaintMT-skin" name="Armature">
+      <skin source="#AllRoot__PaintMT-mesh">
+        <bind_shape_matrix>0.7061084 0.1982658 -0.6797806 3.765463 -4.22063e-8 0.9600013 0.2799954 -0.8632956 0.7081038 -0.1977071 0.677865 1.750265 0 0 0 1</bind_shape_matrix>
+        <source id="Armature_AllRoot__PaintMT-skin-joints">
+          <Name_array id="Armature_AllRoot__PaintMT-skin-joints-array" count="1">AllRoot</Name_array>
+          <technique_common>
+            <accessor source="#Armature_AllRoot__PaintMT-skin-joints-array" count="1" stride="1">
+              <param name="JOINT" type="name"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_AllRoot__PaintMT-skin-bind_poses">
+          <float_array id="Armature_AllRoot__PaintMT-skin-bind_poses-array" count="16">1 0 0 0 0 0 1 0 0 -1 0 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_AllRoot__PaintMT-skin-bind_poses-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Armature_AllRoot__PaintMT-skin-weights">
+          <float_array id="Armature_AllRoot__PaintMT-skin-weights-array" count="49">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#Armature_AllRoot__PaintMT-skin-weights-array" count="49" stride="1">
+              <param name="WEIGHT" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#Armature_AllRoot__PaintMT-skin-joints"/>
+          <input semantic="INV_BIND_MATRIX" source="#Armature_AllRoot__PaintMT-skin-bind_poses"/>
+        </joints>
+        <vertex_weights count="49">
+          <input semantic="JOINT" source="#Armature_AllRoot__PaintMT-skin-joints" offset="0"/>
+          <input semantic="WEIGHT" source="#Armature_AllRoot__PaintMT-skin-weights" offset="1"/>
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 1 0 2 0 3 0 4 0 5 0 6 0 7 0 8 0 9 0 10 0 11 0 12 0 13 0 14 0 15 0 16 0 17 0 18 0 19 0 20 0 21 0 22 0 23 0 24 0 25 0 26 0 27 0 28 0 29 0 30 0 31 0 32 0 33 0 34 0 35 0 36 0 37 0 38 0 39 0 40 0 41 0 42 0 43 0 44 0 45 0 46 0 47 0 48</v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 7.54979e-8 -1 0 0 1 7.54979e-8 0 0 0 0 1</matrix>
+        <node id="Armature_AllRoot" name="AllRoot" sid="AllRoot" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <extra>
+            <technique profile="blender">
+              <layer sid="layer" type="string">0</layer>
+              <tip_x sid="tip_x" type="float">0</tip_x>
+              <tip_y sid="tip_y" type="float">1</tip_y>
+              <tip_z sid="tip_z" type="float">0</tip_z>
+            </technique>
+          </extra>
+        </node>
+        <node id="AllRoot__PaintMT" name="AllRoot__PaintMT" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <instance_controller url="#Armature_AllRoot__PaintMT-skin">
+            <skeleton>#Armature_AllRoot</skeleton>
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="PaintMT-material" target="#PaintMT-material">
+                  <bind_vertex_input semantic="AllRoot__PaintMT-texcoord" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_controller>
+        </node>
+      </node>
+      <node id="Camera" name="Camera" type="NODE">
+        <matrix sid="transform">0.6859207 -0.3240135 0.6515582 7.358891 0.7276763 0.3054208 -0.6141704 -6.925791 0 0.8953956 0.4452714 4.958309 0 0 0 1</matrix>
+        <instance_camera url="#Camera-camera"/>
+      </node>
+      <node id="Light" name="Light" type="NODE">
+        <matrix sid="transform">-0.2908646 -0.7711008 0.5663932 4.076245 0.9551712 -0.1998834 0.2183912 1.005454 -0.05518906 0.6045247 0.7946723 5.903862 0 0 0 1</matrix>
+        <instance_light url="#Light-light"/>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

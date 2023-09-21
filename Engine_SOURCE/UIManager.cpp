@@ -3,17 +3,15 @@
 #include "SceneMgr.h"
 #include "Material.h"
 
-std::unordered_map<eUIType, UIBase*> UIManager::mUIPanals;
-std::queue<eUIType> UIManager::mRequestUIQueue;
-std::stack<UIBase*> UIManager::mUIBases;
-UIBase* UIManager::mCurrentData = nullptr;
-currentUI UIManager::mCurrentUI = currentUI::End;
-int UIManager::mCount = 3;
-
-int UIManager::mCoin = 0;
-int UIManager::mCityCoin = 0;
-
 UIManager::UIManager()
+	: mUIPanals {}
+	, mRequestUIQueue{}
+	, mUIBases{}
+	, mCurrentData(nullptr)
+	, mCurrentUI(currentUI::End)
+	, mCount(3)
+	, mCoin(0)
+	, mCityCoin(0)
 {
 }
 
