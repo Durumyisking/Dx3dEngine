@@ -182,9 +182,9 @@ void Physical::CreateMainShape()
 		PxShape* shape = physics.CreateShape(PxSphereGeometry(1.0f), myMaterial, true);
 		myActor.attachShape(*shape);
 		shape->release();
-		ÀÌ ÄÚµå´Â
+		ì´ ì½”ë“œëŠ”
 
-		PxRigidActorExt::createExclusiveShape() ÀÌ°Í°ú °°´Ù.
+		PxRigidActorExt::createExclusiveShape() ì´ê²ƒê³¼ ê°™ë‹¤.
 	*/
 	PxPhysics* physics = PhysicsMgr::GetInstance()->GetEnvironment()->GetPhysics();
 
@@ -307,6 +307,7 @@ void Physical::createActor()
 			mActor = physics->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 			//mActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
 			mActor->is<PxRigidDynamic>()->setRigidBodyFlags(PxRigidBodyFlag::eKINEMATIC);
+			//mActor->is<PxRigidDynamic>()->setRigidBodyFlags(PxRigidBodyFlag::eKINEMATIC | PxRigidBodyFlag::eFORCE_KINE_KINE_NOTIFICATIONS);
 		}
 		break;
 		case eActorType::Character:
@@ -338,8 +339,8 @@ void Physical::initializeActor()
 	switch (mActorType)
 	{
 	case eActorType::Static:
-		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
-		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
+	/*	mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
+		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);*/
 		break;
 	//case eActorType::MONSTER_DYNAMIC:
 	//case eActorType::PROJECTILE_DYNAMIC:
@@ -356,16 +357,16 @@ void Physical::initializeActor()
 	case eActorType::Kinematic:
 		/*
 			eSIMULATION_SHAPE 
-			ÇØ´ç ÇÃ·¡±×¸¦ Å°¸é Kinematic ActorÀÇ Shape°¡ ¹°¸®½Ã¹Ä·¹ÀÌ¼Ç¿¡ Âü¿©ÇÕ´Ï´Ù.
+			í•´ë‹¹ í”Œëž˜ê·¸ë¥¼ í‚¤ë©´ Kinematic Actorì˜ Shapeê°€ ë¬¼ë¦¬ì‹œë®¬ë ˆì´ì…˜ì— ì°¸ì—¬í•©ë‹ˆë‹¤.
 		
 			eSCENE_QUERY_SHAPE
-			ÇØ´ç ÇÃ·¡±×¸¦ Å°¸é Kinematic Shape°¡ ·¹ÀÌÄ³½ºÆ®, ÇÈÅ·µîÀÇ ÀÛ¾÷¿¡¼­ Ãæµ¹À» È®ÀÎÇÒ ¼ö ÀÖ½À´Ï´Ù.
+			í•´ë‹¹ í”Œëž˜ê·¸ë¥¼ í‚¤ë©´ Kinematic Shapeê°€ ë ˆì´ìºìŠ¤íŠ¸, í”½í‚¹ë“±ì˜ ìž‘ì—…ì—ì„œ ì¶©ëŒì„ í™•ì¸í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.
 
 			eTRIGGER_SHAPE
-			ÇØ´ç ÇÃ·¡±×¸¦ Å°¸é Kinematic Shape°¡ Æ®¸®°Å·Î »ç¿ëµË´Ï´Ù. Æ®¸®°Å¸¦ ÅëÇØ¼­ Ãæµ¹ ÀÌº¥Æ®¸¦ ¼³Á¤ ÇÒ ¼ö ÀÖ°Ô µË´Ï´Ù.
+			í•´ë‹¹ í”Œëž˜ê·¸ë¥¼ í‚¤ë©´ Kinematic Shapeê°€ íŠ¸ë¦¬ê±°ë¡œ ì‚¬ìš©ë©ë‹ˆë‹¤. íŠ¸ë¦¬ê±°ë¥¼ í†µí•´ì„œ ì¶©ëŒ ì´ë²¤íŠ¸ë¥¼ ì„¤ì • í•  ìˆ˜ ìžˆê²Œ ë©ë‹ˆë‹¤.
 
 			eVISUALIZATION
-			ÇØ´ç ÇÃ·¡±×¸¦ Å°¸é Kinematic °´Ã¼°¡ ½Ã°¢È­ ¸ñÀûÀ¸·Î »ç¿ëµË´Ï´Ù.
+			í•´ë‹¹ í”Œëž˜ê·¸ë¥¼ í‚¤ë©´ Kinematic ê°ì²´ê°€ ì‹œê°í™” ëª©ì ìœ¼ë¡œ ì‚¬ìš©ë©ë‹ˆë‹¤.
 		*/
 
 		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);

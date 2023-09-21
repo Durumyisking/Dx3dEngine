@@ -96,8 +96,8 @@ void ScenePlay::Initialize()
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
-		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.01f);
-		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.99f);
+		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
+		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
 
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 		player->AddComponent<PlayerScript>(eComponentType::Script);
@@ -156,7 +156,7 @@ void ScenePlay::Initialize()
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial");
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);

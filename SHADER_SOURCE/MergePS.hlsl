@@ -30,7 +30,7 @@ float4 main(VSOut vsIn) : SV_Target
     float4 vDiffuse = diffuseLightTarget.Sample(linearSampler, UV);
     float4 vSpecular = specularLightTarget.Sample(linearSampler, UV);
     
-    outColor.rgb = (outColor.rgb * vDiffuse.rgb) + vSpecular.rgb;
+    outColor.rgb = (outColor.rgb * vDiffuse.rgb);
     
     
     return outColor;

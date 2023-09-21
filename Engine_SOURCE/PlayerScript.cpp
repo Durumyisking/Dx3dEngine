@@ -29,7 +29,7 @@ void PlayerScript::Initialize()
 
 	mPhyXRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
 	mPhyXRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
-
+	mPhyXRigidBody->SetMaxVelocity_Y(100.f);
 	//mPhyXRigidBody->SetAngularMaxVelocityForDynamic(10.f);
 	//mPhyXRigidBody->SetLinearMaxVelocityForDynamic(10.f);
 }
@@ -58,7 +58,7 @@ void PlayerScript::Update()
 		mPhyXRigidBody->AddTorqueZForDynamic(100.f * DT);
 	}
 
-	// Ä«¸Þ¶óÀÇ forward¿Í playerÀÇ forward³»Àû
+	// Ã„Â«Â¸ÃžÂ¶Ã³Ã€Ã‡ forwardÂ¿Ã playerÃ€Ã‡ forwardÂ³Â»Ã€Ã»
 	float cDotp = camForward.Dot(mTransform->Forward());
 	float cDotp_degree = toDegree(cDotp);
 
@@ -82,11 +82,7 @@ void PlayerScript::Update()
 	}
 	if (KEY_TAP(SPACE))
 	{
-		mPhyXRigidBody->SetVelocity(AXIS::Y, Vector3(0.f, 100.f, 0.f));
-	}
-	if (KEY_TAP(M))
-	{
-		mPhyXRigidBody->SetVelocity(AXIS::Y, Vector3(0.f, -100.f, 0.f));
+		mPhyXRigidBody->AddForce(Vector3::Up * 70000.f * DT);
 	}
 
 }
