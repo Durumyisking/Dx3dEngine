@@ -131,7 +131,7 @@ void Model::BindBoneMatrix()
 	}
 }
 
-void Model::Bind_Render()
+void Model::Bind_Render(bool bindMaterial)
 {
 	if (mStructure == nullptr)
 		return;
@@ -171,17 +171,19 @@ void Model::Bind_Render()
 			continue;
 		/////////////////////////////////////////////////////////////////////
 
-		std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
-		for (int slot = 0; slot < Textures.size(); ++slot)
+		if (bindMaterial)
 		{
-			if (Textures[slot] == nullptr)
-				continue;
+			std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
+			for (int slot = 0; slot < Textures.size(); ++slot)
+			{
+				if (Textures[slot] == nullptr)
+					continue;
 
-			mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+				mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+			}
+
+			mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
-
-		mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
-
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
@@ -500,7 +502,7 @@ void Model::CreateMaterial()
 				break;
 			}
 		}
-		inMaterial->SetShaderByKey(L"PBRShader");
+		inMaterial->SetShaderByKey(L"DeferredShader");
 		GETSINGLE(ResourceMgr)->Insert<Material>(matName, inMaterial);
 	}
 }

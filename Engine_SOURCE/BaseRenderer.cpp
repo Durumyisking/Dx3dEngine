@@ -47,9 +47,16 @@ void BaseRenderer::SetMeshByKey(std::wstring key)
 	mMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(key);
 }
 
-void BaseRenderer::SetMaterial(Material* material)
+void BaseRenderer::SetMaterial(Material* material, UINT modelMeshSlot)
 {
-	mMaterial = material;
+	if (mModel)
+	{
+		mModel->SetVariableMaterials(modelMeshSlot, material);
+	}
+	else
+	{
+		mMaterial = material;
+	}
 }
 
 Material* BaseRenderer::GetMaterial()
@@ -57,9 +64,17 @@ Material* BaseRenderer::GetMaterial()
 	return mMaterial;
 }
 
-void BaseRenderer::SetMaterialByKey(std::wstring key)
+void BaseRenderer::SetMaterialByKey(std::wstring key, UINT modelMeshSlot)
 {
-	mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+	if (mModel)
+	{
+		mModel->SetVariableMaterialsByKey(modelMeshSlot, key);
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+	}
+	else
+	{
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+	}
 }
 
 void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)

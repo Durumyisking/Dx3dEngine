@@ -34,8 +34,8 @@ void Goomba::Initialize()
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
 	assert(model);
 
-	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
-
+	MeshRenderer* mr =  GetComponent<MeshRenderer>();
+	mr->SetModel(model);
 	model->MeshRenderSwtich(L"EyeClose__BodyMT-mesh", false);
 	model->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
 	model->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", false);
@@ -43,12 +43,29 @@ void Goomba::Initialize()
 	model->MeshRenderSwtich(L"Mustache__HairMT-mesh", false);
 	model->MeshRenderSwtich(L"PressModel__BodyMT-mesh", false);
 
-	model->SetVariableMaterialsByKey(0, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(1, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(2, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(7, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
-	model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
+	// body
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 0);
+
+	// eyebrow
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 1);
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 2);
+
+	// close
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 3);
+
+	// halfclose
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 4);
+	mr->SetMaterialByKey(L"goombaEye0Material", 5);
+	mr->SetMaterialByKey(L"goombaEye0Material", 6);
+
+	// open
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 7);
+	mr->SetMaterialByKey(L"goombaEye0Material", 8);
+	mr->SetMaterialByKey(L"goombaEye0Material", 9);
+
+	// mustatch
+
+	// press
 
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);

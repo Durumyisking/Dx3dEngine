@@ -47,13 +47,13 @@ VSOut main(VSIn vsIn)
     vsOut.Position = projPosition;
     vsOut.UV = vsIn.UV;
 
-    matrix worldIT = transpose(inverseWorld);
+    //matrix worldIT = transpose(inverseWorld);
 
     // 로컬 노말을 뷰변환
     float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), worldIT).xyz);
     viewNormal = normalize(mul(float4(viewNormal, 0.f), view).xyz);
     
-    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), worldIT).xyz);
+    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), world).xyz);
     viewTangent = normalize(mul(float4(viewTangent, 0.f), view).xyz);
         
     vsOut.ViewPos = worldPosition.xyz;
