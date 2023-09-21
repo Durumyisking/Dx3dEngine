@@ -62,6 +62,7 @@
 #include "ImageUI.h"
 #include "UIFactory.h"
 #include "Animator.h"
+#include "LifeUI.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -203,14 +204,17 @@ void ScenePlay::CreatePlayerUI()
 	{
 		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 10.f), Vector3(100.0f, 100.0f, 1.0f), L"LifePanal", this, eUIType::HP));
 		//LifeGauge
-		HUD* hud = (GETSINGLE(UIFactory)->CreateHud(L"LifeGauge", L"LifeGauge_3Material", Vector3(7.f, 3.6f, 0.f), Vector3::One, mLifePanal, this));
+		LifeUI* gauge = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeGauge", L"LifeGauge_3Material",eUIType::None  ,Vector3(7.f, 3.6f, 0.f), Vector3::One, mLifePanal, this));
+		gauge->SetUIActive();
 		//Lifeheart
-		HUD* lifeheart = (GETSINGLE(UIFactory)->CreateHud(L"LifeHeart", L"LifeheartMaterial", Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
+		LifeUI* lifeheart = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeHeart", L"LifeheartMaterial", eUIType::None, Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
+		lifeheart->SetUIActive();
 
 		ImageUI* lifeText = (GETSINGLE(UIFactory)->CreateImage(L"LifeText", L"LifeTextMaterial", Vector3(7.f, 3.55f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
 		lifeText->SetColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f), true);
 
-		mLifePanal->Addchild(hud);
+
+		mLifePanal->Addchild(gauge);
 		mLifePanal->Addchild(lifeheart);
 		mLifePanal->Addchild(lifeText);
 	}

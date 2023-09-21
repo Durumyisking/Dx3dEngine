@@ -155,7 +155,6 @@ namespace enums
 		Option,
 		Exit,
 		Bar,
-
 		HP,
 		Coin,
 		CoinText,
