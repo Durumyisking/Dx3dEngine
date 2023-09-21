@@ -172,6 +172,7 @@ void SceneTitle::CreateMainMenu()
 		ImageUI* exit = (GETSINGLE(UIFactory)->CreateImage(L"Exit", L"ExitMaterial", Vector3(-5.55f, -3.f, 97.0f), Vector3(2.f, 0.8f, 1.f), mStartTextPanal, this));
 		exit->SetRotation(Vector3(0.0f, 0.0f, 1.0f));
 
+
 		mStartTextPanal->Addchild(exit);
 		mStartTextPanal->Addchild(resume2P);
 		mStartTextPanal->Addchild(resume);

@@ -22,10 +22,15 @@ public:
 	void UIActivate();
 	UIBase* GetPanal(eUIType type);
 
-	void MainMenuUI();
+protected:
 
-	void GetCoin();
-	void GetLuna();
+	static void MainMenuUI();
+
+	static void GetCoin();
+	static void GetLuna();
+	static void PlayScene();
+	static void PlayerHit();
+
 
 private:
 

@@ -57,7 +57,7 @@ public:
 	void SetUIPos(Vector3 pos) { mUIPos = pos; }
 	void SetUISize(Vector3 size) { mUISize = size; }
 	void Addchild(UIBase* uiBase);
-	void SetColor(Vector4 color, bool isColor);
+	virtual void SetColor(Vector4 color, bool isColor) {};
 
 protected:
 	UIBase* mUIParent;
@@ -65,6 +65,8 @@ protected:
 	Vector3 mUIPos;
 	Vector3 mUISize;
 
+	bool mbColor;
+	bool mbUIEnable;
 
 private:
 	virtual void OnInit() {};
@@ -79,7 +81,6 @@ private:
 private:
 	eUIType mUIType;
 	bool mUIbFullScreen;
-	bool mbUIEnable;
 
 	//백터가 더 메모리 친화적이기 떄문에 사용
 	std::vector<UIBase*> mChilds;
