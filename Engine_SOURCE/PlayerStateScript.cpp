@@ -60,26 +60,22 @@ void PlayerStateScript::Idle()
 		return;
 	if(!(animator->PlayAnimationName()== L"Wait"))
 		animator->Play(L"Wait");
-	mInitialForce = 33.f;
+	//mInitialForce = 33.f;
 }
 
 void PlayerStateScript::Move()
 {
 	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	if (animator == nullptr)
-		return;
+	assert(animator);
 
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
-	if (!rigidbody)
-		return;
-
+	assert(rigidbody);
+		
 	PhysicalMovement* moveMent = GetOwner()->GetComponent<PhysicalMovement>();
-	if (moveMent == nullptr)
-		return;
+	assert(moveMent);
 
 	Physical* physical = GetOwner()->GetComponent<Physical>();
-	if (physical == nullptr)
-		return;
+	assert(physical);
 
 	if (animator->PlayAnimationName() == L"Brake")
 		return;
@@ -106,8 +102,8 @@ void PlayerStateScript::Move()
 			animator->Play(L"Brake");
 			//mPlayer->SetPlayerState(Player::ePlayerState::Idle);
 			//mMoveTime = 0.0f;
-			rigidbody->SetLinearMaxVelocityForDynamic(5.f);
-			mInitialForce = 33.f;
+			//rigidbody->SetLinearMaxVelocityForDynamic(5.f);
+			//mInitialForce = 33.f;
 			return;
 		}
 	}
@@ -144,21 +140,26 @@ void PlayerStateScript::Move()
 	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
 	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
 
-	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
-	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
-	rigidbody->SetLinearMaxVelocityForDynamic(10.f);
+	//rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	//rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+	rigidbody->SetMaxVelocity(10.f);
 
 
 	// 매 프레임마다 힘을 증가시킴
 	//if (mInitialForce < 40.f)
 	//mMoveTime += DT;
-	mInitialForce += mForceIncrement;
+	//mInitialForce += mForceIncrement;
 	/*if (mMoveTime > 1.f)
 	{
 		if (animator->PlayAnimationName() != L"Run")
 			animator->Play(L"Run");
 	}*/
-	rigidbody->AddForceForDynamic((-tr->Forward() * mInitialForce * DT), PxForceMode::Enum::eIMPULSE);
+	//rigidbody->AddForceForDynamic((-tr->Forward() * mInitialForce * DT), PxForceMode::Enum::eIMPULSE);
+
+	rigidbody->AddForce((-tr->Forward() * 10000.f));
+
+	
+	//std::cout << rigidbody->GetForce().x << rigidbody->GetForce().y << rigidbody->GetForce().z << std::endl;
 }
 
 void PlayerStateScript::Jump()
