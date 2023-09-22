@@ -77,6 +77,12 @@ void PackunStateScript::Move()
 	if (moveMent == nullptr)
 		return;
 
+	if (!mMonster->IsCapture())
+	{
+		mMonster->SetMonsterState(Monster::eMonsterState::Idle);
+		return;
+	}
+
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
 	{

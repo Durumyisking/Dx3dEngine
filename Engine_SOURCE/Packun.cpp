@@ -120,13 +120,13 @@ void Packun::CaptureEvent()
 }
 
 void Packun::OnTriggerEnter(GameObj* gameObject)
-{
+{ 
 	if (!gameObject)
 		return;
 
 	if (gameObject->GetLayerType() == eLayerType::Player)
 	{
-		SetMonsterState(eMonsterState::Die);
+		SetMonsterState(eMonsterState::Hit);
 	}
 }
 
@@ -204,7 +204,7 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 						rigidbody->SetAirOn();
 
 
-						Vector3 force = -tr->WorldForward() * 550.f;
+						Vector3 force = -tr->WorldForward() * 350.f;
 						force.y = 999999.f;
 
 						rigidbody->AddForce(force);
@@ -252,7 +252,7 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 				{
 					cilp->SetDuration(static_cast<double>(1.f / 30.f));
 					Die();
-					GetComponent<Physical>()->RemoveActorToPxScene();
+					//GetComponent<Physical>()->RemoveActorToPxScene();
 				});
 	}
 }
