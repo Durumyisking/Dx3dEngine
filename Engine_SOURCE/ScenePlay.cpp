@@ -112,12 +112,12 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(0.f, 0.f, 0.f));
+		/*Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(0.f, 0.f, 0.f));*/
 	}
 
 	{
-		//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
 
 	}
 	//{

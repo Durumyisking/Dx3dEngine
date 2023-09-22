@@ -26,10 +26,7 @@ void PackunPostionBall::Initialize()
 	if (model)
 	{
 		// Model Setting
-		meshRenderer->SetModel(model);
-
-		//Model Default Material
-		meshRenderer->SetMaterial(model->GetMaterial(0));
+		meshRenderer->SetModel(model, model->GetMaterial(0));
 	}
 
 	//Phsical

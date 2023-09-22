@@ -52,6 +52,7 @@ void Packun::Initialize()
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3::Zero, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 
 	// Rigidbody
@@ -116,6 +117,17 @@ void Packun::CaptureEvent()
 	// 공격
 	able = false;
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Attack);
+}
+
+void Packun::OnTriggerEnter(GameObj* gameObject)
+{
+	if (!gameObject)
+		return;
+
+	if (gameObject->GetLayerType() == eLayerType::Player)
+	{
+		SetMonsterState(eMonsterState::Die);
+	}
 }
 
 void Packun::stateInfoInitalize()
@@ -187,12 +199,12 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 					PhysXRigidBody* rigidbody = packunball->GetComponent<PhysXRigidBody>();
 					if (rigidbody)
 					{
-						rigidbody->SetMaxVelocity_Y(15.f);
+						rigidbody->SetMaxVelocity_Y(5.f);
 						rigidbody->ApplyGravity();
 						rigidbody->SetAirOn();
 
 
-						Vector3 force = tr->WorldForward() * 550.f;
+						Vector3 force = -tr->WorldForward() * 550.f;
 						force.y = 999999.f;
 
 						rigidbody->AddForce(force);
@@ -232,4 +244,15 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 				});
 	}
 
+	// 죽었을때
+	{
+		cilp = animator->GetAnimationClip(L"PressDown");
+		if (cilp)
+			cilp->SetCompleteEvent([this, cilp]()
+				{
+					cilp->SetDuration(static_cast<double>(1.f / 30.f));
+					Die();
+					GetComponent<Physical>()->RemoveActorToPxScene();
+				});
+	}
 }

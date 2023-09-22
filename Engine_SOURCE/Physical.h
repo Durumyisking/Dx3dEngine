@@ -110,7 +110,7 @@ public:
 
     void CreateMainShape();
     void CreateMainShape(Vector3 localPos);
-
+    
     void CreateSubShape(Vector3 relativePos, eGeometryType geomType, Vector3 geomSize, PxShapeFlag::Enum shapeFlag);
     std::vector<PxShape*> GetSubShapes() { return mSubShapes; }
 

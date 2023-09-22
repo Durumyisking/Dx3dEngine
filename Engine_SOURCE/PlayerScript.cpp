@@ -58,10 +58,9 @@ void PlayerScript::Update()
 		mPhyXRigidBody->AddTorqueZForDynamic(100.f * DT);
 	}
 
-	// Ã„Â«Â¸ÃžÂ¶Ã³Ã€Ã‡ forwardÂ¿Ã playerÃ€Ã‡ forwardÂ³Â»Ã€Ã»
+	// Ä«¸Þ¶óÀÇ forward¿Í playerÀÇ forward³»Àû
 	float cDotp = camForward.Dot(mTransform->Forward());
 	float cDotp_degree = toDegree(cDotp);
-
 
 
 	if (KEY_DOWN(LEFT))
