@@ -33,17 +33,16 @@ void Player::Initialize()
 	//마리오 body 초기화
 	MeshRenderer* mesh = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	//AddComponent<PlayerScript>(eComponentType::Script);
-	assert(AddComponent<PlayerStateScript>(eComponentType::Script));
-	assert(AddComponent<Transform>(eComponentType::Transform));
-
+	AddComponent<PlayerStateScript>(eComponentType::Script);
+	AddComponent<Transform>(eComponentType::Transform);
+	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	assert(rigid);
-	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
-	assert(AddComponent<PhysicalMovement>(eComponentType::Movement));
+	AddComponent<PhysXCollider>(eComponentType::Collider);
+	AddComponent<PhysicalMovement>(eComponentType::Movement);
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
 	//기본 설정
-	SetPos(Vector3(0.f, 0.f, 0.f));
+	SetPos(Vector3(0.f, 80.f, 0.f));
 	SetScale(Vector3(1.f, 1.f, 1.f));
 	SetName(L"Player");
 	mesh->SetMaterialByKey(L"PBRMaterial");
@@ -52,20 +51,14 @@ void Player::Initialize()
 
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 
-	//Physical 설정
-	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	assert(physical);
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 1.6f, 0.f), eGeometryType::Box, Vector3(0.25f ,0.01f, 0.25f), PxShapeFlag::eTRIGGER_SHAPE);
+
 
 	// OffsetScale Setting
 	Transform* tr = GetComponent<Transform>();
 	if (tr)
 		tr->SetOffsetScale(0.01f);
 
-	rigid->ApplyGravity();
-	rigid->SetAirOn();
-	rigid->SetFriction(Vector3(30.f, 0.f, 30.f));
 
 	//model setting
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");

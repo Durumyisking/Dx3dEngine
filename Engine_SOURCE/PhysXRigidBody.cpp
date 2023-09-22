@@ -66,6 +66,7 @@ void PhysXRigidBody::FixedUpdate()
 
 	mVelocity += mAccelation * DT;
 
+
 	// cal fric
 	if (mVelocity != Vector3::Zero && !mbAirborn)
 	{
