@@ -341,6 +341,7 @@
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
+    <ClCompile Include="GenericAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -714,6 +715,7 @@
     <ClInclude Include="UIBase.h">
       <Filter>UI\Base</Filter>
     </ClInclude>
+    <ClInclude Include="GenericAnimator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
