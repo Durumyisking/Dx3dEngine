@@ -22,7 +22,7 @@ void MarioCap::Initialize()
 {
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
-	AddComponent<Transform>(eComponentType::Transform);
+	//AddComponent<Transform>(eComponentType::Transform);
 
 	//model initialize
 	SetPos(Vector3(0.f, 0.f, 0.f));
