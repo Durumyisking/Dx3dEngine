@@ -42,7 +42,7 @@ void Player::Initialize()
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
 	//기본 설정
-	SetPos(Vector3(0.f, 80.f, 0.f));
+	SetPos(Vector3(0.f, 0.f, 0.f));
 	SetScale(Vector3(1.f, 1.f, 1.f));
 	SetName(L"Player");
 	mesh->SetMaterialByKey(L"PBRMaterial");
@@ -52,7 +52,9 @@ void Player::Initialize()
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
+	rigid->SetFriction(Vector3(30.f, 0.f, 30.f));
 
 	// OffsetScale Setting
 	Transform* tr = GetComponent<Transform>();

@@ -106,8 +106,8 @@ void PlayerStateScript::Move()
 			animator->Play(L"Brake");
 			//mPlayer->SetPlayerState(Player::ePlayerState::Idle);
 			//mMoveTime = 0.0f;
-			rigidbody->SetLinearMaxVelocityForDynamic(5.f);
-			mInitialForce = 33.f;
+			//rigidbody->SetLinearMaxVelocityForDynamic(5.f);
+			//mInitialForce = 33.f;
 			return;
 		}
 	}
@@ -152,13 +152,13 @@ void PlayerStateScript::Move()
 	// 매 프레임마다 힘을 증가시킴
 	//if (mInitialForce < 40.f)
 	//mMoveTime += DT;
-	mInitialForce += mForceIncrement;
+	//mInitialForce += mForceIncrement;
 	/*if (mMoveTime > 1.f)
 	{
 		if (animator->PlayAnimationName() != L"Run")
 			animator->Play(L"Run");
 	}*/
-	rigidbody->AddForceForDynamic((-tr->Forward() * mInitialForce * DT), PxForceMode::Enum::eIMPULSE);
+	rigidbody->AddForce(-tr->Forward() * 5000.f * DT);
 }
 
 void PlayerStateScript::Jump()
