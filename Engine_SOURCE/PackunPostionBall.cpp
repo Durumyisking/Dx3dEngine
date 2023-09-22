@@ -26,15 +26,13 @@ void PackunPostionBall::Initialize()
 	if (model)
 	{
 		// Model Setting
-		meshRenderer->SetModel(model);
-
-		//Model Default Material
-		meshRenderer->SetMaterial(model->GetMaterial(0));
+		meshRenderer->SetModel(model, model->GetMaterial(0));
 	}
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3::Zero, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 
 	// Rigidbody
@@ -52,4 +50,16 @@ void PackunPostionBall::Initialize()
 void PackunPostionBall::Update()
 {
 	ProjectileObj::Update();
+}
+
+void PackunPostionBall::OnTriggerEnter(GameObj* gameObject)
+{
+	if (!gameObject)
+		return;
+
+	if (gameObject->GetLayerType() == eLayerType::Platforms && GetPhysXRigidBody()->GetVelocity().y < 0.f)
+	{
+		Die();
+		GetPhysical()->ShapesPause();
+	}
 }

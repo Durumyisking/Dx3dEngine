@@ -38,10 +38,16 @@ void MeshRenderer::PrevRender()
 
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-	GetMesh()->BindBuffer();
-	GetMesh()->Render();
-
-	material->Clear();
+	if (GetModel() != nullptr)
+	{
+		GetModel()->Bind_Render(false);
+	}
+	else
+	{
+		GetMesh()->BindBuffer();
+		GetMesh()->Render();
+		material->Clear();
+	}
 }
 
 void MeshRenderer::Render()

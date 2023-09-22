@@ -346,6 +346,7 @@
     <ClCompile Include="MarioParts.cpp">
       <Filter>Common\GameObj\DynamicObject</Filter>
     </ClCompile>
+    <ClCompile Include="GenericAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -717,6 +718,7 @@
     <ClInclude Include="UIBase.h">
       <Filter>UI\Base</Filter>
     </ClInclude>
+    <ClInclude Include="GenericAnimator.h" />
     <ClInclude Include="PlayerStateScript.h" />
     <ClInclude Include="MarioCap.h">
       <Filter>Common\GameObj\DynamicObject</Filter>

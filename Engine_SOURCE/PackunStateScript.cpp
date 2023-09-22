@@ -55,7 +55,7 @@ void PackunStateScript::Idle()
 		// 월드 좌표상 회전이 0 일때 모델은 -90 도 방향을 바라보기때문에
 		// 값의 90도를 빼주고 반전시킨다
 		float angle = atan2(direction.z, direction.x);
-		angle -= math::toRadian(90.f);
+		angle += math::toRadian(90.f);
 
 		tr->SetPhysicalRotation(Vector3(0.f, math::toDegree(-angle), 0.f));
 
@@ -76,6 +76,12 @@ void PackunStateScript::Move()
 	PhysicalMovement* moveMent = GetOwner()->GetComponent<PhysicalMovement>();
 	if (moveMent == nullptr)
 		return;
+
+	if (!mMonster->IsCapture())
+	{
+		mMonster->SetMonsterState(Monster::eMonsterState::Idle);
+		return;
+	}
 
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
@@ -183,10 +189,10 @@ void PackunStateScript::Groggy()
 		if (direction.Length() > mFindRadius)
 			return;
 
-		// 월드 좌표상 회전이 0 일때 모델은 -90 도 방향을 바라보기때문에
+		// 월드 좌표상 회전이 0 일때 모델은 90 도 방향을 바라보기때문에
 		// 값의 90도를 빼주고 반전시킨다
 		float angle = atan2(direction.z, direction.x);
-		angle -= math::toRadian(90.f);
+		angle += math::toRadian(90.f);
 
 		tr->SetPhysicalRotation(Vector3(0.f, math::toDegree(-angle), 0.f));
 	}
@@ -194,4 +200,14 @@ void PackunStateScript::Groggy()
 
 void PackunStateScript::Die()
 {
+	BoneAnimator* animator = mMonster->GetComponent<BoneAnimator>();
+	if (animator == nullptr)
+		return;
+
+	std::wstring animationName = L"PressDown";
+	if (!mbAnimationRunning)
+	{
+		animator->Play(animationName, false);
+		mbAnimationRunning = true;
+	}
 }

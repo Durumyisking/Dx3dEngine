@@ -86,7 +86,9 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
@@ -110,8 +112,8 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		//Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		//goomba->SetPos(Vector3(0.f, 10.f, 0.f));
+		/*Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(0.f, 0.f, 0.f));*/
 	}
 
 	{
@@ -154,7 +156,7 @@ void ScenePlay::Initialize()
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial");
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);

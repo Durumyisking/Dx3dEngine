@@ -8,6 +8,9 @@
 #include "SpriteRenderer.h"
 #include "guiWidgetMgr.h"
 
+#include "Material.h"
+#include "Mesh.h"
+
 
 extern gui::Editor editor;
 

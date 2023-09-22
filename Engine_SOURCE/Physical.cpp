@@ -69,6 +69,18 @@ void Physical::RemoveActorToPxScene()
 	GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysicsScene()->RemoveActor(mActor);
 }
 
+void Physical::ShapesPause()
+{
+	mMainShape->acquireReference();
+	mMainShape->release();
+
+	for (auto shap : mSubShapes)
+	{
+		shap->acquireReference();
+		shap->release();
+	}
+}
+
 void Physical::SetGeometrySize(const Vector3& newSize)
 {
 	switch (mGeometryType)
@@ -305,7 +317,9 @@ void Physical::createActor()
 		case eActorType::Kinematic:
 		{
 			mActor = physics->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
-			mActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
+			//mActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
+			mActor->is<PxRigidDynamic>()->setRigidBodyFlags(PxRigidBodyFlag::eKINEMATIC);
+			//mActor->is<PxRigidDynamic>()->setRigidBodyFlags(PxRigidBodyFlag::eKINEMATIC | PxRigidBodyFlag::eFORCE_KINE_KINE_NOTIFICATIONS);
 		}
 		break;
 		case eActorType::Character:
@@ -337,8 +351,8 @@ void Physical::initializeActor()
 	switch (mActorType)
 	{
 	case eActorType::Static:
-		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
-		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
+	/*	mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
+		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);*/
 		break;
 	//case eActorType::MONSTER_DYNAMIC:
 	//case eActorType::PROJECTILE_DYNAMIC:
@@ -367,8 +381,7 @@ void Physical::initializeActor()
 			해당 플래그를 키면 Kinematic 객체가 시각화 목적으로 사용됩니다.
 		*/
 
-		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
-		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 		break;
 	}
 }
