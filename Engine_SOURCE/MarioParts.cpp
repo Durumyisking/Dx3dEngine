@@ -17,6 +17,7 @@ MarioParts::MarioParts()
 
 MarioParts::~MarioParts()
 {
+
 }
 
 void MarioParts::Initialize()
@@ -26,7 +27,7 @@ void MarioParts::Initialize()
 	//Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	//physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Box, Vector3(0.000001f, 0.000001f, 0.000001f));
 	//AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	AddComponent<Transform>(eComponentType::Transform);
+	//AddComponent<Transform>(eComponentType::Transform);
 	//AddComponent<PhysXCollider>(eComponentType::Collider);
 	//AddComponent<PhysicalMovement>(eComponentType::Movement);
 

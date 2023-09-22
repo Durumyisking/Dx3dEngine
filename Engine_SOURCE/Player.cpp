@@ -25,7 +25,20 @@ Player::Player()
 
 Player::~Player()
 {
+	for (MarioParts* parts : mParts)
+	{
+		if (!parts)
+			continue;
 
+		delete parts;
+		parts = nullptr;
+	}
+
+	if (mMarioCap)
+	{
+		delete mMarioCap;
+		mMarioCap = nullptr;
+	}
 }
 
 void Player::Initialize()
@@ -34,11 +47,12 @@ void Player::Initialize()
 	MeshRenderer* mesh = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	//AddComponent<PlayerScript>(eComponentType::Script);
 	AddComponent<PlayerStateScript>(eComponentType::Script);
-	AddComponent<Transform>(eComponentType::Transform);
+	//AddComponent<Transform>(eComponentType::Transform);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	AddComponent<PhysXCollider>(eComponentType::Collider);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
+
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
 	//기본 설정
