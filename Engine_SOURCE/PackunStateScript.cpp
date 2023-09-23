@@ -33,7 +33,7 @@ void PackunStateScript::Idle()
 		mbAnimationRunning = true;
 	}
 
-	if (mPlayer)
+	if (mPlayer && !mMonster->IsCapture())
 	{
 		Transform* playerTr = mPlayer->GetTransform();
 		Transform* tr = GetTransform();
@@ -152,6 +152,17 @@ void PackunStateScript::Hit()
 	{
 		animator->Play(animationName);
 		mbAnimationRunning = true;
+	}
+
+	// 캡처상태일때 맞았을경우 플레이어의 Hp가 감소
+	if (mPlayer)
+	{
+		//mPlayer->DownHp();
+	}
+	// 캡처 X
+	else
+	{
+		//mMonster->DownHp();
 	}
 }
 
