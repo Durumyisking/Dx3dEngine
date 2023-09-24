@@ -3,6 +3,8 @@
 #include "SceneMgr.h"
 #include "Material.h"
 
+#include "LifeUI.h"
+
 //std::unordered_map<eUIType, UIBase*> UIManager::mUIPanals;
 //std::queue<eUIType> UIManager::mRequestUIQueue;
 //std::stack<UIBase*> UIManager::mUIBases;
@@ -22,6 +24,7 @@ UIManager::UIManager()
 	, mCount(3)
 	, mCoin(0)
 	, mCityCoin(0)
+	, mLife(3)
 {
 }
 
@@ -289,9 +292,21 @@ void UIManager::PlayerHit()
 {
 	if (KEY_TAP(N_9))
 	{
+		mLife--;
 		for (size_t i = 0; i < GetPanal(eUIType::HP)->GetChilds().size(); i++)
 		{
-			GetPanal(eUIType::HP)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), true);
+			//GetPanal(eUIType::HP)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), true);
+			LifeUI* object = (LifeUI*)GetPanal(eUIType::HP)->GetChilds()[i];
+			object->Hit();
 		}
+
+		if (mLife <= 0)
+			return;
+
+		const std::wstring& lifeKey =  std::to_wstring(mLife);
+		GetPanal(eUIType::HP)->GetChilds()[2]->ChangeTexture(lifeKey);
+
+		const std::wstring& gaugeKey = L"Gauge_" + std::to_wstring(mLife);
+		GetPanal(eUIType::HP)->GetChilds()[0]->ChangeTexture(gaugeKey);
 	}
 }

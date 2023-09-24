@@ -43,4 +43,5 @@ private:
 
 	int mCoin;
 	int mCityCoin;
+	int mLife;
 };

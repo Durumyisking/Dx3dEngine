@@ -156,6 +156,7 @@ namespace enums
 		Exit,
 		Bar,
 		HP,
+		HPText,
 		Coin,
 		CoinText,
 		CityCoin,
