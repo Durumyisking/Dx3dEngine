@@ -12,11 +12,12 @@
 #include "PhysicalMovement.h"
 
 #include "PackunPostionBall.h"
+#include "MarioCap.h"
 
 Packun::Packun()
 	: Monster()
 {
-	//OnCapture();
+
 }
 
 Packun::~Packun()
@@ -37,9 +38,9 @@ void Packun::Initialize()
 
 
 		//// 오프
-		//model->MeshRenderSwtich(L"Head2__BodyMT-mesh", false);
-		//model->MeshRenderSwtich(L"Head2__HeadMT-mesh", false);
-		//model->MeshRenderSwtich(L"mustache__HairMT-mesh", false);
+		model->MeshRenderSwtich(L"Head2__BodyMT-mesh", false);
+		model->MeshRenderSwtich(L"Head2__HeadMT-mesh", false);
+		model->MeshRenderSwtich(L"mustache__HairMT-mesh", false);
 
 		//// 온ㄴ
 		//model->MeshRenderSwtich(L"Head3__BodyMT-mesh");
@@ -52,12 +53,11 @@ void Packun::Initialize()
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3::Zero, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
-
-
 
 	// MoveMent
 	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
@@ -116,6 +116,33 @@ void Packun::CaptureEvent()
 	// 공격
 	able = false;
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Attack);
+}
+
+void Packun::OnTriggerEnter(GameObj* gameObject)
+{ 
+	if (!gameObject)
+		return;
+
+	// 마리오 모자와 충돌시 캡처 상태로 변경
+	if (gameObject->GetLayerType() == eLayerType::Player)
+	{
+		MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
+		if (cap != nullptr)
+		{
+			OnCapture();
+
+			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
+			if (model)
+			{
+				// 오프
+				model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
+				model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
+				model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
+			}
+
+			SetMonsterState(eMonsterState::Idle);
+		}
+	}
 }
 
 void Packun::stateInfoInitalize()
@@ -187,12 +214,12 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 					PhysXRigidBody* rigidbody = packunball->GetComponent<PhysXRigidBody>();
 					if (rigidbody)
 					{
-						rigidbody->SetMaxVelocity_Y(15.f);
+						rigidbody->SetMaxVelocity_Y(5.f);
 						rigidbody->ApplyGravity();
 						rigidbody->SetAirOn();
 
 
-						Vector3 force = tr->WorldForward() * 550.f;
+						Vector3 force = -tr->WorldForward() * 350.f;
 						force.y = 999999.f;
 
 						rigidbody->AddForce(force);
@@ -232,4 +259,15 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 				});
 	}
 
+	// 죽었을때
+	{
+		cilp = animator->GetAnimationClip(L"PressDown");
+		if (cilp)
+			cilp->SetCompleteEvent([this, cilp]()
+				{
+					cilp->SetDuration(static_cast<double>(1.f / 30.f));
+					Die();
+					//GetComponent<Physical>()->RemoveActorToPxScene();
+				});
+	}
 }

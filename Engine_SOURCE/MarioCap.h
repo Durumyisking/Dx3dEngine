@@ -1,11 +1,11 @@
 #pragma once
 #include "MarioParts.h"
-class MarioHead :
-    public MarioParts
+class MarioCap :
+    public DynamicObject
 {
 public:
-	MarioHead();
-	virtual ~MarioHead();
+	MarioCap();
+	virtual ~MarioCap();
 
 	virtual void Initialize() final;
 	virtual void Update() final;
@@ -14,8 +14,18 @@ public:
 	virtual void FontRender() final;
 
 public:
+	void Physicalinit();
 	virtual void OnCollisionEnter(GameObj* gameObject) final;
 	virtual void OnTriggerEnter(GameObj* gameObject) final;
 	virtual void OnTriggerExit(GameObj* gameObject) final;
+
+	void boneAnimatorInit(BoneAnimator* animator);
+
+public:
+	virtual void BoneInitialize() {};
+
+protected:
+	virtual void stateInfoInitalize() {};
+
 };
 

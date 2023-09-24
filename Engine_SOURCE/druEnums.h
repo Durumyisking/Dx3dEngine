@@ -31,6 +31,7 @@ namespace enums
 		Camera,
 		RigidBody,
 		Movement, 
+		GenericAnimator,
 		Transform,
 		Physical,
 		//Controller,

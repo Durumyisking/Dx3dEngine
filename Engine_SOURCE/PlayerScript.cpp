@@ -62,7 +62,6 @@ void PlayerScript::Update()
 	float cDotp_degree = toDegree(cDotp);
 
 
-
 	if (KEY_DOWN(LEFT))
 	{
 		mPhyXRigidBody->AddForce(-camRight * 7000.f * DT);

@@ -69,6 +69,18 @@ void Physical::RemoveActorToPxScene()
 	GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysicsScene()->RemoveActor(mActor);
 }
 
+void Physical::ShapesPause()
+{
+	mMainShape->acquireReference();
+	mMainShape->release();
+
+	for (auto shap : mSubShapes)
+	{
+		shap->acquireReference();
+		shap->release();
+	}
+}
+
 void Physical::SetGeometrySize(const Vector3& newSize)
 {
 	switch (mGeometryType)

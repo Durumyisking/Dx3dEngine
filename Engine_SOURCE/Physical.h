@@ -102,6 +102,7 @@ public:
 
     void AddActorToPxScene();
     void RemoveActorToPxScene();
+    void ShapesPause();
 
     void SetGeometrySize(const Vector3& newSize);
     void SetActorType(eActorType type) { mActorType = type; }

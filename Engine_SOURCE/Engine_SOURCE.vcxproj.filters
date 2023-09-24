@@ -3,8 +3,6 @@
   <ItemGroup>
     <ClCompile Include="CameraScript.cpp" />
     <ClCompile Include="FMod.cpp" />
-    <ClCompile Include="MarioHead.cpp" />
-    <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="PackunPostionBall.cpp" />
     <ClCompile Include="ProjectileObj.cpp" />
     <ClCompile Include="StructedBuffer.cpp" />
@@ -341,13 +339,19 @@
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerStateScript.cpp" />
+    <ClCompile Include="MarioCap.cpp">
+      <Filter>Common\GameObj\DynamicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioParts.cpp">
+      <Filter>Common\GameObj\DynamicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
     <ClInclude Include="FMod.h" />
     <ClInclude Include="Macro.h" />
-    <ClInclude Include="MarioHead.h" />
-    <ClInclude Include="MarioParts.h" />
     <ClInclude Include="PackunPostionBall.h" />
     <ClInclude Include="ProjectileObj.h" />
     <ClInclude Include="StructedBuffer.h" />
@@ -713,6 +717,14 @@
     </ClInclude>
     <ClInclude Include="UIBase.h">
       <Filter>UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericAnimator.h" />
+    <ClInclude Include="PlayerStateScript.h" />
+    <ClInclude Include="MarioCap.h">
+      <Filter>Common\GameObj\DynamicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioParts.h">
+      <Filter>Common\GameObj\DynamicObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
