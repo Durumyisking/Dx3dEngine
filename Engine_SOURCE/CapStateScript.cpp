@@ -75,10 +75,11 @@ void CapStateScript::Throw()
 	PhysXRigidBody* rigidbody = mCap->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
-	rigidbody->SetMaxVelocity(30.f);
-	rigidbody->AddForce(-(tr->Forward()) * 2000.f);
+	rigidbody->SetTurnSpeed(150.f);
+	rigidbody->RightTrun();
 
-	
+	/*rigidbody->SetMaxVelocity(30.f);
+	rigidbody->AddForce(-(tr->Forward()) * 2000.f);*/
 }
 
 void CapStateScript::Return()

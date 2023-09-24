@@ -9,6 +9,7 @@ GenericAnimator::GenericAnimator()
 	, EndValue(0.f)
 	, AccTime(0.f)
 	, EndTime(0.f)
+	, mbRunning(false)
 {
 
 }
@@ -22,12 +23,13 @@ bool GenericAnimator::Start(const AnimatorParam& InParam)
 {
 	// 애니메이션타입이 아직 구현안된거면 중지
 	if (InParam.AnimType == eAnimType::Max)
-	{
 		return false;
-	}
+
+	// 함수가 구현이 안되어있으면 중단
+	if (InParam.DurationFunc == nullptr)
+		return false;
 
 	Param = InParam;
-	Param.Handle = ++HandleId;
 
 	StartValue = InParam.StartValue;
 	CurValue = InParam.StartValue;
@@ -36,10 +38,12 @@ bool GenericAnimator::Start(const AnimatorParam& InParam)
 	AccTime = 0.f;
 	EndTime = InParam.DurationTime;
 
+	mbRunning = true;
+
 	return true;
 }
 
-void GenericAnimator::Update(float InDeltaTime)
+void GenericAnimator::update(float InDeltaTime)
 {
 	if (!IsRunning())
 		return;
@@ -63,11 +67,13 @@ void GenericAnimator::Update(float InDeltaTime)
 
 bool GenericAnimator::IsRunning()
 {
-	return Param.Handle != InvalidHandleId;
+	return mbRunning;
 }
 
 void GenericAnimator::Stop(bool InCompleteEvent)
 {
+	mbRunning = false;
+
 	if (InCompleteEvent)
 	{
 		if (Param.CompleteFunc)
@@ -78,27 +84,10 @@ void GenericAnimator::Stop(bool InCompleteEvent)
 	}
 
 	Param = AnimatorParam();
-	StartValue = 0.f;
-	CurValue = 0.f;
-	EndValue = 0.f;
-
-	AccTime = 0.f;
-	EndTime = 0.f;
-}
-
-void GenericAnimator::Initialize()
-{
 }
 
 void GenericAnimator::Update()
 {
-	Update(DT);
+	update(DT);
 }
 
-void GenericAnimator::FixedUpdate()
-{
-}
-
-void GenericAnimator::Render()
-{
-}

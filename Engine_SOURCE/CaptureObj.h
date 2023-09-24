@@ -17,10 +17,12 @@ public:
 	void OffCapture() { mbCapture = false; }
 public:
 	GETSET(bool, mbCapture, Capture)
+	GETSET(GameObj*, mObject, Object)
 	GETSET(GameObj*, mPlayer, Player)
 
 	bool IsCapture() { return mbCapture; }
 private:
+	GameObj* mObject = nullptr;
 	GameObj* mPlayer	= nullptr;
 	bool mbCapture		= false;
 };

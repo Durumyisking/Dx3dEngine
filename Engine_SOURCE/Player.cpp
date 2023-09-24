@@ -367,7 +367,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 		cilp = animator->GetAnimationClip(L"ThrowCap");
 		if (cilp)
 		{
-			cilp->SetKeyFrameEvent(3, [this]()
+			cilp->SetStartEvent([this]()
 			{
 				//mMarioCap->SetCapState(MarioCap::eCapState::Throw);
 					

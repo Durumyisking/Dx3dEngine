@@ -9,6 +9,10 @@
 #include "Transform.h"
 #include "CapStateScript.h"
 #include "Monster.h"
+#include "GenericAnimator.h"
+#include "TimeMgr.h"
+
+#include "Player.h"
 
 MarioCap::MarioCap()
 {
@@ -36,6 +40,8 @@ void MarioCap::Initialize()
 
 	BoneAnimator* animator = GetComponent<BoneAnimator>(); 
 	boneAnimatorInit(animator);
+
+	AddComponent<GenericAnimator>(eComponentType::GenericAnimator);
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
@@ -149,9 +155,10 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 	{
 		cilp = animator->GetAnimationClip(L"ThrowCap");
 		if (cilp)
-			cilp->SetCompleteEvent([animator]()
+			cilp->SetCompleteEvent([animator, this]()
 		{
 			animator->Play(L"FlyingStart");
+			FlyStart();
 		});
 	}
 
@@ -188,3 +195,99 @@ void MarioCap::stateInfoInitalize()
 	//InsertLockState(static_cast<UINT>(eCapState::Capture), static_cast<UINT>(eCapState::Throw));
 }
 
+
+void MarioCap::FlyStart()
+{
+	// 이전에 진행중이던 애니메이터 종료
+	GenericAnimator* animator = GetComponent<GenericAnimator>();
+	if (animator->IsRunning())
+		animator->Stop();
+
+	// 플레이어의 현재 포지션과 Player forWard 를 가져옴
+	Transform* tr = GetTransform();
+	Vector3 pos = tr->GetPhysicalPosition();
+	Vector3 playerforward = mPlayer->GetTransform()->WorldForward();
+
+	AnimatorParam param;
+	// 진행타입
+	param.AnimType = eAnimType::Linear;
+
+	// 진행중 사용될 Value 값
+	param.StartValue = 0.f;
+	param.EndValue= 15.f;
+
+	// 진행시간
+	param.DurationTime = 0.5;
+
+	// 진행 함수 std::function<void(float)>
+	param.DurationFunc = [this, tr, pos, playerforward](float inCurValue)
+	{
+		tr->SetPhysicalPosition(pos + (-playerforward * inCurValue));
+	};
+
+	// 끝날때 호출되는 함수
+	param.CompleteFunc = [this](float inCurValue)
+	{
+		FlyEnd();
+	};
+
+	// 이벤트 시작
+	animator->Start(param);
+}
+
+void MarioCap::FlyEnd()
+{
+	// 이전에 진행중이던 애니메이터 종료
+	GenericAnimator* animator = GetComponent<GenericAnimator>();
+	if (animator->IsRunning())
+		animator->Stop();
+
+	// PlayerTrasform
+	Transform* playerTr = mPlayer == nullptr ? nullptr : mPlayer->GetTransform();
+	// ThisTrasform
+	Transform* myTr = GetTransform();
+
+	AnimatorParam param;
+	// 진행타입
+	param.AnimType = eAnimType::Linear;
+
+	param.StartValue = 1.f;
+	param.EndValue = 10.f;
+
+	// 진행시간
+	param.DurationTime = 20.f;
+
+	// 진행 함수 std::function<void(float)>
+	param.DurationFunc = [this, animator, playerTr, myTr](float inCurValue)
+	{
+		Vector3 playerPos = playerTr->GetPhysicalPosition();
+		Vector3 myPos = myTr->GetPhysicalPosition();
+
+		// 플레이어방향 벡터를구함
+		Vector3 Dirction = playerPos - myPos;
+
+		// 플레이어와 모자의 거리가 가까워졌으면 종료
+		if (Dirction.Length() <= 0.1f)
+			animator->Stop(true);
+
+		// 방향벡터 정규화
+		Dirction.Normalize();
+
+		// 해당방향으로 이동
+		float speed = 20.f;
+
+		// inCurValue 을 곱하므로써 시간의 경과에따라 돌아오는 속도가 증가함
+		myTr->SetPhysicalPosition(myPos + (Dirction * speed * inCurValue * DT));
+
+	};
+
+	// 끝날때 호출되는 함수
+	param.CompleteFunc = [this, playerTr, myTr](float inCurValue)
+	{
+		myTr->SetPhysicalPosition(playerTr->GetPhysicalPosition());
+		SetCapState(eCapState::Idle);
+	};
+
+	// 이벤트 시작
+	animator->Start(param);
+}

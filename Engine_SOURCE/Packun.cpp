@@ -12,11 +12,12 @@
 #include "PhysicalMovement.h"
 
 #include "PackunPostionBall.h"
+#include "MarioCap.h"
 
 Packun::Packun()
 	: Monster()
 {
-	//OnCapture();
+	OnCapture();
 }
 
 Packun::~Packun()
@@ -37,9 +38,9 @@ void Packun::Initialize()
 
 
 		//// 오프
-		//model->MeshRenderSwtich(L"Head2__BodyMT-mesh", false);
-		//model->MeshRenderSwtich(L"Head2__HeadMT-mesh", false);
-		//model->MeshRenderSwtich(L"mustache__HairMT-mesh", false);
+		model->MeshRenderSwtich(L"Head2__BodyMT-mesh", false);
+		model->MeshRenderSwtich(L"Head2__HeadMT-mesh", false);
+		model->MeshRenderSwtich(L"mustache__HairMT-mesh", false);
 
 		//// 온ㄴ
 		//model->MeshRenderSwtich(L"Head3__BodyMT-mesh");
@@ -122,9 +123,25 @@ void Packun::OnTriggerEnter(GameObj* gameObject)
 	if (!gameObject)
 		return;
 
+	// 마리오 모자와 충돌시 캡처 상태로 변경
 	if (gameObject->GetLayerType() == eLayerType::Player)
 	{
-		SetMonsterState(eMonsterState::Hit);
+		MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
+		if (cap != nullptr)
+		{
+			OnCapture();
+
+			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
+			if (model)
+			{
+				// 오프
+				model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
+				model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
+				model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
+			}
+
+			SetMonsterState(eMonsterState::Idle);
+		}
 	}
 }
 

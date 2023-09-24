@@ -59,8 +59,7 @@ void PackunPostionBall::OnTriggerEnter(GameObj* gameObject)
 
 	if (gameObject->GetLayerType() == eLayerType::Platforms && GetPhysXRigidBody()->GetVelocity().y < 0.f)
 	{
-		//Die();
 		Pause();
-		GetPhysical()->ShapesPause();
+		//GetPhysical()->ShapesPause();
 	}
 }

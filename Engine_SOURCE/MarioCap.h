@@ -1,5 +1,8 @@
 #pragma once
 #include "MarioParts.h"
+
+
+class Player;
 class MarioCap :
     public DynamicObject
 {
@@ -22,6 +25,9 @@ public:
 	virtual void Render() final;
 	virtual void FontRender() final;
 
+	void FlyStart();
+	void FlyEnd();
+
 public:
 	void Physicalinit();
 	virtual void OnCollisionEnter(GameObj* gameObject) final;
@@ -36,11 +42,13 @@ public:
 public:
 	virtual void BoneInitialize() {};
 
+	GETSET(Player*, mPlayer, Player)
+
 protected:
 	virtual void stateInfoInitalize();
 
 private: 
 	eCapState mCapState;
-
+	Player* mPlayer;
 };
 

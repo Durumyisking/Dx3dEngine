@@ -92,9 +92,10 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 
 	{
-		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Objects , this);
+		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Player, this);
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetMarioCap(mariocap);
+		mariocap->SetPlayer(player);
 	/*	player->SetPos(Vector3(0.f, 80.f, 0.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
@@ -121,7 +122,7 @@ void ScenePlay::Initialize()
 
 	
 	{
-		//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
 
 	}
 	//{
