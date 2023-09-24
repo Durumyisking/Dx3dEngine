@@ -23,6 +23,7 @@ PlayerStateScript::PlayerStateScript()
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Squat, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::SquatMove, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Air, this));
+	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Fall, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Wall, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Hit, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Groggy, this));
@@ -66,32 +67,20 @@ void PlayerStateScript::Idle()
 void PlayerStateScript::Move()
 {
 	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	if (animator == nullptr)
-		return;
+	assert(animator);
 
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
-	if (!rigidbody)
-		return;
+	assert(rigidbody);
 
 	PhysicalMovement* moveMent = GetOwner()->GetComponent<PhysicalMovement>();
-	if (moveMent == nullptr)
-		return;
+	assert(moveMent);
 
 	Physical* physical = GetOwner()->GetComponent<Physical>();
-	if (physical == nullptr)
-		return;
+	assert(physical);
+		
 
 	if (animator->PlayAnimationName() == L"Brake")
 		return;
-
-	if (animator->PlayAnimationName() != L"Walk" 
-		&& animator->PlayAnimationName() != L"Run"
-		&& animator->PlayAnimationName() != L"RunStart")
-	{
-		const std::wstring& test = animator->PlayAnimationName();
-		animator->Play(L"Walk");
-		//mPlayer->PlayerAnimation(L"Walk");
-	}
 
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
@@ -104,17 +93,16 @@ void PlayerStateScript::Move()
 			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
 		{
 			animator->Play(L"Brake");
-			//mPlayer->SetPlayerState(Player::ePlayerState::Idle);
+			mPlayer->SetPlayerState(Player::ePlayerState::Idle);
 			//mMoveTime = 0.0f;
-			rigidbody->SetLinearMaxVelocityForDynamic(5.f);
-			mInitialForce = 33.f;
+			//rigidbody->SetLinearMaxVelocityForDynamic(5.f);
+			//mInitialForce = 33.f;
 			return;
 		}
 	}
 
 	Transform* tr = mPlayer->GetComponent<Transform>();
-	if (nullptr == tr)
-		return;
+	assert(tr);
 
 
 	bool able = false;
@@ -146,45 +134,62 @@ void PlayerStateScript::Move()
 
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
-	rigidbody->SetLinearMaxVelocityForDynamic(10.f);
 
 
-	// 매 프레임마다 힘을 증가시킴
-	//if (mInitialForce < 40.f)
-	//mMoveTime += DT;
-	mInitialForce += mForceIncrement;
-	/*if (mMoveTime > 1.f)
+
+	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&& animator->PlayAnimationName() != L"Run"
+		&& animator->PlayAnimationName() != L"RunStart")
 	{
-		if (animator->PlayAnimationName() != L"Run")
-			animator->Play(L"Run");
-	}*/
-	rigidbody->AddForceForDynamic((-tr->Forward() * mInitialForce * DT), PxForceMode::Enum::eIMPULSE);
+		animator->Play(L"RunStart");
+		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+	}
+	else if (
+		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&&(animator->PlayAnimationName() == L"Run"
+		|| animator->PlayAnimationName() == L"RunStart"))
+	{
+		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+	}
+	else if(animator->PlayAnimationName() != L"Walk")
+	{
+		animator->Play(L"Walk");
+		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
+	}
+	else
+	{
+		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
+	}
+
+
+	rigidbody->AddForce(-tr->Forward() * 10000.f * DT);
 }
+
+
 
 void PlayerStateScript::Jump()
 {
 	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	if (animator == nullptr)
-		return;
+	assert(animator);
 
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
-	if (!rigidbody)
-		return;
+	assert(rigidbody);
 
 	if (animator->PlayAnimationName() != L"Jump")
 	{
-		const std::wstring& test = animator->PlayAnimationName();
 		animator->Play(L"Jump", false);
 
-		rigidbody->SetLinearMaxVelocityForDynamic(1000.f);
-		//rigidbody->AddForce(math::Vector3(0.0f, 5000.f, 0.0f), physx::PxForceMode::eFORCE);
-		rigidbody->SetLinearDamping(1.0f);
+		rigidbody->SetMaxVelocity_Y(10.f);
+		rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
+		rigidbody->ApplyGravity();
+		rigidbody->SetAirOn();
 	}
 
 	if (animator->PlayAnimationName() == L"Jump" && animator->IsComplete())
 	{
-		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
-		rigidbody->SetLinearMaxVelocityForDynamic(100.f);
+		//rigidbody->SetMaxVelocity_Y(10.f);
+		animator->Play(L"Fall",false);
+		mPlayer->SetPlayerState(Player::ePlayerState::Fall);
 	}
 
 }
@@ -192,18 +197,15 @@ void PlayerStateScript::Jump()
 void PlayerStateScript::Squat()
 {
 	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	if (animator == nullptr)
-		return;
+	assert(animator);
 
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
-	if (!rigidbody)
-		return;
+	assert(rigidbody);
 
 	if (animator->PlayAnimationName() != L"SquatStart" 
 		&& animator->PlayAnimationName() != L"SquatMove"
 		&& animator->PlayAnimationName() != L"SquatWait")
 	{
-		const std::wstring& test = animator->PlayAnimationName();
 		animator->Play(L"SquatStart");
 	}
 
@@ -215,6 +217,24 @@ void PlayerStateScript::SquatMove()
 
 void PlayerStateScript::Air()
 {
+}
+
+void PlayerStateScript::Fall()
+{
+	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
+	assert(animator);
+
+	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
+	assert(rigidbody);
+
+	//if (animator->PlayAnimationName() != L"Fall")
+	//{
+		//animator->Play(L"Fall",false);
+	//}
+	if(rigidbody->GetVelocity().y==0)
+	{
+		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
+	}
 }
 
 void PlayerStateScript::Wall()
@@ -232,8 +252,7 @@ void PlayerStateScript::Groggy()
 void PlayerStateScript::ThrowCap()
 {
 	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	if (animator == nullptr)
-		return;
+	assert(animator);
 
 	if (animator->PlayAnimationName() != L"ThrowCap" )
 	{

@@ -13,7 +13,6 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 
-
 PlayerScript::PlayerScript()
 	: mTransform(nullptr)
 	, mPhyXRigidBody(nullptr)
@@ -79,12 +78,10 @@ void PlayerScript::Update()
 	{
 		mPhyXRigidBody->AddForce(-camForward * 7000.f * DT);
 	}
-
 	if (KEY_TAP(SPACE))
 	{
-		mPhyXRigidBody->AddForce(Vector3::Up * 70000.f * DT);
+		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((Vector3::Up * 5000.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
-
 
 }
 void PlayerScript::FixedUpdate()

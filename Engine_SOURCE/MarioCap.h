@@ -1,9 +1,21 @@
 #pragma once
 #include "MarioParts.h"
+
+
+class Player;
 class MarioCap :
     public DynamicObject
 {
 public:
+	enum class eCapState : short
+	{
+		Idle,
+		Throw,
+		Return,
+		Capture,
+		Die,
+	};
+
 	MarioCap();
 	virtual ~MarioCap();
 
@@ -13,6 +25,9 @@ public:
 	virtual void Render() final;
 	virtual void FontRender() final;
 
+	void FlyStart();
+	void FlyEnd();
+
 public:
 	void Physicalinit();
 	virtual void OnCollisionEnter(GameObj* gameObject) final;
@@ -21,11 +36,19 @@ public:
 
 	void boneAnimatorInit(BoneAnimator* animator);
 
+	eCapState GetCapState() { return mCapState; }
+	void SetCapState(eCapState capState);
+
 public:
 	virtual void BoneInitialize() {};
 
-protected:
-	virtual void stateInfoInitalize() {};
+	GETSET(Player*, mPlayer, Player)
 
+protected:
+	virtual void stateInfoInitalize();
+
+private: 
+	eCapState mCapState;
+	Player* mPlayer;
 };
 

@@ -28,6 +28,7 @@ public:
 	FORCEINLINE void        AddVelocity(const math::Vector3& velocity) { mVelocity += velocity; }
 	FORCEINLINE void        SetVelocity(const math::Vector3& velocity) { mVelocity = velocity; }
 	void                    SetVelocity(AXIS axis, const math::Vector3& velocity);
+	FORCEINLINE void        SetFriction(const math::Vector3& friction) { mFriction = friction; }
 
 
   FORCEINLINE void        AddForce(const math::Vector3& force) { mForce += force; }
