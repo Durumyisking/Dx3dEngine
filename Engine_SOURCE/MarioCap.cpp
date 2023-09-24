@@ -119,7 +119,9 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		Vector3 position = tr->GetPhysicalPosition();
 		Vector3 rotation = tr->GetRotation();
 
-		GetComponent<Transform>()->SetPhysicalPosition(position + Vector3(0.f, 1.f, 0.f));
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioCap");
+
+		//GetComponent<Transform>()->SetPhysicalPosition(position + Vector3(0.f, 1.f, 0.f));
 		GetComponent<Transform>()->SetPhysicalRotation(rotation);
 		rigidbody->SetMaxVelocity(0.0f);
 

@@ -77,6 +77,8 @@ void CapStateScript::Throw()
 
 	rigidbody->SetMaxVelocity(30.f);
 	rigidbody->AddForce(-(tr->Forward()) * 2000.f);
+
+	
 }
 
 void CapStateScript::Return()
