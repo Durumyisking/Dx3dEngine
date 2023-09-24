@@ -173,8 +173,13 @@ private:
 
 
 	Matrix  mPxWorld = {};
-
 	PxTransform mPxTransform;
+
+	math::Quaternion mCurQuternion;
+	math::Quaternion mArriveQuternion;
+
+	float mTickPerSceond = 0.0f;
+	float mDurationTime = 0.05f;
 
 	float mOffsetScale;
 };
