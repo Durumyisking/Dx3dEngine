@@ -60,8 +60,6 @@ void Player::Initialize()
 	SetScale(Vector3(1.f, 1.f, 1.f));
 	SetName(L"Player");
 	mesh->SetMaterialByKey(L"PBRMaterial");
-	mesh->GetMaterial()->SetMetallic(0.01f);
-	mesh->GetMaterial()->SetRoughness(0.99f);
 
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 

@@ -92,7 +92,8 @@ void ScenePlay::Initialize()
 
 	{
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-	/*	player->SetPos(Vector3(0.f, 80.f, 0.f));
+		player->SetPos({ 10.f, 2.5f, 10.f });
+		/*	player->SetPos(Vector3(0.f, 80.f, 0.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
@@ -170,9 +171,10 @@ void ScenePlay::Initialize()
 	//	Player* player = object::Instantiate<Player>(eLayerType::Player,this);
 	//}
 
-	//{
-	//	//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
-	//}
+	{
+		Goomba* packun = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		packun->SetPos({ 15.f, 5.f, 15.f });
+	}
 
 	CreatePlayerUI();
 
