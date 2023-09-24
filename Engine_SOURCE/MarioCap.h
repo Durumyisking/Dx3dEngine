@@ -4,6 +4,15 @@ class MarioCap :
     public DynamicObject
 {
 public:
+	enum class eCapState : short
+	{
+		Idle,
+		Throw,
+		Return,
+		Capture,
+		Die,
+	};
+
 	MarioCap();
 	virtual ~MarioCap();
 
@@ -21,11 +30,17 @@ public:
 
 	void boneAnimatorInit(BoneAnimator* animator);
 
+	eCapState GetCapState() { return mCapState; }
+	void SetCapState(eCapState capState);
+
 public:
 	virtual void BoneInitialize() {};
 
 protected:
-	virtual void stateInfoInitalize() {};
+	virtual void stateInfoInitalize();
+
+private: 
+	eCapState mCapState;
 
 };
 
