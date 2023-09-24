@@ -210,6 +210,7 @@ void MarioCap::FlyStart()
 	// 진행타입
 	param.AnimType = eAnimType::Linear;
 
+	// 진행중 사용될 Value 값
 	param.StartValue = 0.f;
 	param.EndValue= 15.f;
 
@@ -228,6 +229,7 @@ void MarioCap::FlyStart()
 		FlyEnd();
 	};
 
+	// 이벤트 시작
 	animator->Start(param);
 }
 
@@ -248,24 +250,33 @@ void MarioCap::FlyEnd()
 	param.AnimType = eAnimType::Linear;
 
 	param.StartValue = 1.f;
-	param.EndValue = 2.0f;
+	param.EndValue = 10.f;
 
 	// 진행시간
-	param.DurationTime = 0.5f;
+	param.DurationTime = 20.f;
 
 	// 진행 함수 std::function<void(float)>
-	param.DurationFunc = [this, playerTr, myTr](float inCurValue)
+	param.DurationFunc = [this, animator, playerTr, myTr](float inCurValue)
 	{
 		Vector3 playerPos = playerTr->GetPhysicalPosition();
 		Vector3 myPos = myTr->GetPhysicalPosition();
 
 		// 플레이어방향 벡터를구함
 		Vector3 Dirction = playerPos - myPos;
+
+		// 플레이어와 모자의 거리가 가까워졌으면 종료
+		if (Dirction.Length() <= 0.1f)
+			animator->Stop(true);
+
+		// 방향벡터 정규화
 		Dirction.Normalize();
 
 		// 해당방향으로 이동
 		float speed = 20.f;
+
+		// inCurValue 을 곱하므로써 시간의 경과에따라 돌아오는 속도가 증가함
 		myTr->SetPhysicalPosition(myPos + (Dirction * speed * inCurValue * DT));
+
 	};
 
 	// 끝날때 호출되는 함수
@@ -275,5 +286,6 @@ void MarioCap::FlyEnd()
 		SetCapState(eCapState::Idle);
 	};
 
+	// 이벤트 시작
 	animator->Start(param);
 }
