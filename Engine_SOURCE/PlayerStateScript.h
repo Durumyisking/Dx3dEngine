@@ -30,6 +30,7 @@ public:
 	virtual void Hit() final;
 	virtual void Groggy() final;
 	virtual void ThrowCap() final;
+	virtual void CatchCap() final;
 	virtual void Die() final;
 
 public:
@@ -43,6 +44,7 @@ private:
 
 protected:
 	Player* mPlayer;
+	BoneAnimator* mAnimator;
 	bool mbAnimationRunning;
 };
 

@@ -24,6 +24,7 @@ public:
 		Groggy,
 
 		ThrowCap,
+		CatchCap,
 		Die,
 	};
 

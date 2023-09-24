@@ -149,6 +149,7 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 	animator->CreateAnimation(L"Capture", L"..//..//Resources/MarioCap/Animation/Capture.smd", 0.05f);
 	animator->CreateAnimation(L"FlyingStart", L"..//..//Resources/MarioCap/Animation/FlyingStart.smd", 0.05f);
 	animator->CreateAnimation(L"FlyingWait", L"..//..//Resources/MarioCap/Animation/FlyingWait.smd", 0.05f);
+	animator->CreateAnimation(L"CatchCap", L"..//..//Resources/MarioCap/Animation/CatchCap.smd", 0.05f);
 	//animator->Play(L"Capture");
 
 	//모자 던진후 flyStart
@@ -169,6 +170,16 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 			cilp->SetCompleteEvent([animator]()
 		{
 			animator->Play(L"FlyingWait");
+		});
+	}
+
+	//CatchCap 후 idle로
+	{
+		cilp = animator->GetAnimationClip(L"CatchCap");
+		if (cilp)
+			cilp->SetCompleteEvent([this]()
+		{
+			SetCapState(MarioCap::eCapState::Idle);
 		});
 	}
 }
@@ -282,10 +293,13 @@ void MarioCap::FlyEnd()
 	};
 
 	// 끝날때 호출되는 함수
-	param.CompleteFunc = [this, playerTr, myTr](float inCurValue)
+	param.CompleteFunc = [this, animator, playerTr, myTr](float inCurValue)
 	{
 		myTr->SetPhysicalPosition(playerTr->GetPhysicalPosition());
-		SetCapState(eCapState::Idle);
+		myTr->SetPhysicalRotation(playerTr->GetPhysicalRotation());
+
+		mPlayer->SetPlayerState(Player::ePlayerState::CatchCap);
+		SetCapState(eCapState::Return);
 	};
 
 	// 이벤트 시작
