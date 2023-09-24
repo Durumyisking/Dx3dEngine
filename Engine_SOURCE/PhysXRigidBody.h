@@ -41,6 +41,11 @@ public:
   FORCEINLINE void					SetAirOff() { mbAirborn = false; }
   FORCEINLINE bool					IsOnAir() const { return mbAirborn ; }
 
+  FORCEINLINE void					SetTurnSpeed(float speed) { mTurnSpeed = speed; }
+
+  void RightTrun();
+  void LeftTrun();
+
 public:
     // for kinematic actors
     float GetVelocity(AXIS eAxis);
@@ -87,6 +92,7 @@ private:
 	math::Vector3 mReserveVelocity;
 	Timer mReserveTimer;
 
+	float mTurnSpeed;
 	float mMass;
 	Transform* mOwnerTransform;
 };

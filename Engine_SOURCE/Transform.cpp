@@ -42,7 +42,6 @@ void Transform::Update()
 
 void Transform::FixedUpdate()
 {
-
 	if (GetOwner()->GetComponent<Physical>())
 	{
 		Physical* physical = GetPhysical();

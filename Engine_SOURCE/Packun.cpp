@@ -17,7 +17,7 @@
 Packun::Packun()
 	: Monster()
 {
-
+	OnCapture();
 }
 
 Packun::~Packun()
