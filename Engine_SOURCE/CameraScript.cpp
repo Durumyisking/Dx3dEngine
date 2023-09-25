@@ -115,7 +115,7 @@ void CameraScript::KeyBoardMove()
 {
 	// Keyboard Move
 
-	float speed = 50.f;
+	float speed = 100.f;
 	if (KEY_DOWN(W))
 	{
 		mLookAt += speed * mTransform->Forward() * DT;

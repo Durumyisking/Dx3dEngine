@@ -45,6 +45,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
+		// 파일 로드 실패
 		return E_FAIL;
 	}
 
@@ -74,6 +75,7 @@ HRESULT Model::LoadFullpath(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
+		// 파일 로드 실패
 		return E_FAIL;
 	}
 
@@ -90,7 +92,7 @@ HRESULT Model::LoadFullpath(const std::wstring& path)
 		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
 	}
 
-
+	mVariableMaterials.resize(mMaterials.size());
 	mAssimpImporter.FreeScene();
 
 	return S_OK;
@@ -129,7 +131,7 @@ void Model::BindBoneMatrix()
 	}
 }
 
-void Model::Bind_Render()
+void Model::Bind_Render(bool bindMaterial)
 {
 	if (mStructure == nullptr)
 		return;
@@ -160,22 +162,22 @@ void Model::Bind_Render()
 		if (mMaterials[i] == nullptr)
 			continue;
 
-		if ((mMeshes[i]->GetName().find(L"Press") != std::wstring::npos) || (mMeshes[i]->GetName().find(L"Close") != std::wstring::npos) || (mMeshes[i]->GetName().find(L"Mustache") != std::wstring::npos))
-		{
+		if (mMeshes[i]->IsRender() == false)
 			continue;
-		}
 
-		std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
-		for (int slot = 0; slot < Textures.size(); ++slot)
+		if (bindMaterial)
 		{
-			if (Textures[slot] == nullptr)
-				continue;
+			std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
+			for (int slot = 0; slot < Textures.size(); ++slot)
+			{
+				if (Textures[slot] == nullptr)
+					continue;
 
-			mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+				mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+			}
+
+			mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
-
-		mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
-
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
@@ -186,6 +188,18 @@ void Model::Bind_Render()
 	boneMat.clear();
 }
 
+
+void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
+{
+	for (auto iter = mMeshes.begin(); iter != mMeshes.end(); ++iter)
+	{
+		if ((*iter)->GetName().find(name) == std::wstring::npos)
+			continue;
+
+		(*iter)->SetRender(renderSwitch);
+		return;
+	}
+}
 
 void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode)
 {
@@ -234,6 +248,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<Vertex> vertexes;
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
+
 
 	vertexes.reserve(mesh->mNumVertices);
 
@@ -357,16 +372,19 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
 		}
 
-		mTextures.emplace_back(textureBuff);
-
-		std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
-		for (auto& tex : texInfo)
+		if (textureBuff.size() > 0)
 		{
-			if (tex.texPath == L"")
-				continue;
+			mTextures.emplace_back(textureBuff);
 
-			tex.pTex = new Texture();
-			tex.pTex->Load(tex.texPath, tex);
+			std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
+			for (auto& tex : texInfo)
+			{
+				if (tex.texPath == L"")
+					continue;
+
+				tex.pTex = new Texture();
+				tex.pTex->Load(tex.texPath, tex);
+			}
 		}
 
 		//Material
@@ -461,7 +479,7 @@ void Model::CreateMaterial()
 				matName = texInfo.texName;
 				std::size_t found = matName.find(L"_");
 				if (found != std::wstring::npos) {
-					matName = matName.substr(0, found);
+					matName = matName.substr(0, found); // _ 이전까지의 문자열 추출
 				}
 			}
 			break;
@@ -619,4 +637,5 @@ void Model::SetVariableMaterialsByKey(UINT index, const std::wstring& key)
 	{
 		mVariableMaterials[index] = mater;
 	}
+
 }

@@ -49,7 +49,7 @@ namespace gui
 
 	void Editor::Initialize()
 	{
-		mEnable = false;
+		mEnable = true;
 
 		if (mEnable == false)
 			return;

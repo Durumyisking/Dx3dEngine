@@ -99,11 +99,11 @@ void PlayerScript::FixedUpdate()
 	}
 	if (KEY_DOWN(UP))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * 1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camForward * 3000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(DOWN))
 	{
-		mPhyXRigidBody->AddForceForDynamic((camForward * -1000.f * DT), PxForceMode::Enum::eFORCE);
+		mPhyXRigidBody->AddForceForDynamic((camForward * -3000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_TAP(SPACE))
 	{

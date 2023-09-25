@@ -590,6 +590,7 @@
     <ClInclude Include="AnimationClip.h">
       <Filter>Common\Component\Animator3D</Filter>
     </ClInclude>
+    <ClInclude Include="CustomPhysXMemory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -913,6 +914,7 @@
     <ClCompile Include="AnimationClip.cpp">
       <Filter>Common\Component\Animator3D</Filter>
     </ClCompile>
+    <ClCompile Include="CustomPhysXMemory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini">

@@ -239,6 +239,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="CubeMap.h" />
     <ClInclude Include="CursorScript.h" />
+    <ClInclude Include="CustomPhysXMemory.h" />
     <ClInclude Include="def.h" />
     <ClInclude Include="druEnums.h" />
     <ClInclude Include="druMath.h" />
@@ -367,6 +368,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="CubeMap.cpp" />
     <ClCompile Include="CursorScript.cpp" />
+    <ClCompile Include="CustomPhysXMemory.cpp" />
     <ClCompile Include="druEnums.cpp" />
     <ClCompile Include="druMath.cpp" />
     <ClCompile Include="DynamicObject.cpp" />

@@ -7,6 +7,21 @@ using namespace enums;
 
 struct Geometry
 {
+    Geometry(const Geometry& geom)
+        : eGeomType(geom.eGeomType)
+        , boxGeom(geom.boxGeom)
+        , capsuleGeom(geom.capsuleGeom)
+        , sphereGeom(geom.sphereGeom)
+        , planeGeom(geom.planeGeom)
+    {
+
+    }
+    Geometry()
+        : eGeomType(eGeometryType::End)
+    {
+
+    }
+
     Geometry(eGeometryType geometryType, math::Vector3 boxHalfSize)
         : eGeomType(eGeometryType::Box)
     {
@@ -64,13 +79,13 @@ struct Geometry
         }
     }
 
-        PxBoxGeometry boxGeom;
-        PxCapsuleGeometry capsuleGeom;
-        PxSphereGeometry sphereGeom;
-        PxPlaneGeometry planeGeom;
-        PxConvexMeshGeometry convexMeshGeom;
-        PxTriangleMeshGeometry triangleMeshGeom;
-        eGeometryType eGeomType;
+    PxBoxGeometry boxGeom;
+    PxCapsuleGeometry capsuleGeom;
+    PxSphereGeometry sphereGeom;
+    PxPlaneGeometry planeGeom;
+    PxConvexMeshGeometry convexMeshGeom;
+    PxTriangleMeshGeometry triangleMeshGeom;
+    eGeometryType eGeomType;
 
 };
 
@@ -78,6 +93,7 @@ struct Geometry
 
 using namespace math;
 
+class Model;
 class Physical : public Component
 {
 public:
@@ -87,10 +103,10 @@ public:
 public:
     virtual void Initialize();
     virtual void InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, MassProperties massProperties = MassProperties());
-    virtual void InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, MassProperties massProperties = MassProperties());
-    virtual void InitialTriangleMeshProperties(Vector3 geometrySize, MassProperties massProperties = MassProperties());
-    PxConvexMesh* MakeConvexMesh();
-    PxTriangleMesh* MakeTriangleMesh();
+    virtual void InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, Model* model = nullptr, MassProperties massProperties = MassProperties());
+    virtual void InitialTriangleMeshProperties(Vector3 geometrySize, Model* model = nullptr, MassProperties massProperties = MassProperties());
+    PxConvexMesh* MakeConvexMesh(Model* model);
+    PxTriangleMesh* MakeTriangleMesh(Model* model);
     virtual void Update();
     virtual void FixedUpdate();
     virtual void Render();
@@ -98,10 +114,10 @@ public:
 public:
     eActorType                  GetActorType()     const { return mActorType; }
     eGeometryType               GetGeometryType()  const { return mGeometryType; }
-    PxShape*                    GetShape()         const { return mShape; }
-    const Vector3&              GetGeometrySize()  const { return mSize; }
-    std::shared_ptr<Geometry>   GetGeometries()    const { return mGeometry; }
-    PxActor*                    GetActor()         const { return mActor; }
+    PxShape* GetShape()         const { return mMainShape; }
+    const Vector3& GetGeometrySize()  const { return mSize; }
+    std::shared_ptr<Geometry>   GetGeometries()    const { return mMainGeometry; }
+    PxActor* GetActor()         const { return mActor; }
 
     template<typename T>
     inline T* GetActor() const
@@ -117,21 +133,26 @@ public:
     void SetGeometrySize(const Vector3& newSize);
     void SetActorType(eActorType type) { mActorType = type; }
 
+    std::shared_ptr<PhysicalProperties> GetProperties() const { return mProperties; }
+
+    void CreateMainShape();
+    void CreateMainShape(Vector3 localPos);
+
+    void CreateSubShape(Vector3 relativePos, eGeometryType geomType, Vector3 geomSize, PxShapeFlag::Enum shapeFlag);
+    std::vector<PxShape*> GetSubShapes() { return mSubShapes; }
+
 private:
-    void createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize);
-    void createCapsuleGeometry(eGeometryType geometryType, float radius, float halfHeight);
-    void createPlaneGeometry(eGeometryType geometryType);
-    void createSphereGeometry(eGeometryType geometryType, float radius);
-    void createConvexMeshGeometry(eGeometryType geometryType, PxConvexMesh* convexMesh, const Vector3& mScale);
-    void createTriangleMeshGeometry(eGeometryType geometryType, PxTriangleMesh* triangleMesh, const Vector3& mScale);
+    Geometry createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize);
+    Geometry createCapsuleGeometry(eGeometryType geometryType, float radius, float halfHeight);
+    Geometry createPlaneGeometry(eGeometryType geometryType);
+    Geometry createSphereGeometry(eGeometryType geometryType, float radius);
+    std::shared_ptr<Geometry> createConvexMeshGeometry(eGeometryType geometryType, PxConvexMesh* convexMesh, const Vector3& mScale);
+    std::shared_ptr<Geometry> createTriangleMeshGeometry(eGeometryType geometryType, PxTriangleMesh* triangleMesh, const Vector3& mScale);
 
 private:
     void createPhysicsProperties(const MassProperties& massProperties = MassProperties());
-    void createGeometry(eGeometryType geometryType, const Vector3& shapeSize); // 액터당 단일로 달아줄 지오메트리(shape)
+    Geometry createGeometry(eGeometryType geometryType, const Vector3& shapeSize); // 액터당 달아줄 지오메트리(shape)
     void createUniversalShape(); // 공용으로 사용 가능한 지오메트리 
-    void createShape(); 
-    void createConvexMeshShape(PxConvexMeshGeometry convexMeshGeom);
-    void createTriangleMeshShape(PxTriangleMeshGeometry triangleMeshGeom);
     void createActor();
     void initializeActor();
 
@@ -142,7 +163,7 @@ private:
     eGeometryType                   mGeometryType;
 
     Vector3                         mSize;
-    PxActor*                        mActor;
+    PxActor* mActor;
     // PxActor은 물리엔진 시뮬레이션을 적용할 수 있는 객체들이다.
     // 얘네들은 PxScene에서 물리 시뮬레이션에 참여한다.
     /*
@@ -157,12 +178,15 @@ private:
         - 관절 기반의 복잡한 물체
 
         PxParticleFluid
-        - 입자 기반의 유체 시뮬레이션 수행        
+        - 입자 기반의 유체 시뮬레이션 수행
     */
 
-    PxShape*                        mShape;
+    PxShape* mMainShape;
+    std::vector<PxShape*>           mSubShapes;
+
 
     std::shared_ptr<PhysicalProperties> mProperties;
-    std::shared_ptr<Geometry>        mGeometry;
+    std::shared_ptr<Geometry>        mMainGeometry;
+    std::vector<std::shared_ptr<Geometry> >           mSubGeometries;
 
 };

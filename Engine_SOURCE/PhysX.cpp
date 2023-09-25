@@ -1,6 +1,6 @@
 #include "PhysX.h"
 #include "PhysicsScene.h"
-
+#include "CustomPhysXMemory.h"
 
 PhysX::PhysX()
 	:mPhysicsScene(nullptr)
@@ -58,14 +58,20 @@ PxTriangleMesh* PhysX::CreateTriangleMesh(const PxVec3* verts, const PxU32 numVe
 	// Create descriptor for triangle mesh
 	PxTriangleMeshDesc meshDesc;
 	meshDesc.points.count = numVerts;
-	meshDesc.points.stride = sizeof(PxVec3);
+	meshDesc.points.stride = sizeof(PxVec3);	
 	meshDesc.points.data = verts;
 
 	meshDesc.triangles.count = numIndexes / 3;
 	meshDesc.triangles.stride = 3 * sizeof(PxU32);
 	meshDesc.triangles.data = indexs;
 
-	PxDefaultMemoryOutputStream writeBuffer;
+	// for prevent stackoverflow
+	PxU32 estimatedVertSize = numVerts * sizeof(PxVec3) * 1.5;
+	PxU32 estimatedIndexSize = numIndexes * sizeof(PxU32) * 1.5;
+	PxU32 initialSize = estimatedVertSize + estimatedIndexSize;
+	CustomPhysXMemory writeBuffer(initialSize);
+
+	//PxDefaultMemoryOutputStream writeBuffer;
 	bool status = cooking->cookTriangleMesh(meshDesc, writeBuffer);
 	if (!status)
 		return nullptr; 
