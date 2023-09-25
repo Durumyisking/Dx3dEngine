@@ -41,8 +41,10 @@ public:
 	//UI가 사라질때 호출되는 함수
 	void UIClear();
 
+
 	eUIType GetUIType() { return mUIType; }
 	bool GetIsFullScreen() { return mUIbFullScreen; }
+	bool GetUIEnable() { return mbUIEnable; }
 	void SetIsFullScreen(bool enable) { mUIbFullScreen = enable; }
 	void SetUIParent(UIBase* parent) { mUIParent = parent; }
 
@@ -55,7 +57,7 @@ public:
 	void SetUIPos(Vector3 pos) { mUIPos = pos; }
 	void SetUISize(Vector3 size) { mUISize = size; }
 	void Addchild(UIBase* uiBase);
-	void SetColor(Vector4 color);
+	virtual void SetColor(Vector4 color, bool isColor) {};
 
 protected:
 	UIBase* mUIParent;
@@ -63,6 +65,8 @@ protected:
 	Vector3 mUIPos;
 	Vector3 mUISize;
 
+	bool mbColor;
+	bool mbUIEnable;
 
 private:
 	virtual void OnInit() {};
@@ -77,7 +81,6 @@ private:
 private:
 	eUIType mUIType;
 	bool mUIbFullScreen;
-	bool mbUIEnable;
 
 	//백터가 더 메모리 친화적이기 떄문에 사용
 	std::vector<UIBase*> mChilds;

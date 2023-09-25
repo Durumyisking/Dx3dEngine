@@ -2,14 +2,14 @@
 #include "InputMgr.h"
 
 Button::Button()
-	:UIBase(eUIType::Button)
+	:UIBase(eUIType::None)
 	,mbMouseOn(false)
 {
 	mOnClick = std::bind(&Button::Click, this);
 }
 
 Button::Button(Vector3 pos)
-	:UIBase(eUIType::Button)
+	:UIBase(eUIType::None)
 	, mbMouseOn(false)
 {
 	mUIScreenPos = pos;

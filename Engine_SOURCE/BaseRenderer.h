@@ -22,8 +22,12 @@ public:
 
 	void SetMesh(Mesh* mesh) { mMesh = mesh; }
 	void SetMeshByKey(std::wstring key);
-	void SetMaterial(Material* material);
-	void SetMaterialByKey(std::wstring key);
+	void SetMaterial(Material* material, UINT modelMeshSlot = 0);
+
+	Material* GetMaterial();
+	void SetMaterialByKey(std::wstring key, UINT modelMeshSlot = 0);
+
+
 	void SetAnimMaterial(Material* material, Vector2 spriteSize);
 
 	
@@ -31,7 +35,6 @@ public:
 	void SetModelByKey(std::wstring key);
 	void SetModelByKey(std::wstring modelKey, std::wstring materialKey);
 	GETSET(Model*, mModel, Model)
-
 
 
 	Mesh* GetMesh() const { return mMesh; }

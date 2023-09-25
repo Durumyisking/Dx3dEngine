@@ -229,6 +229,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="CapEyeUI.h" />
     <ClInclude Include="CaptureObj.h" />
     <ClInclude Include="CapUI.h" />
+    <ClInclude Include="ChracterController.h" />
     <ClInclude Include="ClientToServer.h" />
     <ClInclude Include="Collider2D.h" />
     <ClInclude Include="Collider3D.h" />
@@ -258,6 +259,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="GameNetServer.h" />
     <ClInclude Include="GameNetThread.h" />
     <ClInclude Include="GameObj.h" />
+    <ClInclude Include="GenericAnimator.h" />
     <ClInclude Include="GlobalPacket.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="GoombaStateScript.h" />
@@ -270,7 +272,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Macro.h" />
-    <ClInclude Include="MarioHead.h" />
+    <ClInclude Include="MarioCap.h" />
     <ClInclude Include="MarioParts.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
@@ -301,6 +303,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PhysXRigidBody.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
+    <ClInclude Include="PlayerStateScript.h" />
     <ClInclude Include="PostProcess.h" />
     <ClInclude Include="PostProcessRenderer.h" />
     <ClInclude Include="PostProcessWave.h" />
@@ -360,6 +363,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="CapEyeUI.cpp" />
     <ClCompile Include="CaptureObj.cpp" />
     <ClCompile Include="CapUI.cpp" />
+    <ClCompile Include="ChracterController.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collider3D.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
@@ -385,6 +389,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="GameNetServer.cpp" />
     <ClCompile Include="GameNetThread.cpp" />
     <ClCompile Include="GameObj.cpp" />
+    <ClCompile Include="GenericAnimator.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="GoombaStateScript.cpp" />
     <ClCompile Include="GraphicDevice.cpp" />
@@ -394,7 +399,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Light.cpp" />
-    <ClCompile Include="MarioHead.cpp" />
+    <ClCompile Include="MarioCap.cpp" />
     <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -424,6 +429,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PhysXRigidBody.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="PlayerStateScript.cpp" />
     <ClCompile Include="PostProcess.cpp" />
     <ClCompile Include="PostProcessRenderer.cpp" />
     <ClCompile Include="PostProcessWave.cpp" />

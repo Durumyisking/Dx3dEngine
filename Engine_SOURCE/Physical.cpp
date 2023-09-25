@@ -174,7 +174,7 @@ void Physical::FixedUpdate()
 
 void Physical::Render()
 {
-
+	
 }
 
 
@@ -186,6 +186,18 @@ void Physical::AddActorToPxScene()
 void Physical::RemoveActorToPxScene()
 {
 	GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysicsScene()->RemoveActor(mActor);
+}
+
+void Physical::ShapesPause()
+{
+	mMainShape->acquireReference();
+	mMainShape->release();
+
+	for (auto shap : mSubShapes)
+	{
+		shap->acquireReference();
+		shap->release();
+	}
 }
 
 void Physical::SetGeometrySize(const Vector3& newSize)
@@ -238,18 +250,6 @@ Geometry Physical::createSphereGeometry(eGeometryType geometryType, float radius
 {
 	assert(eGeometryType::Sphere == geometryType);
 	return Geometry(geometryType, radius);
-}
-
-std::shared_ptr<Geometry> Physical::createConvexMeshGeometry(eGeometryType geometryType, PxConvexMesh* convexMesh, const Vector3& mScale)
-{
-	assert(eGeometryType::ConvexMesh == geometryType);
-	return std::make_shared<Geometry>(geometryType, convexMesh, mScale);
-}
-
-std::shared_ptr<Geometry> Physical::createTriangleMeshGeometry(eGeometryType geometryType, PxTriangleMesh* triangleMesh, const Vector3& mScale)
-{
-	assert(eGeometryType::TriangleMesh == geometryType);
-	return std::make_shared<Geometry>(geometryType, triangleMesh, mScale);
 }
 
 void Physical::createPhysicsProperties(const MassProperties& massProperties)
@@ -457,7 +457,8 @@ void Physical::createActor()
 		{
 			mActor = physics->createRigidDynamic(PxTransform(PxVec3(0.f, 0.f, 0.f)));
 			//mActor->is<PxRigidDynamic>()->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
-			mActor->is<PxRigidDynamic>()->setRigidBodyFlags(PxRigidBodyFlag::eKINEMATIC | PxRigidBodyFlag::eFORCE_KINE_KINE_NOTIFICATIONS);
+			mActor->is<PxRigidDynamic>()->setRigidBodyFlags(PxRigidBodyFlag::eKINEMATIC);
+			//mActor->is<PxRigidDynamic>()->setRigidBodyFlags(PxRigidBodyFlag::eKINEMATIC | PxRigidBodyFlag::eFORCE_KINE_KINE_NOTIFICATIONS);
 		}
 		break;
 		case eActorType::Character:
@@ -489,8 +490,8 @@ void Physical::initializeActor()
 	switch (mActorType)
 	{
 	case eActorType::Static:
-		/*	mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
-			mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);*/
+	/*	mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
+		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);*/
 		break;
 		//case eActorType::MONSTER_DYNAMIC:
 		//case eActorType::PROJECTILE_DYNAMIC:
@@ -521,6 +522,7 @@ void Physical::initializeActor()
 
 		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
 		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 		break;
 	}
 }

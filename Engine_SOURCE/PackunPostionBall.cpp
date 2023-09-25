@@ -26,25 +26,23 @@ void PackunPostionBall::Initialize()
 	if (model)
 	{
 		// Model Setting
-		meshRenderer->SetModel(model);
-
-		//Model Default Material
-		meshRenderer->SetMaterial(model->GetMaterial(0));
+		meshRenderer->SetModel(model, model->GetMaterial(0));
 	}
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3::Zero, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 
 	// Rigidbody
-	PhysXRigidBody* rigidbody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	rigidbody->Initialize();
+	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
 
 	// MoveMent
-	AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
-	AddComponent<PhysicalMovement>(eComponentType::Movement)->Initialize();
+	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
+	assert(AddComponent<PhysicalMovement>(eComponentType::Movement));
 
+	GameObj::Initialize();
 	//test
 	//GetComponent<Transform>()->SetPhysicalPosition(Vector3(-500.f, 0.0f, 1.0f));
 }
@@ -52,14 +50,16 @@ void PackunPostionBall::Initialize()
 void PackunPostionBall::Update()
 {
 	ProjectileObj::Update();
+}
 
-	Transform* tr = GetComponent<Transform>();
-	if (tr == nullptr)
+void PackunPostionBall::OnTriggerEnter(GameObj* gameObject)
+{
+	if (!gameObject)
 		return;
 
-	Vector3 foward = tr->Forward();
-	PhysXRigidBody* rigidbody = GetComponent<PhysXRigidBody>();
-
-	/*if(rigidbody)
-		rigidbody->AddForce((-foward * 100.f * DT), physx::PxForceMode::eFORCE);*/
+	if (gameObject->GetLayerType() == eLayerType::Platforms && GetPhysXRigidBody()->GetVelocity().y < 0.f)
+	{
+		Pause();
+		//GetPhysical()->ShapesPause();
+	}
 }

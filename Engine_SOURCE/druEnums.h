@@ -28,11 +28,13 @@ namespace enums
 	enum class eComponentType
 	{
 		None,
-		Transform,
 		Camera,
 		RigidBody,
 		Movement, 
+		GenericAnimator,
+		Transform,
 		Physical,
+		//Controller,
 		Collider,
 		Animator,
 		BoneAnimator,
@@ -121,7 +123,7 @@ namespace enums
 		Dynamic, // 동적인 물체 (물리엔진에 직접적인 영향을 받는다)
 		Kinematic, // 프로그래밍 운동제어 물리 시뮬레이션 영향을 받지 않고 스크립트로 움직인다.
 		Character, // 일반적인 액터들과 다른 움직임을 처리하기 위해 사용한다. (컨트롤러를 붙여줘야한다)
-		Monster,
+		Monster, // 커스텀
 		End,
 	};
 
@@ -147,12 +149,34 @@ namespace enums
 
 	enum class eUIType
 	{
+		None,
+		TitleImg,
+		MainMenu,
+		TitleText,
+		Start,
+		Start2P,
+		Option,
+		Exit,
+		Bar,
+
 		HP,
 		Coin,
-		Option,
-		Crosshair,
-		Button,
-		Image,
+		CoinText,
+		CityCoin,
+		CityCoinText,
+		Luna,
+		LunaText,
+		End,
+	};
+
+	enum class currentUI
+	{
+		None,
+
+		MainMenu,
+		Play,
+
+
 		End,
 	};
 
@@ -161,6 +185,11 @@ namespace enums
 		X,
 		Y,
 		Z,
+		XY,
+		XZ,
+		YZ,
+		XYZ,
+		END,
 	};
 
 	enum class eHUDState
@@ -171,6 +200,7 @@ namespace enums
 		Rotate,
 		Size,
 		TitleCapMove,
+		Hit,
 		End
 	};
 

@@ -10,20 +10,22 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
-
 Goomba::Goomba()
 	: Monster()
 {
 	OnCapture();
+	SetName(L"Goomba");
 }
 
 Goomba::~Goomba()
 {
-
 }
 
 void Goomba::Initialize()
 {
+	SetGetRecognizeRadius(15.f);	
+
+
 	// Add MeshRenderer
 	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
@@ -31,8 +33,8 @@ void Goomba::Initialize()
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
 	assert(model);
 
-	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
-
+	MeshRenderer* mr =  GetComponent<MeshRenderer>();
+	mr->SetModel(model);
 	model->MeshRenderSwtich(L"EyeClose__BodyMT-mesh", false);
 	model->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
 	model->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", false);
@@ -40,21 +42,38 @@ void Goomba::Initialize()
 	model->MeshRenderSwtich(L"Mustache__HairMT-mesh", false);
 	model->MeshRenderSwtich(L"PressModel__BodyMT-mesh", false);
 
-	model->SetVariableMaterialsByKey(0, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(1, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(2, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(7, L"goombaBodyMaterial");
-	model->SetVariableMaterialsByKey(8, L"goombaEye0Material");
-	model->SetVariableMaterialsByKey(9, L"goombaEye0Material");
+	// body
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 0);
+
+	// eyebrow
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 1);
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 2);
+
+	// close
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 3);
+
+	// halfclose
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 4);
+	mr->SetMaterialByKey(L"goombaEye0Material", 5);
+	mr->SetMaterialByKey(L"goombaEye0Material", 6);
+
+	// open
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 7);
+	mr->SetMaterialByKey(L"goombaEye0Material", 8);
+	mr->SetMaterialByKey(L"goombaEye0Material", 9);
+
+	// mustatch
+
+	// press
 
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(0.05f, 0.05f, 0.5f));
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
-
 	// MoveMent
 	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
 	
@@ -74,7 +93,9 @@ void Goomba::Initialize()
 
 void Goomba::Update()
 {
+
 	Monster::Update();
+
 }
 
 void Goomba::FixedUpdate()
@@ -111,18 +132,59 @@ void Goomba::CaptureEvent()
 		};
 
 	// 이동
-	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
+	//stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
 
-	// 점프
-	able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Jump);
+	//// 점프
+	//able = false;
+	stateEvent(eKeyState::TAP, eKeyCode::Y, eMonsterState::Jump);
 
 	// 특수
 	//able = false;
 	//stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::SpecialCast);
+}
+
+void Goomba::OnCollisionEnter(GameObj* gameObject)
+{
+
+}
+
+void Goomba::OnTriggerEnter(GameObj* gameObject)
+{
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+
+	{
+		if (eMonsterState::Fall == GetMonsterState())
+		{
+			SetMonsterState(Monster::eMonsterState::Land);
+		}
+		GetPhysXRigidBody()->SetAirOff();
+	}
+
+	if (eLayerType::Player == gameObject->GetLayerType())
+
+	{
+
+		GetPhysXRigidBody()->SetAirOff();
+	}
+
+	GetComponent<PhysXRigidBody>()->ApplyGravity();
+	GetComponent<PhysXRigidBody>()->SetAirOn();
+}
+
+void Goomba::OnTriggerStay(GameObj* gameObject)
+{
+}
+
+void Goomba::OnTriggerExit(GameObj* gameObject)
+{
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+	{
+		GetPhysXRigidBody()->ApplyGravity();
+		GetPhysXRigidBody()->SetAirOn();
+	}
 }
 
 void Goomba::boneAnimatorInit(BoneAnimator* animator)
@@ -131,7 +193,7 @@ void Goomba::boneAnimatorInit(BoneAnimator* animator)
 
 	AnimationClip* cilp = animator->GetAnimationClip(L"Attack");
 	if (cilp)
-		cilp->SetCompleateEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
+		cilp->SetCompleteEvent([this]() {SetMonsterState(Monster::eMonsterState::Idle); });
 }
 
 void Goomba::stateInfoInitalize()
@@ -143,6 +205,7 @@ void Goomba::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(eMonsterState::Move), static_cast<UINT>(eMonsterState::Move));
 
 	// Jump
+	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Jump));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Move));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::SpecialSituation));
 	InsertLockState(static_cast<UINT>(eMonsterState::Jump), static_cast<UINT>(eMonsterState::Groggy));

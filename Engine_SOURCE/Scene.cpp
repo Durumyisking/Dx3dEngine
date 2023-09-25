@@ -5,7 +5,7 @@
 #include "Object.h"
 #include "CameraScript.h"
 #include "Player.h"
-
+#include "TimerMgr.h"
 Scene::Scene()
 	: mDeleteObj(true)
 	, mType(SceneMgr::eSceneType::End)
@@ -101,6 +101,12 @@ void Scene::Exit()
 
 	destroy();
 
+
+	mCamera = nullptr;
+	mUICamera = nullptr;
+
+	GETSINGLE(TimerMgr)->GetInstance()->ChangeScene();
+
 	renderer::lights.clear();
 }
 
@@ -124,7 +130,7 @@ std::vector<GameObj*> Scene::GetDontDestroyObjects()
 	return allLayerDontDestroyObjs;
 }
 
-const std::vector<GameObj*>& Scene::GetGameObj(eLayerType _eLayer)
+const std::vector<GameObj*>& Scene::GetGameObjects(eLayerType _eLayer)
 {
 
 	return mLayers[static_cast<UINT>(_eLayer)].GetGameObjects();
@@ -142,7 +148,7 @@ GameObj* Scene::GetPlayer()
 		}
 	}
 
-	assert(player);
+	//assert(player);
 
 	return player;
 }
@@ -150,18 +156,6 @@ GameObj* Scene::GetPlayer()
 void Scene::CreateCameras()
 {
 	{
-		if (!mUICamera)
-		{
-			// UI Camera
-			mUICamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"UICamera");
-			mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
-			Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
-
-			cameraUIComp->SetProjectionType(eProjectionType::Orthographic);
-			cameraUIComp->SmoothOn();
-			cameraUIComp->DisableLayerMasks();
-			cameraUIComp->SetLayerMaskOn(eLayerType::UI);
-		}
 		if (!mCamera)
 		{
 			// main Camera
@@ -177,9 +171,22 @@ void Scene::CreateCameras()
 			cameraComp->SetNear(0.01f);
 
 			CameraScript* cameraScript = mCamera->AddComponent<CameraScript>(eComponentType::Script);
-			cameraScript->SetUICameraObject(mUICamera);
 
 		}
+		if (!mUICamera)
+		{
+			// UI Camera
+			mUICamera = object::Instantiate<GameObj>(eLayerType::Camera, this, L"UICamera");
+			mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
+			Camera* cameraUIComp = mUICamera->AddComponent<Camera>(eComponentType::Camera);
+
+			cameraUIComp->SetProjectionType(eProjectionType::Orthographic);
+			cameraUIComp->SmoothOn();
+			cameraUIComp->DisableLayerMasks();
+			cameraUIComp->SetLayerMaskOn(eLayerType::UI);
+		}
+		mCamera->GetScript<CameraScript>()->SetUICameraObject(mUICamera);
+
 
 		renderer::UICamera = mUICamera->GetComponent<Camera>();
 		renderer::mainCamera = mCamera->GetComponent<Camera>();

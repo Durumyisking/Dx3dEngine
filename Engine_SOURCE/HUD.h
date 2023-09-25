@@ -34,7 +34,10 @@ public:
 	void TitleCapMove();
 	void PlayAnimation();
 
-	void SetColor();
+
+	void SetColor(Vector4 color, bool isColor) override;
+	void SetStop() { mbStop = true; }
+	void SetStart() { mbStop = false; }
 
 protected:
 	Vector3 mOriginPos;
@@ -44,6 +47,7 @@ protected:
 	float mSpeed;
 	float mCurrentTime;
 	bool mActivate;
+	bool mbStop;
 	bool mbGoAndReturn;
 
 	int mCount;

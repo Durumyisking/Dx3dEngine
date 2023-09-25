@@ -11,6 +11,10 @@ public:
 		Idle,
 		Move,
 		Jump,
+		Fall,
+		Land,
+		Turn,
+		Chase,
 		Attack,
 		SpecialSituation,
 		Hit,
@@ -19,12 +23,14 @@ public:
 	};
 
 public:
+
 	Monster();
 	virtual ~Monster();
 
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
+
 
 	virtual void CaptureEvent() = 0;
 

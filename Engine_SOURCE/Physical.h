@@ -114,10 +114,10 @@ public:
 public:
     eActorType                  GetActorType()     const { return mActorType; }
     eGeometryType               GetGeometryType()  const { return mGeometryType; }
-    PxShape* GetShape()         const { return mMainShape; }
-    const Vector3& GetGeometrySize()  const { return mSize; }
+    PxShape*                    GetShape()         const { return mMainShape; }
+    const Vector3&              GetGeometrySize()  const { return mSize; }
     std::shared_ptr<Geometry>   GetGeometries()    const { return mMainGeometry; }
-    PxActor* GetActor()         const { return mActor; }
+    PxActor*                    GetActor()         const { return mActor; }
 
     template<typename T>
     inline T* GetActor() const
@@ -129,6 +129,7 @@ public:
 
     void AddActorToPxScene();
     void RemoveActorToPxScene();
+    void ShapesPause();
 
     void SetGeometrySize(const Vector3& newSize);
     void SetActorType(eActorType type) { mActorType = type; }
@@ -181,7 +182,7 @@ private:
         - 입자 기반의 유체 시뮬레이션 수행
     */
 
-    PxShape* mMainShape;
+    PxShape*                        mMainShape;
     std::vector<PxShape*>           mSubShapes;
 
 

@@ -126,6 +126,9 @@ void Camera::Render()
 		light->Render();
 	}
 
+	if (mLayerMask[static_cast<UINT>(eLayerType::UI)])
+		return;
+
 	//SwapChain
 	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
 
@@ -441,6 +444,7 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 
 	if (nullptr == renderer)
 		return;
+
 
 	Material* material = renderer->GetMaterial();
 

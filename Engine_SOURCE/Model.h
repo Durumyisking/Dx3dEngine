@@ -77,6 +77,9 @@ public:
 	void SetVariableMaterials(UINT index, Material* mater);
 	void SetVariableMaterialsByKey(UINT index, const std::wstring& key);
 	void Bind_Render(bool bindMaterial = true);
+
+	size_t GetMeshCount() const { return mMeshes.size(); }
+
 public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
 	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)

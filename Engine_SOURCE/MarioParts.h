@@ -20,20 +20,12 @@ public:
 	virtual void BoneInitialize();
 
 public:
-	MarioParts* GetMario() { return mBody; }
 
 protected:
 	virtual void stateInfoInitalize() override {};
 
 
 private:
-	std::vector<MarioParts*> mMario;
-	Vector3 mMarioPhysicPos;
-	MarioParts* mBody;
-	//MarioParts* mHandL;
-	//MarioParts* mHandR;
-	//MarioParts* mHead;
-	//MarioParts* mFace;
 
 };
 

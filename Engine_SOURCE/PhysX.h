@@ -3,6 +3,7 @@
 #include "PxInitialization.h"
 
 class PhysicsScene;
+class ChracterController;
 class PhysX
 {
 public:
@@ -30,7 +31,7 @@ public:
 	void CreatePhysicsScene(const PxSceneDesc& sceneDesc);
 	void ConnectDebuggerToScene();
 
-
+	void CreateCharacterController(ChracterController* controller, PxMaterial* material);
 
 private:
 	void CreateScene(const PxSceneDesc& sceneDesc);

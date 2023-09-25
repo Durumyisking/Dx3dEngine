@@ -83,12 +83,6 @@ ScenePlay::~ScenePlay()
 void ScenePlay::Initialize()
 {
 	CreateCameras();
-	{
-		/*Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(0.f, 5.f, -17.f));
-		goomba->SetScale(Vector3(1.0f, 1.0f, 1.0f));
-		goomba->SetName(L"Goomba");*/
-	}
 
 	//{
 	//	GameObj* dirLight = object::Instantiate<GameObj>(eLayerType::Player, this);
@@ -192,28 +186,35 @@ void ScenePlay::Initialize()
 		Sphere->AddComponent<PlayerScript>(eComponentType::Script);
 	}
 
+	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+	//}
+
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
-
 		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
 		t->BindAllShaderResource(12);
 	}
+
 	{
 		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
 		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		skySphere->SetName(L"SkySphere");
 	}
 
-	//{
-	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-	//	plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-	//	plane->SetScale({ 1000.f, 0.5f, 1000.f });
-	//	plane->SetName(L"Plane");
-	//	plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PhongMaterial");
-	//	plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(1000.f, 0.25f, 1000.f));
+	{
+		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+		plane->SetScale({ 1000.f, 0.5f, 1000.f });
+		plane->SetName(L"Plane");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial");
+		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
-	//	PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		rigid->RemoveGravity();
 
 	//	//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	//}
@@ -266,33 +267,63 @@ void ScenePlay::CreatePlayerUI()
 {
 	//Life UI
 	{
-		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 10.f), Vector3(100.0f, 100.0f, 1.0f), L"LifePanal", this));
+		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 10.f), Vector3(100.0f, 100.0f, 1.0f), L"LifePanal", this, eUIType::HP));
 		//LifeGauge
 		HUD* hud = (GETSINGLE(UIFactory)->CreateHud(L"LifeGauge", L"LifeGauge_3Material", Vector3(7.f, 3.6f, 0.f), Vector3::One, mLifePanal, this));
 		//Lifeheart
 		HUD* lifeheart = (GETSINGLE(UIFactory)->CreateHud(L"LifeHeart", L"LifeheartMaterial", Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
 
+		ImageUI* lifeText = (GETSINGLE(UIFactory)->CreateImage(L"LifeText", L"LifeTextMaterial", Vector3(7.f, 3.55f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
+		lifeText->SetColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f), true);
+
 		mLifePanal->Addchild(hud);
 		mLifePanal->Addchild(lifeheart);
+		mLifePanal->Addchild(lifeText);
 	}
 
 	//Left Coin UI
 	{
-		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this));
-		mCoinTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this));
+		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this, eUIType::Coin));
+		mCoinTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this, eUIType::CoinText));
 
-		HUD* coin = (GETSINGLE(UIFactory)->CreateHud(L"Coin", L"CoinMaterial", Vector3(-7.f, 3.5f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
-		HUD* cityCoin = (GETSINGLE(UIFactory)->CreateHud(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
+
+
+		ImageUI* coin = (GETSINGLE(UIFactory)->CreateImage(L"Coin", L"CoinMaterial", Vector3(-7.f, 3.5f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
+		coin->SetUIActive();
+		ImageUI* cityCoin = (GETSINGLE(UIFactory)->CreateImage(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
+		cityCoin->SetUIActive();
 		ImageUI* bar = (GETSINGLE(UIFactory)->CreateImage(L"Bar", L"BarMaterial", Vector3(-5.4f, 2.9f, 0.f), Vector3(4.2f, 1.4f, 1.f), mCoinPanal, this));
 		mCoinPanal->Addchild(coin);
-		mCoinPanal->Addchild(cityCoin);
 		mCoinPanal->Addchild(bar);
+
+		for (size_t i = 0; i < 3; i++)
+		{
+			ImageUI* image = (GETSINGLE(UIFactory)->CreateImage(L"CoinText", L"CoinTextMaterial_" + std::to_wstring(i), Vector3(-6.35f + (0.34f * i), 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), mCoinTextPanal, this));
+			image->SetUIActive();
+
+			mCoinTextPanal->Addchild(image);
+		}
+
+
+
+		Panal* cityCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CityCoinPanal", this, eUIType::CityCoin));
+		mLunaTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CityCoinTextPanal", this, eUIType::CityCoinText));
+
+		cityCoinPanal->Addchild(cityCoin);
+		for (size_t i = 0; i < 3; i++)
+		{
+			ImageUI* image = (GETSINGLE(UIFactory)->CreateImage(L"CoinText", L"CityCoinTextMaterial_" + std::to_wstring(i), Vector3(-4.35f + (0.34f * i), 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), mLunaTextPanal, this));
+			image->SetUIActive();
+
+			mLunaTextPanal->Addchild(image);
+		}
+
 	}
 
 	//left Luna UI
 	{
-		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaPanal", this));
-		mLunaTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaTextPanal", this));
+		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaPanal", this, eUIType::Luna));
+
 
 		for (size_t i = 0; i < 10; i++)
 		{

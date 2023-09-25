@@ -4,6 +4,7 @@ class DynamicObject :
     public GameObj
 {
 public:
+
 	struct StateInfo {
 		std::set<UINT> mLockState;
 	};
@@ -21,6 +22,7 @@ public:
 public:
 	virtual void OnCollisionEnter(GameObj* gameObject) override{};
 	virtual void OnTriggerEnter(GameObj* gameObject) override{};
+	virtual void OnTriggerStay(GameObj* gameObject) override {};
 	virtual void OnTriggerExit(GameObj* gameObject) override{};
 
 

@@ -9,11 +9,17 @@ using namespace math;
 PhysXRigidBody::PhysXRigidBody()
 	: Component(eComponentType::RigidBody)
 	, mPhysical(nullptr)
-	, mGravityApplied(true)
+	, mbGravityApplied(true)
+	, mbAirborn(true)
+	, mFriction(Vector3(20.f, 0.0f, 20.0f))
+	, mFricCoeff(40.f)
 	, mForce(Vector3::Zero)
-	, mGravityAccel(Vector3(0.f, -19.8f * 2.f, 0.f))
-	, mMaxVelocity(Vector3(40.f, -40.f, 40.f))
+	, mGravityAccel(Vector3(0.f, -9.8f , 0.f))
+	, mMaxVelocity(Vector3(100.f, 200.f, 100.f))
 	, mReserveTimer(0.f)
+	, mAccelation(Vector3(0.f, 0.f, 0.f))
+	, mMass(1.0f)
+	, mOwnerTransform(nullptr)
 {
 }
 
@@ -25,12 +31,14 @@ void PhysXRigidBody::Initialize()
 {
 	mPhysical = GetOwner()->GetComponent<Physical>();
 
-
 	if (eActorType::Dynamic == mPhysical->GetActorType())
 	{
 		SetAngularMaxVelocityForDynamic(40.f);
 		SetLinearMaxVelocityForDynamic(40.f);
 	}
+
+	mOwnerTransform = GetOwner()->GetComponent<Transform>();
+	assert(mOwnerTransform);
 }
 
 void PhysXRigidBody::Update()
@@ -39,28 +47,107 @@ void PhysXRigidBody::Update()
 
 void PhysXRigidBody::FixedUpdate()
 {
-	if (mGravityApplied)
+	// accel from force
+	float fForce = mForce.Length();
+
+	if (0.f != fForce)
 	{
-		if (mVelocity.y > mMaxVelocity.y)
-			mVelocity += mGravityAccel * DT;
+		mForce.Normalize();
+
+		float Accel = fForce / mMass;
+
+		mAccelation = mForce * Accel;
 	}
 
-	if (mReserveTimer.IsRunning())
+	if (mbAirborn && mbGravityApplied)
 	{
-		mReserveTimer.Update(DT);
-		mVelocity = mReserveVelocity;
+		mAccelation += mGravityAccel;
+	}
 
-		if (mReserveTimer.IsFinished())
+	mVelocity += mAccelation * DT;
+
+
+	// cal fric
+	if (mVelocity != Vector3::Zero && !mbAirborn)
+	{
+		Vector3 FricDir = -mVelocity;
+		FricDir.Normalize();
+
+		Vector3 Friction = FricDir * mFricCoeff * DT;
+
+		mAccelation += Friction;
+
+		if (mVelocity.Length() <= Friction.Length())
 		{
-			mReserveTimer.Stop();
-			mReserveVelocity = Vector3::Zero;
-			mVelocity = Vector3::Zero;
+			mVelocity = Vector3(0.f, 0.f, 0.f);
+		}
+		else
+		{
+			mVelocity += Friction;
 		}
 	}
+
+	// check max speed
+	if (mMaxVelocity.x < fabs(mVelocity.x))
+	{
+		mVelocity.x /= fabs(mVelocity.x);
+		mVelocity.x *= mMaxVelocity.x;
+	}
+	if (mMaxVelocity.z < fabs(mVelocity.z))
+	{
+		mVelocity.z /= fabs(mVelocity.z);
+		mVelocity.z *= mMaxVelocity.z;
+	}
+	if (mMaxVelocity.y < fabs(mVelocity.y))
+	{
+		mVelocity.y /= fabs(mVelocity.y);
+		mVelocity.y *= mMaxVelocity.y;
+	}
+
+	mForce = Vector3(0.f, 0.f, 0.f);
+	mAccelation = Vector3(0.f, 0.f, 0.f);
 }
 
 void PhysXRigidBody::Render()
 {
+}
+
+void PhysXRigidBody::SetVelocity(AXIS axis, const math::Vector3& velocity)
+{
+	switch (axis)
+	{
+	case enums::AXIS::X:
+		mVelocity.x = velocity.x;
+		break;
+	case enums::AXIS::Y:
+		mVelocity.y = velocity.y;
+		break;
+	case enums::AXIS::Z:
+		mVelocity.z = velocity.z;
+		break;
+	case enums::AXIS::XY:
+		mVelocity.x = velocity.x;
+		mVelocity.y = velocity.y;
+		break;
+	case enums::AXIS::XZ:
+		mVelocity.x = velocity.x;
+		mVelocity.z = velocity.z;
+		break;
+	case enums::AXIS::YZ:
+		mVelocity.y = velocity.y;
+		mVelocity.z = velocity.z;
+		break;
+	case enums::AXIS::XYZ:
+		mVelocity.x = velocity.x;
+		mVelocity.y = velocity.y;
+		mVelocity.z = velocity.z;
+		break;
+	case enums::AXIS::END:
+		break;
+	default:
+		break;
+	}
+
 }
 
 // for kinematic actors
@@ -107,22 +194,6 @@ void PhysXRigidBody::AddVelocity(AXIS eAxis, float velocity)
 	}
 }
 
-void PhysXRigidBody::AddForce(const math::Vector3& force, PxForceMode::Enum eForceMode)
-{
-	PxRigidBodyExt::addForceAtPos(
-		*mPhysical->GetActor<PxRigidBody>(),
-		convert::Vector3ToPxVec3(force),
-		convert::Vector3ToPxVec3(GetOwner()->GetComponent<Transform>()->GetPhysicalPosition()),
-		eForceMode);
-
-}
-
-void PhysXRigidBody::ReserveSpeedForSeconds(const Vector3& velocity, float duration)
-{
-	mReserveVelocity = velocity;
-	mReserveTimer.SetEndTime(duration);
-	mReserveTimer.Start();
-}
 
 // for dynamic actors
 void PhysXRigidBody::SetMassForDynamic(float mass)

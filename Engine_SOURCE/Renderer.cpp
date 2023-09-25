@@ -193,7 +193,7 @@ namespace renderer
 		}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-			GetDevice()->CreateInputLayout(arrLayout, 4
+			GetDevice()->CreateInputLayout(arrLayout, 6
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
@@ -690,6 +690,11 @@ namespace renderer
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"texCursor", L"MainScene/Cursor.png");
 
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"t_a", L"temp/albedo.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"t_n", L"temp/normal.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"t_m", L"temp/metallic.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"t_r", L"temp/roughness.png");
+
 
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"brick/BlockBrickBody_alb.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"brick/BlockBrickBody_nrm.png");
@@ -895,6 +900,10 @@ namespace renderer
 			Material* material = new Material();
 			material->SetRenderingMode(eRenderingMode::Transparent);
 			material->SetShader(shader);
+			material->SetTextureByKey(L"t_a", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
+			material->SetTextureByKey(L"t_m", eTextureSlot::Metallic);
+			material->SetTextureByKey(L"t_r", eTextureSlot::Roughness);
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"PBRMaterial", material);
 		}
 #pragma endregion
@@ -912,6 +921,11 @@ namespace renderer
 			Material* material = new Material();
 			material->SetRenderingMode(eRenderingMode::DeferredOpaque);
 			material->SetShader(shader);
+			material->SetTextureByKey(L"t_a", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
+			material->SetTextureByKey(L"t_m", eTextureSlot::Metallic);
+			material->SetTextureByKey(L"t_r", eTextureSlot::Roughness);
+
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", material);
 		}
 #pragma endregion
@@ -1005,58 +1019,63 @@ namespace renderer
 
 #pragma region goombaBody Material
 		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
 			Material* material = new Material();
 			material->SetShader(shader);
 			material->SetTextureByKey(L"goombaBody_alb", eTextureSlot::Albedo);
 			material->SetTextureByKey(L"goombaBody_nrm", eTextureSlot::Normal);
 			material->SetTextureByKey(L"goombaBody_rgh", eTextureSlot::Roughness);
+			material->SetRenderingMode(eRenderingMode::DeferredOpaque);
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaBodyMaterial", material);
 		}
 #pragma endregion
 #pragma region goombaEye0 Material
 		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
 			Material* material = new Material();
 			material->SetShader(shader);
 			material->SetTextureByKey(L"goombaEye_alb0", eTextureSlot::Albedo);
 			material->SetTextureByKey(L"goombaEye_nrm0", eTextureSlot::Normal);
 			material->SetTextureByKey(L"goombaEye_rgh0", eTextureSlot::Roughness);
+			material->SetRenderingMode(eRenderingMode::DeferredOpaque);
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye0Material", material);
 		}
 #pragma endregion
 #pragma region goombaEye1 Material
 		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
 			Material* material = new Material();
 			material->SetShader(shader);
 			material->SetTextureByKey(L"goombaEye_alb1", eTextureSlot::Albedo);
 			material->SetTextureByKey(L"goombaEye_nrm1", eTextureSlot::Normal);
 			material->SetTextureByKey(L"goombaEye_rgh1", eTextureSlot::Roughness);
 			material->SetTextureByKey(L"goombaEye_emm", eTextureSlot::Emissive);
+			material->SetRenderingMode(eRenderingMode::DeferredOpaque);
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye1Material", material);
 		}
 #pragma endregion
 #pragma region goombaEye2 Material
 		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
 			Material* material = new Material();
 			material->SetShader(shader);
 			material->SetTextureByKey(L"goombaEye_alb2", eTextureSlot::Albedo);
 			material->SetTextureByKey(L"goombaEye_nrm2", eTextureSlot::Normal);
 			material->SetTextureByKey(L"goombaEye_rgh2", eTextureSlot::Roughness);
+			material->SetRenderingMode(eRenderingMode::DeferredOpaque);
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye2Material", material);
 		}
 #pragma endregion
 #pragma region MarioMustache Material
 		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
 			Material* material = new Material();
 			material->SetShader(shader);
 			material->SetTextureByKey(L"goombaHairFace_alb", eTextureSlot::Albedo);
 			material->SetTextureByKey(L"goombaHairFace_nrm", eTextureSlot::Normal);
 			material->SetTextureByKey(L"goombaHairFace_rgh", eTextureSlot::Roughness);
 			material->SetTextureByKey(L"goombaHairFace_emm", eTextureSlot::Emissive);
+			material->SetRenderingMode(eRenderingMode::DeferredOpaque);
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"MarioMustacheMaterial", material);
 		}
 #pragma endregion
@@ -1874,7 +1893,19 @@ namespace renderer
 			const std::wstring numberName = std::to_wstring(i);
 
 			CreateMaterial(numberName, L"UISpriteShader", numberName + L"Material", eRenderingMode::Transparent);
+
+			CreateMaterial(numberName, L"UISpriteShader", L"Coin" + numberName + L"Material", eRenderingMode::Transparent);
+			CreateMaterial(numberName, L"UISpriteShader", L"Luna" + numberName + L"Material", eRenderingMode::Transparent);
 		}
+
+		CreateMaterial(L"0", L"UISpriteShader", L"CoinTextMaterial_0", eRenderingMode::Transparent);
+		CreateMaterial(L"0", L"UISpriteShader", L"CoinTextMaterial_1", eRenderingMode::Transparent);
+		CreateMaterial(L"0", L"UISpriteShader", L"CoinTextMaterial_2", eRenderingMode::Transparent);
+
+		CreateMaterial(L"0", L"UISpriteShader", L"CityCoinTextMaterial_0", eRenderingMode::Transparent);
+		CreateMaterial(L"0", L"UISpriteShader", L"CityCoinTextMaterial_1", eRenderingMode::Transparent);
+		CreateMaterial(L"0", L"UISpriteShader", L"CityCoinTextMaterial_2", eRenderingMode::Transparent);
+
 
 		for (size_t i = 'a'; i <= 'z'; i++)
 		{
@@ -1889,6 +1920,13 @@ namespace renderer
 
 			CreateMaterial(numberName, L"UISpriteShader", numberName + L"Material", eRenderingMode::Transparent);
 		}
+
+		CreateMaterial(L"Exit", L"UISpriteShader", L"ExitMaterial", eRenderingMode::Transparent);
+		CreateMaterial(L"Resume", L"UISpriteShader", L"ResumeMaterial", eRenderingMode::Transparent);
+		CreateMaterial(L"Resume2P", L"UISpriteShader", L"Resume2PMaterial", eRenderingMode::Transparent);
+		CreateMaterial(L"Start", L"UISpriteShader", L"StartMaterial", eRenderingMode::Transparent);
+
+		CreateMaterial(L"0", L"UISpriteShader", L"LifeTextMaterial", eRenderingMode::Transparent);
 #pragma endregion
 	}
 
@@ -1914,7 +1952,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"CapEye", L"Textures/UI/CapUI/CapEyeAnimation.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"UIBar", L"Textures/UI/UIBar.png");
 
-		for (size_t i = 0; i < 9; i++)
+		for (size_t i = 0; i <= 9; i++)
 		{
 			const std::wstring& key = std::to_wstring(i);
 			GETSINGLE(ResourceMgr)->Load<Texture>(key, L"Textures/UI/Number/" + key + L".png");
@@ -1932,6 +1970,12 @@ namespace renderer
 			const std::wstring& key = L"uppercase_" + std::to_wstring(i);
 			GETSINGLE(ResourceMgr)->Load<Texture>(key, L"Textures/UI/Alphabet/uppercase/" + key + L".png");
 		}
+
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Exit", L"Textures/UI/Text/Exit.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Resume", L"Textures/UI/Text/Resume.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Resume2P", L"Textures/UI/Text/Resume2P.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Start", L"Textures/UI/Text/Start.png");
 	}
 
 	////////////////////////////////////////////////////////

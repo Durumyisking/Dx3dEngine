@@ -12,9 +12,13 @@ public:
 	virtual void Update() override;
 	virtual void Initialize() override;
 public:
-	virtual void Idle() {};
+	virtual void Idle();
 	virtual void Move() {};
 	virtual void Jump() {};
+	virtual void Fall() {};
+	virtual void Land() {};
+	virtual void Turn() {};
+	virtual void Chase() {};
 	virtual void Attack() {};
 	virtual void SpecialSituation() {};
 	virtual void Hit() {};
@@ -29,8 +33,8 @@ private:
 
 protected:
 	Monster* mMonster;
+	GameObj* mPlayer;
 	bool mbAnimationRunning;
-
-
+	bool mbTurnLeft;
 };
 
