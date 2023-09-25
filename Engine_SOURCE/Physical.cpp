@@ -252,6 +252,18 @@ Geometry Physical::createSphereGeometry(eGeometryType geometryType, float radius
 	return Geometry(geometryType, radius);
 }
 
+std::shared_ptr<Geometry> Physical::createConvexMeshGeometry(eGeometryType geometryType, PxConvexMesh* convexMesh, const Vector3& mScale)
+{
+	assert(eGeometryType::ConvexMesh == geometryType);
+	return std::make_shared<Geometry>(geometryType, convexMesh, mScale);
+}
+
+std::shared_ptr<Geometry> Physical::createTriangleMeshGeometry(eGeometryType geometryType, PxTriangleMesh* triangleMesh, const Vector3& mScale)
+{
+	assert(eGeometryType::TriangleMesh == geometryType);
+	return std::make_shared<Geometry>(geometryType, triangleMesh, mScale);
+}
+
 void Physical::createPhysicsProperties(const MassProperties& massProperties)
 {
 	mProperties = std::make_shared<PhysicalProperties>(massProperties);

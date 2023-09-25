@@ -59,11 +59,6 @@ void BaseRenderer::SetMaterial(Material* material, UINT modelMeshSlot)
 	}
 }
 
-Material* BaseRenderer::GetMaterial()
-{
-	return mMaterial;
-}
-
 void BaseRenderer::SetMaterialByKey(std::wstring key, UINT modelMeshSlot)
 {
 	if (mModel)
