@@ -45,7 +45,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
+		// ÆÄÀÏ ·Îµå ½ÇÆĞ
 		return E_FAIL;
 	}
 
@@ -75,7 +75,7 @@ HRESULT Model::LoadFullpath(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
+		// ÆÄÀÏ ·Îµå ½ÇÆĞ
 		return E_FAIL;
 	}
 
@@ -193,11 +193,11 @@ void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
 {
 	for (auto iter = mMeshes.begin(); iter != mMeshes.end(); ++iter)
 	{
-		if ((*iter)->GetName().find(name) == std::wstring::npos)
-			continue;
-
-		(*iter)->SetRender(renderSwitch);
-		return;
+		if ((*iter)->GetName() == name)
+		{ 
+			(*iter)->SetRender(renderSwitch);
+			break;
+		}
 	}
 }
 
@@ -476,7 +476,7 @@ void Model::CreateMaterial()
 				matName = texInfo.texName;
 				std::size_t found = matName.find(L"_");
 				if (found != std::wstring::npos) {
-					matName = matName.substr(0, found); // _ ì´ì „ê¹Œì§€ì˜ ë¬¸ìì—´ ì¶”ì¶œ
+					matName = matName.substr(0, found); // _ ÀÌÀü±îÁöÀÇ ¹®ÀÚ¿­ ÃßÃâ
 				}
 			}
 			break;

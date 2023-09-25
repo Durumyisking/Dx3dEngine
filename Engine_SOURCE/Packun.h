@@ -14,6 +14,7 @@ public:
 
 	virtual void CaptureEvent() final;
 
+	virtual void OnTriggerEnter(GameObj* gameObject) override;
 
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) final;

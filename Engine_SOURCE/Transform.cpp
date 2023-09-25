@@ -87,6 +87,7 @@ void Transform::FixedUpdate()
 		mWorldRight.Normalize();
 		mWorldUp .Normalize();
 	}
+
 	else
 	{	
 		// 렌더링에 사용될 위치값을 업데이트.
@@ -203,6 +204,13 @@ Vector3 Transform::GetPhysicalPosition()
 	return convert::PxVec3ToVector3(mPxTransform.p);
 	//return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
 }
+
+Vector3 Transform::GetPhysicalRotation()
+{
+	assert(GetOwner()->GetComponent<Physical>());
+	return convert::PxQuatToQuaternion(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().q).ToEuler() / XM_PI * 180;
+}
+
 
 void Transform::SetPhysicalPosition(const Vector3& position)
 {

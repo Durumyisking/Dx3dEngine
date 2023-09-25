@@ -3,6 +3,7 @@
 
 #include "Object.h"
 #include "Camera.h"
+
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "SpriteRenderer.h"
@@ -16,8 +17,6 @@
 
 #include "Application.h"
 #include "Player.h"
-#include "Goomba.h"
-#include "Packun.h"
 
 #include "Physical.h"
 #include "PhysXRigidBody.h"
@@ -41,6 +40,7 @@
 #include "BoneAnimator.h"
 
 #include "Panal.h"
+
 #include "HUD.h"
 #include "Button.h"
 #include "UIFactory.h"
@@ -49,6 +49,7 @@
 #include "ImageUI.h"
 #include "CapUI.h"
 #include "CapEyeUI.h"
+
 
 
 extern Application application;
