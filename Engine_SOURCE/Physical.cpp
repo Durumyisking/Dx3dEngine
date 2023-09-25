@@ -137,6 +137,8 @@ PxTriangleMesh* Physical::MakeTriangleMesh(Model* model)
 	std::vector<PxVec3> vertices;
 	std::vector<PxU32> indexes;
 
+	UINT forInt = 0;
+
 	for (Mesh* mesh : meshes)
 	{
 		std::vector<Vertex> meshVertices;
@@ -152,7 +154,11 @@ PxTriangleMesh* Physical::MakeTriangleMesh(Model* model)
 		for (PxU32 i = 0; i < vertexCount; i++)
 		{
 			vertices.emplace_back(meshVertices[i].pos.x, meshVertices[i].pos.y, meshVertices[i].pos.z);
-			indexes.emplace_back(meshIndexes[i]);
+		}
+
+		for (PxU32 i = 0; i < indexCount; i++)
+		{
+			indexes.emplace_back(meshIndexes[i] + vertices.size() - vertexCount);
 		}
 	}
 
