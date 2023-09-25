@@ -132,10 +132,11 @@ PxTriangleMesh* Physical::MakeTriangleMesh(Model* model)
 
 	//vertexCount = model->GetNumberOfVertices(index);
 	const std::vector<Mesh*> meshes = model->GetMeshes();
-	PxU32 allVertexCount = 0;
-	PxU32 allIndexCount = 0;
 	std::vector<PxVec3> vertices;
 	std::vector<PxU32> indexes;
+	UINT allVertexCount = 0;
+	UINT allIndexCount = 0;
+	UINT currentIndexOffset = 0;
 
 	for (Mesh* mesh : meshes)
 	{
@@ -143,17 +144,23 @@ PxTriangleMesh* Physical::MakeTriangleMesh(Model* model)
 		std::vector<UINT> meshIndexes;
 		mesh->GetVerticesFromBuffer(&meshVertices);
 		mesh->GetIndexesFromBuffer(&meshIndexes);
-		PxU32 vertexCount = mesh->GetVertexCount();
-		PxU32 indexCount = mesh->GetIndexCount();
+		UINT vertexCount = mesh->GetVertexCount();
+		UINT indexCount = mesh->GetIndexCount();
 		allVertexCount += vertexCount;
 		allIndexCount += indexCount;
 
 		// Copy from cvector array to PxVec3 array
-		for (PxU32 i = 0; i < vertexCount; i++)
+		for (UINT i = 0; i < vertexCount; i++)
 		{
 			vertices.emplace_back(meshVertices[i].pos.x, meshVertices[i].pos.y, meshVertices[i].pos.z);
-			indexes.emplace_back(meshIndexes[i]);
 		}
+
+		for (UINT i = 0; i < indexCount; i++)
+		{
+			indexes.emplace_back(meshIndexes[i] + currentIndexOffset);
+		}
+
+		currentIndexOffset += vertexCount;
 	}
 
 	PxVec3* v = vertices.data(); // use for Debug can be delete
