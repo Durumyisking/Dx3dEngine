@@ -148,7 +148,9 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		Vector3 position = tr->GetPhysicalPosition();
 		Vector3 rotation = tr->GetRotation();
 
-		GetComponent<Transform>()->SetPhysicalPosition(position + Vector3(0.f, 1.f, 0.f));
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioCap");
+
+		//GetComponent<Transform>()->SetPhysicalPosition(position + Vector3(0.f, 1.f, 0.f));
 		GetComponent<Transform>()->SetPhysicalRotation(rotation);
 		rigidbody->SetMaxVelocity(0.0f);
 
@@ -166,10 +168,11 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 	AnimationClip* cilp = nullptr;
 	//animator->LoadAnimations(L"..//Resources/MarioCap/Animation");
 
-	animator->CreateAnimation(L"ThrowCap", L"..//..//Resources/MarioCap/Animation/ThrowCap.smd", 60);
+	animator->CreateAnimation(L"ThrowCap", L"..//..//Resources/MarioCap/Animation/ThrowCap.smd", 0.05f);
 	animator->CreateAnimation(L"Capture", L"..//..//Resources/MarioCap/Animation/Capture.smd", 120);
-	animator->CreateAnimation(L"FlyingStart", L"..//..//Resources/MarioCap/Animation/FlyingStart.smd", 60);
-	animator->CreateAnimation(L"FlyingWait", L"..//..//Resources/MarioCap/Animation/FlyingWait.smd", 60);
+	animator->CreateAnimation(L"FlyingStart", L"..//..//Resources/MarioCap/Animation/FlyingStart.smd", 0.05f);
+	animator->CreateAnimation(L"FlyingWait", L"..//..//Resources/MarioCap/Animation/FlyingWait.smd", 0.05f);
+	animator->CreateAnimation(L"CatchCap", L"..//..//Resources/MarioCap/Animation/CatchCap.smd", 0.05f);
 	//animator->Play(L"Capture");
 
 	//모자 던진후 flyStart
@@ -191,6 +194,16 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 		{
 			animator->Play(L"FlyingWait");
 		});*/
+	}
+
+	//CatchCap 후 idle로
+	{
+		cilp = animator->GetAnimationClip(L"CatchCap");
+		if (cilp)
+			cilp->SetCompleteEvent([this]()
+		{
+			SetCapState(MarioCap::eCapState::Idle);
+		});
 	}
 }
 
@@ -303,11 +316,18 @@ void MarioCap::FlyEnd()
 	};
 
 	// 끝날때 호출되는 함수
-	param.CompleteFunc = [this, playerTr, myTr](float inCurValue)
+	param.CompleteFunc = [this, animator, playerTr, myTr](float inCurValue)
 	{
 		myTr->SetPhysicalPosition(playerTr->GetPhysicalPosition());
-		SetCapState(eCapState::Idle);
+		myTr->SetPhysicalRotation(playerTr->GetPhysicalRotation());
 
+		Player* player = dynamic_cast<Player*>(mOwner);
+		if (player)
+		{
+			player->SetPlayerState(Player::ePlayerState::CatchCap);
+		}
+
+		SetCapState(eCapState::Return);
 		// 마리오의 모자를 씌워줌
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
 		model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);

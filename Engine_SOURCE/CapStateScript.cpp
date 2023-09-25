@@ -46,6 +46,7 @@ void CapStateScript::Initialize()
 	// Owner Çü º¯È¯
 	if (GetOwner())
 		mCap = dynamic_cast<MarioCap*>(GetOwner());
+
 	mAnimator = mCap->GetComponent<BoneAnimator>();
 	assert(mAnimator);
 	
@@ -53,6 +54,8 @@ void CapStateScript::Initialize()
 
 void CapStateScript::Idle()
 {
+	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
+	model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
 	//BoneAnimator* animator = mCap->GetComponent<BoneAnimator>();
 	//if (animator == nullptr)
 	//	return;
@@ -85,6 +88,10 @@ void CapStateScript::Throw()
 
 void CapStateScript::Return()
 {
+	if (mAnimator->PlayAnimationName() != L"CatchCap")
+	{
+		mAnimator->Play(L"CatchCap", false);
+	}
 }
 
 void CapStateScript::Capture()

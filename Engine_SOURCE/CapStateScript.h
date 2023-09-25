@@ -38,5 +38,6 @@ protected:
 	MarioCap* mCap;
 	BoneAnimator* mAnimator;
 	bool mbAnimationRunning;
+	float mTimer;
 };
 

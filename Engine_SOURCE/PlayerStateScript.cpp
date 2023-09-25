@@ -28,6 +28,7 @@ PlayerStateScript::PlayerStateScript()
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Hit, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Groggy, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::ThrowCap, this));
+	mStateEventList.emplace_back(std::bind(&PlayerStateScript::CatchCap, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Die, this));
 }
 PlayerStateScript::~PlayerStateScript()
@@ -52,6 +53,9 @@ void PlayerStateScript::Initialize()
 	// Owner 형 변환
 	if (GetOwner())
 		mPlayer = dynamic_cast<Player*>(GetOwner());
+
+	mAnimator = mPlayer->GetComponent<BoneAnimator>();
+	assert(mAnimator);
 }
 
 void PlayerStateScript::Idle()
@@ -66,9 +70,6 @@ void PlayerStateScript::Idle()
 
 void PlayerStateScript::Move()
 {
-	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	assert(animator);
-
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
@@ -79,7 +80,7 @@ void PlayerStateScript::Move()
 	assert(physical);
 		
 
-	if (animator->PlayAnimationName() == L"Brake")
+	if (mAnimator->PlayAnimationName() == L"Brake")
 		return;
 
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
@@ -92,7 +93,7 @@ void PlayerStateScript::Move()
 			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT)
 			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
 		{
-			animator->Play(L"Brake");
+			mAnimator->Play(L"Brake");
 			mPlayer->SetPlayerState(Player::ePlayerState::Idle);
 			//mMoveTime = 0.0f;
 			//rigidbody->SetLinearMaxVelocityForDynamic(5.f);
@@ -138,22 +139,22 @@ void PlayerStateScript::Move()
 
 
 	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
-		&& animator->PlayAnimationName() != L"Run"
-		&& animator->PlayAnimationName() != L"RunStart")
+		&& mAnimator->PlayAnimationName() != L"Run"
+		&& mAnimator->PlayAnimationName() != L"RunStart")
 	{
-		animator->Play(L"RunStart");
+		mAnimator->Play(L"RunStart");
 		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
 	}
 	else if (
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
-		&&(animator->PlayAnimationName() == L"Run"
-		|| animator->PlayAnimationName() == L"RunStart"))
+		&&(mAnimator->PlayAnimationName() == L"Run"
+		|| mAnimator->PlayAnimationName() == L"RunStart"))
 	{
 		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
 	}
-	else if(animator->PlayAnimationName() != L"Walk")
+	else if(mAnimator->PlayAnimationName() != L"Walk")
 	{
-		animator->Play(L"Walk");
+		mAnimator->Play(L"Walk");
 		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
 	}
 	else
@@ -169,15 +170,12 @@ void PlayerStateScript::Move()
 
 void PlayerStateScript::Jump()
 {
-	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	assert(animator);
-
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
-	if (animator->PlayAnimationName() != L"Jump")
+	if (mAnimator->PlayAnimationName() != L"Jump")
 	{
-		animator->Play(L"Jump", false);
+		mAnimator->Play(L"Jump", false);
 
 		rigidbody->SetMaxVelocity_Y(10.f);
 		rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
@@ -185,28 +183,33 @@ void PlayerStateScript::Jump()
 		rigidbody->SetAirOn();
 	}
 
-	if (animator->PlayAnimationName() == L"Jump" && animator->IsComplete())
+	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())
 	{
 		//rigidbody->SetMaxVelocity_Y(10.f);
-		animator->Play(L"Fall",false);
+		mAnimator->Play(L"Fall",false);
 		mPlayer->SetPlayerState(Player::ePlayerState::Fall);
 	}
+	
 
+	// 점프했을시 이동 애니메이션으로 가지않고 공중에서 약간의 움직임을 구현해야한다
+	// ==============================================================================
+	// 
+	// 
+	// 
+	// ==============================================================================
 }
 
 void PlayerStateScript::Squat()
 {
-	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	assert(animator);
 
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
-	if (animator->PlayAnimationName() != L"SquatStart" 
-		&& animator->PlayAnimationName() != L"SquatMove"
-		&& animator->PlayAnimationName() != L"SquatWait")
+	if (mAnimator->PlayAnimationName() != L"SquatStart"
+		&& mAnimator->PlayAnimationName() != L"SquatMove"
+		&& mAnimator->PlayAnimationName() != L"SquatWait")
 	{
-		animator->Play(L"SquatStart");
+		mAnimator->Play(L"SquatStart");
 	}
 
 }
@@ -221,9 +224,6 @@ void PlayerStateScript::Air()
 
 void PlayerStateScript::Fall()
 {
-	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	assert(animator);
-
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
@@ -251,15 +251,20 @@ void PlayerStateScript::Groggy()
 
 void PlayerStateScript::ThrowCap()
 {
-	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	assert(animator);
-
-	if (animator->PlayAnimationName() != L"ThrowCap" )
+	if (mAnimator->PlayAnimationName() != L"ThrowCap" )
 	{
 		mPlayer->GetMarioCap()->GetPhysical()->AddActorToPxScene();
-		animator->Play(L"ThrowCap",false);
+		mAnimator->Play(L"ThrowCap", false);
 	}
 
+}
+
+void PlayerStateScript::CatchCap()
+{
+	if (mAnimator->PlayAnimationName() != L"CatchCap")
+	{
+		mAnimator->Play(L"CatchCap", false);
+	}
 }
 
 void PlayerStateScript::Die()
