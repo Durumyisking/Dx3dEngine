@@ -42,13 +42,13 @@ public:
 public:
 	virtual void BoneInitialize() {};
 
-	GETSET(Player*, mPlayer, Player)
+	GETSET(GameObj*, mOwner, Owner)
 
 protected:
 	virtual void stateInfoInitalize();
 
 private: 
 	eCapState mCapState;
-	Player* mPlayer;
+	GameObj* mOwner;
 };
 

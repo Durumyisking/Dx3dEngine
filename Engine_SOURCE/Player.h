@@ -47,7 +47,8 @@ public:
 
 	std::vector<MarioParts*> GetParts() { return mParts; }
 	void SetParts(MarioParts* part) { mParts.push_back(part); }
-	void SetMarioCap(MarioCap* cap) { mMarioCap = cap; }
+	void SetMarioCap(MarioCap* cap);
+	MarioCap* GetMarioCap() const { return mMarioCap; }
 
 private:
 	std::vector<MarioParts*> mParts;

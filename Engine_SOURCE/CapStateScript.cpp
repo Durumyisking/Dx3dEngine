@@ -59,6 +59,7 @@ void CapStateScript::Idle()
 	//if (!(animator->PlayAnimationName() == L"Wait"))
 	//	animator->Play(L"Wait");
 	//mInitialForce = 33.f;
+	mCap->Pause();
 }
 
 void CapStateScript::Throw()
@@ -75,8 +76,8 @@ void CapStateScript::Throw()
 	PhysXRigidBody* rigidbody = mCap->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
-	rigidbody->SetTurnSpeed(150.f);
-	rigidbody->RightTrun();
+	//rigidbody->SetTurnSpeed(150.f);
+	//rigidbody->RightTrun();
 
 	/*rigidbody->SetMaxVelocity(30.f);
 	rigidbody->AddForce(-(tr->Forward()) * 2000.f);*/

@@ -17,7 +17,7 @@
 Packun::Packun()
 	: Monster()
 {
-	OnCapture();
+
 }
 
 Packun::~Packun()
@@ -119,29 +119,43 @@ void Packun::CaptureEvent()
 }
 
 void Packun::OnTriggerEnter(GameObj* gameObject)
-{ 
+{
 	if (!gameObject)
 		return;
 
 	// 마리오 모자와 충돌시 캡처 상태로 변경
 	if (gameObject->GetLayerType() == eLayerType::Player)
 	{
-		MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
-		if (cap != nullptr)
-		{
-			OnCapture();
+		int a = 0;
+		//if (IsCapture())
+		//	return;
 
-			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
-			if (model)
-			{
-				// 오프
-				model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
-				model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
-				model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
-			}
+		//MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
+		//if (cap == nullptr)
+		//	return;
 
-			SetMonsterState(eMonsterState::Idle);
-		}
+		//OnCapture();
+
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
+		//if (!model)
+		//	return;
+
+		//// 오프
+		//model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
+		//model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
+		//model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
+
+		//// 마리오 본체 pause
+		//cap->GetOwner()->Pause();
+
+		//// 캡의 오너변경
+		//cap->SetOwner(this);
+		//SetPlayer(cap);
+
+		//// 캡의 default 상태
+		//cap->SetCapState(MarioCap::eCapState::Idle);
+		//// 몬스터의 default 
+		//SetMonsterState(eMonsterState::Idle);
 	}
 }
 
@@ -227,9 +241,9 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 
 				});
 
-			cilp->SetCompleteEvent([this]() 
+			cilp->SetCompleteEvent([this]()
 				{
-					if(IsCapture())
+					if (IsCapture())
 						SetMonsterState(Monster::eMonsterState::Idle);
 					else
 						SetMonsterState(Monster::eMonsterState::Groggy);
@@ -249,7 +263,7 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 				});
 	}
 
-	
+
 	{
 		cilp = animator->GetAnimationClip(L"HackWait");
 		if (cilp)

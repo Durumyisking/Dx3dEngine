@@ -57,6 +57,10 @@ void Player::Initialize()
 
 	//기본 설정
 	SetPos(Vector3(0.f, 0.f, 0.f));
+
+	//Test
+	SetPos(Vector3(-20.f, 0.f, 0.f));
+
 	SetScale(Vector3(1.f, 1.f, 1.f));
 	SetName(L"Player");
 	mesh->SetMaterialByKey(L"PBRMaterial",0);
@@ -121,6 +125,8 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	if (GetState() != GameObj::eState::Active)
+		return;
 
 	DynamicObject::Update();
 
@@ -133,6 +139,9 @@ void Player::Update()
 
 void Player::FixedUpdate()
 {
+	if (GetState() != GameObj::eState::Active)
+		return;
+
 	DynamicObject::FixedUpdate();
 
 	KeyCheck();
@@ -153,6 +162,9 @@ void Player::FixedUpdate()
 
 void Player::Render()
 {
+	if (GetState() != GameObj::eState::Active)
+		return;
+
 	DynamicObject::Render();
 
 	for (auto i : mParts)
@@ -377,6 +389,10 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 				Vector3 position = tr->GetPhysicalPosition();
 				Vector3 rotation = tr->GetRotation();
 
+				mMarioCap->Active();
+
+				mMarioCap->GetPhysical()->AddActorToPxScene();
+
 				mMarioCap->GetComponent<Transform>()->SetPhysicalPosition(position+Vector3(0.f,0.6f,0.f));
 				mMarioCap->GetComponent<Transform>()->SetPhysicalRotation(rotation);
 
@@ -387,9 +403,8 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 				model->MeshRenderSwtich(L"Cap__CapMT-mesh", false);
 			});
 
-			cilp->SetCompleteEvent([this]() {SetPlayerState(Player::ePlayerState::Idle);});
+			cilp->SetCompleteEvent([this]() {SetPlayerState(ePlayerState::Idle); });
 		}
-
 	}
 
 	// runstart 후 run으로
@@ -431,4 +446,10 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 			animator->Play(L"SquatWait");
 		});
 	}
+}
+
+void Player::SetMarioCap(MarioCap* cap)
+{
+	mMarioCap = cap;
+	cap->SetOwner(this);
 }

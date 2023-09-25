@@ -15,6 +15,9 @@
 #include "Player.h"
 
 MarioCap::MarioCap()
+	: DynamicObject()
+	, mCapState(eCapState::Idle)
+	, mOwner(nullptr)
 {
 	SetLayerType(eLayerType::Player);
 }
@@ -46,7 +49,9 @@ void MarioCap::Initialize()
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Sphere, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Sphere, Vector3(0.5f, 1.0f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+
+	physical->RemoveActorToPxScene();
 
 	// Rigidbody
 	PhysXRigidBody* rigidbody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
@@ -55,8 +60,8 @@ void MarioCap::Initialize()
 	rigidbody->SetAirOff();
 
 	// MoveMent
-	AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
-	AddComponent<PhysicalMovement>(eComponentType::Movement)->Initialize();
+	AddComponent<PhysXCollider>(eComponentType::Collider);
+	AddComponent<PhysicalMovement>(eComponentType::Movement);
 
 
 	//model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
@@ -68,6 +73,8 @@ void MarioCap::Initialize()
 	stateInfoInitalize();
 	Physicalinit();
 
+
+
 	DynamicObject::Initialize();
 }
 
@@ -78,6 +85,18 @@ void MarioCap::Update()
 
 void MarioCap::FixedUpdate()
 {
+	if (mOwner == nullptr)
+		return;
+
+	if (GetCapState() == eCapState::Idle)
+	{
+		Transform* tr = GetTransform();
+		Transform* playerTr = mOwner->GetTransform();
+
+		tr->SetPhysicalPosition(playerTr->GetPhysicalPosition());
+		tr->SetPhysicalRotation(playerTr->GetPhysicalRotation());
+	}
+
 	DynamicObject::FixedUpdate();
 }
 
@@ -143,10 +162,10 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 	AnimationClip* cilp = nullptr;
 	//animator->LoadAnimations(L"..//Resources/MarioCap/Animation");
 
-	animator->CreateAnimation(L"ThrowCap", L"..//..//Resources/MarioCap/Animation/ThrowCap.smd", 0.05f);
-	animator->CreateAnimation(L"Capture", L"..//..//Resources/MarioCap/Animation/Capture.smd", 0.05f);
-	animator->CreateAnimation(L"FlyingStart", L"..//..//Resources/MarioCap/Animation/FlyingStart.smd", 0.05f);
-	animator->CreateAnimation(L"FlyingWait", L"..//..//Resources/MarioCap/Animation/FlyingWait.smd", 0.05f);
+	animator->CreateAnimation(L"ThrowCap", L"..//..//Resources/MarioCap/Animation/ThrowCap.smd", 60);
+	animator->CreateAnimation(L"Capture", L"..//..//Resources/MarioCap/Animation/Capture.smd", 120);
+	animator->CreateAnimation(L"FlyingStart", L"..//..//Resources/MarioCap/Animation/FlyingStart.smd", 60);
+	animator->CreateAnimation(L"FlyingWait", L"..//..//Resources/MarioCap/Animation/FlyingWait.smd", 60);
 	//animator->Play(L"Capture");
 
 	//모자 던진후 flyStart
@@ -155,19 +174,19 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 		if (cilp)
 			cilp->SetCompleteEvent([animator, this]()
 		{
-			animator->Play(L"FlyingStart");
+			animator->Play(L"Capture");
 			FlyStart();
 		});
 	}
 
 	//flyStart후 fly
 	{
-		cilp = animator->GetAnimationClip(L"FlyingStart");
+		/*cilp = animator->GetAnimationClip(L"FlyingStart");
 		if (cilp)
 			cilp->SetCompleteEvent([animator]()
 		{
 			animator->Play(L"FlyingWait");
-		});
+		});*/
 	}
 }
 
@@ -204,7 +223,7 @@ void MarioCap::FlyStart()
 	// 플레이어의 현재 포지션과 Player forWard 를 가져옴
 	Transform* tr = GetTransform();
 	Vector3 pos = tr->GetPhysicalPosition();
-	Vector3 playerforward = mPlayer->GetTransform()->WorldForward();
+	Vector3 playerforward = mOwner->GetTransform()->WorldForward();
 
 	AnimatorParam param;
 	// 진행타입
@@ -240,9 +259,9 @@ void MarioCap::FlyEnd()
 	if (animator->IsRunning())
 		animator->Stop();
 
-	// PlayerTrasform
-	Transform* playerTr = mPlayer == nullptr ? nullptr : mPlayer->GetTransform();
-	// ThisTrasform
+	// PlayerTransform
+	Transform* playerTr = mOwner == nullptr ? nullptr : mOwner->GetTransform();
+	// ThisTransform
 	Transform* myTr = GetTransform();
 
 	AnimatorParam param;
@@ -250,10 +269,10 @@ void MarioCap::FlyEnd()
 	param.AnimType = eAnimType::Linear;
 
 	param.StartValue = 1.f;
-	param.EndValue = 10.f;
+	param.EndValue = 30.f;
 
 	// 진행시간
-	param.DurationTime = 20.f;
+	param.DurationTime = 10.f;
 
 	// 진행 함수 std::function<void(float)>
 	param.DurationFunc = [this, animator, playerTr, myTr](float inCurValue)
@@ -262,10 +281,10 @@ void MarioCap::FlyEnd()
 		Vector3 myPos = myTr->GetPhysicalPosition();
 
 		// 플레이어방향 벡터를구함
-		Vector3 Dirction = playerPos - myPos;
+		Vector3 Dirction = playerPos - myPos; 
 
 		// 플레이어와 모자의 거리가 가까워졌으면 종료
-		if (Dirction.Length() <= 0.1f)
+		if (Dirction.Length() <= 0.5f)
 			animator->Stop(true);
 
 		// 방향벡터 정규화
@@ -284,6 +303,12 @@ void MarioCap::FlyEnd()
 	{
 		myTr->SetPhysicalPosition(playerTr->GetPhysicalPosition());
 		SetCapState(eCapState::Idle);
+
+		// 마리오의 모자를 씌워줌
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
+		model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
+
+		GetPhysical()->RemoveActorToPxScene();
 	};
 
 	// 이벤트 시작
