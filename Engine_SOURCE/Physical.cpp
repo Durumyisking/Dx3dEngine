@@ -138,8 +138,6 @@ PxTriangleMesh* Physical::MakeTriangleMesh(Model* model)
 	UINT allIndexCount = 0;
 	UINT currentIndexOffset = 0;
 
-	UINT forInt = 0;
-
 	for (Mesh* mesh : meshes)
 	{
 		std::vector<Vertex> meshVertices;
@@ -155,7 +153,11 @@ PxTriangleMesh* Physical::MakeTriangleMesh(Model* model)
 		for (UINT i = 0; i < vertexCount; i++)
 		{
 			vertices.emplace_back(meshVertices[i].pos.x, meshVertices[i].pos.y, meshVertices[i].pos.z);
-			indexes.emplace_back(meshIndexes[i]);
+		}
+
+		for (UINT i = 0; i < indexCount; i++)
+		{
+			indexes.emplace_back(meshIndexes[i] + currentIndexOffset);
 		}
 
 		currentIndexOffset += vertexCount;
