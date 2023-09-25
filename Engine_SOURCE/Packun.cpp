@@ -123,6 +123,8 @@ void Packun::CaptureEvent()
 
 void Packun::DivideEvnet()
 {
+	// 마지막 상태가 어떤지 모르기때문에 idle 로 초기화후
+	// groggy로 상태변경
 	SetMonsterState(eMonsterState::Idle);
 	SetMonsterState(eMonsterState::Groggy);
 }
