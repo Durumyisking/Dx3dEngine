@@ -56,7 +56,7 @@ void Player::Initialize()
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
 	//기본 설정
-	SetPos(Vector3(0.f, 80.f, 0.f));
+	SetPos(Vector3(0.f, 20.f, 0.f));
 	SetScale(Vector3(1.f, 1.f, 1.f));
 	SetName(L"Player");
 	mesh->SetMaterialByKey(L"PBRMaterial");

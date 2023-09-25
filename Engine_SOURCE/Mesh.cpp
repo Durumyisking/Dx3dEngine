@@ -145,7 +145,7 @@ bool Mesh::GetIndexesFromBuffer(std::vector<UINT>* indexVec)
 
 	// Copy the vertices from the buffer to the vector
 	UINT* bufferData = reinterpret_cast<UINT*>(mappedData.pData);
-	for (UINT i = 0; i < mVertexCount; ++i)
+	for (UINT i = 0; i < mIndexCount; ++i)
 	{
 		(*indexVec)[i] = bufferData[i];
 	}
