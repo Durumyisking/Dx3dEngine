@@ -14,11 +14,12 @@ PhysXRigidBody::PhysXRigidBody()
 	, mFriction(Vector3(20.f, 0.0f, 20.0f))
 	, mFricCoeff(40.f)
 	, mForce(Vector3::Zero)
-	, mGravityAccel(Vector3(0.f, -9.8f , 0.f))
+	, mGravityAccel(Vector3(0.f, -(9.8f * 2.f) , 0.f))
 	, mMaxVelocity(Vector3(100.f, 200.f, 100.f))
 	, mReserveTimer(0.f)
 	, mAccelation(Vector3(0.f, 0.f, 0.f))
 	, mMass(1.0f)
+	, mTurnSpeed(400.f)
 	, mOwnerTransform(nullptr)
 {
 }
@@ -148,6 +149,26 @@ void PhysXRigidBody::SetVelocity(AXIS axis, const math::Vector3& velocity)
 		break;
 	}
 
+}
+
+void PhysXRigidBody::RightTrun()
+{
+	if (!mOwnerTransform)
+		return;
+
+	Vector3 rotation = mOwnerTransform->GetPhysicalRotation();
+	rotation.y += mTurnSpeed * DT;
+	mOwnerTransform->SetPhysicalRotation(rotation);
+}
+
+void PhysXRigidBody::LeftTrun()
+{
+	if (!mOwnerTransform)
+		return;
+
+	Vector3 rotation = mOwnerTransform->GetPhysicalRotation();
+	rotation.y -= mTurnSpeed * DT;
+	mOwnerTransform->SetPhysicalRotation(rotation);
 }
 
 // for kinematic actors

@@ -83,6 +83,7 @@ void CameraScript::Update()
 
 	if (mUICameraObject != nullptr)
 	{
+
 		mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
 		//mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());
 	}
@@ -198,8 +199,8 @@ void CameraScript::Shake(const ShakeParams& params)
 {
 	if (mbShaking) 
 	{
-		// »õ·Î¿î Èçµé±â È¿°ú µé¾î°¡¸é
-		// ÀÌÀü Èçµé¸² È¿°ú¸¦ Ãë¼Ò
+		// ìƒˆë¡œìš´ í”ë“¤ê¸° íš¨ê³¼ ë“¤ì–´ê°€ë©´
+		// ì´ì „ í”ë“¤ë¦¼ íš¨ê³¼ë¥¼ ì·¨ì†Œ
 		CancelShake();
 	}
 
@@ -222,11 +223,11 @@ void CameraScript::ShakeMove()
 		mShakeTimer += GETSINGLE(TimeMgr)->DeltaTimeConstant();
 		if (mShakeTimer >= mShakeParams.duration)
 		{
-			// Èçµé¸² Áö¼Ó ½Ã°£ÀÌ Áö³ª¸é È¿°ú Á¾·á
+			// í”ë“¤ë¦¼ ì§€ì† ì‹œê°„ì´ ì§€ë‚˜ë©´ íš¨ê³¼ ì¢…ë£Œ
 			CancelShake();
 		}
 		else {				
-			// Èçµé¸² È¿°ú °è»ê
+			// í”ë“¤ë¦¼ íš¨ê³¼ ê³„ì‚°
 			float magnitude = mShakeParams.magnitude *
 				(1.f - mShakeTimer / mShakeParams.duration);
 

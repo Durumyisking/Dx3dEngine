@@ -2,6 +2,8 @@
 #include "Engine.h"
 
 class GameObj;
+class MarioCap;
+class Player;
 
 class CaptureObj
 {
@@ -11,17 +13,21 @@ public:
 
 	void Update();
 	virtual void Divide();
+	virtual void DivideEvnet() {};
 	virtual void CaptureEvent() = 0;
 
 	void OnCapture() { mbCapture = true; }
 	void OffCapture() { mbCapture = false; }
+
 public:
 	GETSET(bool, mbCapture, Capture)
-	GETSET(GameObj*, mPlayer, Player)
+	GETSET(MarioCap*, mObject, Object)
+	GETSET(Player*, mPlayer, Player)
 
 	bool IsCapture() { return mbCapture; }
 private:
-	GameObj* mPlayer	= nullptr;
+	MarioCap* mObject    = nullptr;
+	Player* mPlayer		= nullptr;
 	bool mbCapture		= false;
 };
 
