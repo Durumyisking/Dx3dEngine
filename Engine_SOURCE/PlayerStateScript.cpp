@@ -146,19 +146,19 @@ void PlayerStateScript::Move()
 
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
-	rigidbody->SetLinearMaxVelocityForDynamic(10.f);
+	//rigidbody->SetLinearMaxVelocityForDynamic(10.f);
 
 
 	// 매 프레임마다 힘을 증가시킴
 	//if (mInitialForce < 40.f)
 	//mMoveTime += DT;
-	mInitialForce += mForceIncrement;
+	//mInitialForce += mForceIncrement;
 	/*if (mMoveTime > 1.f)
 	{
 		if (animator->PlayAnimationName() != L"Run")
 			animator->Play(L"Run");
 	}*/
-	rigidbody->AddForceForDynamic((-tr->Forward() * mInitialForce * DT), PxForceMode::Enum::eIMPULSE);
+	rigidbody->AddForce((-tr->Forward() * 7000 * DT));
 }
 
 void PlayerStateScript::Jump()
@@ -176,8 +176,8 @@ void PlayerStateScript::Jump()
 		const std::wstring& test = animator->PlayAnimationName();
 		animator->Play(L"Jump", false);
 
-		rigidbody->SetLinearMaxVelocityForDynamic(1000.f);
-		//rigidbody->AddForce(math::Vector3(0.0f, 5000.f, 0.0f), physx::PxForceMode::eFORCE);
+		//rigidbody->SetLinearMaxVelocityForDynamic(1000.f);
+		rigidbody->AddForce(math::Vector3::Up * 7000.f * DT);
 		rigidbody->SetLinearDamping(1.0f);
 	}
 
