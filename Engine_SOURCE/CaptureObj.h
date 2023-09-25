@@ -13,10 +13,12 @@ public:
 
 	void Update();
 	virtual void Divide();
+	virtual void DivideEvnet() {};
 	virtual void CaptureEvent() = 0;
 
 	void OnCapture() { mbCapture = true; }
 	void OffCapture() { mbCapture = false; }
+
 public:
 	GETSET(bool, mbCapture, Capture)
 	GETSET(MarioCap*, mObject, Object)
@@ -25,7 +27,7 @@ public:
 	bool IsCapture() { return mbCapture; }
 private:
 	MarioCap* mObject    = nullptr;
-	Player* mPlayer	= nullptr;
+	Player* mPlayer		= nullptr;
 	bool mbCapture		= false;
 };
 

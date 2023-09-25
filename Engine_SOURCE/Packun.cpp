@@ -121,6 +121,12 @@ void Packun::CaptureEvent()
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Attack);
 }
 
+void Packun::DivideEvnet()
+{
+	SetMonsterState(eMonsterState::Idle);
+	SetMonsterState(eMonsterState::Groggy);
+}
+
 void Packun::OnTriggerEnter(GameObj* gameObject)
 {
 	if (!gameObject)

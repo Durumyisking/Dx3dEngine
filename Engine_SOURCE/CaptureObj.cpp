@@ -28,6 +28,7 @@ void CaptureObj::Divide()
 	// 라바콘 처럼 특수하게 분리될 오브젝트는
 	// 해당객체내부에서 함수 재정의
 	OffCapture();
+	DivideEvnet();
 
 	if (mObject == nullptr)
 		return;
