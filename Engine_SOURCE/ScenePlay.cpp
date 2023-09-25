@@ -96,23 +96,6 @@ void ScenePlay::Initialize()
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Player, this);
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetMarioCap(mariocap);
-
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->SetName(L"Player");
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
-		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.01f);
-		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.99f);
-
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
-
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
-
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);*/
 	}
 
 	{
@@ -170,7 +153,7 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-	////í”Œë ˆì´ì–´ í˜¸ì¶œ, í˜¸ì¶œì‹œ ì•Œì•„ì„œ ëª¨ë¸ initialize
+	////ÇÃ·¹ÀÌ¾î È£Ãâ, È£Ãâ½Ã ¾Ë¾Æ¼­ ¸ğµ¨ initialize
 	//{
 	//	Player* player = object::Instantiate<Player>(eLayerType::Player,this);
 	//}
