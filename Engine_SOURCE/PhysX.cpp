@@ -66,13 +66,13 @@ PxTriangleMesh* PhysX::CreateTriangleMesh(const PxVec3* verts, const PxU32 numVe
 	meshDesc.triangles.stride = 3 * sizeof(PxU32);
 	meshDesc.triangles.data = indexs;
 
-	// for prevent stackoverflow
-	PxU32 estimatedVertSize = numVerts * sizeof(PxVec3) * 1.5;
-	PxU32 estimatedIndexSize = numIndexes * sizeof(PxU32) * 1.5;
-	PxU32 initialSize = estimatedVertSize + estimatedIndexSize;
-	CustomPhysXMemory writeBuffer(initialSize);
+	//// for prevent stackoverflow
+	//PxU32 estimatedVertSize = numVerts * sizeof(PxVec3) * 1.5;
+	//PxU32 estimatedIndexSize = numIndexes * sizeof(PxU32) * 1.5;
+	//PxU32 initialSize = estimatedVertSize + estimatedIndexSize;
+	//CustomPhysXMemory writeBuffer(initialSize);
 
-	//PxDefaultMemoryOutputStream writeBuffer;
+	PxDefaultMemoryOutputStream writeBuffer;
 	bool status = cooking->cookTriangleMesh(meshDesc, writeBuffer);
 	if (!status)
 		return nullptr; 

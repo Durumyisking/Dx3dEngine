@@ -294,16 +294,31 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		vertexes.emplace_back(vertex);
 	}
 
+	//indexes.reserve(mesh->mNumFaces);
+	//for (UINT i = 0; i < mesh->mNumFaces; ++i)
+	//{
+	//	aiFace face = mesh->mFaces[i];
+	//	if (mesh->mFaces[i].mNumIndices != 3) {
+	//		int a = 0;
+	//	}
+	//	for (UINT j = 0; j < face.mNumIndices; ++j)
+	//	{
+	//		indexes.emplace_back(face.mIndices[j]);
+	//	}
+	//}
+
 	indexes.reserve(mesh->mNumFaces);
 	for (UINT i = 0; i < mesh->mNumFaces; ++i)
 	{
 		aiFace face = mesh->mFaces[i];
+		if (mesh->mFaces[i].mNumIndices != 3) {
+			int a = 0;
+		}
 		for (UINT j = 0; j < face.mNumIndices; ++j)
 		{
 			indexes.emplace_back(face.mIndices[j]);
 		}
 	}
-
 
 	for (unsigned int i = 0; i < mesh->mNumBones; ++i)
 	{
