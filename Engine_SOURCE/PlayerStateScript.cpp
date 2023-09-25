@@ -256,6 +256,7 @@ void PlayerStateScript::ThrowCap()
 
 	if (animator->PlayAnimationName() != L"ThrowCap" )
 	{
+		mPlayer->GetMarioCap()->GetPhysical()->AddActorToPxScene();
 		animator->Play(L"ThrowCap",false);
 	}
 

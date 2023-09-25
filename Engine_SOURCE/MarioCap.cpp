@@ -36,6 +36,10 @@ void MarioCap::Initialize()
 
 	//model initialize
 	SetPos(Vector3(0.f, 0.f, 0.f));
+
+	// TEST
+	SetPos(Vector3(-20.f, 0.f, 0.f));
+
 	SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioCap");

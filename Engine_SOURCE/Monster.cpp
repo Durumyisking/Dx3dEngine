@@ -12,8 +12,6 @@ Monster::Monster()
 	//StateInfoSetting
 	mStateInfo.resize(static_cast<int>(eMonsterState::Die) + 1);
 
-	// 캡처 클래스의 자신의 포인터전달
-	CaptureObj::SetObject(this);
 }
 
 Monster::~Monster()

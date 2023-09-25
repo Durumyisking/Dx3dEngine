@@ -391,8 +391,6 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 
 				mMarioCap->Active();
 
-				mMarioCap->GetPhysical()->AddActorToPxScene();
-
 				mMarioCap->GetComponent<Transform>()->SetPhysicalPosition(position+Vector3(0.f,0.6f,0.f));
 				mMarioCap->GetComponent<Transform>()->SetPhysicalRotation(rotation);
 

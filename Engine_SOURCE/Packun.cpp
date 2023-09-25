@@ -14,6 +14,9 @@
 #include "PackunPostionBall.h"
 #include "MarioCap.h"
 
+#include "GenericAnimator.h"
+#include "Player.h"
+
 Packun::Packun()
 	: Monster()
 {
@@ -126,36 +129,42 @@ void Packun::OnTriggerEnter(GameObj* gameObject)
 	// 마리오 모자와 충돌시 캡처 상태로 변경
 	if (gameObject->GetLayerType() == eLayerType::Player)
 	{
-		int a = 0;
-		//if (IsCapture())
-		//	return;
+		if (IsCapture())
+			return;
 
-		//MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
-		//if (cap == nullptr)
-		//	return;
+		MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
+		if (cap == nullptr)
+			return;
 
-		//OnCapture();
+		OnCapture();
 
-		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
-		//if (!model)
-		//	return;
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
+		if (!model)
+			return;
 
-		//// 오프
-		//model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
-		//model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
-		//model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
+		// 오프
+		model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
+		model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
+		model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
 
-		//// 마리오 본체 pause
-		//cap->GetOwner()->Pause();
+		// 마리오 본체 pause
+		cap->GetOwner()->Pause();
+		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
 
-		//// 캡의 오너변경
-		//cap->SetOwner(this);
-		//SetPlayer(cap);
+		// 캡의 오너변경
+		cap->SetOwner(this);
+		SetObject(cap);
 
-		//// 캡의 default 상태
-		//cap->SetCapState(MarioCap::eCapState::Idle);
-		//// 몬스터의 default 
-		//SetMonsterState(eMonsterState::Idle);
+		// 캡의 default 상태
+		cap->SetCapState(MarioCap::eCapState::Idle);
+
+		// 진행중인 애니메이터 초기화
+		GenericAnimator* animator = cap->GetComponent<GenericAnimator>();
+		if (animator)
+			animator->Stop();
+
+		// 몬스터의 default 
+		SetMonsterState(eMonsterState::Idle);
 	}
 }
 
