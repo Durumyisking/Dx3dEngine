@@ -88,12 +88,14 @@ void ScenePlay::Initialize()
 
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 
 	{
+		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Player, this);
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetPos({ 10.f, 2.5f, 10.f });
-		/*	player->SetPos(Vector3(0.f, 80.f, 0.f));
+		player->SetMarioCap(mariocap);
+
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
@@ -113,12 +115,13 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		/*Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(0.f, 0.f, 0.f));*/
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(5.f, 0.f, 0.f));
 	}
 
+	
 	{
-		//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
 
 	}
 	//{
@@ -166,7 +169,7 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-	////ÇÃ·¹ÀÌ¾î È£Ãâ, È£Ãâ½Ã ¾Ë¾Æ¼­ ¸ğµ¨ initialize
+	////í”Œë ˆì´ì–´ í˜¸ì¶œ, í˜¸ì¶œì‹œ ì•Œì•„ì„œ ëª¨ë¸ initialize
 	//{
 	//	Player* player = object::Instantiate<Player>(eLayerType::Player,this);
 	//}

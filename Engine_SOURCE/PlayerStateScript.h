@@ -2,6 +2,12 @@
 #include "Script.h"
 #include "BoneAnimator.h"
 
+#define PLAYER_SPPED 7000.f
+#define PLAYER_JUMPFORCE 7000.f
+#define PLAYER_MASS 1.f
+#define PLAYER_WALK_VELOCITY 3.f
+#define PLAYER_RUN_VELOCITY 10.f
+
 class Player;
 class PlayerStateScript : public Script
 {
@@ -13,15 +19,18 @@ public:
 	virtual void Initialize() override;
 public:
 	virtual void Idle() final;
+
 	virtual void Move() final;
 	virtual void Jump() final;
 	virtual void Squat() final;
 	virtual void SquatMove() final;
 	virtual void Air() final;
+	virtual void Fall() final;
 	virtual void Wall() final;
 	virtual void Hit() final;
 	virtual void Groggy() final;
 	virtual void ThrowCap() final;
+	virtual void CatchCap() final;
 	virtual void Die() final;
 
 public:
@@ -35,6 +44,7 @@ private:
 
 protected:
 	Player* mPlayer;
+	BoneAnimator* mAnimator;
 	bool mbAnimationRunning;
 };
 

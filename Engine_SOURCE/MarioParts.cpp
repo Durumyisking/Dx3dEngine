@@ -78,11 +78,11 @@ void MarioParts::BoneInitialize()
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandL/Animation/Walk.smd", 0.05f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandL/Animation/Jump.smd", 0.05f);
-		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandL/Animation/Dead.smd", 0.05f);
-		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandL/Animation/Run.smd", 0.05f);
-		animator->Play(L"test");
+		animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioHandL/Animation/Walk.smd", 0.05f);
+		//animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandL/Animation/Jump.smd", 0.05f);
+		//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandL/Animation/Dead.smd", 0.05f);
+		//animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandL/Animation/Run.smd", 0.05f);
+		animator->Play(L"Walk");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
 		model->SetParentTargetBone(L"Armature_HandL");
@@ -100,10 +100,10 @@ void MarioParts::BoneInitialize()
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
 		//animator->LoadAnimations(L"..//Resources/MarioHandR/Animation");
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHandR/Animation/Walk.smd", 0.05f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandR/Animation/Jump.smd", 0.05f);
-		animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandR/Animation/Dead.smd", 0.05f);
-		animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandR/Animation/Run.smd", 0.05f);
+		animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioHandR/Animation/Walk.smd", 0.05f);
+		//animator->CreateAnimation(L"test2", L"..//..//Resources/MarioHandR/Animation/Jump.smd", 0.05f);
+		//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioHandR/Animation/Dead.smd", 0.05f);
+		//animator->CreateAnimation(L"test4", L"..//..//Resources/MarioHandR/Animation/Run.smd", 0.05f);
 		animator->Play(L"Walk");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
@@ -120,10 +120,10 @@ void MarioParts::BoneInitialize()
 		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
-		animator->LoadAnimations(L"..//Resources/MarioHead/Animation");
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/WaitHot.smd", 0.05f);
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
-		animator->Play(L"test");
+		//animator->LoadAnimations(L"..//Resources/MarioHead/Animation");
+		animator->CreateAnimation(L"WaitHot", L"..//..//Resources/MarioHead/Animation/WaitHot.smd", 0.05f);
+		//animator->CreateAnimation(L"test", L"..//..//Resources/MarioHead/Animation/Defalut.smd", 0.05f);
+		animator->Play(L"WaitHot");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
 		model->SetParentTargetBone(L"Armature_Head");
@@ -143,9 +143,9 @@ void MarioParts::BoneInitialize()
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
 		//animator->LoadAnimations(L"..//Resources/MarioFace/Animation");
-		animator->CreateAnimation(L"test", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioFace/Animation/Walk.smd", 0.02f);
-		animator->Play(L"test2");
+		animator->CreateAnimation(L"AreaWaitStink", L"..//..//Resources/MarioFace/Animation/AreaWaitStink.smd", 0.02f);
+		animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioFace/Animation/Walk.smd", 0.02f);
+		animator->Play(L"Walk");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"Mario"));
 		model->SetParentTargetBone(L"Armature_Head");
@@ -162,8 +162,8 @@ void MarioParts::BoneInitialize()
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
 		//animator->LoadAnimations(L"..//Resources/MarioEye/Animation");
-		animator->CreateAnimation(L"test2", L"..//..//Resources/MarioEye/Animation/WaitHot.smd", 0.02f);
-		animator->Play(L"test2");
+		animator->CreateAnimation(L"WaitHot", L"..//..//Resources/MarioEye/Animation/WaitHot.smd", 0.02f);
+		animator->Play(L"WaitHot");
 
 		model->SetParentModel(GETSINGLE(ResourceMgr)->Find<Model>(L"MarioFace"));
 		model->SetParentTargetBone(L"Armature_Face");
