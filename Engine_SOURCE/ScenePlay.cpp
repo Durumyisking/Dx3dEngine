@@ -96,7 +96,6 @@ void ScenePlay::Initialize()
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetMarioCap(mariocap);
 
-	/*	player->SetPos(Vector3(0.f, 80.f, 0.f));
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
@@ -170,14 +169,15 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-	////ÇÃ·¹ÀÌ¾î È£Ãâ, È£Ãâ½Ã ¾Ë¾Æ¼­ ¸ğµ¨ initialize
+	////í”Œë ˆì´ì–´ í˜¸ì¶œ, í˜¸ì¶œì‹œ ì•Œì•„ì„œ ëª¨ë¸ initialize
 	//{
 	//	Player* player = object::Instantiate<Player>(eLayerType::Player,this);
 	//}
 
-	//{
-	//	//Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
-	//}
+	{
+		Goomba* packun = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		packun->SetPos({ 15.f, 5.f, 15.f });
+	}
 
 	CreatePlayerUI();
 

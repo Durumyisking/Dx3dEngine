@@ -13,10 +13,10 @@ PlayerStateScript::PlayerStateScript()
 	, mPlayer(nullptr)
 	, mbAnimationRunning(false)
 {
-	// ¸Ş¸ğ¸® °ø°£ È®º¸
+	// ë©”ëª¨ë¦¬ ê³µê°„ í™•ë³´
 	mStateEventList.reserve(static_cast<UINT>(Player::ePlayerState::Die) + 1);
 
-	// ÀÌº¥Æ® ¹ÙÀÎµù
+	// ì´ë²¤íŠ¸ ë°”ì¸ë”©
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Idle, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Move, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Jump, this));
@@ -42,7 +42,7 @@ void PlayerStateScript::Update()
 		return;
 
 	UINT iState = static_cast<UINT>(mPlayer->GetPlayerState());
-	// enum »óÅÂ¿Í ¸ÅÄªµÇ´Â ¹è¿­À» ÀÎµ¦½º·Î Á¢±Ù
+	// enum ìƒíƒœì™€ ë§¤ì¹­ë˜ëŠ” ë°°ì—´ì„ ì¸ë±ìŠ¤ë¡œ ì ‘ê·¼
 	mStateEventList[iState]();
 
 	Script::Update();
@@ -50,7 +50,7 @@ void PlayerStateScript::Update()
 
 void PlayerStateScript::Initialize()
 {
-	// Owner Çü º¯È¯
+	// Owner í˜• ë³€í™˜
 	if (GetOwner())
 		mPlayer = dynamic_cast<Player*>(GetOwner());
 
@@ -136,8 +136,6 @@ void PlayerStateScript::Move()
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
 
-
-
 	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&& mAnimator->PlayAnimationName() != L"Run"
 		&& mAnimator->PlayAnimationName() != L"RunStart")
@@ -164,6 +162,8 @@ void PlayerStateScript::Move()
 
 
 	rigidbody->AddForce(-tr->Forward() * 10000.f * DT);
+
+
 }
 
 
@@ -177,10 +177,11 @@ void PlayerStateScript::Jump()
 	{
 		mAnimator->Play(L"Jump", false);
 
-		rigidbody->SetMaxVelocity_Y(10.f);
+ 		rigidbody->SetMaxVelocity_Y(10.f);
 		rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
 		rigidbody->ApplyGravity();
 		rigidbody->SetAirOn();
+
 	}
 
 	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())
@@ -191,7 +192,7 @@ void PlayerStateScript::Jump()
 	}
 	
 
-	// Á¡ÇÁÇßÀ»½Ã ÀÌµ¿ ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î °¡Áö¾Ê°í °øÁß¿¡¼­ ¾à°£ÀÇ ¿òÁ÷ÀÓÀ» ±¸ÇöÇØ¾ßÇÑ´Ù
+	// ì í”„í–ˆì„ì‹œ ì´ë™ ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ ê°€ì§€ì•Šê³  ê³µì¤‘ì—ì„œ ì•½ê°„ì˜ ì›€ì§ì„ì„ êµ¬í˜„í•´ì•¼í•œë‹¤
 	// ==============================================================================
 	// 
 	// 
