@@ -352,6 +352,8 @@
     <ClCompile Include="CapStateScript.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\LifeUI.cpp" />
+    <ClCompile Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\CompassUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -737,6 +739,8 @@
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysXMemory.h" />
+    <ClInclude Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\LifeUI.h" />
+    <ClInclude Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\CompassUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -1013,7 +1017,6 @@
       <Filter>Common\Scene</Filter>
     </ClCompile>
     <ClCompile Include="ImageUI.cpp" />
-    <ClCompile Include="MarioHead.cpp" />
     <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="DynamicObject.cpp">
       <Filter>Common\GameObj\DynamicObject</Filter>
