@@ -16,6 +16,16 @@ ImageUI::ImageUI(eUIType type)
 {
 }
 
+ImageUI::ImageUI(const std::wstring& key, eUIType type)
+	:UIBase(type)
+	, mCurrentTime(0.0f)
+	, mActivate(false)
+{
+	SpriteRenderer* hudRender = this->AddComponent<SpriteRenderer>(eComponentType::UI);
+	hudRender->SetMeshByKey(L"Rectmesh");
+	hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(key));
+}
+
 ImageUI::~ImageUI()
 {
 }

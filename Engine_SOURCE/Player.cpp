@@ -34,11 +34,11 @@ Player::~Player()
 		parts = nullptr;
 	}
 
-	if (mMarioCap)
-	{
-		delete mMarioCap;
-		mMarioCap = nullptr;
-	}
+	//if (mMarioCap)
+	//{
+	//	delete mMarioCap;
+	//	mMarioCap = nullptr;
+	//}
 }
 
 void Player::Initialize()
@@ -56,17 +56,23 @@ void Player::Initialize()
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
 	//기본 설정
-	SetPos(Vector3(0.f, 20.f, 0.f));
+	SetPos(Vector3(0.f, 0.f, 0.f));
+
+	//Test
+	SetPos(Vector3(-20.f, 0.f, 0.f));
+
 	SetScale(Vector3(1.f, 1.f, 1.f));
 	SetName(L"Player");
+
 	mesh->SetMaterialByKey(L"PBRMaterial");
-	mesh->GetMaterial()->SetMetallic(0.01f);
-	mesh->GetMaterial()->SetRoughness(0.99f);
+
 
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
+	rigid->SetFriction(Vector3(40.f, 0.f, 40.f));
 
 	// OffsetScale Setting
 	Transform* tr = GetComponent<Transform>();
@@ -111,14 +117,16 @@ void Player::Initialize()
 	//mPlayerState = ePlayerState::Idle;
 
 	//mariocap 생성
-	mMarioCap = new MarioCap();
-	mMarioCap->Initialize();
-
+	//mMarioCap = object::LateInstantiate<MarioCap>(eLayerType::Objects);
+	//mMarioCap->Initialize();
+	//mMarioCap->Physicalinit();
 	DynamicObject::Initialize();
 }
 
 void Player::Update()
 {
+	if (GetState() != GameObj::eState::Active)
+		return;
 
 	DynamicObject::Update();
 
@@ -126,11 +134,14 @@ void Player::Update()
 	{
 		i->Update();
 	}
-	mMarioCap->Update();
+	//mMarioCap->Update();
 }
 
 void Player::FixedUpdate()
 {
+	if (GetState() != GameObj::eState::Active)
+		return;
+
 	DynamicObject::FixedUpdate();
 
 	KeyCheck();
@@ -146,11 +157,14 @@ void Player::FixedUpdate()
 		i->GetComponent<Transform>()->SetWorldMatrix(GetComponent<Transform>()->GetWorldMatrix());
 	}
 
-	mMarioCap->FixedUpdate();
+	//mMarioCap->FixedUpdate();
 }
 
 void Player::Render()
 {
+	if (GetState() != GameObj::eState::Active)
+		return;
+
 	DynamicObject::Render();
 
 	for (auto i : mParts)
@@ -158,7 +172,7 @@ void Player::Render()
 		i->Render();
 	}
 
-	mMarioCap->Render();
+	//mMarioCap->Render();
 }
 
 void Player::FontRender()
@@ -175,7 +189,7 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Platforms == gameObject->GetLayerType())
 	{
-		GetPhysXRigidBody()->SetAirOff();
+		//GetPhysXRigidBody()->SetAirOff();
 	}
 }
 
@@ -236,16 +250,16 @@ void Player::BoneInitialize()
 {
 }
 
-void Player::PlayerAnimation(std::wstring name)
-{
-	//일괄적으로 애니메이션을 재생시켜주는 함수
-	BoneAnimator* animator = GetComponent<BoneAnimator>();
-	animator->Play(name);
-	for (auto i : mParts)
-	{
-		i->GetComponent<BoneAnimator>()->Play(name);
-	}
-}
+//void Player::PlayerAnimation(std::wstring name)
+//{
+//	//일괄적으로 애니메이션을 재생시켜주는 함수
+//	BoneAnimator* animator = GetComponent<BoneAnimator>();
+//	animator->Play(name);
+//	for (auto i : mParts)
+//	{
+//		i->GetComponent<BoneAnimator>()->Play(name);
+//	}
+//}
 
 void Player::stateInfoInitalize()
 {
@@ -277,6 +291,12 @@ void Player::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(ePlayerState::Air), static_cast<UINT>(ePlayerState::Squat));
 	InsertLockState(static_cast<UINT>(ePlayerState::Air), static_cast<UINT>(ePlayerState::SquatMove));
 
+	//Fall
+	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::Move));
+	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::Jump));
+	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::Squat));
+	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::SquatMove));
+
 	//Wall -벽을 손으로 짚으면서 내려오는 상태, 이 상태에서 점프를 하면 벽차기가 된다. 
 	InsertLockState(static_cast<UINT>(ePlayerState::Wall), static_cast<UINT>(ePlayerState::Move));
 	InsertLockState(static_cast<UINT>(ePlayerState::Wall), static_cast<UINT>(ePlayerState::SquatMove));
@@ -303,6 +323,14 @@ void Player::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(ePlayerState::ThrowCap), static_cast<UINT>(ePlayerState::Air));
 	InsertLockState(static_cast<UINT>(ePlayerState::ThrowCap), static_cast<UINT>(ePlayerState::Wall));
 
+	//CatchCap
+	InsertLockState(static_cast<UINT>(ePlayerState::CatchCap), static_cast<UINT>(ePlayerState::Move));
+	InsertLockState(static_cast<UINT>(ePlayerState::CatchCap), static_cast<UINT>(ePlayerState::Jump));
+	InsertLockState(static_cast<UINT>(ePlayerState::CatchCap), static_cast<UINT>(ePlayerState::Squat));
+	InsertLockState(static_cast<UINT>(ePlayerState::CatchCap), static_cast<UINT>(ePlayerState::SquatMove));
+	InsertLockState(static_cast<UINT>(ePlayerState::CatchCap), static_cast<UINT>(ePlayerState::Air));
+	InsertLockState(static_cast<UINT>(ePlayerState::CatchCap), static_cast<UINT>(ePlayerState::Wall));
+
 	//Die
 	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Idle));
 	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Move));
@@ -314,6 +342,7 @@ void Player::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Hit));
 	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::Groggy));
 	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::ThrowCap));
+	InsertLockState(static_cast<UINT>(ePlayerState::Die), static_cast<UINT>(ePlayerState::CatchCap));
 }
 void Player::SetPlayerState(ePlayerState playerState)
 {
@@ -336,17 +365,21 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 	//animator->LoadAnimations(L"..//Resources/MarioBody/Animation");
 	animator->CreateAnimation(L"Wait", L"..//..//Resources/MarioBody/Animation/Wait.smd");
 	animator->CreateAnimation(L"WaitHot", L"..//..//Resources/MarioBody/Animation/WaitHot.smd");
-	animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioBody/Animation/Walk.smd", 0.018f);
+
+	animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioBody/Animation/Walk.smd");
 	animator->CreateAnimation(L"Brake", L"..//..//Resources/MarioBody/Animation/Brake.smd");
+	animator->CreateAnimation(L"Fall", L"..//..//Resources/MarioBody/Animation/Fall.smd");
+
 	animator->CreateAnimation(L"ThrowCap", L"..//..//Resources/MarioBody/Animation/ThrowCap.smd");
-	animator->CreateAnimation(L"Jump", L"..//..//Resources/MarioBody/Animation/Jump.smd",0.018f);
+	animator->CreateAnimation(L"CatchCap", L"..//..//Resources/MarioBody/Animation/CatchCap.smd");
+	animator->CreateAnimation(L"Jump", L"..//..//Resources/MarioBody/Animation/Jump.smd");
 
 	animator->CreateAnimation(L"SquatStart", L"..//..//Resources/MarioBody/Animation/SquatStart.smd");
 	animator->CreateAnimation(L"SquatEnd", L"..//..//Resources/MarioBody/Animation/SquatEnd.smd");
 	animator->CreateAnimation(L"SquatWait", L"..//..//Resources/MarioBody/Animation/SquatWait.smd");
 	animator->CreateAnimation(L"SquatWalk", L"..//..//Resources/MarioBody/Animation/SquatWalk.smd");
 
-	//animator->CreateAnimation(L"test3", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.05f);
+	//animator->CreateAnimation(L"Dead", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.1f);
 	animator->CreateAnimation(L"Run", L"..//..//Resources/MarioBody/Animation/Run.smd");
 	animator->CreateAnimation(L"RunStart", L"..//..//Resources/MarioBody/Animation/RunStart.smd");
 	animator->Play(L"Wait");
@@ -356,48 +389,30 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 		cilp = animator->GetAnimationClip(L"ThrowCap");
 		if (cilp)
 		{
-			cilp->SetKeyFrameEvent(3, [this]()
+			cilp->SetStartEvent([this]()
 			{
+				//mMarioCap->SetCapState(MarioCap::eCapState::Throw);
+					
 				//mMarioCap->Physicalinit();
 				Transform* tr = GetComponent<Transform>();
 
 				Vector3 position = tr->GetPhysicalPosition();
 				Vector3 rotation = tr->GetRotation();
 
-				//mMarioCap->GetComponent<Transform>()->SetPhysicalPosition(position);
-				//mMarioCap->GetComponent<Transform>()->SetPhysicalRotation(rotation);
-				mMarioCap->GetComponent<Transform>()->SetPosition(position);
-				mMarioCap->GetComponent<Transform>()->SetRotation(rotation);
-				
+				mMarioCap->Active();
+
+				mMarioCap->GetComponent<Transform>()->SetPhysicalPosition(position+Vector3(0.f,0.6f,0.f));
+				mMarioCap->GetComponent<Transform>()->SetPhysicalRotation(rotation);
+
 				mMarioCap->GetComponent<BoneAnimator>()->Play(L"ThrowCap",false);
-
-				//Transform* test = mMarioCap->GetComponent<Transform>();
-				//Vector3 testfor = test->Forward();
-
-				//PhysXRigidBody* rigidbody = mMarioCap->GetComponent<PhysXRigidBody>();
-
-				//if (rigidbody)
-				//{
-					//rigidbody->AddForceForDynamic(testfor * 15.f, PxForceMode::eIMPULSE);
-				//}
+				mMarioCap->SetCapState(MarioCap::eCapState::Throw);
 
 				Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
 				model->MeshRenderSwtich(L"Cap__CapMT-mesh", false);
 			});
 
-			cilp->SetCompleteEvent([this]() {SetPlayerState(Player::ePlayerState::Idle); });
+			cilp->SetCompleteEvent([this]() {SetPlayerState(ePlayerState::Idle); });
 		}
-
-	}
-	
-	// 걷기 후 runstart으로
-	{
-		cilp = animator->GetAnimationClip(L"Walk");
-		if (cilp)
-			cilp->SetCompleteEvent([animator]()
-		{
-			animator->Play(L"RunStart");
-		});
 	}
 
 	// runstart 후 run으로
@@ -429,4 +444,20 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 			animator->Play(L"SquatWait");
 		});
 	}
+
+	//CatchCap > idle
+	{
+		cilp = animator->GetAnimationClip(L"CatchCap");
+		if (cilp)
+			cilp->SetCompleteEvent([this]()
+		{
+			SetPlayerState(Player::ePlayerState::Idle);
+		});
+	}
+}
+
+void Player::SetMarioCap(MarioCap* cap)
+{
+	mMarioCap = cap;
+	cap->SetOwner(this);
 }

@@ -14,6 +14,9 @@
 #include "PackunPostionBall.h"
 #include "MarioCap.h"
 
+#include "GenericAnimator.h"
+#include "Player.h"
+
 Packun::Packun()
 	: Monster()
 {
@@ -118,30 +121,58 @@ void Packun::CaptureEvent()
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Attack);
 }
 
+void Packun::DivideEvnet()
+{
+	// 마지막 상태가 어떤지 모르기때문에 idle 로 초기화후
+	// groggy로 상태변경
+	SetMonsterState(eMonsterState::Idle);
+	SetMonsterState(eMonsterState::Groggy);
+}
+
 void Packun::OnTriggerEnter(GameObj* gameObject)
-{ 
+{
 	if (!gameObject)
 		return;
 
 	// 마리오 모자와 충돌시 캡처 상태로 변경
 	if (gameObject->GetLayerType() == eLayerType::Player)
 	{
+		if (IsCapture())
+			return;
+
 		MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
-		if (cap != nullptr)
-		{
-			OnCapture();
+		if (cap == nullptr)
+			return;
 
-			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
-			if (model)
-			{
-				// 오프
-				model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
-				model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
-				model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
-			}
+		OnCapture();
 
-			SetMonsterState(eMonsterState::Idle);
-		}
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
+		if (!model)
+			return;
+
+		// 오프
+		model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
+		model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
+		model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
+
+		// 마리오 본체 pause
+		cap->GetOwner()->Pause();
+		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
+
+		// 캡의 오너변경
+		cap->SetOwner(this);
+		SetObject(cap);
+
+		// 캡의 default 상태
+		cap->SetCapState(MarioCap::eCapState::Idle);
+
+		// 진행중인 애니메이터 초기화
+		GenericAnimator* animator = cap->GetComponent<GenericAnimator>();
+		if (animator)
+			animator->Stop();
+
+		// 몬스터의 default 
+		SetMonsterState(eMonsterState::Idle);
 	}
 }
 
@@ -227,9 +258,9 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 
 				});
 
-			cilp->SetCompleteEvent([this]() 
+			cilp->SetCompleteEvent([this]()
 				{
-					if(IsCapture())
+					if (IsCapture())
 						SetMonsterState(Monster::eMonsterState::Idle);
 					else
 						SetMonsterState(Monster::eMonsterState::Groggy);
@@ -249,7 +280,7 @@ void Packun::boneAnimatorInit(BoneAnimator* animator)
 				});
 	}
 
-	
+
 	{
 		cilp = animator->GetAnimationClip(L"HackWait");
 		if (cilp)

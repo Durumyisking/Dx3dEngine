@@ -46,7 +46,9 @@ void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geom
 	createActor();
 	CreateMainShape();
 	AddActorToPxScene();
-	//		createUniversalShape();
+
+	mbSceneIncludActor = true;
+//		createUniversalShape();
 }
 
 void Physical::InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, Model* model, MassProperties massProperties)
@@ -196,11 +198,13 @@ void Physical::Render()
 void Physical::AddActorToPxScene()
 {
 	GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysicsScene()->AddActor(mActor);
+	mbSceneIncludActor = true;
 }
 
 void Physical::RemoveActorToPxScene()
 {
 	GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysicsScene()->RemoveActor(mActor);
+	mbSceneIncludActor = false;
 }
 
 void Physical::ShapesPause()

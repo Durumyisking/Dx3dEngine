@@ -142,6 +142,7 @@ public:
     void CreateSubShape(Vector3 relativePos, eGeometryType geomType, Vector3 geomSize, PxShapeFlag::Enum shapeFlag);
     std::vector<PxShape*> GetSubShapes() { return mSubShapes; }
 
+    bool IsIncludActor() { return mbSceneIncludActor; }
 private:
     Geometry createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize);
     Geometry createCapsuleGeometry(eGeometryType geometryType, float radius, float halfHeight);
@@ -156,7 +157,6 @@ private:
     void createUniversalShape(); // 공용으로 사용 가능한 지오메트리 
     void createActor();
     void initializeActor();
-
 
 
 private:
@@ -190,4 +190,5 @@ private:
     std::shared_ptr<Geometry>        mMainGeometry;
     std::vector<std::shared_ptr<Geometry> >           mSubGeometries;
 
+    bool mbSceneIncludActor = false;
 };

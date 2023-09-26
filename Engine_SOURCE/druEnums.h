@@ -158,8 +158,8 @@ namespace enums
 		Option,
 		Exit,
 		Bar,
-
 		HP,
+		HPText,
 		Coin,
 		CoinText,
 		CityCoin,

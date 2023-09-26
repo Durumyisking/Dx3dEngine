@@ -74,6 +74,9 @@ void GameObj::Initialize()
 
 void GameObj::Update()
 {
+	if (mState != eState::Active)
+		return;
+
 	for (Component* comp : mComponents)
 	{
 		if (nullptr == comp)
@@ -98,6 +101,9 @@ void GameObj::Update()
 
 void GameObj::FixedUpdate()
 {
+	if (mState != eState::Active)
+		return;
+
 	for (Component* comp : mComponents)
 	{
 		if (nullptr == comp)
@@ -122,6 +128,9 @@ void GameObj::FixedUpdate()
 
 void GameObj::Render()
 {
+	if (mState != eState::Active)
+		return;
+
 	for (Component* comp : mComponents)
 	{
 		if (nullptr == comp)

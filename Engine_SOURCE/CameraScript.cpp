@@ -58,8 +58,9 @@ void CameraScript::Update()
 
 	if (mUICameraObject != nullptr)
 	{
+
 		mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
-		mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());
+		//mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());
 	}
 }
 

@@ -3,6 +3,8 @@
 #include "GameObj.h"
 #include "Physical.h"
 
+#include "TimeMgr.h"
+
 
 Transform::Transform()
 	: Component(eComponentType::Transform)
@@ -42,9 +44,20 @@ void Transform::Update()
 
 void Transform::FixedUpdate()
 {
-
 	if (GetOwner()->GetComponent<Physical>())
 	{
+		mTickPerSceond += DT;
+		if (mTickPerSceond > mDurationTime)
+		{
+			mTickPerSceond -= mDurationTime;
+		}
+
+		// 쿼터니언을 보간합니다
+		if (mArriveQuternion != mCurQuternion)
+		{
+			mCurQuternion = math::Quaternion::Slerp(mCurQuternion, mArriveQuternion, mTickPerSceond / mDurationTime);
+		}
+
 		Physical* physical = GetPhysical();
 		if (eActorType::Kinematic == physical->GetActorType())
 		{
@@ -54,6 +67,9 @@ void Transform::FixedUpdate()
 		{
 			mPxTransform = physical->GetActor<PxRigidActor>()->getGlobalPose();
 		}
+
+		// 보간된 회전을 적용
+		mPxTransform.q = PxQuat(mCurQuternion.x, mCurQuternion.y, mCurQuternion.z, mCurQuternion.w);
 
 		Matrix matPxScale = Matrix::CreateScale(physical->GetGeometrySize());
 
@@ -87,7 +103,6 @@ void Transform::FixedUpdate()
 		mWorldRight.Normalize();
 		mWorldUp .Normalize();
 	}
-
 	else
 	{	
 		// 렌더링에 사용될 위치값을 업데이트.
@@ -234,6 +249,9 @@ void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 	mPxTransform.q = finalRotation;
 	//GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 
+	// 보간도착 지점에 쿼터니언
+	mArriveQuternion = math::Quaternion(finalRotation.x, finalRotation.y, finalRotation.z, finalRotation.w);
+	mTickPerSceond = 0.f;
 }
 
 void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)

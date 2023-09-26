@@ -70,21 +70,23 @@ void PackunStateScript::Move()
 		return;
 
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
-	if (!rigidbody)
+	if (rigidbody == nullptr)
 		return;
 
 	PhysicalMovement* moveMent = GetOwner()->GetComponent<PhysicalMovement>();
 	if (moveMent == nullptr)
 		return;
 
+	// 캡처상태가아니면 조작할수 없다
 	if (!mMonster->IsCapture())
 	{
 		mMonster->SetMonsterState(Monster::eMonsterState::Idle);
 		return;
 	}
 
-	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
+	// 이동 키입력이 없을때
+	if (GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::UP) && GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::DOWN)
+		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::LEFT) && GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::RIGHT))
 	{
 		mMonster->SetMonsterState(Monster::eMonsterState::Idle);
 		return;
@@ -94,32 +96,19 @@ void PackunStateScript::Move()
 	if (nullptr == tr)
 		return;
 
-	bool able = false;
-	auto Input_DownFunC = [&](eKeyCode key, eKeyCode mult_key, math::Vector3 rotation)
-		{
-			if (able)
-				return;
+	rigidbody->RemoveGravity();
+	rigidbody->SetAirOff();
 
-			if (GETSINGLE(InputMgr)->GetKeyDown(key))
-			{
-				if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
-				{
-					tr->SetPhysicalRotation(rotation);
-					able = true;
-				}
-			}
-		};
+	/*if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP))
+		rigidbody->AddForce(-tr->WorldForward() * 100.f);
+	else if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN))
+		rigidbody->AddForce(tr->WorldForward() * 100.f);*/
 
-	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
-
-	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
-	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
+	if(GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+		rigidbody->RightTrun();
+	else if(GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT))
+		rigidbody->LeftTrun();
 }
 
 void PackunStateScript::Attack()

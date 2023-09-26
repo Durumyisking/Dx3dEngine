@@ -339,14 +339,23 @@
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerStateScript.cpp" />
-    <ClCompile Include="MarioCap.cpp">
-      <Filter>Common\GameObj\DynamicObject</Filter>
-    </ClCompile>
-    <ClCompile Include="MarioParts.cpp">
-      <Filter>Common\GameObj\DynamicObject</Filter>
+
+    <ClCompile Include="LifeUI.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="GenericAnimator.cpp" />
+      <Filter>Common\GameObj\Player</Filter>
+    </ClCompile>
+
+    <ClCompile Include="MarioCap.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioParts.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClCompile>
+    <ClCompile Include="CapStateScript.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -718,13 +727,20 @@
     <ClInclude Include="UIBase.h">
       <Filter>UI\Base</Filter>
     </ClInclude>
+    <ClInclude Include="LifeUI.h">
+      <Filter>UI</Filter>
     <ClInclude Include="GenericAnimator.h" />
-    <ClInclude Include="PlayerStateScript.h" />
+    <ClInclude Include="PlayerStateScript.h">
+      <Filter>Common\GameObj\Player</Filter>
+    </ClInclude>
     <ClInclude Include="MarioCap.h">
-      <Filter>Common\GameObj\DynamicObject</Filter>
+      <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClInclude>
     <ClInclude Include="MarioParts.h">
-      <Filter>Common\GameObj\DynamicObject</Filter>
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClInclude>
+    <ClInclude Include="CapStateScript.h">
+      <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysXMemory.h" />
   </ItemGroup>
@@ -1293,6 +1309,12 @@
     </Filter>
     <Filter Include="UI\Base">
       <UniqueIdentifier>{c0210c48-412e-4a70-ab56-b1e8d30bf93c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\DynamicObject\MarioCap">
+      <UniqueIdentifier>{9e435981-4e5f-4d71-9cbb-df6e519ce00a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\DynamicObject\MarioParts">
+      <UniqueIdentifier>{a14f0ed8-e7c6-4b65-aad9-e6e8bf037019}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -17,12 +17,14 @@ public:
 		SquatMove,
 
 		Air, //공중에 있지만 다른 액션은 하지 않는 상태
+		Fall, //떨어지는 중
 		Wall, //벽차기
 
 		Hit,
 		Groggy,
 
 		ThrowCap,
+		CatchCap,
 		Die,
 	};
 
@@ -46,7 +48,8 @@ public:
 
 	std::vector<MarioParts*> GetParts() { return mParts; }
 	void SetParts(MarioParts* part) { mParts.push_back(part); }
-
+	void SetMarioCap(MarioCap* cap);
+	MarioCap* GetMarioCap() const { return mMarioCap; }
 
 private:
 	std::vector<MarioParts*> mParts;
@@ -58,7 +61,7 @@ protected:
 public:
 	ePlayerState GetPlayerState() { return mPlayerState; }
 	void SetPlayerState(ePlayerState playerState);
-	void PlayerAnimation(std::wstring name);
+	//void PlayerAnimation(std::wstring name);
 
 private:
 	ePlayerState mPlayerState;
