@@ -339,10 +339,14 @@
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
+
+    <ClCompile Include="LifeUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
     <ClCompile Include="GenericAnimator.cpp" />
-    <ClCompile Include="PlayerStateScript.cpp">
       <Filter>Common\GameObj\Player</Filter>
     </ClCompile>
+
     <ClCompile Include="MarioCap.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
@@ -723,6 +727,8 @@
     <ClInclude Include="UIBase.h">
       <Filter>UI\Base</Filter>
     </ClInclude>
+    <ClInclude Include="LifeUI.h">
+      <Filter>UI</Filter>
     <ClInclude Include="GenericAnimator.h" />
     <ClInclude Include="PlayerStateScript.h">
       <Filter>Common\GameObj\Player</Filter>
