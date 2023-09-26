@@ -52,13 +52,14 @@ public:
 	Vector3 GetUIPos() { return mUIPos; }
 	Vector3 GetUISize() { return mUISize; }
 	std::vector<UIBase*> GetChilds() { return mChilds; }
-
+	std::vector<UIBase*> GetCHilds() {}
 	void SetUIScreenPos(Vector3 pos) { mUIScreenPos = pos; }
 	void SetUIPos(Vector3 pos) { mUIPos = pos; }
 	void SetUISize(Vector3 size) { mUISize = size; }
 	void Addchild(UIBase* uiBase);
 	virtual void SetColor(Vector4 color, bool isColor) {};
 
+	void ChangeTexture(const std::wstring& key);
 protected:
 	UIBase* mUIParent;
 	Vector3 mUIScreenPos;

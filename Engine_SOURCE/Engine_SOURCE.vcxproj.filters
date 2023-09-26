@@ -358,6 +358,8 @@
     <ClCompile Include="AsyncLoad.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="CompassUI.cpp" />
+    <ClCompile Include="LifeUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -749,6 +751,8 @@
     <ClInclude Include="AsyncLoad.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="CompassUI.h" />
+    <ClInclude Include="LifeUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
