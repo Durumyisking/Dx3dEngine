@@ -14,15 +14,12 @@ struct VSOut
     float2 UV : TEXCOORD;
 };
 
-
-
 //cbuffer time
 //int 0
 
 float4 main(VSOut In) : SV_Target
 {
     float4 color = (float) 0.0f;
-    
     if (animationType == 1)
     {
         float2 diff = (atlasSize - spriteSize) / 2.0f;
@@ -52,7 +49,6 @@ float4 main(VSOut In) : SV_Target
     if (color.a <= 0.0f)
         discard;
     
-    
     if (cbbBool3)
     {
         color *= cbxyzw1; // °öÇÒ »ö
@@ -66,8 +62,7 @@ float4 main(VSOut In) : SV_Target
     }
     color *= lightColor.diffuse;
     
-    
     //color.a = 0.5f;
-    //color = colorTexture.Sample(anisotropicSampler, In.UV);
+    //color = defaultTexture.Sample(anisotropicSampler, In.UV);
     return color;
 }

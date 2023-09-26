@@ -56,36 +56,10 @@ void CameraScript::Update()
 
 	mTransform->SetPosition(mLookAt);
 
-
-	if (KEY_TAP(LBTN))
-	{
-		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
-		{
-			GETSINGLE(PhysXRayCast)->Raycast();
-		}
-	}
-
-	if (KEY_DOWN(LCTRL) && KEY_DOWN(LBTN))
-	{
-		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
-		{
-			GETSINGLE(PhysXRayCast)->MoveObject();
-		}
-	}
-
-	if (KEY_UP(LBTN))
-	{
-		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
-		{
-			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
-		}
-	}
-
 	if (mUICameraObject != nullptr)
 	{
-
-		mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
-		//mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());
+		//mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
+		//mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());z
 	}
 }
 
@@ -116,7 +90,7 @@ void CameraScript::KeyBoardMove()
 {
 	// Keyboard Move
 
-	float speed = 50.f;
+	float speed = 100.f;
 	if (KEY_DOWN(W))
 	{
 		mLookAt += speed * mTransform->Forward() * DT;
@@ -199,8 +173,8 @@ void CameraScript::Shake(const ShakeParams& params)
 {
 	if (mbShaking) 
 	{
-		// ìƒˆë¡œìš´ í”ë“¤ê¸° íš¨ê³¼ ë“¤ì–´ê°€ë©´
-		// ì´ì „ í”ë“¤ë¦¼ íš¨ê³¼ë¥¼ ì·¨ì†Œ
+		// »õ·Î¿î Èçµé±â È¿°ú µé¾î°¡¸é
+		// ÀÌÀü Èçµé¸² È¿°ú¸¦ Ãë¼Ò
 		CancelShake();
 	}
 
@@ -223,11 +197,11 @@ void CameraScript::ShakeMove()
 		mShakeTimer += GETSINGLE(TimeMgr)->DeltaTimeConstant();
 		if (mShakeTimer >= mShakeParams.duration)
 		{
-			// í”ë“¤ë¦¼ ì§€ì† ì‹œê°„ì´ ì§€ë‚˜ë©´ íš¨ê³¼ ì¢…ë£Œ
+			// Èçµé¸² Áö¼Ó ½Ã°£ÀÌ Áö³ª¸é È¿°ú Á¾·á
 			CancelShake();
 		}
 		else {				
-			// í”ë“¤ë¦¼ íš¨ê³¼ ê³„ì‚°
+			// Èçµé¸² È¿°ú °è»ê
 			float magnitude = mShakeParams.magnitude *
 				(1.f - mShakeTimer / mShakeParams.duration);
 

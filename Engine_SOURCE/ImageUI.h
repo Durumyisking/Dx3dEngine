@@ -6,7 +6,6 @@ class ImageUI :public UIBase
 public:
 	ImageUI();
 	ImageUI(eUIType type);
-	ImageUI(const std::wstring& key, eUIType type);
 	~ImageUI();
 
 	virtual void OnInit() override;

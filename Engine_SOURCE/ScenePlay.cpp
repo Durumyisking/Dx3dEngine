@@ -16,7 +16,6 @@
 //#include "UIFactory.h"
 //#include "Animator.h"
 
-
 #include "TimeMgr.h"
 
 #include "Object.h"
@@ -62,16 +61,13 @@
 #include "ImageUI.h"
 #include "UIFactory.h"
 #include "Animator.h"
-#include "LifeUI.h"
 
 #include "Goomba.h"
 #include "Packun.h"
 
 
 ScenePlay::ScenePlay()
-	: mCamera(nullptr)
-	, mUICamera(nullptr)
-	, mCoinPanal(nullptr)
+	: mCoinPanal(nullptr)
 	, mLifePanal(nullptr)
 	, mLunaPanal(nullptr)
 	, mCoinTextPanal(nullptr)
@@ -91,58 +87,55 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
+	//Convex and Triangle Mesh TEST
+	{
+		////TriangleMesh Test
+		//{
+		//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+		//	obj->SetPos(Vector3(0.f, -10.f, 300.f));
+		//	obj->SetScale(Vector3(0.04f, 0.04f, 0.04f));
+		//	obj->SetName(L"CityWorldHomeGroundCollider");
+
+		//	// SetModel
+		//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_CityWorldHomeGround000");
+		//	obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetModel(model, model->GetMaterial(0));
+		//
+		//}
 
 	{
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Player, this);
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetMarioCap(mariocap);
-
-		player->SetScale(Vector3(1.f, 1.f, 1.f));
-		player->SetName(L"Player");
-		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
-		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.01f);
-		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.99f);
-
-		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
-
-		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-		physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
-
-		PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-		player->AddComponent<PhysXCollider>(eComponentType::Collider);
-		player->AddComponent<PhysicalMovement>(eComponentType::Movement);*/
 	}
 
+		//Sphere 
+		{
+			GameObj* Sphere = object::Instantiate<GameObj>(eLayerType::Player, this);
+			Sphere->SetPos(Vector3(32.f, 25.f, -9.5f));
+			Sphere->SetScale(Vector3(15.f, 15.f, 15.f));
+			Sphere->SetName(L"Sphere");
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 0.f, 0.f));
 	}
 
-	
-	{
-		Packun* packun = object::Instantiate<Packun>(eLayerType::Monster, this);
+			Sphere->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			Sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+			Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
+			Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
 
+			Sphere->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+
+			Physical* physical = Sphere->AddComponent<Physical>(eComponentType::Physical);
+			physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(7.5f, 7.5f, 7.5f));
+
+			PhysXRigidBody* rigid = Sphere->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+			Sphere->AddComponent<PhysXCollider>(eComponentType::Collider);
+			//player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+			Sphere->AddComponent<PlayerScript>(eComponentType::Script);
+		}
 	}
-	//{
-	//	Player* player = object::Instantiate<Player>(eLayerType::Objects, this);
-	//	player->SetPos(Vector3(-15.f, 10.f, 9.5f));
-	//	player->SetScale(Vector3(1.f, 1.f, 1.f));
-	//	player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"DeferredMaterial");
-
-	//	player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Cubemesh");
-	//	//player->AddComponent<PlayerScript>(eComponentType::Script);
-
-	//	Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
-	//	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-
-	//	PhysXRigidBody* rigid = player->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-	//	player->AddComponent<PhysXCollider>(eComponentType::Collider);
-	//	player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-	//}
-
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -170,11 +163,6 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-	////플레이어 호출, 호출시 알아서 모델 initialize
-	//{
-	//	Player* player = object::Instantiate<Player>(eLayerType::Player,this);
-	//}
-
 	{
 		Goomba* packun = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		packun->SetPos({ 15.f, 5.f, 15.f });
@@ -184,6 +172,7 @@ void ScenePlay::Initialize()
 
 	Scene::Initialize();
 }
+
 
 void ScenePlay::update()
 {
@@ -209,8 +198,10 @@ void ScenePlay::render()
 
 void ScenePlay::Enter()
 {
-
 	Scene::Enter();
+
+	mCamera->SetPos(Vector3(0.f, 150.f, -150.f));
+	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 }
 
 void ScenePlay::Exit()
@@ -224,21 +215,14 @@ void ScenePlay::CreatePlayerUI()
 	{
 		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 10.f), Vector3(100.0f, 100.0f, 1.0f), L"LifePanal", this, eUIType::HP));
 		//LifeGauge
-		LifeUI* gauge = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeGauge", L"LifeGauge_3Material",eUIType::None  ,Vector3(7.f, 3.6f, 0.f), Vector3::One, mLifePanal, this));
-		gauge->SetUIActive();
-		gauge->SetTargetPos(Vector3::Zero);
+		HUD* hud = (GETSINGLE(UIFactory)->CreateHud(L"LifeGauge", L"LifeGauge_3Material", Vector3(7.f, 3.6f, 0.f), Vector3::One, mLifePanal, this));
 		//Lifeheart
-		LifeUI* lifeheart = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeHeart", L"LifeheartMaterial", eUIType::None, Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
-		lifeheart->SetUIActive();
-		lifeheart->SetTargetPos(Vector3(0.0f, -0.05f, 0.0f));
+		HUD* lifeheart = (GETSINGLE(UIFactory)->CreateHud(L"LifeHeart", L"LifeheartMaterial", Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
 
-		LifeUI* lifeText = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeText", L"LifeTextMaterial", eUIType::HPText, Vector3(7.f, 3.55f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
-		lifeText->InitColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
-		lifeText->SetUIActive();
-		lifeText->SetTargetPos(Vector3(0.0f, -0.05f, -0.1f));
+		ImageUI* lifeText = (GETSINGLE(UIFactory)->CreateImage(L"LifeText", L"LifeTextMaterial", Vector3(7.f, 3.55f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
+		lifeText->SetColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f), true);
 
-
-		mLifePanal->Addchild(gauge);
+		mLifePanal->Addchild(hud);
 		mLifePanal->Addchild(lifeheart);
 		mLifePanal->Addchild(lifeText);
 	}

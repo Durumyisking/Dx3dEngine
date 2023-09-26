@@ -107,13 +107,13 @@ namespace renderer
 		//Vector3 tangent;
 		//Vector3 biNormal;
 		//Vector3 normal;
-		{
-			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
-			GetDevice()->CreateInputLayout(arrLayout, 6
-				, shader->GetVSBlobBufferPointer()
-				, shader->GetVSBlobBufferSize()
-				, shader->GetInputLayoutAddr());
-		}
+		//{
+		//	Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MeshShader");
+		//	GetDevice()->CreateInputLayout(arrLayout, 6
+		//		, shader->GetVSBlobBufferPointer()
+		//		, shader->GetVSBlobBufferSize()
+		//		, shader->GetInputLayoutAddr());
+		//}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
 			GetDevice()->CreateInputLayout(arrLayout, 3
@@ -443,14 +443,14 @@ namespace renderer
 
 	void LoadShader()
 	{
-#pragma region MeshShader
-		{
-			Shader* shader = new Shader();
-			shader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
-			shader->Create(eShaderStage::PS, L"PhongPS.hlsl", "main");
-			GETSINGLE(ResourceMgr)->Insert<Shader>(L"MeshShader", shader);
-		}
-#pragma endregion
+//#pragma region MeshShader
+//		{
+//			Shader* shader = new Shader();
+//			shader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
+//			shader->Create(eShaderStage::PS, L"PhongPS.hlsl", "main");
+//			GETSINGLE(ResourceMgr)->Insert<Shader>(L"MeshShader", shader);
+//		}
+//#pragma endregion
 
 #pragma region DebugGeometryShader
 		{
@@ -1926,7 +1926,7 @@ namespace renderer
 		CreateMaterial(L"Resume2P", L"UISpriteShader", L"Resume2PMaterial", eRenderingMode::Transparent);
 		CreateMaterial(L"Start", L"UISpriteShader", L"StartMaterial", eRenderingMode::Transparent);
 
-		CreateMaterial(L"3", L"UISpriteShader", L"LifeTextMaterial", eRenderingMode::Transparent);
+		CreateMaterial(L"0", L"UISpriteShader", L"LifeTextMaterial", eRenderingMode::Transparent);
 #pragma endregion
 	}
 
