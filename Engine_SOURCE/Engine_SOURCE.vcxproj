@@ -210,6 +210,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\CompassUI.h" />
+    <ClInclude Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\LifeUI.h" />
     <ClInclude Include="AiScript.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationClip.h" />
@@ -345,6 +347,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\CompassUI.cpp" />
+    <ClCompile Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\LifeUI.cpp" />
     <ClCompile Include="AiScript.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationClip.cpp" />

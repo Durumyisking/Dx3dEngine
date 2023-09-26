@@ -160,6 +160,7 @@ namespace enums
 		Bar,
 
 		HP,
+		HPText,
 		Coin,
 		CoinText,
 		CityCoin,

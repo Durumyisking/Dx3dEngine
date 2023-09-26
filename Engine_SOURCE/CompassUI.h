@@ -1,13 +1,13 @@
 #pragma once
-#include "UIBase.h"
+#include  "UIBase.h"
 
-class ImageUI :public UIBase
+class CompassUI : public UIBase
 {
+
 public:
-	ImageUI();
-	ImageUI(eUIType type);
-	ImageUI(const std::wstring& key, eUIType type);
-	~ImageUI();
+	CompassUI();
+	CompassUI(const std::wstring& key, eUIType type);
+	~CompassUI();
 
 	virtual void OnInit() override;
 	virtual void OnActive() override;
@@ -18,12 +18,7 @@ public:
 	virtual void OnFontRender() override;
 	virtual void OnClear() override;
 
-
-	void SetColor(Vector4 color, bool isColor) override;
-	void SetUIActive() { mActivate = true; }
-	void SetUIInActive() { mActivate = false; }
 private:
 
-	float mCurrentTime;
 	bool mActivate;
 };

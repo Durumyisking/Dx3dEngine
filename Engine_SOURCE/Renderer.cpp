@@ -1926,7 +1926,12 @@ namespace renderer
 		CreateMaterial(L"Resume2P", L"UISpriteShader", L"Resume2PMaterial", eRenderingMode::Transparent);
 		CreateMaterial(L"Start", L"UISpriteShader", L"StartMaterial", eRenderingMode::Transparent);
 
-		CreateMaterial(L"0", L"UISpriteShader", L"LifeTextMaterial", eRenderingMode::Transparent);
+		CreateMaterial(L"3", L"UISpriteShader", L"LifeTextMaterial", eRenderingMode::Transparent);
+
+
+		CreateMaterial(L"Compass", L"UISpriteShader", L"CompassMaterial", eRenderingMode::Transparent);
+		CreateMaterial(L"CompassBar", L"UISpriteShader", L"CompassBarMaterial", eRenderingMode::Transparent);
+		CreateMaterial(L"CompassNeedle", L"UISpriteShader", L"CompassNeedleMaterial", eRenderingMode::Transparent);
 #pragma endregion
 	}
 
@@ -1976,6 +1981,10 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Resume", L"Textures/UI/Text/Resume.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Resume2P", L"Textures/UI/Text/Resume2P.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Start", L"Textures/UI/Text/Start.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"Compass", L"Textures/UI/Compass/Compass.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CompassBar", L"Textures/UI/Compass/CompassBar.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CompassNeedle", L"Textures/UI/Compass/CompassNeedle.png");
 	}
 
 	////////////////////////////////////////////////////////
