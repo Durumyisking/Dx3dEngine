@@ -210,8 +210,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\CompassUI.h" />
-    <ClInclude Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\LifeUI.h" />
     <ClInclude Include="AiScript.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationClip.h" />
@@ -238,6 +236,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Collider3D.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="CommonInclude.h" />
+    <ClInclude Include="CompassUI.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="ConstantBuffer.h" />
@@ -273,6 +272,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ImageUI.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Layer.h" />
+    <ClInclude Include="LifeUI.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="MarioCap.h" />
@@ -347,8 +347,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="UIManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\CompassUI.cpp" />
-    <ClCompile Include="..\..\..\Dx3D\Dx3dEngine\Engine_SOURCE\LifeUI.cpp" />
     <ClCompile Include="AiScript.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationClip.cpp" />
@@ -373,6 +371,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collider3D.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="CompassUI.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
@@ -404,6 +403,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="LifeUI.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MarioCap.cpp" />
     <ClCompile Include="MarioParts.cpp" />
