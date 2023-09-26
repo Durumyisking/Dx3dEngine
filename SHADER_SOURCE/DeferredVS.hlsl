@@ -37,7 +37,7 @@ VSOut main(VSIn vsIn)
     pos = vsIn.BlendWeight.x + vsIn.BlendWeight.y + vsIn.BlendWeight.z + vsIn.BlendWeight.w == 0.0f ? vsIn.Position : pos;
     
     
-    float4 worldPosition = mul(vsIn.Position, world);
+    float4 worldPosition = mul(float4(pos.xyz, 1.f), world);
     float4 viewPosition = mul(worldPosition, view);
     float4 ProjPosition = mul(viewPosition, projection);
     

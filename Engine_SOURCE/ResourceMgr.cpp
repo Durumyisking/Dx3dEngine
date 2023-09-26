@@ -66,11 +66,13 @@ Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring te
 void ResourceMgr::Initalize()
 {
 	// Mario
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioBody", L"Mario");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHandL", L"MarioHandL");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHandR", L"MarioHandR");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioFace", L"MarioFace");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHead", L"MarioHead");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioBody", L"Mario");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHandL", L"MarioHandL");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHandR", L"MarioHandR");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioFace", L"MarioFace");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioHead", L"MarioHead");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioEye", L"MarioEye");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/MarioCap", L"MarioCap");
 
 	//// Monster
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Tank", L"Tank");
@@ -89,6 +91,13 @@ void ResourceMgr::Initalize()
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWomans", L"CityWomans");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources//brick", L"BlockBrick");
 
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeGround000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeGround003");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeBuilding000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeBuilding001");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeBuilding001Low");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeBuilding002");
+	//GETSINGLE(FileMgr)->StageFolderLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorld");
 }
 
 void ResourceMgr::Release()

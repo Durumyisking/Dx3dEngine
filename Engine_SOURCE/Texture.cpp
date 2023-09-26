@@ -441,6 +441,7 @@ Texture* Texture::Load(const std::wstring& path, const Model::TextureInfo& info)
 	);
 
 
+
 	mSRV->GetResource((ID3D11Resource**)mTexture.GetAddressOf());
 
 	mTexture->GetDesc(&mDesc);

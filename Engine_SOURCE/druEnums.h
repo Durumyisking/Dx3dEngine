@@ -31,6 +31,7 @@ namespace enums
 		Camera,
 		RigidBody,
 		Movement, 
+		GenericAnimator,
 		Transform,
 		Physical,
 		//Controller,
@@ -132,6 +133,8 @@ namespace enums
 		Capsule,
 		Sphere,
 		Plane,
+		ConvexMesh,
+		TriangleMesh,
 		End,
 	};
 
@@ -155,8 +158,8 @@ namespace enums
 		Option,
 		Exit,
 		Bar,
+
 		HP,
-		HPText,
 		Coin,
 		CoinText,
 		CityCoin,

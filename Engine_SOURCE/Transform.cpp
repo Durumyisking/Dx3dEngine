@@ -3,6 +3,8 @@
 #include "GameObj.h"
 #include "Physical.h"
 
+#include "TimeMgr.h"
+
 
 Transform::Transform()
 	: Component(eComponentType::Transform)
@@ -42,9 +44,20 @@ void Transform::Update()
 
 void Transform::FixedUpdate()
 {
-
 	if (GetOwner()->GetComponent<Physical>())
 	{
+		mTickPerSceond += DT;
+		if (mTickPerSceond > mDurationTime)
+		{
+			mTickPerSceond -= mDurationTime;
+		}
+
+		// 쿼터니언을 보간합니다
+		if (mArriveQuternion != mCurQuternion)
+		{
+			mCurQuternion = math::Quaternion::Slerp(mCurQuternion, mArriveQuternion, mTickPerSceond / mDurationTime);
+		}
+
 		Physical* physical = GetPhysical();
 		if (eActorType::Kinematic == physical->GetActorType())
 		{
@@ -54,6 +67,9 @@ void Transform::FixedUpdate()
 		{
 			mPxTransform = physical->GetActor<PxRigidActor>()->getGlobalPose();
 		}
+
+		// 보간된 회전을 적용
+		mPxTransform.q = PxQuat(mCurQuternion.x, mCurQuternion.y, mCurQuternion.z, mCurQuternion.w);
 
 		Matrix matPxScale = Matrix::CreateScale(physical->GetGeometrySize());
 
@@ -204,6 +220,13 @@ Vector3 Transform::GetPhysicalPosition()
 	//return convert::PxVec3ToVector3(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().p);
 }
 
+Vector3 Transform::GetPhysicalRotation()
+{
+	assert(GetOwner()->GetComponent<Physical>());
+	return convert::PxQuatToQuaternion(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().q).ToEuler() / XM_PI * 180;
+}
+
+
 void Transform::SetPhysicalPosition(const Vector3& position)
 {
 	assert(GetPhysical());
@@ -226,6 +249,9 @@ void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 	mPxTransform.q = finalRotation;
 	//GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 
+	// 보간도착 지점에 쿼터니언
+	mArriveQuternion = math::Quaternion(finalRotation.x, finalRotation.y, finalRotation.z, finalRotation.w);
+	mTickPerSceond = 0.f;
 }
 
 void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)

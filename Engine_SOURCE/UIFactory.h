@@ -1,6 +1,6 @@
 #pragma once
 #include "Object.h"
-#include "SpriteRenderer.h"
+
 
 class UIBase;
 class Panal;
@@ -31,14 +31,15 @@ public:
 	template <typename T>
 	T* CreateUI(const std::wstring& name, const std::wstring& key, eUIType type, Vector3 pos, Vector3 scale, GameObj* parent, Scene* scene)
 	{
-		T* object = object::Instantiate<T>(eLayerType::UI, scene, key, type);
-		object->SetPos(pos);
-		object->SetScale(scale);
-		object->SetName(name);
-		object->GetComponent<Transform>()->SetParent(parent);
+		T* hud = object::Instantiate<T>(eLayerType::UI, scene, key, type);
+		hud->SetPos(pos);
+		hud->SetScale(scale);
+		hud->SetName(name);
+		hud->GetComponent<Transform>()->SetParent(parent);
 
-		return object;
+		return hud;
 	}
+
 
 private:
 

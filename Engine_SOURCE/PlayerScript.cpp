@@ -13,7 +13,6 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 
-
 PlayerScript::PlayerScript()
 	: mTransform(nullptr)
 	, mPhyXRigidBody(nullptr)
@@ -58,10 +57,9 @@ void PlayerScript::Update()
 		mPhyXRigidBody->AddTorqueZForDynamic(100.f * DT);
 	}
 
-	// Ã„Â«Â¸ÃžÂ¶Ã³Ã€Ã‡ forwardÂ¿Ã playerÃ€Ã‡ forwardÂ³Â»Ã€Ã»
+	// Ä«¸Þ¶óÀÇ forward¿Í playerÀÇ forward³»Àû
 	float cDotp = camForward.Dot(mTransform->Forward());
 	float cDotp_degree = toDegree(cDotp);
-
 
 
 	if (KEY_DOWN(LEFT))
@@ -74,18 +72,16 @@ void PlayerScript::Update()
 	}
 	if (KEY_DOWN(UP))
 	{
-		mPhyXRigidBody->AddForce(camForward * 7000.f * DT);
+		mPhyXRigidBody->AddForceForDynamic((camForward * 3000.f * DT), PxForceMode::Enum::eFORCE);
 	}
 	if (KEY_DOWN(DOWN))
 	{
-		mPhyXRigidBody->AddForce(-camForward * 7000.f * DT);
+		mPhyXRigidBody->AddForceForDynamic((camForward * -3000.f * DT), PxForceMode::Enum::eFORCE);
 	}
-
 	if (KEY_TAP(SPACE))
 	{
-		mPhyXRigidBody->AddForce(Vector3::Up * 70000.f * DT);
+		GetOwner()->GetComponent<PhysXRigidBody>()->AddForceForDynamic((Vector3::Up * 5000.f * DT), PxForceMode::Enum::eIMPULSE);
 	}
-
 
 }
 void PlayerScript::FixedUpdate()

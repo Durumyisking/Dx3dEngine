@@ -45,7 +45,7 @@ HRESULT Model::Load(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
+		// ÆÄÀÏ ·Îµå ½ÇÆĞ
 		return E_FAIL;
 	}
 
@@ -75,7 +75,7 @@ HRESULT Model::LoadFullpath(const std::wstring& path)
 
 	if (aiscene == nullptr || aiscene->mRootNode == nullptr)
 	{
-		// íŒŒì¼ ë¡œë“œ ì‹¤íŒ¨
+		// ÆÄÀÏ ·Îµå ½ÇÆĞ
 		return E_FAIL;
 	}
 
@@ -193,11 +193,11 @@ void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
 {
 	for (auto iter = mMeshes.begin(); iter != mMeshes.end(); ++iter)
 	{
-		if ((*iter)->GetName().find(name) == std::wstring::npos)
-			continue;
-
-		(*iter)->SetRender(renderSwitch);
-		return;
+		if ((*iter)->GetName() == name)
+		{ 
+			(*iter)->SetRender(renderSwitch);
+			break;
+		}
 	}
 }
 
@@ -245,7 +245,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 {
 	std::map<std::wstring, ModelNode*>::iterator iter = mNodes.find(nodeName);
 
-	std::vector<renderer::Vertex> vertexes;
+	std::vector<Vertex> vertexes;
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
@@ -254,7 +254,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 	for (UINT i = 0; i < mesh->mNumVertices; ++i)
 	{
-		renderer::Vertex vertex = {};
+		Vertex vertex = {};
 		math::Vector3 pos = {};
 
 
@@ -294,16 +294,31 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		vertexes.emplace_back(vertex);
 	}
 
+	//indexes.reserve(mesh->mNumFaces);
+	//for (UINT i = 0; i < mesh->mNumFaces; ++i)
+	//{
+	//	aiFace face = mesh->mFaces[i];
+	//	if (mesh->mFaces[i].mNumIndices != 3) {
+	//		int a = 0;
+	//	}
+	//	for (UINT j = 0; j < face.mNumIndices; ++j)
+	//	{
+	//		indexes.emplace_back(face.mIndices[j]);
+	//	}
+	//}
+
 	indexes.reserve(mesh->mNumFaces);
 	for (UINT i = 0; i < mesh->mNumFaces; ++i)
 	{
 		aiFace face = mesh->mFaces[i];
+		if (mesh->mFaces[i].mNumIndices != 3) {
+			int a = 0;
+		}
 		for (UINT j = 0; j < face.mNumIndices; ++j)
 		{
 			indexes.emplace_back(face.mIndices[j]);
 		}
 	}
-
 
 	for (unsigned int i = 0; i < mesh->mNumBones; ++i)
 	{
@@ -401,6 +416,9 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
 
+	inMesh->SetVertexCount(static_cast<UINT>(vertexes.size()));
+	inMesh->SetIndexCount(static_cast<UINT>(indexes.size()));
+
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 	inMesh->SetName(wName);
 	GETSINGLE(ResourceMgr)->Insert<Mesh>(wName, inMesh);
@@ -476,7 +494,7 @@ void Model::CreateMaterial()
 				matName = texInfo.texName;
 				std::size_t found = matName.find(L"_");
 				if (found != std::wstring::npos) {
-					matName = matName.substr(0, found); // _ ì´ì „ê¹Œì§€ì˜ ë¬¸ìì—´ ì¶”ì¶œ
+					matName = matName.substr(0, found); // _ ÀÌÀü±îÁöÀÇ ¹®ÀÚ¿­ ÃßÃâ
 				}
 			}
 			break;

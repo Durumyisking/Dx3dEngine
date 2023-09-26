@@ -1,11 +1,32 @@
 #pragma once
-#include "GameObj.h"
-
-
+#include "DynamicObject.h"
+#include "MarioParts.h"
+#include "MarioCap.h"
 
 class Player :
-	public GameObj
+	public DynamicObject
 {
+public:
+	enum class ePlayerState : short
+	{
+		Idle,
+
+		Move,
+		Jump,
+		Squat, //웅크리기
+		SquatMove,
+
+		Air, //공중에 있지만 다른 액션은 하지 않는 상태
+		Fall, //떨어지는 중
+		Wall, //벽차기
+
+		Hit,
+		Groggy,
+
+		ThrowCap,
+		CatchCap,
+		Die,
+	};
 
 public:
 	Player();
@@ -21,10 +42,29 @@ public:
 	virtual void OnCollisionEnter(GameObj* gameObject) override;
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
+	void KeyCheck();
+	virtual void BoneInitialize();
+	void boneAnimatorInit(BoneAnimator* animator);
 
+	std::vector<MarioParts*> GetParts() { return mParts; }
+	void SetParts(MarioParts* part) { mParts.push_back(part); }
+	void SetMarioCap(MarioCap* cap);
+	MarioCap* GetMarioCap() const { return mMarioCap; }
 
 private:
+	std::vector<MarioParts*> mParts;
+	MarioCap* mMarioCap;
+
+protected:
+	virtual void stateInfoInitalize() final;
 
 public:
+	ePlayerState GetPlayerState() { return mPlayerState; }
+	void SetPlayerState(ePlayerState playerState);
+	//void PlayerAnimation(std::wstring name);
+
+private:
+	ePlayerState mPlayerState;
+
 
 };

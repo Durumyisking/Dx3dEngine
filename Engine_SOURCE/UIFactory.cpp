@@ -6,6 +6,7 @@
 #include "HUD.h"
 #include "ImageUI.h"
 #include "Button.h"
+#include "SpriteRenderer.h"
 #include "UIManager.h"
 
 UIFactory::UIFactory()

@@ -13,6 +13,7 @@
 #include "guiOutLiner.h"
 
 #include "InputMgr.h"
+#include "PhysXRayCast.h"
 
 extern Application application;
 extern gui::Editor editor;
@@ -61,6 +62,7 @@ namespace gui
 		//ImGui::SetNextWindowCollapsed(false);  // 윈도우를 접히지 않은 상태로 초기화
 		//ImGui::SetNextWindowFocus();  // 윈도우에 포커스 설정
 		//ImGui::SetNextWindowContentSize(ImVec2(10, 10));  // 컨텐츠 크기 초기화
+
 		Scene* mActiveScene = GETSINGLE(SceneMgr)->GetActiveScene();
 		if (mCurrentScene != mActiveScene)
 		{
@@ -70,6 +72,30 @@ namespace gui
 
 				InitializeScene();
 			}
+		}
+
+
+		if (KEY_UP(LSHIFT))
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+
+		if (!KEY_DOWN(LSHIFT))
+			return;
+
+		if (KEY_TAP(LBTN))
+		{
+			mTargetObject = GETSINGLE(PhysXRayCast)->Raycast();
+
+			InitializeOutline(mTargetObject);
+		}
+
+		if (KEY_DOWN(LBTN))
+		{
+			GETSINGLE(PhysXRayCast)->MoveObject();
+		}
+
+		if (KEY_UP(LBTN))
+		{
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
 		}
 	}
 

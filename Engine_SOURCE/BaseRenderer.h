@@ -23,7 +23,6 @@ public:
 	void SetMesh(Mesh* mesh) { mMesh = mesh; }
 	void SetMeshByKey(std::wstring key);
 	void SetMaterial(Material* material, UINT modelMeshSlot = 0);
-	Material* GetMaterial();
 	void SetMaterialByKey(std::wstring key, UINT modelMeshSlot = 0);
 
 
