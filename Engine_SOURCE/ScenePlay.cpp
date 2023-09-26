@@ -306,14 +306,14 @@ void ScenePlay::CreatePlayerUI()
 
 	//CompassUI
 	{
-		//mCompassPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CompassPanal", this, eUIType::Compass));
+		mCompassPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CompassPanal", this, eUIType::Compass));
 
-		//CompassUI* compass = (GETSINGLE(UIFactory)->CreateUI<CompassUI>(L"Compass", L"CompassMaterial", eUIType::None, Vector3(7.f, 2.5f, 2.f), Vector3::One, mCompassPanal, this));
-		//ImageUI* compassBar = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassBar", L"CompassBarMaterial", eUIType::None, Vector3(7.f, 2.5f, -1.f), Vector3::One, mCompassPanal, this));
-		//ImageUI* compassNeedle = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassNeedle", L"CompassNeedleMaterial", eUIType::None, Vector3(7.f, 2.5f, -1.f), Vector3(2.0f,2.0f,1.0f), mCompassPanal, this));
+		CompassUI* compass = (GETSINGLE(UIFactory)->CreateUI<CompassUI>(L"Compass", L"CompassMaterial", eUIType::None, Vector3(7.f, 2.5f, 2.f), Vector3::One, mCompassPanal, this));
+		ImageUI* compassBar = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassBar", L"CompassBarMaterial", eUIType::None, Vector3(7.f, 2.5f, -1.f), Vector3::One, mCompassPanal, this));
+		ImageUI* compassNeedle = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassNeedle", L"CompassNeedleMaterial", eUIType::None, Vector3(7.f, 2.5f, -1.f), Vector3(2.0f,2.0f,1.0f), mCompassPanal, this));
 
-		//mCompassPanal->Addchild(compass);
-		//mCompassPanal->Addchild(compassBar);
-		//mCompassPanal->Addchild(compassNeedle);
+		mCompassPanal->Addchild(compass);
+		mCompassPanal->Addchild(compassBar);
+		mCompassPanal->Addchild(compassNeedle);
 	}
 }

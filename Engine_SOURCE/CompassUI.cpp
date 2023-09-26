@@ -41,7 +41,8 @@ void CompassUI::OnInActive()
 
 void CompassUI::OnUpdate()
 {
-
+	Vector3 cameraRot = mainCamera->GetOwner()->GetComponent<Transform>()->GetRotation();
+	int a = 0;
 }
 
 void CompassUI::OnFixedUpdate()

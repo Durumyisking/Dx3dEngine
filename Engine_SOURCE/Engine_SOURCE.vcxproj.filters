@@ -312,33 +312,6 @@
     <ClCompile Include="TimerMgr.cpp">
       <Filter>Timer</Filter>
     </ClCompile>
-    <ClCompile Include="CapUI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CapEyeUI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="UIFactory.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageUI.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Panal.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="UIBase.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
     <ClCompile Include="GenericAnimator.cpp" />
     <ClCompile Include="PlayerStateScript.cpp">
       <Filter>Common\GameObj\Player</Filter>
@@ -352,8 +325,42 @@
     <ClCompile Include="CapStateScript.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
-    <ClCompile Include="CompassUI.cpp" />
-    <ClCompile Include="LifeUI.cpp" />
+    <ClCompile Include="CompassUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Panal.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFactory.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUI.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CapUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIScript.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -701,9 +708,6 @@
     <ClInclude Include="CapUI.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="CapEyeUI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>UI\Manager</Filter>
     </ClInclude>
@@ -739,8 +743,18 @@
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysXMemory.h" />
-    <ClInclude Include="CompassUI.h" />
-    <ClInclude Include="LifeUI.h" />
+    <ClInclude Include="CompassUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CapEyeUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIScript.h">
+      <Filter>UI\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -1318,5 +1332,10 @@
     <None Include="druMath.ini">
       <Filter>Common\Math</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="UI\PanalScripts">
+      <UniqueIdentifier>{7a7eac05-156c-47c7-ab34-0d773dbe495d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

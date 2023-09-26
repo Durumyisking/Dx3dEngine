@@ -345,6 +345,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIFactory.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AiScript.cpp" />
@@ -471,6 +472,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIFactory.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UIScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini" />

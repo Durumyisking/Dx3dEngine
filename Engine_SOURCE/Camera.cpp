@@ -126,9 +126,9 @@ void Camera::Render()
 		light->Render();
 	}
 
+	//if (!mLayerMask[static_cast<UINT>(eLayerType::UI)])
+	//	return;
 
-	if (!mLayerMask[static_cast<UINT>(eLayerType::UI)])
-		return;
 
 	//SwapChain
 	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
