@@ -170,8 +170,8 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		GetPhysXRigidBody()->SetAirOff();
 	}
 
-	GetComponent<PhysXRigidBody>()->ApplyGravity();
-	GetComponent<PhysXRigidBody>()->SetAirOn();
+	//GetComponent<PhysXRigidBody>()->ApplyGravity();
+	//GetComponent<PhysXRigidBody>()->SetAirOn();
 }
 
 void Goomba::OnTriggerStay(GameObj* gameObject)
