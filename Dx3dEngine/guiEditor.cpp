@@ -34,6 +34,7 @@
 
 #include "guiWidgetMgr.h"
 #include "guiEditorObjMgr.h"
+#include "PhysXRayCast.h"
 
 extern Application application;
 

@@ -56,31 +56,6 @@ void CameraScript::Update()
 
 	mTransform->SetPosition(mLookAt);
 
-
-	if (KEY_TAP(LBTN))
-	{
-		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
-		{
-			GETSINGLE(PhysXRayCast)->Raycast();
-		}
-	}
-
-	if (KEY_DOWN(LCTRL) && KEY_DOWN(LBTN))
-	{
-		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
-		{
-			GETSINGLE(PhysXRayCast)->MoveObject();
-		}
-	}
-
-	if (KEY_UP(LBTN))
-	{
-		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
-		{
-			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
-		}
-	}
-
 	if (mUICameraObject != nullptr)
 	{
 		mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);

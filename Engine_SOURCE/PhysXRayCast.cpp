@@ -30,7 +30,7 @@ PhysXRayCast::~PhysXRayCast()
 {
 }
 
-void PhysXRayCast::Raycast()
+GameObj* PhysXRayCast::Raycast()
 {
 	Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 
@@ -80,6 +80,8 @@ void PhysXRayCast::Raycast()
 			}
 		}
 	}
+
+	return mPickingObject;
 }
 
 void PhysXRayCast::ReleaseRaycast()
