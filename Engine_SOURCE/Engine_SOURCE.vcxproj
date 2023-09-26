@@ -270,7 +270,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ImageUI.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Layer.h" />
-    <ClInclude Include="LifeUI.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="MarioCap.h" />
@@ -399,7 +398,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Layer.cpp" />
-    <ClCompile Include="LifeUI.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MarioCap.cpp" />
     <ClCompile Include="MarioParts.cpp" />
