@@ -13,7 +13,7 @@ extern Application application;
 
 PhysXRayCast::PhysXRayCast()
 	: mRaycastHit{}
-	, mRayMaxDist(1500.f)
+	, mRayMaxDist(6500.f)
 	, mRayMaxHit(10)
 	, mPickingObject(nullptr)
 	, mPickDistance(FLT_MAX)
@@ -139,6 +139,9 @@ bool PhysXRayCast::CollisionCheck(const Vector3& origin, const Vector3& dir, Gam
 	eGeometryType geometryType = physical->GetGeometryType();
 	PxTransform pxTransform = gameObject->GetComponent<Transform>()->GetPxTransform();
 
+	if (geometryType == eGeometryType::ConvexMesh || geometryType == eGeometryType::TriangleMesh)
+		int a = 0;
+
 	switch (geometryType)
 	{
 	case eGeometryType::Box:
@@ -191,6 +194,44 @@ bool PhysXRayCast::CollisionCheck(const Vector3& origin, const Vector3& dir, Gam
 
 		return bResult;
 	}
+	case eGeometryType::ConvexMesh:
+	{
+		PxTriangleMeshGeometry triangleGeom = physical->GetGeometries()->triangleMeshGeom;
+
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			triangleGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		if (bResult)
+			bResult = true;
+
+		return bResult;
+	}
+		break;
+	case eGeometryType::TriangleMesh:
+	{
+		PxConvexMeshGeometry convexGeom = physical->GetGeometries()->convexMeshGeom;
+
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			convexGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		if (bResult)
+			bResult = true;
+
+		return bResult;
+	}
+		break;
 	break;
 	}
 

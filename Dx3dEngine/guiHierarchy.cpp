@@ -74,15 +74,18 @@ namespace gui
 			}
 		}
 
-		if (!KEY_DOWN(LSHIFT))
-		{
+
+		if (KEY_UP(LSHIFT))
 			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+
+		if (!KEY_DOWN(LSHIFT))
 			return;
-		}
 
 		if (KEY_TAP(LBTN))
 		{
 			mTargetObject = GETSINGLE(PhysXRayCast)->Raycast();
+
+			InitializeOutline(mTargetObject);
 		}
 
 		if (KEY_DOWN(LBTN))
