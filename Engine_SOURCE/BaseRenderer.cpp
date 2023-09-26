@@ -11,8 +11,11 @@ BaseRenderer::BaseRenderer(eComponentType type)
 	, mbIsAnim(false)
 	, mbUseLOD(false)
 	, mSpriteSize(Vector2::Zero)
+	, mMesh (nullptr)
+	, mModel (nullptr)
+	, mMaterial (nullptr)
 {
-	// ë””í´íŠ¸ ë§¤ì‹œ ì§€ì •
+	// µðÆúÆ® ¸Å½Ã ÁöÁ¤
 	Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
 
 	SetMesh(mesh);
@@ -44,18 +47,34 @@ void BaseRenderer::SetMeshByKey(std::wstring key)
 	mMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(key);
 }
 
-void BaseRenderer::SetMaterial(Material* material)
+void BaseRenderer::SetMaterial(Material* material, UINT modelMeshSlot)
 {
-	mMaterial = material;
-
-	// adjustTexture();
+	if (mModel)
+	{
+		mModel->SetVariableMaterials(modelMeshSlot, material);
+	}
+	else
+	{
+		mMaterial = material;
+	}
 }
 
-void BaseRenderer::SetMaterialByKey(std::wstring key)
+Material* BaseRenderer::GetMaterial()
 {
-	mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+	return mMaterial;
+}
 
-	// adjustTexture();
+void BaseRenderer::SetMaterialByKey(std::wstring key, UINT modelMeshSlot)
+{
+	if (mModel)
+	{
+		mModel->SetVariableMaterialsByKey(modelMeshSlot, key);
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+	}
+	else
+	{
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+	}
 }
 
 void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
@@ -63,7 +82,17 @@ void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
 	mMaterial = material;
 	mbIsAnim = true;
 	mSpriteSize = spriteSize;
-	// adjustTexture();
+}
+
+void BaseRenderer::SetModelByKey(std::wstring key)
+{
+	mModel = GETSINGLE(ResourceMgr)->Find<Model>(key);
+}
+
+void BaseRenderer::SetModelByKey(std::wstring modelKey, std::wstring materialKey)
+{
+	mModel = GETSINGLE(ResourceMgr)->Find<Model>(modelKey);
+	mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(materialKey);
 }
 
 

@@ -6,7 +6,7 @@ namespace gui
 	VisualEditor::VisualEditor()
         : mbPadding(false)
         , mbFullscreen(true)
-        , mDockspace_flags(ImGuiDockNodeFlags_None)
+        , mDockspace_flags(ImGuiDockNodeFlags_PassthruCentralNode)
 	{
 		SetName("VisualEditor");
         SetSize(ImVec2(100.0f, 100.0f));

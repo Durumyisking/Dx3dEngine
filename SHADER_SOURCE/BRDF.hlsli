@@ -9,7 +9,7 @@ float ndfGGX(float cosLh, float roughness)
     float alphaSq = alpha * alpha;
 
     float denom = (cosLh * cosLh) * (alphaSq - 1.0) + 1.0;
-    return alphaSq / (PI * denom * denom);
+    return alphaSq / (3.1415926535f * denom * denom);
 }
 
 // microfacet 계산       
@@ -22,7 +22,7 @@ float DistributionGGX(float3 N, float3 H, float roughness)
 
     float num = a2;
     float denom = (NdotH2 * (a2 - 1.f) + 1.f);
-    denom = PI * denom * denom;
+    denom = 3.1415926535f * denom * denom;
 
     return num / denom;
 }

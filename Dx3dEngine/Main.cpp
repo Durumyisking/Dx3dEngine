@@ -1,4 +1,4 @@
-ï»¿// Dx2dEngine.cpp : ì• í”Œë¦¬ì¼€ì´ì…˜ì— ëŒ€í•œ ì§„ì…ì ì„ ì •ì˜í•©ë‹ˆë‹¤.
+// Dx2dEngine.cpp : ¾ÖÇÃ¸®ÄÉÀÌ¼Ç¿¡ ´ëÇÑ ÁøÀÔÁ¡À» Á¤ÀÇÇÕ´Ï´Ù.
 //
 
 #include "framework.h"
@@ -11,7 +11,6 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
-
 //#include <dxgidebug.h>
 //#include <d3d11sdklayers.h>
 
@@ -22,11 +21,14 @@
 #endif
 
 
-//#ifdef UNICODE
-//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
-//#else
-//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
-//#endif
+#ifdef _DEBUG
+#ifdef UNICODE
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+#else
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+#endif
+#endif
+
 
 #define MAX_LOADSTRING 100
 
@@ -41,10 +43,10 @@
 
 
 
-// ì „ì—­ ë³€ìˆ˜:
-HINSTANCE hInst;                                // í˜„ì¬ ì¸ìŠ¤í„´ìŠ¤ì…ë‹ˆë‹¤.
-WCHAR szTitle[MAX_LOADSTRING];                  // ì œëª© í‘œì‹œì¤„ í…ìŠ¤íŠ¸ì…ë‹ˆë‹¤.
-WCHAR szWindowClass[MAX_LOADSTRING];            // ê¸°ë³¸ ì°½ í´ë˜ìŠ¤ ì´ë¦„ì…ë‹ˆë‹¤.
+// Àü¿ª º¯¼ö:
+HINSTANCE hInst;                                // ÇöÀç ÀÎ½ºÅÏ½ºÀÔ´Ï´Ù.
+WCHAR szTitle[MAX_LOADSTRING];                  // Á¦¸ñ Ç¥½ÃÁÙ ÅØ½ºÆ®ÀÔ´Ï´Ù.
+WCHAR szWindowClass[MAX_LOADSTRING];            // ±âº» Ã¢ Å¬·¡½º ÀÌ¸§ÀÔ´Ï´Ù.
 
 Application   application;
 gui::Editor        editor;
@@ -69,7 +71,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
  
 
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(3121);
+    //_CrtSetBreakAlloc(4556649);
 
     if (!InitInstance (hInstance, nCmdShow))
     {
@@ -80,7 +82,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
-    // ê¸°ë³¸ ë©”ì‹œì§€ ë£¨í”„ì…ë‹ˆë‹¤:
+    // ±âº» ¸Ş½ÃÁö ·çÇÁÀÔ´Ï´Ù:
     while (true)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -104,10 +106,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
     
     application.Release();
-    editor.Release();
-
-
     application.DestroySingle();
+
+    editor.Release();
+    editor.DestroySingle();
+
 
     return (int)msg.wParam;
 }
@@ -115,9 +118,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
 //
-//  í•¨ìˆ˜: MyRegisterClass()
+//  ÇÔ¼ö: MyRegisterClass()
 //
-//  ìš©ë„: ì°½ í´ë˜ìŠ¤ë¥¼ ë“±ë¡í•©ë‹ˆë‹¤.
+//  ¿ëµµ: Ã¢ Å¬·¡½º¸¦ µî·ÏÇÕ´Ï´Ù.
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
@@ -141,18 +144,18 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 }
 
 //
-//   í•¨ìˆ˜: InitInstance(HINSTANCE, int)
+//   ÇÔ¼ö: InitInstance(HINSTANCE, int)
 //
-//   ìš©ë„: ì¸ìŠ¤í„´ìŠ¤ í•¸ë“¤ì„ ì €ì¥í•˜ê³  ì£¼ ì°½ì„ ë§Œë“­ë‹ˆë‹¤.
+//   ¿ëµµ: ÀÎ½ºÅÏ½º ÇÚµéÀ» ÀúÀåÇÏ°í ÁÖ Ã¢À» ¸¸µì´Ï´Ù.
 //
-//   ì£¼ì„:
+//   ÁÖ¼®:
 //
-//        ì´ í•¨ìˆ˜ë¥¼ í†µí•´ ì¸ìŠ¤í„´ìŠ¤ í•¸ë“¤ì„ ì „ì—­ ë³€ìˆ˜ì— ì €ì¥í•˜ê³ 
-//        ì£¼ í”„ë¡œê·¸ë¨ ì°½ì„ ë§Œë“  ë‹¤ìŒ í‘œì‹œí•©ë‹ˆë‹¤.
+//        ÀÌ ÇÔ¼ö¸¦ ÅëÇØ ÀÎ½ºÅÏ½º ÇÚµéÀ» Àü¿ª º¯¼ö¿¡ ÀúÀåÇÏ°í
+//        ÁÖ ÇÁ·Î±×·¥ Ã¢À» ¸¸µç ´ÙÀ½ Ç¥½ÃÇÕ´Ï´Ù.
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // ì¸ìŠ¤í„´ìŠ¤ í•¸ë“¤ì„ ì „ì—­ ë³€ìˆ˜ì— ì €ì¥í•©ë‹ˆë‹¤.
+   hInst = hInstance; // ÀÎ½ºÅÏ½º ÇÚµéÀ» Àü¿ª º¯¼ö¿¡ ÀúÀåÇÕ´Ï´Ù.
 
    math::Vector2 Resolution = { 1600, 900 };
    application.SetResolution(Resolution);
@@ -169,6 +172,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    application.Initialize();
    application.DivideMenu();
    editor.Initialize();
+   
+  
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
    //ShowCursor(false);
@@ -177,24 +182,27 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 }
 
 //
-//  í•¨ìˆ˜: WndProc(HWND, UINT, WPARAM, LPARAM)
+//  ÇÔ¼ö: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
-//  ìš©ë„: ì£¼ ì°½ì˜ ë©”ì‹œì§€ë¥¼ ì²˜ë¦¬í•©ë‹ˆë‹¤.
+//  ¿ëµµ: ÁÖ Ã¢ÀÇ ¸Ş½ÃÁö¸¦ Ã³¸®ÇÕ´Ï´Ù.
 //
-//  WM_COMMAND  - ì• í”Œë¦¬ì¼€ì´ì…˜ ë©”ë‰´ë¥¼ ì²˜ë¦¬í•©ë‹ˆë‹¤.
-//  WM_PAINT    - ì£¼ ì°½ì„ ê·¸ë¦½ë‹ˆë‹¤.
-//  WM_DESTROY  - ì¢…ë£Œ ë©”ì‹œì§€ë¥¼ ê²Œì‹œí•˜ê³  ë°˜í™˜í•©ë‹ˆë‹¤.
+//  WM_COMMAND  - ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸Ş´º¸¦ Ã³¸®ÇÕ´Ï´Ù.
+//  WM_PAINT    - ÁÖ Ã¢À» ±×¸³´Ï´Ù.
+//  WM_DESTROY  - Á¾·á ¸Ş½ÃÁö¸¦ °Ô½ÃÇÏ°í ¹İÈ¯ÇÕ´Ï´Ù.
 //
 //
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+        return true;
+
     switch (message)
     {
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
-            // ë©”ë‰´ ì„ íƒì„ êµ¬ë¬¸ ë¶„ì„í•©ë‹ˆë‹¤:
+            // ¸Ş´º ¼±ÅÃÀ» ±¸¹® ºĞ¼®ÇÕ´Ï´Ù:
             switch (wmId)
             {
             case IDM_ABOUT:
@@ -208,6 +216,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+    case WM_SIZE:
+        // È­¸é ÇØ»óµµ°¡ ¹Ù²î¸é SwapChainÀ» ´Ù½Ã »ı¼º
+        //if (GetDevice()->GetSwapChain())
+        //{
+        //    application.SetResolution(math::Vector2(int(LOWORD(lParam)), int(HIWORD(lParam))));
+        //    //m_guiWidth = 0;
+        //    
+        //    GetDevice()->GetBackBufferRTV().Reset();
+  
+        //    GetDevice()->GetSwapChain()->ResizeBuffers(0, // ÇöÀç °³¼ö À¯Áö
+        //        (UINT)LOWORD(lParam), // ÇØ»óµµ º¯°æ
+        //        (UINT)HIWORD(lParam),
+        //        DXGI_FORMAT_UNKNOWN, // ÇöÀç Æ÷¸Ë À¯Áö
+        //        0);
+
+        //    GetDevice()->CreateDefaultBuffers();
+
+        //    GetDevice()->AdjustToDefaultResolutionViewPorts();
+        //    //m_camera.SetAspectRatio(this->GetAspectRatio());
+        //}
+        //break;
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
@@ -233,7 +262,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-// ì •ë³´ ëŒ€í™” ìƒìì˜ ë©”ì‹œì§€ ì²˜ë¦¬ê¸°ì…ë‹ˆë‹¤.
+// Á¤º¸ ´ëÈ­ »óÀÚÀÇ ¸Ş½ÃÁö Ã³¸®±âÀÔ´Ï´Ù.
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     UNREFERENCED_PARAMETER(lParam);

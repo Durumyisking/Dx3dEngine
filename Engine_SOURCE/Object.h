@@ -11,8 +11,7 @@ namespace object
 	static T* LateInstantiate(enums::eLayerType layerType)
 	{
 		T* gameObj = new T();
-		Scene* scene = GETSINGLE(SceneMgr)->AddEvent(gameObj);
-		gameObj->Initialize();
+		GETSINGLE(SceneMgr)->AddEvent(gameObj);
 		gameObj->SetLayerType(layerType);
 
 		return gameObj;
@@ -34,6 +33,28 @@ namespace object
 	static T* Instantiate(enums::eLayerType layerType, Scene* scene)
 	{
 		T* gameObj = new T();
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
+
+		return gameObj;
+	}
+
+	template <typename T>
+	static T* Instantiate(enums::eLayerType layerType, Scene* scene, const std::wstring& key, eUIType type)
+	{
+		T* gameObj = new T(key, type);
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
+
+		return gameObj;
+	}
+
+	template <typename T>
+	static T* Instantiate(enums::eLayerType layerType,eUIType uiType ,Scene* scene)
+	{
+		T* gameObj = new T(uiType);
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
 		layer.PushAddedObject(gameObj);
@@ -131,13 +152,22 @@ namespace object
 		return gameObj;
 	}
 
+	//이미 존재하는 오브젝트를 씬에 삽입
+	template <typename T>
+	static T* AddToScene(T* gameObj, enums::eLayerType layerType, Scene* scene)
+	{
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
 
+		return gameObj;
+	}
 
 	static void DontDestroyOnLoad(GameObj* gameobj)
 	{
 		if (gameobj == nullptr)
 			return;
 
-		gameobj->DontDestroy();
+		gameobj->SetDestroyOff();
 	}
 }

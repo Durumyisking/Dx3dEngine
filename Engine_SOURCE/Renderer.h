@@ -40,23 +40,24 @@ namespace renderer
 	struct Vertex
 	{
 		Vector4 pos;
-		Vector4	color;
 		Vector2 uv;
 		Vector3 tangent;
-		Vector3 biNormal;
 		Vector3 normal;
 
 		Vector4 BlendID;
 		Vector4 BlendWeight;
 	};
 
-	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // êµ¬ì¡°ì²´ ë§Œë“œëŠ”ê±°ìž„
+	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // ±¸Á¶Ã¼ ¸¸µå´Â°ÅÀÓ
 	{
 		Matrix world;
 		Matrix inverseWorld;
+		Matrix worldIT; // world inverse and transpose
 		Matrix view;
 		Matrix inverseView;
 		Matrix projection;
+		Matrix fovForSkySphere;
+		Vector4 cameraWorldPos;
 	};
 
 	CBUFFER(MaterialCB, CBSLOT_MATERIAL)
@@ -72,8 +73,8 @@ namespace renderer
 		float fData4;
 		float fData5;
 		float fData6;
-		float fData7;
-		float fData8;
+		float metallic;
+		float roughness;
 
 		Vector2 xy1;
 		Vector2 xy2;
@@ -84,7 +85,7 @@ namespace renderer
 		float	xyzPadding1;
 		Vector3 xyz2;
 		float	xyzPadding2;
-		Vector3 xyz3;
+		Vector3 FresnelCoeff;
 		float	xyzPadding3;
 		Vector3 CamPosition;
 		float	xyzPadding4;
@@ -102,15 +103,15 @@ namespace renderer
 		int bAlbedo;
 		int bNormal;
 		int bMetallic;
-
 		int bRoughness;
+
 		int bEmissive;
 		int bool1;
 		int bool2;
 		int bool3;
 	};
 
-	CBUFFER(GridCB, CBSLOT_GRID)	
+	CBUFFER(GridCB, CBSLOT_GRID)
 	{
 		Vector3 cameraPosition;
 		Vector2 GridOffset;
@@ -134,7 +135,7 @@ namespace renderer
 	};
 
 	CBUFFER(LightCB, CBSLOT_LIGHTCOUNT)
-	{	
+	{
 		UINT lightCount;
 		UINT lightIndex;
 	};
@@ -181,6 +182,16 @@ namespace renderer
 		float wave_distortion;
 	};
 
+	CBUFFER(SkyCB, CBSLOT_SKY)
+	{
+		Matrix matrix;
+	};
+
+	CBUFFER(LightMatrixCB, CBSLOT_LIGHTMATRIX)
+	{
+		Matrix lightView;
+		Matrix lightProjection;
+	};
 
 
 	// vertex data
@@ -195,25 +206,26 @@ namespace renderer
 	extern std::vector<Camera*> Cameras[];
 
 	extern Camera* mainCamera;
+	extern Camera* UICamera;
 	extern std::vector<DebugMesh> debugMeshes;
 	extern std::vector<Light*> lights;
 	extern std::vector<LightAttribute> lightAttributes;
 
 	extern StructedBuffer* lightBuffer;
 
-	extern GameObj* inspectorGameObject;
-	
+	extern GameObj* outlineGameObject;
+
 	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
 
 	void Initialize();
-	void release(); // ê·¸ë¦¬ëŠ” ë°©ì‹ì´ ì—¬ëŸ¬ê°œì¼ë•Œ ì—¬ëŸ¬ê°œë¥¼ í• ë‹¹í•˜ëŠ”ê²Œ ì•„ë‹ˆë¼
-					// ê·¸ë¦¬ëŠ” ë°©ì‹ì„ ë³€ê²½í• ë•Œ í• ë‹¹ëœ ê³³ì— ê·¸ë¦¬ëŠ” ë°©ì‹ì˜ ê°ì²´ë“¤ì„ êµì²´ë§Œ í•´ì¤€ë‹¤ -> ì˜¤ëž˜ê±¸ë¦¼
-					// ì•„ì§ gpuì˜ vramì˜ ìš©ëŸ‰ì´ ramë³´ë‹¤ í•œì°¸ ìž‘ì•„ì„œê·¸ëŸ¼
-	
+	void release(); // ±×¸®´Â ¹æ½ÄÀÌ ¿©·¯°³ÀÏ¶§ ¿©·¯°³¸¦ ÇÒ´çÇÏ´Â°Ô ¾Æ´Ï¶ó
+					// ±×¸®´Â ¹æ½ÄÀ» º¯°æÇÒ¶§ ÇÒ´çµÈ °÷¿¡ ±×¸®´Â ¹æ½ÄÀÇ °´Ã¼µéÀ» ±³Ã¼¸¸ ÇØÁØ´Ù -> ¿À·¡°É¸²
+					// ¾ÆÁ÷ gpuÀÇ vramÀÇ ¿ë·®ÀÌ ramº¸´Ù ÇÑÂü ÀÛ¾Æ¼­±×·³
+
 	void Render();
 
 	// MultiRenderTargets
-	void CreateRenderTargets(); 
+	void CreateRenderTargets();
 	void ClearRenderTargets();
 
 	// Renderer
@@ -221,6 +233,8 @@ namespace renderer
 	void BindLight();
 	void BindNoiseTexture();
 	void CopyRenderTarget();
+
+	void BindPBRProprerties();
 
 	// mesh create
 	void CreatePointMesh();
@@ -231,5 +245,9 @@ namespace renderer
 	void CreateCubeMesh();
 	void CreateSphereMesh();
 	void CreateCapsuleMesh();
+
+	void CreateMaterial(const std::wstring& textureKey, const std::wstring& shaderKey, const std::wstring& keyName, eRenderingMode eRenderMode = eRenderingMode::Transparent);
+	void CreateUIMaterial();
+	void CreateUITexture();
 }
 

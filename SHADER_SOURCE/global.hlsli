@@ -5,7 +5,6 @@
 struct VTX_IN
 {
     float4 vPos : POSITION;
-    float4 vColor : COLOR;
     float2 vUV : TEXCOORD;
 };
 
@@ -13,7 +12,6 @@ struct VTX_OUT
 {
     float4 vPos : SV_Position;
     float4 vWorldPos : POSITION;
-    float4 vColor : COLOR;
     float2 vUV : TEXCOORD;
 };
 
@@ -60,38 +58,57 @@ float4 DecodeColor(float _value)
 }
 
 
-float4 TextureMapping_albedo(float2 uv)
+float4 TextureMapping_albedo(float2 uv, float pixelToCam)
 {
+    float mip = pixelToCam / 10.f;
+    if (mip > 10)
+        mip = 10;
+
     return colorTexture.SampleLevel(linearSampler, uv, 0.f);
 }
 
 
-// 현재 픽셀의 normal을 얻고 viewspace로 변경한다.
-float3 TextureMapping_normal(float2 uv, float3 viewTangent, float3 viewNormal, float3 viewBiNormal)
+float3 TextureMapping_normal(float2 uv, float3 Tangent, float3 Normal, float pixelToCam)
 {
-    float3 result = normalTexture.SampleLevel(linearSampler, uv, 0.f).rgb;
+    float3 normal = normalTexture.SampleLevel(linearSampler, uv, 0.f).rgb;    
+    normal = (normal * 2.f) - 1.f;
     
-    result.xyz = normalize((result.xyz * 2.f).xyz - 1.f);
+    // 마리오가 아마 vulkan으로 만든거라서 노말 y 뒤집어줘야할거임
+    normal.y = -normal.y;
+    
+    float3 N = Normal;
+    float3 T = normalize(Tangent - dot(Tangent, N) * N);
+    float3 B = cross(N, T);
         
-
-    float3x3 matTBN =
-    {
-        viewTangent,
-        viewBiNormal,
-        viewNormal,
-    };
-
-    result = normalize(float3(mul(result.xyz, matTBN)));
-    
-    return result;
+    float3x3 TBN = {T,B,N};
+        
+    return normalize(mul(normal, TBN));
 }
 
-float TextureMapping_metallic(float2 uv)
+float TextureMapping_metallic(float2 uv, float pixelToCam)
 {
-    return saturate(metallicTexture.SampleLevel(linearSampler, uv, 0.f).r);
+    return metallicTexture.Sample(linearSampler, uv).r;
 }
 
-float TextureMapping_roughness(float2 uv)
+float TextureMapping_roughness(float2 uv, float pixelToCam)
 {
-    return saturate(roughnessTexture.SampleLevel(linearSampler, uv, 0.f).r);
+    return roughnessTexture.Sample(linearSampler, uv).r;
+}
+
+float3 TextureMapping_emissive(float2 uv, float pixelToCam)
+{
+    return emissiveTexture.Sample(linearSampler, uv).rgb;
+}
+
+
+// 3d위치나 방향을 구면 매핑 좌표로 변환합니다.
+// 해당 좌표를 텍스처의 샘플링에 사용합니다.
+
+static const float2 invAtan = float2(0.1591, 0.3183);
+float2 SampleSphericalMap(float3 v)
+{
+    float2 uv = float2(atan2(v.z, v.x), asin(v.y));
+    uv *= invAtan;
+    uv += 0.5;
+    return uv;
 }

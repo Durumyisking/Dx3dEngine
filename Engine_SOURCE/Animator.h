@@ -2,8 +2,6 @@
 #include "Component.h"
 #include "Animation.h"
 
-
-
 class Animator : public Component
 {
 public:

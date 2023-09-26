@@ -1,6 +1,6 @@
 
 // noise
-Texture2D NoiseTexture : register(t16);
+Texture2D NoiseTexture : register(t17);
 
 
 cbuffer Noise : register(b7)

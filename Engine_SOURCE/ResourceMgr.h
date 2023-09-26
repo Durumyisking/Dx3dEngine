@@ -16,7 +16,7 @@ public:
 	{
 		std::map<std::wstring, Resource*>::iterator iter = mResources.find(key);
 
-		// ì´ë¯¸ ë™ì¼í•œ í‚¤ê°’ìœ¼ë¡œ ë‹¤ë¥¸ ë¦¬ì†ŒìŠ¤ê°€ ë¨¼ì € ë“±ë¡ë˜ì–´ ìˆì—ˆë‹¤.
+		// ÀÌ¹Ì µ¿ÀÏÇÑ Å°°ªÀ¸·Î ´Ù¸¥ ¸®¼Ò½º°¡ ¸ÕÀú µî·ÏµÇ¾î ÀÖ¾ú´Ù.
 		if (iter != mResources.end())
 		{
 			return dynamic_cast<T*>(iter->second);
@@ -44,17 +44,44 @@ public:
 	template <typename T>
 	T* Load(const std::wstring& key, const std::wstring& path)
 	{
-		// í‚¤ê°’ìœ¼ë¡œ íƒìƒ‰
+		// Å°°ªÀ¸·Î Å½»ö
 		T* resource = GETSINGLE(ResourceMgr)->Find<T>(key);
 		if (nullptr != resource)
 		{
-			// í•´ë‹¹í‚¤ë¡œ ì´ë¯¸ ë¡œë”©ëœê²Œ ìˆìœ¼ë©´ í•´ë‹¹ ë¦¬ì†ŒìŠ¤ë¥¼ ë°˜í™˜
+			// ÇØ´çÅ°·Î ÀÌ¹Ì ·ÎµùµÈ°Ô ÀÖÀ¸¸é ÇØ´ç ¸®¼Ò½º¸¦ ¹İÈ¯
 			return resource;
 		}
 
-		// í•´ë‹¹ í‚¤ë¡œ ë¡œë”©ëœ ë¦¬ì†ŒìŠ¤ê°€ ì—†ë‹¤.
+		// ÇØ´ç Å°·Î ·ÎµùµÈ ¸®¼Ò½º°¡ ¾ø´Ù.
 		resource = new T();
 		if (FAILED(resource->Load(path)))
+		{
+			MessageBox(nullptr, L"Image Load Failed!", L"Error", MB_OK);
+			assert(false);
+			return nullptr;
+		}
+
+		resource->SetKey(key);
+		resource->SetPath(path);
+		mResources.insert(std::make_pair(key, resource));
+
+		return resource;
+	}
+
+	template <typename T>
+	T* LoadFullpath(const std::wstring& key, const std::wstring& path)
+	{
+		// Å°°ªÀ¸·Î Å½»ö
+		T* resource = GETSINGLE(ResourceMgr)->Find<T>(key);
+		if (nullptr != resource)
+		{
+			// ÇØ´çÅ°·Î ÀÌ¹Ì ·ÎµùµÈ°Ô ÀÖÀ¸¸é ÇØ´ç ¸®¼Ò½º¸¦ ¹İÈ¯
+			return resource;
+		}
+
+		// ÇØ´ç Å°·Î ·ÎµùµÈ ¸®¼Ò½º°¡ ¾ø´Ù.
+		resource = new T();
+		if (FAILED(resource->LoadFullpath(path)))
 		{
 			MessageBox(nullptr, L"Image Load Failed!", L"Error", MB_OK);
 			assert(false);
@@ -87,12 +114,14 @@ public:
 	}
 
 	Material* CreateMaterial(std::wstring texture, eTextureSlot slot, std::wstring shaderName, std::wstring materialName);
+	Material* CreateMaterial(std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring shaderName, std::wstring materialName);
 	Material* CreateMaterial(std::wstring textureColor, std::wstring textureNormal, std::wstring textureMetal, std::wstring textureRoughness, std::wstring textureEmissive, std::wstring shaderName, std::wstring materialName);
 
+	void Initalize();
 	void Release();
 private:
 	std::map<std::wstring, Resource* > mResources;

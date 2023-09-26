@@ -9,6 +9,12 @@
 #include "TimeMgr.h"
 #include "Layer.h"
 #include "ResourceMgr.h"
+#include "InputMgr.h"
+
+#include "Physical.h"
+#include "Object.h"
+
+#include "PhysXRayCast.h"
 
 extern Application application;
 
@@ -17,6 +23,7 @@ extern Application application;
 Matrix Camera::View = Matrix::Identity;
 Matrix Camera::InverseView = Matrix::Identity;
 Matrix Camera::Projection = Matrix::Identity;
+Matrix Camera::SkyFov = Matrix::Identity;
 
 Camera::Camera()
 	: Component(eComponentType::Camera)
@@ -33,6 +40,9 @@ Camera::Camera()
 	, mFarDist(0.f)
 	, mTime(0.3f)
 	, mSmooth(false)
+	, mRaycastHit{}
+	, mRayMaxDist(5.f)
+	, mRayMaxHit(1)
 {
 	EnableLayerMasks();
 }
@@ -41,20 +51,20 @@ Camera::~Camera()
 }
 void Camera::Initialize()
 {
-	RegisterCameraInRenderer();
+	//RegisterCameraInRenderer();
 }
 
 void Camera::Update()
 {
-	if (mTargetObj)
+	if (mTargetObj) // Å¸°Ù ¿ÀºêÁ§Æ®¸¦ ÂÑ¾Æ°¨
 	{
 
-		Vector2 v2Start = Vector2(GetOwner()->GetPos().x,  GetOwner()->GetPos().y);
-		Vector2 v2Dest = Vector2(mTargetObj->GetPos().x,  mTargetObj->GetPos().y);
+		Vector2 v2Start = Vector2(GetOwner()->GetPos().x, GetOwner()->GetPos().y);
+		Vector2 v2Dest = Vector2(mTargetObj->GetPos().x, mTargetObj->GetPos().y);
 
 		mFarDist = (v2Start - v2Dest).Length();
 
-		if(mSmooth)
+		if (mSmooth)
 			mCamSpeed = mFarDist / mTime;
 
 		if (mFarDist < 0.001f)
@@ -64,7 +74,6 @@ void Camera::Update()
 		Dir.z = GetOwner()->GetPos().z;
 		(Dir).Normalize(mCamDir);
 	}
-
 }
 
 void Camera::FixedUpdate()
@@ -83,16 +92,42 @@ void Camera::Render()
 
 	sortGameObjects();
 
+	// shadow	
+	Transform directionLighttr = *(renderer::lights[0]->GetOwner()->GetComponent<Transform>());
+	directionLighttr.SetRotation(DecomposeRotMat(directionLighttr.GetWorldRotationMatrix()));
+
+	ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
+
+	LightMatrixCB data = {};
+	data.lightView = CreateViewMatrix(&directionLighttr);
+	data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, static_cast<float>(application.GetWidth()), static_cast<float>(application.GetHeight()), 1.0f, 1000.0f);
+	lightCB->SetData(&data);
+	lightCB->Bind(eShaderStage::VS);	
+	lightCB->Bind(eShaderStage::PS);
+
+	renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->OMSetRenderTarget();
+	renderShadow();
+
+	// Forward Render
+	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+	renderOpaque();
+	renderCutout();
+	renderTransparent();
+
 	// Deferred Opaque Render 
 	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
 	renderDeferred();
 
 	// Deferred light Render
 	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
+
 	for (Light* light : renderer::lights)
 	{
 		light->Render();
 	}
+
+	if (mLayerMask[static_cast<UINT>(eLayerType::UI)])
+		return;
 
 	//SwapChain
 	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
@@ -103,28 +138,25 @@ void Camera::Render()
 	rectMesh->BindBuffer();
 	mergeMaterial->Bind();
 	rectMesh->Render();
-	
-	// Forward Render
-	renderOpaque();
-	renderCutout();
-	renderTransparent();
-}	
+
+}
 
 void Camera::CreateViewMatrix()
 {
 	Transform* transform = GetOwner()->GetComponent<Transform>();
-		
-	// ì´ë™ì •ë³´
+
+	// ÀÌµ¿Á¤º¸
 	Vector3 translation = transform->GetPosition();
 
-	// create view translation matrix
-	mView = Matrix::Identity;
-	mView *= Matrix::CreateTranslation(-translation);
-		
-	// íšŒì „ì •ë³´
+	
+	// È¸ÀüÁ¤º¸
 	Vector3 up = transform->Up();
 	Vector3 right = transform->Right();
 	Vector3 foward = transform->Forward();
+	
+	//create view translation matrix
+	mView = Matrix::Identity;
+	mView *= Matrix::CreateTranslation(-translation);
 
 	Matrix viewRotate;
 	viewRotate._11 = right.x; 		viewRotate._12 = up.x;		 viewRotate._13 = foward.x;
@@ -134,7 +166,28 @@ void Camera::CreateViewMatrix()
 	mView *= viewRotate;
 
 }
-		
+
+Matrix Camera::CreateViewMatrix(Transform* tr)
+{
+	Matrix view = Matrix::Identity;
+	//Vector3 up = Vector3(0.f, 1.f, 0.f);
+	Vector3 up = tr->Up();
+	Vector3 right = tr->Right();
+	Vector3 forward = tr->Forward();
+
+	Vector3 pos = forward * -50.f;
+
+	view *= Matrix::CreateTranslation(-pos);
+
+	view *= XMMatrixLookToLH(pos, forward, up);	
+
+	
+	return view;
+
+	////»õ·Î Àû¿ëÇÒ È¸ÀüÇà·Ä
+	//mView = XMMatrixLookAtLH(translation, foward, up);
+}
+
 void Camera::CreateProjectionMatrix()
 {
 	RECT winRect;
@@ -144,20 +197,45 @@ void Camera::CreateProjectionMatrix()
 	float height = (winRect.bottom - winRect.top) * mScale;
 	mAspectRatio = width / height;
 
+	SkyFov = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f , mAspectRatio, mNear, mFar);
+
 
 	if (mType == eProjectionType::Perspective)
 	{
 		mProjection = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f, mAspectRatio, mNear, mFar);
-	}
+	}	
 	else // (mType == eProjectionType::Orthographic)
 	{
-		mProjection = Matrix::CreateOrthographic(width , height , mNear, mFar);
+		mProjection = Matrix::CreateOrthographic(width, height, mNear, mFar);
 	}
 
 }
 
+Matrix Camera::CreateProjectionMatrix(eProjectionType type, float width, float height, float Near, float Far)
+{
+	Matrix proj = Matrix::Identity;
+
+	float AspectRatio = width / height;
+	if (mType == eProjectionType::Perspective)
+	{
+		proj = Matrix::CreatePerspectiveFieldOfView
+		(
+			XM_PI / 4.0f
+			, AspectRatio
+			, Near
+			, Far
+		);
+	}
+	else
+	{
+		proj = Matrix::CreateOrthographicLH(width /*/ 100.0f*/, height /*/ 100.0f*/, Near, Far);
+	}
+
+	return proj;
+}
+
 void Camera::RegisterCameraInRenderer()
-{	
+{
 	UINT type = static_cast<UINT>(GETSINGLE(SceneMgr)->GetActiveScene()->GetType());
 	renderer::Cameras[type].push_back(this);
 }
@@ -176,6 +254,79 @@ void Camera::SetTarget(GameObj* target)
 
 	(Dir).Normalize(mCamDir);
 }
+
+bool Camera::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance)
+{
+
+
+	if (this == renderer::mainCamera)
+	{
+		Physical* physical = gameObject->GetComponent<Physical>();
+		if (!physical)
+		{
+			return false;
+		}
+		eGeometryType geometryType = physical->GetGeometryType();
+		PxTransform pxTransform = gameObject->GetComponent<Transform>()->GetPxTransform();
+
+		switch (geometryType)
+		{
+		case eGeometryType::Box:
+		{
+			PxBoxGeometry boxGeom = physical->GetGeometries()->boxGeom;
+			bool bResult = PxGeometryQuery::raycast(
+				convert::Vector3ToPxVec3(origin),
+				convert::Vector3ToPxVec3(dir),
+				boxGeom, pxTransform,
+				maxDistance,
+				PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+				mRayMaxHit,
+				&mRaycastHit);
+
+			return bResult;
+		}
+		break;
+
+		case eGeometryType::Capsule:
+		{
+			PxCapsuleGeometry capsuleGeom = physical->GetGeometries()->capsuleGeom;
+			bool bResult = PxGeometryQuery::raycast(
+				convert::Vector3ToPxVec3(origin),
+				convert::Vector3ToPxVec3(dir),
+				capsuleGeom, pxTransform,
+				maxDistance,
+				PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+				mRayMaxHit,
+				&mRaycastHit);
+
+			return bResult;
+		}
+		break;
+
+		case eGeometryType::Sphere:
+		{
+			PxSphereGeometry sphereGeom = physical->GetGeometries()->sphereGeom;
+
+			bool bResult = PxGeometryQuery::raycast(
+				convert::Vector3ToPxVec3(origin),
+				convert::Vector3ToPxVec3(dir),
+				sphereGeom, pxTransform,
+				maxDistance,
+				PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+				mRayMaxHit,
+				&mRaycastHit);
+
+			return bResult;
+		}
+		break;
+		}
+
+		return false;
+	}
+
+	return false;
+}
+
 
 void Camera::sortGameObjects()
 {
@@ -204,6 +355,25 @@ void Camera::sortGameObjects()
 		}
 	}
 
+}
+
+void Camera::renderShadow()
+{
+	for (GameObj* obj : mDeferredOpaqueGameObjects)
+	{
+		if (obj == nullptr)
+			continue;
+
+		obj->PrevRender();
+	}
+
+	for (GameObj* obj : mOpaqueGameObjects)
+	{
+		if (obj == nullptr)
+			continue;
+
+		obj->PrevRender();
+	}
 }
 
 void Camera::renderDeferred()
@@ -245,7 +415,7 @@ void Camera::renderTransparent()
 	{
 		if (renderPassCheck(obj))
 		{
-			obj->Render();				
+			obj->Render();
 		}
 	}
 }
@@ -267,8 +437,14 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 {
 	BaseRenderer* renderer = obj->GetComponent<BaseRenderer>();
 
+	if ( eLayerType::CubeMap== obj->GetLayerType())
+	{
+		obj->Render();
+	}
+
 	if (nullptr == renderer)
 		return;
+
 
 	Material* material = renderer->GetMaterial();
 
@@ -314,6 +490,22 @@ bool Camera::renderPassCheck(GameObj* obj)
 			return false;
 		}
 	}
-		
+
 	return true;
+}
+
+void Camera::SetLayerMaskOn(eLayerType type)
+{
+	if (mLayerMask.test((UINT)type))
+		return;
+
+	mLayerMask.flip((UINT)type);
+}
+
+void Camera::SetLayerMaskOFF(eLayerType type)
+{
+	if (!mLayerMask.test((UINT)type))
+		return;
+
+	mLayerMask.flip((UINT)type);
 }

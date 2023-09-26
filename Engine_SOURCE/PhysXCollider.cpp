@@ -9,12 +9,15 @@ PhysXCollider::PhysXCollider()
 	: Component(eComponentType::Collider)
 	, mCallback(nullptr)
 	, mPhysical(nullptr)
-	, mTransform{}
+	, mPxTransform{}
 	, mRaycastHit{}
 	, mSweepHit	 {}
 	, mOverlapHit{}
 	, mFilterData{}
-
+	, mRayMaxDist(5.f)
+	, mRayMaxHit (1)
+	, mPenetDir{}
+	, mPenetDepth(0.f)
 {
 }
 PhysXCollider::~PhysXCollider()
@@ -22,7 +25,7 @@ PhysXCollider::~PhysXCollider()
 }
 void PhysXCollider::Initialize()
 {
-	mTransform = GetOwner()->GetComponent<Transform>()->GetPxTransform();
+	mPxTransform = GetOwner()->GetComponent<Transform>()->GetPxTransform();
 	mFilterData.word0 = 1 << static_cast<unsigned __int32>(GetOwner()->GetLayerType()); // 충돌 레이어 정해주는듯
 
 	// 렌더링할 물체의 모양을 가진 콜라이더
@@ -33,7 +36,7 @@ void PhysXCollider::Initialize()
 		createDebugGeometry(mPhysical->GetGeometries());
 		mPhysical->GetShape()->setSimulationFilterData(mFilterData);
 	}
-	//mCallback = PhysicsMgr::GetInstance()->GetDispatcher()->GetSimulationCallback();
+	mCallback = PhysicsMgr::GetInstance()->GetDispatcher()->GetSimulationCallback();
 }
 void PhysXCollider::Update()
 {
@@ -61,6 +64,8 @@ void PhysXCollider::FixedUpdate()
 	case physx::PxGeometryType::eCAPSULE:
 		scale.x = shape->getGeometry().capsule().radius;
 		scale.y = shape->getGeometry().capsule().halfHeight;
+		scale.z = shape->getGeometry().capsule().radius;
+		colType = eColliderType::Capsule;
 		break;
 	case physx::PxGeometryType::eBOX:
 		scale = shape->getGeometry().box().halfExtents;
@@ -97,8 +102,10 @@ void PhysXCollider::OnCollisionEnter(PhysXCollider* otherCollider)
 {
 	GetOwner()->OnCollisionEnter(otherCollider->GetOwner());
 }
+
 void PhysXCollider::OnCollisionExit(PhysXCollider* otherCollider)
 {
+	GetOwner()->OnCollisionEnter(otherCollider->GetOwner());
 }
 
 void PhysXCollider::OnTriggerEnter(PhysXCollider* otherCollider)
@@ -107,10 +114,200 @@ void PhysXCollider::OnTriggerEnter(PhysXCollider* otherCollider)
 }
 void PhysXCollider::OnTriggerStay(PhysXCollider* otherCollider)
 {
+	GetOwner()->OnTriggerStay(otherCollider->GetOwner());
 }
 void PhysXCollider::OnTriggerExit(PhysXCollider* otherCollider)
 {
 	GetOwner()->OnTriggerExit(otherCollider->GetOwner());
+}
+
+bool PhysXCollider::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance)
+{
+	Physical* physical = gameObject->GetComponent<Physical>();
+	if (!physical)
+	{
+		return false;
+	}
+	eGeometryType geometryType = physical->GetGeometryType();
+	PxTransform pxTransform = gameObject->GetComponent<Transform>()->GetPxTransform();
+
+	switch (geometryType)
+	{
+	case eGeometryType::Box:
+	{
+		PxBoxGeometry boxGeom = physical->GetGeometries()->boxGeom;
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			boxGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		return bResult;
+	}
+	break;
+
+	case eGeometryType::Capsule:
+	{
+		PxCapsuleGeometry capsuleGeom = physical->GetGeometries()->capsuleGeom;
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			capsuleGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		return bResult;
+	}
+	break;
+
+	case eGeometryType::Sphere:
+	{
+		PxSphereGeometry sphereGeom = physical->GetGeometries()->sphereGeom;
+
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			sphereGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		return bResult;
+	}
+	break;
+	}
+
+	return false;
+}
+
+Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
+{
+	eGeometryType eGeometryType = GetPhysical()->GetGeometryType();
+	if (!gameObject->GetPhysical())
+		return Vector3::Zero;
+
+	switch (eGeometryType)
+	{
+	case eGeometryType::Box:
+	{
+		PxBoxGeometry boxGeom = GetPhysical()->GetGeometries()->boxGeom;
+		PxTransform otherTransform = gameObject->GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose();
+		bool bIsPenet = false;
+		switch (gameObject->GetPhysical()->GetGeometryType())
+		{
+		case eGeometryType::Box:
+		{
+			PxBoxGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->boxGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, boxGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		case eGeometryType::Capsule:
+		{
+			PxCapsuleGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->capsuleGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, boxGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		case eGeometryType::Sphere:
+		{
+			PxSphereGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->sphereGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, boxGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		default:
+			break;
+		}
+	}
+	break;
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	case eGeometryType::Capsule:
+	{
+		PxCapsuleGeometry capsuleGeom = GetPhysical()->GetGeometries()->capsuleGeom;
+		PxTransform otherTransform = gameObject->GetTransform()->GetPxTransform();
+
+		bool bIsPenet = false;
+		switch (gameObject->GetPhysical()->GetGeometryType())
+		{
+		case eGeometryType::Box:
+		{
+			PxBoxGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->boxGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, capsuleGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		case eGeometryType::Capsule:
+		{
+			PxCapsuleGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->capsuleGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, capsuleGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		case eGeometryType::Sphere:
+		{
+			PxSphereGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->sphereGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, capsuleGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		default:
+			break;
+		}
+	}
+	break;
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	case eGeometryType::Sphere:
+	{
+		PxTransform otherTransform = gameObject->GetTransform()->GetPxTransform();
+		PxSphereGeometry sphereGeom = GetPhysical()->GetGeometries()->sphereGeom;
+		bool bIsPenet = false;
+		switch (gameObject->GetPhysical()->GetGeometryType())
+		{
+		case eGeometryType::Box:
+		{
+			PxBoxGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->boxGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, sphereGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		case eGeometryType::Capsule:
+		{
+			PxCapsuleGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->capsuleGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, sphereGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		case eGeometryType::Sphere:
+		{
+			PxSphereGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->sphereGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, sphereGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		default:
+			break;
+		}	
+	}
+	break;
+	}
+
+	return Vector3::Zero;
 }
 
 void PhysXCollider::createDebugGeometry(std::shared_ptr<Geometry> geometries)

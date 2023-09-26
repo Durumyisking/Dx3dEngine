@@ -4,10 +4,7 @@
 #include "Texture.h"
 #include "Renderer.h"
 
-
 using namespace math;
-;
-
 
 
 class Animation : public DruEntity

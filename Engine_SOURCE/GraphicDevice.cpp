@@ -14,80 +14,89 @@
 
 extern Application application;
 
-
-
-
 GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 {
 	/*
 			<summary>
-			1. Device ì™€ SwapChainë¥¼ ìƒì„±í•œë‹¤.
-			2. ë°±ë²„í¼ì— ì‹¤ì œë¡œ ë Œë”ë§í•  ë Œë”íƒ€ê²Ÿ ë·°ë¥¼ ìƒì„±í•œë‹¤.
-			3. í™”ë©´ì„ í´ë¦¬ì–´ í•´ì¤˜ì•¼í•œë‹¤. ë·°í¬íŠ¸ë¥¼ ìƒì„±í•´ì¤˜ì•¼ í•œë‹¤.
-			4. ë§¤í”„ë ˆìž„ë§ˆë‹¤ ìœ„ì—ì„œ ìƒì„±í•œ ë Œë”íƒ€ê²Ÿ ë·°ì— ë Œë”ë§í•´ì¤€ë‹¤.
-			5. Swapchainì„ ì´ìš©í•˜ì—¬ ìµœì¢… ë””ë°”ì´ìŠ¤(ë””ìŠ¤í”Œë ˆì´)ì— í™”ë©´ì„ ê·¸ë ¤ì¤€ë‹¤.
+			1. Device ¿Í SwapChain¸¦ »ý¼ºÇÑ´Ù.
+			2. ¹é¹öÆÛ¿¡ ½ÇÁ¦·Î ·»´õ¸µÇÒ ·»´õÅ¸°Ù ºä¸¦ »ý¼ºÇÑ´Ù.
+			3. È­¸éÀ» Å¬¸®¾î ÇØÁà¾ßÇÑ´Ù. ºäÆ÷Æ®¸¦ »ý¼ºÇØÁà¾ß ÇÑ´Ù.
+			4. ¸ÅÇÁ·¹ÀÓ¸¶´Ù À§¿¡¼­ »ý¼ºÇÑ ·»´õÅ¸°Ù ºä¿¡ ·»´õ¸µÇØÁØ´Ù.
+			5. SwapchainÀ» ÀÌ¿ëÇÏ¿© ÃÖÁ¾ µð¹ÙÀÌ½º(µð½ºÇÃ·¹ÀÌ)¿¡ È­¸éÀ» ±×·ÁÁØ´Ù.
 	*/
 
 	GetDevice() = this;
 
-	HWND hwnd = application.GetHwnd(); // ìœˆë„ìš° í•¸ë“¤ ì–»ì–´ì˜´
+	HWND hwnd = application.GetHwnd(); // À©µµ¿ì ÇÚµé ¾ò¾î¿È
 				
 	// Device, Device Context
-	UINT DeviceFlag = D3D11_CREATE_DEVICE_DEBUG; // ë””ë²„ê·¸ëª¨ë“œë¡œ ë§Œë“¤ê±°ìž„ ë¦´ë¦¬ì¦ˆëª¨ë“œëŠ” 0
+	UINT DeviceFlag = D3D11_CREATE_DEVICE_DEBUG; // µð¹ö±×¸ðµå·Î ¸¸µé°ÅÀÓ ¸±¸®Áî¸ðµå´Â 0
 	D3D_FEATURE_LEVEL FeatureLevel = (D3D_FEATURE_LEVEL)0;
 
-	// ê·¸ëƒ¥ bool í˜• ë°˜í™˜ê°’ê³¼ ê°™ìŒ SUCCEEDED / FAILEDë¡œ ë‚˜ë‰¨
-	// í•¨ìˆ˜ ë°˜í™˜ ì„±ê³µí•˜ë©´ suc ì•„ë‹ˆë©´ fail ë‚˜ì˜´
+	// ±×³É bool Çü ¹ÝÈ¯°ª°ú °°À½ SUCCEEDED / FAILED·Î ³ª´¸
+	// ÇÔ¼ö ¹ÝÈ¯ ¼º°øÇÏ¸é suc ¾Æ´Ï¸é fail ³ª¿È
 	HRESULT hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, DeviceFlag
 		, nullptr, 0, D3D11_SDK_VERSION, mDevice.GetAddressOf()
 		, &FeatureLevel, mContext.GetAddressOf());
 
+	// nX MSAA Áö¿øÇÏ´ÂÁö È®ÀÎ
+	mDevice->CheckMultisampleQualityLevels(DXGI_FORMAT_R8G8B8A8_UNORM, 4, &mNumQualityLevels); // ÀÏ´Ü 4·Î ¼³Á¤
+	if (mNumQualityLevels <= 0) {
+		std::cout << "MSAA not supported." << std::endl;
+	}
+
+
 	// SwapChain
 	DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
 
-	swapChainDesc.OutputWindow = hwnd; // ë Œë”ë  ìœˆë„ìš°ì˜ í•¸ë“¤
-	swapChainDesc.Windowed = true; // ì°½ëª¨ë“œ ì „ì²´í™”ë©´
-	swapChainDesc.BufferCount = 2; // ì‚¬ìš©í•  ë Œë”ë§ ë²„í¼ê°œìˆ˜ ìµœëŒ€ 8
+	swapChainDesc.OutputWindow = hwnd; // ·»´õµÉ À©µµ¿ìÀÇ ÇÚµé
+	swapChainDesc.Windowed = true; // Ã¢¸ðµå ÀüÃ¼È­¸é
+	swapChainDesc.BufferCount = 2; // »ç¿ëÇÒ ·»´õ¸µ ¹öÆÛ°³¼ö ÃÖ´ë 8
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; // ë²„í¼ ë Œë”íƒ€ê²Ÿìœ¼ë¡œ ì“¸ê±°ìž„
+	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; // ¹öÆÛ ·»´õÅ¸°ÙÀ¸·Î ¾µ°ÅÀÓ
 	swapChainDesc.BufferDesc.Width = application.GetWidth();
 	swapChainDesc.BufferDesc.Height = application.GetHeight();
-	swapChainDesc.BufferDesc.Format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM; // ì»¬ëŸ¬ í¬ë©§ íƒ€ìž…
-	swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;// í”„ë ˆìž„ ë¹„ìœ¨ ë¶„ìž
-	swapChainDesc.BufferDesc.RefreshRate.Denominator = 1; // í”„ë ˆìž„ ë¹„ìœ¨ ë¶„ëª¨
+	swapChainDesc.BufferDesc.Format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM; // ÄÃ·¯ Æ÷¸ä Å¸ÀÔ unorm = unsigned normalized integer (0~255¸¦ 0~1.0 À¸·Î º»´Ù´Â ¶æ)
+	swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;// ÇÁ·¹ÀÓ ºñÀ² ºÐÀÚ
+	swapChainDesc.BufferDesc.RefreshRate.Denominator = 1; // ÇÁ·¹ÀÓ ºñÀ² ºÐ¸ð
 	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 	swapChainDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 
 	/*
-		sample desciptionì€ Direct3Dì˜ ë©€í‹° ìƒ˜í”Œë§ ì†ì„±ì„ ì •ì˜í•œë‹¤. 
-		ë©€í‹° ìƒ˜í”Œë§ì€ ë Œë”ëœ í”½ì…€ë“¤ì˜ í‰ê·  ìƒ˜í”Œì„ ì‚¬ìš©í•˜ì—¬ ìµœì¢… ì»¬ëŸ¬ë¥¼ ì¢€ë” ë¶€ë“œëŸ½ê²Œ í•˜ëŠ” ê¸°ìˆ ì´ë‹¤.
-		ìƒ˜í”ŒëŸ¬ì™€ ê´€ë ¨ëœê²Œ ë§žë‹¤.
+		sample desciptionÀº Direct3DÀÇ ¸ÖÆ¼ »ùÇÃ¸µ ¼Ó¼ºÀ» Á¤ÀÇÇÑ´Ù. 
+		¸ÖÆ¼ »ùÇÃ¸µÀº ·»´õµÈ ÇÈ¼¿µéÀÇ Æò±Õ »ùÇÃÀ» »ç¿ëÇÏ¿© ÃÖÁ¾ ÄÃ·¯¸¦ Á»´õ ºÎµå·´°Ô ÇÏ´Â ±â¼úÀÌ´Ù.
+		»ùÇÃ·¯¿Í °ü·ÃµÈ°Ô ¸Â´Ù.
 	*/
-	swapChainDesc.SampleDesc.Count = 1;
-	swapChainDesc.SampleDesc.Quality = 0;
+	if (mbUseMSAA && mNumQualityLevels)
+	{
+		swapChainDesc.SampleDesc.Count = 4; // how many multisamples
+		swapChainDesc.SampleDesc.Quality = mNumQualityLevels - 1;
+	}
+	else
+	{
+		swapChainDesc.SampleDesc.Count = 1; 
+		swapChainDesc.SampleDesc.Quality = 0;
+	}
 
 	if (!CreateSwapChain(&swapChainDesc))
 		return;
-
-	mRenderTargetTexture =  new Texture();
-
-	Microsoft::WRL::ComPtr <ID3D11Texture2D> renderTarget;
-	// Get rendertarget for swapchain
-	//						0ë²ˆ ë²„í¼ê°€ ë Œë”íƒ€ê²Ÿ							ë Œë”íƒ€ê²Ÿ í¬ì¸í„°
-	hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf());
-	mRenderTargetTexture->Create(renderTarget);
-	GETSINGLE(ResourceMgr)->Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
-	// Create Rendertarget View
-
-	mDepthStencilBufferTexture =  new Texture();
-	mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
-	GETSINGLE(ResourceMgr)->Insert<Texture>(L"DepthStencilBufferTexture", mDepthStencilBufferTexture);
 	
+	CreateDefaultBuffers();
+
 	// Setting Viewport		
 	RECT winRect;
 	GetClientRect(application.GetHwnd(), &winRect);
-	mViewPort = { 0.f, 0.f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.f, 1.f };
+	ZeroMemory(&mViewPort, sizeof(mViewPort));
+	mViewPort.TopLeftX = 0.f;
+	mViewPort.TopLeftY = 0.f;
+	mViewPort.Width = FLOAT(winRect.right - winRect.left);
+	mViewPort.Height = FLOAT(winRect.bottom - winRect.top);
+	mViewPort.MinDepth = 0.f;
+	mViewPort.MaxDepth = 1.f;
+
 	BindViewports(&mViewPort);
 
 	// RenderTarget Set
@@ -105,13 +114,13 @@ bool GraphicDevice::CreateSwapChain(DXGI_SWAP_CHAIN_DESC* pDesc)
 	Microsoft::WRL::ComPtr<IDXGIAdapter> pDXGIAdapter = nullptr; 
 	Microsoft::WRL::ComPtr<IDXGIFactory> pDXGIFactory = nullptr; 
 
-												// hwndê°™ì´ gpuì ‘ê·¼ê°ì²´
+												// hwnd°°ÀÌ gpuÁ¢±Ù°´Ã¼
 	if (FAILED(mDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)pDXGIDevice.GetAddressOf())))
 		return false;
-												// ë‚´ ê·¸ëž˜í”½ ì¹´ë“œ ì •ë³´ê°€ì ¸ì˜´
+												// ³» ±×·¡ÇÈ Ä«µå Á¤º¸°¡Á®¿È
 	if (FAILED(pDXGIDevice->GetParent(__uuidof(IDXGIAdapter), (void**)pDXGIAdapter.GetAddressOf())))
 		return false;
-												// ì „ì²´í™”ë©´ ì „í™˜ ê´€ë¦¬ (swapchain ë§Œë“¤ê¸° ìœ„í•´ í•„ìš”)
+
 	if (FAILED(pDXGIAdapter->GetParent(__uuidof(IDXGIFactory), (void**)pDXGIFactory.GetAddressOf())))
 		return false;
 
@@ -123,6 +132,7 @@ bool GraphicDevice::CreateSwapChain(DXGI_SWAP_CHAIN_DESC* pDesc)
 
 bool GraphicDevice::CreateTexture(D3D11_TEXTURE2D_DESC* pDesc, ID3D11Texture2D** ppTexture2D)
 {
+	// create Ä£±¸µéÀº gpu¿¡ ¸Þ¸ð¸®¸¦ ÇÒ´çÇÏ´Â °Í
 	if (FAILED(mDevice->CreateTexture2D(pDesc, nullptr, ppTexture2D)))
 		return false;
 
@@ -143,7 +153,7 @@ bool GraphicDevice::CreateInputLayout(D3D11_INPUT_ELEMENT_DESC* pDesc, UINT numE
 bool GraphicDevice::CreateBuffer(D3D11_BUFFER_DESC* pDESC, D3D11_SUBRESOURCE_DATA* data, ID3D11Buffer** buffer)
 {
 	// ram -> gpu 
-	// input assembly ë‹¨ê³„ë¡œ ë²„í¼ ë„˜ê²¨ì£¼ëŠ”í–‰ìœ„
+	// input assembly ´Ü°è·Î ¹öÆÛ ³Ñ°ÜÁÖ´ÂÇàÀ§
 
 	if (FAILED(mDevice->CreateBuffer(pDESC, data, buffer)))
 		return false;
@@ -336,11 +346,11 @@ void GraphicDevice::CopyResource(ID3D11Resource* dstResource, ID3D11Resource* sr
 
 void GraphicDevice::BindBuffer(ID3D11Buffer* buffer, void* data, UINT size)
 {
-	// gpuì— ê°’ ì¤„ê±°ë‹ˆê¹Œ ë°ì´í„° ë°”ê¿”ì„œ ë³´ë‚´ì•¼í•´
+	// gpu¿¡ °ª ÁÙ°Å´Ï±î µ¥ÀÌÅÍ ¹Ù²ã¼­ º¸³»¾ßÇØ
 	D3D11_MAPPED_SUBRESOURCE sub = {};
-	mContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub); // ë‹¤ë¥¸ ì• ë“¤ì´ Bufferë¥¼ ì‚¬ìš© ëª»í•˜ê²Œ ì ìœ í•˜ë„ë¡ í•¨		
-	memcpy(sub.pData, data, size); // GPUë¡œ ê°’ ë³µì‚¬í•´ì¤Œ
-	mContext->Unmap(buffer, 0); // ì ìœ  í•´ì œ
+	mContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub); // ´Ù¸¥ ¾ÖµéÀÌ Buffer¸¦ »ç¿ë ¸øÇÏ°Ô Á¡À¯ÇÏµµ·Ï ÇÔ		
+	memcpy(sub.pData, data, size); // GPU·Î °ª º¹»çÇØÁÜ
+	mContext->Unmap(buffer, 0); // Á¡À¯ ÇØÁ¦	
 }
 
 void GraphicDevice::ClearConstantBuffer(ID3D11Buffer* buffer, UINT size)
@@ -453,9 +463,91 @@ void GraphicDevice::BindDepthStencilState(ID3D11DepthStencilState* depthStencilS
 	mContext->OMSetDepthStencilState(depthStencilState, 0);
 }
 
+void GraphicDevice::BindDepthStencilState(ID3D11DepthStencilState* depthStencilState, int depthINT)
+{
+	mContext->OMSetDepthStencilState(depthStencilState, depthINT);
+}
+
 void GraphicDevice::BindBlendState(ID3D11BlendState* blendState)
 {
 	mContext->OMSetBlendState(blendState, nullptr, 0xffffff);
+}
+
+void GraphicDevice::CreateDefaultBuffers()
+{
+	// create buffer
+
+	Microsoft::WRL::ComPtr <ID3D11Texture2D> backBuffer;
+	// Get rendertarget for swapchain
+	// Create Rendertarget View 
+	// swapChainÀÇ BackBuffer¸¦ RT·Î »ç¿ëÇÒ °ÍÀÌ´Ù.
+	// 
+	//						0¹ø ¹öÆÛ°¡ ¿ì¸® ´«¿¡ º¸¿©Áú ·»´õÅ¸°Ù
+	HRESULT hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)backBuffer.GetAddressOf()); // swapChainÀÇ DESC¸¦ RT¿¡ º¹»çÇÑ´Ù. (RTV ÇÃ·¡±× µþ·Áµé¾î°£´Ù)
+	if (backBuffer)
+	{
+		if (mRenderTargetTexture)
+		{
+			CreateRenderTargetView(backBuffer.Get(), NULL, mRenderTargetTexture->GetRTV().GetAddressOf());
+		}
+		else
+		{
+			mRenderTargetTexture = new Texture();
+			mRenderTargetTexture->Create(backBuffer); // ±×·¡¼­ ¿©±â¼­ RTV »ý¼ºÇÔ
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
+		}
+	}
+	//// FLOAT MSAA RenderTargetView/ShaderResourceView
+	ThrowIfFailed(mDevice->CheckMultisampleQualityLevels(
+		DXGI_FORMAT_R16G16B16A16_FLOAT, 4, &mNumQualityLevels));
+
+	D3D11_TEXTURE2D_DESC desc;
+	backBuffer->GetDesc(&desc);
+	desc.MipLevels = desc.ArraySize = 1;
+	desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	desc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+	desc.Usage = D3D11_USAGE_DEFAULT; // ½ºÅ×ÀÌÂ¡ ÅØ½ºÃç·ÎºÎÅÍ º¹»ç °¡´É
+	desc.MiscFlags = 0;
+	desc.CPUAccessFlags = 0;
+	if (mbUseMSAA && mNumQualityLevels)
+	{
+		desc.SampleDesc.Count = 4;
+		desc.SampleDesc.Quality = mNumQualityLevels - 1;
+	}
+	else
+	{
+		desc.SampleDesc.Count = 1;
+		desc.SampleDesc.Quality = 0;
+	}
+
+	if (mFloatBuffer)
+	{
+		CreateTexture(&desc, mFloatBuffer->GetTexture().GetAddressOf());
+
+		CreateShaderResourceView(mFloatBuffer->GetTexture().Get(), NULL, mFloatBuffer->GetSRV().GetAddressOf());
+
+		CreateRenderTargetView(mFloatBuffer->GetTexture().Get(), NULL, mFloatBuffer->GetRTV().GetAddressOf());
+	}
+	else
+	{
+		mFloatBuffer = new Texture();
+		mFloatBuffer->Create(backBuffer); // ±×·¡¼­ ¿©±â¼­ RTV »ý¼ºÇÔ
+		GETSINGLE(ResourceMgr)->Insert<Texture>(L"MSAATexture", mFloatBuffer);
+	}
+
+	if (mDepthStencilBufferTexture)
+	{
+		mDepthStencilBufferTexture->Create(application.GetWidth(), application.GetHeight(), DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT,
+			UINT(mbUseMSAA ? mNumQualityLevels : 0), D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
+	}
+	else
+	{
+		mDepthStencilBufferTexture = new Texture();
+		// depth ÀúÀå½Ã¿¡´Â 24ºñÆ® stencil¿¡´Â 8ºñÆ®
+		mDepthStencilBufferTexture->Create(application.GetWidth(), application.GetHeight(), DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT,
+			UINT(mbUseMSAA ? mNumQualityLevels : 0), D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
+		GETSINGLE(ResourceMgr)->Insert<Texture>(L"DepthStencilBufferTexture", mDepthStencilBufferTexture);
+	}
 }
 
 
@@ -463,8 +555,8 @@ void GraphicDevice::Clear()
 {
 	// clear target
 	FLOAT backgroundColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	mContext->ClearRenderTargetView(mRenderTargetTexture->GetRTV().Get(), backgroundColor); // ì§€ìš°ê³  ë‹¤ì‹œê·¸ë¦¼
-	mContext->ClearDepthStencilView(mDepthStencilBufferTexture->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0); // ê¹Šì´ë²„í¼ë„ í´ë¦¬ì–´ í•´ì¤˜ì•¼í•´
+	mContext->ClearRenderTargetView(mRenderTargetTexture->GetRTV().Get(), backgroundColor); // Áö¿ì°í ´Ù½Ã±×¸²
+	mContext->ClearDepthStencilView(mDepthStencilBufferTexture->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0); // ±íÀÌ¹öÆÛµµ Å¬¸®¾î ÇØÁà¾ßÇØ
 }
 
 void GraphicDevice::ClearRenderTargetView(ID3D11RenderTargetView* renderTargetView, const FLOAT colorRGBA[4])
@@ -477,13 +569,18 @@ void GraphicDevice::ClearDepthStencilView(ID3D11DepthStencilView* depthStencilVi
 	mContext->ClearDepthStencilView(depthStencilView, clearFlags, 1.0f, 0);
 }
 
-void GraphicDevice::AdjustViewPorts()
+void GraphicDevice::AdjustToDefaultResolutionViewPorts()
 {
 	RECT winRect;
 	GetClientRect(application.GetHwnd(), &winRect);
 	mViewPort = { 0.f, 0.f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.f, 1.f };
 	BindViewports(&mViewPort);
 	mContext->OMSetRenderTargets(1, mRenderTargetTexture->GetRTV().GetAddressOf(), mDepthStencilBufferTexture->GetDSV().Get());
+}
+
+void GraphicDevice::ChangeViewPorts(D3D11_VIEWPORT& viewPort)
+{
+	BindViewports(&viewPort);
 }
 
 void GraphicDevice::OMSetRenderTarget()
@@ -504,7 +601,7 @@ void GraphicDevice::Draw()
 }
 
 
-void GraphicDevice::DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation)
+void GraphicDevice::DrawIndexed(UINT indexCount, UINT startIndexLocation, INT baseVertexLocation	)
 {
 	mContext->DrawIndexed(indexCount, startIndexLocation, startIndexLocation);
 }
@@ -516,6 +613,14 @@ void GraphicDevice::DrawIndexedInstanced(UINT indexCountPerInstance, UINT instan
 
 void GraphicDevice::Present()
 {
-	mSwapChain->Present(0, 0); // ë‘ë²ˆì§¸ ì¸ìžëŠ” ìœˆë„ìš°ê°€ ì•„ì˜ˆ í‘œì‹œë˜ì§€ì•Šì„ë•Œ ë Œë”ë§ í• ê¹Œë§ê¹Œ ê³ ë¥´ëŠ”ê±°
-	//mSwapChain->Present(1, 0); // ìˆ˜ì§ë™ê¸°í™” on
+	mSwapChain->Present(0, 0); // µÎ¹øÂ° ÀÎÀÚ´Â À©µµ¿ì°¡ ¾Æ¿¹ Ç¥½ÃµÇÁö¾ÊÀ»¶§ ·»´õ¸µ ÇÒ±î¸»±î °í¸£´Â°Å
+	//mSwapChain->Present(1, 0); // ¼öÁ÷µ¿±âÈ­ on
+}
+
+Microsoft::WRL::ComPtr<ID3D11RenderTargetView> GraphicDevice::GetBackBufferRTV() const
+{
+	if(mRenderTargetTexture)
+		return mRenderTargetTexture->GetRTV(); 
+
+	return nullptr;
 }

@@ -136,8 +136,8 @@ void ParticleSystem::FixedUpdate()
 void ParticleSystem::Render() 
 {
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
-	mBuffer->BindSRV(eShaderStage::GS, 15);
-	mBuffer->BindSRV(eShaderStage::PS, 15);
+	mBuffer->BindSRV(eShaderStage::GS, static_cast<UINT>(eTextureSlot::NoiseTexture));
+	mBuffer->BindSRV(eShaderStage::PS, static_cast<UINT>(eTextureSlot::NoiseTexture));
 
 	GetMaterial()->Bind();
 	GetMesh()->RenderInstanced(mMaxParticles);
