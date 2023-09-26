@@ -4,7 +4,6 @@ class DynamicObject :
     public GameObj
 {
 public:
-
 	struct StateInfo {
 		std::set<UINT> mLockState;
 	};

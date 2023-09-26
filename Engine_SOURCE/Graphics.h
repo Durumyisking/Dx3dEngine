@@ -292,14 +292,3 @@ struct ParticleShared
 {
 	UINT activeCount;
 };
-
-struct Vertex
-{
-	math::Vector4 pos;
-	math::Vector2 uv;
-	math::Vector3 tangent;
-	math::Vector3 normal;
-
-	math::Vector4 BlendID;
-	math::Vector4 BlendWeight;
-};

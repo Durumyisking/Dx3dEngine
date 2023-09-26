@@ -10,6 +10,7 @@ CapEyeUI::CapEyeUI()
 }
 
 CapEyeUI::CapEyeUI(const std::wstring& key, eUIType type)
+	:mbEyeblink(false)
 {
 	SpriteRenderer* hudRender = this->AddComponent<SpriteRenderer>(eComponentType::UI);
 	hudRender->SetMeshByKey(L"Rectmesh");

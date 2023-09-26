@@ -3,8 +3,6 @@
 #include "Transform.h"
 #include "GameObj.h"
 
-#include "Physical.h"
-
 
 
 //static bool CompareGameObjectByZAxis(GameObj* a, GameObj* b)

@@ -25,6 +25,10 @@ public:
 
 	void CreatePlayerUI();
 private:
+	GameObj* mCamera;
+	GameObj* mUICamera;
+
+
 	Panal* mCoinPanal;
 	Panal* mLifePanal;
 	Panal* mLunaPanal;

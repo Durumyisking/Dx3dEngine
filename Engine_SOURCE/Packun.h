@@ -13,9 +13,7 @@ public:
 	virtual void FixedUpdate() final;
 
 	virtual void CaptureEvent() final;
-	virtual void DivideEvnet() final;
 
-	virtual void OnTriggerEnter(GameObj* gameObject) override;
 
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) final;

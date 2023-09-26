@@ -152,16 +152,7 @@ namespace object
 		return gameObj;
 	}
 
-	//이미 존재하는 오브젝트를 씬에 삽입
-	template <typename T>
-	static T* AddToScene(T* gameObj, enums::eLayerType layerType, Scene* scene)
-	{
-		Layer& layer = scene->GetLayer(layerType);
-		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
 
-		return gameObj;
-	}
 
 	static void DontDestroyOnLoad(GameObj* gameobj)
 	{

@@ -11,7 +11,6 @@ Monster::Monster()
 {
 	//StateInfoSetting
 	mStateInfo.resize(static_cast<int>(eMonsterState::Die) + 1);
-
 }
 
 Monster::~Monster()
@@ -37,8 +36,8 @@ void Monster::Initialize()
 
 void Monster::Update()
 {
-	CaptureObj::Update();
 	GameObj::Update();
+	CaptureObj::Update();
 }
 
 void Monster::FixedUpdate()

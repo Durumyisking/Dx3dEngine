@@ -34,7 +34,6 @@ void DynamicObject::FontRender()
 	GameObj::FontRender();
 }
 
-
 void DynamicObject::InsertLockState(UINT curState, UINT lockState)
 {
 	if (curState >= mStateInfo.size())

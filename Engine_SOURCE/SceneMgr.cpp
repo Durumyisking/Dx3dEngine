@@ -21,13 +21,13 @@ SceneMgr::~SceneMgr()
 
 void SceneMgr::Initialize()
 {
-	//mScenes[static_cast<UINT>(eSceneType::Title)] = new SceneTitle;
-	//mScenes[static_cast<UINT>(eSceneType::Title)]->SetType(eSceneType::Title);
+	mScenes[static_cast<UINT>(eSceneType::Title)] = new SceneTitle;
+	mScenes[static_cast<UINT>(eSceneType::Title)]->SetType(eSceneType::Title);
 
 	mScenes[static_cast<UINT>(eSceneType::Play)] = new ScenePlay;
 	mScenes[static_cast<UINT>(eSceneType::Play)]->SetType(eSceneType::Play);
 
-	mActiveScene = mScenes[static_cast<UINT>(eSceneType::Play)];
+	mActiveScene = mScenes[static_cast<UINT>(eSceneType::Title)];
 
 	for (UINT i = 0; i < static_cast<UINT>(eSceneType::End); i++)
 	{

@@ -225,9 +225,9 @@ void GoombaStateScript::Chase()
 			//mTransform->AddPhysicalRotation_Radian(Vector3(0.f, rotCosTheta, 0.f) * DT);
 
 			
-			Vector3 moveDir = -mTransform->WorldForward();
+			Vector3 moveDir = mTransform->WorldForward();
 			moveDir.y = 0.f;
-			mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
+			//mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
 		}
 	}
 }

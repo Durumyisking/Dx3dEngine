@@ -227,7 +227,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraScript.h" />
     <ClInclude Include="CapEyeUI.h" />
-    <ClInclude Include="CapStateScript.h" />
     <ClInclude Include="CaptureObj.h" />
     <ClInclude Include="CapUI.h" />
     <ClInclude Include="ChracterController.h" />
@@ -242,7 +241,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="CubeMap.h" />
     <ClInclude Include="CursorScript.h" />
-    <ClInclude Include="CustomPhysXMemory.h" />
     <ClInclude Include="def.h" />
     <ClInclude Include="druEnums.h" />
     <ClInclude Include="druMath.h" />
@@ -261,7 +259,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="GameNetServer.h" />
     <ClInclude Include="GameNetThread.h" />
     <ClInclude Include="GameObj.h" />
-    <ClInclude Include="GenericAnimator.h" />
     <ClInclude Include="GlobalPacket.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="GoombaStateScript.h" />
@@ -272,9 +269,10 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ImageUI.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Layer.h" />
+    <ClInclude Include="LifeUI.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Macro.h" />
-    <ClInclude Include="MarioCap.h" />
+    <ClInclude Include="MarioHead.h" />
     <ClInclude Include="MarioParts.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
@@ -305,7 +303,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PhysXRigidBody.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerScript.h" />
-    <ClInclude Include="PlayerStateScript.h" />
     <ClInclude Include="PostProcess.h" />
     <ClInclude Include="PostProcessRenderer.h" />
     <ClInclude Include="PostProcessWave.h" />
@@ -363,7 +360,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraScript.cpp" />
     <ClCompile Include="CapEyeUI.cpp" />
-    <ClCompile Include="CapStateScript.cpp" />
     <ClCompile Include="CaptureObj.cpp" />
     <ClCompile Include="CapUI.cpp" />
     <ClCompile Include="ChracterController.cpp" />
@@ -376,7 +372,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="CubeMap.cpp" />
     <ClCompile Include="CursorScript.cpp" />
-    <ClCompile Include="CustomPhysXMemory.cpp" />
     <ClCompile Include="druEnums.cpp" />
     <ClCompile Include="druMath.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
@@ -393,7 +388,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="GameNetServer.cpp" />
     <ClCompile Include="GameNetThread.cpp" />
     <ClCompile Include="GameObj.cpp" />
-    <ClCompile Include="GenericAnimator.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="GoombaStateScript.cpp" />
     <ClCompile Include="GraphicDevice.cpp" />
@@ -402,8 +396,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="LifeUI.cpp" />
     <ClCompile Include="Light.cpp" />
-    <ClCompile Include="MarioCap.cpp" />
+    <ClCompile Include="MarioHead.cpp" />
     <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -433,7 +428,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PhysXRigidBody.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
-    <ClCompile Include="PlayerStateScript.cpp" />
     <ClCompile Include="PostProcess.cpp" />
     <ClCompile Include="PostProcessRenderer.cpp" />
     <ClCompile Include="PostProcessWave.cpp" />

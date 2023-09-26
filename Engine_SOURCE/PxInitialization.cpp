@@ -8,7 +8,6 @@ PxInitialization::PxInitialization()
 	, mPhysics{}
 	, mPvd{}
 	, mTransport{}
-	, mCooking{}
 {
 }
 
@@ -23,20 +22,8 @@ PxInitialization::~PxInitialization()
 	if (mTransport)
 		mTransport->release();
 
-	if (mCooking)
-		mCooking->release();
-
 	if (mFoundation)
 		mFoundation->release();
-}
-
-void PxInitialization::CreateCooking()
-{
-	physx::PxTolerancesScale scale = physx::PxTolerancesScale();
-
-	mCooking = PxCreateCooking(PX_PHYSICS_VERSION, *mFoundation, physx::PxCookingParams(scale));
-	if (!mCooking)
-		assert("PxCreateCooking failed!");
 }
 
 void PxInitialization::CreateFoundation()

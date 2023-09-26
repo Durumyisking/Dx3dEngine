@@ -122,10 +122,6 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 				model = new Model();
 				GETSINGLE(ResourceMgr)->Insert<Model>(modelName, model);
 			}
-			else
-			{
-				return false;
-			}
 
 			if (L".DAE" == extension || L".Dae" == extension || L".dae" == extension)
 			{
@@ -135,44 +131,6 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 		}
 	}
 
-
-	return true;
-}
-
-bool FileMgr::StageFolderLoad(const std::wstring& path, const std::wstring& stageName)
-{
-	std::wstring fullPath = L"..//" + path;
-	fs::path folderPath = std::string(fullPath.begin(), fullPath.end());
-
-	Model* parentModel = nullptr;
-	// 폴더 내부 파일들을 순회하며 출력
-	for (const auto& entry : fs::directory_iterator(folderPath)) 
-	{
-		if (entry.is_regular_file())
-		{
-			wchar_t szExtension[256] = {};
-			_wsplitpath_s(entry.path().c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExtension, 256); // 경로에서 확장자만 뽑아오는 녀석
-
-			std::wstring extension(szExtension);
-
-			if (L".DAE" == extension || L".Dae" == extension || L".dae" == extension)
-			{
-				std::wstring fileName(entry.path().stem().wstring());
-
-				std::wstring modelName = stageName + L"_" + fileName;
-
-				Model* model = GETSINGLE(ResourceMgr)->Find<Model>(modelName);
-
-				if (model == nullptr)
-				{
-					model = new Model();
-					GETSINGLE(ResourceMgr)->Insert<Model>(modelName, model);
-				}
-				model->SetCurDirectoryPath(fullPath);
-				model->Load(entry.path());
-			}
-		}
-	}
 
 	return true;
 }

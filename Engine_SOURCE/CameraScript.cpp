@@ -56,10 +56,35 @@ void CameraScript::Update()
 
 	mTransform->SetPosition(mLookAt);
 
+
+	if (KEY_TAP(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->Raycast();
+		}
+	}
+
+	if (KEY_DOWN(LCTRL) && KEY_DOWN(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->MoveObject();
+		}
+	}
+
+	if (KEY_UP(LBTN))
+	{
+		if (GetOwner()->GetComponent<Camera>() == renderer::mainCamera)
+		{
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+		}
+	}
+
 	if (mUICameraObject != nullptr)
 	{
-		//mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
-		//mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());z
+		mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
+		//mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());
 	}
 }
 
@@ -90,7 +115,7 @@ void CameraScript::KeyBoardMove()
 {
 	// Keyboard Move
 
-	float speed = 100.f;
+	float speed = 50.f;
 	if (KEY_DOWN(W))
 	{
 		mLookAt += speed * mTransform->Forward() * DT;
