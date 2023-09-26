@@ -20,7 +20,6 @@ Player::Player()
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
 
-
 }
 
 Player::~Player()

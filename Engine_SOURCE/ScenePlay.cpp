@@ -16,7 +16,6 @@
 //#include "UIFactory.h"
 //#include "Animator.h"
 
-
 #include "TimeMgr.h"
 
 #include "Object.h"
@@ -62,7 +61,6 @@
 #include "ImageUI.h"
 #include "UIFactory.h"
 #include "Animator.h"
-#include "LifeUI.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -101,6 +99,12 @@ void ScenePlay::Initialize()
 			// SetModel
 			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_CityWorldHomeGround000");
 			obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetModel(model, model->GetMaterial(0));
+		/*
+		player->SetScale(Vector3(1.f, 1.f, 1.f));
+		player->SetName(L"Player");
+		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
+		player->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.01f);
+		player->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.99f);
 
 			Physical* physical = obj->AddComponent<Physical>(eComponentType::Physical);
 			//physical->InitialConvexMeshProperties(eActorType::Static, Vector3(0.03f, 0.03f, 0.03f));
@@ -200,7 +204,7 @@ void ScenePlay::Initialize()
 		////plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-	////ÇÃ·¹ÀÌ¾î È£Ãâ, È£Ãâ½Ã ¾Ë¾Æ¼­ ¸ğµ¨ initialize
+	////í”Œë ˆì´ì–´ í˜¸ì¶œ, í˜¸ì¶œì‹œ ì•Œì•„ì„œ ëª¨ë¸ initialize
 	//{
 	//	Player* player = object::Instantiate<Player>(eLayerType::Player,this);
 	//}
@@ -257,21 +261,14 @@ void ScenePlay::CreatePlayerUI()
 	{
 		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 10.f), Vector3(100.0f, 100.0f, 1.0f), L"LifePanal", this, eUIType::HP));
 		//LifeGauge
-		LifeUI* gauge = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeGauge", L"LifeGauge_3Material",eUIType::None  ,Vector3(7.f, 3.6f, 0.f), Vector3::One, mLifePanal, this));
-		gauge->SetUIActive();
-		gauge->SetTargetPos(Vector3::Zero);
+		HUD* hud = (GETSINGLE(UIFactory)->CreateHud(L"LifeGauge", L"LifeGauge_3Material", Vector3(7.f, 3.6f, 0.f), Vector3::One, mLifePanal, this));
 		//Lifeheart
-		LifeUI* lifeheart = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeHeart", L"LifeheartMaterial", eUIType::None, Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
-		lifeheart->SetUIActive();
-		lifeheart->SetTargetPos(Vector3(0.0f, -0.05f, 0.0f));
+		HUD* lifeheart = (GETSINGLE(UIFactory)->CreateHud(L"LifeHeart", L"LifeheartMaterial", Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
 
-		LifeUI* lifeText = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeText", L"LifeTextMaterial", eUIType::HPText, Vector3(7.f, 3.55f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
-		lifeText->InitColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
-		lifeText->SetUIActive();
-		lifeText->SetTargetPos(Vector3(0.0f, -0.05f, -0.1f));
+		ImageUI* lifeText = (GETSINGLE(UIFactory)->CreateImage(L"LifeText", L"LifeTextMaterial", Vector3(7.f, 3.55f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
+		lifeText->SetColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f), true);
 
-
-		mLifePanal->Addchild(gauge);
+		mLifePanal->Addchild(hud);
 		mLifePanal->Addchild(lifeheart);
 		mLifePanal->Addchild(lifeText);
 	}
