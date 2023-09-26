@@ -62,7 +62,13 @@ void CapStateScript::Idle()
 	//if (!(animator->PlayAnimationName() == L"Wait"))
 	//	animator->Play(L"Wait");
 	//mInitialForce = 33.f;
+	/*if (mCap->GetState() == GameObj::eState::Paused)
+	{
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
+		model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
+	}*/
 	mCap->Pause();
+
 }
 
 void CapStateScript::Throw()
