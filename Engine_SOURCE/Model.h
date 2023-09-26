@@ -88,6 +88,7 @@ public:
 	GETSET(const std::wstring&, mParentTargetBone, ParentTargetBone)
 	GETSET(const std::wstring&, mTargetBone, TargetBone)
 	GETSET(math::Vector3, mOffsetRotation, OffsetRotation)
+	const std::vector<Mesh*>& GetMeshes() { return mMeshes; }
 private:
 	Assimp::Importer mAssimpImporter;
 
@@ -112,4 +113,5 @@ private:
 	std::wstring mTargetBone;
 
 	math::Vector3 mOffsetRotation;
+
 };

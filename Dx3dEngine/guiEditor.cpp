@@ -34,6 +34,7 @@
 
 #include "guiWidgetMgr.h"
 #include "guiEditorObjMgr.h"
+#include "PhysXRayCast.h"
 
 extern Application application;
 
@@ -49,7 +50,7 @@ namespace gui
 
 	void Editor::Initialize()
 	{
-		mEnable = false;
+		mEnable = true;
 
 		if (mEnable == false)
 			return;

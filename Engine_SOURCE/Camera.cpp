@@ -126,7 +126,8 @@ void Camera::Render()
 		light->Render();
 	}
 
-	if (mLayerMask[static_cast<UINT>(eLayerType::UI)])
+
+	if (!mLayerMask[static_cast<UINT>(eLayerType::UI)])
 		return;
 
 	//SwapChain

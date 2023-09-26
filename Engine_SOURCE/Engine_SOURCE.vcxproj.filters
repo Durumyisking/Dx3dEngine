@@ -736,8 +736,331 @@
     <ClInclude Include="CapStateScript.h">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClInclude>
+    <ClInclude Include="CustomPhysXMemory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp">
+      <Filter>High Level Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="druMath.cpp">
+      <Filter>Common\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicDevice.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineResource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Common\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeMgr.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Graphics\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObj.cpp">
+      <Filter>Common\GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMgr.cpp">
+      <Filter>Resource\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Common\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneTitle.cpp">
+      <Filter>Common\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Resource\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Common\Component\TransForm</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Script.cpp">
+      <Filter>Common\Component\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Common\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraScript.cpp">
+      <Filter>Common\Component\Camera\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseRenderer.cpp">
+      <Filter>Common\Component\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Common\Component\Renderer\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Common\Component\Renderer\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="GridScript.cpp">
+      <Filter>Common\Component\Script\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Common\Scene\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>Common\Scene\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Common\Scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>Common\Component\Collider\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Prefab.cpp">
+      <Filter>Resource\Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider2D.cpp">
+      <Filter>Common\Component\Collider\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider3D.cpp">
+      <Filter>Common\Component\Collider\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="CursorScript.cpp">
+      <Filter>Common\GameObj\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Common\GameObj\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Common\Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Common\Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Common\Component\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Common\Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="StructedBuffer.cpp" />
+    <ClCompile Include="ComputeShader.cpp">
+      <Filter>Resource\Shader\ComputeShader</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleShader.cpp">
+      <Filter>Resource\Shader\ComputeShader</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMath.cpp">
+      <Filter>Common\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="PostProcess.cpp">
+      <Filter>Common\GameObj\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="PostProcessRenderer.cpp">
+      <Filter>Common\Component\Renderer\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="PostProcessWave.cpp">
+      <Filter>Common\GameObj\PostProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="FMod.cpp" />
+    <ClCompile Include="AudioClip.cpp">
+      <Filter>Common\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioListener.cpp">
+      <Filter>Common\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSource.cpp">
+      <Filter>Common\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="StringFunctions.cpp">
+      <Filter>Common\StringFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="FontWrapper.cpp">
+      <Filter>Common\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>Common\GameObj\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="druEnums.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="InputMgr.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicalMovement.cpp">
+      <Filter>Common\Component\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXCollider.cpp">
+      <Filter>Common\Component\Collider\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXRigidBody.cpp">
+      <Filter>Common\Component\RigidBody\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysX.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicalProperties.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsScene.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PxDispathcer.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PxEventCallback.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PxFilter.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PxInitialization.cpp">
+      <Filter>PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsMgr.cpp">
+      <Filter>PhysX\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Physical.cpp">
+      <Filter>Common\Component\Physical</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysXCollisionMgr.cpp">
+      <Filter>Common\Component\Collider\Manager\PhysX</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerMgr.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicalGameObj.cpp">
+      <Filter>Common\GameObj\PhysicalGameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Common\GameObj\PhysicalGameObj\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Common\GameObj\PhysicalGameObj\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="FileMgr.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerMgr.cpp">
+      <Filter>Server\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNet.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNetServer.cpp">
+      <Filter>Server\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNetClient.cpp">
+      <Filter>Server\Client</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNetDispatcher.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNetPacket.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNetSerializer.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNetThread.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNetObject.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketSendScript.cpp">
+      <Filter>Common\Component\Script\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="ApplyPacketScript.cpp">
+      <Filter>Common\Component\Script\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiRenderTarget.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Resource\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Bone.cpp">
+      <Filter>Resource\Model\Bone</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelNode.cpp">
+      <Filter>Resource\Model\ModelNode</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneAnimator.cpp">
+      <Filter>Common\Component\Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="SkySphereRenderer.cpp">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="SkySphere.cpp">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeMap.cpp">
+      <Filter>Common\Component\Renderer\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFactory.cpp" />
+    <ClCompile Include="ScenePlay.cpp">
+      <Filter>Common\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUI.cpp" />
+    <ClCompile Include="MarioHead.cpp" />
+    <ClCompile Include="MarioParts.cpp" />
+    <ClCompile Include="DynamicObject.cpp">
+      <Filter>Common\GameObj\DynamicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Common\GameObj\DynamicObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Common\GameObj\DynamicObject\Monster\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="Packun.cpp">
+      <Filter>Common\GameObj\DynamicObject\Monster\Packun</Filter>
+    </ClCompile>
+    <ClCompile Include="PackunStateScript.cpp">
+      <Filter>Common\GameObj\DynamicObject\Monster\Packun</Filter>
+    </ClCompile>
+    <ClCompile Include="GoombaStateScript.cpp">
+      <Filter>Common\GameObj\DynamicObject\Monster\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterStateScript.cpp">
+      <Filter>Common\Component\Camera\Script\MonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterAiScript.cpp">
+      <Filter>Common\Component\Camera\Script\MonsterAI</Filter>
+    </ClCompile>
+    <ClCompile Include="AiScript.cpp">
+      <Filter>Common\Component\Camera\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureObj.cpp">
+      <Filter>Common\GameObj\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp" />
+    <ClCompile Include="CapUI.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Panal.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="PhysXRayCast.cpp">
+      <Filter>RayCast</Filter>
+    </ClCompile>
+    <ClCompile Include="PackunPostionBall.cpp" />
+    <ClCompile Include="ProjectileObj.cpp" />
+    <ClCompile Include="AnimationClip.cpp">
+      <Filter>Common\Component\Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomPhysXMemory.cpp" />
     <Filter Include="Common">
       <UniqueIdentifier>{c30c57ff-eea2-4c74-95c4-901fb434e17f}</UniqueIdentifier>
     </Filter>

@@ -14,7 +14,7 @@ struct Geometry
         , sphereGeom(geom.sphereGeom)
         , planeGeom(geom.planeGeom)
     {
-       
+
     }
     Geometry()
         : eGeomType(eGeometryType::End)
@@ -49,21 +49,43 @@ struct Geometry
         }
     }
 
-        Geometry(eGeometryType geometryType)
-            : eGeomType(eGeometryType::Plane)
+    Geometry(eGeometryType geometryType)
+        : eGeomType(eGeometryType::Plane)
+    {
+        // RigidStatic일 떄,
+        if (eGeometryType::Plane == geometryType)
         {
-            // RigidStatic일 떄,
-            if (eGeometryType::Plane == geometryType)
-            {
-                planeGeom = PxPlaneGeometry();
-            }
+            planeGeom = PxPlaneGeometry();
         }
+    }
 
-        PxBoxGeometry boxGeom;
-        PxCapsuleGeometry capsuleGeom;
-        PxSphereGeometry sphereGeom;
-        PxPlaneGeometry planeGeom;
-        eGeometryType eGeomType;
+    Geometry(eGeometryType geometryType, PxConvexMesh* convexMesh, math::Vector3 scale)
+        : eGeomType(eGeometryType::ConvexMesh)
+    {
+        if (eGeometryType::ConvexMesh == geometryType)
+        {
+            PxMeshScale meshScale(PxVec3(scale.x, scale.y, scale.z));
+            convexMeshGeom = PxConvexMeshGeometry(convexMesh, meshScale);
+        }
+    }
+
+    Geometry(eGeometryType geometryType, PxTriangleMesh* triangleMesh, math::Vector3 scale)
+        : eGeomType(eGeometryType::TriangleMesh)
+    {
+        if (eGeometryType::TriangleMesh == geometryType)
+        {
+            PxMeshScale meshScale(PxVec3(scale.x, scale.y, scale.z));
+            triangleMeshGeom = PxTriangleMeshGeometry(triangleMesh, meshScale);
+        }
+    }
+
+    PxBoxGeometry boxGeom;
+    PxCapsuleGeometry capsuleGeom;
+    PxSphereGeometry sphereGeom;
+    PxPlaneGeometry planeGeom;
+    PxConvexMeshGeometry convexMeshGeom;
+    PxTriangleMeshGeometry triangleMeshGeom;
+    eGeometryType eGeomType;
 
 };
 
@@ -71,6 +93,7 @@ struct Geometry
 
 using namespace math;
 
+class Model;
 class Physical : public Component
 {
 public:
@@ -80,6 +103,10 @@ public:
 public:
     virtual void Initialize();
     virtual void InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, MassProperties massProperties = MassProperties());
+    virtual void InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, Model* model = nullptr, MassProperties massProperties = MassProperties());
+    virtual void InitialTriangleMeshProperties(Vector3 geometrySize, Model* model = nullptr, MassProperties massProperties = MassProperties());
+    PxConvexMesh* MakeConvexMesh(Model* model);
+    PxTriangleMesh* MakeTriangleMesh(Model* model);
     virtual void Update();
     virtual void FixedUpdate();
     virtual void Render();
@@ -121,10 +148,12 @@ private:
     Geometry createCapsuleGeometry(eGeometryType geometryType, float radius, float halfHeight);
     Geometry createPlaneGeometry(eGeometryType geometryType);
     Geometry createSphereGeometry(eGeometryType geometryType, float radius);
+    std::shared_ptr<Geometry> createConvexMeshGeometry(eGeometryType geometryType, PxConvexMesh* convexMesh, const Vector3& mScale);
+    std::shared_ptr<Geometry> createTriangleMeshGeometry(eGeometryType geometryType, PxTriangleMesh* triangleMesh, const Vector3& mScale);
 
 private:
     void createPhysicsProperties(const MassProperties& massProperties = MassProperties());
-    Geometry createGeometry( eGeometryType geometryType, const Vector3& shapeSize); // 액터당 달아줄 지오메트리(shape)
+    Geometry createGeometry(eGeometryType geometryType, const Vector3& shapeSize); // 액터당 달아줄 지오메트리(shape)
     void createUniversalShape(); // 공용으로 사용 가능한 지오메트리 
     void createActor();
     void initializeActor();
@@ -135,7 +164,7 @@ private:
     eGeometryType                   mGeometryType;
 
     Vector3                         mSize;
-    PxActor*                        mActor;
+    PxActor* mActor;
     // PxActor은 물리엔진 시뮬레이션을 적용할 수 있는 객체들이다.
     // 얘네들은 PxScene에서 물리 시뮬레이션에 참여한다.
     /*
@@ -150,7 +179,7 @@ private:
         - 관절 기반의 복잡한 물체
 
         PxParticleFluid
-        - 입자 기반의 유체 시뮬레이션 수행        
+        - 입자 기반의 유체 시뮬레이션 수행
     */
 
     PxShape*                        mMainShape;

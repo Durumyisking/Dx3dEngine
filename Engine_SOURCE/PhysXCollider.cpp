@@ -30,7 +30,7 @@ void PhysXCollider::Initialize()
 
 	// 렌더링할 물체의 모양을 가진 콜라이더
 	mPhysical = GetOwner()->GetComponent<Physical>();
-
+	GameObj* obj = GetOwner();
 	if (mPhysical)
 	{
 		createDebugGeometry(mPhysical->GetGeometries());
@@ -173,6 +173,22 @@ bool PhysXCollider::Raycast(const Vector3& origin, const Vector3& dir, GameObj* 
 			convert::Vector3ToPxVec3(origin),
 			convert::Vector3ToPxVec3(dir),
 			sphereGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		return bResult;
+	}
+
+	case eGeometryType::ConvexMesh:
+	{
+		PxConvexMeshGeometry convexMeshGeom = physical->GetGeometries()->convexMeshGeom;
+
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			convexMeshGeom, pxTransform,
 			maxDistance,
 			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
 			mRayMaxHit,
@@ -340,6 +356,9 @@ void PhysXCollider::createDebugGeometry(std::shared_ptr<Geometry> geometries)
 	break;
 
 	case eGeometryType::Plane:
+		break;
+
+	case eGeometryType::ConvexMesh:
 		break;
 	}
 }
