@@ -16,7 +16,6 @@
 //#include "UIFactory.h"
 //#include "Animator.h"
 
-
 #include "TimeMgr.h"
 
 #include "Object.h"
@@ -96,6 +95,7 @@ void ScenePlay::Initialize()
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetMarioCap(mariocap);
 
+		/*
 		player->SetScale(Vector3(1.f, 1.f, 1.f));
 		player->SetName(L"Player");
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PBRMaterial");
@@ -169,7 +169,7 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-	////í”Œë ˆì´ì–´ í˜¸ì¶œ, í˜¸ì¶œì‹œ ì•Œì•„ì„œ ëª¨ë¸ initialize
+	////ÇÃ·¹ÀÌ¾î È£Ãâ, È£Ãâ½Ã ¾Ë¾Æ¼­ ¸ğµ¨ initialize
 	//{
 	//	Player* player = object::Instantiate<Player>(eLayerType::Player,this);
 	//}
