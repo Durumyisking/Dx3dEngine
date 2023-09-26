@@ -86,29 +86,36 @@ void ScenePlay::Initialize()
 	CreateCameras();
 
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 	//Convex and Triangle Mesh TEST
 	{
-		////TriangleMesh Test
-		//{
-		//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		//	obj->SetPos(Vector3(0.f, -10.f, 300.f));
-		//	obj->SetScale(Vector3(0.04f, 0.04f, 0.04f));
-		//	obj->SetName(L"CityWorldHomeGroundCollider");
+		//TriangleMesh Test
+		{
+			GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+			obj->SetPos(Vector3(0.f, -5.f, 300.f));
+			obj->SetScale(Vector3(0.06f, 0.06f, 0.06f));
+			obj->SetName(L"CityWorld_NaviCollider");
 
-		//	// SetModel
-		//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_CityWorldHomeGround000");
-		//	obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetModel(model, model->GetMaterial(0));
-		//
-		//}
+			// SetModel
+			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_NaviRoadCollider");
+			MeshRenderer* mrd = obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			Material* mt = model->GetMaterial(0);
+				
+			if (mt == nullptr)
+				mt = GETSINGLE(ResourceMgr)->Find<Material>(L"PhongMaterial");
 
-	{
-		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Player, this);
-		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetMarioCap(mariocap);
-	}
+			mrd->SetModel(model, mt);
+
+			Physical* physical = obj->AddComponent<Physical>(eComponentType::Physical);
+			physical->InitialTriangleMeshProperties(Vector3(0.06f, 0.06f, 0.06f));
+
+			obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+			obj->AddComponent<PhysXCollider>(eComponentType::Collider);
+		}
+
 
 		//Sphere 
 		{
@@ -116,10 +123,7 @@ void ScenePlay::Initialize()
 			Sphere->SetPos(Vector3(32.f, 25.f, -9.5f));
 			Sphere->SetScale(Vector3(15.f, 15.f, 15.f));
 			Sphere->SetName(L"Sphere");
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(5.f, 0.f, 0.f));
-	}
+
 
 			Sphere->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 			Sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
@@ -129,12 +133,12 @@ void ScenePlay::Initialize()
 			Sphere->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 
 			Physical* physical = Sphere->AddComponent<Physical>(eComponentType::Physical);
-			physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(7.5f, 7.5f, 7.5f));
+			physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(7.5f, 7.5f, 7.5f));
 
 			PhysXRigidBody* rigid = Sphere->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
 			Sphere->AddComponent<PhysXCollider>(eComponentType::Collider);
-			//player->AddComponent<PhysicalMovement>(eComponentType::Movement);
+			//Sphere->AddComponent<PhysicalMovement>(eComponentType::Movement);
 			Sphere->AddComponent<PlayerScript>(eComponentType::Script);
 		}
 	}
@@ -152,17 +156,28 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		plane->SetScale({ 1000.f, 0.5f, 1000.f });
-		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial");
-		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+		//GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+		//plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+		//plane->SetScale({ 1000.f, 0.5f, 1000.f });
+		//plane->SetName(L"Plane");
+		//plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial");
+		//plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
-		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		rigid->RemoveGravity();
+		//PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		//rigid->RemoveGravity();
 
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+	}
+
+	{
+		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Player, this);
+		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
+		player->SetMarioCap(mariocap);
+	}
+
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(5.f, 0.f, 0.f));
 	}
 
 	{

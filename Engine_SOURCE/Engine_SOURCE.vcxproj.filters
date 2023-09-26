@@ -354,6 +354,9 @@
     </ClCompile>
     <ClCompile Include="CompassUI.cpp" />
     <ClCompile Include="LifeUI.cpp" />
+    <ClCompile Include="NavigationMgr.cpp">
+      <Filter>Common\Navigation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -741,6 +744,9 @@
     <ClInclude Include="CustomPhysXMemory.h" />
     <ClInclude Include="CompassUI.h" />
     <ClInclude Include="LifeUI.h" />
+    <ClInclude Include="NavigationMgr.h">
+      <Filter>Common\Navigation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -1318,5 +1324,10 @@
     <None Include="druMath.ini">
       <Filter>Common\Math</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Common\Navigation">
+      <UniqueIdentifier>{c9afd7c8-42af-4f1e-9186-771c0333a93f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
