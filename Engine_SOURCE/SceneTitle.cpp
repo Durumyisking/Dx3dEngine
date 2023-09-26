@@ -104,8 +104,6 @@ void SceneTitle::render()
 
 void SceneTitle::Enter()
 {
-
-
 	Scene::Enter();
 }
 

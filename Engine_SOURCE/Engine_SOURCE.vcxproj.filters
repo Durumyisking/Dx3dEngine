@@ -303,7 +303,7 @@
     <ClCompile Include="GameNetSerializer.cpp">
       <Filter>Server</Filter>
     </ClCompile>
-    <ClCompile Include="GameNetThread.cpp">
+    <ClCompile Include="GameThread.cpp">
       <Filter>Server</Filter>
     </ClCompile>
     <ClCompile Include="TimeMgr.cpp">
@@ -351,6 +351,12 @@
     </ClCompile>
     <ClCompile Include="CapStateScript.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLoading.cpp">
+      <Filter>Common\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="AsyncLoad.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="CompassUI.cpp" />
     <ClCompile Include="LifeUI.cpp" />
@@ -686,7 +692,7 @@
     <ClInclude Include="GameNetSerializer.h">
       <Filter>Server</Filter>
     </ClInclude>
-    <ClInclude Include="GameNetThread.h">
+    <ClInclude Include="GameThread.h">
       <Filter>Server</Filter>
     </ClInclude>
     <ClInclude Include="ServerHeader.h">
@@ -739,6 +745,12 @@
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysXMemory.h" />
+    <ClInclude Include="SceneLoading.h">
+      <Filter>Common\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncLoad.h">
+      <Filter>Common</Filter>
+    </ClInclude>
     <ClInclude Include="CompassUI.h" />
     <ClInclude Include="LifeUI.h" />
   </ItemGroup>

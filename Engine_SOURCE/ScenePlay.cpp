@@ -109,34 +109,12 @@ void ScenePlay::Initialize()
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetMarioCap(mariocap);
 	}
-
-		//Sphere 
-		{
-			GameObj* Sphere = object::Instantiate<GameObj>(eLayerType::Player, this);
-			Sphere->SetPos(Vector3(32.f, 25.f, -9.5f));
-			Sphere->SetScale(Vector3(15.f, 15.f, 15.f));
-			Sphere->SetName(L"Sphere");
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 0.f, 0.f));
 	}
 
-			Sphere->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-			Sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-			Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
-			Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
 
-			Sphere->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-
-			Physical* physical = Sphere->AddComponent<Physical>(eComponentType::Physical);
-			physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(7.5f, 7.5f, 7.5f));
-
-			PhysXRigidBody* rigid = Sphere->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-			Sphere->AddComponent<PhysXCollider>(eComponentType::Collider);
-			//player->AddComponent<PhysicalMovement>(eComponentType::Movement);
-			Sphere->AddComponent<PlayerScript>(eComponentType::Script);
-		}
 	}
 
 	{
@@ -202,7 +180,7 @@ void ScenePlay::Enter()
 {
 	Scene::Enter();
 
-	mCamera->SetPos(Vector3(0.f, 150.f, -150.f));
+	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 }
 
