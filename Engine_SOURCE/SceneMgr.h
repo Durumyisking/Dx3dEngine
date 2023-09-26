@@ -14,6 +14,7 @@ public:
 public:
 	enum class eSceneType
 	{
+		Loading,
 		Title,
 		Play,
 		//Ending,

@@ -216,6 +216,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="ApplyPacketScript.h" />
+    <ClInclude Include="AsyncLoad.h" />
     <ClInclude Include="AudioClip.h" />
     <ClInclude Include="AudioListener.h" />
     <ClInclude Include="AudioSource.h" />
@@ -259,7 +260,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="GameNetPacket.h" />
     <ClInclude Include="GameNetSerializer.h" />
     <ClInclude Include="GameNetServer.h" />
-    <ClInclude Include="GameNetThread.h" />
+    <ClInclude Include="GameThread.h" />
     <ClInclude Include="GameObj.h" />
     <ClInclude Include="GenericAnimator.h" />
     <ClInclude Include="GlobalPacket.h" />
@@ -321,6 +322,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneLoading.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="ScenePlay.h" />
     <ClInclude Include="SceneTitle.h" />
@@ -354,6 +356,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="ApplyPacketScript.cpp" />
+    <ClCompile Include="AsyncLoad.cpp" />
     <ClCompile Include="AudioClip.cpp" />
     <ClCompile Include="AudioListener.cpp" />
     <ClCompile Include="AudioSource.cpp" />
@@ -393,7 +396,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="GameNetPacket.cpp" />
     <ClCompile Include="GameNetSerializer.cpp" />
     <ClCompile Include="GameNetServer.cpp" />
-    <ClCompile Include="GameNetThread.cpp" />
+    <ClCompile Include="GameThread.cpp" />
     <ClCompile Include="GameObj.cpp" />
     <ClCompile Include="GenericAnimator.cpp" />
     <ClCompile Include="Goomba.cpp" />
@@ -451,6 +454,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="ResourceMgr.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneLoading.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="ScenePlay.cpp" />
     <ClCompile Include="SceneTitle.cpp" />

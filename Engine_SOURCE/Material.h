@@ -30,7 +30,17 @@ public:
 	void Bind();
 	void Clear();
 
-	void SetShader(Shader* shader) { mShader = shader; }
+	void SetShader(Shader* shader) 
+	{	
+		mShader = shader; 
+
+		assert(mShader);
+	
+		if (L"DeferredShader" == mShader->GetName())
+		{
+			SetRenderingMode(eRenderingMode::DeferredOpaque);
+		}
+	}
 	void SetShaderByKey(std::wstring key);
 	Shader* GetShader() const { return mShader; }
 
