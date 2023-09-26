@@ -163,7 +163,6 @@ namespace enums
 		CityCoinText,
 		Luna,
 		LunaText,
-		Compass,
 		End,
 	};
 

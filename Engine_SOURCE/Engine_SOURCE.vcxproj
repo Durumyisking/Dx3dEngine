@@ -235,7 +235,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Collider3D.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="CommonInclude.h" />
-    <ClInclude Include="CompassUI.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="ConstantBuffer.h" />
@@ -366,7 +365,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collider3D.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
-    <ClCompile Include="CompassUI.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />

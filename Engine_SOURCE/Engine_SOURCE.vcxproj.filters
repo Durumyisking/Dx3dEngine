@@ -344,9 +344,6 @@
     <ClCompile Include="LifeUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="CompassUI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -721,9 +718,6 @@
       <Filter>UI\Base</Filter>
     </ClInclude>
     <ClInclude Include="LifeUI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CompassUI.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
