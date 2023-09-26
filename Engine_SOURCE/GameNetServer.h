@@ -1,6 +1,6 @@
 #pragma once
 #include "ServerHeader.h"
-#include "GameNetThread.h"
+#include "GameThread.h"
 #include "GameNet.h"
 #include <queue>
 
@@ -47,12 +47,12 @@ namespace server
 
 	private:
 		GameNetSerializer	mSendSer;
-		GameNetThread		mAccpetThread;
+		GameThread		mAccpetThread;
 		SOCKET				mAcceptSocket;
 
 		std::mutex									mUserLock;
 		std::vector<SOCKET>							mAllUsers;
-		std::vector<std::shared_ptr<GameNetThread>> mRecvThreads;
+		std::vector<std::shared_ptr<GameThread>> mRecvThreads;
 		std::function<void(SOCKET)>					mNewUserAccpetFunction;
 
 		std::mutex									mAcceptLock;
