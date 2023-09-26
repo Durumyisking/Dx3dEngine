@@ -38,9 +38,9 @@ LifeUI::LifeUI(const std::wstring& key, eUIType type)
 	, mOriginColor(1.f, 1.f, 1.f, 1.f)
 	, mState{}
 {
-	SpriteRenderer* hudRender = this->AddComponent<SpriteRenderer>(eComponentType::UI);
-	hudRender->SetMeshByKey(L"Rectmesh");
-	hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(key));
+	SpriteRenderer* render = this->AddComponent<SpriteRenderer>(eComponentType::UI);
+	render->SetMeshByKey(L"Rectmesh");
+	render->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(key));
 }
 
 

@@ -35,4 +35,6 @@ private:
 
 	Panal* mCoinTextPanal;
 	Panal* mLunaTextPanal;
+
+	Panal* mCompassPanal;
 };
