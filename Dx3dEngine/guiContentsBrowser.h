@@ -3,6 +3,7 @@
 #include "guiTreeWidget.h"
 #include "ResourceMgr.h"
 
+class Scene;
 namespace gui
 {
     class ContentsBrowser :
@@ -12,32 +13,18 @@ namespace gui
 		ContentsBrowser();
 		~ContentsBrowser();
 
+		bool SaveScene();
+		bool LoadScene();
+
+		void Initialize();
+
 		virtual void FixedUpdate() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		void ResetContent();
-
 	private:
-		template <typename T>
-		void AddResources(TreeWidget::Node* rootNode, const char* name)
-		{
-			const std::vector<T*> resources
-				= GETSINGLE(ResourceMgr)->Finds<T>();
-
-			TreeWidget::Node* stemNode
-				= mTreeWidget->AddNode(rootNode, name, 0, true);
-
-			for (T* resource : resources)
-			{
-				std::string name(resource->GetName().begin(), resource->GetName().end());
-				mTreeWidget->AddNode(stemNode, name, resource);
-			}
-		}
-
-		void toInspector(void* data);
-
-	private:
-		TreeWidget* mTreeWidget;
+		std::wstring mSceneSaveName;
+		std::wstring mCurrentSceneName;
+		Scene* mScene;
     };
 }

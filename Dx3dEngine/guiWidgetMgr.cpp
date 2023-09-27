@@ -26,6 +26,8 @@
 #include "guiVisualEditor.h"
 #include "guiGizmo.h"
 #include "guiOutLiner.h"
+#include "guiContentsBrowser.h"
+
 
 #include "InputMgr.h"
 
@@ -76,14 +78,18 @@ namespace gui
 		mWidgets.insert(std::make_pair("Console", console));
 		console->Initialize();
 
+		ContentsBrowser* contentsBrowser = new ContentsBrowser();
+		mWidgets.insert(std::make_pair("ContentsBrowser", contentsBrowser));
+		contentsBrowser->Initialize();
+
+
 		//설정 로드 (기본 imgui.ini Null 로 변경함)
-		ImGuiIO& io = ImGui::GetIO();
-		io.IniFilename = "../../Custom_ini.ini";
-		ImGui::LoadIniSettingsFromDisk(io.IniFilename);
+		ImGui::LoadIniSettingsFromDisk("../../Custom_ini.ini");
 	}
 
 	void WidgetMgr::Release()
 	{
+
 		//// ImGui 설정 저장하고 싶으면 사용
 		//ImGuiIO& io = ImGui::GetIO();
 		//io.IniFilename = "../../Custom_ini.ini";
