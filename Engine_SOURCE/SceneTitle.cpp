@@ -65,6 +65,16 @@ SceneTitle::~SceneTitle()
 
 }
 
+bool SceneTitle::Save()
+{
+	return false;
+}
+
+bool SceneTitle::Load()
+{
+	return false;
+}
+
 void SceneTitle::Initialize()
 {
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);

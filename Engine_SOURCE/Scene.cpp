@@ -20,6 +20,32 @@ Scene::Scene()
 Scene::~Scene()
 {
 }
+
+bool Scene::Save()
+{
+	for (UINT i = 0; i < static_cast<UINT>(eLayerType::End); i++)
+	{
+		eLayerType layerType = static_cast<eLayerType>(i);
+
+		//fs::wr = layerType;
+
+		std::vector<GameObj*> gameObjs = mLayers[i].GetGameObjects();
+
+		for (GameObj* obj : gameObjs)
+		{
+			obj->Save();
+		}
+	}
+
+	return false;
+}
+
+bool Scene::Load()
+{
+
+	return false;
+}
+
 void Scene::Initialize()
 {
 	for (Layer& layer : mLayers)

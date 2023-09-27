@@ -47,6 +47,8 @@ namespace gui
 		if (mSceneSaveName.rfind(L".scene") == mSceneSaveName.size() - 6)
 			return false;
 
+		activeScene->Save();
+
 		return false;
 	}
 

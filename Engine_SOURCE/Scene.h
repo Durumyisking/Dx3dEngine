@@ -15,6 +15,9 @@ public:
 	Scene();
 	virtual ~Scene();
 
+	virtual bool Save();
+	virtual bool Load();
+
 	virtual void Initialize();
 	virtual void update();
 	virtual void fixedUpdate();

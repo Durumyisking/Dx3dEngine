@@ -41,6 +41,9 @@ public:
 	GameObj();
 	virtual ~GameObj();
 
+	virtual bool Save();
+	virtual bool Load();
+
 	virtual void Initialize();
 	virtual void Update();
 	virtual void FixedUpdate();

@@ -55,6 +55,16 @@ GameObj::~GameObj()
 
 }
 
+bool GameObj::Save()
+{
+	return false;
+}
+
+bool GameObj::Load()
+{
+	return false;
+}
+
 void GameObj::Initialize()
 {
 	for (Component* comp : mComponents)

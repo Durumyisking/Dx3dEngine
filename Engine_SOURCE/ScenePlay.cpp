@@ -81,6 +81,16 @@ ScenePlay::~ScenePlay()
 {
 }
 
+bool ScenePlay::Save()
+{
+	return false;
+}
+
+bool ScenePlay::Load()
+{
+	return false;
+}
+
 void ScenePlay::Initialize()
 {
 	CreateCameras();

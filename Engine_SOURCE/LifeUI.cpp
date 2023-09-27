@@ -206,7 +206,7 @@ void LifeUI::BackUI()
 		Vector3 dir = mOriginPos - mTargetPos;
 
 		Vector3 fabsDir = Vector3(dir.x, dir.y, 0);
-		double value = sqrt(pow(fabsDir.x, 2) + pow(fabsDir.y, 2));
+		float value = sqrt(pow(fabsDir.x, 2) + pow(fabsDir.y, 2));
 		Vector3 dirValue = Vector3(fabsDir.x / value, fabsDir.y / value, 0);
 
 		Vector3 pos = mTr->GetPosition();
