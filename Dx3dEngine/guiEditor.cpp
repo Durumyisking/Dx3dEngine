@@ -50,7 +50,7 @@ namespace gui
 
 	void Editor::Initialize()
 	{
-		mEnable = false;
+		//mEnable = false;
 
 		if (mEnable == false)
 			return;
@@ -66,8 +66,8 @@ namespace gui
 		{
 			if (mEnable == false)
 			{
-				Initialize();
 				mEnable = true;
+				Initialize();
 			}
 			else
 			{

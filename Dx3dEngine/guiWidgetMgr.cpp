@@ -29,7 +29,6 @@
 
 #include "InputMgr.h"
 
-
 extern Application application;
 
 namespace gui
@@ -76,10 +75,20 @@ namespace gui
 		Console* console = new Console();
 		mWidgets.insert(std::make_pair("Console", console));
 		console->Initialize();
+
+		//설정 로드 (기본 imgui.ini Null 로 변경함)
+		ImGuiIO& io = ImGui::GetIO();
+		io.IniFilename = "../../Custom_ini.ini";
+		ImGui::LoadIniSettingsFromDisk(io.IniFilename);
 	}
 
 	void WidgetMgr::Release()
 	{
+		//// ImGui 설정 저장하고 싶으면 사용
+		//ImGuiIO& io = ImGui::GetIO();
+		//io.IniFilename = "../../Custom_ini.ini";
+		//ImGui::SaveIniSettingsToDisk(io.IniFilename);
+
 		ImGui_Release();
 		
 		for (auto iter : mWidgets)
@@ -88,9 +97,12 @@ namespace gui
 			iter.second = nullptr;
 		}
 
+		mWidgets.clear();
+
 		delete mVisualEditor;
 		mVisualEditor = nullptr;
 		mHierarchy = nullptr;
+
 	}
 
 	void WidgetMgr::Run()
@@ -107,12 +119,9 @@ namespace gui
 		//}
 
 		mVisualEditor->Render();
-		UINT count = 0;
 		for (auto iter : mWidgets)
 		{
-			count++;
-			std::string debugName = iter.second->GetName();
-
+			//std::string debugName = iter.second->GetName();
 			iter.second->Render();
 		}
 

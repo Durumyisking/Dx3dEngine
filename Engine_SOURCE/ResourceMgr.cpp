@@ -98,6 +98,8 @@ void ResourceMgr::Initalize()
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeBuilding001Low");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorldHomeBuilding002");
 	GETSINGLE(FileMgr)->StageFolderLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorld");
+
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorld_NaviRoadCollider");
 }
 
 void ResourceMgr::Release()
