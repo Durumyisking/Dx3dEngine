@@ -988,9 +988,6 @@
     <ClCompile Include="GameNetSerializer.cpp">
       <Filter>Server</Filter>
     </ClCompile>
-    <ClCompile Include="GameNetThread.cpp">
-      <Filter>Server</Filter>
-    </ClCompile>
     <ClCompile Include="GameNetObject.cpp">
       <Filter>Server</Filter>
     </ClCompile>

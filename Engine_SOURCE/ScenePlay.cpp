@@ -198,15 +198,17 @@ void ScenePlay::CreatePlayerUI()
 		LifeUI* gauge = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeGauge", L"LifeGauge_3Material", eUIType::None, Vector3(7.f, 3.6f, 0.f), Vector3::One, mLifePanal, this));
 		gauge->SetUIActive();
 		gauge->SetTargetPos(Vector3::Zero);
+
+		//LifeText
+		LifeUI* lifeText = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeText", L"LifeTextMaterial", eUIType::HPText, Vector3(7.f, 3.55f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
+		lifeText->InitColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
+		lifeText->SetUIActive();
+		lifeText->SetTargetPos(Vector3(0.0f, -0.05f, 0.0f));
+
 		//Lifeheart
 		LifeUI* lifeheart = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeHeart", L"LifeheartMaterial", eUIType::None, Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
 		lifeheart->SetUIActive();
 		lifeheart->SetTargetPos(Vector3(0.0f, -0.05f, 0.0f));
-
-		LifeUI* lifeText = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeText", L"LifeTextMaterial", eUIType::HPText, Vector3(7.f, 3.55f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
-		lifeText->InitColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
-		lifeText->SetUIActive();
-		lifeText->SetTargetPos(Vector3(0.0f, -0.05f, -0.1f));
 
 
 		mLifePanal->Addchild(gauge);
@@ -286,12 +288,13 @@ void ScenePlay::CreatePlayerUI()
 	{
 		mCompassPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CompassPanal", this, eUIType::Compass));
 
-		CompassUI* compass = (GETSINGLE(UIFactory)->CreateUI<CompassUI>(L"Compass", L"CompassMaterial", eUIType::None, Vector3(7.f, 2.5f, 2.f), Vector3::One, mCompassPanal, this));
-		ImageUI* compassBar = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassBar", L"CompassBarMaterial", eUIType::None, Vector3(7.f, 2.5f, -1.f), Vector3::One, mCompassPanal, this));
-		ImageUI* compassNeedle = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassNeedle", L"CompassNeedleMaterial", eUIType::None, Vector3(7.f, 2.5f, -1.f), Vector3(2.0f,2.0f,1.0f), mCompassPanal, this));
 
-		mCompassPanal->Addchild(compass);
+		ImageUI* compassBar = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassBar", L"CompassBarMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3::One, mCompassPanal, this));
+		ImageUI* compassNeedle = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassNeedle", L"CompassNeedleMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3(2.0f, 2.0f, 1.0f), mCompassPanal, this));
+		CompassUI* compass = (GETSINGLE(UIFactory)->CreateUI<CompassUI>(L"Compass", L"CompassMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3::One, mCompassPanal, this));
+
 		mCompassPanal->Addchild(compassBar);
 		mCompassPanal->Addchild(compassNeedle);
+		mCompassPanal->Addchild(compass);
 	}
 }
