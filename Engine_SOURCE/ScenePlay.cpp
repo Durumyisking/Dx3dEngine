@@ -109,7 +109,7 @@ void ScenePlay::Initialize()
 	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(5.f, 0.f, 0.f));
+		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
 	}
 
 
@@ -139,11 +139,6 @@ void ScenePlay::Initialize()
 		rigid->RemoveGravity();
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-	}
-
-	{
-		Goomba* packun = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		packun->SetPos({ 15.f, 5.f, 15.f });
 	}
 
 	CreatePlayerUI();

@@ -74,6 +74,7 @@ void Goomba::Initialize()
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
+
 	// MoveMent
 	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
 	

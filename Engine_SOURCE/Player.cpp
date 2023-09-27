@@ -17,6 +17,7 @@
 Player::Player()
 {
 	SetLayerType(eLayerType::Player);
+	SetName(L"Player");
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
 
@@ -42,8 +43,12 @@ Player::~Player()
 
 void Player::Initialize()
 {
+	//기본 설정
+	SetPos(Vector3(10.f, 10.f, 0.f));
+	SetScale(Vector3(1.f, 1.f, 1.f));
+
 	//마리오 body 초기화
-	MeshRenderer* mesh = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	MeshRenderer* mr = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	//AddComponent<PlayerScript>(eComponentType::Script);
 	AddComponent<PlayerStateScript>(eComponentType::Script);
 	//AddComponent<Transform>(eComponentType::Transform);
@@ -54,19 +59,11 @@ void Player::Initialize()
 
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
-	//기본 설정
-	SetPos(Vector3(0.f, 0.f, 0.f));
+	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
+	assert(model);
+	mr->SetModel(model);
+	mr->SetMaterialByKey(L"marioBodyMaterial", 0);
 
-	//Test
-	SetPos(Vector3(-20.f, 0.f, 0.f));
-
-	SetScale(Vector3(1.f, 1.f, 1.f));
-	SetName(L"Player");
-
-	mesh->SetMaterialByKey(L"PBRMaterial");
-
-
-	GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
 	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
@@ -79,9 +76,6 @@ void Player::Initialize()
 		tr->SetOffsetScale(0.01f);
 
 
-	//model setting
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
-	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 	//animation setting
 	boneAnimatorInit(animator);
@@ -188,7 +182,9 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Platforms == gameObject->GetLayerType())
 	{
-		//GetPhysXRigidBody()->SetAirOff();
+		GetPhysXRigidBody()->SetAirOff();
+		SetPlayerState(Player::ePlayerState::Idle);
+
 	}
 }
 

@@ -35,10 +35,8 @@ void MarioCap::Initialize()
 	//AddComponent<Transform>(eComponentType::Transform);
 
 	//model initialize
-	SetPos(Vector3(0.f, 0.f, 0.f));
+	SetPos(Vector3(0.f, 20.f, 0.f));
 
-	// TEST
-	SetPos(Vector3(-20.f, 0.f, 0.f));
 
 	SetScale(Vector3(0.01f, 0.01f, 0.01f));
 

@@ -1832,7 +1832,7 @@ namespace renderer
 
 	void Render()
 	{
-		GetDevice()->OMSetRenderTarget();
+		//GetDevice()->OMSetRenderTarget();
 
 		BindNoiseTexture();
 		BindLight();

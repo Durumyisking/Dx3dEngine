@@ -104,22 +104,13 @@ void Camera::Render()
 	renderCutout();
 	renderTransparent();
 
+	// merged object가 있는게 아니라 분류가 되지 않는다 따라서 ui 카메라는 해당 작업 수행하면 안됨.
 
-	// Deferred Opaque Render 
-	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
-	renderDeferred();
-
-	// Deferred light Render
-	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
-
-	for (Light* light : renderer::lights)
+	if (this == renderer::mainCamera)
 	{
-		light->Render();
+		deferredRenderingOperate();
+		renderMergedOutput();
 	}
-	//SwapChain
-	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
-
-	renderMergedOutput();
 }
 
 void Camera::CreateViewMatrix()
@@ -488,14 +479,25 @@ void Camera::bindLightConstantBuffer()
 	lightCB->Bind(eShaderStage::PS);
 }
 
+void Camera::deferredRenderingOperate()
+{
+	// Deferred Opaque Render 
+	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
+	renderDeferred();
+
+	// Deferred light Render
+	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
+
+	for (Light* light : renderer::lights)
+	{
+		light->DeferredLightRender();
+	}
+}
+
 void Camera::renderMergedOutput()
 {
-	// merged object가 있는게 아니라 분류가 되지 않는다 따라서 ui 카메라는 해당 작업 수행하면 안됨.
+	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
 
-	if (renderer::UICamera = this)
-	{
-		return;
-	}
 	// Deferred + SwapChain Merge
 	Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
 	Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");

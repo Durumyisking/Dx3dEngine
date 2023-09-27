@@ -16,6 +16,8 @@ public:
 	virtual void FixedUpdate();
 	virtual void Render();
 
+	void DeferredLightRender();
+
 	void SetType(eLightType type);
 
 	LightAttribute& GetAttribute() { return mAttribute; }
