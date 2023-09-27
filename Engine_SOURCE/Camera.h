@@ -83,6 +83,7 @@ private:
 
 	void bindLightConstantBuffer();
 
+	void deferredRenderingOperate();
 	void renderMergedOutput();
 
 private:

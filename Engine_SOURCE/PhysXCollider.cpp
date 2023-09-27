@@ -316,6 +316,7 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
+		break;
 		default:
 			break;
 		}	

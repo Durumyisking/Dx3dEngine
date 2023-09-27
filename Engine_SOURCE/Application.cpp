@@ -56,7 +56,7 @@ void Application::Update()
 		GETSINGLE(InputMgr)->Update();
 		//		GETSINGLE(CollisionMgr)->Update();
 		GETSINGLE(SceneMgr)->Update();
-		GETSINGLE(UIManager)->Update();
+		// GETSINGLE(UIManager)->Update();
 		GETSINGLE(PhysicsMgr)->Update();
 	}
 }

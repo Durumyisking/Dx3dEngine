@@ -45,6 +45,10 @@ void Light::FixedUpdate()
 
 void Light::Render()
 {
+}
+
+void Light::DeferredLightRender()
+{
 	if (mMaterial == nullptr)
 		return;
 
