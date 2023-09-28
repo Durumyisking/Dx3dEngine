@@ -54,6 +54,7 @@ void Player::Initialize()
 	//AddComponent<Transform>(eComponentType::Transform);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
 	AddComponent<PhysXCollider>(eComponentType::Collider);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
 
@@ -114,6 +115,10 @@ void Player::Initialize()
 	//mMarioCap->Initialize();
 	//mMarioCap->Physicalinit();
 	DynamicObject::Initialize();
+
+
+	rigid->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	rigid->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
 }
 
 void Player::Update()
@@ -186,6 +191,21 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 		SetPlayerState(Player::ePlayerState::Idle);
 
 	}
+
+	if (eLayerType::Monster == gameObject->GetLayerType())
+	{
+		Vector3 monToPlayer = GetWorldPos() - gameObject->GetWorldPos();
+		monToPlayer.Normalize();
+		Vector3 monUpVector = gameObject->GetTransform()->WorldUp();
+
+		float cosTheta = monToPlayer.Dot(monUpVector);
+		if (cosTheta > 0.95f)
+		{
+			GetPhysXRigidBody()->SetAirOff();
+			SetPlayerState(Player::ePlayerState::Jump);
+		}
+	}
+
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)
