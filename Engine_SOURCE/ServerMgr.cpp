@@ -9,7 +9,6 @@
 #include "Sphere.h"
 #include "Box.h"
 #include "Player.h"
-#include "PlayerScript.h"
 #include "Physical.h"
 #include "PhysXRigidBody.h"
 #include "PhysXCollider.h"
@@ -18,6 +17,7 @@
 
 #include "PacketSendScript.h"
 #include "ApplyPacketScript.h"
+#include "PlayerStateScript.h"
 
 namespace server
 {
@@ -96,7 +96,7 @@ namespace server
 				player->GetComponent<MeshRenderer>()->SetMaterial(mat);
 				//player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 				player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-				player->AddComponent<PlayerScript>(eComponentType::Script);
+				player->AddComponent<PlayerStateScript>(eComponentType::Script);
 
 				Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 				physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));
@@ -169,7 +169,7 @@ namespace server
 		//player->GetComponent<GUIMeshRenderer>()->SetMaterial(mat);
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-		player->AddComponent<PlayerScript>(eComponentType::Script);
+		player->AddComponent<PlayerStateScript>(eComponentType::Script);
 
 		Physical* physical = player->AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Sphere, Vector3(2.5f, 2.5f, 2.5f));

@@ -12,7 +12,6 @@
 #include "Object.h"
 
 #include "PlayerStateScript.h"
-#include "PlayerScript.h"
 
 Player::Player()
 {
@@ -45,7 +44,6 @@ void Player::Initialize()
 {
 	//마리오 body 초기화
 	MeshRenderer* mesh = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	//AddComponent<PlayerScript>(eComponentType::Script);
 	AddComponent<PlayerStateScript>(eComponentType::Script);
 	//AddComponent<Transform>(eComponentType::Transform);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
@@ -379,7 +377,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 	animator->CreateAnimation(L"SquatWait", L"..//..//Resources/MarioBody/Animation/SquatWait.smd");
 	animator->CreateAnimation(L"SquatWalk", L"..//..//Resources/MarioBody/Animation/SquatWalk.smd");
 
-	//animator->CreateAnimation(L"Dead", L"..//..//Resources/MarioBody/Animation/Dead.smd", 0.1f);
+	animator->CreateAnimation(L"Dead", L"..//..//Resources/MarioBody/Animation/Dead.smd");
 	animator->CreateAnimation(L"Run", L"..//..//Resources/MarioBody/Animation/Run.smd");
 	animator->CreateAnimation(L"RunStart", L"..//..//Resources/MarioBody/Animation/RunStart.smd");
 	animator->Play(L"Wait");

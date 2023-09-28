@@ -65,7 +65,7 @@ void PlayerStateScript::Idle()
 		return;
 	if(!(animator->PlayAnimationName()== L"Wait"))
 		animator->Play(L"Wait");
-	mInitialForce = 33.f;
+
 }
 
 void PlayerStateScript::Move()
@@ -95,9 +95,6 @@ void PlayerStateScript::Move()
 		{
 			mAnimator->Play(L"Brake");
 			mPlayer->SetPlayerState(Player::ePlayerState::Idle);
-			//mMoveTime = 0.0f;
-			//rigidbody->SetLinearMaxVelocityForDynamic(5.f);
-			//mInitialForce = 33.f;
 			return;
 		}
 	}
@@ -142,28 +139,37 @@ void PlayerStateScript::Move()
 		&& mAnimator->PlayAnimationName() != L"Run"
 		&& mAnimator->PlayAnimationName() != L"RunStart")
 	{
+		mInitialForce += mForceIncrement;
 		mAnimator->Play(L"RunStart");
 		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
 	}
 	else if (
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
-		&&(mAnimator->PlayAnimationName() == L"Run"
-		|| mAnimator->PlayAnimationName() == L"RunStart"))
+		&&(mAnimator->PlayAnimationName() == L"RunStart"))
 	{
+		mInitialForce += mForceIncrement;
+		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+	}
+	else if (
+		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&& (mAnimator->PlayAnimationName() == L"Run"))
+	{
+		mInitialForce == 10000.f;
 		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
 	}
 	else if(mAnimator->PlayAnimationName() != L"Walk")
 	{
 		mAnimator->Play(L"Walk");
+		mInitialForce = 7000.f;
 		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
 	}
 	else
 	{
+		mInitialForce = 7000.f;
 		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
 	}
+	rigidbody->AddForce(-tr->Forward() * mInitialForce * DT);
 
-
-	rigidbody->AddForce(-tr->Forward() * 10000.f * DT);
 }
 
 
@@ -183,20 +189,11 @@ void PlayerStateScript::Jump()
 		rigidbody->SetAirOn();
 	}
 
-	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())
+	if (rigidbody->GetVelocity().y < 0)
 	{
-		//rigidbody->SetMaxVelocity_Y(10.f);
-		mAnimator->Play(L"Fall",false);
+		mAnimator->Play(L"Fall", false);
 		mPlayer->SetPlayerState(Player::ePlayerState::Fall);
 	}
-	
-
-	// 점프했을시 이동 애니메이션으로 가지않고 공중에서 약간의 움직임을 구현해야한다
-	// ==============================================================================
-	// 
-	// 
-	// 
-	// ==============================================================================
 }
 
 void PlayerStateScript::Squat()
@@ -227,10 +224,6 @@ void PlayerStateScript::Fall()
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
-	//if (animator->PlayAnimationName() != L"Fall")
-	//{
-		//animator->Play(L"Fall",false);
-	//}
 	if(rigidbody->GetVelocity().y==0)
 	{
 		mPlayer->SetPlayerState(Player::ePlayerState::Idle);

@@ -6,7 +6,6 @@
 #include "PhysXRigidBody.h"
 #include "PhysicalMovement.h"
 #include "PhysXCollider.h"
-#include "PlayerScript.h"
 #include "Transform.h"
 
 MarioParts::MarioParts()
