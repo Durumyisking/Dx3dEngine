@@ -7,6 +7,9 @@
 #include "MarioCap.h"
 #include "Physical.h"
 
+#include "BoneAnimator.h"
+#include "PhysXRigidBody.h"
+
 CaptureObj::~CaptureObj()
 {
 }
@@ -28,7 +31,7 @@ void CaptureObj::Divide()
 	// 라바콘 처럼 특수하게 분리될 오브젝트는
 	// 해당객체내부에서 함수 재정의
 	OffCapture();
-	DivideEvnet();
+	DivideEvent();
 
 	if (mObject == nullptr)
 		return;
@@ -58,7 +61,20 @@ void CaptureObj::Divide()
 	playertr->SetPhysicalPosition(monsterTr->GetPhysicalPosition());
 
 	mPlayer->SetPlayerState(Player::ePlayerState::Idle);
+
+	BoneAnimator* animator = mPlayer->GetBoneAnimator();
+	PhysXRigidBody* rigidbody = mPlayer->GetPhysXRigidBody();
+
+	animator->Play(L"Jump", false);
+
+	rigidbody->SetMaxVelocity_Y(10.f);
+	rigidbody->ApplyGravity();
+	rigidbody->SetAirOn();
+	rigidbody->AddForce(math::Vector3(10000.f, 10000.f, 0.0f));
+
 	mPlayer->SetPlayerState(Player::ePlayerState::Jump);
 }
+
+
 
 

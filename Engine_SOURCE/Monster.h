@@ -33,6 +33,7 @@ public:
 
 
 	virtual void CaptureEvent() = 0;
+	virtual void CaptureEnter(MarioCap* cap) = 0;
 
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) {};

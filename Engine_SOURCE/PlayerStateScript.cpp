@@ -184,12 +184,13 @@ void PlayerStateScript::Jump()
 		mAnimator->Play(L"Jump", false);
 
 		rigidbody->SetMaxVelocity_Y(10.f);
-		rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
 		rigidbody->ApplyGravity();
 		rigidbody->SetAirOn();
+		rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
 	}
 
-	if (rigidbody->GetVelocity().y < 0)
+	if ((mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete()) 
+		||rigidbody->GetVelocity().y < 0)
 	{
 		mAnimator->Play(L"Fall", false);
 		mPlayer->SetPlayerState(Player::ePlayerState::Fall);

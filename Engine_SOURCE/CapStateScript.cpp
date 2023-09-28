@@ -54,8 +54,6 @@ void CapStateScript::Initialize()
 
 void CapStateScript::Idle()
 {
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
-	model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
 	//BoneAnimator* animator = mCap->GetComponent<BoneAnimator>();
 	//if (animator == nullptr)
 	//	return;

@@ -16,6 +16,7 @@
 
 #include "GenericAnimator.h"
 #include "Player.h"
+#include "TimeMgr.h"
 
 Packun::Packun()
 	: Monster()
@@ -121,7 +122,96 @@ void Packun::CaptureEvent()
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Attack);
 }
 
-void Packun::DivideEvnet()
+void Packun::CaptureEnter(MarioCap* cap)
+{
+	// 캡쳐 연출부
+	// 이전에 진행중이던 애니메이터 종료
+	GenericAnimator* animator = cap->GetOwner()->GetComponent<GenericAnimator>();
+	if (animator)
+		animator->Stop();
+
+	// 몬스터와 플레이어의 포지션을 가져옴
+	Vector3 monpos = GetTransform()->GetPhysicalPosition();
+	Transform* tr = cap->GetOwner()->GetTransform();
+	Vector3 playerpos = tr->GetPhysicalPosition();
+
+	//수직 계산
+	float dh = monpos.y - playerpos.y;
+	float mh = 5.f - playerpos.y;
+	float ty = sqrt(2 * 9.8f * mh);
+
+	//수평 계산
+	float a = 9.8f;
+	float b = -2 * ty;
+	float c = 2 * dh;
+	float dat = (-b + sqrt(b * b - 4 * a * c)) / (2 * a);
+
+	float tx = -(playerpos.x - monpos.x) / dat;
+	float tz = -(playerpos.z - monpos.z) / dat;
+
+
+	AnimatorParam param;
+
+	// 진행타입
+	param.AnimType = eAnimType::Linear;
+
+	// 진행중 사용될 Value 값
+	param.StartValue = 0.f;
+	param.EndValue = 300.f;
+
+	// 진행시간
+	param.DurationTime = 0.7f;
+
+	Vector3 Initvelocity = Vector3(tx, ty, tz);
+
+	// 진행 함수 std::function<void(float)>
+	param.DurationFunc = [this, tr, playerpos, Initvelocity](float inCurValue)
+	{
+		tr->SetPhysicalPosition(
+			Vector3(
+				(playerpos.x + (Initvelocity.x * inCurValue * DT)),
+				(playerpos.y + (Initvelocity.y * inCurValue * DT) - (0.5 * 9.8f * inCurValue * DT * inCurValue * DT)),
+				(playerpos.z + (Initvelocity.z * inCurValue * DT))
+			));
+
+	};
+
+	 //끝날때 호출되는 함수
+	param.CompleteFunc = [this, cap](float inCurValue)
+	{
+		OnCapture();
+
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
+		if (!model)
+			return;
+
+		// 오프
+		model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
+		model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
+		model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
+
+		// 마리오 본체 pause
+		cap->GetOwner()->Pause();
+		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
+
+		// 캡의 오너변경
+		cap->SetOwner(this);
+		SetObject(cap);
+
+		// 캡의 Capture 상태
+		cap->SetCapState(MarioCap::eCapState::Capture);
+
+		// 몬스터의 default 
+		SetMonsterState(eMonsterState::Idle);
+
+	};
+
+	//이벤트 시작
+	animator->Start(param);
+
+}
+
+void Packun::DivideEvent()
 {
 	// 마지막 상태가 어떤지 모르기때문에 idle 로 초기화후
 	// groggy로 상태변경
@@ -144,35 +234,13 @@ void Packun::OnTriggerEnter(GameObj* gameObject)
 		if (cap == nullptr)
 			return;
 
-		OnCapture();
-
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
-		if (!model)
-			return;
-
-		// 오프
-		model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
-		model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
-		model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
-
-		// 마리오 본체 pause
-		cap->GetOwner()->Pause();
-		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
-
-		// 캡의 오너변경
-		cap->SetOwner(this);
-		SetObject(cap);
-
-		// 캡의 default 상태
-		cap->SetCapState(MarioCap::eCapState::Idle);
-
 		// 진행중인 애니메이터 초기화
 		GenericAnimator* animator = cap->GetComponent<GenericAnimator>();
 		if (animator)
 			animator->Stop();
 
-		// 몬스터의 default 
-		SetMonsterState(eMonsterState::Idle);
+		CaptureEnter(cap);
+	
 	}
 }
 

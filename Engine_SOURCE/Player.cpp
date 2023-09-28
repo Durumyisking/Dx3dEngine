@@ -12,6 +12,7 @@
 #include "Object.h"
 
 #include "PlayerStateScript.h"
+#include "GenericAnimator.h"
 
 Player::Player()
 {
@@ -45,11 +46,11 @@ void Player::Initialize()
 	//마리오 body 초기화
 	MeshRenderer* mesh = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	AddComponent<PlayerStateScript>(eComponentType::Script);
-	//AddComponent<Transform>(eComponentType::Transform);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	AddComponent<PhysXCollider>(eComponentType::Collider);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
+	AddComponent<GenericAnimator>(eComponentType::GenericAnimator);
 
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
@@ -450,6 +451,8 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 			cilp->SetCompleteEvent([this]()
 		{
 			SetPlayerState(Player::ePlayerState::Idle);
+			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
+			model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
 		});
 	}
 }
