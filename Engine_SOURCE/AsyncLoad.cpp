@@ -166,52 +166,6 @@ void AsyncLoad::LoadMaterials()
 	}
 #pragma endregion
 
-
-#pragma region goombaBody Material
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"goombaBody_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"goombaBody_nrm", eTextureSlot::Normal);
-		material->SetTextureByKey(L"goombaBody_rgh", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaBodyMaterial", material);
-	}
-#pragma endregion
-#pragma region goombaEye0 Material
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"goombaEye_alb0", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"goombaEye_nrm0", eTextureSlot::Normal);
-		material->SetTextureByKey(L"goombaEye_rgh0", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye0Material", material);
-	}
-#pragma endregion
-#pragma region goombaEye1 Material
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"goombaEye_alb1", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"goombaEye_nrm1", eTextureSlot::Normal);
-		material->SetTextureByKey(L"goombaEye_rgh1", eTextureSlot::Roughness);
-		material->SetTextureByKey(L"goombaEye_emm", eTextureSlot::Emissive);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye1Material", material);
-	}
-#pragma endregion
-#pragma region goombaEye2 Material
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"goombaEye_alb2", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"goombaEye_nrm2", eTextureSlot::Normal);
-		material->SetTextureByKey(L"goombaEye_rgh2", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye2Material", material);
-	}
-#pragma endregion
 #pragma region MarioMustache Material
 	{
 		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
@@ -225,11 +179,67 @@ void AsyncLoad::LoadMaterials()
 	}
 #pragma endregion
 
+	loadGoomba(L"DeferredShader");
+	loadMario(L"DeferredShader");
 
-// 마리오
+	renderer::CreateUIMaterial();
+}
+
+void AsyncLoad::loadGoomba(std::wstring shaderName)
+{
+#pragma region goombaBody Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"goombaBody_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"goombaBody_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"goombaBody_rgh", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaBodyMaterial", material);
+	}
+#pragma endregion
+#pragma region goombaEye0 Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"goombaEye_alb0", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"goombaEye_nrm0", eTextureSlot::Normal);
+		material->SetTextureByKey(L"goombaEye_rgh0", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye0Material", material);
+	}
+#pragma endregion
+#pragma region goombaEye1 Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"goombaEye_alb1", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"goombaEye_nrm1", eTextureSlot::Normal);
+		material->SetTextureByKey(L"goombaEye_rgh1", eTextureSlot::Roughness);
+		material->SetTextureByKey(L"goombaEye_emm", eTextureSlot::Emissive);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye1Material", material);
+	}
+#pragma endregion
+#pragma region goombaEye2 Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"goombaEye_alb2", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"goombaEye_nrm2", eTextureSlot::Normal);
+		material->SetTextureByKey(L"goombaEye_rgh2", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"goombaEye2Material", material);
+	}
+#pragma endregion
+}
+
+void AsyncLoad::loadMario(std::wstring shaderName)
+{
+	// 마리오
 #pragma region marioBody Material
 	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(L"marioBody_alb", eTextureSlot::Albedo);
@@ -241,7 +251,7 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 #pragma region marioCap Material
 	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(L"marioCap_alb", eTextureSlot::Albedo);
@@ -253,7 +263,7 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 #pragma region marioeye Material
 	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(L"marioEye_alb", eTextureSlot::Albedo);
@@ -263,7 +273,7 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 #pragma region marioeyePupil Material
 	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(L"marioEyePupil_alb", eTextureSlot::Albedo);
@@ -276,7 +286,7 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 #pragma region marioeyeBall Material
 	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(L"marioEyeBall_alb", eTextureSlot::Albedo);
@@ -287,7 +297,7 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 #pragma region marioface Material
 	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(L"marioFace_alb", eTextureSlot::Albedo);
@@ -297,7 +307,7 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 #pragma region marioHairface Material
 	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(L"marioHairFace_alb", eTextureSlot::Albedo);
@@ -309,7 +319,7 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 #pragma region marioHandL Material
 	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(L"marioHandL_alb", eTextureSlot::Albedo);
@@ -320,7 +330,7 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 #pragma region marioHandR Material
 	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(L"marioHandR_alb", eTextureSlot::Albedo);
@@ -331,7 +341,7 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 #pragma region marioHair Material
 	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(L"marioHair_alb", eTextureSlot::Albedo);
@@ -340,6 +350,4 @@ void AsyncLoad::LoadMaterials()
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"marioHairMaterial", material);
 	}
 #pragma endregion
-
-	renderer::CreateUIMaterial();
 }

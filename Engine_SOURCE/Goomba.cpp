@@ -165,10 +165,18 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 	}
 
 	if (eLayerType::Player == gameObject->GetLayerType())
-
 	{
+		Vector3 goombaToPlayer = gameObject->GetWorldPos() - GetWorldPos();
+		goombaToPlayer.Normalize();
+		Vector3 goombaUpVector = GetTransform()->WorldUp();
 
-		GetPhysXRigidBody()->SetAirOff();
+		float cosTheta = goombaToPlayer.Dot(goombaUpVector);
+		if (cosTheta > 0.95f)
+		{
+			Model* model = GetMeshRenderer()->GetModel();
+			model->AllMeshRenderSwtichOff();
+			model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");			
+		}
 	}
 
 	GetComponent<PhysXRigidBody>()->ApplyGravity();

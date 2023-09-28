@@ -90,7 +90,7 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 	//Convex and Triangle Mesh TEST
-	{
+	
 		////TriangleMesh Test
 		//{
 		//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
@@ -112,10 +112,7 @@ void ScenePlay::Initialize()
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-	}
-
-
-	}
+	}	
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -134,7 +131,9 @@ void ScenePlay::Initialize()
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
+		plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.f);
+		plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.99f);
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);

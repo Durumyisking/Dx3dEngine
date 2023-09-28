@@ -83,23 +83,17 @@ void PlayerStateScript::Move()
 	if (mAnimator->PlayAnimationName() == L"Brake")
 		return;
 
-	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
+	if (GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::UP)
+		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::DOWN)
+		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::LEFT)
+		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::RIGHT))
 	{
-		if (!GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
-			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN)
-			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT)
-			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
-		{
-			mAnimator->Play(L"Brake");
-			mPlayer->SetPlayerState(Player::ePlayerState::Idle);
-			//mMoveTime = 0.0f;
-			//rigidbody->SetLinearMaxVelocityForDynamic(5.f);
-			//mInitialForce = 33.f;
-			return;
-		}
+		mAnimator->Play(L"Brake");
+		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
+		//mMoveTime = 0.0f;
+		//rigidbody->SetLinearMaxVelocityForDynamic(5.f);
+		//mInitialForce = 33.f;
+		return;
 	}
 
 	Transform* tr = mPlayer->GetComponent<Transform>();
@@ -133,33 +127,32 @@ void PlayerStateScript::Move()
 	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
 	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
 
-	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
-	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
-
-	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
-		&& mAnimator->PlayAnimationName() != L"Run"
-		&& mAnimator->PlayAnimationName() != L"RunStart")
+	if (!rigidbody->IsOnAir())
 	{
-		mAnimator->Play(L"RunStart");
-		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+			&& mAnimator->PlayAnimationName() != L"Run"
+			&& mAnimator->PlayAnimationName() != L"RunStart")
+		{
+			mAnimator->Play(L"RunStart");
+			rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+		}
+		else if (
+			GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+			&& (mAnimator->PlayAnimationName() == L"Run"
+				|| mAnimator->PlayAnimationName() == L"RunStart"))
+		{
+			rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+		}
+		else if (mAnimator->PlayAnimationName() != L"Walk")
+		{
+			mAnimator->Play(L"Walk");
+			rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
+		}
+		else
+		{
+			rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
+		}
 	}
-	else if (
-		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
-		&&(mAnimator->PlayAnimationName() == L"Run"
-		|| mAnimator->PlayAnimationName() == L"RunStart"))
-	{
-		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
-	}
-	else if(mAnimator->PlayAnimationName() != L"Walk")
-	{
-		mAnimator->Play(L"Walk");
-		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
-	}
-	else
-	{
-		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
-	}
-
 
 	rigidbody->AddForce(-tr->Forward() * 10000.f * DT);
 
@@ -173,21 +166,24 @@ void PlayerStateScript::Jump()
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
-	if (mAnimator->PlayAnimationName() != L"Jump")
+	if (!rigidbody->IsOnAir())
 	{
 		mAnimator->Play(L"Jump", false);
+		rigidbody->SetVelocity(AXIS::Y, 0.f);
 
- 		rigidbody->SetMaxVelocity_Y(10.f);
+		rigidbody->SetMaxVelocity_Y(13.f);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_WALK_VELOCITY);
+
 		rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
+
 		rigidbody->ApplyGravity();
 		rigidbody->SetAirOn();
-
 	}
 
-	if (mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())
+	if (rigidbody->GetVelocity().y < 0.f)
 	{
 		//rigidbody->SetMaxVelocity_Y(10.f);
-		mAnimator->Play(L"Fall",false);
+		mAnimator->Play(L"Fall");
 		mPlayer->SetPlayerState(Player::ePlayerState::Fall);
 	}
 	
@@ -225,17 +221,7 @@ void PlayerStateScript::Air()
 
 void PlayerStateScript::Fall()
 {
-	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
-	assert(rigidbody);
-
-	//if (animator->PlayAnimationName() != L"Fall")
-	//{
-		//animator->Play(L"Fall",false);
-	//}
-	if(rigidbody->GetVelocity().y==0)
-	{
-		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
-	}
+	Move();
 }
 
 void PlayerStateScript::Wall()

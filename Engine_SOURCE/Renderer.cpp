@@ -802,7 +802,6 @@ namespace renderer
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
 			Material* material = new Material();
-			material->SetRenderingMode(eRenderingMode::DeferredOpaque);
 			material->SetShader(shader);
 			material->SetTextureByKey(L"t_a", eTextureSlot::Albedo);
 			material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
@@ -812,6 +811,16 @@ namespace renderer
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", material);
 		}
 #pragma endregion
+#pragma region DeferredMaterial
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial_NT", material);
+		}
+#pragma endregion
+
 
 #pragma region LightDirMaterial
 		{

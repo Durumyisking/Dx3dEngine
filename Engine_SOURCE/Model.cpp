@@ -201,6 +201,14 @@ void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
 	}
 }
 
+void Model::AllMeshRenderSwtichOff()
+{
+	for (auto iter = mMeshes.begin(); iter != mMeshes.end(); ++iter)
+	{
+		(*iter)->SetRender(false);
+	}
+}
+
 void Model::recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode)
 {
 	std::wstring wNodeName = ConvertToW_String(node->mName.C_Str());
