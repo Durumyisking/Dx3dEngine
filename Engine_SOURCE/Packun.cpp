@@ -148,7 +148,8 @@ void Packun::CaptureEnter(MarioCap* cap)
 
 	float tx = -(playerpos.x - monpos.x) / dat;
 	float tz = -(playerpos.z - monpos.z) / dat;
-
+	Vector3 right = tr->Right();
+	Vector3 forward = tr->Forward();
 
 	AnimatorParam param;
 
@@ -157,15 +158,15 @@ void Packun::CaptureEnter(MarioCap* cap)
 
 	// 진행중 사용될 Value 값
 	param.StartValue = 0.f;
-	param.EndValue = 300.f;
+	param.EndValue = 250.f;
 
 	// 진행시간
-	param.DurationTime = 0.7f;
+	param.DurationTime = 0.4f;
 
 	Vector3 Initvelocity = Vector3(tx, ty, tz);
 
 	// 진행 함수 std::function<void(float)>
-	param.DurationFunc = [this, tr, playerpos, Initvelocity](float inCurValue)
+	param.DurationFunc = [this, tr, playerpos, right, forward, Initvelocity](float inCurValue)
 	{
 		tr->SetPhysicalPosition(
 			Vector3(
@@ -173,6 +174,9 @@ void Packun::CaptureEnter(MarioCap* cap)
 				(playerpos.y + (Initvelocity.y * inCurValue * DT) - (0.5 * 9.8f * inCurValue * DT * inCurValue * DT)),
 				(playerpos.z + (Initvelocity.z * inCurValue * DT))
 			));
+
+		
+		tr->SetPhysicalRotation(right * inCurValue);
 
 	};
 

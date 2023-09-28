@@ -59,6 +59,7 @@ void CaptureObj::Divide()
 	Transform* playertr = mPlayer->GetTransform();
 
 	playertr->SetPhysicalPosition(monsterTr->GetPhysicalPosition());
+	playertr->SetPhysicalRotation(Vector3(0.f, 0.0f, 0.f));
 
 	mPlayer->SetPlayerState(Player::ePlayerState::Idle);
 
@@ -66,11 +67,12 @@ void CaptureObj::Divide()
 	PhysXRigidBody* rigidbody = mPlayer->GetPhysXRigidBody();
 
 	animator->Play(L"Jump", false);
-
+	
 	rigidbody->SetMaxVelocity_Y(10.f);
 	rigidbody->ApplyGravity();
 	rigidbody->SetAirOn();
 	rigidbody->AddForce(math::Vector3(10000.f, 10000.f, 0.0f));
+
 
 	mPlayer->SetPlayerState(Player::ePlayerState::Jump);
 }
