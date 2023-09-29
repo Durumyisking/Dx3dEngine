@@ -6,25 +6,35 @@
 struct LightColor
 {
     float4 diffuse;
+
+    // pbr에서 아래 내용들은 쓰지 않도록 합시다
     float4 specular;
-    float4 ambient;
-    
+    float4 ambient;    
 };
 
 struct LightAttribute
 {
     LightColor color;
+
     float4 position;
     float4 direction;
     
+    // point and spot 
     float radius;
-    float angle;    
-
-    int type;
+    float fallOffStart;
+    float fallOffEnd;
+    float spotPower;
     
-    int padding;
+    int type;      
+    float3 padding;
 
 };
+
+//#define LIGHT_OFF 0x00
+#define LIGHT_DIRECTIONAL 0
+#define LIGHT_POINT 1
+#define LIGHT_SPOT 2
+//#define LIGHT_SHADOW3 0x10
 
 
 StructuredBuffer<LightAttribute> lightAttributes : register(t22);
@@ -280,7 +290,7 @@ float VSM_FILTER(float2 moments, float fragDepth)
     }
         
     lit = max(p, 0.4f);
-
+    
     return lit;
 }
 

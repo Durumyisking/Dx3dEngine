@@ -31,13 +31,38 @@ float4 main(VSOut vsIn) : SV_Target
     metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV, pixelToCam) : cbbMetallic;
     roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV, pixelToCam) : cbbRoughness;
     emission = cbbEmissive ? TextureMapping_emissive(vsIn.UV, pixelToCam) : emission;
+    
     float3 pixelToEye = normalize(cameraWorldPos.xyz - vsIn.WorldPos);
     ambientLighting = AmbientLightingByIBL(albedo.xyz, normal, pixelToEye, metallic, roughness, pixelToCam);
     
     // 빛 타입에 따라 다르게 적용되도록해야함 현재는 dir light만 적용중
     
-    float3 lightVec = -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz;
-    directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness);
+    for (int i = 0; i < lightCount; ++i)
+    {
+        float3 lightVec = lightAttributes[i].type == LIGHT_DIRECTIONAL 
+        ? -lightAttributes[i].direction.xyz
+        : lightAttributes[i].position - worldPosition;
+        
+        float lightDist = length(lightVec);
+        lightVec /= lightDist;
+
+        // Spot light
+        float spotFator = lightAttributes[i].type & LIGHT_SPOT
+                      ? pow(max(-dot(lightVec, lightAttributes[i].direction.xyz), 0.0f), lightAttributes[i].spotPower)
+                      : 1.0f;
+        
+        // Distance attenuation
+        float att = saturate((lightAttributes[i].fallOffEnd - lightDist)
+                         / (lightAttributes[i].fallOffEnd - lightAttributes[i].fallOffStart));
+
+        
+        float3 radiance = lightAttributes[i].color.diffuse * spotFator * att;// * shadowFactor;
+
+        
+        directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness);
+            
+        
+    }
 
     
     //outColor.xyz = CalculateLightPBR_Direct(vsIn.WorldPos, albedo, normal, metallic, roughness);

@@ -55,9 +55,7 @@ PS_OUT main(VSOut vsin)
     float4 lightProj = mul(float4(worldPos.xyz, 1.f), lightView);
     lightProj = mul(float4(lightProj.xyz, 1.f), lightProjection);
 
-    lightProj.xy /=lightProj .w;
-    
-    // 광원으로부터 픽셀까지의 거리 ( 해당 거리보다 shadowmap에 저장된 값이 더 커야 그림자 생성)
+    lightProj.xy /=lightProj .w;    
     lightProj.z /= lightProj.w;
 
     // 샘플링을 하기 위해서 투영좌표계를 UV 좌표계로 변환
