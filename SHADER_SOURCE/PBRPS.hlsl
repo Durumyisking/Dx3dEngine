@@ -41,25 +41,27 @@ float4 main(VSOut vsIn) : SV_Target
     {
         float3 lightVec = lightAttributes[i].type == LIGHT_DIRECTIONAL 
         ? -lightAttributes[i].direction.xyz
-        : lightAttributes[i].position - worldPosition;
+        : mul(lightAttributes[i].position, world) - worldPosition;
         
         float lightDist = length(lightVec);
         lightVec /= lightDist;
 
         // Spot light
-        float spotFator = lightAttributes[i].type & LIGHT_SPOT
+        float spotFator = lightAttributes[i].type == LIGHT_SPOT
                       ? pow(max(-dot(lightVec, lightAttributes[i].direction.xyz), 0.0f), lightAttributes[i].spotPower)
                       : 1.0f;
         
         // Distance attenuation
-        float att = saturate((lightAttributes[i].fallOffEnd - lightDist)
+        float att = lightAttributes[i].type == LIGHT_DIRECTIONAL
+        ? 1.f
+        : saturate((lightAttributes[i].fallOffEnd - lightDist)
                          / (lightAttributes[i].fallOffEnd - lightAttributes[i].fallOffStart));
 
         
-        float3 radiance = lightAttributes[i].color.diffuse * spotFator * att;// * shadowFactor;
+        float3 radiance = lightAttributes[i].color.diffuse * spotFator * 1.f;// * shadowFactor;
 
         
-        directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness);
+        directLighting += PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness) * radiance;
             
         
     }

@@ -317,9 +317,9 @@ float3 PBR_DirectLighting(float3 pixelToEye, float3 lightDir, float3 albedo, flo
     float3 G = gaSchlickGGX(NdotI, NdotO, roughness);
     float3 specularBRDF = (F * D * G) / max(1e-5, 4.0 * NdotI * NdotO);
 
-    float3 radiance = lightAttributes[0].color.diffuse.xyz;
+    // float3 radiance = lightAttributes[0].color.diffuse.xyz;
       
-    directLighting += (diffuseBRDF + specularBRDF) * radiance; // * NdotI;
+    directLighting += (diffuseBRDF + specularBRDF); // * NdotI;
     
     return directLighting;
 }

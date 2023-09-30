@@ -179,8 +179,8 @@ void AsyncLoad::LoadMaterials()
 	}
 #pragma endregion
 
-	loadGoomba(L"DeferredShader");
-	loadMario(L"DeferredShader");
+	loadGoomba(L"PBRShader");
+	loadMario(L"PBRShader");
 
 	renderer::CreateUIMaterial();
 }
