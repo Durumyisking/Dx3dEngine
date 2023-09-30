@@ -112,7 +112,16 @@ void ScenePlay::Initialize()
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
+
+		//goomba->SetMonsterState(Monster::eMonsterState::Hit);
 	}	
+
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(15.f, 10.f, 0.f));
+
+		goomba->SetMonsterState(Monster::eMonsterState::Hit);
+	}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);

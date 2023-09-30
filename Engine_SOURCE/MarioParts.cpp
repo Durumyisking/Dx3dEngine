@@ -33,6 +33,8 @@ void MarioParts::Initialize()
 
 	BoneInitialize();
 	DynamicObject::Initialize();
+
+	GetComponent<MeshRenderer>()->SetBoneAnimator(nullptr);
 }
 
 void MarioParts::Update()
