@@ -26,9 +26,9 @@ void PlayerScript::Initialize()
 	mTransform = GetOwner()->GetComponent<Transform>();
 	mPhyXRigidBody = GetOwner()->GetComponent<PhysXRigidBody>();
 
-	mPhyXRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
-	mPhyXRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
-	mPhyXRigidBody->SetMaxVelocity_Y(100.f);
+	//mPhyXRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	//mPhyXRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+	//mPhyXRigidBody->SetMaxVelocity_Y(13.f);
 	//mPhyXRigidBody->SetAngularMaxVelocityForDynamic(10.f);
 	//mPhyXRigidBody->SetLinearMaxVelocityForDynamic(10.f);
 }

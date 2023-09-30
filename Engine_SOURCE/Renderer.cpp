@@ -446,6 +446,7 @@ namespace renderer
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"PhongPS.hlsl", "main");
+			shader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PhongShader", shader);
 		}
 #pragma endregion
@@ -514,7 +515,7 @@ namespace renderer
 			shader->SetRSState(eRasterizerType::SolidNone);
 			shader->SetDSState(eDepthStencilType::NoWrite);
 			shader->SetBSState(eBlendStateType::AlphaBlend);
-			shader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_LINESTRIP);
+			shader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"DebugShader", shader);
 		}
 #pragma endregion
@@ -790,6 +791,16 @@ namespace renderer
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"PBRMaterial", material);
 		}
 #pragma endregion
+#pragma region PBRMaterial No Texture
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"PBRMaterial_NT", material);
+		}
+#pragma endregion
+
 
 #pragma region CursorMat
 		{
@@ -802,7 +813,6 @@ namespace renderer
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
 			Material* material = new Material();
-			material->SetRenderingMode(eRenderingMode::DeferredOpaque);
 			material->SetShader(shader);
 			material->SetTextureByKey(L"t_a", eTextureSlot::Albedo);
 			material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
@@ -812,6 +822,16 @@ namespace renderer
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial", material);
 		}
 #pragma endregion
+#pragma region DeferredMaterial No Texture
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"DeferredMaterial_NT", material);
+		}
+#pragma endregion
+
 
 #pragma region LightDirMaterial
 		{
@@ -1013,18 +1033,21 @@ namespace renderer
 
 	void BindLight()
 	{
-		lightBuffer->SetData(lightAttributes.data(), static_cast<UINT>(lightAttributes.size()));
-		lightBuffer->BindSRV(eShaderStage::VS, 22);
-		lightBuffer->BindSRV(eShaderStage::PS, 22);
+		if (!lightAttributes.empty())
+		{
+			lightBuffer->SetData(lightAttributes.data(), static_cast<UINT>(lightAttributes.size()));
+			lightBuffer->BindSRV(eShaderStage::VS, 22);
+			lightBuffer->BindSRV(eShaderStage::PS, 22);
 
-		renderer::LightCB Lightcb = {};
-		Lightcb.lightCount = static_cast<UINT>(lightAttributes.size());
+			renderer::LightCB Lightcb = {};
+			Lightcb.lightCount = static_cast<UINT>(lightAttributes.size());
 
-		ConstantBuffer* cb = constantBuffers[static_cast<UINT>(eCBType::Light)];
-		cb->SetData(&Lightcb);
+			ConstantBuffer* cb = constantBuffers[static_cast<UINT>(eCBType::Light)];
+			cb->SetData(&Lightcb);
 
-		cb->Bind(eShaderStage::VS);
-		cb->Bind(eShaderStage::PS);
+			cb->Bind(eShaderStage::VS);
+			cb->Bind(eShaderStage::PS);
+		}
 	}
 
 	float noiseTime = 10.f;

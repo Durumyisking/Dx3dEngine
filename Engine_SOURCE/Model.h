@@ -60,6 +60,8 @@ public:
 
 	void AddMaterial(Material* mater) { mMaterials.emplace_back(mater); }
 	void MeshRenderSwtich(const std::wstring& name, bool renderSwitch = true);
+	void AllMeshRenderSwtichOff();
+
 
 private:
 	void recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode);

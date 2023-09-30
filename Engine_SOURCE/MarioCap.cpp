@@ -50,8 +50,8 @@ void MarioCap::Initialize()
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Sphere, Vector3(0.5f, 1.0f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.0f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	physical->RemoveActorToPxScene();
 
@@ -153,6 +153,11 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		rigidbody->SetMaxVelocity(0.0f);
 
 		GetComponent<BoneAnimator>()->Play(L"Capture", false);
+
+		//PxShape* detachShape = GetPhysical()->GetSubShapes()[0];
+		//GetPhysical()->GetActor()->is<PxRigidActor>()->detachShape(*detachShape);
+
+
 		SetCapState(MarioCap::eCapState::Capture);
 	}
 }
