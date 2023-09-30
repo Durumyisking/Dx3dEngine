@@ -165,8 +165,10 @@ void Packun::CaptureEnter(MarioCap* cap)
 
 	Vector3 Initvelocity = Vector3(tx, ty, tz);
 
+	//cap->GetOwner()->GetBoneAnimator()->Play(L"Bind");
+
 	// 진행 함수 std::function<void(float)>
-	param.DurationFunc = [this, tr, playerpos, right, forward, Initvelocity](float inCurValue)
+	param.DurationFunc = [this, cap, tr, playerpos, right, forward, Initvelocity](float inCurValue)
 	{
 		tr->SetPhysicalPosition(
 			Vector3(
@@ -243,6 +245,8 @@ void Packun::OnTriggerEnter(GameObj* gameObject)
 		if (animator)
 			animator->Stop();
 
+		dynamic_cast<Player*>(cap->GetOwner())->SetPlayerState(Player::ePlayerState::Capture);
+		
 		CaptureEnter(cap);
 	
 	}

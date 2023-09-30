@@ -29,6 +29,7 @@ PlayerStateScript::PlayerStateScript()
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Groggy, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::ThrowCap, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::CatchCap, this));
+	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Capture, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Die, this));
 }
 PlayerStateScript::~PlayerStateScript()
@@ -63,7 +64,7 @@ void PlayerStateScript::Idle()
 	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
 	if (animator == nullptr)
 		return;
-	if(!(animator->PlayAnimationName()== L"Wait"))
+	if(animator->PlayAnimationName() != L"Wait")
 		animator->Play(L"Wait");
 
 }
@@ -203,17 +204,114 @@ void PlayerStateScript::Squat()
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
+	if (mAnimator->PlayAnimationName() == L"SquatEnd")
+		return;
+
+	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::Z))
+	{
+		mAnimator->Play(L"SquatEnd", false);
+		return;
+	}
+
 	if (mAnimator->PlayAnimationName() != L"SquatStart"
-		&& mAnimator->PlayAnimationName() != L"SquatMove"
-		&& mAnimator->PlayAnimationName() != L"SquatWait")
+		&& mAnimator->PlayAnimationName() != L"SquatWalk"
+		&& mAnimator->PlayAnimationName() != L"SquatWait"
+		&& mAnimator->PlayAnimationName() != L"SquatEnd")
 	{
 		mAnimator->Play(L"SquatStart");
+	}
+
+	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
+		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN)
+		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT)
+		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+	{
+		mPlayer->SetPlayerState(Player::ePlayerState::SquatMove);
+		return;
 	}
 
 }
 
 void PlayerStateScript::SquatMove()
 {
+	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
+	assert(rigidbody);
+
+	PhysicalMovement* moveMent = GetOwner()->GetComponent<PhysicalMovement>();
+	assert(moveMent);
+
+	Physical* physical = GetOwner()->GetComponent<Physical>();
+	assert(physical);
+
+	if (mAnimator->PlayAnimationName() == L"SquatEnd")
+		return;
+
+	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::Z))
+	{
+		mAnimator->Play(L"SquatEnd",false);
+		return;
+	}
+
+	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
+	{
+		if (!GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+		{
+			mPlayer->SetPlayerState(Player::ePlayerState::Squat);
+			return;
+		}
+	}
+
+
+
+	Transform* tr = mPlayer->GetComponent<Transform>();
+	assert(tr);
+
+
+	bool able = false;
+	auto Input_DownFunC = [&](eKeyCode key, eKeyCode mult_key, math::Vector3 rotation)
+	{
+		if (able)
+			return;
+
+		if (GETSINGLE(InputMgr)->GetKeyDown(key))
+		{
+			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
+			{
+				tr->SetPhysicalRotation(rotation);
+				able = true;
+			}
+		}
+	};
+
+	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
+	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
+
+	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+
+	rigidbody->SetMaxVelocity(PLAYER_SQUATWALK_VELOCITY);
+
+	if (mAnimator->PlayAnimationName() != L"SquatWalk")
+	{
+		mAnimator->Play(L"SquatWalk");
+		mInitialForce = 7000.f;
+	}
+
+	rigidbody->AddForce(-tr->Forward() * mInitialForce * DT);
 }
 
 void PlayerStateScript::Air()
@@ -258,6 +356,16 @@ void PlayerStateScript::CatchCap()
 	if (mAnimator->PlayAnimationName() != L"CatchCap")
 	{
 		mAnimator->Play(L"CatchCap", false);
+	}
+}
+
+void PlayerStateScript::Capture()
+{
+	if (!mAnimator)
+		return;
+	if (mAnimator->PlayAnimationName() != L"Bind")
+	{
+		mAnimator->Play(L"Bind");
 	}
 }
 

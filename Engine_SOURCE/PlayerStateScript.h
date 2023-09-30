@@ -6,7 +6,8 @@
 #define PLAYER_JUMPFORCE 10000.f
 #define PLAYER_MASS 1.f
 #define PLAYER_WALK_VELOCITY 3.f
-#define PLAYER_RUN_VELOCITY 10.f
+#define PLAYER_SQUATWALK_VELOCITY 1.f
+#define PLAYER_RUN_VELOCITY 8.f
 
 class Player;
 class PlayerStateScript : public Script
@@ -31,6 +32,7 @@ public:
 	virtual void Groggy() final;
 	virtual void ThrowCap() final;
 	virtual void CatchCap() final;
+	virtual void Capture() final;
 	virtual void Die() final;
 
 public:
