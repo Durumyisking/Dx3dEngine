@@ -58,7 +58,7 @@ float4 main(VSOut vsIn) : SV_Target
                          / (lightAttributes[i].fallOffEnd - lightAttributes[i].fallOffStart));
 
         
-        float3 radiance = lightAttributes[i].color.diffuse * spotFator * 1.f;// * shadowFactor;
+        float3 radiance = lightAttributes[i].color.diffuse * spotFator * att; // * shadowFactor;
 
         
         directLighting += PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness) * radiance;

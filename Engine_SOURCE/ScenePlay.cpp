@@ -118,11 +118,11 @@ void ScenePlay::Initialize()
 		goomba->SetPos(Vector3(15.f, 10.f, 0.f));
 	}
 
-	{
-		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
-		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
-		t->BindAllShaderResource(12);
-	}
+	//{
+	//	CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
+	//	Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
+	//	t->BindAllShaderResource(12);
+	//}
 
 	{
 		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
@@ -188,7 +188,7 @@ void ScenePlay::Enter()
 		lightComp->SetType(eLightType::Point);
 		lightComp->SetDiffuse(Vector4(1.f, 0.f, 1.f, 1.f));
 		lightComp->SetRadius(20.f);
-		lightComp->SetFallOffStart(0.f);
+		lightComp->SetFallOffStart(10.5f);
 		lightComp->SetFallOffEnd(20.f);
 	}
 
