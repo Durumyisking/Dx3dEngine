@@ -118,11 +118,11 @@ void ScenePlay::Initialize()
 		goomba->SetPos(Vector3(15.f, 10.f, 0.f));
 	}
 
-	//{
-	//	CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
-	//	Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
-	//	t->BindAllShaderResource(12);
-	//}
+	{
+		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
+		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
+		t->BindAllShaderResource(12);
+	}
 
 	{
 		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
@@ -135,7 +135,7 @@ void ScenePlay::Initialize()
 		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial_NT");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
 		plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.99f);
 		plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
@@ -181,15 +181,12 @@ void ScenePlay::Enter()
 	{
 		GameObj* PointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLight");
 		PointLight->SetPos(Vector3(5.f, 5.f, 0.f));
-		MeshRenderer* mr = PointLight->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		mr->SetMeshByKey(L"Spheremesh");
-		mr->SetMaterialByKey(L"PhongMaterial");
 		Light* lightComp = PointLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Point);
 		lightComp->SetDiffuse(Vector4(1.f, 0.f, 1.f, 1.f));
 		lightComp->SetRadius(20.f);
-		lightComp->SetFallOffStart(10.5f);
-		lightComp->SetFallOffEnd(20.f);
+		lightComp->SetFallOffStart(5.5f);
+		lightComp->SetFallOffEnd(10.f);
 	}
 
 

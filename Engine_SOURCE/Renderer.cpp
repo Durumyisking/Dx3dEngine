@@ -862,11 +862,11 @@ namespace renderer
 			lightPointMaterial->SetRenderingMode(eRenderingMode::None);
 			lightPointMaterial->SetShader(lightPointShader);
 
-			Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTarget");
+			Texture* lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 			lightPointMaterial->SetTexture(eTextureSlot::PositionTarget, lightPointTex);
 			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
 			lightPointMaterial->SetTexture(eTextureSlot::AlbedoTarget, lightPointTex);
-			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTarget");
+			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"NormalTargetTexture");
 			lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
 			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
 			lightPointMaterial->SetTexture(eTextureSlot::MRDTarget, lightPointTex);

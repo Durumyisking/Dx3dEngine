@@ -263,8 +263,8 @@ struct LightAttribute
 	math::Vector4 direction;
 
 	float radius;
-	float fallOffStart;
-	float fallOffEnd;
+	float fallOffStart = 0.f;
+	float fallOffEnd = 0.f;
 	float spotPower;
 
 	enums::eLightType type;
