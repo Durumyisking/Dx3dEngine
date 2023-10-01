@@ -3,11 +3,13 @@
 #include "Transform.h"
 #include "Model.h"
 #include "Mesh.h"
+#include "BoneAnimator.h"
 
 
 
 MeshRenderer::MeshRenderer()
 	: BaseRenderer(eComponentType::MeshRenderer)
+	, mBoneAnimator(nullptr)
 {
 }
 
@@ -18,6 +20,11 @@ MeshRenderer::~MeshRenderer()
 void MeshRenderer::Initialize()
 {
 	BaseRenderer::Initialize();
+	BoneAnimator* animator = GetOwner()->GetComponent<BoneAnimator>();
+	if (animator)
+	{
+		mBoneAnimator = animator;
+	}
 }
 
 void MeshRenderer::Update()
@@ -58,6 +65,11 @@ void MeshRenderer::Render()
 
 	if (GetModel() != nullptr)
 	{
+		if (mBoneAnimator)
+		{
+			GetModel()->SetFrameAnimationVector(&(mBoneAnimator->GetFrameAnimationData()));
+		}
+
 		GetModel()->Bind_Render();
 	}
 	else

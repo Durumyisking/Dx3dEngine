@@ -119,6 +119,8 @@ void Player::Initialize()
 
 	rigid->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
 	rigid->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+
+	mr->SetBoneAnimator(nullptr);
 }
 
 void Player::Update()
@@ -149,10 +151,11 @@ void Player::FixedUpdate()
 		i->FixedUpdate();
 	}
 
-
+	Transform* transform = GetComponent<Transform>();
+	math::Matrix playerWorldMatirx = transform == nullptr ? math::Matrix::Identity : transform->GetWorldMatrix();
 	for (auto i : mParts)
 	{
-		i->GetComponent<Transform>()->SetWorldMatrix(GetComponent<Transform>()->GetWorldMatrix());
+		i->GetComponent<Transform>()->SetWorldMatrix(playerWorldMatirx);
 	}
 
 	//mMarioCap->FixedUpdate();

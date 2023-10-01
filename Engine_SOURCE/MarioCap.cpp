@@ -76,8 +76,9 @@ void MarioCap::Initialize()
 	Physicalinit();
 
 
-
 	DynamicObject::Initialize();
+
+	GetComponent<MeshRenderer>()->SetBoneAnimator(nullptr);
 }
 
 void MarioCap::Update()
