@@ -122,9 +122,7 @@ void ScenePlay::Initialize()
 
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(15.f, 10.f, 0.f));
-
-		goomba->SetMonsterState(Monster::eMonsterState::Hit);
+		goomba->SetPos(Vector3(15.f, 10.f, 0.f));		
 	}
 
 	{

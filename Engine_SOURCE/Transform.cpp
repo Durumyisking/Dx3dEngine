@@ -69,7 +69,7 @@ void Transform::FixedUpdate()
 		}
 
 		// 보간된 회전을 적용
-		mPxTransform.q = PxQuat(mCurQuternion.x, mCurQuternion.y, mCurQuternion.z, mCurQuternion.w);
+		//mPxTransform.q = PxQuat(mCurQuternion.x, mCurQuternion.y, mCurQuternion.z, mCurQuternion.w);
 
 		Matrix matPxScale = Matrix::CreateScale(physical->GetGeometrySize());
 

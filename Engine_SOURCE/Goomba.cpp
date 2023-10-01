@@ -65,6 +65,7 @@ void Goomba::Initialize()
 	// mustatch
 
 	// press
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 11);
 
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
@@ -175,7 +176,9 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		{
 			Model* model = GetMeshRenderer()->GetModel();
 			model->AllMeshRenderSwtichOff();
-			model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");			
+			model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");
+			GetBoneAnimator()->Play(L"PressDown");
+			SetMonsterState(Monster::eMonsterState::Die);
 		}
 	}
 

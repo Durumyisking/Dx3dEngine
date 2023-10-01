@@ -166,10 +166,11 @@ void GoombaStateScript::Land()
 
 void GoombaStateScript::Turn()
 {
-	Vector3 dirToPlayer_XYZ = mPlayer->GetWorldPos() - GetTransform()->WorldForward();
+	Vector3 dirToPlayer_XYZ = GetTransform()->GetWorldPosition() - mPlayer->GetWorldPos();
 	Vector2 dirToPlayer = { dirToPlayer_XYZ.x, dirToPlayer_XYZ.z };
 	Vector2 worldForward = { GetTransform()->WorldForward().x, GetTransform()->WorldForward().z };
 	dirToPlayer.Normalize();
+	worldForward.Normalize();
 	float rotCosTheta = dirToPlayer.Dot(worldForward);
 	if (rotCosTheta < 0.99f)
 	{		
@@ -234,15 +235,11 @@ void GoombaStateScript::Chase()
 
 void GoombaStateScript::SpecialSituation()
 {
-	BoneAnimator* animator = mMonster->GetComponent<BoneAnimator>();
-	if (animator == nullptr)
-		return;
-
 	std::wstring testName = L"Turn";
 
-	if (animator->PlayAnimationName() != testName)
+	if (mAnimator->PlayAnimationName() != testName)
 	{
-		animator->Play(testName);
+		mAnimator->Play(testName);
 	}
 }
 
@@ -256,6 +253,12 @@ void GoombaStateScript::Groggy()
 
 void GoombaStateScript::Die()
 {
+
+	if (mAnimator->GetAnimationClip(L"PressDown")->IsComplete())
+	{
+		mMonster->Die();
+		// 죽는 이펙트 재생시켜야한다.
+	}
 }
 
 void GoombaStateScript::setHalfCloseEyeModel()
