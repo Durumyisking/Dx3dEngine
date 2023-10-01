@@ -216,9 +216,22 @@ void PlayerStateScript::Squat()
 	if (mAnimator->PlayAnimationName() != L"SquatStart"
 		&& mAnimator->PlayAnimationName() != L"SquatWalk"
 		&& mAnimator->PlayAnimationName() != L"SquatWait"
-		&& mAnimator->PlayAnimationName() != L"SquatEnd")
+		&& mAnimator->PlayAnimationName() != L"SquatEnd"
+		&& mAnimator->PlayAnimationName() != L"Rolling")
 	{
 		mAnimator->Play(L"SquatStart");
+	}
+
+	if (mAnimator->PlayAnimationName() == L"SquatWalk"
+		|| mAnimator->PlayAnimationName() == L"Rolling")
+	{
+		mAnimator->Play(L"SquatWait");
+	}
+
+	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT))
+	{
+		mPlayer->SetPlayerState(Player::ePlayerState::SquatMove);
+		return;
 	}
 
 	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
@@ -248,14 +261,15 @@ void PlayerStateScript::SquatMove()
 
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::Z))
 	{
-		mAnimator->Play(L"SquatEnd",false);
+		mAnimator->Play(L"SquatEnd");
 		return;
 	}
 
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LSHIFT))
 	{
 		if (!GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
 			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN)
@@ -305,10 +319,39 @@ void PlayerStateScript::SquatMove()
 
 	rigidbody->SetMaxVelocity(PLAYER_SQUATWALK_VELOCITY);
 
-	if (mAnimator->PlayAnimationName() != L"SquatWalk")
+
+	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&& mAnimator->PlayAnimationName() != L"RollingStart"
+		&& mAnimator->PlayAnimationName() != L"Rolling")
+	{
+		mInitialForce += mForceIncrement;
+		mAnimator->Play(L"RollingStart");
+		rigidbody->SetMaxVelocity(PLAYER_ROLLING_VELOCITY);
+	}
+	else if (
+		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&& (mAnimator->PlayAnimationName() == L"RollingStart"))
+	{
+		mInitialForce += mForceIncrement;
+		rigidbody->SetMaxVelocity(PLAYER_ROLLING_VELOCITY);
+	}
+	else if (
+		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&& (mAnimator->PlayAnimationName() == L"Rolling"))
+	{
+		mInitialForce == 10000.f;
+		rigidbody->SetMaxVelocity(PLAYER_ROLLING_VELOCITY);
+	}
+	else if (mAnimator->PlayAnimationName() != L"SquatWalk")
 	{
 		mAnimator->Play(L"SquatWalk");
 		mInitialForce = 7000.f;
+		rigidbody->SetMaxVelocity(PLAYER_SQUATWALK_VELOCITY);
+	}
+	else
+	{
+		mInitialForce = 7000.f;
+		rigidbody->SetMaxVelocity(PLAYER_SQUATWALK_VELOCITY);
 	}
 
 	rigidbody->AddForce(-tr->Forward() * mInitialForce * DT);

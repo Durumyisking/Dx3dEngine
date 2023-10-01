@@ -367,6 +367,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 	animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioBody/Animation/Walk.smd");
 	animator->CreateAnimation(L"Brake", L"..//..//Resources/MarioBody/Animation/Brake.smd");
 	animator->CreateAnimation(L"Fall", L"..//..//Resources/MarioBody/Animation/Fall.smd");
+	animator->CreateAnimation(L"Land", L"..//..//Resources/MarioBody/Animation/Land.smd");
 
 	animator->CreateAnimation(L"ThrowCap", L"..//..//Resources/MarioBody/Animation/ThrowCap.smd");
 	animator->CreateAnimation(L"CatchCap", L"..//..//Resources/MarioBody/Animation/CatchCap.smd");
@@ -376,6 +377,11 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 	animator->CreateAnimation(L"SquatEnd", L"..//..//Resources/MarioBody/Animation/SquatEnd.smd");
 	animator->CreateAnimation(L"SquatWait", L"..//..//Resources/MarioBody/Animation/SquatWait.smd");
 	animator->CreateAnimation(L"SquatWalk", L"..//..//Resources/MarioBody/Animation/SquatWalk.smd");
+
+	animator->CreateAnimation(L"RollingStart", L"..//..//Resources/MarioBody/Animation/RollingStart.smd");
+	animator->CreateAnimation(L"RollingEnd", L"..//..//Resources/MarioBody/Animation/RollingEnd.smd");
+	animator->CreateAnimation(L"Rolling", L"..//..//Resources/MarioBody/Animation/Rolling.smd");
+	animator->CreateAnimation(L"RollingStandUp", L"..//..//Resources/MarioBody/Animation/RollingStandUp.smd");
 
 	animator->CreateAnimation(L"Dead", L"..//..//Resources/MarioBody/Animation/Dead.smd");
 	animator->CreateAnimation(L"Run", L"..//..//Resources/MarioBody/Animation/Run.smd");
@@ -462,6 +468,16 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 			SetPlayerState(Player::ePlayerState::Idle);
 			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
 			model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
+		});
+	}
+
+	// RollingStart > Rolling
+	{
+		cilp = animator->GetAnimationClip(L"RollingStart");
+		if (cilp)
+			cilp->SetCompleteEvent([animator]()
+		{
+			animator->Play(L"Rolling");
 		});
 	}
 }

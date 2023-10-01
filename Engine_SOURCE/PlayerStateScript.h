@@ -8,6 +8,7 @@
 #define PLAYER_WALK_VELOCITY 3.f
 #define PLAYER_SQUATWALK_VELOCITY 1.f
 #define PLAYER_RUN_VELOCITY 8.f
+#define PLAYER_ROLLING_VELOCITY 10.f
 
 class Player;
 class PlayerStateScript : public Script
