@@ -57,16 +57,21 @@ void PlayerStateScript::Initialize()
 
 	mAnimator = mPlayer->GetComponent<BoneAnimator>();
 	assert(mAnimator);
+
+	mJumpCount = 0;
 }
 
 void PlayerStateScript::Idle()
 {
+	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
+	if (!rigidbody)
+		return;
 	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
 	if (animator == nullptr)
 		return;
 	if(animator->PlayAnimationName() != L"Wait")
 		animator->Play(L"Wait");
-
+	//rigidbody->SetAirOff();
 }
 
 void PlayerStateScript::Move()
@@ -180,17 +185,52 @@ void PlayerStateScript::Jump()
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
-	if (mAnimator->PlayAnimationName() != L"Jump")
-	{
-		mAnimator->Play(L"Jump", false);
+	//if (rigidbody->IsOnAir())
+	//{
+	//	return;
+	//}
 
-		rigidbody->SetMaxVelocity_Y(10.f);
-		rigidbody->ApplyGravity();
-		rigidbody->SetAirOn();
-		rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
+	if (mAnimator->PlayAnimationName() != L"Jump"
+		&& mAnimator->PlayAnimationName() != L"Jump2"
+		&& mAnimator->PlayAnimationName() != L"Jump3")
+	{
+		if (mJumpCount == 0)
+		{
+			mAnimator->Play(L"Jump", false);
+
+			rigidbody->SetMaxVelocity_Y(6.f);
+			rigidbody->ApplyGravity();
+			rigidbody->SetAirOn();
+			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
+			mJumpCount++;
+		}
+		else if (mJumpCount == 1)
+		{
+			mAnimator->Play(L"Jump2", false);
+
+			rigidbody->SetMaxVelocity_Y(8.f);
+			rigidbody->ApplyGravity();
+			rigidbody->SetAirOn();
+			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
+			mJumpCount++;
+
+		}
+		else if (mJumpCount == 2)
+		{
+			mAnimator->Play(L"Jump3", false);
+
+			rigidbody->SetMaxVelocity_Y(11.f);
+			rigidbody->ApplyGravity();
+			rigidbody->SetAirOn();
+			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
+			mJumpCount = 0;
+		}
+
 	}
 
-	if ((mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete()) 
+	if (((mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())) 
+		|| ((mAnimator->PlayAnimationName() == L"Jump2" && mAnimator->IsComplete()))
+		|| ((mAnimator->PlayAnimationName() == L"Jump3" && mAnimator->IsComplete()))
 		||rigidbody->GetVelocity().y < 0)
 	{
 		mAnimator->Play(L"Fall", false);

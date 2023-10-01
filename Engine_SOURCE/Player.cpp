@@ -226,6 +226,9 @@ void Player::KeyCheck()
 	// 웅크리기
 	stateEvent(eKeyState::TAP, eKeyCode::Z, ePlayerState::Squat);
 
+	// 점프
+	stateEvent(eKeyState::TAP, eKeyCode::SPACE, ePlayerState::Jump);
+
 	// 대기
  
 	// 이동
@@ -237,9 +240,6 @@ void Player::KeyCheck()
 	// 모자 던지기
 	able = false;
 	stateEvent(eKeyState::TAP, eKeyCode::LCTRL, ePlayerState::ThrowCap);
-
-	// 점프
-	stateEvent(eKeyState::TAP, eKeyCode::SPACE, ePlayerState::Jump);
 
 	// 특수
 	able = false;
@@ -371,7 +371,10 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 
 	animator->CreateAnimation(L"ThrowCap", L"..//..//Resources/MarioBody/Animation/ThrowCap.smd");
 	animator->CreateAnimation(L"CatchCap", L"..//..//Resources/MarioBody/Animation/CatchCap.smd");
+
 	animator->CreateAnimation(L"Jump", L"..//..//Resources/MarioBody/Animation/Jump.smd");
+	animator->CreateAnimation(L"Jump2", L"..//..//Resources/MarioBody/Animation/Jump2.smd");
+	animator->CreateAnimation(L"Jump3", L"..//..//Resources/MarioBody/Animation/Jump3.smd");
 
 	animator->CreateAnimation(L"SquatStart", L"..//..//Resources/MarioBody/Animation/SquatStart.smd");
 	animator->CreateAnimation(L"SquatEnd", L"..//..//Resources/MarioBody/Animation/SquatEnd.smd");
