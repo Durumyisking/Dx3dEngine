@@ -12,6 +12,7 @@ Light::Light()
 	, mMaterial(nullptr)
 	, mIndex(0)
 {
+	mIndex = static_cast<UINT>(renderer::lights.size());
 	renderer::lights.push_back(this);
 }
 
@@ -21,7 +22,6 @@ Light::~Light()
 
 void Light::Initialize()
 {
-	
 }
 
 void Light::Update()

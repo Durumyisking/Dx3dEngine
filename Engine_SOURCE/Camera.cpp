@@ -466,17 +466,20 @@ bool Camera::renderPassCheck(GameObj* obj)
 
 void Camera::bindLightConstantBuffer()
 {
-	Transform directionLighttr = *(renderer::lights[0]->GetOwner()->GetComponent<Transform>());
-	directionLighttr.SetRotation(DecomposeRotMat(directionLighttr.GetWorldRotationMatrix()));
+	if (!renderer::lights.empty())
+	{
+		Transform directionLighttr = *(renderer::lights[0]->GetOwner()->GetComponent<Transform>());
+		directionLighttr.SetRotation(DecomposeRotMat(directionLighttr.GetWorldRotationMatrix()));
 
-	ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
+		ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
 
-	LightMatrixCB data = {};
-	data.lightView = CreateViewMatrix(&directionLighttr);
-	data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, static_cast<float>(application.GetWidth()), static_cast<float>(application.GetHeight()), 1.0f, 1000.0f);
-	lightCB->SetData(&data);
-	lightCB->Bind(eShaderStage::VS);
-	lightCB->Bind(eShaderStage::PS);
+		LightMatrixCB data = {};
+		data.lightView = CreateViewMatrix(&directionLighttr);
+		data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, static_cast<float>(application.GetWidth()), static_cast<float>(application.GetHeight()), 1.0f, 1000.0f);
+		lightCB->SetData(&data);
+		lightCB->Bind(eShaderStage::VS);
+		lightCB->Bind(eShaderStage::PS);
+	}
 }
 
 void Camera::deferredRenderingOperate()

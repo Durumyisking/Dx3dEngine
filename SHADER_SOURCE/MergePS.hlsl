@@ -32,7 +32,7 @@ float4 main(VSOut vsIn) : SV_Target
     
     //outColor.rgb = (outColor.rgb + vDiffuse.rgb);
     outColor.rgb = (vDiffuse.rgb);
-
+    outColor.a = 1.f;
     
     return outColor;
 }

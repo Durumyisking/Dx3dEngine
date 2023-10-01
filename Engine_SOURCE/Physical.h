@@ -143,6 +143,7 @@ public:
     std::vector<PxShape*> GetSubShapes() { return mSubShapes; }
 
     bool IsIncludActor() { return mbSceneIncludActor; }
+
 private:
     Geometry createBoxGeometry(eGeometryType geometryType, const Vector3& boxSize);
     Geometry createCapsuleGeometry(eGeometryType geometryType, float radius, float halfHeight);

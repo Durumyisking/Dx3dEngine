@@ -113,6 +113,10 @@ void ScenePlay::Initialize()
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
 	}	
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(15.f, 10.f, 0.f));
+	}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -132,8 +136,8 @@ void ScenePlay::Initialize()
 		plane->SetScale({ 1000.f, 0.5f, 1000.f });
 		plane->SetName(L"Plane");
 		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-		plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.f);
-		plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.99f);
+		plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.99f);
+		plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
 		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
 		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
@@ -173,6 +177,18 @@ void ScenePlay::render()
 void ScenePlay::Enter()
 {
 	Scene::Enter();
+
+	{
+		GameObj* PointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLight");
+		PointLight->SetPos(Vector3(5.f, 5.f, 0.f));
+		Light* lightComp = PointLight->AddComponent<Light>(eComponentType::Light);
+		lightComp->SetType(eLightType::Point);
+		lightComp->SetDiffuse(Vector4(1.f, 0.f, 1.f, 1.f));
+		lightComp->SetRadius(20.f);
+		lightComp->SetFallOffStart(5.5f);
+		lightComp->SetFallOffEnd(10.f);
+	}
+
 
 	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);

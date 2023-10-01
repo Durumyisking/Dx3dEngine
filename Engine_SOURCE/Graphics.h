@@ -263,11 +263,12 @@ struct LightAttribute
 	math::Vector4 direction;
 
 	float radius;
-	float angle;
-		
-	enums::eLightType type;
+	float fallOffStart = 0.f;
+	float fallOffEnd = 0.f;
+	float spotPower;
 
-	int padding; // 상수버퍼 패딩
+	enums::eLightType type;
+	math::Vector3 padding; // 상수버퍼 패딩
 };
 
 struct Particle

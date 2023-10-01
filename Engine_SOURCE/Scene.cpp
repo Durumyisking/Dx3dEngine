@@ -81,8 +81,8 @@ void Scene::Enter()
 	CreateCameras();
 	mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
 	mCamera->SetRotation(Vector3::Zero);
-	//mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
-	//mUICamera->SetRotation(Vector3::Zero);
+	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
+	mUICamera->SetRotation(Vector3::Zero);
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLight");
 		directionalLight->SetRotation(Vector3(45.f, -45.f, 0.f));
@@ -92,7 +92,6 @@ void Scene::Enter()
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
-	//Initialize();
 }
 
 void Scene::Exit()

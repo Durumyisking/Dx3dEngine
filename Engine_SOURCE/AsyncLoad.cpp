@@ -180,7 +180,7 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 
 	loadGoomba(L"DeferredShader");
-	loadMario(L"DeferredShader");
+	loadMario( L"DeferredShader");
 
 	renderer::CreateUIMaterial();
 }
