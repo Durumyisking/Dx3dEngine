@@ -180,11 +180,11 @@ void GoombaStateScript::Turn()
 		}
 		if (mbTurnLeft)
 		{
-			mTransform->AddPhysicalRotation(Vector3(0.f, 360.f, 0.f) * DT);
+			mTransform->AddPhysicalRotation(Vector3(0.f, -360.f, 0.f) * DT);
 		}
 		else
 		{
-			mTransform->AddPhysicalRotation(Vector3(0.f, -360.f, 0.f) * DT);
+			mTransform->AddPhysicalRotation(Vector3(0.f, 360.f, 0.f) * DT);
 		}
 	}
 	else

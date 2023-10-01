@@ -44,7 +44,7 @@ Player::~Player()
 void Player::Initialize()
 {
 	//기본 설정
-	SetPos(Vector3(10.f, 10.f, 0.f));
+	SetPos(Vector3(20.f, 5.f, 10.f));
 	SetScale(Vector3(1.f, 1.f, 1.f));
 
 	//마리오 body 초기화
