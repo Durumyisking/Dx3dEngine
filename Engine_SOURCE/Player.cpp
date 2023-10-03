@@ -176,6 +176,19 @@ void Player::Render()
 	//mMarioCap->Render();
 }
 
+void Player::PrevRender()
+{
+	if (GetState() != GameObj::eState::Active)
+		return;
+
+	DynamicObject::PrevRender();
+
+	for (auto i : mParts)
+	{
+		i->PrevRender();
+	}
+}
+
 void Player::FontRender()
 {
 }

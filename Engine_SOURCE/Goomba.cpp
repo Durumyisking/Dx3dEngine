@@ -95,9 +95,7 @@ void Goomba::Initialize()
 
 void Goomba::Update()
 {
-
 	Monster::Update();
-
 }
 
 void Goomba::FixedUpdate()
@@ -108,7 +106,7 @@ void Goomba::FixedUpdate()
 void Goomba::CaptureEvent()
 {
 	// 캡처 이벤트 구현부
-	bool able = true;
+	bool able = false;
 
 	std::vector<std::function<bool(eKeyCode)>> keyEvent;
 	keyEvent.resize((static_cast<UINT>(eKeyState::NONE) + 1));
@@ -124,12 +122,12 @@ void Goomba::CaptureEvent()
 		[&]
 		(eKeyState keyState,eKeyCode curPress, eMonsterState nextState) ->void
 		{
-			if (!able)
+			if (able)
 				return;
 			if(keyEvent[static_cast<UINT>(keyState)](curPress))
 			{
 				SetMonsterState(nextState);
-				able = false;
+				able = true;
 			}
 		};
 
