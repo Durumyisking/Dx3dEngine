@@ -1,7 +1,7 @@
 #pragma once
-#include "Script.h"
+#include "UIScript.h"
 
-class RotationUIScript : public Script
+class RotationUIScript : public UIScript
 {
 public:
 	RotationUIScript();

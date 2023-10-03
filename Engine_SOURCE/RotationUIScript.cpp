@@ -17,10 +17,12 @@ void RotationUIScript::Initialize()
 
 void RotationUIScript::Update()
 {
-
+	if (!isRunning)
+		return;
 }
 
 void RotationUIScript::FixedUpdate()
 {
-
+	if (!isRunning)
+		return;
 }

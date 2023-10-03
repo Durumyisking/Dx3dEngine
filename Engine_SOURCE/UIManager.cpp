@@ -22,8 +22,6 @@ UIManager::UIManager()
 	, mCurrentData(nullptr)
 	, mCurrentUI(currentUI::End)
 	, mCount(3)
-	, mCoin(0)
-	, mCityCoin(0)
 	, mLife(3)
 {
 }
@@ -232,55 +230,11 @@ void UIManager::MainMenuUI()
 void UIManager::GetCoin()
 {
 
-	int ones = mCoin % 10;
-	int ten = (mCoin / 10) % 10;
-	int hundreds = mCoin / 100;
-
-
-	GetPanal(eUIType::Coin)->GetChilds()[0]->SetColor(Vector4(1.f, 0.92f, 0.016f, 1.f), true);
-
-	for (size_t i = 0; i < GetPanal(eUIType::CoinText)->GetChilds().size(); i++)
-	{
-		GetPanal(eUIType::CoinText)->GetChilds()[i]->SetColor(Vector4(1.f, 0.92f, 0.016f, 1.f), true);
-
-	}
-
-	Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(std::to_wstring(ones)));
-	GetPanal(eUIType::CoinText)->GetChilds()[2]->GetMaterial()->SetTexture(tex);
-
-	tex = (GETSINGLE(ResourceMgr)->Find<Texture>(std::to_wstring(ten)));
-	GetPanal(eUIType::CoinText)->GetChilds()[1]->GetMaterial()->SetTexture(tex);
-
-	tex = (GETSINGLE(ResourceMgr)->Find<Texture>(std::to_wstring(hundreds)));
-	GetPanal(eUIType::CoinText)->GetChilds()[0]->GetMaterial()->SetTexture(tex);
 }
 
 void UIManager::GetLuna()
 {
-	mCityCoin++;
 
-
-	int ones = mCityCoin % 10;
-	int ten = (mCityCoin / 10) % 10;
-	int hundreds = mCityCoin / 100;
-
-
-	GetPanal(eUIType::CityCoin)->GetChilds()[0]->SetColor(Vector4(1.f, 0.92f, 0.016f, 1.f), true);
-
-
-	for (size_t i = 0; i < GetPanal(eUIType::CityCoinText)->GetChilds().size(); i++)
-	{
-		GetPanal(eUIType::CityCoinText)->GetChilds()[i]->SetColor(Vector4(1.f, 0.92f, 0.016f, 1.f), true);
-	}
-
-	Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(std::to_wstring(ones)));
-	GetPanal(eUIType::CityCoinText)->GetChilds()[2]->GetMaterial()->SetTexture(tex);
-
-	tex = (GETSINGLE(ResourceMgr)->Find<Texture>(std::to_wstring(ten)));
-	GetPanal(eUIType::CityCoinText)->GetChilds()[1]->GetMaterial()->SetTexture(tex);
-
-	tex = (GETSINGLE(ResourceMgr)->Find<Texture>(std::to_wstring(hundreds)));
-	GetPanal(eUIType::CityCoinText)->GetChilds()[0]->GetMaterial()->SetTexture(tex);
 }
 
 void UIManager::PlayScene()
@@ -290,23 +244,5 @@ void UIManager::PlayScene()
 
 void UIManager::PlayerHit()
 {
-	if (KEY_TAP(N_9))
-	{
-		mLife--;
-		for (size_t i = 0; i < GetPanal(eUIType::HP)->GetChilds().size(); i++)
-		{
-			//GetPanal(eUIType::HP)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), true);
-			LifeUI* object = (LifeUI*)GetPanal(eUIType::HP)->GetChilds()[i];
-			object->Hit();
-		}
 
-		if (mLife <= 0)
-			return;
-
-		const std::wstring& lifeKey =  std::to_wstring(mLife);
-		GetPanal(eUIType::HP)->GetChilds()[2]->ChangeTexture(lifeKey);
-
-		const std::wstring& gaugeKey = L"Gauge_" + std::to_wstring(mLife);
-		GetPanal(eUIType::HP)->GetChilds()[0]->ChangeTexture(gaugeKey);
-	}
 }

@@ -1,8 +1,19 @@
 #pragma once
-#include "Script.h"
+#include "UIScript.h"
+#include "Panal.h"
 
-class LifeUIScript : public Script
+class LifeUIScript : public UIScript
 {
+	enum class State
+	{
+		None,
+		Hit,
+		Move,
+		Wait,
+		Back,
+	};
+
+
 public:
 	LifeUIScript();
 	virtual ~LifeUIScript();
@@ -11,7 +22,32 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
 
-private:
+	void ChangeImage();
+	void PlayerHit(float amplitude, float frequency);
 
+	void Hit()
+	{
+		mState = State::Hit;
+	}
+
+	void ReactionHit();
+	void MoveUI(float amplitude, float frequency);
+	void BackUI();
+
+private:
+	int mLife;
+	Panal* mPanal;
+
+	float mShakeTime;
+	float mAmplitude;
+	float mFrequency;
+
+	Vector3 mOriginPos;
+	Vector3 mTargetPos;
+	Vector4 mOriginColor;
+
+	int mCount;
+
+	State mState;
 };
 

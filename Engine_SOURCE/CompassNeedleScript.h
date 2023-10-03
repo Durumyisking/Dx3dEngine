@@ -1,17 +1,15 @@
 #pragma once
 #include "UIScript.h"
 
-class MainMenuScript : public UIScript
+class CompassNeedleScript : public UIScript
 {
 public:
-	MainMenuScript();
-	virtual ~MainMenuScript();
+	CompassNeedleScript();
+	virtual ~CompassNeedleScript();
 
 	virtual void Initialize() override;
 	virtual void Update() override;
-	virtual void FixedUpdate() override;
 
 private:
 
 };
-

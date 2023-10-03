@@ -48,40 +48,27 @@ void ImageUI::OnInActive()
 
 void ImageUI::OnUpdate()
 {
-	if (mbUIEnable == false)
-		return;
 
-	if (mActivate == false)
-		return;
-
-	if (mbColor)
-	{
-		mCurrentTime += DT;
-
-
-		if (mCurrentTime >= 1.0f)
-		{
-			this->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), true);
-			mCurrentTime = 0;
-			mbColor = false;
-		}
-	}
 }
 
 void ImageUI::OnFixedUpdate()
 {
+
 }
 
 void ImageUI::OnRender()
 {
+
 }
 
 void ImageUI::OnFontRender()
 {
+
 }
 
 void ImageUI::OnClear()
 {
+
 }
 
 void ImageUI::SetColor(Vector4 color, bool isColor)

@@ -56,13 +56,15 @@
 #include "BoneAnimator.h"
 
 #include "Panal.h"
-#include "HUD.h"
 #include "Button.h"
 #include "ImageUI.h"
 #include "UIFactory.h"
 #include "Animator.h"
 #include "LifeUI.h"
-#include "CompassUI.h"
+
+#include "CoinUIScript.h"
+#include "LifeUIScript.h"
+#include "CompassUIScript.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -70,10 +72,10 @@
 
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
+	, mCityCoinPanal(nullptr)
 	, mLifePanal(nullptr)
 	, mLunaPanal(nullptr)
-	, mCoinTextPanal(nullptr)
-	, mLunaTextPanal(nullptr)
+	, mCompassPanal(nullptr)
 {
 }
 
@@ -156,9 +158,11 @@ void ScenePlay::Initialize()
 
 void ScenePlay::update()
 {
-	if (KEY_TAP(N_1))
+	if (KEY_TAP(N_9))
 	{
-		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Title);
+		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
+		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
+		mLifePanal->GetScript<LifeUIScript>()->Hit();
 	}
 
 
@@ -193,22 +197,20 @@ void ScenePlay::CreatePlayerUI()
 {
 	//Life UI
 	{
-		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 10.f), Vector3(100.0f, 100.0f, 1.0f), L"LifePanal", this, eUIType::HP));
-		//LifeGauge
-		LifeUI* gauge = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeGauge", L"LifeGauge_3Material", eUIType::None, Vector3(7.f, 3.6f, 0.f), Vector3::One, mLifePanal, this));
+		mLifePanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(700.f, 370.0f, 10.f), Vector3(100.0f, 100.0f, 1.0f), L"LifePanal", this, eUIType::HP));
+		mLifePanal->AddComponent<LifeUIScript>(eComponentType::Script);
+		//LifeGauge Vector3(7.f, 3.6f, 0.f)
+		ImageUI* gauge = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"LifeGauge", L"LifeGauge_3Material", eUIType::None, Vector3(0.f, 0.f, 0.f), Vector3::One, mLifePanal, this));
 		gauge->SetUIActive();
-		gauge->SetTargetPos(Vector3::Zero);
 
-		//LifeText
-		LifeUI* lifeText = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeText", L"LifeTextMaterial", eUIType::HPText, Vector3(7.f, 3.55f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
-		lifeText->InitColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f));
+		//LifeText Vector3(7.f, 3.55f, -0.1f)
+		ImageUI* lifeText = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"LifeText", L"LifeTextMaterial", eUIType::HPText, Vector3(0.f,  -0.05f, -0.1f), Vector3(0.4f, 0.4f, 1.f), mLifePanal, this));
+		lifeText->SetColor(Vector4(0.1f, 0.1f, 0.1f, 1.0f),true);
 		lifeText->SetUIActive();
-		lifeText->SetTargetPos(Vector3(0.0f, -0.05f, 0.0f));
 
-		//Lifeheart
-		LifeUI* lifeheart = (GETSINGLE(UIFactory)->CreateUI<LifeUI>(L"LifeHeart", L"LifeheartMaterial", eUIType::None, Vector3(7.f, 3.55f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
+		//Lifeheart Vector3(7.f, 3.55f, 0.f)
+		ImageUI* lifeheart = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"LifeHeart", L"LifeheartMaterial", eUIType::None, Vector3(0.f, -0.05f, 0.f), Vector3(0.6f, 0.6f, 1.0f), mLifePanal, this));
 		lifeheart->SetUIActive();
-		lifeheart->SetTargetPos(Vector3(0.0f, -0.05f, 0.0f));
 
 
 		mLifePanal->Addchild(gauge);
@@ -219,38 +221,37 @@ void ScenePlay::CreatePlayerUI()
 	//Left Coin UI
 	{
 		mCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this, eUIType::Coin));
-		mCoinTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.f, 0.f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CoinPanal", this, eUIType::CoinText));
+		mCoinPanal->AddComponent<CoinUIScript>(eComponentType::Script);
 
 
 
 		ImageUI* coin = (GETSINGLE(UIFactory)->CreateImage(L"Coin", L"CoinMaterial", Vector3(-7.f, 3.5f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
 		coin->SetUIActive();
-		ImageUI* cityCoin = (GETSINGLE(UIFactory)->CreateImage(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCoinPanal, this));
-		cityCoin->SetUIActive();
 		ImageUI* bar = (GETSINGLE(UIFactory)->CreateImage(L"Bar", L"BarMaterial", Vector3(-5.4f, 2.9f, 0.f), Vector3(4.2f, 1.4f, 1.f), mCoinPanal, this));
 		mCoinPanal->Addchild(coin);
-		mCoinPanal->Addchild(bar);
 
 		for (size_t i = 0; i < 3; i++)
 		{
-			ImageUI* image = (GETSINGLE(UIFactory)->CreateImage(L"CoinText", L"CoinTextMaterial_" + std::to_wstring(i), Vector3(-6.35f + (0.34f * i), 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), mCoinTextPanal, this));
+			ImageUI* image = (GETSINGLE(UIFactory)->CreateImage(L"CoinText", L"CoinTextMaterial_" + std::to_wstring(i), Vector3(-6.35f + (0.34f * i), 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), mCoinPanal, this));
 			image->SetUIActive();
 
-			mCoinTextPanal->Addchild(image);
+			mCoinPanal->Addchild(image);
 		}
 
 
+		mCityCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CityCoinPanal", this, eUIType::CityCoin));
+		mCityCoinPanal->AddComponent<CoinUIScript>(eComponentType::Script);
+		ImageUI* cityCoin = (GETSINGLE(UIFactory)->CreateImage(L"CityCoin", L"CityCoinMaterial", Vector3(-5.f, 3.6f, 0.f), Vector3(1.f, 1.f, 1.f), mCityCoinPanal, this));
+		cityCoin->SetUIActive();
 
-		Panal* cityCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CityCoinPanal", this, eUIType::CityCoin));
-		mLunaTextPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CityCoinTextPanal", this, eUIType::CityCoinText));
 
-		cityCoinPanal->Addchild(cityCoin);
+		mCityCoinPanal->Addchild(cityCoin);
 		for (size_t i = 0; i < 3; i++)
 		{
-			ImageUI* image = (GETSINGLE(UIFactory)->CreateImage(L"CoinText", L"CityCoinTextMaterial_" + std::to_wstring(i), Vector3(-4.35f + (0.34f * i), 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), mLunaTextPanal, this));
+			ImageUI* image = (GETSINGLE(UIFactory)->CreateImage(L"CoinText", L"CityCoinTextMaterial_" + std::to_wstring(i), Vector3(-4.35f + (0.34f * i), 3.3f, 0.f), Vector3(0.5f, 0.5f, 1.0f), mCityCoinPanal, this));
 			image->SetUIActive();
 
-			mLunaTextPanal->Addchild(image);
+			mCityCoinPanal->Addchild(image);
 		}
 
 	}
@@ -291,7 +292,8 @@ void ScenePlay::CreatePlayerUI()
 
 		ImageUI* compassBar = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassBar", L"CompassBarMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3::One, mCompassPanal, this));
 		ImageUI* compassNeedle = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassNeedle", L"CompassNeedleMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3(2.0f, 2.0f, 1.0f), mCompassPanal, this));
-		CompassUI* compass = (GETSINGLE(UIFactory)->CreateUI<CompassUI>(L"Compass", L"CompassMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3::One, mCompassPanal, this));
+		ImageUI* compass = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"Compass", L"CompassMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3::One, mCompassPanal, this));
+		compassBar->AddComponent<CompassUIScript>(eComponentType::Script);
 
 		mCompassPanal->Addchild(compassBar);
 		mCompassPanal->Addchild(compassNeedle);

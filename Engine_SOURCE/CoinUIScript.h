@@ -1,7 +1,9 @@
 #pragma once
-#include "Script.h"
+#include "UIScript.h"
+#include "Panal.h"
 
-class CoinUIScript : public Script
+
+class CoinUIScript : public UIScript
 {
 public:
 	CoinUIScript();
@@ -11,7 +13,13 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
 
-private:
 
+	void GetCoin();
+
+private:
+	int mCoin;
+	bool mbCoin;
+	float mCurrentTime;
+	Panal* mPanal;
 };
 

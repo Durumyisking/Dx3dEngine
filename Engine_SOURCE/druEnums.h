@@ -194,18 +194,6 @@ namespace enums
 		END,
 	};
 
-	enum class eHUDState
-	{
-		None,
-		MoveBlink,
-		MoveTowards,
-		Rotate,
-		Size,
-		TitleCapMove,
-		Hit,
-		End
-	};
-
 	extern const char* charComponentType[(int)eComponentType::End];
 	extern const wchar_t* wcharComponentType[(int)eComponentType::End];
 	extern const char* charResourceType[(int)eResourceType::End];

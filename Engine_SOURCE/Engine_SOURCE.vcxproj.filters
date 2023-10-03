@@ -312,33 +312,6 @@
     <ClCompile Include="TimerMgr.cpp">
       <Filter>Timer</Filter>
     </ClCompile>
-    <ClCompile Include="CapUI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CapEyeUI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="UIFactory.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageUI.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Panal.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="UIBase.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
     <ClCompile Include="GenericAnimator.cpp" />
     <ClCompile Include="PlayerStateScript.cpp">
       <Filter>Common\GameObj\Player</Filter>
@@ -358,8 +331,69 @@
     <ClCompile Include="AsyncLoad.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="CompassUI.cpp" />
-    <ClCompile Include="LifeUI.cpp" />
+    <ClCompile Include="MainMenuScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="RotationUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="UIScript.cpp">
+      <Filter>UI\Script\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeUI.cpp">
+      <Filter>UI\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUI.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleUIBarScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CapMoveScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CapUI.cpp">
+      <Filter>UI\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp">
+      <Filter>UI\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFactory.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Panal.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CompassUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CompassNeedleScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -704,12 +738,6 @@
     <ClInclude Include="TimerMgr.h">
       <Filter>Timer</Filter>
     </ClInclude>
-    <ClInclude Include="CapUI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CapEyeUI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>UI\Manager</Filter>
     </ClInclude>
@@ -751,8 +779,48 @@
     <ClInclude Include="AsyncLoad.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="CompassUI.h" />
-    <ClInclude Include="LifeUI.h" />
+    <ClInclude Include="MainMenuScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="RotationUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="UIScript.h">
+      <Filter>UI\Script\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CapEyeUI.h">
+      <Filter>UI\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CapUI.h">
+      <Filter>UI\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeUI.h">
+      <Filter>UI\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleUIBarScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CapMoveScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CapEyeScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CompassUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CompassNeedleScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -1327,5 +1395,16 @@
     <None Include="druMath.ini">
       <Filter>Common\Math</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="UI\Script">
+      <UniqueIdentifier>{7e443b8d-9f15-4ae7-a3e1-5b2aa8eee7e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Script\Base">
+      <UniqueIdentifier>{a1205e1e-51cd-4b0d-b34e-2c8637c850fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UIObject">
+      <UniqueIdentifier>{9ce3c0ca-6cf4-4526-a443-57ba40870484}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

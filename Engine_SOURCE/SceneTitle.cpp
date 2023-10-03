@@ -40,17 +40,18 @@
 #include "BoneAnimator.h"
 
 #include "Panal.h"
-
 #include "HUD.h"
 #include "Button.h"
 #include "UIFactory.h"
 #include "Animator.h"
-
 #include "ImageUI.h"
 #include "CapUI.h"
 #include "CapEyeUI.h"
 
-
+#include "WorldMapScript.h"
+#include "TitleUIBarScript.h"
+#include "CapMoveScript.h"
+#include "CapEyeScript.h"
 
 extern Application application;
 
@@ -116,12 +117,9 @@ void SceneTitle::CreateMainMenu()
 {
 	{
 		Panal* mMainMenuPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"WorldMapPanal", this, eUIType::TitleImg));
-		HUD* worldMap = (GETSINGLE(UIFactory)->CreateHud(L"WorldMap", L"WorldMapMaterial", Vector3(0.f, 4.5f, 100.f), Vector3(20.f, 20.f, 1.f), mMainMenuPanal, this));
-		//worldMap->SetColor();
+		ImageUI* worldMap = (GETSINGLE(UIFactory)->CreateImage(L"WorldMap", L"WorldMapMaterial", Vector3(0.f, 4.5f, 100.f), Vector3(20.f, 20.f, 1.f), mMainMenuPanal, this));
+		worldMap->AddComponent<WorldMapScript>(eComponentType::Script);
 		ImageUI* filter = (GETSINGLE(UIFactory)->CreateImage(L"RedFilter", L"FilterMaterial", Vector3(0.f, 4.5f, 99.f), Vector3(20.f, 20.f, 1.f), mMainMenuPanal, this));
-		//filter->SetColor();
-		worldMap->SetState(eHUDState::Rotate);
-		worldMap->SetSpeed(1);
 		ImageUI* title = (GETSINGLE(UIFactory)->CreateImage(L"MarioTitle", L"TitleMaterial", Vector3(-6.5f, 3.f, 98.f), Vector3(2.f, 2.f, 1.f), mMainMenuPanal, this));
 
 		mMainMenuPanal->Addchild(worldMap);
@@ -132,20 +130,16 @@ void SceneTitle::CreateMainMenu()
 	{
 		Panal* mBarPanal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"Start2PTextPanal", this, eUIType::Bar));
 
-		HUD* bar = (GETSINGLE(UIFactory)->CreateHud(L"UIBar", L"UIBarMaterial", Vector3(-5.f, 0.f, 98.f), Vector3(6.f, 1.f, 1.f), mBarPanal, this));
-		//bar->SetColor();
+		ImageUI* bar = (GETSINGLE(UIFactory)->CreateImage(L"UIBar", L"UIBarMaterial", Vector3(-5.f, 0.f, 98.f), Vector3(6.f, 1.f, 1.f), mBarPanal, this));
+		bar->AddComponent<TitleUIBarScript>(eComponentType::Script);
+		//bar->SetColor(); 
 		bar->SetRotation(Vector3(0.0f, 0.0f, 2.0f));
-		bar->SetChangeSize(Vector3(1.f, 0.9f, 1.0f));
-		bar->SetState(eHUDState::MoveBlink);
 
-		CapUI* cap = (GETSINGLE(UIFactory)->CreateUI<CapUI>(L"Cap", L"CapMaterial", eUIType::TitleImg, Vector3(-0.33f, 0.0f, -0.1f), Vector3(0.2f, 0.6f, 1.f), bar, this));
-		//cap->SetColor();
-		cap->SetState(eHUDState::TitleCapMove);
-		cap->SetTargetPos(cap->GetComponent<Transform>()->GetPosition() + Vector3(0.05f, 0.0f, 0.0f));
+		ImageUI* cap = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"Cap", L"CapMaterial", eUIType::TitleImg, Vector3(-0.33f, 0.0f, -0.1f), Vector3(0.2f, 0.6f, 1.f), bar, this));
+		cap->AddComponent<CapMoveScript>(eComponentType::Script);
 
-		CapEyeUI* capEye = (GETSINGLE(UIFactory)->CreateUI<CapEyeUI>(L"CapEye", L"CapMaterial", eUIType::TitleImg, Vector3(-0.3f, 0.1f, -0.2f), Vector3(0.2f, 1.f, 1.f), bar, this));
-		capEye->SetTargetPos(capEye->GetComponent<Transform>()->GetPosition() + Vector3(0.05f, 0.0f, 0.0f));
-		//capEye->SetColor(); 
+		ImageUI* capEye = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CapEye", L"CapMaterial", eUIType::TitleImg, Vector3(0.2f, 0.2f, -0.2f), Vector3(0.f, 0.f, 1.f), cap, this));
+		capEye->AddComponent<CapEyeScript>(eComponentType::Script);
 		Animator* capEyeAni = capEye->AddComponent<Animator>(eComponentType::Animator);
 		Texture* capEyeTexture = (GETSINGLE(ResourceMgr)->Find<Texture>(L"CapEye"));
 		capEyeAni->Create(L"CapEyeAni", capEyeTexture, Vector2::Zero, Vector2(40.0f, 40.0f), Vector2::One, 8, Vector2(80.0f, 80.0f), 0.1f);
@@ -179,19 +173,4 @@ void SceneTitle::CreateMainMenu()
 		mStartTextPanal->Addchild(resume);
 		mStartTextPanal->Addchild(start);
 	}
-	////HUD* zero = (GETSINGLE(UIFactory)->CreateHud(L"S", L"uppercase_18Material", Vector3(0.f, 0.f, 97.f), Vector3(0.8f, 0.8f, 1.f), MainMenuPanal, this));
-	//(GETSINGLE(UIFactory)->CreateString(L"Start", Vector3(-6.0f,0.0f,1.0f), Vector3(0.5f, 0.5f, 1.0f), 0.3f, mStartTextPanal, this));
-	//(GETSINGLE(UIFactory)->CreateString(L"2P Mode", Vector3(-6.0f, -1.0f, 1.0f), Vector3(0.5f, 0.5f, 1.0f), 0.3f, mStart2PTextPanal, this));
-	//(GETSINGLE(UIFactory)->CreateString(L"End", Vector3(-6.0f, -2.0f, 1.0f), Vector3(0.5f, 0.5f, 1.0f), 0.3f, mExitTextPanal, this));
-
-	//for (size_t i = 0; i < mStartTextPanal->GetChilds().size(); i++)
-	//{
-	//	mStartTextPanal->GetChilds()[i]->SetColor(Vector4(0.5f,0.5f,0.5f,1.0f),true);
-	//}
-
-
-	////Animator* capAni = cap->AddComponent<Animator>(eComponentType::Animator);
-	////Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(L"CapRotate"));
-	////capAni->Create(L"CapAni", tex, Vector2::Zero, Vector2(84.0f, 50.0f), Vector2::One, 5, Vector2(100.0f, 80.0f), 0.1f);
-	////capAni->Play(L"CapAni", true);
 }
