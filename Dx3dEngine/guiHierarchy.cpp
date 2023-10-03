@@ -155,8 +155,8 @@ namespace gui
 		case enums::eLayerType::Player:
 			name = "eLayerType::Player";
 			break;
-		case enums::eLayerType::AfterImage:
-			name = "eLayerType::AfterImage";
+		case enums::eLayerType::Cap:
+			name = "eLayerType::Cap";
 			break;
 		case enums::eLayerType::Platforms:
 			name = "eLayerType::Platforms";

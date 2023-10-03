@@ -69,7 +69,6 @@ void MeshRenderer::Render()
 		{
 			GetModel()->SetFrameAnimationVector(&(mBoneAnimator->GetFrameAnimationData()));
 		}
-
 		GetModel()->Bind_Render();
 	}
 	else

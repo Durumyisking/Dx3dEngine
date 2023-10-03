@@ -19,7 +19,7 @@ MarioCap::MarioCap()
 	, mCapState(eCapState::Idle)
 	, mOwner(nullptr)
 {
-	SetLayerType(eLayerType::Player);
+	SetLayerType(eLayerType::Cap);
 }
 
 MarioCap::~MarioCap()
@@ -41,7 +41,8 @@ void MarioCap::Initialize()
 	SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioCap");
-	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+	GetComponent<MeshRenderer>()->SetModel(model);
+	GetComponent<MeshRenderer>()->SetMaterialByKey(L"marioCapMaterial");
 
 	BoneAnimator* animator = GetComponent<BoneAnimator>(); 
 	boneAnimatorInit(animator);

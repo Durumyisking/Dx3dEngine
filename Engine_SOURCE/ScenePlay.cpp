@@ -89,6 +89,7 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
 	//Convex and Triangle Mesh TEST
 	
 		////TriangleMesh Test
@@ -105,7 +106,7 @@ void ScenePlay::Initialize()
 		//}
 
 	{
-		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Player, this);
+		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetMarioCap(mariocap);
 	}

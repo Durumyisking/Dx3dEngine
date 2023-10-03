@@ -108,7 +108,7 @@ void Goomba::FixedUpdate()
 void Goomba::CaptureEvent()
 {
 	// 캡처 이벤트 구현부
-	bool able = false;
+	bool able = true;
 
 	std::vector<std::function<bool(eKeyCode)>> keyEvent;
 	keyEvent.resize((static_cast<UINT>(eKeyState::NONE) + 1));
@@ -124,24 +124,24 @@ void Goomba::CaptureEvent()
 		[&]
 		(eKeyState keyState,eKeyCode curPress, eMonsterState nextState) ->void
 		{
-			if (able)
+			if (!able)
 				return;
 			if(keyEvent[static_cast<UINT>(keyState)](curPress))
 			{
 				SetMonsterState(nextState);
-				able = true;
+				able = false;
 			}
 		};
 
 	// 이동
-	//stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
 
 	//// 점프
 	//able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::Y, eMonsterState::Jump);
+	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Jump);
 
 	// 특수
 	//able = false;
@@ -156,7 +156,6 @@ void Goomba::OnCollisionEnter(GameObj* gameObject)
 void Goomba::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Platforms == gameObject->GetLayerType())
-
 	{
 		if (eMonsterState::Fall == GetMonsterState())
 		{
@@ -182,8 +181,7 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		}
 	}
 
-	GetComponent<PhysXRigidBody>()->ApplyGravity();
-	GetComponent<PhysXRigidBody>()->SetAirOn();
+	Monster::OnTriggerEnter(gameObject);
 }
 
 void Goomba::OnTriggerStay(GameObj* gameObject)
