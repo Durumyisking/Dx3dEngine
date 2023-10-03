@@ -394,6 +394,9 @@
     <ClCompile Include="CompassNeedleScript.cpp">
       <Filter>UI\Script</Filter>
     </ClCompile>
+    <ClCompile Include="PowerMoonScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -819,6 +822,9 @@
       <Filter>UI\Script</Filter>
     </ClInclude>
     <ClInclude Include="CompassNeedleScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerMoonScript.h">
       <Filter>UI\Script</Filter>
     </ClInclude>
   </ItemGroup>

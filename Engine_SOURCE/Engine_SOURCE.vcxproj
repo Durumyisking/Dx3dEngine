@@ -317,6 +317,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PostProcess.h" />
     <ClInclude Include="PostProcessRenderer.h" />
     <ClInclude Include="PostProcessWave.h" />
+    <ClInclude Include="PowerMoonScript.h" />
     <ClInclude Include="Prefab.h" />
     <ClInclude Include="ProjectileObj.h" />
     <ClInclude Include="PxDispathcer.h" />
@@ -458,6 +459,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PostProcess.cpp" />
     <ClCompile Include="PostProcessRenderer.cpp" />
     <ClCompile Include="PostProcessWave.cpp" />
+    <ClCompile Include="PowerMoonScript.cpp" />
     <ClCompile Include="Prefab.cpp" />
     <ClCompile Include="ProjectileObj.cpp" />
     <ClCompile Include="PxDispathcer.cpp" />

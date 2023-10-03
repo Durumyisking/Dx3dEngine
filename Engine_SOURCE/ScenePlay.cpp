@@ -65,6 +65,7 @@
 #include "CoinUIScript.h"
 #include "LifeUIScript.h"
 #include "CompassUIScript.h"
+#include "PowerMoonScript.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -162,7 +163,7 @@ void ScenePlay::update()
 	{
 		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
-		mLifePanal->GetScript<LifeUIScript>()->Hit();
+		mLunaPanal->GetScript<PowerMoonScript>()->GetPowerMoon();
 	}
 
 
@@ -259,7 +260,7 @@ void ScenePlay::CreatePlayerUI()
 	//left Luna UI
 	{
 		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaPanal", this, eUIType::Luna));
-
+		mLunaPanal->AddComponent<PowerMoonScript>(eComponentType::Script);
 
 		for (size_t i = 0; i < 10; i++)
 		{
@@ -272,7 +273,7 @@ void ScenePlay::CreatePlayerUI()
 					position,
 					Vector3(0.3f, 0.3f, 1.f),
 					mLunaPanal, this));
-				luna->Die();
+				luna->InActivate();
 				mLunaPanal->Addchild(luna);
 
 				ImageUI* dottedLine = (GETSINGLE(UIFactory)->CreateImage(L"DottedLine" + std::to_wstring(i) + std::to_wstring(j * 10), L"DottedLineMaterial",
@@ -280,7 +281,7 @@ void ScenePlay::CreatePlayerUI()
 					Vector3(0.3f, 0.3f, 1.f),
 					mLunaPanal, this));
 
-				mLunaPanal->Addchild(dottedLine);
+				//mLunaPanal->Addchild(dottedLine);
 			}
 		}
 	}

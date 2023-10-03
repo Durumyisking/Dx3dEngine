@@ -37,13 +37,13 @@ void ImageUI::OnInit()
 void ImageUI::OnActive()
 {
 	mActivate = true;
-	this->Active();
+	//this->Active();
 }
 
 void ImageUI::OnInActive()
 {
 	mActivate = false;
-	this->Die();
+	//this->Die();
 }
 
 void ImageUI::OnUpdate()
