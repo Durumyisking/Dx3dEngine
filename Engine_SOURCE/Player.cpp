@@ -14,6 +14,8 @@
 #include "PlayerStateScript.h"
 #include "PlayerScript.h"
 
+#include "ParticleSystem.h"
+
 Player::Player()
 {
 	SetLayerType(eLayerType::Player);
@@ -104,6 +106,21 @@ void Player::Initialize()
 	{
 		i->Initialize();
 	}
+
+	ParticleSystem* particle = AddComponent<ParticleSystem>(eComponentType::Particle);
+	particle->MakeConstantBufferData(L"ParticleCS", renderer::ParticleSystemCB());
+	particle->MakeParticleBufferData(Vector4::Zero, 1, 1.0f, 2.0f, 10.f, 1.0f, 1);
+
+	Model* cloude = GETSINGLE(ResourceMgr)->Find<Model>(L"CloudParticle");
+	
+	Mesh* mesh = cloude->GetMesh(0);
+	Material* material = cloude->GetMaterial(0);
+
+	particle->SetMesh(mesh);
+	particle->SetMaterial(material);
+
+	particle->SetModel(cloude);
+
 
 
 	mStateInfo.resize(static_cast<int>(ePlayerState::Die) + 1);

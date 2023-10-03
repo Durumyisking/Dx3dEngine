@@ -56,6 +56,7 @@ public:
 	void CreateTexture();
 	void CreateMaterial();
 	std::vector<Texture*> GetTexture(int index);
+	Mesh* GetMesh(UINT index) { return mMeshes[index]; }
 	Material* GetMaterial(UINT index) { return mMaterials[index]; }
 
 	void AddMaterial(Material* mater) { mMaterials.emplace_back(mater); }

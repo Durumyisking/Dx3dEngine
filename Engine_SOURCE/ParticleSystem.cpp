@@ -140,7 +140,15 @@ void ParticleSystem::Render()
 	mBuffer->BindSRV(eShaderStage::PS, static_cast<UINT>(eTextureSlot::NoiseTexture));
 
 	GetMaterial()->Bind();
-	GetMesh()->RenderInstanced(mMaxParticles);
+	GetMesh()->BindBuffer();
+	GetMesh()->Render();
+
+	GetMaterial()->Clear();
+
+	//GetModel()->Bind_Render();
+
+	/*GetMaterial()->Bind();
+	GetMesh()->RenderInstanced(mMaxParticles);*/
 
 	mBuffer->Clear();
 }
