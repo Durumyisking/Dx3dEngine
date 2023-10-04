@@ -1,5 +1,6 @@
 #pragma once
 #include  "UIBase.h"
+//#include "Panal.h"
 
 class LifeUI : public UIBase
 {
@@ -41,6 +42,7 @@ public:
 		mState = State::Hit; 
 		mbShake = true;
 	}
+
 private:
 	void ReactionHit();
 	void MoveUI(float amplitude, float frequency);
@@ -49,9 +51,9 @@ private:
 
 	float mCurrentTime;
 	float mShakeTime;
-	float mAmplitude;   // 흔들림 크기
-	float mFrequency;   // 코사인 함수 주기
-	float mPositionX;  // 객체의 현재 X 위치
+	float mAmplitude;
+	float mFrequency;
+	float mPositionX;
 
 	Vector3 mOriginPos;
 	Vector3 mTargetPos;

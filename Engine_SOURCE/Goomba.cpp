@@ -65,6 +65,7 @@ void Goomba::Initialize()
 	// mustatch
 
 	// press
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 11);
 
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
@@ -94,9 +95,7 @@ void Goomba::Initialize()
 
 void Goomba::Update()
 {
-
 	Monster::Update();
-
 }
 
 void Goomba::FixedUpdate()
@@ -133,14 +132,14 @@ void Goomba::CaptureEvent()
 		};
 
 	// 이동
-	//stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
 
 	//// 점프
 	//able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::Y, eMonsterState::Jump);
+	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Jump);
 
 	// 특수
 	//able = false;
@@ -155,7 +154,6 @@ void Goomba::OnCollisionEnter(GameObj* gameObject)
 void Goomba::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Platforms == gameObject->GetLayerType())
-
 	{
 		if (eMonsterState::Fall == GetMonsterState())
 		{
@@ -175,12 +173,13 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		{
 			Model* model = GetMeshRenderer()->GetModel();
 			model->AllMeshRenderSwtichOff();
-			model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");			
+			model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");
+			GetBoneAnimator()->Play(L"PressDown");
+			SetMonsterState(Monster::eMonsterState::Die);
 		}
 	}
 
-	GetComponent<PhysXRigidBody>()->ApplyGravity();
-	GetComponent<PhysXRigidBody>()->SetAirOn();
+	Monster::OnTriggerEnter(gameObject);
 }
 
 void Goomba::OnTriggerStay(GameObj* gameObject)

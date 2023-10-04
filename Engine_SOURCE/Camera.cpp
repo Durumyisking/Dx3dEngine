@@ -92,8 +92,6 @@ void Camera::Render()
 
 	sortGameObjects();
 
-	bindLightConstantBuffer();
-
 	// shadow	
 	renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->OMSetRenderTarget();
 	renderShadow();
@@ -339,20 +337,25 @@ void Camera::sortGameObjects()
 
 void Camera::renderShadow()
 {
-	for (GameObj* obj : mDeferredOpaqueGameObjects)
+	for (size_t i = 0; i < renderer::lights.size(); i++)
 	{
-		if (obj == nullptr)
-			continue;
+		bindLightConstantBuffer(i);
 
-		obj->PrevRender();
-	}
+		for (GameObj* obj : mDeferredOpaqueGameObjects)
+		{
+			if (obj == nullptr || !renderPassCheck(obj))
+				continue;
 
-	for (GameObj* obj : mOpaqueGameObjects)
-	{
-		if (obj == nullptr)
-			continue;
+			obj->PrevRender();
+		}
 
-		obj->PrevRender();
+		for (GameObj* obj : mOpaqueGameObjects)
+		{
+			if (obj == nullptr || !renderPassCheck(obj))
+				continue;
+
+			obj->PrevRender();
+		}
 	}
 }
 
@@ -472,17 +475,17 @@ bool Camera::renderPassCheck(GameObj* obj)
 	return true;
 }
 
-void Camera::bindLightConstantBuffer()
+void Camera::bindLightConstantBuffer(size_t lightIdx)
 {
 	if (!renderer::lights.empty())
 	{
-		Transform directionLighttr = *(renderer::lights[0]->GetOwner()->GetComponent<Transform>());
-		directionLighttr.SetRotation(DecomposeRotMat(directionLighttr.GetWorldRotationMatrix()));
+		Transform Lighttr = *(renderer::lights[lightIdx]->GetOwner()->GetComponent<Transform>());
+		Lighttr.SetRotation(DecomposeRotMat(Lighttr.GetWorldRotationMatrix()));
 
 		ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
 
 		LightMatrixCB data = {};
-		data.lightView = CreateViewMatrix(&directionLighttr);
+		data.lightView = CreateViewMatrix(&Lighttr);
 		data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, static_cast<float>(application.GetWidth()), static_cast<float>(application.GetHeight()), 1.0f, 1000.0f);
 		lightCB->SetData(&data);
 		lightCB->Bind(eShaderStage::VS);
@@ -494,6 +497,7 @@ void Camera::deferredRenderingOperate()
 {
 	// Deferred Opaque Render 
 	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
+	
 	renderDeferred();
 
 	// Deferred light Render

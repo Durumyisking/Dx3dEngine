@@ -41,7 +41,5 @@ private:
 	currentUI mCurrentUI;
 	int mCount;
 
-	int mCoin;
-	int mCityCoin;
 	int mLife;
 };
