@@ -167,6 +167,7 @@ namespace enums
 		CityCoinText,
 		Luna,
 		LunaText,
+		Compass,
 		End,
 	};
 
@@ -191,18 +192,6 @@ namespace enums
 		YZ,
 		XYZ,
 		END,
-	};
-
-	enum class eHUDState
-	{
-		None,
-		MoveBlink,
-		MoveTowards,
-		Rotate,
-		Size,
-		TitleCapMove,
-		Hit,
-		End
 	};
 
 	extern const char* charComponentType[(int)eComponentType::End];

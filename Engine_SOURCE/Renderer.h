@@ -38,7 +38,7 @@ namespace renderer
 {
 
 
-	CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
+CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 	{
 		Matrix world;
 		Matrix inverseWorld;

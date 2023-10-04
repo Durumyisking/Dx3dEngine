@@ -8,15 +8,16 @@ public:
 	Panal(eUIType type);
 	virtual ~Panal();
 
-	virtual void OnInit() final;
-	virtual void OnActive() final;
-	virtual void OnInActive() final;
-	virtual void OnUpdate() final;
-	virtual void OnFixedUpdate() final;
-	virtual void OnRender() final;
-	virtual void OnFontRender() final;
-	virtual void OnClear() final;
+	virtual void OnInit() override;
+	virtual void OnActive() override;
+	virtual void OnInActive() override;
+	virtual void OnUpdate() override;
+	virtual void OnFixedUpdate() override;
+	virtual void OnRender() override;
+	virtual void OnFontRender() override;
+	virtual void OnClear() override;
 
+	UIBase* GetOwner() { return this; }
 
 private:
 

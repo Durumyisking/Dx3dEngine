@@ -56,11 +56,11 @@ void CameraScript::Update()
 
 	mTransform->SetPosition(mLookAt);
 
-	if (mUICameraObject != nullptr)
-	{
-		//mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
-		//mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());z
-	}
+	//if (mUICameraObject != nullptr)
+	//{
+	//	//mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
+	//	//mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());z
+	//}
 }
 
 void CameraScript::FixedUpdate()

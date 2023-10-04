@@ -75,25 +75,6 @@ void LifeUI::OnUpdate()
 		return;
 
 	PlayerHIt(mAmplitude, mFrequency);
-
-
-	//if (mbColor)
-	//{
-	//	mCurrentTime += DT * 3;
-	//	this->SetColor(Vector4(0.0f + mCurrentTime, 0.0f + mCurrentTime, 0.0f + mCurrentTime, 1.f), true);
-
-	//	if (mCurrentTime > 1.f)
-	//	{
-	//		mCurrentTime = 0;
-	//		//mCount++;
-
-	//		//if (mCount >= 3)
-	//		//{
-	//		//	mCount = 0;
-	//		//	mbColor = false;
-	//		//}
-	//	}
-	//}
 }
 
 void LifeUI::OnFixedUpdate()
@@ -214,6 +195,5 @@ void LifeUI::BackUI()
 		pos += dirValue * DT * 12;
 
 		mTr->SetPosition(pos);
-
 	}
 }
