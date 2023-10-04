@@ -333,7 +333,7 @@ void Camera::renderShadow()
 {
 	for (GameObj* obj : mDeferredOpaqueGameObjects)
 	{
-		if (obj == nullptr)
+		if (obj == nullptr || !renderPassCheck(obj))
 			continue;
 
 		obj->PrevRender();
@@ -341,7 +341,7 @@ void Camera::renderShadow()
 
 	for (GameObj* obj : mOpaqueGameObjects)
 	{
-		if (obj == nullptr)
+		if (obj == nullptr || !renderPassCheck(obj))
 			continue;
 
 		obj->PrevRender();
