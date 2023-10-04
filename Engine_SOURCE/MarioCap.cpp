@@ -333,10 +333,6 @@ void MarioCap::FlyEnd()
 		}
 
 		SetCapState(eCapState::Return);
-		// ¸¶¸®¿ÀÀÇ ¸ðÀÚ¸¦ ¾º¿öÁÜ
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
-		model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
-
 		GetPhysical()->RemoveActorToPxScene();
 	};
 
