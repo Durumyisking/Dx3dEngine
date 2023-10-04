@@ -91,6 +91,9 @@ void CapStateScript::Return()
 	if (mAnimator->PlayAnimationName() != L"CatchCap")
 	{
 		mAnimator->Play(L"CatchCap", false);
+		// ¸¶¸®¿ÀÀÇ ¸ðÀÚ¸¦ ¾º¿öÁÜ
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
+		model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
 	}
 }
 

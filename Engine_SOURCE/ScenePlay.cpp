@@ -92,6 +92,7 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
 	//Convex and Triangle Mesh TEST
 	
 		////TriangleMesh Test
@@ -108,27 +109,14 @@ void ScenePlay::Initialize()
 		//}
 
 	{
-		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Player, this);
+		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetMarioCap(mariocap);
 	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-
-		//goomba->SetMonsterState(Monster::eMonsterState::Hit);
 	}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(15.f, 10.f, 0.f));
-	}
-
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(15.f, 10.f, 0.f));
-
-		goomba->SetMonsterState(Monster::eMonsterState::Hit);
-	}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -191,19 +179,6 @@ void ScenePlay::render()
 void ScenePlay::Enter()
 {
 	Scene::Enter();
-
-	{
-		GameObj* PointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLight");
-		PointLight->SetPos(Vector3(5.f, 5.f, 0.f));
-		Light* lightComp = PointLight->AddComponent<Light>(eComponentType::Light);
-		lightComp->SetType(eLightType::Point);
-		lightComp->SetDiffuse(Vector4(1.f, 0.f, 1.f, 1.f));
-		lightComp->SetRadius(20.f);
-		lightComp->SetFallOffStart(5.5f);
-		lightComp->SetFallOffEnd(10.f);
-	}
-
-
 	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 }

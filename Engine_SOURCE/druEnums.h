@@ -13,7 +13,7 @@ namespace enums
 		Monster,
 		Boss,
 		Player,
-		AfterImage,
+		Cap,
 		Platforms,
 		Particle,
 		FX,

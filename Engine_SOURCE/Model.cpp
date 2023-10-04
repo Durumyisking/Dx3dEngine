@@ -144,7 +144,6 @@ void Model::Bind_Render(bool bindMaterial)
 
 	for (Bone* bone : mBones)
 	{
-
 		aiMatrix4x4 finalMat = bone->mFinalMatrix;
 		boneInfo.FinalTransformation = ConvertMatrix(finalMat);
 		boneMat.emplace_back(boneInfo);
@@ -177,6 +176,7 @@ void Model::Bind_Render(bool bindMaterial)
 
 			mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
+
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 

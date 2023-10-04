@@ -46,6 +46,22 @@ void Monster::FixedUpdate()
 	GameObj::FixedUpdate();
 }
 
+void Monster::OnTriggerEnter(GameObj* gameObject)
+{
+	if (eLayerType::Cap == gameObject->GetLayerType())
+	{
+		int i = 0;
+	}
+}
+
+void Monster::OnTriggerStay(GameObj* gameObject)
+{
+}
+
+void Monster::OnTriggerExit(GameObj* gameObject)
+{
+}
+
 void Monster::SetMonsterState(eMonsterState monsterState)
 {
 	std::set<UINT>::iterator iter;

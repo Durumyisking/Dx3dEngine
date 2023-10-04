@@ -268,6 +268,8 @@ void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)
 	mPxTransform.q = finalRotation;
 	//GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 
+	mArriveQuternion = math::Quaternion(finalRotation.x, finalRotation.y, finalRotation.z, finalRotation.w);
+	mTickPerSceond = 0.f;
 }
 
 void Transform::AddPhysicalRotation_Radian(const Vector3& rotation_radian)
@@ -287,4 +289,6 @@ void Transform::AddPhysicalRotation_Radian(const Vector3& rotation_radian)
 	mPxTransform.q = finalRotation;
 	//GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 
+	mArriveQuternion = math::Quaternion(finalRotation.x, finalRotation.y, finalRotation.z, finalRotation.w);
+	mTickPerSceond = 0.f;
 }

@@ -29,6 +29,11 @@ void DynamicObject::Render()
 	GameObj::Render();
 }
 
+void DynamicObject::PrevRender()
+{
+	GameObj::PrevRender();
+}
+
 void DynamicObject::FontRender()
 {
 	GameObj::FontRender();

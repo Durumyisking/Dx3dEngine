@@ -52,6 +52,11 @@ void MarioParts::Render()
 	DynamicObject::Render();
 }
 
+void MarioParts::PrevRender()
+{
+	DynamicObject::PrevRender();
+}
+
 void MarioParts::FontRender()
 {
 }

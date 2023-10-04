@@ -40,7 +40,6 @@ void MeshRenderer::FixedUpdate()
 void MeshRenderer::PrevRender()
 {
 	Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"ShadowMaterial");
-
 	material->Bind();
 
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
@@ -53,8 +52,8 @@ void MeshRenderer::PrevRender()
 	{
 		GetMesh()->BindBuffer();
 		GetMesh()->Render();
-		material->Clear();
 	}
+	material->Clear();
 }
 
 void MeshRenderer::Render()
@@ -69,7 +68,6 @@ void MeshRenderer::Render()
 		{
 			GetModel()->SetFrameAnimationVector(&(mBoneAnimator->GetFrameAnimationData()));
 		}
-
 		GetModel()->Bind_Render();
 	}
 	else
