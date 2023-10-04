@@ -51,21 +51,8 @@ void GoombaStateScript::Initialize()
 
 void GoombaStateScript::Update()
 {
-	if (KEY_TAP(N_3))
-	{
-		mAnimator->Play(L"Find", false);
-	}
-	if (KEY_TAP(N_4))
-	{
-		mAnimator->Play(L"Turn");
-	}
-	if (KEY_TAP(N_5))
-	{
-		mAnimator->Play(L"Attack");
-	}
 
 	MonsterStateScript::Update();
-
 }
 
 void GoombaStateScript::Idle()
@@ -81,12 +68,12 @@ void GoombaStateScript::Idle()
 
 void GoombaStateScript::Move()
 {
-	//if (mAnimator->PlayAnimationName() != L"Walk")
-	//{
-	//	const std::wstring& anim = mAnimator->PlayAnimationName();
-	//	mRigidbody->SetMaxVelocity(GOOMBA_WALK_VELOCITY);
-	//	mAnimator->Play(L"Walk");
-	//}
+	if (mAnimator->PlayAnimationName() != L"Walk")
+	{
+		const std::wstring& anim = mAnimator->PlayAnimationName();
+		mRigidbody->SetMaxVelocity(GOOMBA_WALK_VELOCITY);
+		mAnimator->Play(L"Walk");
+	}
 
 	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
@@ -123,7 +110,7 @@ void GoombaStateScript::Move()
 	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, 90.f, 0.0f));
 	
 
-	Vector3 moveDir = mTransform->WorldForward();
+	Vector3 moveDir = -mTransform->WorldForward();
 	moveDir.y = 0.f;
 	mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
 
@@ -135,7 +122,7 @@ void GoombaStateScript::Jump()
 	{
 		mAnimator->Play(L"Jump", false);
 
-		mRigidbody->SetMaxVelocity_Y(20.f);
+		mRigidbody->SetMaxVelocity_Y(17.f);
 		mRigidbody->AddForce(math::Vector3(0.0f, GOOMBA_JUMPFORCE, 0.0f));
 		mRigidbody->ApplyGravity();
 		mRigidbody->SetAirOn();

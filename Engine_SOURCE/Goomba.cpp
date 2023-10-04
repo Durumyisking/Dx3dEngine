@@ -12,8 +12,7 @@
 
 Goomba::Goomba()
 	: Monster()
-{
-	OnCapture();
+{	
 	SetName(L"Goomba");
 }
 

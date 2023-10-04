@@ -60,7 +60,7 @@ void MonsterStateScript::Initialize()
 
 void MonsterStateScript::Idle()
 {	
-	if (mPlayer)
+	if (mPlayer && !mMonster->IsCapture())
 	{
 		float dist = Vector3::Distance(GETSINGLE(SceneMgr)->GetActiveScene()->GetPlayer()->GetWorldPos(), GetOwnerWorldPos());
 		if (mMonster->GetGetRecognizeRadius() > dist)
