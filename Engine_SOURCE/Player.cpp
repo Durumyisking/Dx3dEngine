@@ -112,13 +112,11 @@ void Player::Initialize()
 	particle->MakeParticleBufferData(Vector4::Zero, 1, 1.0f, 2.0f, 10.f, 1.0f, 1);
 
 	Model* cloude = GETSINGLE(ResourceMgr)->Find<Model>(L"CloudParticle");
-	
 	Mesh* mesh = cloude->GetMesh(0);
-	Material* material = cloude->GetMaterial(0);
+	Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"Particle3DMaterial");
 
 	particle->SetMesh(mesh);
 	particle->SetMaterial(material);
-
 	particle->SetModel(cloude);
 
 

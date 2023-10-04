@@ -155,6 +155,8 @@ namespace renderer
 		float force;
 		float radian;
 		Vector2 padding;
+
+		math::Matrix particleWorld;
 	};
 	CBUFFER(NoiseCB, CBSLOT_NOISE)
 	{
@@ -206,6 +208,7 @@ namespace renderer
 	extern GameObj* outlineGameObject;
 
 	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
+	extern std::vector<std::function<void()>> ParticleFunCArr;
 
 	void Initialize();
 	void release(); // 그리는 방식이 여러개일때 여러개를 할당하는게 아니라

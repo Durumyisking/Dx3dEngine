@@ -1,3 +1,4 @@
+#include "Quaternion.hlsl"
 
 struct Particle
 {
@@ -15,6 +16,8 @@ struct Particle
     float2 gravityAcc;
     float radian;
     uint active;
+    
+    matrix particleWorld;
 };
 
 

@@ -288,6 +288,7 @@ struct Particle
 	float radian;
 	UINT active;
 
+	math::Matrix particleWorld;
 };
 struct ParticleShared
 {

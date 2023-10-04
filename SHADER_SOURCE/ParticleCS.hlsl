@@ -33,7 +33,7 @@ void main(uint3 DTid : SV_DispatchThreadID) // 쓰레드 그룹 xyz를 인자로 받음
             
             if (simulationSpace) // 1 world , 0 local
             {
-                ParticleBufferUAV[DTid.x].position.xyz += worldPosition.xyz;
+                ParticleBufferUAV[DTid.x].position.xyz += world._41_42_42 + worldPosition.xyz;
             }
             
             ////파티클 속력
@@ -71,8 +71,32 @@ void main(uint3 DTid : SV_DispatchThreadID) // 쓰레드 그룹 xyz를 인자로 받음
         }
         else
         {
-            ParticleBufferUAV[DTid.x].position 
+            ParticleBufferUAV[DTid.x].position
             += ParticleBufferUAV[DTid.x].direction * ParticleBufferUAV[DTid.x].speed * deltaTime;
+            
+            float3 scale = lerp(ParticleBufferUAV[DTid.x].startScale, ParticleBufferUAV[DTid.x].endScale, ParticleBufferUAV[DTid.x].elapsedTime / ParticleBufferUAV[DTid.x].lifeTime);
+            
+            // scale
+            //row_major matrix worldMatrix = matrix
+            //( 1.0f * scale.x, 0.0f, 0.0f, 0.0f
+            //, 0.0f, 1.0f * scale.y, 0.0f, 0.0f
+            //, 0.0f, 0.0f, 1.0f * scale.z, 0.0f
+            //, 0.0f, 0.0f, 0.0f, 1.0f);
+            
+             // scale
+            row_major matrix worldMatrix = matrix
+            (1.0f , 0.0f, 0.0f, 0.0f
+            , 0.0f, 1.0f , 0.0f, 0.0f
+            , 0.0f, 0.0f, 1.0f , 0.0f
+            , 0.0f, 0.0f, 0.0f, 1.0f);
+            
+            // rotation
+            
+            // translation
+            worldMatrix._41_42_43 = ParticleBufferUAV[DTid.x].position.xyz;
+            
+            
+            ParticleBufferUAV[DTid.x].particleWorld = worldMatrix;
         }
     }
 }

@@ -23,7 +23,7 @@ ParticleSystem::ParticleSystem()
 	, mCS(nullptr)
 	, mMaxParticles(1)
 	, mStartPosition(Vector4(0.f, 0.f, 0.f, 1.f))
-	, mStartScale(Vector4(0.1f, 0.1f, 1.f, 1.f))
+	, mStartScale(Vector4(1.0f, 1.0f, 1.f, 1.f))
 	, mStartColor(Vector4::Zero)
 	, mEndColor(Vector4::Zero)
 	, mMaxLifeTime(1.f)
@@ -56,9 +56,12 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Initialize()
 {
-	Mesh* point = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Pointmesh");
+	if (!GetMesh())
+	{
+		Mesh* point = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Pointmesh");
 
-	SetMesh(point);
+		SetMesh(point);
+	}
 
 //	mParticle = new Particle[mMaxParticles];
 
@@ -126,22 +129,28 @@ void ParticleSystem::FixedUpdate()
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::ParticleSystem)];
 	cb->SetData(&mCBData);
 	cb->Bind(eShaderStage::All);
-
+	
 	mCS->SetSharedStrutedBuffer(mSharedBuffer);
 	mCS->SetStrcutedBuffer(mBuffer);
 	mCS->OnExcute();
 		
+	renderer::ParticleFunCArr.emplace_back(std::bind(& ParticleSystem::ParticleRender, this));
 }
 
 void ParticleSystem::Render() 
 {
+	
+}
+
+void ParticleSystem::ParticleRender()
+{
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
-	mBuffer->BindSRV(eShaderStage::GS, static_cast<UINT>(eTextureSlot::NoiseTexture));
-	mBuffer->BindSRV(eShaderStage::PS, static_cast<UINT>(eTextureSlot::NoiseTexture));
+	mBuffer->BindSRV(eShaderStage::VS, 16/*static_cast<UINT>(eTextureSlot::NoiseTexture)*/);
+	mBuffer->BindSRV(eShaderStage::PS, 16/*static_cast<UINT>(eTextureSlot::NoiseTexture)*/);
 
 	GetMaterial()->Bind();
 	GetMesh()->BindBuffer();
-	GetMesh()->Render();
+	GetMesh()->RenderInstanced(mMaxParticles);
 
 	GetMaterial()->Clear();
 

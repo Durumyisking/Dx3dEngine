@@ -33,6 +33,8 @@ namespace renderer
 	Texture* dsTexture = nullptr;
 	GameObj* outlineGameObject = nullptr;
 
+	std::vector<std::function<void()>> ParticleFunCArr = {};
+
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
 
 	void LoadMesh()
@@ -141,6 +143,13 @@ namespace renderer
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"ParticleShader");
 			GetDevice()->CreateInputLayout(arrLayout, 3
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"Particle3DShader");
+			GetDevice()->CreateInputLayout(arrLayout, 6
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
@@ -446,7 +455,6 @@ namespace renderer
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"PhongPS.hlsl", "main");
-			shader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PhongShader", shader);
 		}
 #pragma endregion
@@ -531,6 +539,11 @@ namespace renderer
 			particleShader->SetBSState(eBlendStateType::AlphaBlend);
 			particleShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"ParticleShader", particleShader);
+
+			Shader* particle3DShader = new Shader();
+			particle3DShader->Create(eShaderStage::VS, L"Particle3DVS.hlsl", "main");
+			particle3DShader->Create(eShaderStage::PS, L"Particle3DPS.hlsl", "main");
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"Particle3DShader", particle3DShader);
 
 			ParticleShader* particleCS = new ParticleShader();
 			GETSINGLE(ResourceMgr)->Insert<ParticleShader>(L"ParticleCS", particleCS);
@@ -724,6 +737,13 @@ namespace renderer
 			material->SetRenderingMode(eRenderingMode::Transparent);
 			material->SetShader(shader);
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"ParticleMaterial", material);
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"Particle3DShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"Particle3DMaterial", material);
 		}
 #pragma endregion
 

@@ -22,6 +22,8 @@ public:
 	virtual void FixedUpdate() final;
 	virtual void Render() final;
 
+	void ParticleRender();
+
 	void MakeParticleBufferData(Vector4 startPosition, UINT maxParticleCount, float minLifeTime, float maxLifeTime, float speed, float radian, UINT active);
 
 	void MakeConstantBufferData(std::wstring shaderName, ParticleSystemCB CB);

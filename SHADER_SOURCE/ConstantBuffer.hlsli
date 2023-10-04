@@ -116,6 +116,7 @@ cbuffer ParticleSystem : register(b6)
     float force;
     float radian;
     int2 padding;    
+    
 }
 
 // noise b7
