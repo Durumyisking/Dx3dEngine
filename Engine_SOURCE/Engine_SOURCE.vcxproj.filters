@@ -373,9 +373,6 @@
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="UIFactory.cpp">
       <Filter>UI\Manager</Filter>
     </ClCompile>
@@ -396,6 +393,9 @@
     </ClCompile>
     <ClCompile Include="PowerMoonScript.cpp">
       <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>UI\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -25,6 +25,11 @@ void TitleUIBarScript::Initialize()
 
 void TitleUIBarScript::Update()
 {
+	Vector3 scale = this->GetOwner()->GetComponent<Transform>()->GetScale();
+	scale.x -= DT;
+	this->GetOwner()->GetComponent<Transform>()->SetScaleX(scale.x);
+
+
 	switch (mState)
 	{
 	case TitleUIBarScript::State::Idle:
@@ -72,4 +77,9 @@ void TitleUIBarScript::ScaleChange()
 		mCurrentTime = 0;
 		mState = State::Idle;
 	}
+}
+
+void TitleUIBarScript::Select()
+{
+
 }

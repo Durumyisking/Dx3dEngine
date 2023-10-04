@@ -1,5 +1,6 @@
 #pragma once
 #include "UIScript.h"
+#include "Panal.h"
 
 class MainMenuScript : public UIScript
 {
@@ -12,6 +13,7 @@ public:
 	virtual void FixedUpdate() override;
 
 private:
-
+	Panal* mPanal;
+	int mCount;
 };
 

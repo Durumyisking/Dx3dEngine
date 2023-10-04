@@ -19,7 +19,7 @@ public:
 
 	void Idle();
 	void ScaleChange();
-
+	void Select();
 private:
 	float mCurrentTime;
 	State mState;
