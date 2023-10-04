@@ -174,19 +174,6 @@ void ScenePlay::render()
 void ScenePlay::Enter()
 {
 	Scene::Enter();
-
-	{
-		GameObj* PointLight = object::Instantiate<GameObj>(eLayerType::None, this, L"PointLight");
-		PointLight->SetPos(Vector3(5.f, 5.f, 0.f));
-		Light* lightComp = PointLight->AddComponent<Light>(eComponentType::Light);
-		lightComp->SetType(eLightType::Point);
-		lightComp->SetDiffuse(Vector4(1.f, 0.f, 1.f, 1.f));
-		lightComp->SetRadius(20.f);
-		lightComp->SetFallOffStart(5.5f);
-		lightComp->SetFallOffEnd(10.f);
-	}
-
-
 	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 }

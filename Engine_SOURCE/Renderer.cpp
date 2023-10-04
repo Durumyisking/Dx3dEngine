@@ -196,7 +196,7 @@ namespace renderer
 		}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DepthShader");
-			GetDevice()->CreateInputLayout(arrLayout, 1
+			GetDevice()->CreateInputLayout(arrLayout, 6
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());

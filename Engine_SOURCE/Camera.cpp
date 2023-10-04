@@ -486,6 +486,7 @@ void Camera::deferredRenderingOperate()
 {
 	// Deferred Opaque Render 
 	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
+	
 	renderDeferred();
 
 	// Deferred light Render
