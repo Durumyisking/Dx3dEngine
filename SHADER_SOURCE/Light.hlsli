@@ -275,21 +275,16 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
 float VSM_FILTER(float2 moments, float fragDepth)
 {
     float lit = (float) 1.0f;
-    float E_x2 = moments.y;
+    float E_x2 = moments.y;  
     float Ex_2 = moments.x * moments.x;
     float variance = E_x2 - Ex_2;
-    variance = max(variance, 0.0000005f);
+    variance = max(variance, 0.00005f);
 
-    float mD = fragDepth - moments.x;
-    
-    float p = 1.f;
-    if (mD > 0.f)
-    {
-        float mD_2 = mD * mD;
-        p = variance / (variance + mD_2);
-    }
-        
-    lit = max(p, 0.4f);
+    float mD = moments.x - fragDepth; // mean dist
+    float mD_2 = mD * mD;
+    float p = variance / (variance + mD_2);
+
+    lit = max(smoothstep(0.05f, 1.f, p), fragDepth <= moments.x);
     
     return lit;
 }
