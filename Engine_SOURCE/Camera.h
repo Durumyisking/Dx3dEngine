@@ -81,7 +81,7 @@ private:
 	void pushGameObjectToRenderingModes(GameObj* obj);
 	bool renderPassCheck(GameObj* obj);
 
-	void bindLightConstantBuffer();
+	void bindLightConstantBuffer(size_t lightIdx);
 
 	void deferredRenderingOperate();
 	void renderMergedOutput();

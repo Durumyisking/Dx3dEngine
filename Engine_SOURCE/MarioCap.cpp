@@ -20,6 +20,7 @@ MarioCap::MarioCap()
 	, mOwner(nullptr)
 {
 	SetLayerType(eLayerType::Cap);
+	RenderingBlockOn();
 }
 
 MarioCap::~MarioCap()
