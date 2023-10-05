@@ -12,6 +12,7 @@ PlayerStateScript::PlayerStateScript()
 	, mStateEventList{}
 	, mPlayer(nullptr)
 	, mbAnimationRunning(false)
+	, mbHavingCap(true)
 {
 	// 메모리 공간 확보
 	mStateEventList.reserve(static_cast<UINT>(Player::ePlayerState::Die) + 1);
@@ -159,7 +160,7 @@ void PlayerStateScript::Move()
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&& (mAnimator->PlayAnimationName() == L"Run"))
 	{
-		mInitialForce == 10000.f;
+		mInitialForce = 10000.f;
 		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
 	}
 	else if(mAnimator->PlayAnimationName() != L"Walk")
@@ -197,7 +198,7 @@ void PlayerStateScript::Jump()
 		{
 			mAnimator->Play(L"Jump", false);
 
-			rigidbody->SetMaxVelocity_Y(6.f);
+			rigidbody->SetMaxVelocity_Y(15.f);
 			rigidbody->ApplyGravity();
 			rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
@@ -207,7 +208,7 @@ void PlayerStateScript::Jump()
 		{
 			mAnimator->Play(L"Jump2", false);
 
-			rigidbody->SetMaxVelocity_Y(8.f);
+			rigidbody->SetMaxVelocity_Y(17.f);
 			rigidbody->ApplyGravity();
 			rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
@@ -218,7 +219,7 @@ void PlayerStateScript::Jump()
 		{
 			mAnimator->Play(L"Jump3", false);
 
-			rigidbody->SetMaxVelocity_Y(11.f);
+			rigidbody->SetMaxVelocity_Y(20.f);
 			rigidbody->ApplyGravity();
 			rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
@@ -378,7 +379,7 @@ void PlayerStateScript::SquatMove()
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&& (mAnimator->PlayAnimationName() == L"Rolling"))
 	{
-		mInitialForce == 10000.f;
+		mInitialForce = 10000.f;
 		rigidbody->SetMaxVelocity(PLAYER_ROLLING_VELOCITY);
 	}
 	else if (mAnimator->PlayAnimationName() != L"SquatWalk")
@@ -402,8 +403,6 @@ void PlayerStateScript::Air()
 
 void PlayerStateScript::Fall()
 {
-	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
-	assert(rigidbody);
 
 	if(!rigidbody->IsOnAir())
 	{
@@ -427,12 +426,15 @@ void PlayerStateScript::Groggy()
 
 void PlayerStateScript::ThrowCap()
 {
-	if (mAnimator->PlayAnimationName() != L"ThrowCap" )
+	if (mbHavingCap)
 	{
-		mPlayer->GetMarioCap()->GetPhysical()->AddActorToPxScene();
-		mAnimator->Play(L"ThrowCap", false);
+		if (mAnimator->PlayAnimationName() != L"ThrowCap")
+		{
+			mPlayer->GetMarioCap()->GetPhysical()->AddActorToPxScene();
+			mAnimator->Play(L"ThrowCap", false);
+			mbHavingCap = false;
+		}
 	}
-
 }
 
 void PlayerStateScript::CatchCap()

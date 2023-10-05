@@ -284,7 +284,7 @@ float VSM_FILTER(float2 moments, float fragDepth)
     float mD_2 = mD * mD;
     float p = variance / (variance + mD_2);
 
-    lit = max(smoothstep(0.05f, 1.f, p), fragDepth <= moments.x);
+    lit = max(p, fragDepth <= moments.x);
     
     return lit;
 }

@@ -65,8 +65,17 @@ void Player::Initialize()
 	mr->SetMaterialByKey(L"marioBodyMaterial", 0);
 
 
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	mesh->SetMaterialByKey(L"PBRMaterial",0);
+	mesh->GetMaterial()->SetMetallic(0.01f);
+	mesh->GetMaterial()->SetRoughness(0.99f);
+
+	GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
 	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+
 
 	rigid->SetFriction(Vector3(40.f, 0.f, 40.f));
 
@@ -195,24 +204,13 @@ void Player::FontRender()
 void Player::OnCollisionEnter(GameObj* gameObject)
 {
 
-
-}
-
-void Player::OnTriggerEnter(GameObj* gameObject)
-{
-	if (eLayerType::Platforms == gameObject->GetLayerType() )
+	if (eLayerType::Platforms == gameObject->GetLayerType())
 	{
-		GetPhysXRigidBody()->SetAirOff();
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-		SetPlayerState(Player::ePlayerState::Idle);
-
->>>>>>> 4efb7128a52b2ffe55e9509579a0dd6609e239a2
-=======
-		SetPlayerState(Player::ePlayerState::Idle);
-
->>>>>>> 4efb7128a52b2ffe55e9509579a0dd6609e239a2
+		if (GetPhysXRigidBody()->IsOnAir())
+		{
+			GetPhysXRigidBody()->SetAirOff();
+			SetPlayerState(Player::ePlayerState::Idle);
+		}
 	}
 
 	if (eLayerType::Monster == gameObject->GetLayerType())
@@ -227,6 +225,11 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			GetPhysXRigidBody()->SetAirOff();
 			SetPlayerState(Player::ePlayerState::Jump);
 		}
+void Player::OnTriggerEnter(GameObj* gameObject)
+{
+	if (eLayerType::Platforms == gameObject->GetLayerType())
+	{
+		//GetPhysXRigidBody()->SetAirOff();
 	}
 
 }
@@ -459,7 +462,10 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 				model->MeshRenderSwtich(L"Cap__CapMT-mesh", false);
 			});
 
-			cilp->SetCompleteEvent([this]() {SetPlayerState(ePlayerState::Idle); });
+			cilp->SetCompleteEvent([this]() 
+			{
+				SetPlayerState(ePlayerState::Idle); 
+			});
 		}
 	}
 
@@ -512,6 +518,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 			SetPlayerState(Player::ePlayerState::Idle);
 			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
 			model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
+			GetScript<PlayerStateScript>()->SetHavingCap(true);
 		});
 	}
 
