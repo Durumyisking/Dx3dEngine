@@ -176,6 +176,17 @@ void AsyncLoad::LoadMaterials()
 	}
 #pragma endregion
 
+#pragma region basicPostProcess Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"BasicPostProcessShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetRenderingMode(eRenderingMode::PostProcess);
+		material->SetTextureByKey(L"PostProcessTexture", eTextureSlot::Albedo);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"BasicPostProcessMaterial", material);
+	}
+#pragma endregion
+
 	loadGoomba(L"DeferredShader");
 	loadMario( L"DeferredShader");
 

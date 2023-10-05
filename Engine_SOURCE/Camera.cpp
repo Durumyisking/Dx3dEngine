@@ -109,6 +109,8 @@ void Camera::Render()
 		deferredRenderingOperate();
 		renderMergedOutput();
 	}
+
+	renderPostProcess();
 }
 
 void Camera::CreateViewMatrix()
