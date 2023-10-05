@@ -37,7 +37,6 @@
 #include "Physical.h"
 #include "PhysXRigidBody.h"
 #include "PhysXCollider.h"
-#include "PlayerScript.h"
 #include "PhysicalMovement.h"
 #include "PhysicsMgr.h"
 #include "PhysicsScene.h"
