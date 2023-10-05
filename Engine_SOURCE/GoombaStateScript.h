@@ -8,8 +8,8 @@
 #define GOOMBA_SPPED 5000.f
 #define GOOMBA_JUMPFORCE 7000.f
 #define GOOMBA_MASS 1.f
-#define GOOMBA_WALK_VELOCITY 5.f
-#define GOOMBA_RUN_VELOCITY 7.5f
+#define GOOMBA_WALK_VELOCITY 3.f
+#define GOOMBA_RUN_VELOCITY 5.f
 
 class Model;
 class GoombaStateScript : public MonsterStateScript
