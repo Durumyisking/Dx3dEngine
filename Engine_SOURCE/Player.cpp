@@ -186,9 +186,9 @@ void Player::OnCollisionEnter(GameObj* gameObject)
 
 void Player::OnTriggerEnter(GameObj* gameObject)
 {
-	if (eLayerType::Platforms == gameObject->GetLayerType())
+	if (eLayerType::Platforms == gameObject->GetLayerType() )
 	{
-		//GetPhysXRigidBody()->SetAirOff();
+		GetPhysXRigidBody()->SetAirOff();
 	}
 }
 
@@ -370,7 +370,9 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 	animator->CreateAnimation(L"Land", L"..//..//Resources/MarioBody/Animation/Land.smd");
 
 	animator->CreateAnimation(L"ThrowCap", L"..//..//Resources/MarioBody/Animation/ThrowCap.smd");
+	animator->CreateAnimation(L"ThrowCapJump", L"..//..//Resources/MarioBody/Animation/ThrowCapJump.smd");
 	animator->CreateAnimation(L"CatchCap", L"..//..//Resources/MarioBody/Animation/CatchCap.smd");
+	animator->CreateAnimation(L"CatchCapJump", L"..//..//Resources/MarioBody/Animation/CatchCapJump.smd");
 
 	animator->CreateAnimation(L"Jump", L"..//..//Resources/MarioBody/Animation/Jump.smd");
 	animator->CreateAnimation(L"Jump2", L"..//..//Resources/MarioBody/Animation/Jump2.smd");

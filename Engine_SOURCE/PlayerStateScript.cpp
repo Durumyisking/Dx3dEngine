@@ -66,12 +66,14 @@ void PlayerStateScript::Idle()
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	if (!rigidbody)
 		return;
+
 	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	if (animator == nullptr)
+	if (!animator)
 		return;
+
 	if(animator->PlayAnimationName() != L"Wait")
 		animator->Play(L"Wait");
-	//rigidbody->SetAirOff();
+	
 }
 
 void PlayerStateScript::Move()
@@ -406,7 +408,7 @@ void PlayerStateScript::Fall()
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
-	if(rigidbody->GetVelocity().y==0)
+	if(!rigidbody->IsOnAir())
 	{
 		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
 	}
@@ -418,10 +420,12 @@ void PlayerStateScript::Wall()
 
 void PlayerStateScript::Hit()
 {
+
 }
 
 void PlayerStateScript::Groggy()
 {
+
 }
 
 void PlayerStateScript::ThrowCap()
