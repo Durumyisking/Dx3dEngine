@@ -67,9 +67,9 @@ void Player::Initialize()
 
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f));
 	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
-	mesh->SetMaterialByKey(L"PBRMaterial",0);
-	mesh->GetMaterial()->SetMetallic(0.01f);
-	mesh->GetMaterial()->SetRoughness(0.99f);
+	mr->SetMaterialByKey(L"PBRMaterial",0);
+	mr->GetMaterial()->SetMetallic(0.01f);
+	mr->GetMaterial()->SetRoughness(0.99f);
 
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 
@@ -225,6 +225,9 @@ void Player::OnCollisionEnter(GameObj* gameObject)
 			GetPhysXRigidBody()->SetAirOff();
 			SetPlayerState(Player::ePlayerState::Jump);
 		}
+	}
+}
+
 void Player::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Platforms == gameObject->GetLayerType())
@@ -438,12 +441,13 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 	// 모자 던지기
 	{
 		cilp = animator->GetAnimationClip(L"ThrowCap");
+
 		if (cilp)
 		{
 			cilp->SetStartEvent([this]()
 			{
 				//mMarioCap->SetCapState(MarioCap::eCapState::Throw);
-					
+
 				//mMarioCap->Physicalinit();
 				Transform* tr = GetComponent<Transform>();
 
@@ -452,19 +456,19 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 
 				mMarioCap->Active();
 
-				mMarioCap->GetComponent<Transform>()->SetPhysicalPosition(position+Vector3(0.f,0.6f,0.f));
+				mMarioCap->GetComponent<Transform>()->SetPhysicalPosition(position + Vector3(0.f, 0.6f, 0.f));
 				mMarioCap->GetComponent<Transform>()->SetPhysicalRotation(rotation);
 
-				mMarioCap->GetComponent<BoneAnimator>()->Play(L"ThrowCap",false);
+				mMarioCap->GetComponent<BoneAnimator>()->Play(L"ThrowCap", false);
 				mMarioCap->SetCapState(MarioCap::eCapState::Throw);
 
 				Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
 				model->MeshRenderSwtich(L"Cap__CapMT-mesh", false);
 			});
 
-			cilp->SetCompleteEvent([this]() 
+				cilp->SetCompleteEvent([this]()
 			{
-				SetPlayerState(ePlayerState::Idle); 
+				SetPlayerState(ePlayerState::Idle);
 			});
 		}
 	}

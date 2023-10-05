@@ -22,7 +22,7 @@ public:
 
 		Hit,
 		Groggy,
-		
+
 		ThrowCap,
 		CatchCap,
 		Capture,

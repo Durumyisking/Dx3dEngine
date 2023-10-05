@@ -404,10 +404,14 @@ void PlayerStateScript::Air()
 void PlayerStateScript::Fall()
 {
 
-	if(!rigidbody->IsOnAir())
-	{
-		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
-	}
+	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
+	assert(rigidbody);
+
+	//if (rigidbody->GetVelocity().y == 0)
+	//	if (!rigidbody->IsOnAir())
+	//	{
+	//		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
+	//	}
 }
 
 void PlayerStateScript::Wall()
