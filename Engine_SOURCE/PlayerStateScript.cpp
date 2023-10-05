@@ -12,6 +12,7 @@ PlayerStateScript::PlayerStateScript()
 	, mStateEventList{}
 	, mPlayer(nullptr)
 	, mbAnimationRunning(false)
+	, mbHavingCap(true)
 {
 	// 메모리 공간 확보
 	mStateEventList.reserve(static_cast<UINT>(Player::ePlayerState::Die) + 1);
@@ -29,6 +30,7 @@ PlayerStateScript::PlayerStateScript()
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Groggy, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::ThrowCap, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::CatchCap, this));
+	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Capture, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Die, this));
 }
 PlayerStateScript::~PlayerStateScript()
@@ -56,16 +58,21 @@ void PlayerStateScript::Initialize()
 
 	mAnimator = mPlayer->GetComponent<BoneAnimator>();
 	assert(mAnimator);
+
+	mJumpCount = 0;
 }
 
 void PlayerStateScript::Idle()
 {
+	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
+	if (!rigidbody)
+		return;
 	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
 	if (animator == nullptr)
 		return;
-	if(!(animator->PlayAnimationName()== L"Wait"))
+	if(animator->PlayAnimationName() != L"Wait")
 		animator->Play(L"Wait");
-	mInitialForce = 33.f;
+	//rigidbody->SetAirOff();
 }
 
 void PlayerStateScript::Move()
@@ -127,35 +134,45 @@ void PlayerStateScript::Move()
 	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
 	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
 
-	if (!rigidbody->IsOnAir())
+	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+
+
+
+	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&& mAnimator->PlayAnimationName() != L"Run"
+		&& mAnimator->PlayAnimationName() != L"RunStart")
 	{
-		if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
-			&& mAnimator->PlayAnimationName() != L"Run"
-			&& mAnimator->PlayAnimationName() != L"RunStart")
-		{
-			mAnimator->Play(L"RunStart");
-			rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
-		}
-		else if (
-			GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
-			&& (mAnimator->PlayAnimationName() == L"Run"
-				|| mAnimator->PlayAnimationName() == L"RunStart"))
-		{
-			rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
-		}
-		else if (mAnimator->PlayAnimationName() != L"Walk")
-		{
-			mAnimator->Play(L"Walk");
-			rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
-		}
-		else
-		{
-			rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
-		}
+		mInitialForce += mForceIncrement;
+		mAnimator->Play(L"RunStart");
+		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
 	}
-
-	rigidbody->AddForce(-tr->Forward() * 10000.f * DT);
-
+	else if (
+		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&&(mAnimator->PlayAnimationName() == L"RunStart"))
+	{
+		mInitialForce += mForceIncrement;
+		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+	}
+	else if (
+		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&& (mAnimator->PlayAnimationName() == L"Run"))
+	{
+		mInitialForce = 10000.f;
+		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+	}
+	else if(mAnimator->PlayAnimationName() != L"Walk")
+	{
+		mAnimator->Play(L"Walk");
+		mInitialForce = 7000.f;
+		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
+	}
+	else
+	{
+		mInitialForce = 7000.f;
+		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
+	}
+	rigidbody->AddForce(-tr->Forward() * mInitialForce * DT);
 
 }
 
@@ -166,34 +183,57 @@ void PlayerStateScript::Jump()
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
-	if (!rigidbody->IsOnAir())
+	//if (rigidbody->IsOnAir())
+	//{
+	//	return;
+	//}
+
+	if (mAnimator->PlayAnimationName() != L"Jump"
+		&& mAnimator->PlayAnimationName() != L"Jump2"
+		&& mAnimator->PlayAnimationName() != L"Jump3")
 	{
-		mAnimator->Play(L"Jump", false);
-		rigidbody->SetVelocity(AXIS::Y, 0.f);
+		if (mJumpCount == 0)
+		{
+			mAnimator->Play(L"Jump", false);
 
-		rigidbody->SetMaxVelocity_Y(13.f);
-		rigidbody->SetMaxVelocity_XZ(PLAYER_WALK_VELOCITY);
+			rigidbody->SetMaxVelocity_Y(15.f);
+			rigidbody->ApplyGravity();
+			rigidbody->SetAirOn();
+			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
+			mJumpCount++;
+		}
+		else if (mJumpCount == 1)
+		{
+			mAnimator->Play(L"Jump2", false);
 
-		rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
+			rigidbody->SetMaxVelocity_Y(17.f);
+			rigidbody->ApplyGravity();
+			rigidbody->SetAirOn();
+			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
+			mJumpCount++;
 
-		rigidbody->ApplyGravity();
-		rigidbody->SetAirOn();
+		}
+		else if (mJumpCount == 2)
+		{
+			mAnimator->Play(L"Jump3", false);
+
+			rigidbody->SetMaxVelocity_Y(20.f);
+			rigidbody->ApplyGravity();
+			rigidbody->SetAirOn();
+			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
+			mJumpCount = 0;
+		}
+
 	}
 
-	if (rigidbody->GetVelocity().y < 0.f)
+	if (((mAnimator->PlayAnimationName() == L"Jump" && mAnimator->IsComplete())) 
+		|| ((mAnimator->PlayAnimationName() == L"Jump2" && mAnimator->IsComplete()))
+		|| ((mAnimator->PlayAnimationName() == L"Jump3" && mAnimator->IsComplete()))
+		||rigidbody->GetVelocity().y < 0)
 	{
-		//rigidbody->SetMaxVelocity_Y(10.f);
 		mAnimator->Play(L"Fall");
 		mPlayer->SetPlayerState(Player::ePlayerState::Fall);
 	}
-	
-
-	// 점프했을시 이동 애니메이션으로 가지않고 공중에서 약간의 움직임을 구현해야한다
-	// ==============================================================================
-	// 
-	// 
-	// 
-	// ==============================================================================
 }
 
 void PlayerStateScript::Squat()
@@ -202,17 +242,157 @@ void PlayerStateScript::Squat()
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
+	if (mAnimator->PlayAnimationName() == L"SquatEnd")
+		return;
+
+	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::Z))
+	{
+		mAnimator->Play(L"SquatEnd", false);
+		return;
+	}
+
 	if (mAnimator->PlayAnimationName() != L"SquatStart"
-		&& mAnimator->PlayAnimationName() != L"SquatMove"
-		&& mAnimator->PlayAnimationName() != L"SquatWait")
+		&& mAnimator->PlayAnimationName() != L"SquatWalk"
+		&& mAnimator->PlayAnimationName() != L"SquatWait"
+		&& mAnimator->PlayAnimationName() != L"SquatEnd"
+		&& mAnimator->PlayAnimationName() != L"Rolling")
 	{
 		mAnimator->Play(L"SquatStart");
+	}
+
+	if (mAnimator->PlayAnimationName() == L"SquatWalk"
+		|| mAnimator->PlayAnimationName() == L"Rolling")
+	{
+		mAnimator->Play(L"SquatWait");
+	}
+
+	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT))
+	{
+		mPlayer->SetPlayerState(Player::ePlayerState::SquatMove);
+		return;
+	}
+
+	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
+		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN)
+		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT)
+		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+	{
+		mPlayer->SetPlayerState(Player::ePlayerState::SquatMove);
+		return;
 	}
 
 }
 
 void PlayerStateScript::SquatMove()
 {
+	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
+	assert(rigidbody);
+
+	PhysicalMovement* moveMent = GetOwner()->GetComponent<PhysicalMovement>();
+	assert(moveMent);
+
+	Physical* physical = GetOwner()->GetComponent<Physical>();
+	assert(physical);
+
+	if (mAnimator->PlayAnimationName() == L"SquatEnd")
+		return;
+
+	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::Z))
+	{
+		mAnimator->Play(L"SquatEnd");
+		return;
+	}
+
+	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LSHIFT))
+	{
+		if (!GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+		{
+			mPlayer->SetPlayerState(Player::ePlayerState::Squat);
+			return;
+		}
+	}
+
+
+
+	Transform* tr = mPlayer->GetComponent<Transform>();
+	assert(tr);
+
+
+	bool able = false;
+	auto Input_DownFunC = [&](eKeyCode key, eKeyCode mult_key, math::Vector3 rotation)
+	{
+		if (able)
+			return;
+
+		if (GETSINGLE(InputMgr)->GetKeyDown(key))
+		{
+			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
+			{
+				tr->SetPhysicalRotation(rotation);
+				able = true;
+			}
+		}
+	};
+
+	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225, 0.0f));
+	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
+	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
+
+	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+
+	rigidbody->SetMaxVelocity(PLAYER_SQUATWALK_VELOCITY);
+
+
+	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&& mAnimator->PlayAnimationName() != L"RollingStart"
+		&& mAnimator->PlayAnimationName() != L"Rolling")
+	{
+		mInitialForce += mForceIncrement;
+		mAnimator->Play(L"RollingStart");
+		rigidbody->SetMaxVelocity(PLAYER_ROLLING_VELOCITY);
+	}
+	else if (
+		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&& (mAnimator->PlayAnimationName() == L"RollingStart"))
+	{
+		mInitialForce += mForceIncrement;
+		rigidbody->SetMaxVelocity(PLAYER_ROLLING_VELOCITY);
+	}
+	else if (
+		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
+		&& (mAnimator->PlayAnimationName() == L"Rolling"))
+	{
+		mInitialForce = 10000.f;
+		rigidbody->SetMaxVelocity(PLAYER_ROLLING_VELOCITY);
+	}
+	else if (mAnimator->PlayAnimationName() != L"SquatWalk")
+	{
+		mAnimator->Play(L"SquatWalk");
+		mInitialForce = 7000.f;
+		rigidbody->SetMaxVelocity(PLAYER_SQUATWALK_VELOCITY);
+	}
+	else
+	{
+		mInitialForce = 7000.f;
+		rigidbody->SetMaxVelocity(PLAYER_SQUATWALK_VELOCITY);
+	}
+
+	rigidbody->AddForce(-tr->Forward() * mInitialForce * DT);
 }
 
 void PlayerStateScript::Air()
@@ -221,7 +401,7 @@ void PlayerStateScript::Air()
 
 void PlayerStateScript::Fall()
 {
-	Move();
+
 }
 
 void PlayerStateScript::Wall()
@@ -238,12 +418,15 @@ void PlayerStateScript::Groggy()
 
 void PlayerStateScript::ThrowCap()
 {
-	if (mAnimator->PlayAnimationName() != L"ThrowCap" )
+	if (mbHavingCap)
 	{
-		mPlayer->GetMarioCap()->GetPhysical()->AddActorToPxScene();
-		mAnimator->Play(L"ThrowCap", false);
+		if (mAnimator->PlayAnimationName() != L"ThrowCap")
+		{
+			mPlayer->GetMarioCap()->GetPhysical()->AddActorToPxScene();
+			mAnimator->Play(L"ThrowCap", false);
+			mbHavingCap = false;
+		}
 	}
-
 }
 
 void PlayerStateScript::CatchCap()
@@ -251,6 +434,16 @@ void PlayerStateScript::CatchCap()
 	if (mAnimator->PlayAnimationName() != L"CatchCap")
 	{
 		mAnimator->Play(L"CatchCap", false);
+	}
+}
+
+void PlayerStateScript::Capture()
+{
+	if (!mAnimator)
+		return;
+	if (mAnimator->PlayAnimationName() != L"Bind")
+	{
+		mAnimator->Play(L"Bind");
 	}
 }
 

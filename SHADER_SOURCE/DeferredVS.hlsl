@@ -48,7 +48,7 @@ VSOut main(VSIn vsIn)
     Normal = normalize(Normal);
     
     float4 Tangent = float4(vsIn.Tangent, 0.f);
-    Tangent = mul(Tangent, world);
+    Tangent = mul(Tangent, worldIT);
     Tangent = normalize(Tangent);
 
     

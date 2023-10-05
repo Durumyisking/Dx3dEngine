@@ -50,7 +50,7 @@ void Monster::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Cap == gameObject->GetLayerType())
 	{
-		int i = 0;
+		OnCapture();
 	}
 }
 
