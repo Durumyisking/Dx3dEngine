@@ -13,7 +13,7 @@ namespace enums
 		Monster,
 		Boss,
 		Player,
-		AfterImage,
+		Cap,
 		Platforms,
 		Particle,
 		FX,
@@ -133,6 +133,8 @@ namespace enums
 		Capsule,
 		Sphere,
 		Plane,
+		ConvexMesh,
+		TriangleMesh,
 		End,
 	};
 
@@ -158,12 +160,14 @@ namespace enums
 		Bar,
 
 		HP,
+		HPText,
 		Coin,
 		CoinText,
 		CityCoin,
 		CityCoinText,
 		Luna,
 		LunaText,
+		Compass,
 		End,
 	};
 
@@ -188,18 +192,6 @@ namespace enums
 		YZ,
 		XYZ,
 		END,
-	};
-
-	enum class eHUDState
-	{
-		None,
-		MoveBlink,
-		MoveTowards,
-		Rotate,
-		Size,
-		TitleCapMove,
-		Hit,
-		End
 	};
 
 	extern const char* charComponentType[(int)eComponentType::End];

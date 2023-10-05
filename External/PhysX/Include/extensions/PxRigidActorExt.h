@@ -130,7 +130,9 @@ public:
 													         PxShapeFlags shapeFlags = PxShapeFlag::eVISUALIZATION | PxShapeFlag::eSCENE_QUERY_SHAPE | PxShapeFlag::eSIMULATION_SHAPE)
 	{
 		PxMaterial* materialPtr = const_cast<PxMaterial*>(&material);
-		return createExclusiveShape(actor, geometry, &materialPtr, 1, shapeFlags);
+
+		PxShape* shape = createExclusiveShape(actor, geometry, &materialPtr, 1, shapeFlags);
+		return shape;
 	}
 
 

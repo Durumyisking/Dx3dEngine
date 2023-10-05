@@ -91,20 +91,17 @@ void PlayerStateScript::Move()
 	if (mAnimator->PlayAnimationName() == L"Brake")
 		return;
 
-	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
+	if (GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::UP)
+		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::DOWN)
+		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::LEFT)
+		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::RIGHT))
 	{
-		if (!GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
-			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN)
-			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT)
-			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
-		{
-			mAnimator->Play(L"Brake");
-			mPlayer->SetPlayerState(Player::ePlayerState::Idle);
-			return;
-		}
+		mAnimator->Play(L"Brake");
+		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
+		//mMoveTime = 0.0f;
+		//rigidbody->SetLinearMaxVelocityForDynamic(5.f);
+		//mInitialForce = 33.f;
+		return;
 	}
 
 	Transform* tr = mPlayer->GetComponent<Transform>();
@@ -235,7 +232,7 @@ void PlayerStateScript::Jump()
 		|| ((mAnimator->PlayAnimationName() == L"Jump3" && mAnimator->IsComplete()))
 		||rigidbody->GetVelocity().y < 0)
 	{
-		mAnimator->Play(L"Fall", false);
+		mAnimator->Play(L"Fall");
 		mPlayer->SetPlayerState(Player::ePlayerState::Fall);
 	}
 }

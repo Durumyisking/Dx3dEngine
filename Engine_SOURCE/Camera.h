@@ -81,6 +81,11 @@ private:
 	void pushGameObjectToRenderingModes(GameObj* obj);
 	bool renderPassCheck(GameObj* obj);
 
+	void bindLightConstantBuffer(size_t lightIdx);
+
+	void deferredRenderingOperate();
+	void renderMergedOutput();
+
 private:
 	static Matrix View;
 	static Matrix InverseView;

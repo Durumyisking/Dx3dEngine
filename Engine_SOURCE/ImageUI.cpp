@@ -16,6 +16,16 @@ ImageUI::ImageUI(eUIType type)
 {
 }
 
+ImageUI::ImageUI(const std::wstring& key, eUIType type)
+	:UIBase(type)
+	, mCurrentTime(0.0f)
+	, mActivate(false)
+{
+	SpriteRenderer* hudRender = this->AddComponent<SpriteRenderer>(eComponentType::UI);
+	hudRender->SetMeshByKey(L"Rectmesh");
+	hudRender->SetMaterial(GETSINGLE(ResourceMgr)->Find<Material>(key));
+}
+
 ImageUI::~ImageUI()
 {
 }
@@ -27,51 +37,38 @@ void ImageUI::OnInit()
 void ImageUI::OnActive()
 {
 	mActivate = true;
-	this->Active();
+	//this->Active();
 }
 
 void ImageUI::OnInActive()
 {
 	mActivate = false;
-	this->Die();
+	//this->Die();
 }
 
 void ImageUI::OnUpdate()
 {
-	if (mbUIEnable == false)
-		return;
 
-	if (mActivate == false)
-		return;
-
-	if (mbColor)
-	{
-		mCurrentTime += DT;
-
-
-		if (mCurrentTime >= 1.0f)
-		{
-			this->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), true);
-			mCurrentTime = 0;
-			mbColor = false;
-		}
-	}
 }
 
 void ImageUI::OnFixedUpdate()
 {
+
 }
 
 void ImageUI::OnRender()
 {
+
 }
 
 void ImageUI::OnFontRender()
 {
+
 }
 
 void ImageUI::OnClear()
 {
+
 }
 
 void ImageUI::SetColor(Vector4 color, bool isColor)

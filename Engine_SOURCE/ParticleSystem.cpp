@@ -60,7 +60,7 @@ void ParticleSystem::Initialize()
 
 	SetMesh(point);
 
-//		mParticle = new Particle[mMaxParticles];
+//	mParticle = new Particle[mMaxParticles];
 
 	mBuffer = new StructedBuffer();
 	mBuffer->Create(sizeof(Particle), mMaxParticles, eSRVType::UAV, mParticle, true);

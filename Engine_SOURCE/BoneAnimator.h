@@ -3,6 +3,13 @@
 #include "AnimationClip.h"
 #include "Struct.h"
 
+#include "..//External/assimp/include/assimp/Importer.hpp"
+#include "..//External/assimp/include/assimp/cimport.h"
+#include "..//External/assimp/include/assimp/postprocess.h"
+#include "..//External/assimp/include/assimp/scene.h"
+
+#pragma comment(lib, "..//External/assimp/lib/Debug/assimp-vc143-mtd.lib")
+
 class BoneAnimator : public Component
 {
 public:
@@ -27,18 +34,25 @@ public:
 
 	// 애니메이션의 1 프레임 간격 세팅
 	void SetAnimationDruationTime(const std::wstring& name, float duration = 0.1f);
-
 	bool IsComplete() { return mPlayAnimation == nullptr ? true :mPlayAnimation->IsComplete(); }
-
 	const std::wstring PlayAnimationName() const;
-
 	AnimationClip* GetAnimationClip(const std::wstring& animationName) const;
+
+	const std::map<std::wstring, aiMatrix4x4>& GetFrameAnimationData() { return mFrameAnimationVector; }
+	aiMatrix4x4 GetAnimationNodeTransform(const std::wstring& name) const ;
+	void AddNodeTransform(const std::wstring& name, aiMatrix4x4 transform);
+	void DeleteNodeTransform(const std::wstring& name);
+
 public:
 	GETSET(float, mIntervalAnimation, IntervalAnimation)
 private:
+	// 애니메이션들을 담을곳
 	std::map<std::wstring, AnimationClip*> mAnimationClips;
 	AnimationClip* mPlayAnimation;
 
+	// 1 프레임의 애니메이션 이동정보를 담을곳
+	std::map<std::wstring, aiMatrix4x4> mFrameAnimationVector;
+	
 	float mIntervalAnimation;
 	bool mbLoop;
 };

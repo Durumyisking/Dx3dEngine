@@ -24,8 +24,7 @@ struct VSOut
 VSOut main(VSIn vsIn)
 {
     VSOut vsOut = (VSOut) 0.f;
-    
-    
+        
     float4 weights = vsIn.BlendWeight;
     weights.w = 1.f - (weights.x + weights.y + weights.z);
   
@@ -37,7 +36,7 @@ VSOut main(VSIn vsIn)
     pos = vsIn.BlendWeight.x + vsIn.BlendWeight.y + vsIn.BlendWeight.z + vsIn.BlendWeight.w == 0.0f ? vsIn.Position : pos;
     
     
-    float4 worldPosition = mul(vsIn.Position, world);
+    float4 worldPosition = mul(float4(pos.xyz, 1.f), world);
     float4 viewPosition = mul(worldPosition, view);
     float4 ProjPosition = mul(viewPosition, projection);
     
@@ -49,7 +48,7 @@ VSOut main(VSIn vsIn)
     Normal = normalize(Normal);
     
     float4 Tangent = float4(vsIn.Tangent, 0.f);
-    Tangent = mul(Tangent, world);
+    Tangent = mul(Tangent, worldIT);
     Tangent = normalize(Tangent);
 
     

@@ -11,7 +11,7 @@ class PhysXRayCast
 	SINGLE(PhysXRayCast);
 public:
 
-	void Raycast();
+	GameObj* Raycast();
 	void ReleaseRaycast();
 
 	bool MoveObject();

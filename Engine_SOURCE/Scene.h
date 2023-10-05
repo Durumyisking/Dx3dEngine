@@ -48,10 +48,13 @@ protected :
 
 	std::vector<GameObj*> mDeadObjects;
 
-	GameObj* mUICamera  ;
+	GameObj* mUICamera;
 	GameObj* mCamera;
 
 	bool mDeleteObj;
+
+	bool mbInitialized;
+
 
 public:
 	bool mbPause;

@@ -263,11 +263,12 @@ struct LightAttribute
 	math::Vector4 direction;
 
 	float radius;
-	float angle;
-		
-	enums::eLightType type;
+	float fallOffStart = 0.f;
+	float fallOffEnd = 0.f;
+	float spotPower;
 
-	int padding; // 상수버퍼 패딩
+	enums::eLightType type;
+	math::Vector3 padding; // 상수버퍼 패딩
 };
 
 struct Particle
@@ -291,4 +292,15 @@ struct Particle
 struct ParticleShared
 {
 	UINT activeCount;
+};
+
+struct Vertex
+{
+	math::Vector4 pos;
+	math::Vector2 uv;
+	math::Vector3 tangent;
+	math::Vector3 normal;
+
+	math::Vector4 BlendID;
+	math::Vector4 BlendWeight;
 };

@@ -17,9 +17,9 @@
 Player::Player()
 {
 	SetLayerType(eLayerType::Player);
+	SetName(L"Player");
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
-
 
 }
 
@@ -43,30 +43,27 @@ Player::~Player()
 
 void Player::Initialize()
 {
+	//기본 설정
+	SetPos(Vector3(20.f, 5.f, 10.f));
+	SetScale(Vector3(1.f, 1.f, 1.f));
+
 	//마리오 body 초기화
-	MeshRenderer* mesh = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	MeshRenderer* mr = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	AddComponent<PlayerStateScript>(eComponentType::Script);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
 	AddComponent<PhysXCollider>(eComponentType::Collider);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
 	AddComponent<GenericAnimator>(eComponentType::GenericAnimator);
 
 	BoneAnimator* animator = AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 
-	//기본 설정
-	SetPos(Vector3(0.f, 0.f, 0.f));
+	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
+	assert(model);
+	mr->SetModel(model);
+	mr->SetMaterialByKey(L"marioBodyMaterial", 0);
 
-	//Test
-	SetPos(Vector3(-20.f, 0.f, 0.f));
-
-	SetScale(Vector3(1.f, 1.f, 1.f));
-	SetName(L"Player");
-	mesh->SetMaterialByKey(L"PBRMaterial",0);
-	mesh->GetMaterial()->SetMetallic(0.01f);
-	mesh->GetMaterial()->SetRoughness(0.99f);
-
-	GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
 	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
@@ -79,9 +76,6 @@ void Player::Initialize()
 		tr->SetOffsetScale(0.01f);
 
 
-	//model setting
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
-	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
 
 	//animation setting
 	boneAnimatorInit(animator);
@@ -120,6 +114,12 @@ void Player::Initialize()
 	//mMarioCap->Initialize();
 	//mMarioCap->Physicalinit();
 	DynamicObject::Initialize();
+
+
+	rigid->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	rigid->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+
+	mr->SetBoneAnimator(nullptr);
 }
 
 void Player::Update()
@@ -150,10 +150,11 @@ void Player::FixedUpdate()
 		i->FixedUpdate();
 	}
 
-
+	Transform* transform = GetComponent<Transform>();
+	math::Matrix playerWorldMatirx = transform == nullptr ? math::Matrix::Identity : transform->GetWorldMatrix();
 	for (auto i : mParts)
 	{
-		i->GetComponent<Transform>()->SetWorldMatrix(GetComponent<Transform>()->GetWorldMatrix());
+		i->GetComponent<Transform>()->SetWorldMatrix(playerWorldMatirx);
 	}
 
 	//mMarioCap->FixedUpdate();
@@ -174,6 +175,19 @@ void Player::Render()
 	//mMarioCap->Render();
 }
 
+void Player::PrevRender()
+{
+	if (GetState() != GameObj::eState::Active)
+		return;
+
+	DynamicObject::PrevRender();
+
+	for (auto i : mParts)
+	{
+		i->PrevRender();
+	}
+}
+
 void Player::FontRender()
 {
 }
@@ -189,7 +203,27 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 	if (eLayerType::Platforms == gameObject->GetLayerType() )
 	{
 		GetPhysXRigidBody()->SetAirOff();
+<<<<<<< HEAD
+=======
+		SetPlayerState(Player::ePlayerState::Idle);
+
+>>>>>>> 4efb7128a52b2ffe55e9509579a0dd6609e239a2
 	}
+
+	if (eLayerType::Monster == gameObject->GetLayerType())
+	{
+		Vector3 monToPlayer = GetWorldPos() - gameObject->GetWorldPos();
+		monToPlayer.Normalize();
+		Vector3 monUpVector = gameObject->GetTransform()->WorldUp();
+
+		float cosTheta = monToPlayer.Dot(monUpVector);
+		if (cosTheta > 0.95f)
+		{
+			GetPhysXRigidBody()->SetAirOff();
+			SetPlayerState(Player::ePlayerState::Jump);
+		}
+	}
+
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)

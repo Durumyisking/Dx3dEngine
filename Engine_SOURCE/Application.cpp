@@ -14,6 +14,7 @@
 #include "ServerMgr.h"
 #include "UIManager.h"
 #include "UIFactory.h"
+#include "AsyncLoad.h"
 
 Application::Application()
 	: mbInitalized(false)
@@ -37,10 +38,9 @@ void Application::Initialize()
 	GETSINGLE(Fmod)->Initialize();
 	// GETSINGLE(CollisionMgr)->Initialize();
 	renderer::Initialize();
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/brick", L"blockBrick");
 	GETSINGLE(UIManager)->Initialize();
 	GETSINGLE(UIFactory)->Initialize();
-	GETSINGLE(ResourceMgr)->Initalize();
+	//GETSINGLE(ResourceMgr)->Initalize();
 	GETSINGLE(PhysicsMgr)->Initialize();
 	GETSINGLE(FontWrapper)->Initialize();
 	GETSINGLE(SceneMgr)->Initialize();
@@ -56,7 +56,7 @@ void Application::Update()
 		GETSINGLE(InputMgr)->Update();
 		//		GETSINGLE(CollisionMgr)->Update();
 		GETSINGLE(SceneMgr)->Update();
-		GETSINGLE(UIManager)->Update();
+		// GETSINGLE(UIManager)->Update();
 		GETSINGLE(PhysicsMgr)->Update();
 	}
 }
