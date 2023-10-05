@@ -140,6 +140,7 @@ CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 		Vector4 endColor;
 		Vector4 startAngle;
 		Vector4 endAngle;
+
 		UINT maxParticles;
 		UINT simulationSpace;
 		float radius;

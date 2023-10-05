@@ -17,6 +17,8 @@ ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 	, mParticleCB {}
 	, mBuffer(nullptr)
 	, mSharedBuffer(nullptr)
+	, mTexture_X_Count(1)
+	, mTexture_Y_Count(1)
 {
 	if (type == eParticleType::D2D)
 	{
@@ -36,10 +38,10 @@ ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 	info.minLifeTime = 0.0f;
 
 	info.startAngle = Vector4::Zero;
-	info.endAngle = Vector4::Zero;
+	info.endAngle = Vector4(0.0f, 180.f,0.0f,1.0f);
 
 	info.worldPosition = Vector4::Zero;
-	info.startSize = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	info.startSize = Vector4(0.01f, 0.01f, 0.01f, 1.0f);
 	info.endSize = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	info.startColor = Vector4(1.0f, 0.f, 1.0f, 1.0f);
@@ -67,25 +69,34 @@ ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 		mParticleData[i].speed = info.startSpeed;
 		mParticleData[i].radian = info.radius;
 		mParticleData[i].active = 0;
+		mParticleData[i].particleWorld = math::Matrix::Identity;
 	}
 
 	// StructureBuffer
 	mBuffer = new StructedBuffer();
 	mBuffer->Create(sizeof(Particle), maxCount, eSRVType::UAV, &mParticleData, true);
+
 	mSharedBuffer = new StructedBuffer();
-	mSharedBuffer->Create(sizeof(ParticleShared), 1, eSRVType::UAV, nullptr, true);
+	ParticleShared count = {};
+	count.activeCount = 10;
+
+	mSharedBuffer->Create(sizeof(ParticleShared), 1, eSRVType::UAV, &count, true);
 }
 
 ParticleFormat::~ParticleFormat()
 {
 	if (mBuffer)
 	{
+		mBuffer->Clear();
+
 		delete mBuffer;
 		mBuffer = nullptr;
 	}
 
 	if (mSharedBuffer)
 	{
+		mSharedBuffer->Clear();
+
 		delete mSharedBuffer;
 		mSharedBuffer = nullptr;
 	}
@@ -101,19 +112,24 @@ void ParticleFormat::Update()
 
 	mParticleCB.elapsedTime += DT;
 	mParticleCB.gravity += -DT;
+
+	mSharedBuffer->Clear();
 }
 
 void ParticleFormat::CB_Bind()
 {
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::ParticleSystem)];
 	cb->SetData(&mParticleCB);
-	cb->Bind(eShaderStage::CS);
+	cb->Bind(eShaderStage::All);
 }
 
 void ParticleFormat::Render()
 {
 	if (mMaterial == nullptr || mMesh == nullptr)
 		return;
+
+	Vector2 textureSize(static_cast<float>(mTexture_X_Count), static_cast<float>(mTexture_Y_Count));
+	mMaterial->SetData(eGPUParam::Float_2, &textureSize);
 
 	mBuffer->BindSRV(eShaderStage::VS, 16);
 	mBuffer->BindSRV(eShaderStage::PS, 16);
@@ -124,6 +140,7 @@ void ParticleFormat::Render()
 	mMesh->RenderInstanced(mParitlceMaxCount);
 
 	mMaterial->Clear();
+
 	mBuffer->Clear();
 }
 
@@ -151,10 +168,24 @@ void ParticleFormat::SetCB_Data(const renderer::ParticleSystemCB& data)
 	mParticleCB = data;
 }
 
+void ParticleFormat::SetTexture(int slot, Texture* texture, int xCount, int yCount)
+{
+	if (mMaterial == nullptr)
+		return;
+
+	mMaterial->SetTexture(static_cast<eTextureSlot>(slot), texture);
+
+	mTexture_X_Count = xCount;
+	mTexture_Y_Count = yCount;
+}
+
 void ParticleFormat::Reset()
 {
 	mParticleCB.elapsedTime = 0.0f;
 	mParticleCB.gravity = 0.0f;
 
 	mParticleCB.force = 0.0f;
+
+	ParticleShared resetDate = {};
+	mSharedBuffer->SetData(&resetDate, sizeof(ParticleShared));
 }

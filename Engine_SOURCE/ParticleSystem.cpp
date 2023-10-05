@@ -20,6 +20,7 @@ ParticleSystem::ParticleSystem()
 	, mCurParticle(nullptr)
 	, mOnParticle(nullptr)
 	, mCS(nullptr)
+	, mbLoop(false)
 {
 
 }
@@ -51,14 +52,16 @@ void ParticleSystem::FixedUpdate()
 	if (mCurParticle->IsRunning())
 	{
 		mCurParticle->Reset();
-		mCurParticle = nullptr;
-		return;
+
+		if (!mbLoop)
+		{
+			mCurParticle = nullptr;
+			return;
+		}
 	}
 
 	//particleUpdate
 	mCurParticle->Update();
-	// SetCB_Data
-	mCurParticle->CB_Bind();
 
 	// SetStructureData
 	StructedBuffer* buffer = mCurParticle->GetDataBuffer();
@@ -66,6 +69,9 @@ void ParticleSystem::FixedUpdate()
 
 	if (buffer != nullptr && shaderBuffer != nullptr)
 	{
+		// SetCB_Data
+		mCurParticle->CB_Bind();
+
 		// UAV Bind
 		mCS->SetStrcutedBuffer(buffer);
 		mCS->SetSharedStrutedBuffer(shaderBuffer);
@@ -128,7 +134,7 @@ ParticleFormat* ParticleSystem::InsertParticle(const std::wstring& name, const s
 	return particle;
 }
 
-void ParticleSystem::Play(const std::wstring& name)
+void ParticleSystem::Play(const std::wstring& name,bool loop)
 {
 	mOnParticle = [this, name]()
 		{
@@ -139,5 +145,7 @@ void ParticleSystem::Play(const std::wstring& name)
 			mCurParticle = iter->second;
 			mCurParticle->Reset();
 		};
+
+	mbLoop = loop;
 }
 

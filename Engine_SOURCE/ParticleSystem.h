@@ -27,7 +27,7 @@ public:
 
 	void SetComputeShader(const std::wstring& shaderName);
 	ParticleFormat* InsertParticle(const std::wstring& name, const std::wstring& modelname, UINT particleType = 1, int count = 1);
-	void Play(const std::wstring& name);
+	void Play(const std::wstring& name, bool loop = true);
 
 private:
 	std::map<std::wstring, ParticleFormat*> mParticles;
@@ -35,6 +35,7 @@ private:
 
 	std::function<void()> mOnParticle;
 	ParticleShader* mCS;
-	
+
+	bool mbLoop;
 };
 

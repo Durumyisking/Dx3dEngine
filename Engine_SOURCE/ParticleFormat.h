@@ -24,7 +24,11 @@ public:
 
 	void SetModel(Model* model);
 	void SetModel(const std::wstring& name);
+
+	const renderer::ParticleSystemCB& GetCB_Data() const {return mParticleCB;}
 	void SetCB_Data(const renderer::ParticleSystemCB& data);
+
+	void SetTexture(int slot, class Texture* texture, int xCount, int yCount);
 
 	void Reset();
 
@@ -49,6 +53,9 @@ private:
 
 	StructedBuffer* mBuffer;
 	StructedBuffer* mSharedBuffer;
+
+	int mTexture_X_Count;
+	int mTexture_Y_Count;
 
 	// 파티클의 버퍼에 데이터를 읽고 씀
 	std::vector<Particle> mParticleData;

@@ -292,11 +292,11 @@ struct Particle
 	float gravityAcc;
 	UINT active;
 
-	math::Matrix particleWorld;
+	math::Matrix particleWorld = {};
 };
 struct ParticleShared
 {
-	UINT activeCount;
+	UINT activeCount = 1;
 };
 
 struct Vertex

@@ -217,4 +217,36 @@ float4x4 quaternion_to_matrix(float4 quat)
     return m;
 }
 
+float4 EulerToQuternion(float3 rotation)
+{
+    float radianRoll = rotation.x * 3.1415927f / 180.f;
+    float radianPitch = rotation.y * 3.1415927f / 180.f;
+    float radianyaw = rotation.z * 3.1415927f / 180.f;
+    
+    float half_roll = radianRoll * 0.5f;
+    float half_pitch = radianPitch * 0.5f;
+    float half_yaw = radianyaw * 0.5f;
+    
+    float cosroll = cos(half_roll);
+    float sinroll = sin(half_roll);
+    
+    float cospitch = cos(half_pitch);
+    float sinpitch = sin(half_pitch);
+    
+    float cosyaw = cos(half_yaw);
+    float sinyaw = sin(half_yaw);
+    
+    float cosPitchCosYaw = cospitch * cosyaw;
+    float sinPitchsinYaw = sinpitch * sinyaw;
+    
+    float4 result = float4(0.0f,0.0f,0.0f,1.0f);
+    
+    result.w = cosroll * cospitch * cosyaw + sinroll * sinpitch * sinyaw;
+    result.x = sinroll * cospitch * cosyaw - cosroll * sinpitch * sinyaw;
+    result.y = cosroll * sinpitch * cosyaw + sinroll * cospitch * sinyaw;
+    result.z = cosroll * cospitch * sinyaw - sinroll * sinpitch * cosyaw;
+    
+    return result;
+}
+
 #endif // __QUATERNION_INCLUDED__

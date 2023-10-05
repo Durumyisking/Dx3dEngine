@@ -26,32 +26,18 @@ struct VSOut
 VSOut main(VSIn vsIn)
 {
     VSOut vsOut = (VSOut) 0.0f;
+    float4x4 particleWorld = particleBuffer[vsIn.Instance].particleWorld;
     
-    // identity matrix
-    row_major matrix particleWorldMatrix =  float4x4
-    (1.0f, 0.0f, 0.0f, 0.0f
-    ,0.0f, 1.0f, 0.0f, 0.0f
-    ,0.0f, 0.0f,1.0f,  0.0f
-    ,0.0f ,0.0f, 0.0f, 1.0f);
-    
-    
-    // 파티클의 이동 계산
-    float4 particlePos = particleBuffer[vsIn.Instance].position;
-    particlePos.xyz += world._41_42_43;
-    
-    particleWorldMatrix._41_42_43 = particlePos.xyz;
-    
-    
-    float4 worldPos = mul(vsIn.Position, particleWorldMatrix);
+    float4 worldPos = mul(vsIn.Position, particleWorld);
     float4 veiwPos = mul(worldPos, view);
     float4 projectionPos = mul(veiwPos, projection);
     
     
     // 노말 탄젠트 계산
-    float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), worldIT).xyz);
+    float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), transpose(particleWorld)).xyz);
     viewNormal = normalize(mul(float4(viewNormal, 0.f), view).xyz);
     
-    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), world).xyz);
+    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), particleWorld).xyz);
     viewTangent = normalize(mul(float4(viewTangent, 0.f), view).xyz);
     
     
