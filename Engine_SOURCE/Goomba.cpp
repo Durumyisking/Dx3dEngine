@@ -12,8 +12,7 @@
 
 Goomba::Goomba()
 	: Monster()
-{
-	OnCapture();
+{	
 	SetName(L"Goomba");
 }
 
@@ -131,6 +130,7 @@ void Goomba::CaptureEvent()
 			}
 		};
 
+
 	// ÀÌµ¿
 	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
@@ -155,11 +155,11 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Platforms == gameObject->GetLayerType())
 	{
-		if (eMonsterState::Fall == GetMonsterState())
+		if (GetPhysXRigidBody()->IsOnAir())
 		{
 			SetMonsterState(Monster::eMonsterState::Land);
+			GetPhysXRigidBody()->SetAirOff();
 		}
-		GetPhysXRigidBody()->SetAirOff();
 	}
 
 	if (eLayerType::Player == gameObject->GetLayerType())
