@@ -397,6 +397,7 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>UI\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleFormat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraScript.h" />
@@ -827,6 +828,7 @@
     <ClInclude Include="PowerMoonScript.h">
       <Filter>UI\Script</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleFormat.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

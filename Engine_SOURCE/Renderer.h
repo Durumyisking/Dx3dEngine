@@ -134,9 +134,12 @@ CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 	{
 		Vector4 worldPosition;
 		Vector4 startSize;
+		Vector4 endSize;
 		Vector4 startColor;
-		Vector4 endColor;
 
+		Vector4 endColor;
+		Vector4 startAngle;
+		Vector4 endAngle;
 		UINT maxParticles;
 		UINT simulationSpace;
 		float radius;
@@ -147,16 +150,10 @@ CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 		float maxLifeTime;
 		float minLifeTime;
 
-		float startAngle;
-		float endAngle;
 		float elapsedTime;
 		float gravity;
-
 		float force;
 		float radian;
-		Vector2 padding;
-
-		math::Matrix particleWorld;
 	};
 	CBUFFER(NoiseCB, CBSLOT_NOISE)
 	{

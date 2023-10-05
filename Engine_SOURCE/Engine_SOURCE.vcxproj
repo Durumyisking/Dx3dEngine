@@ -298,6 +298,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PackunPostionBall.h" />
     <ClInclude Include="PackunStateScript.h" />
     <ClInclude Include="Panal.h" />
+    <ClInclude Include="ParticleFormat.h" />
     <ClInclude Include="ParticleShader.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Physical.h" />
@@ -440,6 +441,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PackunPostionBall.cpp" />
     <ClCompile Include="PackunStateScript.cpp" />
     <ClCompile Include="Panal.cpp" />
+    <ClCompile Include="ParticleFormat.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Physical.cpp" />

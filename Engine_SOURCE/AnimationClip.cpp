@@ -69,6 +69,11 @@ void AnimationClip::Update()
 		return;
 	}
 
+	if (mAnimator)
+	{
+		mAnimator->FrameAnimationClear();
+	}
+
 	SetBoneMatrix(mSkeletonData[mCurIndex], mSkeletonData[mCurIndex + 1], mDuration);
 }
 
@@ -236,6 +241,11 @@ void AnimationClip::InterpolationPrveToCurAnimation()
 		mTickPerSceond = 0.0f;
 		mPreveAnimationData = nullptr;
 		return;
+	}
+
+	if (mAnimator)
+	{
+		mAnimator->FrameAnimationClear();
 	}
 
 	SetBoneMatrix(*mPreveAnimationData, mSkeletonData[mCurIndex], mConnectionDuration);

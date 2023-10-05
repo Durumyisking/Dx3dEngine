@@ -43,7 +43,6 @@ void BoneAnimator::Update()
 		mPlayAnimation->SetCurIndex(0);
 	}
 
-	mFrameAnimationVector.clear();
 	mPlayAnimation->Update();
 }
 

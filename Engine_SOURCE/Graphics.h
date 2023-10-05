@@ -283,9 +283,13 @@ struct Particle
 
 	float lifeTime;
 	float elapsedTime;
+
+	math::Vector4 q_startRotation;
+	math::Vector4 q_endRotation;
+
 	float speed;
-	math::Vector2 gravityAcc;
 	float radian;
+	float gravityAcc;
 	UINT active;
 
 	math::Matrix particleWorld;
