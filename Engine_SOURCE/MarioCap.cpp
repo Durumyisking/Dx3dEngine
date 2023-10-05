@@ -80,6 +80,7 @@ void MarioCap::Initialize()
 	DynamicObject::Initialize();
 
 	GetComponent<MeshRenderer>()->SetBoneAnimator(nullptr);
+	Pause();
 }
 
 void MarioCap::Update()
@@ -156,11 +157,10 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 
 		GetComponent<BoneAnimator>()->Play(L"Capture", false);
 
-		//PxShape* detachShape = GetPhysical()->GetSubShapes()[0];
-		//GetPhysical()->GetActor()->is<PxRigidActor>()->detachShape(*detachShape);
-
-
 		SetCapState(MarioCap::eCapState::Capture);
+
+		GetOwner()->Pause();
+		//GetOwner()->GetPhysical()->RemoveActorToPxScene();
 	}
 }
 
@@ -337,6 +337,7 @@ void MarioCap::FlyEnd()
 		SetCapState(eCapState::Return);
 		RenderingBlockOn();
 		GetPhysical()->RemoveActorToPxScene();
+		Pause();
 	};
 
 	// 이벤트 시작

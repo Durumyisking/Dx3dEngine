@@ -108,8 +108,9 @@ void PxEventCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
                     if (triggerColl)
                         triggerColl->OnTriggerEnter(otherColl);
 
-                    if (otherColl)
-                        otherColl->OnTriggerEnter(triggerColl);
+                    // 어차피 쌍방으로 trigger 호출하기때문에 둘 다 해줄필요 없어보임
+                    //if (otherColl)
+                    //    otherColl->OnTriggerEnter(triggerColl);
                 }
             }
         }
@@ -129,8 +130,9 @@ void PxEventCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
                     if (triggerColl)
                         triggerColl->OnTriggerExit(otherColl);
 
-                    if (otherColl)
-                        otherColl->OnTriggerExit(triggerColl);
+                    // 어차피 쌍방으로 trigger 호출하기때문에 둘 다 해줄필요 없어보임
+                    //if (otherColl)
+                    //    otherColl->OnTriggerExit(triggerColl);
                 }
             }
         }

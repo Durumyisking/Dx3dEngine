@@ -5,11 +5,11 @@
 //class PhysXRigidBody;
 //class PhysicalMovement;
 //class Transform		;
-#define GOOMBA_SPPED 7000.f
+#define GOOMBA_SPPED 5000.f
 #define GOOMBA_JUMPFORCE 7000.f
 #define GOOMBA_MASS 1.f
-#define GOOMBA_WALK_VELOCITY 20.f
-#define GOOMBA_RUN_VELOCITY 50.f
+#define GOOMBA_WALK_VELOCITY 5.f
+#define GOOMBA_RUN_VELOCITY 7.5f
 
 class Model;
 class GoombaStateScript : public MonsterStateScript
@@ -39,6 +39,7 @@ public:
 private:
 	void setHalfCloseEyeModel();
 	void setOpenEyeModel();
+	void rotateByKey();
 
 private:
 	BoneAnimator*		 mAnimator ;
