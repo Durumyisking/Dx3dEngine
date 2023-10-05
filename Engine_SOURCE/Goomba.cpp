@@ -12,8 +12,7 @@
 
 Goomba::Goomba()
 	: Monster()
-{
-	OnCapture();
+{	
 	SetName(L"Goomba");
 }
 
@@ -65,6 +64,7 @@ void Goomba::Initialize()
 	// mustatch
 
 	// press
+	mr->SetMaterialByKey(L"goombaBodyMaterial", 11);
 
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
@@ -74,6 +74,7 @@ void Goomba::Initialize()
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
+
 	// MoveMent
 	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
 	
@@ -93,9 +94,7 @@ void Goomba::Initialize()
 
 void Goomba::Update()
 {
-
 	Monster::Update();
-
 }
 
 void Goomba::FixedUpdate()
@@ -131,15 +130,16 @@ void Goomba::CaptureEvent()
 			}
 		};
 
+
 	// 이동
-	//stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
-	//stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
 
 	//// 점프
 	//able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::Y, eMonsterState::Jump);
+	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Jump);
 
 	// 특수
 	//able = false;
@@ -154,24 +154,32 @@ void Goomba::OnCollisionEnter(GameObj* gameObject)
 void Goomba::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Platforms == gameObject->GetLayerType())
-
 	{
-		if (eMonsterState::Fall == GetMonsterState())
+		if (GetPhysXRigidBody()->IsOnAir())
 		{
 			SetMonsterState(Monster::eMonsterState::Land);
+			GetPhysXRigidBody()->SetAirOff();
 		}
-		GetPhysXRigidBody()->SetAirOff();
 	}
 
 	if (eLayerType::Player == gameObject->GetLayerType())
-
 	{
+		Vector3 goombaToPlayer = gameObject->GetWorldPos() - GetWorldPos();
+		goombaToPlayer.Normalize();
+		Vector3 goombaUpVector = GetTransform()->WorldUp();
 
-		GetPhysXRigidBody()->SetAirOff();
+		float cosTheta = goombaToPlayer.Dot(goombaUpVector);
+		if (cosTheta > 0.95f)
+		{
+			Model* model = GetMeshRenderer()->GetModel();
+			model->AllMeshRenderSwtichOff();
+			model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");
+			GetBoneAnimator()->Play(L"PressDown");
+			SetMonsterState(Monster::eMonsterState::Die);
+		}
 	}
 
-	//GetComponent<PhysXRigidBody>()->ApplyGravity();
-	//GetComponent<PhysXRigidBody>()->SetAirOn();
+	Monster::OnTriggerEnter(gameObject);
 }
 
 void Goomba::OnTriggerStay(GameObj* gameObject)

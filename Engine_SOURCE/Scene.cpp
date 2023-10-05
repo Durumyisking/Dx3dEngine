@@ -13,6 +13,7 @@ Scene::Scene()
 	, mDeadObjects{}
 	, mUICamera(nullptr)
 	, mCamera(nullptr)
+	, mbInitialized(false)
 
 {
 	mLayers.resize(static_cast<UINT>(eLayerType::End));
@@ -71,6 +72,12 @@ void Scene::destroy()
 
 void Scene::Enter()
 {
+	if (!mbInitialized)
+	{
+		Initialize();
+		mbInitialized = true;
+	}
+
 	CreateCameras();
 	mCamera->SetPos(Vector3(0.f, 5.f, -20.f));
 	mCamera->SetRotation(Vector3::Zero);
@@ -85,7 +92,6 @@ void Scene::Enter()
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
 	}
-	//Initialize();
 }
 
 void Scene::Exit()

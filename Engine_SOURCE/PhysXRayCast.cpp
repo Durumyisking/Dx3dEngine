@@ -13,7 +13,7 @@ extern Application application;
 
 PhysXRayCast::PhysXRayCast()
 	: mRaycastHit{}
-	, mRayMaxDist(1500.f)
+	, mRayMaxDist(6500.f)
 	, mRayMaxHit(10)
 	, mPickingObject(nullptr)
 	, mPickDistance(FLT_MAX)
@@ -30,12 +30,9 @@ PhysXRayCast::~PhysXRayCast()
 {
 }
 
-void PhysXRayCast::Raycast()
+GameObj* PhysXRayCast::Raycast()
 {
 	Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
-
-	//math::Vector3 cameraPos = renderer::mainCamera->GetOwner()->GetComponent<Transform>()->GetPosition();
-	//math::Vector3 dirZ = renderer::mainCamera->GetOwner()->GetComponent<Transform>()->Forward();
 
 	// Get the cursor position
 	math::Vector2 clientPos = GETSINGLE(InputMgr)->GetMousePosition_client();
@@ -64,92 +61,27 @@ void PhysXRayCast::Raycast()
 
 	for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
 	{
-		if (mLayerCollision[i])
+		if (!mLayerCollision[i])
+			continue;
+
+		Layer& layer = scene->GetLayer((enums::eLayerType)i);
+		const std::vector<GameObj*>& gameObjs
+			= layer.GetGameObjects();
+
+		for (GameObj* obj : gameObjs)
 		{
-			Layer& layer = scene->GetLayer((enums::eLayerType)i);
-			const std::vector<GameObj*>& gameObjs
-				= layer.GetGameObjects();
+			if (!CollisionCheck(RayOrigin, RayDirection, obj, mRayMaxDist))
+				continue;
 
-			for (GameObj* obj : gameObjs)
+			if (mPickDistance > static_cast<float>(mRaycastHit.distance))
 			{
-				//Vector3 a = obj->GetWorldPos();
-				//a -= RayOrigin;
-				//a.Normalize();
-
-				if (CollisionCheck(RayOrigin, RayDirection, obj, mRayMaxDist))
-				{
-					int a = 0;
-					if (mPickDistance > static_cast<float>(mRaycastHit.distance))
-					{
-						mPickingObject = obj;
-						mPickDistance = static_cast<float>(mRaycastHit.distance);
-						
-					}
-				}
+				mPickingObject = obj;
+				mPickDistance = static_cast<float>(mRaycastHit.distance);
 			}
 		}
 	}
 
-	//DirectX::XMMATRIX viewMatrix = renderer::mainCamera->GetViewMatrix();
-	//DirectX::XMMATRIX projectionMatrix = renderer::mainCamera->GetProjectionMatrix();
-
-	//DirectX::XMMATRIX invViewMatrix = DirectX::XMMatrixInverse(nullptr, viewMatrix);
-	//DirectX::XMMATRIX invProjectionMatrix = DirectX::XMMatrixInverse(nullptr, projectionMatrix);
-
-
-
-	//DirectX::XMVECTOR unprojectedVec = DirectX::XMVector3Unproject(
-	//	DirectX::XMLoadFloat4(&ndcPos2),
-	//	0.0f, 0.0f,
-	//	windowX,
-	//	windowY,
-	//	0.0f, 1.0f,
-	//	projectionMatrix,
-	//	viewMatrix,
-	//	invViewMatrix
-	//);
-
-	// Calculate the direction vector from mCamera position to unprojected position
-	//DirectX::XMVECTOR cameraPos = renderer::mainCamera->GetOwnerWorldPos(); 
-
-	//math::Vector4 mouseViewPos = XMVector3TransformCoord(XMVectorSet(ndcPos.x, ndcPos.y, ndcPos.z, 1.f), invProjectionMatrix);
-	//math::Vector4 mouseWorldPos = XMVector3TransformCoord(mouseViewPos, invViewMatrix);
-
-	//math::Vector4 projViewPos = XMVector3TransformCoord(XMVectorSet(ndcPos2.x, ndcPos2.y, ndcPos2.z, 1.f), invProjectionMatrix);
-	//math::Vector4 unprojectedVec = XMVector3TransformCoord(mouseViewPos, invViewMatrix);
-
-	//DirectX::XMVECTOR directionVec = DirectX::XMVectorSubtract(unprojectedVec, mouseWorldPos);
-	//directionVec = DirectX::XMVector3Normalize(directionVec);
-
-	//// Convert the DirectX vectors to PhysX vectors
-	//math::Vector3 rayOrigin(mouseWorldPos.x, mouseWorldPos.y, mouseWorldPos.z);
-	//math::Vector3 rayDirection(directionVec.m128_f32[0], directionVec.m128_f32[1], directionVec.m128_f32[2]);
-
-
-	//for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
-	//{
-	//	if (mLayerCollision[i])
-	//	{
-	//		Layer& layer = scene->GetLayer((enums::eLayerType)i);
-	//		const std::vector<GameObj*>& gameObjs
-	//			= layer.GetGameObjects();
-	//		for (GameObj* obj : gameObjs)
-	//		{
-	//			Vector3 a = obj->GetWorldPos();
-	//			a -= rayOrigin;
-	//			a.Normalize();
-	//			if (CollisionCheck(rayOrigin, rayOrigin, obj, mRayMaxDist))
-	//			{
-	//				int a = 0;
-	//				if (mPickDistance > static_cast<float>(mRaycastHit.distance))
-	//				{
-	//					mPickingObject = obj;
-	//					mPickDistance = static_cast<float>(mRaycastHit.distance);
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
+	return mPickingObject;
 }
 
 void PhysXRayCast::ReleaseRaycast()
@@ -207,6 +139,9 @@ bool PhysXRayCast::CollisionCheck(const Vector3& origin, const Vector3& dir, Gam
 	eGeometryType geometryType = physical->GetGeometryType();
 	PxTransform pxTransform = gameObject->GetComponent<Transform>()->GetPxTransform();
 
+	if (geometryType == eGeometryType::ConvexMesh || geometryType == eGeometryType::TriangleMesh)
+		int a = 0;
+
 	switch (geometryType)
 	{
 	case eGeometryType::Box:
@@ -259,6 +194,44 @@ bool PhysXRayCast::CollisionCheck(const Vector3& origin, const Vector3& dir, Gam
 
 		return bResult;
 	}
+	case eGeometryType::ConvexMesh:
+	{
+		PxTriangleMeshGeometry triangleGeom = physical->GetGeometries()->triangleMeshGeom;
+
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			triangleGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		if (bResult)
+			bResult = true;
+
+		return bResult;
+	}
+		break;
+	case eGeometryType::TriangleMesh:
+	{
+		PxConvexMeshGeometry convexGeom = physical->GetGeometries()->convexMeshGeom;
+
+		bool bResult = PxGeometryQuery::raycast(
+			convert::Vector3ToPxVec3(origin),
+			convert::Vector3ToPxVec3(dir),
+			convexGeom, pxTransform,
+			maxDistance,
+			PxHitFlag::ePOSITION | PxHitFlag::eDEFAULT,
+			mRayMaxHit,
+			&mRaycastHit);
+
+		if (bResult)
+			bResult = true;
+
+		return bResult;
+	}
+		break;
 	break;
 	}
 

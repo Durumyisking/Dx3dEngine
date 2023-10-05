@@ -17,41 +17,55 @@ struct PS_OUT
     float4 vSpecular : SV_Target1;
 };
 
-		//albedo = Resources::Find<Texture>(L"PositionTarget");
-		//lightMaterial->SetTexture(eTextureSlot::PositionTarget, albedo);
-		//albedo = Resources::Find<Texture>(L"NormalTarget");
-		//lightMaterial->SetTexture(eTextureSlot::NormalTarget, albedo);
-		//albedo = Resources::Find<Texture>(L"SpecularTarget");
-		//lightMaterial->SetTexture(eTextureSlot::SpecularTarget, albedo);
-
 PS_OUT main(VSOut vsin)
 {
     PS_OUT output = (PS_OUT) 0.f;
+    output.vSpecular = (float4) 0.f;
     
-    float2 vUV = vsin.Position.xy / float2(1600.0f, 900.0f);
-    float4 vViewPos = positionTarget.Sample(linearSampler, vUV);
+    float3 directLighting = (float3) 0.f;
+    float3 ambientLighting = (float3) 0.f;
+
     
-    if (0.f == vViewPos.a)
+    float2 uv = vsin.Position.xy / float2(1600.0f, 900.0f);
+    float4 worldPos = positionTarget.Sample(linearSampler, uv);
+    if (0.f == worldPos.a)
         discard;
-      
-    // 광원 영역에 잡힌 position target의 위차값을 로컬영역으로 바꿔야한다.
-    // 로컬 영역에서 광원메쉬 (spherer)의 내부에 있다면 실제로 point light 안에 들어가있다는 뜻
-    float4 vLocalPos = mul(mul(vViewPos, inverseView), inverseWorld);
-    if (length(vLocalPos.xyz) > 0.5f)
+    
+    float4 albedo = albedoTarget.Sample(linearSampler, uv);
+    float3 normal = normalTarget.Sample(linearSampler, uv).xyz;
+    float4 mrg = MRDTarget.Sample(linearSampler, uv);
+    float metallic = saturate(mrg.r);
+    float roughness = saturate(mrg.g);
+    
+    float pixelToCam = distance(cameraWorldPos.xyz, worldPos.xyz);
+    float3 pixelToEye = normalize(cameraWorldPos.xyz - worldPos.xyz);
+    ambientLighting = AmbientLightingByIBL(albedo.xyz, normal, pixelToEye, metallic, roughness, pixelToCam);
+    
+ 
+    float3 lightVec = lightAttributes[lightIndex].position.xyz - worldPos.xyz;
+        
+    float lightDist = length(lightVec);    
+    
+    if (lightDist > lightAttributes[lightIndex].fallOffEnd)
     {
-        discard;
+        output.vDiffuse = (float4) 0.f;
+        return output;
     }
     
-    float4 vViewNormal = normalTarget.Sample(linearSampler, vUV);
-        
-    LightColor lightcolor = (LightColor) 0.f;
-    CalculateLight3D(vViewPos.xyz, vViewNormal.xyz, lightIndex, lightcolor);
+    lightVec /= lightDist;
     
-    output.vDiffuse = lightcolor.diffuse + lightcolor.ambient;
-    output.vSpecular.xyz = lightcolor.specular.xyz; // * vSpec.xyz;
-       
+    // Distance attenuation
+    float att = saturate((lightAttributes[lightIndex].fallOffEnd - lightDist)
+                         / (lightAttributes[lightIndex].fallOffEnd - lightAttributes[lightIndex].fallOffStart));
+
+        
+    float3 radiance = lightAttributes[lightIndex].color.diffuse * att; // * shadowFactor;
+    
+    directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal, metallic, roughness) * radiance;
+
+    output.vDiffuse.xyz = ambientLighting + directLighting;// * lit;
+    
     output.vDiffuse.a = 1.f;
-    output.vSpecular.a = 1.f;
     
     return output;
 }

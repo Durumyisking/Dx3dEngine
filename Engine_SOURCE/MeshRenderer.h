@@ -4,7 +4,7 @@
 #include "Material.h"
 
 
-
+class BoneAnimator;
 class MeshRenderer : public BaseRenderer
 {
 public:
@@ -16,4 +16,9 @@ public:
 	virtual void FixedUpdate() final;
 	virtual void PrevRender() final;
 	virtual void Render() final;
+
+	void SetBoneAnimator(BoneAnimator* aniamtor) { mBoneAnimator = aniamtor; }
+
+private:
+	BoneAnimator* mBoneAnimator;
 };

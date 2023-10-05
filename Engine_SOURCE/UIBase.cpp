@@ -102,3 +102,15 @@ void UIBase::Addchild(UIBase* uiBase)
 	mChilds.push_back(uiBase);
 	uiBase->mUIParent = this;
 }
+
+void UIBase::ChangeTexture(const std::wstring& key)
+{
+	if (this->GetComponent<SpriteRenderer>() == nullptr)
+		return;
+
+	SpriteRenderer* render = this->GetComponent<SpriteRenderer>();
+
+	Texture* tex = (GETSINGLE(ResourceMgr)->Find<Texture>(key));
+
+	render->GetMaterial()->SetTexture(tex);
+}

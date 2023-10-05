@@ -15,6 +15,9 @@
 #pragma warning( disable : 26495 )
 #pragma warning( disable : 26812 )
 #pragma warning( disable : 33010 )
+//
+//#define PX_PHYSX_STATIC_LIB
+//#include "../External/PhysX/Include/PxConfig.h"
 #include "../External/PhysX/Include/PxPhysicsAPI.h"
 #include "druMath.h"
 #pragma warning( pop ) 
@@ -29,6 +32,7 @@
 #pragma comment(lib, "../External/PhysX/lib/debug/PhysXExtensions_static_64.lib")
 #pragma comment(lib, "../External/PhysX/lib/debug/PhysXPvdSDK_static_64.lib")
 #pragma comment(lib, "../External/PhysX/lib/debug/PhysXCharacterKinematic_static_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/debug/PhysXCooking_64.lib")
 #else
 
 
@@ -38,6 +42,7 @@
 #pragma comment(lib, "../External/PhysX/lib/release/PhysXExtensions_static_64.lib")
 #pragma comment(lib, "../External/PhysX/lib/release/PhysXPvdSDK_static_64.lib")
 #pragma comment(lib, "../External/PhysX/lib/release/PhysXCharacterKinematic_static_64.lib")
+#pragma comment(lib, "../External/PhysX/lib/release/PhysXCooking_64.lib")
 #endif
 
 using namespace physx;

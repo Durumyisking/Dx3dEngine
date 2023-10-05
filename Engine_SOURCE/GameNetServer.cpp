@@ -123,7 +123,7 @@ namespace server
             }
 
             net->mUserLock.lock();
-            std::shared_ptr<GameNetThread> Thread = std::make_shared<GameNetThread>();
+            std::shared_ptr<GameThread> Thread = std::make_shared<GameThread>();
             net->mRecvThreads.push_back(Thread);
             net->mAllUsers.push_back(CientSocket);
 

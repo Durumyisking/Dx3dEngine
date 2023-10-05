@@ -93,18 +93,6 @@ void Camera::Render()
 	sortGameObjects();
 
 	// shadow	
-	Transform directionLighttr = *(renderer::lights[0]->GetOwner()->GetComponent<Transform>());
-	directionLighttr.SetRotation(DecomposeRotMat(directionLighttr.GetWorldRotationMatrix()));
-
-	ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
-
-	LightMatrixCB data = {};
-	data.lightView = CreateViewMatrix(&directionLighttr);
-	data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, static_cast<float>(application.GetWidth()), static_cast<float>(application.GetHeight()), 1.0f, 1000.0f);
-	lightCB->SetData(&data);
-	lightCB->Bind(eShaderStage::VS);	
-	lightCB->Bind(eShaderStage::PS);
-
 	renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->OMSetRenderTarget();
 	renderShadow();
 
@@ -114,31 +102,13 @@ void Camera::Render()
 	renderCutout();
 	renderTransparent();
 
-	// Deferred Opaque Render 
-	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
-	renderDeferred();
+	// merged object가 있는게 아니라 분류가 되지 않는다 따라서 ui 카메라는 해당 작업 수행하면 안됨.
 
-	// Deferred light Render
-	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
-
-	for (Light* light : renderer::lights)
+	if (this == renderer::mainCamera)
 	{
-		light->Render();
+		deferredRenderingOperate();
+		renderMergedOutput();
 	}
-
-	if (mLayerMask[static_cast<UINT>(eLayerType::UI)])
-		return;
-
-	//SwapChain
-	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
-
-	// Deferred + SwapChain Merge
-	Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
-	Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
-	rectMesh->BindBuffer();
-	mergeMaterial->Bind();
-	rectMesh->Render();
-
 }
 
 void Camera::CreateViewMatrix()
@@ -359,20 +329,25 @@ void Camera::sortGameObjects()
 
 void Camera::renderShadow()
 {
-	for (GameObj* obj : mDeferredOpaqueGameObjects)
+	for (size_t i = 0; i < renderer::lights.size(); i++)
 	{
-		if (obj == nullptr)
-			continue;
+		bindLightConstantBuffer(i);
 
-		obj->PrevRender();
-	}
+		for (GameObj* obj : mDeferredOpaqueGameObjects)
+		{
+			if (obj == nullptr || !renderPassCheck(obj))
+				continue;
 
-	for (GameObj* obj : mOpaqueGameObjects)
-	{
-		if (obj == nullptr)
-			continue;
+			obj->PrevRender();
+		}
 
-		obj->PrevRender();
+		for (GameObj* obj : mOpaqueGameObjects)
+		{
+			if (obj == nullptr || !renderPassCheck(obj))
+				continue;
+
+			obj->PrevRender();
+		}
 	}
 }
 
@@ -437,7 +412,7 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 {
 	BaseRenderer* renderer = obj->GetComponent<BaseRenderer>();
 
-	if ( eLayerType::CubeMap== obj->GetLayerType())
+	if ( eLayerType::CubeMap == obj->GetLayerType())
 	{
 		obj->Render();
 	}
@@ -445,9 +420,7 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 	if (nullptr == renderer)
 		return;
 
-
 	Material* material = renderer->GetMaterial();
-
 	eRenderingMode mode = material->GetRenderingMode();
 
 	switch (mode)
@@ -492,6 +465,53 @@ bool Camera::renderPassCheck(GameObj* obj)
 	}
 
 	return true;
+}
+
+void Camera::bindLightConstantBuffer(size_t lightIdx)
+{
+	if (!renderer::lights.empty())
+	{
+		Transform Lighttr = *(renderer::lights[lightIdx]->GetOwner()->GetComponent<Transform>());
+		Lighttr.SetRotation(DecomposeRotMat(Lighttr.GetWorldRotationMatrix()));
+
+		ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
+
+		LightMatrixCB data = {};
+		data.lightView = CreateViewMatrix(&Lighttr);
+		data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, static_cast<float>(application.GetWidth()), static_cast<float>(application.GetHeight()), 1.0f, 1000.0f);
+		lightCB->SetData(&data);
+		lightCB->Bind(eShaderStage::VS);
+		lightCB->Bind(eShaderStage::PS);
+	}
+}
+
+void Camera::deferredRenderingOperate()
+{
+	// Deferred Opaque Render 
+	renderTargets[static_cast<UINT>(eRenderTargetType::Deferred)]->OMSetRenderTarget();
+	
+	renderDeferred();
+
+	// Deferred light Render
+	renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->OMSetRenderTarget();
+
+	for (Light* light : renderer::lights)
+	{
+		light->DeferredLightRender();
+	}
+}
+
+void Camera::renderMergedOutput()
+{
+	renderTargets[static_cast<UINT>(eRenderTargetType::Swapchain)]->OMSetRenderTarget();
+
+	// Deferred + SwapChain Merge
+	Material* mergeMaterial = GETSINGLE(ResourceMgr)->Find<Material>(L"MergeMRT_Material");
+	Mesh* rectMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
+	rectMesh->BindBuffer();
+	mergeMaterial->Bind();
+	rectMesh->Render();
+
 }
 
 void Camera::SetLayerMaskOn(eLayerType type)

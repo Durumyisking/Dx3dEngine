@@ -53,7 +53,7 @@ VSOut main(VSIn vsIn)
     float3 viewNormal = normalize(mul(float4(vsIn.Normal.xyz, 0.f), worldIT).xyz);
     viewNormal = normalize(mul(float4(viewNormal, 0.f), view).xyz);
     
-    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), world).xyz);
+    float3 viewTangent = normalize(mul(float4(vsIn.Tangent.xyz, 0.f), worldIT).xyz);
     viewTangent = normalize(mul(float4(viewTangent, 0.f), view).xyz);
         
     vsOut.ViewPos = worldPosition.xyz;

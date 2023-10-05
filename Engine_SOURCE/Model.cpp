@@ -13,7 +13,6 @@ namespace fs = std::filesystem;
 
 Model::Model()
 	: Resource(eResourceType::Model)
-	, mOwner(nullptr)
 	, mStructure(nullptr)
 	, mAssimpImporter{}
 	, mNodes{}
@@ -145,7 +144,6 @@ void Model::Bind_Render(bool bindMaterial)
 
 	for (Bone* bone : mBones)
 	{
-
 		aiMatrix4x4 finalMat = bone->mFinalMatrix;
 		boneInfo.FinalTransformation = ConvertMatrix(finalMat);
 		boneMat.emplace_back(boneInfo);
@@ -178,14 +176,21 @@ void Model::Bind_Render(bool bindMaterial)
 
 			mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
+
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
 		mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
 	}
 
+	mFrameAnimationVector = nullptr;
 	mStructure->Clear();
 	boneMat.clear();
+}
+
+void Model::SetFrameAnimationVector(const std::map<std::wstring, aiMatrix4x4>* animationVector)
+{
+	mFrameAnimationVector = animationVector;
 }
 
 
@@ -198,6 +203,14 @@ void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
 			(*iter)->SetRender(renderSwitch);
 			break;
 		}
+	}
+}
+
+void Model::AllMeshRenderSwtichOff()
+{
+	for (auto iter = mMeshes.begin(); iter != mMeshes.end(); ++iter)
+	{
+		(*iter)->SetRender(false);
 	}
 }
 
@@ -245,7 +258,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 {
 	std::map<std::wstring, ModelNode*>::iterator iter = mNodes.find(nodeName);
 
-	std::vector<renderer::Vertex> vertexes;
+	std::vector<Vertex> vertexes;
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
@@ -254,7 +267,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 	for (UINT i = 0; i < mesh->mNumVertices; ++i)
 	{
-		renderer::Vertex vertex = {};
+		Vertex vertex = {};
 		math::Vector3 pos = {};
 
 
@@ -294,16 +307,31 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		vertexes.emplace_back(vertex);
 	}
 
+	//indexes.reserve(mesh->mNumFaces);
+	//for (UINT i = 0; i < mesh->mNumFaces; ++i)
+	//{
+	//	aiFace face = mesh->mFaces[i];
+	//	if (mesh->mFaces[i].mNumIndices != 3) {
+	//		int a = 0;
+	//	}
+	//	for (UINT j = 0; j < face.mNumIndices; ++j)
+	//	{
+	//		indexes.emplace_back(face.mIndices[j]);
+	//	}
+	//}
+
 	indexes.reserve(mesh->mNumFaces);
 	for (UINT i = 0; i < mesh->mNumFaces; ++i)
 	{
 		aiFace face = mesh->mFaces[i];
+		if (mesh->mFaces[i].mNumIndices != 3) {
+			int a = 0;
+		}
 		for (UINT j = 0; j < face.mNumIndices; ++j)
 		{
 			indexes.emplace_back(face.mIndices[j]);
 		}
 	}
-
 
 	for (unsigned int i = 0; i < mesh->mNumBones; ++i)
 	{
@@ -400,6 +428,9 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
 	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
+
+	inMesh->SetVertexCount(static_cast<UINT>(vertexes.size()));
+	inMesh->SetIndexCount(static_cast<UINT>(indexes.size()));
 
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 	inMesh->SetName(wName);
@@ -521,6 +552,15 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 {
 	const ModelNode* modelNode = FindNode(nodeName);
 	aiMatrix4x4 transform = modelNode->mTransformation;
+
+	if (mFrameAnimationVector)
+	{
+		auto iter = mFrameAnimationVector->find(nodeName);
+		if (iter != mFrameAnimationVector->end())
+		{
+			transform = iter->second;
+		}
+	}
 
 	matrix = matrix * transform;
 
