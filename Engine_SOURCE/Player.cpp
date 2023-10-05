@@ -204,6 +204,11 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 	{
 		GetPhysXRigidBody()->SetAirOff();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		SetPlayerState(Player::ePlayerState::Idle);
+
+>>>>>>> 4efb7128a52b2ffe55e9509579a0dd6609e239a2
 =======
 		SetPlayerState(Player::ePlayerState::Idle);
 
