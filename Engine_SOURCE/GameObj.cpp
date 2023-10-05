@@ -428,16 +428,12 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 				if (vResult.y < 0.f)
 				{
 					GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-					GetPhysXRigidBody()->RemoveGravity();
-					GetPhysXRigidBody()->SetAirOff();
 					vResult *= -1.f;
 					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				}
 				else
 				{
 					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
-					GetPhysXRigidBody()->RemoveGravity();
-					GetPhysXRigidBody()->SetAirOff();
 				}
 				break;
 			case enums::AXIS::Z:

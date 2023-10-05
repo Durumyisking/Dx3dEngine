@@ -147,9 +147,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Common\GameObj\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerScript.cpp">
-      <Filter>Common\GameObj\Player</Filter>
-    </ClCompile>
     <ClCompile Include="PostProcess.cpp">
       <Filter>Common\GameObj\PostProcess</Filter>
     </ClCompile>
@@ -545,9 +542,6 @@
       <Filter>Common\GameObj\PhysicalGameObj</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Common\GameObj\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerScript.h">
       <Filter>Common\GameObj\Player</Filter>
     </ClInclude>
     <ClInclude Include="PostProcess.h">

@@ -13,7 +13,8 @@ public:
 
 	void Update();
 	virtual void Divide();
-	virtual void DivideEvnet() {};
+	virtual void CaptureEnter(MarioCap* cap) {};
+	virtual void DivideEvent() {};
 	virtual void CaptureEvent() = 0;
 
 	void OnCapture() { mbCapture = true; }

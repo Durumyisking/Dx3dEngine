@@ -12,8 +12,7 @@
 
 Goomba::Goomba()
 	: Monster()
-{
-	OnCapture();
+{	
 	SetName(L"Goomba");
 }
 
@@ -70,8 +69,8 @@ void Goomba::Initialize()
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
@@ -131,6 +130,7 @@ void Goomba::CaptureEvent()
 			}
 		};
 
+
 	// ÀÌµ¿
 	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
@@ -155,11 +155,11 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Platforms == gameObject->GetLayerType())
 	{
-		if (eMonsterState::Fall == GetMonsterState())
+		if (GetPhysXRigidBody()->IsOnAir())
 		{
 			SetMonsterState(Monster::eMonsterState::Land);
+			GetPhysXRigidBody()->SetAirOff();
 		}
-		GetPhysXRigidBody()->SetAirOff();
 	}
 
 	if (eLayerType::Player == gameObject->GetLayerType())
