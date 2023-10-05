@@ -1,7 +1,6 @@
 #pragma once
 #include "Entity.h"
 
-
 using namespace enums;
 
 class Resource : public DruEntity

@@ -95,6 +95,14 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
+	if (GetType() == SceneMgr::eSceneType::Test)
+	{
+		CreatePlayerUI();
+		Scene::Initialize();
+
+		return;
+	}
+
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);

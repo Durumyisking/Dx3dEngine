@@ -21,6 +21,7 @@
 #include "ParticleSystem.h"
 #include "Light.h"
 
+std::unordered_map<std::string, GameObj*> GameObj::mObjectCDO;
 	
 GameObj::GameObj()
 	:mState(eState::Active)
@@ -31,6 +32,17 @@ GameObj::GameObj()
 {
 	mComponents.resize(static_cast<UINT>(eComponentType::End));
 	this->AddComponent<Transform>(eComponentType::Transform);
+
+	mObjectTypeName = "GameObj";
+}
+
+GameObj::GameObj(const GameObj& Obj)
+	: Entity(Obj)
+{
+	mComponents.resize(static_cast<UINT>(eComponentType::End));
+	this->AddComponent<Transform>(eComponentType::Transform);
+
+	mObjectTypeName = Obj.mObjectTypeName;
 }
 
 GameObj::~GameObj()
@@ -55,14 +67,58 @@ GameObj::~GameObj()
 
 }
 
-bool GameObj::Save()
+
+GameObj* GameObj::Clone() const
 {
-	return false;
+	return new GameObj(*this);
 }
 
-bool GameObj::Load()
+void GameObj::Save(FILE* File)
 {
-	return false;
+	DruEntity::Save(File);	
+
+	////컴포넌트 따로 저장할거면 사용(미완)
+	//{
+	//	auto	iter = mComponents.begin();
+	//	auto	iterEnd = mComponents.end();
+	//
+	//	for (; iter != iterEnd; ++iter)
+	//	{
+	//		eComponentType compType = (*iter)->GetOrder();
+	//		fwrite(&compType, sizeof(eComponentType), 1, File);
+	//
+	//		(*iter)->Save(File);
+	//	}
+	//}
+
+	Transform* tr = GetComponent<Transform>();
+
+	math::Vector3 pos = tr->GetPosition();
+	math::Vector3 rotation = tr->GetRotation();
+	math::Vector3 scale = tr->GetScale();
+
+	fwrite(&pos, sizeof(math::Vector3), 1, File);
+	fwrite(&rotation, sizeof(math::Vector3), 1, File);
+	fwrite(&scale, sizeof(math::Vector3), 1, File);
+}
+
+void GameObj::Load(FILE* File)
+{
+	DruEntity::Load(File);	
+	
+	Transform* tr = GetComponent<Transform>();
+
+	math::Vector3 pos;
+	math::Vector3 rotation;
+	math::Vector3 scale;
+
+	fread(&pos, sizeof(math::Vector3), 1, File);
+	fread(&rotation, sizeof(math::Vector3), 1, File);
+	fread(&scale, sizeof(math::Vector3), 1, File);
+
+	tr->SetPosition(pos);
+	tr->SetRotation(rotation);
+	tr->SetScale(scale);
 }
 
 void GameObj::Initialize()

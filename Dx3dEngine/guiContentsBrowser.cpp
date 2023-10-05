@@ -1,5 +1,6 @@
 #include "guiContentsBrowser.h"
 
+#include "Application.h"
 #include "Texture.h"
 #include "Material.h"
 #include "Mesh.h"
@@ -12,8 +13,9 @@
 
 #include "SceneMgr.h"
 #include "Scene.h"
+#include "PathMgr.h"
 
-
+extern Application application;
 extern gui::Editor editor;
 
 namespace gui
@@ -44,16 +46,64 @@ namespace gui
 		if (activeScene == nullptr)
 			return false;
 
-		if (mSceneSaveName.rfind(L".scene") == mSceneSaveName.size() - 6)
+		if (mSceneSaveName.size() < 7)
 			return false;
 
-		activeScene->Save();
+		if (mSceneSaveName.rfind(L".scene") == mSceneSaveName.size() - 6)
+		{
+			std::wstring fullpath = GETSINGLE(PathMgr)->FindPath(SCENE_SAVE_PATH) + mSceneSaveName;
+
+			if (GETSINGLE(SceneMgr)->SaveSceneFile(fullpath))
+				return true;
+		}
 
 		return false;
 	}
 
 	bool ContentsBrowser::LoadScene()
 	{
+		TCHAR	FilePath[MAX_PATH] = {};
+
+		OPENFILENAME	OpenFile = {};
+
+		OpenFile.lStructSize = sizeof(OPENFILENAME);
+		OpenFile.hwndOwner = application.GetHwnd();
+		OpenFile.lpstrFilter = TEXT("모든파일\0*.*");
+		OpenFile.lpstrFile = FilePath;	// FilePath 에 풀경로가 들어온다.
+		OpenFile.nMaxFile = MAX_PATH;
+		OpenFile.lpstrInitialDir = GETSINGLE(PathMgr)->FindPath(SCENE_SAVE_PATH).c_str();
+
+		if (GetOpenFileName(&OpenFile) != 0)
+		{
+			int	Length = lstrlen(FilePath);
+
+			char	FilePathMultiByte[MAX_PATH] = {};
+
+#ifdef UNICODE
+	// 유니코드로 되어있는 문자열을 멀티바이트로 바꾸기 위한 수를
+	// 얻어온다.
+			int	PathLength = WideCharToMultiByte(CP_ACP, 0, FilePath, -1,
+				0, 0, 0, 0);
+
+			WideCharToMultiByte(CP_ACP, 0, FilePath, -1,
+				FilePathMultiByte, PathLength, 0, 0);
+#else
+			strcpy_s(FilePathMultiByte, FilePath);
+
+#endif // UNICODE
+
+			GETSINGLE(PathMgr)->ResetPath();
+
+			// .scene 파일인지 확인하고 씬 로드
+			if (lstrcmpi(FilePath + Length - 6, TEXT(".scene")) == 0) 
+			{
+				if (GETSINGLE(SceneMgr)->LoadSceneFile(ConvertToW_String(FilePathMultiByte)))
+					return true;
+			}
+		}
+
+		GETSINGLE(PathMgr)->ResetPath();
+
 		return false;
 	}
 

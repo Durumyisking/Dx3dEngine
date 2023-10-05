@@ -15,8 +15,8 @@ public:
 	Scene();
 	virtual ~Scene();
 
-	virtual bool Save();
-	virtual bool Load();
+	virtual void Save(FILE* File);
+	virtual void Load(FILE* File);
 
 	virtual void Initialize();
 	virtual void update();
@@ -27,7 +27,6 @@ public:
 
 	virtual void Enter();
 	virtual void Exit();
-
 
 	void AddGameObject(GameObj* gameObj, const eLayerType eLayer);
 

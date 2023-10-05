@@ -282,6 +282,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelNode.h" />
+    <ClInclude Include="ModelObj.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterAiScript.h" />
     <ClInclude Include="MonsterStateScript.h" />
@@ -294,6 +295,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Panal.h" />
     <ClInclude Include="ParticleShader.h" />
     <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="PathMgr.h" />
     <ClInclude Include="Physical.h" />
     <ClInclude Include="PhysicalGameObj.h" />
     <ClInclude Include="PhysicalMovement.h" />
@@ -413,6 +415,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelNode.cpp" />
+    <ClCompile Include="ModelObj.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterAiScript.cpp" />
     <ClCompile Include="MonsterStateScript.cpp" />
@@ -424,6 +427,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Panal.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="PathMgr.cpp" />
     <ClCompile Include="Physical.cpp" />
     <ClCompile Include="PhysicalGameObj.cpp" />
     <ClCompile Include="PhysicalMovement.cpp" />

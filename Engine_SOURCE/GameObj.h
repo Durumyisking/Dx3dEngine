@@ -39,10 +39,12 @@ public:
 
 public:
 	GameObj();
+	GameObj(const GameObj& Obj);
 	virtual ~GameObj();
 
-	virtual bool Save();
-	virtual bool Load();
+	virtual GameObj* Clone() const;
+	virtual void Save(FILE* File) override;
+	virtual void Load(FILE* File) override;
 
 	virtual void Initialize();
 	virtual void Update();
@@ -171,10 +173,44 @@ public:
 	ParticleSystem* GetParticle();
 	Light* GetLight();
 
+public:
+	static void AddObjectCDO(const std::string& Name, GameObj* CDO)
+	{
+		mObjectCDO.insert(std::make_pair(Name, CDO));
+	}
+
+	static GameObj* FindObjectCDO(const std::string& Name)
+	{
+		auto	iter = mObjectCDO.find(Name);
+
+		if (iter == mObjectCDO.end())
+			return nullptr;
+
+		return iter->second;
+	}
+
+	static void ClearObjectCDO()
+	{
+		for (auto& iter : mObjectCDO)
+		{
+			if (iter.second == nullptr)
+				continue;
+
+			delete iter.second;
+			iter.second = nullptr;
+		}
+
+		mObjectCDO.clear();
+	}
+
+	const std::string& GetObjectTypeName()	const { return mObjectTypeName; }
 
 protected:
 	std::vector<Component*> mComponents;
+	std::string				mObjectTypeName;
 
+private:
+	static std::unordered_map<std::string, GameObj*> mObjectCDO; 
 
 private:
 	eLayerType mType;

@@ -24,6 +24,7 @@ namespace gui
 
 	private:
 		std::wstring mSceneSaveName;
+		std::wstring mScenePath;
 		std::wstring mCurrentSceneName;
 		Scene* mScene;
     };

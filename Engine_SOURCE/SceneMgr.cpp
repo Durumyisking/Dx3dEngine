@@ -6,6 +6,20 @@
 #include "Layer.h"
 #include "GameObj.h"
 
+#include "PhysicalGameObj.h"
+#include "Sphere.h"
+#include "Box.h"
+#include "DynamicObject.h"
+
+#include "Monster.h"
+#include "Goomba.h"
+#include "Packun.h"
+
+#include "Player.h"
+#include "MarioParts.h"
+#include "MarioCap.h"
+#include "ModelObj.h"
+#include "SkySphere.h"
 
 
 SceneMgr::SceneMgr()
@@ -21,19 +35,27 @@ SceneMgr::~SceneMgr()
 
 void SceneMgr::Initialize()
 {
-	//mScenes[static_cast<UINT>(eSceneType::Title)] = new SceneTitle;
-	//mScenes[static_cast<UINT>(eSceneType::Title)]->SetType(eSceneType::Title);
+	mScenes[static_cast<UINT>(eSceneType::Title)] = new SceneTitle;
+	mScenes[static_cast<UINT>(eSceneType::Title)]->SetType(eSceneType::Title);
 
 	mScenes[static_cast<UINT>(eSceneType::Play)] = new ScenePlay;
 	mScenes[static_cast<UINT>(eSceneType::Play)]->SetType(eSceneType::Play);
 
-	mActiveScene = mScenes[static_cast<UINT>(eSceneType::Play)];
+	mScenes[static_cast<UINT>(eSceneType::Test)] = new ScenePlay;
+	mScenes[static_cast<UINT>(eSceneType::Test)]->SetType(eSceneType::Test);
+
+	mActiveScene = mScenes[static_cast<UINT>(eSceneType::Title)];
 
 	for (UINT i = 0; i < static_cast<UINT>(eSceneType::End); i++)
 	{
+		if (i == 2)
+			continue;
+
 		if(mScenes[i])
 			mScenes[i]->Initialize();
 	}
+
+	CreateCDO();
 
 	mActiveScene->Enter();
 
@@ -109,10 +131,99 @@ void SceneMgr::LateEvent()
 	mLateEvent.clear();
 }
 
+bool SceneMgr::SaveSceneFile(const std::wstring& filePath)
+{
+	FILE* File = nullptr;
+
+	_wfopen_s(&File, filePath.c_str(), L"wb");
+
+	if (!File)
+		return false;
+
+	eSceneType SceneType = mActiveScene->GetType();
+	int size = sizeof(eSceneType);
+	fwrite(&SceneType, sizeof(eSceneType), 1, File);
+	
+	mActiveScene->Save(File);
+
+	fclose(File);
+	return true;
+}
+
+bool SceneMgr::LoadSceneFile(const std::wstring& filePath)
+{
+	FILE* File = nullptr;
+
+	_wfopen_s(&File, filePath.c_str(), L"rb");
+
+	if (!File)
+		return false;
+
+	eSceneType SceneType;
+	int size = sizeof(eSceneType);
+	fread(&SceneType, sizeof(eSceneType), 1, File);
+
+	//mScenes[static_cast<UINT>(SceneType)]->Load(File);
+	
+	mScenes[static_cast<UINT>(eSceneType::Test)]->Load(File);
+
+	fclose(File);
+
+
+	mScenes[static_cast<UINT>(eSceneType::Test)]->Initialize();
+
+	LoadScene(eSceneType::Test);
+
+	return true;
+}
+
 void SceneMgr::DontDestroyOnLoad(GameObj* gameObj)
 {
 	if (nullptr == gameObj)
 		return;
 
 	gameObj->SetDestroyOff();
+}
+
+void SceneMgr::CreateCDO()
+{
+///////// GameObject ///////////
+	GameObj* GameObjCDO = new GameObj();
+	GameObj::AddObjectCDO("GameObj", GameObjCDO);
+
+	PhysicalGameObj* PhysicalGameObjCDO = new PhysicalGameObj();
+	GameObj::AddObjectCDO("PhysicalGameObj", PhysicalGameObjCDO);
+
+	Sphere* SphereCDO = new Sphere();
+	GameObj::AddObjectCDO("Sphere", SphereCDO);
+
+	Box* BoxCDO = new Box();
+	GameObj::AddObjectCDO("Box", BoxCDO);
+
+	DynamicObject* DynamicObjectCDO = new DynamicObject();
+	GameObj::AddObjectCDO("DynamicObject", DynamicObjectCDO);
+
+	Player* PlayerCDO = new Player();
+	GameObj::AddObjectCDO("Player", PlayerCDO);
+
+	Monster* MonsterCDO = new Monster();
+	GameObj::AddObjectCDO("Monster", MonsterCDO);
+
+	Goomba* GoombaCDO = new Goomba();
+	GameObj::AddObjectCDO("Goomba", GoombaCDO);
+
+	Packun* PackunCDO = new Packun();
+	GameObj::AddObjectCDO("Packun", PackunCDO);
+
+	MarioParts* MarioPartsCDO = new MarioParts();
+	GameObj::AddObjectCDO("MarioParts", MarioPartsCDO);
+
+	MarioCap* MarioCapCDO = new MarioCap();
+	GameObj::AddObjectCDO("MarioCap", MarioCapCDO);
+
+	ModelObj* ModelObjCDO = new ModelObj();
+	GameObj::AddObjectCDO("ModelObj", ModelObjCDO);
+
+	//SkySphere* SkySphere = new SkySphere();
+	//GameObj::AddObjectCDO("SkySphere", SkySphere);
 }
