@@ -218,6 +218,7 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 				++mGoombaLayerIdx;
 
 				GetPhysXRigidBody()->SetSwitchState(false);
+				GetPhysXRigidBody()->RemoveGravity();
 
 				OffCapture();
 				mLowerLayerGoombas[0]->OnCapture();

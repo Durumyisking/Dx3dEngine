@@ -21,7 +21,7 @@ public:
 
 public:
 	UINT GetLayerIdx() const { return mGoombaLayerIdx; }
-	std::vector<Goomba*>  GetGoombaLayer() const { return mLowerLayerGoombas; }
+	std::vector<Goomba*>  GetGoombaLayer()  { return mLowerLayerGoombas; }
 
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) final;

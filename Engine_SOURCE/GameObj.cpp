@@ -166,14 +166,15 @@ void GameObj::Render()
 
 void GameObj::PrevRender()
 {
-	for (Component* comp : mComponents)
+	if (eState::Active == mState)
 	{
-		if (comp == nullptr)
-			continue;
-
-		if (comp->IsSwitchOn())
+		MeshRenderer* mr = GetComponent<MeshRenderer>();
+		if (mr)
 		{
-			comp->PrevRender();
+			if (mr->IsSwitchOn())
+			{
+				mr->PrevRender();
+			}
 		}
 	}
 }
@@ -304,6 +305,26 @@ float GameObj::Calculate_RelativeDirection_ByCosTheta(GameObj* otherObj)
 	float cosTheta = thisToOther.Dot(thisUpVector);
 
 	return cosTheta;
+}
+
+bool GameObj::IsObjectInFOV(GameObj* otherObj, float FOV)
+{
+	Vector3 faceDir = -GetTransform()->WorldForward();
+	Vector3 a = otherObj->GetTransform()->GetWorldPosition();
+	Vector3 b = GetTransform()->GetWorldPosition();
+
+	Vector3 thisToOther = a - b;
+	thisToOther.Normalize();
+
+	float costTheta = faceDir.Dot(thisToOther);
+	float FovRadian = cosf(toRadian(FOV));
+
+	if (costTheta > FovRadian)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 bool GameObj::MoveToTarget_Smooth_bool(GameObj* target, float speed, bool zOn, eDir dir)

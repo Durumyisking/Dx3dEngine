@@ -65,17 +65,20 @@ void MonsterStateScript::Idle()
 		float dist = Vector3::Distance(GETSINGLE(SceneMgr)->GetActiveScene()->GetPlayer()->GetWorldPos(), GetOwnerWorldPos());
 		if (mMonster->GetGetRecognizeRadius() > dist)
 		{
-			mMonster->SetIsFoundPlayer(true);
-			mMonster->SetMonsterState(Monster::eMonsterState::Turn);
-
-			Vector3 dirToPlayer_XYZ = mPlayer->GetWorldPos() - GetTransform()->WorldForward();
-			Vector2 dirToPlayer = { dirToPlayer_XYZ.x, dirToPlayer_XYZ.z};
-			Vector2 worldForward = { GetTransform()->WorldForward().x, GetTransform()->WorldForward().z };
-			dirToPlayer.Normalize();
-			float rotCosTheta = dirToPlayer.Dot(worldForward);
-			if (rotCosTheta > 0.f)
+			if (GetOwner()->IsObjectInFOV(mPlayer, 30.f))
 			{
-				mbTurnLeft = true;
+				mMonster->SetIsFoundPlayer(true);
+				mMonster->SetMonsterState(Monster::eMonsterState::Turn);
+
+				Vector3 dirToPlayer_XYZ = mPlayer->GetWorldPos() - GetTransform()->WorldForward();
+				Vector2 dirToPlayer = { dirToPlayer_XYZ.x, dirToPlayer_XYZ.z };
+				Vector2 worldForward = { GetTransform()->WorldForward().x, GetTransform()->WorldForward().z };
+				dirToPlayer.Normalize();
+				float rotCosTheta = dirToPlayer.Dot(worldForward);
+				if (rotCosTheta > 0.f)
+				{
+					mbTurnLeft = true;
+				}
 			}
 		}
 		else
