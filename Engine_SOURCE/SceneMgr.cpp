@@ -48,7 +48,7 @@ void SceneMgr::Initialize()
 
 	for (UINT i = 0; i < static_cast<UINT>(eSceneType::End); i++)
 	{
-		if (i == 2)
+		if (i > 1)
 			continue;
 
 		if(mScenes[i])
@@ -131,7 +131,7 @@ void SceneMgr::LateEvent()
 	mLateEvent.clear();
 }
 
-bool SceneMgr::SaveSceneFile(const std::wstring& filePath)
+bool SceneMgr::SaveSceneFile(eSceneType type, const std::wstring& filePath)
 {
 	FILE* File = nullptr;
 
@@ -140,9 +140,7 @@ bool SceneMgr::SaveSceneFile(const std::wstring& filePath)
 	if (!File)
 		return false;
 
-	eSceneType SceneType = mActiveScene->GetType();
-	int size = sizeof(eSceneType);
-	fwrite(&SceneType, sizeof(eSceneType), 1, File);
+	fwrite(&type, sizeof(eSceneType), 1, File);
 	
 	mActiveScene->Save(File);
 
@@ -163,16 +161,13 @@ bool SceneMgr::LoadSceneFile(const std::wstring& filePath)
 	int size = sizeof(eSceneType);
 	fread(&SceneType, sizeof(eSceneType), 1, File);
 
-	//mScenes[static_cast<UINT>(SceneType)]->Load(File);
-	
-	mScenes[static_cast<UINT>(eSceneType::Test)]->Load(File);
+	mScenes[static_cast<UINT>(SceneType)]->Load(File);
 
 	fclose(File);
 
+	mScenes[static_cast<UINT>(SceneType)]->Initialize();
 
-	mScenes[static_cast<UINT>(eSceneType::Test)]->Initialize();
-
-	LoadScene(eSceneType::Test);
+	LoadScene(SceneType);
 
 	return true;
 }

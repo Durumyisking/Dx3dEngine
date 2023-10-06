@@ -14,6 +14,7 @@ public:
 public:
 	enum class eSceneType
 	{
+		None = -1,
 		Title,
 		Play,
 		Test,
@@ -35,7 +36,7 @@ public:
 	void LoadScene(eSceneType type);
 	void LateEvent(); // 렌더링까지 종료후 오브젝트 추가하는 함수
 
-	bool SaveSceneFile(const std::wstring& filePath);
+	bool SaveSceneFile(eSceneType type, const std::wstring& filePath);
 	bool LoadSceneFile(const std::wstring& filePath);
 
 	void DontDestroyOnLoad(GameObj* gameObj);
