@@ -1,4 +1,4 @@
-#include "guiContentsBrowser.h"
+#include "guiSceneSaveWindow.h"
 
 #include "Application.h"
 #include "Texture.h"
@@ -22,24 +22,22 @@ extern gui::Editor editor;
 namespace gui
 {
 
-	ContentsBrowser::ContentsBrowser()
+	SceneSaveWindow::SceneSaveWindow()
 		: mScene(nullptr)
 		, mSceneSaveName()
 		, mCurrentSceneName()
 		, mSceneSaveType(-1)
 	{
-		SetName("ContentsBrowser");
+		SetName("SceneSaveWindow");
 		UINT width = 1600;
 		UINT height = 900;
 
 		Vector2 size(static_cast<float>(width), static_cast<float>(height));
 
 		SetSize(ImVec2((float)size.x / 2 + size.x / 5, size.y / 4));
-
-		TreeInitialize();
 	}
 
-	ContentsBrowser::~ContentsBrowser()
+	SceneSaveWindow::~SceneSaveWindow()
 	{
 		for (size_t i = 0; i < mChilds.size(); ++i)
 		{
@@ -53,7 +51,7 @@ namespace gui
 		mChilds.clear();
 	}
 
-	bool ContentsBrowser::SaveScene()
+	bool SceneSaveWindow::SaveScene()
 	{
 		Scene* activeScene = GETSINGLE(SceneMgr)->GetActiveScene();
 
@@ -79,7 +77,7 @@ namespace gui
 		return false;
 	}
 
-	bool ContentsBrowser::LoadScene()
+	bool SceneSaveWindow::LoadScene()
 	{
 		TCHAR	FilePath[MAX_PATH] = {};
 
@@ -126,18 +124,65 @@ namespace gui
 		return false;
 	}
 
-	void ContentsBrowser::Initialize()
+	void SetSceneTypeName(SceneMgr::eSceneType type, std::string& name)
 	{
+		switch (type)
+		{
+		case SceneMgr::eSceneType::Title:
+			name = "Title";
+			break;
+		case SceneMgr::eSceneType::Play:
+			name = "Play";
+			break;
+		case SceneMgr::eSceneType::Test:
+			name = "Test";
+			break;
+		case SceneMgr::eSceneType::End:
+			name = "End";
+			break;
+		default:
+			name = "Add Name in SceneSaveWindow::SetSceneTypeName";
+			break;
+		}
 	}
 
-	void ContentsBrowser::FixedUpdate()
+	void SceneSaveWindow::Initialize()
+	{
+		mTreeWidget = new TreeWidget();
+		mTreeWidget->SetName("SceneTypeSelect");
+		AddWidget(mTreeWidget);
+
+		mTreeWidget->SetSimpleEvent(this
+			, std::bind(&SceneSaveWindow::SetSceneType, this, std::placeholders::_1));
+
+		mTreeWidget->SetDummyRoot(true);
+
+		mTreeWidget->Clear();
+
+		//Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
+		std::string sceneName("SceneType : ");
+
+		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, sceneName, 0, true);
+
+		for (UINT i = 0; i < static_cast<UINT>(SceneMgr::eSceneType::End); i++)
+		{
+			std::string name = {};
+
+			SetSceneTypeName(static_cast<SceneMgr::eSceneType>(i), name);
+
+			SceneMgr::eSceneType sceneType = static_cast<SceneMgr::eSceneType>(i);
+			mTreeWidget->AddNode(root, name, 0, false, i);
+		}
+	}
+
+	void SceneSaveWindow::FixedUpdate()
 	{
 		Scene* activeScene = GETSINGLE(SceneMgr)->GetActiveScene();
 
 		mCurrentSceneName = activeScene->GetName();
 	}
 
-	void ContentsBrowser::Update()
+	void SceneSaveWindow::Update()
 	{
 		static char buffer[256] = "";
 
@@ -227,63 +272,12 @@ namespace gui
 		}
 	}
 
-	void ContentsBrowser::LateUpdate()
+	void SceneSaveWindow::LateUpdate()
 	{
 
 	}
 
-	void SetSceneTypeName(SceneMgr::eSceneType type, std::string& name)
-	{
-		switch (type)
-		{
-		case SceneMgr::eSceneType::Title:
-			name = "Title";
-			break;
-		case SceneMgr::eSceneType::Play:
-			name = "Play";
-			break;
-		case SceneMgr::eSceneType::Test:
-			name = "Test";
-			break;
-		case SceneMgr::eSceneType::End:
-			name = "End";
-			break;
-		default:
-			name = "Add Name in ContentsBrowser::SetSceneTypeName";
-			break;
-		}
-	}
-
-	void ContentsBrowser::TreeInitialize()
-	{
-		mTreeWidget = new TreeWidget();
-		mTreeWidget->SetName("SceneTypeSelect");
-		AddWidget(mTreeWidget);
-
-		mTreeWidget->SetSimpleEvent(this
-			, std::bind(&ContentsBrowser::SetSceneType, this, std::placeholders::_1));
-
-		mTreeWidget->SetDummyRoot(true);
-
-		mTreeWidget->Clear();
-
-		//Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
-		std::string sceneName("SceneType : ");
-		
-		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, sceneName, 0, true);
-		
-		for (UINT i = 0; i < static_cast<UINT>(SceneMgr::eSceneType::End); i++)
-		{
-			std::string name = {};
-
-			SetSceneTypeName(static_cast<SceneMgr::eSceneType>(i), name);
-
-			SceneMgr::eSceneType sceneType = static_cast<SceneMgr::eSceneType>(i);
-			mTreeWidget->AddNode(root, name, 0, false, i);
-		}
-	}
-
-	void ContentsBrowser::SetSceneType(UINT data)
+	void SceneSaveWindow::SetSceneType(UINT data)
 	{
 		mSceneSaveType = data;
 	}

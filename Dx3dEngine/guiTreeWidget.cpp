@@ -148,5 +148,10 @@ namespace gui
 		{
 			mEvent(mSelectedNode->mData);
 		}
+
+		if (mSelectedNode && mSimpleEvent)
+		{
+			mSimpleEvent(mSelectedNode->mNumber);
+		}
 	}
 }

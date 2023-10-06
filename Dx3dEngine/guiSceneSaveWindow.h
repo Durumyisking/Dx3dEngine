@@ -6,12 +6,12 @@
 class Scene;
 namespace gui
 {
-    class ContentsBrowser :
+    class SceneSaveWindow :
         public Widget
     {
 	public:
-		ContentsBrowser();
-		~ContentsBrowser();
+		SceneSaveWindow();
+		~SceneSaveWindow();
 
 		bool SaveScene();
 		bool LoadScene();
@@ -22,7 +22,6 @@ namespace gui
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		void TreeInitialize();
 		void SetSceneType(UINT data);
 
 	private:

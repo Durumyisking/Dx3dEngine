@@ -110,7 +110,9 @@ void PhysXCollider::OnCollisionExit(PhysXCollider* otherCollider)
 
 void PhysXCollider::OnTriggerEnter(PhysXCollider* otherCollider)
 {
-	//GameObj* owner = GetOwner(); // 여기서 터졌었는데 디버그용으로 추가하니까 안터짐
+	//GameObj* owner = GetOwner(); 
+	//std::string type= owner->GetObjectTypeName();
+	//std::wstring Name = owner->GetName();
 	GetOwner()->OnTriggerEnter(otherCollider->GetOwner());
 }
 void PhysXCollider::OnTriggerStay(PhysXCollider* otherCollider)

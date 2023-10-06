@@ -21,7 +21,7 @@
 #include "ParticleSystem.h"
 #include "Light.h"
 
-std::unordered_map<std::string, GameObj*> GameObj::mObjectCDO;
+std::map<std::string, GameObj*> GameObj::mObjectCDO;
 	
 GameObj::GameObj()
 	:mState(eState::Active)

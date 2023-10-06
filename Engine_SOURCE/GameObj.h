@@ -173,6 +173,10 @@ public:
 	ParticleSystem* GetParticle();
 	Light* GetLight();
 
+
+private:
+	static std::map<std::string, GameObj*> mObjectCDO;
+
 public:
 	static void AddObjectCDO(const std::string& Name, GameObj* CDO)
 	{
@@ -203,14 +207,20 @@ public:
 		mObjectCDO.clear();
 	}
 
+	static void GetAllCDOType(std::vector<std::string>* objectTypeVec)
+	{
+		for (const auto& pair : mObjectCDO) 
+		{
+			objectTypeVec->push_back(pair.first);
+		}
+	}
+
+
 	const std::string& GetObjectTypeName()	const { return mObjectTypeName; }
 
 protected:
 	std::vector<Component*> mComponents;
 	std::string				mObjectTypeName;
-
-private:
-	static std::unordered_map<std::string, GameObj*> mObjectCDO; 
 
 private:
 	eLayerType mType;

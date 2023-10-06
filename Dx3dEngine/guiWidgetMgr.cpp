@@ -26,8 +26,8 @@
 #include "guiVisualEditor.h"
 #include "guiGizmo.h"
 #include "guiOutLiner.h"
-#include "guiContentsBrowser.h"
-
+#include "guiSceneSaveWindow.h"
+#include "guiObjectWindow.h"
 
 #include "InputMgr.h"
 
@@ -81,9 +81,13 @@ namespace gui
 		ListWidget* list = new ListWidget();
 		mWidgets.insert(std::make_pair("ListWidget", list));
 
-		ContentsBrowser* contentsBrowser = new ContentsBrowser();
-		mWidgets.insert(std::make_pair("ContentsBrowser", contentsBrowser));
-		contentsBrowser->Initialize();
+		SceneSaveWindow* saveWindow = new SceneSaveWindow();
+		mWidgets.insert(std::make_pair("SceneSaveWindow", saveWindow));
+		saveWindow->Initialize();
+
+		ObjectWindow* objectWindow = new ObjectWindow();
+		mWidgets.insert(std::make_pair("ObjectWindow", objectWindow));
+		objectWindow->Initialize();
 
 
 		//설정 로드 (기본 imgui.ini Null 로 변경함)
@@ -93,10 +97,10 @@ namespace gui
 	void WidgetMgr::Release()
 	{
 
-		// ImGui 설정 저장하고 싶으면 사용
-		ImGuiIO& io = ImGui::GetIO();
-		io.IniFilename = "../../Custom_ini.ini";
-		ImGui::SaveIniSettingsToDisk(io.IniFilename);
+		//// ImGui 설정 저장하고 싶으면 사용
+		//ImGuiIO& io = ImGui::GetIO();
+		//io.IniFilename = "../../Custom_ini.ini";
+		//ImGui::SaveIniSettingsToDisk(io.IniFilename);
 
 		ImGui_Release();
 		
