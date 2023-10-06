@@ -169,7 +169,7 @@ enum class eTextureSlot
 
 	ShadowMap = 19,
 
-//	Atlas = 29,					// atlasTexture
+	PostProcess = 20,					// atlasTexture
 
 	End,
 };

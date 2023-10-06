@@ -49,6 +49,5 @@ private:
 
 	Model*				 mModel;
 
-	
 };
 

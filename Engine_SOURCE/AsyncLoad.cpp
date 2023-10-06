@@ -107,12 +107,9 @@ void AsyncLoad::LoadTextures()
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHairFace_rgh", L"MarioFace/Image/MarioHairFace_rgh.png");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHairFace_emm", L"MarioFace/Image/MarioHairFace_emm.png");
 
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHandL_alb", L"MarioHandL/Image/MarioHandL_alb.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHandL_nrm", L"MarioHandL/Image/MarioHandL_nrm.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHandL_rgh", L"MarioHandL/Image/MarioHandL_rgh.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHandR_alb", L"MarioHandR/Image/MarioHandR_alb.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHandR_nrm", L"MarioHandR/Image/MarioHandR_nrm.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHandR_rgh", L"MarioHandR/Image/MarioHandR_rgh.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHand_alb", L"MarioHandR/Image/MarioHand_alb.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHand_nrm", L"MarioHandR/Image/MarioHand_nrm.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHand_rgh", L"MarioHandR/Image/MarioHand_rgh.png");
 
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHair_alb", L"MarioHead/Image/MarioHair_alb.png");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHair_nrm", L"MarioHead/Image/MarioHair_nrm.png");
@@ -176,6 +173,17 @@ void AsyncLoad::LoadMaterials()
 		material->SetTextureByKey(L"goombaHairFace_rgh", eTextureSlot::Roughness);
 		material->SetTextureByKey(L"goombaHairFace_emm", eTextureSlot::Emissive);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"MarioMustacheMaterial", material);
+	}
+#pragma endregion
+
+#pragma region basicPostProcess Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"BasicPostProcessShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetRenderingMode(eRenderingMode::PostProcess);
+		material->SetTextureByKey(L"PostProcessTexture", eTextureSlot::Albedo);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"BasicPostProcessMaterial", material);
 	}
 #pragma endregion
 
@@ -317,26 +325,15 @@ void AsyncLoad::loadMario(std::wstring shaderName)
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"marioHairFaceMaterial", material);
 	}
 #pragma endregion
-#pragma region marioHandL Material
+#pragma region marioHand Material
 	{
 		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
 		Material* material = new Material();
 		material->SetShader(shader);
-		material->SetTextureByKey(L"marioHandL_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"marioHandL_nrm", eTextureSlot::Normal);
-		material->SetTextureByKey(L"marioHandL_rgh", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"marioHandLMaterial", material);
-	}
-#pragma endregion
-#pragma region marioHandR Material
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"marioHandR_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"marioHandR_nrm", eTextureSlot::Normal);
-		material->SetTextureByKey(L"marioHandR_rgh", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"marioHandRMaterial", material);
+		material->SetTextureByKey(L"marioHand_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"marioHand_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"marioHand_rgh", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"marioHandMaterial", material);
 	}
 #pragma endregion
 #pragma region marioHair Material

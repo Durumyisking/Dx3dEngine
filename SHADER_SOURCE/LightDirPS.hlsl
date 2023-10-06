@@ -72,7 +72,7 @@ PS_OUT main(VSOut vsin)
     }
     else
     {
-        lit = VSM_FILTER(ShadowMap.Sample(linearSampler, depthMapUV).rg, lightProj.z);        
+        lit = VSM_FILTER(ShadowMap.Sample(linearSampler, depthMapUV).rg, lightProj.z);      
     }
     
     float3 lightVec = -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz;

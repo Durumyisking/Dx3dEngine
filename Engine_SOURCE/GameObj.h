@@ -246,4 +246,6 @@ public:
 	eLayerType GetLayerType() const { return mType; }
 	void SetLayerType(eLayerType type) { mType = type; }
 
+	// this에서 other로 향하는 벡터와 this->up벡터의 내적으로 어느방향으로 충돌했는지 계산
+	float Calculate_RelativeDirection_ByCosTheta(GameObj* otherObj);
 };

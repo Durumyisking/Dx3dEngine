@@ -38,6 +38,7 @@ public:
 
 public:
 	void Reset() { mbAnimationRunning = false; }
+	void ResetJumpCount() { mJumpCount = 0; }
 	
 	GETSET(bool, mbHavingCap, HavingCap)
 	
@@ -45,7 +46,7 @@ private:
 	std::vector<std::function<void()>> mStateEventList;
 	float mInitialForce = 7000.f; // 초기 힘
 	float mForceIncrement = 20.f; // 시간에 따른 힘의 증가량
-	int mJumpCount;
+	UINT mJumpCount;
 	//float mMoveTime = 0.0f;
 
 	bool mbHavingCap;
