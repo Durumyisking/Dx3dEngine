@@ -32,11 +32,13 @@ public:
 
 	void Reset();
 
-	StructedBuffer* GetDataBuffer() { return mBuffer; }
-	StructedBuffer* GetShaderDataBuffer() { return mSharedBuffer; }
+	StructedBuffer* GetDataBuffer() const { return mBuffer; }
+	StructedBuffer* GetShaderDataBuffer() const;
 
 	std::vector<Particle>& GetParticleData() { return mParticleData; }
 	const renderer::ParticleSystemCB& GetParticleCB() const { return mParticleCB; }
+
+	void SetActiveCount(int count) { mActiveCount = count; }
 
 	bool IsRunning() {return mParticleCB.elapsedTime >= mParticleCB.maxLifeTime;}
 private:
@@ -45,6 +47,9 @@ private:
 
 	// 파티클 최대 갯수
 	int mParitlceMaxCount;
+
+	// activeCount
+	int mActiveCount;
 
 	// 리소스
 	Model* mModel;

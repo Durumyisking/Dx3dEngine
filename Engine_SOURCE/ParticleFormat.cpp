@@ -19,6 +19,7 @@ ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 	, mSharedBuffer(nullptr)
 	, mTexture_X_Count(1)
 	, mTexture_Y_Count(1)
+	, mActiveCount(1)
 {
 	if (type == eParticleType::D2D)
 	{
@@ -77,10 +78,7 @@ ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 	mBuffer->Create(sizeof(Particle), maxCount, eSRVType::UAV, &mParticleData, true);
 
 	mSharedBuffer = new StructedBuffer();
-	ParticleShared count = {};
-	count.activeCount = 10;
-
-	mSharedBuffer->Create(sizeof(ParticleShared), 1, eSRVType::UAV, &count, true);
+	mSharedBuffer->Create(sizeof(ParticleShared), 1, eSRVType::UAV, nullptr, true);
 }
 
 ParticleFormat::~ParticleFormat()
@@ -112,15 +110,13 @@ void ParticleFormat::Update()
 
 	mParticleCB.elapsedTime += DT;
 	mParticleCB.gravity += -DT;
-
-	mSharedBuffer->Clear();
 }
 
 void ParticleFormat::CB_Bind()
 {
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::ParticleSystem)];
 	cb->SetData(&mParticleCB);
-	cb->Bind(eShaderStage::All);
+	cb->Bind(eShaderStage::CS);
 }
 
 void ParticleFormat::Render()
@@ -186,6 +182,14 @@ void ParticleFormat::Reset()
 
 	mParticleCB.force = 0.0f;
 
-	ParticleShared resetDate = {};
-	mSharedBuffer->SetData(&resetDate, sizeof(ParticleShared));
+	mActiveCount = 1;
+}
+
+StructedBuffer* ParticleFormat::GetShaderDataBuffer() const
+{
+	ParticleShared info = {};
+	info.activeCount = mActiveCount;
+	mSharedBuffer->SetData(&info,1);
+
+	return mSharedBuffer;
 }

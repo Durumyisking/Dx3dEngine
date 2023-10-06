@@ -22,12 +22,12 @@ public:
 	virtual void Initialize() final {};
 	virtual void Update() final {};
 	virtual void FixedUpdate() final;
-	virtual void Render() final;
+	virtual void Render() final {};
 	void ParticleRender();
 
 	void SetComputeShader(const std::wstring& shaderName);
 	ParticleFormat* InsertParticle(const std::wstring& name, const std::wstring& modelname, UINT particleType = 1, int count = 1);
-	void Play(const std::wstring& name, bool loop = true);
+	void Play(const std::wstring& name, int activeCount = 1, bool loop = true);
 
 private:
 	std::map<std::wstring, ParticleFormat*> mParticles;

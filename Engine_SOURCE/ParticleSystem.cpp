@@ -77,15 +77,11 @@ void ParticleSystem::FixedUpdate()
 		mCS->SetSharedStrutedBuffer(shaderBuffer);
 		mCS->OnExcute();
 
+
 		// PushRenderFunc
 		renderer::ParticleFunCArr.emplace_back(std::bind(&ParticleSystem::ParticleRender, this));
 	}
 	//==========================================================================
-}
-
-void ParticleSystem::Render() 
-{
-	
 }
 
 void ParticleSystem::ParticleRender()
@@ -134,9 +130,9 @@ ParticleFormat* ParticleSystem::InsertParticle(const std::wstring& name, const s
 	return particle;
 }
 
-void ParticleSystem::Play(const std::wstring& name,bool loop)
+void ParticleSystem::Play(const std::wstring& name, int activeCount, bool loop)
 {
-	mOnParticle = [this, name]()
+	mOnParticle = [this, name, activeCount]()
 		{
 			const auto& iter = mParticles.find(name);
 			if (iter == mParticles.end())
@@ -144,6 +140,7 @@ void ParticleSystem::Play(const std::wstring& name,bool loop)
 
 			mCurParticle = iter->second;
 			mCurParticle->Reset();
+			mCurParticle->SetActiveCount(activeCount);
 		};
 
 	mbLoop = loop;

@@ -109,7 +109,7 @@ void Player::Initialize()
 	ParticleSystem* particle = AddComponent<ParticleSystem>(eComponentType::Particle);
 	particle->InsertParticle(L"Default", L"CloudParticle");
 	particle->SetComputeShader(L"ParticleCS");
-
+	
 	particle->Play(L"Default");
 
 
