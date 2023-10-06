@@ -19,12 +19,17 @@ public:
 	virtual void OnTriggerStay(GameObj* gameObject) final;
 	virtual void OnTriggerExit(GameObj* gameObject) final;
 
+public:
+	UINT GetLayerIdx() const { return mGoombaLayerIdx; }
+	std::vector<Goomba*>  GetGoombaLayer() const { return mLowerLayerGoombas; }
 
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) final;
 	virtual void stateInfoInitalize() final;
 
 private:
+	UINT				mGoombaLayerIdx;
+	std::vector<Goomba*> mLowerLayerGoombas;
 
 };
 

@@ -12,6 +12,8 @@
 
 Goomba::Goomba()
 	: Monster()
+	, mGoombaLayerIdx(0)
+	, mLowerLayerGoombas{}
 {	
 	SetName(L"Goomba");
 }
@@ -95,6 +97,20 @@ void Goomba::Initialize()
 void Goomba::Update()
 {
 	Monster::Update();
+
+	// ¿‚¥Ÿ«— ∞ËªÍ ≥°≥≠ »ƒ
+	if (mLowerLayerGoombas.size())
+	{
+		PxTransform bottomTr = mLowerLayerGoombas[0]->GetTransform()->GetPxTransform();
+		PxTransform tr = GetTransform()->GetPxTransform();
+
+		tr.p.x = bottomTr.p.x;
+		tr.p.z = bottomTr.p.z;
+		tr.p.y = bottomTr.p.y + 0.75f; // ƒ∏Ω∂¿« ≈©±‚ ¥ı«ÿ∫Ω
+		tr.q = bottomTr.q; // »∏¿¸¿∫ µø¿œ«œ∞‘
+		GetTransform()->SetPxTransform(tr);
+	}
+
 }
 
 void Goomba::FixedUpdate()
@@ -164,20 +180,45 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 
 	if (eLayerType::Player == gameObject->GetLayerType())
 	{
-		Vector3 goombaToPlayer = gameObject->GetWorldPos() - GetWorldPos();
-		goombaToPlayer.Normalize();
-		Vector3 goombaUpVector = GetTransform()->WorldUp();
-
-		float cosTheta = goombaToPlayer.Dot(goombaUpVector);
-		if (cosTheta > 0.95f)
+		if (Calculate_RelativeDirection_ByCosTheta(gameObject) > 0.95f)
 		{
 			Model* model = GetMeshRenderer()->GetModel();
-			model->AllMeshRenderSwtichOff();
-			model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");
+			//model->AllMeshRenderSwtichOff();
+			//model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");
 			GetBoneAnimator()->Play(L"PressDown");
 			SetMonsterState(Monster::eMonsterState::Die);
 		}
 	}
+
+	if (eLayerType::Monster == gameObject->GetLayerType())
+	{
+		if (L"Goomba" == gameObject->GetName())
+		{
+			Goomba* goomba = dynamic_cast<Goomba*>(gameObject);
+
+			// ¿≠±¿πŸ
+			if (Calculate_RelativeDirection_ByCosTheta(gameObject) > 0.95f)
+			{
+				// æ∆∑ß±¿πŸ ∫§≈Õ ∫πªÁ
+				std::vector<Goomba*> vec = goomba->GetGoombaLayer();
+				mLowerLayerGoombas.clear();
+				mLowerLayerGoombas.assign(vec.begin(), vec.end());	
+				
+				// æ∆∑ß±¿πŸ pushback
+				mLowerLayerGoombas.emplace_back(goomba);
+				++mGoombaLayerIdx;
+
+				GetPhysXRigidBody()->SetSwitchState(false);
+			}
+
+			//// æ∆∑ß±¿πŸ
+			//if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.95f)
+			//{
+
+			//}
+		}
+	}
+
 
 	Monster::OnTriggerEnter(gameObject);
 }

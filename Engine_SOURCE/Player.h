@@ -3,6 +3,10 @@
 #include "MarioParts.h"
 #include "MarioCap.h"
 
+class MeshRenderer;
+class PlayerStateScript;
+class PhysXRigidBody;
+
 class Player :
 	public DynamicObject
 {
@@ -67,6 +71,7 @@ public:
 
 private:
 	ePlayerState mPlayerState;
-
-
+	MeshRenderer* mMeshRenderer;
+	PlayerStateScript* mScript;
+	PhysXRigidBody* mRigidBody;
 };

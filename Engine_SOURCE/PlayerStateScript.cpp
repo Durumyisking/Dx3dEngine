@@ -183,10 +183,10 @@ void PlayerStateScript::Jump()
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	assert(rigidbody);
 
-	//if (rigidbody->IsOnAir())
-	//{
-	//	return;
-	//}
+	if (rigidbody->IsOnAir())
+	{
+		return;
+	}
 
 	if (mAnimator->PlayAnimationName() != L"Jump"
 		&& mAnimator->PlayAnimationName() != L"Jump2"
@@ -194,9 +194,9 @@ void PlayerStateScript::Jump()
 	{
 		if (mJumpCount == 0)
 		{
-			mAnimator->Play(L"Jump", false);
+			mAnimator->Play(L"Jump");
 
-			rigidbody->SetMaxVelocity_Y(15.f);
+			rigidbody->SetMaxVelocity_Y(13.f);
 			rigidbody->ApplyGravity();
 			rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
@@ -204,9 +204,9 @@ void PlayerStateScript::Jump()
 		}
 		else if (mJumpCount == 1)
 		{
-			mAnimator->Play(L"Jump2", false);
+			mAnimator->Play(L"Jump2");
 
-			rigidbody->SetMaxVelocity_Y(17.f);
+			rigidbody->SetMaxVelocity_Y(15.f);
 			rigidbody->ApplyGravity();
 			rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
@@ -215,13 +215,13 @@ void PlayerStateScript::Jump()
 		}
 		else if (mJumpCount == 2)
 		{
-			mAnimator->Play(L"Jump3", false);
+			mAnimator->Play(L"Jump3");
 
-			rigidbody->SetMaxVelocity_Y(20.f);
+			rigidbody->SetMaxVelocity_Y(18.f);
 			rigidbody->ApplyGravity();
 			rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
-			mJumpCount = 0;
+  			mJumpCount = 0;
 		}
 
 	}

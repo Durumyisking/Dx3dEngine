@@ -122,11 +122,16 @@ void ScenePlay::Initialize()
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
 	}
-
 	{
-		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, renderer::mainCamera->GetOwner(), L"PostProcess_LensFlare");
-		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
 	}
+
+
+	//{
+	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, renderer::mainCamera->GetOwner(), L"PostProcess_LensFlare");
+	//	mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
+	//}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);

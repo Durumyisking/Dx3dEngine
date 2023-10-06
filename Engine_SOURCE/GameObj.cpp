@@ -88,14 +88,20 @@ void GameObj::Update()
 				continue;
 			}
 		}
-
-		comp->Update();
+		if (comp->IsSwitchOn())
+		{
+			comp->Update();
+		}
 	}
 	for (Component* script : mScripts)
 	{
 		if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause )
 			continue;
-		script->Update();
+
+		if (script->IsSwitchOn())
+		{
+			script->Update();
+		}
 	}
 }
 
@@ -115,14 +121,20 @@ void GameObj::FixedUpdate()
 				continue;
 			}
 		}
-		comp->FixedUpdate();
+		if (comp->IsSwitchOn())
+		{
+			comp->FixedUpdate();
+		}
 	}
 
 	for (Component* script : mScripts)
 	{
 		if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause)
 			continue;
-		script->FixedUpdate();
+		if (script->IsSwitchOn())
+		{
+			script->FixedUpdate();
+		}
 	}
 }
 
@@ -135,14 +147,20 @@ void GameObj::Render()
 	{
 		if (nullptr == comp)
 			continue;
-		comp->Render();
+		if (comp->IsSwitchOn())
+		{
+			comp->Render();
+		}
 	}
 		
 	for (Component* script : mScripts)
 	{
 		if (nullptr == script)
 			continue;
-		script->Render();
+		if (script->IsSwitchOn())
+		{
+			script->Render();
+		}
 	}
 }
 
@@ -153,7 +171,10 @@ void GameObj::PrevRender()
 		if (comp == nullptr)
 			continue;
 
-		comp->PrevRender();
+		if (comp->IsSwitchOn())
+		{
+			comp->PrevRender();
+		}
 	}
 }
 
@@ -272,6 +293,17 @@ void GameObj::SetMesh(Mesh* mesh)
 	{
 		GetComponent<SpriteRenderer>()->SetMesh(mesh);
 	}
+}
+
+float GameObj::Calculate_RelativeDirection_ByCosTheta(GameObj* otherObj)
+{
+	Vector3 thisToOther = otherObj->GetWorldPos() - GetWorldPos();
+	thisToOther.Normalize();
+	Vector3 thisUpVector = GetTransform()->WorldUp();
+
+	float cosTheta = thisToOther.Dot(thisUpVector);
+
+	return cosTheta;
 }
 
 bool GameObj::MoveToTarget_Smooth_bool(GameObj* target, float speed, bool zOn, eDir dir)
