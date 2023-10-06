@@ -40,9 +40,6 @@ void Scene::Save(FILE* File)
 			continue;
 		}
 
-		if (layerType == eLayerType::Camera)
-			int a = 0;
-
 		//레이어 내의 오브젝트 수
 		std::vector<GameObj*> gameObjs = mLayers[i].GetGameObjects();
 		int	ObjCount = static_cast<int>(gameObjs.size());
@@ -99,8 +96,6 @@ void Scene::Load(FILE* File)
 
 		int	ObjCount = 0;
 		fread(&ObjCount, sizeof(int), 1, File);
-
-		int a = 0;
 
 		for (int i = 0; i < ObjCount; ++i)
 		{

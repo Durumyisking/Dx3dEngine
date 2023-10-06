@@ -66,7 +66,7 @@
 
 #include "Goomba.h"
 #include "Packun.h"
-
+#include "ModelObj.h"
 
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
@@ -97,6 +97,12 @@ void ScenePlay::Initialize()
 
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
+		{
+			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+			skySphere->SetName(L"SkySphere");
+		}
+
 		CreatePlayerUI();
 		Scene::Initialize();
 
@@ -112,53 +118,40 @@ void ScenePlay::Initialize()
 	{
 		//TriangleMesh Test
 		{
-			GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+			ModelObj* obj = object::Instantiate<ModelObj>(eLayerType::Platforms, this);
 			obj->SetPos(Vector3(0.f, -5.f, 300.f));
 			obj->SetScale(Vector3(0.06f, 0.06f, 0.06f));
 			obj->SetName(L"CityWorld_NaviCollider");
 
-			// SetModel
-			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_NaviRoadCollider");
-			MeshRenderer* mrd = obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-			Material* mt = model->GetMaterial(0);
-				
-			if (mt == nullptr)
-				mt = GETSINGLE(ResourceMgr)->Find<Material>(L"PhongMaterial");
-
-			mrd->SetModel(model, mt);
-
-			Physical* physical = obj->AddComponent<Physical>(eComponentType::Physical);
-			physical->InitialTriangleMeshProperties(Vector3(0.06f, 0.06f, 0.06f));
-
-			obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			obj->AddComponent<PhysXCollider>(eComponentType::Collider);
+			obj->SetModel(L"CityWorld_NaviRoadCollider");
+			obj->SetPhysical(true, eGeometryType::TriangleMesh, math::Vector3(0.06f, 0.06f, 0.06f));
 		}
 
 
-		//Sphere 
-		{
-			GameObj* Sphere = object::Instantiate<GameObj>(eLayerType::Player, this);
-			Sphere->SetPos(Vector3(32.f, 25.f, -9.5f));
-			Sphere->SetScale(Vector3(15.f, 15.f, 15.f));
-			Sphere->SetName(L"Sphere");
-
-
-			Sphere->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-			Sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-			Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
-			Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
-
-			Sphere->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-
-			Physical* physical = Sphere->AddComponent<Physical>(eComponentType::Physical);
-			physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(7.5f, 7.5f, 7.5f));
-
-			PhysXRigidBody* rigid = Sphere->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-
-			Sphere->AddComponent<PhysXCollider>(eComponentType::Collider);
-			//Sphere->AddComponent<PhysicalMovement>(eComponentType::Movement);
-			Sphere->AddComponent<PlayerScript>(eComponentType::Script);
-		}
+		////Sphere 
+		//{
+		//	GameObj* Sphere = object::Instantiate<GameObj>(eLayerType::Player, this);
+		//	Sphere->SetPos(Vector3(32.f, 25.f, -9.5f));
+		//	Sphere->SetScale(Vector3(15.f, 15.f, 15.f));
+		//	Sphere->SetName(L"Sphere");
+		//
+		//
+		//	Sphere->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		//	Sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		//	Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
+		//	Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
+		//
+		//	Sphere->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		//
+		//	Physical* physical = Sphere->AddComponent<Physical>(eComponentType::Physical);
+		//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(7.5f, 7.5f, 7.5f));
+		//
+		//	PhysXRigidBody* rigid = Sphere->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		//
+		//	Sphere->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//	//Sphere->AddComponent<PhysicalMovement>(eComponentType::Movement);
+		//	Sphere->AddComponent<PlayerScript>(eComponentType::Script);
+		//}
 	}
 
 	{

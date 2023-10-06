@@ -41,10 +41,10 @@ void ModelObj::Save(FILE* File)
 	GameObj::Save(File);
 
 	// 이름 저장
-	int Length = (int)(mModelName.length() * sizeof(wchar_t));
+	int numWChars = (int)mModelName.length();
 
-	fwrite(&Length, sizeof(int), 1, File);
-	fwrite(mModelName.c_str(), sizeof(wchar_t), Length, File);
+	fwrite(&numWChars, sizeof(int), 1, File);
+	fwrite(mModelName.c_str(), sizeof(wchar_t), numWChars, File);
 
 	fwrite(&mbPhysical, sizeof(bool), 1, File);
 	fwrite(&mGeomType, sizeof(eGeometryType), 1, File);
@@ -56,21 +56,12 @@ void ModelObj::Load(FILE* File)
 {
 	GameObj::Load(File);
 
-	int	Length = 0;
-	wchar_t	Name[256] = {};
+	int numWChars = 0;
 
-	fread(&Length, sizeof(int), 1, File);
-	if (Length > 0)
-	{
-		int numWChars = Length / sizeof(wchar_t);
+	fread(&numWChars, sizeof(int), 1, File);
 
-		mModelName.resize(numWChars);
-		fread(&mModelName[0], sizeof(wchar_t), numWChars, File);
-	}
-	else
-	{
-		mModelName.clear();
-	}
+	mModelName.resize(numWChars);
+	fread(&mModelName[0], sizeof(wchar_t), numWChars, File);
 
 	fread(&mbPhysical, sizeof(bool), 1, File);
 	fread(&mGeomType, sizeof(eGeometryType), 1, File);
@@ -80,8 +71,6 @@ void ModelObj::Load(FILE* File)
 
 void ModelObj::Initialize()
 {
-	GameObj::Initialize();
-
 	if (mModelName.empty())
 		return;
 
@@ -129,6 +118,8 @@ void ModelObj::Initialize()
 
 	AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	AddComponent<PhysXCollider>(eComponentType::Collider);
+
+	GameObj::Initialize();
 }
 
 void ModelObj::Update()
