@@ -34,7 +34,7 @@ void MainMenuScript::Update()
 			mPanal->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false);
 		}
 
-		mPanal->GetChilds()[mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true);
+		mPanal->GetChilds()[mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4f, 1.0f), true);
 	}
 	else if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::DOWN)))
 	{
@@ -48,7 +48,7 @@ void MainMenuScript::Update()
 			mPanal->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false);
 		}
 
-		mPanal->GetChilds()[mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true);
+		mPanal->GetChilds()[mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4f, 1.0f), true);
 	}
 
 	if (KEY_TAP(N_1))

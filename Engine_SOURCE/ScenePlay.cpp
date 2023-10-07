@@ -69,6 +69,8 @@
 #include "Goomba.h"
 #include "Packun.h"
 
+#include "PostProcess.h"
+
 
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
@@ -117,9 +119,19 @@ void ScenePlay::Initialize()
 		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
 
 	}	
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	}
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
+	}
+
+
 	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));
+	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, renderer::mainCamera->GetOwner(), L"PostProcess_LensFlare");
+	//	mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
 	//}
 
 	{

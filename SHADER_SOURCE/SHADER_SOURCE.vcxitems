@@ -155,6 +155,7 @@
     <None Include="$(MSBuildThisFileDirectory)ConstantBuffer.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)CSHeader.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)global.hlsli" />
+    <None Include="$(MSBuildThisFileDirectory)LensFlarePS.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)Light.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)Particle.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)PostProcess.hlsli" />

@@ -68,6 +68,11 @@ void AnimationClip::Update()
 
 		return;
 	}
+	if (mAnimator)
+	{
+		mAnimator->ClearFrameAnimationData();
+	}
+
 
 	if (mAnimator)
 	{
@@ -242,6 +247,11 @@ void AnimationClip::InterpolationPrveToCurAnimation()
 		mPreveAnimationData = nullptr;
 		return;
 	}
+	if (mAnimator)
+	{
+		mAnimator->ClearFrameAnimationData();
+	}
+
 
 	if (mAnimator)
 	{

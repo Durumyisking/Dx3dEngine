@@ -36,6 +36,9 @@ public:
 	void SetOwner(GameObj* owner) { mOwner = owner; }
 	GameObj* GetOwner() { return mOwner; }
 
+	bool IsSwitchOn() const { return mbSwitch; }
+	void SetSwitchState(bool flag) { mbSwitch = flag; }
+
 	template <typename T>
 	T* GetOwnerType()
 	{
@@ -64,7 +67,7 @@ public:
 private:
 	const eComponentType mType; // 타입이 바뀌면 안되기 때문
 	GameObj* mOwner;
-
+	bool mbSwitch;
 };
 
 

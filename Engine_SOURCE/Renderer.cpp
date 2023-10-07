@@ -245,13 +245,20 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
-
-		Shader* uiSpriteShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UISpriteShader");
-		GetDevice()->CreateInputLayout(arrLayout, 2
-			, uiSpriteShader->GetVSBlobBufferPointer()
-			, uiSpriteShader->GetVSBlobBufferSize()
-			, uiSpriteShader->GetInputLayoutAddr());
-
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UISpriteShader");
+			GetDevice()->CreateInputLayout(arrLayout, 2
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"BasicPostProcessShader");
+			GetDevice()->CreateInputLayout(arrLayout, 2
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
 #pragma endregion
 
 #pragma region SamplerState
@@ -662,13 +669,23 @@ namespace renderer
 
 
 #pragma region UISprite Shader
-		Shader* uiSS = new Shader();
-		uiSS->Create(eShaderStage::VS, L"UISpriteVS.hlsl", "main");
-		uiSS->Create(eShaderStage::PS, L"UISpritePS.hlsl", "main");
-		uiSS->SetRSState(eRasterizerType::SolidNone);
-		uiSS->SetDSState(eDepthStencilType::UI);
-		uiSS->SetBSState(eBlendStateType::AlphaBlend);
-		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UISpriteShader", uiSS);
+		Shader* shader = new Shader();
+		shader->Create(eShaderStage::VS, L"UISpriteVS.hlsl", "main");
+		shader->Create(eShaderStage::PS, L"UISpritePS.hlsl", "main");
+		shader->SetRSState(eRasterizerType::SolidNone);
+		shader->SetDSState(eDepthStencilType::UI);
+		shader->SetBSState(eBlendStateType::AlphaBlend);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UISpriteShader", shader);
+#pragma endregion
+
+#pragma region BasicPostProcessShader
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"PostProcessVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"PostProcessPS.hlsl", "main");
+			shader->SetDSState(eDepthStencilType::NoWrite);
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"BasicPostProcessShader", shader);
+		}
 #pragma endregion
 
 	}
@@ -1103,15 +1120,12 @@ namespace renderer
 	{
 		Texture* renderTarget = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
 
-		ID3D11ShaderResourceView* srv = nullptr;
-		GetDevice()->BindShaderResource(eShaderStage::PS, 60, &srv);
-
 		ID3D11Texture2D* dest = postProcessTexture->GetTexture().Get();
 		ID3D11Texture2D* source = renderTarget->GetTexture().Get();
 
 		GetDevice()->CopyResource(dest, source);
 
-		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
+		postProcessTexture->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PostProcess));
 	}
 
 	void BindPBRProprerties()

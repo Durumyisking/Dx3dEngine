@@ -173,7 +173,7 @@ void Packun::CaptureEnter(MarioCap* cap)
 		tr->SetPhysicalPosition(
 			Vector3(
 				(playerpos.x + (Initvelocity.x * inCurValue * DT)),
-				(playerpos.y + (Initvelocity.y * inCurValue * DT) - (0.5 * 9.8f * inCurValue * DT * inCurValue * DT)),
+				(playerpos.y + (Initvelocity.y * inCurValue * DT) - (0.5f * 9.8f * inCurValue * DT * inCurValue * DT)),
 				(playerpos.z + (Initvelocity.z * inCurValue * DT))
 			));
 

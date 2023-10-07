@@ -14,6 +14,9 @@ PostProcessRenderer::~PostProcessRenderer()
 
 void PostProcessRenderer::Initialize()
 {
+	Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
+
+	SetMesh(mesh);
 	BaseRenderer::Initialize();
 }
 
