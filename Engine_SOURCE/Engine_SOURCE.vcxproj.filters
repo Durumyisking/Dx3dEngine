@@ -394,6 +394,9 @@
     <ClCompile Include="MarioParts.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleFormat.cpp">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -822,6 +825,9 @@
     </ClInclude>
     <ClInclude Include="CameraScript.h">
       <Filter>Common\Component\Camera\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleFormat.h">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

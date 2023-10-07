@@ -95,8 +95,12 @@ cbuffer ParticleSystem : register(b6)
 {
     float4 worldPosition;
     float4 startSize;
+    float4 endSize;
     float4 startColor;
+    
     float4 endColor;
+    float4 startAngle;
+    float4 endAngle;
     
     uint maxParticles;
     uint simulationSpace;
@@ -108,14 +112,10 @@ cbuffer ParticleSystem : register(b6)
     float maxLifeTime;
     float minLifeTime;
     
-    float startAngle;
-    float endAngle;
     float elapsedTime;
     float gravity;    
-
     float force;
     float radian;
-    int2 padding;    
 }
 
 // noise b7

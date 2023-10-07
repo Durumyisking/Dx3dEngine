@@ -127,6 +127,13 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)MergePS.hlsl">
       <Filter>Deferred</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)Quaternion.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)Particle3DVS.hlsl">
+      <Filter>Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)Particle3DPS.hlsl">
+      <Filter>Particle</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Blur.hlsli">

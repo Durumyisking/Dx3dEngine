@@ -44,6 +44,7 @@ public:
 	void AddNodeTransform(const std::wstring& name, aiMatrix4x4 transform);
 	void DeleteNodeTransform(const std::wstring& name);
 
+	void FrameAnimationClear() { mFrameAnimationVector.clear(); }
 public:
 	GETSET(float, mIntervalAnimation, IntervalAnimation)
 private:

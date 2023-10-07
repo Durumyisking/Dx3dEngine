@@ -14,6 +14,8 @@
 #include "PlayerStateScript.h"
 #include "GenericAnimator.h"
 
+#include "ParticleSystem.h"
+
 Player::Player()
 	: mPlayerState(ePlayerState::Idle)
 	, mMeshRenderer(nullptr)
@@ -107,6 +109,18 @@ void Player::Initialize()
 	{
 		i->Initialize();
 	}
+
+	ParticleSystem* particle = AddComponent<ParticleSystem>(eComponentType::Particle);
+	particle->InsertParticle(L"Default", L"CloudParticle");
+	particle->SetComputeShader(L"ParticleCS");
+	
+	ParticleFormat* particleFormat = particle->Play(L"Default");
+	if (particleFormat)
+	{
+		Texture* tex = GETSINGLE(ResourceMgr)->Load<Texture>(L"SmokeParticle", L"SmokeParticle/Image/smoke01.png");
+		particleFormat->SetTexture(static_cast<int>(eTextureSlot::Albedo), tex, 1, 1);
+	}
+
 
 
 	mStateInfo.resize(static_cast<int>(ePlayerState::Die) + 1);

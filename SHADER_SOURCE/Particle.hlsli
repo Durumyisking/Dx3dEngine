@@ -1,3 +1,4 @@
+#include "Quaternion.hlsl"
 
 struct Particle
 {
@@ -11,10 +12,19 @@ struct Particle
     
     float lifeTime;
     float elapsedTime;
+    
+    float4 q_startRotation;
+    float4 q_endRotation;
+    
     float speed;
-    float2 gravityAcc;
     float radian;
+    float gravityAcc;
     uint active;
+    
+    matrix particleWorld;
+    
+    uint texture_x_index;
+    uint texture_y_index;
 };
 
 

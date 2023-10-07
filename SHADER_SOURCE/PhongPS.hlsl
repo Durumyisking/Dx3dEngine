@@ -14,6 +14,7 @@ struct VSOut
 float4 main(VSOut vsIn) : SV_Target
 {
     float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.0f);
+    return albedo;
     float3 normal = vsIn.ViewNormal;
     
     float3 worldPos = mul(float4(vsIn.ViewPos, 1.f), inverseWorld).xyz;

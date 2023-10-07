@@ -417,8 +417,8 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 		//Material
 		Material* inMaterial = new Material();
-		inMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
+		inMaterial->SetRenderingMode(eRenderingMode::DeferredMask);
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
 		inMaterial->SetShader(shader);
 
 		mMaterials.emplace_back(inMaterial);

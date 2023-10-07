@@ -335,6 +335,7 @@ namespace math
         Vector4(FXMVECTOR V) noexcept { XMStoreFloat4(this, V); }
         Vector4(const XMFLOAT4& V) noexcept { this->x = V.x; this->y = V.y; this->z = V.z; this->w = V.w; }
         explicit Vector4(const XMVECTORF32& F) noexcept { this->x = F.f[0]; this->y = F.f[1]; this->z = F.f[2]; this->w = F.f[3]; }
+        Vector4(Vector3 xyz, float w) : XMFLOAT4(xyz.x, xyz.y, xyz.z, w) {};
 
         Vector4(const Vector4&) = default;
         Vector4& operator=(const Vector4&) = default;

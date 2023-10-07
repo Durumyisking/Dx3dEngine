@@ -42,6 +42,7 @@ void BoneAnimator::Update()
 		mPlayAnimation->Reset();
 		mPlayAnimation->SetCurIndex(0);
 	}
+
 	mPlayAnimation->Update();
 }
 
