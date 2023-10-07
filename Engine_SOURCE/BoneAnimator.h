@@ -39,10 +39,12 @@ public:
 	AnimationClip* GetAnimationClip(const std::wstring& animationName) const;
 
 	const std::map<std::wstring, aiMatrix4x4>& GetFrameAnimationData() { return mFrameAnimationVector; }
+	void ClearFrameAnimationData() { mFrameAnimationVector.clear(); }
 	aiMatrix4x4 GetAnimationNodeTransform(const std::wstring& name) const ;
 	void AddNodeTransform(const std::wstring& name, aiMatrix4x4 transform);
 	void DeleteNodeTransform(const std::wstring& name);
 
+	void FrameAnimationClear() { mFrameAnimationVector.clear(); }
 public:
 	GETSET(float, mIntervalAnimation, IntervalAnimation)
 private:

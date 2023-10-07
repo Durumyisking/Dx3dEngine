@@ -101,6 +101,14 @@ void Camera::Render()
 	renderOpaque();
 	renderCutout();
 	renderTransparent();
+	
+	// ParticleFunTest
+	for (auto fun : renderer::ParticleFunCArr)
+	{
+		if (nullptr != fun)
+			fun();
+	}
+	renderer::ParticleFunCArr.clear();
 
 	// merged object가 있는게 아니라 분류가 되지 않는다 따라서 ui 카메라는 해당 작업 수행하면 안됨.
 
@@ -109,6 +117,8 @@ void Camera::Render()
 		deferredRenderingOperate();
 		renderMergedOutput();
 	}
+
+	renderPostProcess();
 }
 
 void Camera::CreateViewMatrix()

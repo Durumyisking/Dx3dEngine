@@ -57,6 +57,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)Particle3DPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)Particle3DVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)ParticleCS.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)ParticleGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
@@ -108,6 +114,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)Quaternion.hlsl" />
     <FxCompile Include="$(MSBuildThisFileDirectory)SpritePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
     </FxCompile>
@@ -148,6 +155,7 @@
     <None Include="$(MSBuildThisFileDirectory)ConstantBuffer.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)CSHeader.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)global.hlsli" />
+    <None Include="$(MSBuildThisFileDirectory)LensFlarePS.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)Light.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)Particle.hlsli" />
     <None Include="$(MSBuildThisFileDirectory)PostProcess.hlsli" />

@@ -33,6 +33,8 @@ namespace renderer
 	Texture* dsTexture = nullptr;
 	GameObj* outlineGameObject = nullptr;
 
+	std::vector<std::function<void()>> ParticleFunCArr = {};
+
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
 
 	void LoadMesh()
@@ -146,6 +148,13 @@ namespace renderer
 				, shader->GetInputLayoutAddr());
 		}
 		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"Particle3DShader");
+			GetDevice()->CreateInputLayout(arrLayout, 6
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PostProcessShader");
 			GetDevice()->CreateInputLayout(arrLayout, 3
 				, shader->GetVSBlobBufferPointer()
@@ -236,13 +245,20 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
-
-		Shader* uiSpriteShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UISpriteShader");
-		GetDevice()->CreateInputLayout(arrLayout, 2
-			, uiSpriteShader->GetVSBlobBufferPointer()
-			, uiSpriteShader->GetVSBlobBufferSize()
-			, uiSpriteShader->GetInputLayoutAddr());
-
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UISpriteShader");
+			GetDevice()->CreateInputLayout(arrLayout, 2
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"BasicPostProcessShader");
+			GetDevice()->CreateInputLayout(arrLayout, 2
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
 #pragma endregion
 
 #pragma region SamplerState
@@ -446,7 +462,6 @@ namespace renderer
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"PhongVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"PhongPS.hlsl", "main");
-			shader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PhongShader", shader);
 		}
 #pragma endregion
@@ -531,6 +546,11 @@ namespace renderer
 			particleShader->SetBSState(eBlendStateType::AlphaBlend);
 			particleShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"ParticleShader", particleShader);
+
+			Shader* particle3DShader = new Shader();
+			particle3DShader->Create(eShaderStage::VS, L"Particle3DVS.hlsl", "main");
+			particle3DShader->Create(eShaderStage::PS, L"Particle3DPS.hlsl", "main");
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"Particle3DShader", particle3DShader);
 
 			ParticleShader* particleCS = new ParticleShader();
 			GETSINGLE(ResourceMgr)->Insert<ParticleShader>(L"ParticleCS", particleCS);
@@ -649,13 +669,23 @@ namespace renderer
 
 
 #pragma region UISprite Shader
-		Shader* uiSS = new Shader();
-		uiSS->Create(eShaderStage::VS, L"UISpriteVS.hlsl", "main");
-		uiSS->Create(eShaderStage::PS, L"UISpritePS.hlsl", "main");
-		uiSS->SetRSState(eRasterizerType::SolidNone);
-		uiSS->SetDSState(eDepthStencilType::UI);
-		uiSS->SetBSState(eBlendStateType::AlphaBlend);
-		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UISpriteShader", uiSS);
+		Shader* shader = new Shader();
+		shader->Create(eShaderStage::VS, L"UISpriteVS.hlsl", "main");
+		shader->Create(eShaderStage::PS, L"UISpritePS.hlsl", "main");
+		shader->SetRSState(eRasterizerType::SolidNone);
+		shader->SetDSState(eDepthStencilType::UI);
+		shader->SetBSState(eBlendStateType::AlphaBlend);
+		GETSINGLE(ResourceMgr)->Insert<Shader>(L"UISpriteShader", shader);
+#pragma endregion
+
+#pragma region BasicPostProcessShader
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"PostProcessVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"PostProcessPS.hlsl", "main");
+			shader->SetDSState(eDepthStencilType::NoWrite);
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"BasicPostProcessShader", shader);
+		}
 #pragma endregion
 
 	}
@@ -724,6 +754,13 @@ namespace renderer
 			material->SetRenderingMode(eRenderingMode::Transparent);
 			material->SetShader(shader);
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"ParticleMaterial", material);
+		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"Particle3DShader");
+			Material* material = new Material();
+			material->SetRenderingMode(eRenderingMode::Transparent);
+			material->SetShader(shader);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"Particle3DMaterial", material);
 		}
 #pragma endregion
 
@@ -1083,15 +1120,12 @@ namespace renderer
 	{
 		Texture* renderTarget = GETSINGLE(ResourceMgr)->Find<Texture>(L"RenderTargetTexture");
 
-		ID3D11ShaderResourceView* srv = nullptr;
-		GetDevice()->BindShaderResource(eShaderStage::PS, 60, &srv);
-
 		ID3D11Texture2D* dest = postProcessTexture->GetTexture().Get();
 		ID3D11Texture2D* source = renderTarget->GetTexture().Get();
 
 		GetDevice()->CopyResource(dest, source);
 
-		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
+		postProcessTexture->BindShaderResource(eShaderStage::PS, static_cast<UINT>(eTextureSlot::PostProcess));
 	}
 
 	void BindPBRProprerties()

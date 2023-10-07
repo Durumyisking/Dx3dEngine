@@ -14,7 +14,13 @@
 #include "PlayerStateScript.h"
 #include "GenericAnimator.h"
 
+#include "ParticleSystem.h"
+
 Player::Player()
+	: mPlayerState(ePlayerState::Idle)
+	, mMeshRenderer(nullptr)
+	, mScript(nullptr)
+	, mRigidBody(nullptr)
 {
 	SetLayerType(eLayerType::Player);
 	SetName(L"Player");
@@ -48,10 +54,10 @@ void Player::Initialize()
 	SetScale(Vector3(1.f, 1.f, 1.f));
 
 	//마리오 body 초기화
-	MeshRenderer* mr = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	AddComponent<PlayerStateScript>(eComponentType::Script);
+	mMeshRenderer = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	mScript = AddComponent<PlayerStateScript>(eComponentType::Script);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	mRigidBody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
 	AddComponent<PhysXCollider>(eComponentType::Collider);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
@@ -61,8 +67,8 @@ void Player::Initialize()
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Mario");
 	assert(model);
-	mr->SetModel(model);
-	mr->SetMaterialByKey(L"marioBodyMaterial", 0);
+	mMeshRenderer->SetModel(model);
+	mMeshRenderer->SetMaterialByKey(L"marioBodyMaterial", 0);
 
 
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f));
@@ -77,7 +83,7 @@ void Player::Initialize()
 	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 1.f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 
-	rigid->SetFriction(Vector3(40.f, 0.f, 40.f));
+	mRigidBody->SetFriction(Vector3(40.f, 0.f, 40.f));
 
 	// OffsetScale Setting
 	Transform* tr = GetComponent<Transform>();
@@ -113,6 +119,18 @@ void Player::Initialize()
 		i->Initialize();
 	}
 
+	ParticleSystem* particle = AddComponent<ParticleSystem>(eComponentType::Particle);
+	particle->InsertParticle(L"Default", L"CloudParticle");
+	particle->SetComputeShader(L"ParticleCS");
+	
+	ParticleFormat* particleFormat = particle->Play(L"Default");
+	if (particleFormat)
+	{
+		Texture* tex = GETSINGLE(ResourceMgr)->Load<Texture>(L"SmokeParticle", L"SmokeParticle/Image/smoke01.png");
+		particleFormat->SetTexture(static_cast<int>(eTextureSlot::Albedo), tex, 1, 1);
+	}
+
+
 
 	mStateInfo.resize(static_cast<int>(ePlayerState::Die) + 1);
 	stateInfoInitalize();
@@ -125,10 +143,10 @@ void Player::Initialize()
 	DynamicObject::Initialize();
 
 
-	rigid->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
-	rigid->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+	mRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	mRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
 
-	mr->SetBoneAnimator(nullptr);
+	mMeshRenderer->SetBoneAnimator(nullptr);
 }
 
 void Player::Update()
@@ -206,9 +224,9 @@ void Player::OnCollisionEnter(GameObj* gameObject)
 
 	if (eLayerType::Platforms == gameObject->GetLayerType())
 	{
-		if (GetPhysXRigidBody()->IsOnAir())
+		if (mRigidBody->IsOnAir())
 		{
-			GetPhysXRigidBody()->SetAirOff();
+			mRigidBody->SetAirOff();
 			SetPlayerState(Player::ePlayerState::Idle);
 		}
 	}
@@ -220,9 +238,12 @@ void Player::OnCollisionEnter(GameObj* gameObject)
 		Vector3 monUpVector = gameObject->GetTransform()->WorldUp();
 
 		float cosTheta = monToPlayer.Dot(monUpVector);
-		if (cosTheta > 0.95f)
+
+		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.95f)
 		{
-			GetPhysXRigidBody()->SetAirOff();
+			mScript->ResetJumpCount();
+			mRigidBody->SetAirOff();
+			mRigidBody->SetVelocity(AXIS::Y, 0.f);
 			SetPlayerState(Player::ePlayerState::Jump);
 		}
 	}
@@ -335,7 +356,7 @@ void Player::stateInfoInitalize()
 
 	//Fall
 	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::Move));
-	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::Jump));
+	//InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::Jump));
 	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::Squat));
 	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::SquatMove));
 
@@ -395,9 +416,8 @@ void Player::SetPlayerState(ePlayerState playerState)
 
 	mPlayerState = playerState;
 
-	PlayerStateScript* script = GetScript<PlayerStateScript>();
-	if (script)
-		script->Reset();
+	if (mScript)
+		mScript->Reset();
 }
 
 void Player::boneAnimatorInit(BoneAnimator* animator)
@@ -522,7 +542,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 			SetPlayerState(Player::ePlayerState::Idle);
 			Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
 			model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
-			GetScript<PlayerStateScript>()->SetHavingCap(true);
+			mScript->SetHavingCap(true);
 		});
 	}
 

@@ -20,6 +20,7 @@ public:
 	UINT GetSize() { return mSize; } // 버퍼의 크기 (넘겨줄 데이터의? 크기)
 	UINT GetStride() { return mStride; } // 버퍼의 개수
 
+	void SetSize(UINT size) { mSize = size; }
 private:
 	void setDiscription();
 	bool createBuffer(void* data);

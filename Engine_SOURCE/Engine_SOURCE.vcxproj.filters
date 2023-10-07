@@ -316,9 +316,6 @@
     <ClCompile Include="MarioCap.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
-    <ClCompile Include="MarioParts.cpp">
-      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
-    </ClCompile>
     <ClCompile Include="CapStateScript.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
@@ -394,9 +391,14 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>UI\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="MarioParts.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleFormat.cpp">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraScript.h" />
     <ClInclude Include="FMod.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="PackunPostionBall.h" />
@@ -821,6 +823,12 @@
     <ClInclude Include="PowerMoonScript.h">
       <Filter>UI\Script</Filter>
     </ClInclude>
+    <ClInclude Include="CameraScript.h">
+      <Filter>Common\Component\Camera\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleFormat.h">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -971,9 +979,6 @@
     </ClCompile>
     <ClCompile Include="FontWrapper.cpp">
       <Filter>Common\Font</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerScript.cpp">
-      <Filter>Common\GameObj\Player</Filter>
     </ClCompile>
     <ClCompile Include="druEnums.cpp">
       <Filter>Common</Filter>
