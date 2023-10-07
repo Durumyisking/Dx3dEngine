@@ -25,13 +25,15 @@ void main(uint3 DTid : SV_DispatchThreadID) // 쓰레드 그룹 xyz를 인자로 받음
             float2 random = float2(r1, r2);
             float2 Theta = random * 3.141592f * 2.0f;
             
+            // ParticleBufferUAV[DTid.x].direction.xz = float2(cos(Theta.x), sin(Theta.y)) * random.y * radius;
+            // ParticleBufferUAV[DTid.x].direction.y = abs(r3);
+            // ParticleBufferUAV[DTid.x].direction = normalize(ParticleBufferUAV[DTid.x].direction);
+            ParticleBufferUAV[DTid.x].direction = float4(0.0f, 0.0f, 0.0f, 1.0f);
             
-            ParticleBufferUAV[DTid.x].position.xz = float2(cos(Theta.x), sin(Theta.y)) * random.y * radius;
-            ParticleBufferUAV[DTid.x].position.y = 1.0f; // y값은 고정
             
             if (simulationSpace) // 1 world , 0 local
             {
-                ParticleBufferUAV[DTid.x].position.xyz += world._41_42_42;
+                ParticleBufferUAV[DTid.x].position.xyz = worldPosition.xyz;
             }
             
             ParticleBufferUAV[DTid.x].q_startRotation = startAngle;
@@ -53,14 +55,12 @@ void main(uint3 DTid : SV_DispatchThreadID) // 쓰레드 그룹 xyz를 인자로 받음
             
           ParticleBufferUAV[DTid.x].speed = startSpeed;
             
-          ParticleBufferUAV[DTid.x].direction = worldPosition +ParticleBufferUAV[DTid.x].position;
-          ParticleBufferUAV[DTid.x].direction.xyz += world._41_42_43;
-          ParticleBufferUAV[DTid.x].direction.w = 1.0f;
-          ParticleBufferUAV[DTid.x].direction = normalize(ParticleBufferUAV[DTid.x].direction);
-            
           ParticleBufferUAV[DTid.x].lifeTime = (maxLifeTime - minLifeTime) * (2.f * r5 - 1.f) + minLifeTime;
           if (minLifeTime == 0.f)
               ParticleBufferUAV[DTid.x].lifeTime = maxLifeTime;
+            
+            ParticleBufferUAV[DTid.x].texture_x_index = 0;
+            ParticleBufferUAV[DTid.x].texture_y_index = 0;
         }
     }
     else // active == 1
@@ -72,16 +72,16 @@ void main(uint3 DTid : SV_DispatchThreadID) // 쓰레드 그룹 xyz를 인자로 받음
         }
         else
         {
-            //ParticleBufferUAV[DTid.x].position
-            //+= ParticleBufferUAV[DTid.x].direction * ParticleBufferUAV[DTid.x].speed * deltaTime;
+            ParticleBufferUAV[DTid.x].position
+            += ParticleBufferUAV[DTid.x].direction * ParticleBufferUAV[DTid.x].speed * deltaTime;
             
             float3 scale = lerp(ParticleBufferUAV[DTid.x].startScale, ParticleBufferUAV[DTid.x].endScale, ParticleBufferUAV[DTid.x].elapsedTime / ParticleBufferUAV[DTid.x].lifeTime);
             
              // scale
             row_major matrix worldMatrix = matrix
-            (scale.x, 0.0f, 0.0f, 0.0f
-            , 0.0f, scale.y, 0.0f, 0.0f
-            , 0.0f, 0.0f, scale.z, 0.0f
+            (1.0f * scale.x, 0.0f, 0.0f, 0.0f
+            , 0.0f, 1.0f * scale.y, 0.0f, 0.0f
+            , 0.0f, 0.0f, 1.0f * scale.z, 0.0f
             , 0.0f, 0.0f, 0.0f, 1.0f);
             
             // rotation
@@ -91,13 +91,9 @@ void main(uint3 DTid : SV_DispatchThreadID) // 쓰레드 그룹 xyz를 인자로 받음
             float4 q_rotation = q_slerp(q_startAngle, q_endAngle, ParticleBufferUAV[DTid.x].elapsedTime / ParticleBufferUAV[DTid.x].lifeTime);
             float4x4 rotationMatrix = quaternion_to_matrix(q_rotation);
             
-            //  S * R
+            //  S * R * T
             ParticleBufferUAV[DTid.x].particleWorld = mul(worldMatrix, rotationMatrix);
-            
-            
-            // translation
-            //worldMatrix._41_42_43 = ParticleBufferUAV[DTid.x].position.xyz;
-            //ParticleBufferUAV[DTid.x].particleWorld = worldMatrix;
+            ParticleBufferUAV[DTid.x].particleWorld._41_42_43 = ParticleBufferUAV[DTid.x].position.xyz;
         }
     }
 }

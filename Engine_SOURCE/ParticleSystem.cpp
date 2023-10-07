@@ -70,7 +70,7 @@ void ParticleSystem::FixedUpdate()
 	if (buffer != nullptr && shaderBuffer != nullptr)
 	{
 		// SetCB_Data
-		mCurParticle->CB_Bind();
+		mCurParticle->CB_Bind(GetOwner()->GetTransform()->GetPhysicalPosition());
 
 		// UAV Bind
 		mCS->SetStrcutedBuffer(buffer);
@@ -130,19 +130,21 @@ ParticleFormat* ParticleSystem::InsertParticle(const std::wstring& name, const s
 	return particle;
 }
 
-void ParticleSystem::Play(const std::wstring& name, int activeCount, bool loop)
+ParticleFormat* ParticleSystem::Play(const std::wstring& name, int activeCount, bool loop)
 {
-	mOnParticle = [this, name, activeCount]()
-		{
-			const auto& iter = mParticles.find(name);
-			if (iter == mParticles.end())
-				return;
+	const auto& iter = mParticles.find(name);
+	if (iter == mParticles.end())
+		return nullptr;
 
+	mOnParticle = [this,iter, name, activeCount]()
+		{
 			mCurParticle = iter->second;
 			mCurParticle->Reset();
 			mCurParticle->SetActiveCount(activeCount);
 		};
 
 	mbLoop = loop;
+
+	return iter->second;
 }
 

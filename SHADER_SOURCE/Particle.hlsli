@@ -22,6 +22,9 @@ struct Particle
     uint active;
     
     matrix particleWorld;
+    
+    uint texture_x_index;
+    uint texture_y_index;
 };
 
 

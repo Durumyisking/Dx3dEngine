@@ -42,8 +42,8 @@ ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 	info.endAngle = Vector4(0.0f, 180.f,0.0f,1.0f);
 
 	info.worldPosition = Vector4::Zero;
-	info.startSize = Vector4(0.01f, 0.01f, 0.01f, 1.0f);
-	info.endSize = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	info.startSize = Vector4(0.001f, 0.001f, 0.001f, 1.0f);
+	info.endSize = Vector4(0.001f, 0.001f, 0.001f, 1.0f);
 
 	info.startColor = Vector4(1.0f, 0.f, 1.0f, 1.0f);
 	info.endColor = Vector4(1.0f, 0.f, 1.0f, 1.0f);
@@ -112,9 +112,10 @@ void ParticleFormat::Update()
 	mParticleCB.gravity += -DT;
 }
 
-void ParticleFormat::CB_Bind()
+void ParticleFormat::CB_Bind(Vector3 pos)
 {
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::ParticleSystem)];
+	mParticleCB.worldPosition = Vector4(pos, 1.0f);
 	cb->SetData(&mParticleCB);
 	cb->Bind(eShaderStage::CS);
 }
@@ -125,7 +126,7 @@ void ParticleFormat::Render()
 		return;
 
 	Vector2 textureSize(static_cast<float>(mTexture_X_Count), static_cast<float>(mTexture_Y_Count));
-	mMaterial->SetData(eGPUParam::Float_2, &textureSize);
+	mMaterial->SetData(eGPUParam::Vector2_1, &textureSize);
 
 	mBuffer->BindSRV(eShaderStage::VS, 16);
 	mBuffer->BindSRV(eShaderStage::PS, 16);

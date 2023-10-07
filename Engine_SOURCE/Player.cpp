@@ -110,7 +110,12 @@ void Player::Initialize()
 	particle->InsertParticle(L"Default", L"CloudParticle");
 	particle->SetComputeShader(L"ParticleCS");
 	
-	particle->Play(L"Default");
+	ParticleFormat* particleFormat = particle->Play(L"Default");
+	if (particleFormat)
+	{
+		Texture* tex = GETSINGLE(ResourceMgr)->Load<Texture>(L"SmokeParticle", L"SmokeParticle/Image/smoke01.png");
+		particleFormat->SetTexture(static_cast<int>(eTextureSlot::Albedo), tex, 1, 1);
+	}
 
 
 

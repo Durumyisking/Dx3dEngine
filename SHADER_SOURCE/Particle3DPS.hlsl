@@ -27,7 +27,6 @@ struct VSOut
 float4 main(VSOut vsIn) : SV_TARGET
 {
     float4 outColor = (float4) 0.0f;
-    return float4(1.0f, 0.0f, 1.0f, 1.0f);
     
     float fElapsedTime = particleBuffer[vsIn.Instance].elapsedTime;
     float fLifeTime = particleBuffer[vsIn.Instance].lifeTime;
@@ -35,17 +34,20 @@ float4 main(VSOut vsIn) : SV_TARGET
     
     float alpharatio = 1.f - fElapsedTime / fLifeTime;
 
-    // outColor = particleBuffer[vsIn.Instance].startColor;
-    outColor = float4(1.0f, 0.0f, 1.0f, 1.0f);
-    outColor.a = alpharatio;
+    if (1 == cbbAlbedo)
+    {
+        float2 startUV = float2(float(particleBuffer[vsIn.Instance].texture_x_index) / cbxy1.x, float(particleBuffer[vsIn.Instance].texture_y_index) / cbxy1.y);
+        float2 endUV = float2(float(particleBuffer[vsIn.Instance].texture_x_index + 1) / cbxy1.x, float(particleBuffer[vsIn.Instance].texture_y_index + 1) / cbxy1.y);
+        
+        float UV = abs(endUV - startUV) * vsIn.UV;
+        UV += startUV;
+        
+        outColor = colorTexture.Sample(linearSampler, UV);
+    }
     
-//    outColor = lerp(startColor, endColor, particleBuffer[In.Instance].lifeTime);
-
-//    outColor.w = alpharatio;
-    
+    outColor.w = alpharatio;
     if (outColor.w <= 0.1f)
         discard;
 
-    
     return outColor;
 }

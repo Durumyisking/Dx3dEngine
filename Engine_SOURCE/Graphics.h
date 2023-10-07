@@ -293,6 +293,9 @@ struct Particle
 	UINT active;
 
 	math::Matrix particleWorld = {};
+
+	UINT texture_x_index;
+	UINT texture_y_index;
 };
 struct ParticleShared
 {

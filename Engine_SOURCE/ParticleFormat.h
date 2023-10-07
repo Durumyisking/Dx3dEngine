@@ -20,7 +20,7 @@ public:
 
 	void Update();
 	void Render();
-	void CB_Bind();
+	void CB_Bind(Vector3 pos);
 
 	void SetModel(Model* model);
 	void SetModel(const std::wstring& name);
