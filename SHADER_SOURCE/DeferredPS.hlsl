@@ -48,11 +48,11 @@ PSOut main(VSOut vsIn) : SV_Target
     vsOutColor.Position = float4(vsIn.WorldPos, 1.0f);
     vsOutColor.Albedo = albedo;
     vsOutColor.Normal = float4(normal, 1.0f);
-    vsOutColor.Normal.w = vsIn.UV.x;
+    vsOutColor.Normal.w = 1.f;//vsIn.UV.x;
     vsOutColor.MRD.r = metallic;
     vsOutColor.MRD.g = roughness;
     vsOutColor.MRD.b = 0.f;
-    vsOutColor.MRD.w = vsIn.UV.y;
+    vsOutColor.MRD.w = 1.f;//vsIn.UV.y;
     
     return vsOutColor;
 }
