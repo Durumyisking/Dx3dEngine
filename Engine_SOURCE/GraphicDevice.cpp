@@ -493,7 +493,7 @@ void GraphicDevice::CreateDefaultBuffers()
 		else
 		{
 			mRenderTargetTexture = new Texture();
-			mRenderTargetTexture->Create(backBuffer); // 그래서 여기서 RTV 생성함
+			mRenderTargetTexture->Create(backBuffer, application.GetWidth(), application.GetHeight()); // 그래서 여기서 RTV 생성함
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"RenderTargetTexture", mRenderTargetTexture);
 		}
 	}

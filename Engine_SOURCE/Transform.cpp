@@ -180,6 +180,7 @@ void Transform::SetConstantBuffer()
 	trCb.view = Camera::GetGpuViewMatrix();
 	trCb.inverseView = trCb.view.Invert();
 	trCb.projection = Camera::GetGpuProjectionMatrix();
+	trCb.inverseProjection = trCb.projection.Invert();
 	trCb.fovForSkySphere= Camera::GetSkySphereFov();
 	Vector3 p = renderer::mainCamera->GetOwnerWorldPos();
 	trCb.cameraWorldPos = Vector4(p.x, p.y, p.z, 1.f);

@@ -705,6 +705,7 @@ namespace renderer
 
 		postProcessTexture = new Texture();
 		postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
+		//postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PostProcessTexture", postProcessTexture);
 	}
@@ -1878,7 +1879,7 @@ namespace renderer
 
 	void Render()
 	{
-		//GetDevice()->OMSetRenderTarget();
+		GetDevice()->OMSetRenderTarget();
 
 		BindNoiseTexture();
 		BindLight();

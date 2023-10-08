@@ -403,6 +403,7 @@ void Camera::renderPostProcess()
 	{
 		if (renderPassCheck(obj))
 		{
+			//GetDevice()->AdjustToDefaultResolutionViewPorts();
 			renderer::CopyRenderTarget();
 			obj->Render();
 		}
