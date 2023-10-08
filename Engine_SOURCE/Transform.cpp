@@ -254,6 +254,18 @@ void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 	mTickPerSceond = 0.f;
 }
 
+void Transform::SetPhysicalRotation(const PxQuat& quat)
+{
+	assert(GetOwner()->GetComponent<Physical>());
+
+	PxQuat finalRotation = quat;
+	mPxTransform.q = finalRotation;
+
+	// 보간도착 지점에 쿼터니언
+	mArriveQuternion = math::Quaternion(finalRotation.x, finalRotation.y, finalRotation.z, finalRotation.w);
+	mTickPerSceond = 0.f;
+}
+
 void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)
 {
 	assert(GetOwner()->GetComponent<Physical>());

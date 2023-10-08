@@ -96,23 +96,6 @@ void Goomba::Initialize()
 
 void Goomba::Update()
 {
-	// 애니메이터 업데이트 전에 돌아야함
-	if (mLowerLayerGoombas.size())
-	{
-		SetMonsterState(mLowerLayerGoombas[0]->GetMonsterState());
-		// 애니메이션 동일하게
-		std::wstring animName = GetBoneAnimator()->PlayAnimationName();
-		std::wstring lowerGoombaAnimName = mLowerLayerGoombas[0]->GetBoneAnimator()->PlayAnimationName();
-		bool loop = mLowerLayerGoombas[0]->GetBoneAnimator()->GetLoop();
-
-		if (animName != lowerGoombaAnimName)
-		{
-			GetBoneAnimator()->Play(lowerGoombaAnimName, loop);
-			GetBoneAnimator()->GetPlayAnimation()->SetSkeletonData(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetSkeletonData());
-			GetBoneAnimator()->GetPlayAnimation()->SetCurIndex(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetCurIndex());
-			GetBoneAnimator()->GetPlayAnimation()->SetDuration(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetDuration());
-		}
-	}
 
 	Monster::Update();
 
@@ -126,8 +109,27 @@ void Goomba::Update()
 		tr.p.x = bottomTr.p.x;
 		tr.p.z = bottomTr.p.z;
 		tr.p.y = bottomTr.p.y + 1.5f * mGoombaLayerIdx;
+		GetTransform()->SetPhysicalPosition(convert::PxVec3ToVector3(tr.p));
+
 		tr.q = bottomTr.q; // 회전은 동일하게
-		GetTransform()->SetPxTransform(tr);
+		GetTransform()->SetPhysicalRotation(tr.q);
+	}
+
+	// 애니메이터 업데이트 전에 돌아야함
+	if (mLowerLayerGoombas.size())
+	{
+		// 애니메이션 동일하게
+		std::wstring animName = GetBoneAnimator()->PlayAnimationName();
+		std::wstring lowerGoombaAnimName = mLowerLayerGoombas[0]->GetBoneAnimator()->PlayAnimationName();
+		bool loop = mLowerLayerGoombas[0]->GetBoneAnimator()->GetLoop();
+
+		if (animName != lowerGoombaAnimName)
+		{
+			GetBoneAnimator()->Play(lowerGoombaAnimName, loop);
+			GetBoneAnimator()->GetPlayAnimation()->SetSkeletonData(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetSkeletonData());
+			GetBoneAnimator()->GetPlayAnimation()->SetCurIndex(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetCurIndex());
+			GetBoneAnimator()->GetPlayAnimation()->SetDuration(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetDuration());
+		}
 	}
 }
 
@@ -222,7 +224,7 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 
 			
 			*/
-			if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.95f)
+			if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.9f)
 			{
 				// 아랫굼바 벡터 복사
 				std::vector<Goomba*> vec = goomba->GetGoombaLayer();
@@ -235,6 +237,7 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 
 				GetPhysXRigidBody()->SetSwitchState(false);
 				GetPhysXRigidBody()->RemoveGravity();
+				GetScript<GoombaStateScript>()->SetSwitchState(false);
 
 				OffCapture();
 				mLowerLayerGoombas[0]->OnCapture();
