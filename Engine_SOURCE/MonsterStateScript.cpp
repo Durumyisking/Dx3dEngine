@@ -3,7 +3,8 @@
 
 #include "SceneMgr.h"
 #include "Scene.h"
-
+#include "PhysXRigidBody.h"
+#include "TimeMgr.h"
 MonsterStateScript::MonsterStateScript()
 	: Script()
 	, mStateEventList{}
@@ -70,12 +71,12 @@ void MonsterStateScript::Idle()
 				mMonster->SetIsFoundPlayer(true);
 				mMonster->SetMonsterState(Monster::eMonsterState::Turn);
 
-				Vector3 dirToPlayer_XYZ = mPlayer->GetWorldPos() - GetTransform()->WorldForward();
-				Vector2 dirToPlayer = { dirToPlayer_XYZ.x, dirToPlayer_XYZ.z };
-				Vector2 worldForward = { GetTransform()->WorldForward().x, GetTransform()->WorldForward().z };
+				Vector3 dirToPlayer = mPlayer->GetWorldPos() - GetTransform()->WorldForward();
 				dirToPlayer.Normalize();
-				float rotCosTheta = dirToPlayer.Dot(worldForward);
-				if (rotCosTheta > 0.f)
+				Vector3 CrossRst = dirToPlayer.Cross(GetTransform()->WorldForward());
+				Vector3 worldUp = { 0.f, 1.f, 0.f };
+				
+				if (worldUp.Dot(CrossRst) < 0.f)
 				{
 					mbTurnLeft = true;
 				}
@@ -87,4 +88,11 @@ void MonsterStateScript::Idle()
 			mMonster->SetMonsterState(Monster::eMonsterState::Idle);
 		}
 	}
+}
+
+void MonsterStateScript::MoveForward(float speed)
+{
+	Vector3 moveDir = -GetTransform()->WorldForward();
+	moveDir.y = 0.f;
+	GetPhysXRigidBody()->AddForce((moveDir * speed * DT));
 }

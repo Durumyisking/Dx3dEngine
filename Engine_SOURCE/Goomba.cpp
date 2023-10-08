@@ -96,11 +96,30 @@ void Goomba::Initialize()
 
 void Goomba::Update()
 {
+	// 애니메이터 업데이트 전에 돌아야함
+	if (mLowerLayerGoombas.size())
+	{
+		SetMonsterState(mLowerLayerGoombas[0]->GetMonsterState());
+		// 애니메이션 동일하게
+		std::wstring animName = GetBoneAnimator()->PlayAnimationName();
+		std::wstring lowerGoombaAnimName = mLowerLayerGoombas[0]->GetBoneAnimator()->PlayAnimationName();
+		bool loop = mLowerLayerGoombas[0]->GetBoneAnimator()->GetLoop();
+
+		if (animName != lowerGoombaAnimName)
+		{
+			GetBoneAnimator()->Play(lowerGoombaAnimName, loop);
+			GetBoneAnimator()->GetPlayAnimation()->SetSkeletonData(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetSkeletonData());
+			GetBoneAnimator()->GetPlayAnimation()->SetCurIndex(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetCurIndex());
+			GetBoneAnimator()->GetPlayAnimation()->SetDuration(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetDuration());
+		}
+	}
+
 	Monster::Update();
 
 	// 잡다한 계산 끝난 후
 	if (mLowerLayerGoombas.size())
 	{
+		// 트랜스포밍
 		PxTransform bottomTr = mLowerLayerGoombas[0]->GetTransform()->GetPxTransform();
 		PxTransform tr = GetTransform()->GetPxTransform();
 
@@ -109,10 +128,7 @@ void Goomba::Update()
 		tr.p.y = bottomTr.p.y + 1.5f * mGoombaLayerIdx;
 		tr.q = bottomTr.q; // 회전은 동일하게
 		GetTransform()->SetPxTransform(tr);
-
-		SetMonsterState(mLowerLayerGoombas[0]->GetMonsterState());
 	}
-
 }
 
 void Goomba::FixedUpdate()
@@ -157,7 +173,7 @@ void Goomba::CaptureEvent()
 
 	//// 점프
 	//able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Jump);
+	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Move);
 
 	// 특수
 	//able = false;
