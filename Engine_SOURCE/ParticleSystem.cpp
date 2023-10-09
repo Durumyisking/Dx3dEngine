@@ -63,24 +63,25 @@ void ParticleSystem::FixedUpdate()
 	//particleUpdate
 	mCurParticle->Update();
 
-	// SetStructureData
-	StructedBuffer* buffer = mCurParticle->GetDataBuffer();
-	StructedBuffer* shaderBuffer = mCurParticle->GetShaderDataBuffer();
-
-	if (buffer != nullptr && shaderBuffer != nullptr)
+	if (mCurParticle->GetAccType() == ParticleFormat::eAccessType::ComputShader)
 	{
-		// SetCB_Data
-		mCurParticle->CB_Bind(GetOwner()->GetTransform()->GetPhysicalPosition());
+		// SetStructureData
+		StructedBuffer* buffer = mCurParticle->GetDataBuffer();
+		StructedBuffer* shaderBuffer = mCurParticle->GetShaderDataBuffer();
 
-		// UAV Bind
-		mCS->SetStrcutedBuffer(buffer);
-		mCS->SetSharedStrutedBuffer(shaderBuffer);
-		mCS->OnExcute();
+		if (buffer != nullptr && shaderBuffer != nullptr)
+		{
+			// SetCB_Data
+			mCurParticle->CB_Bind(GetOwner()->GetTransform()->GetPhysicalPosition());
 
-
-		// PushRenderFunc
-		renderer::ParticleFunCArr.emplace_back(std::bind(&ParticleSystem::ParticleRender, this));
+			// UAV Bind
+			mCS->SetStrcutedBuffer(buffer);
+			mCS->SetSharedStrutedBuffer(shaderBuffer);
+			mCS->OnExcute();
+		}
 	}
+
+	renderer::ParticleFunCArr.emplace_back(std::bind(&ParticleSystem::ParticleRender, this));
 	//==========================================================================
 }
 
@@ -125,9 +126,20 @@ ParticleFormat* ParticleSystem::InsertParticle(const std::wstring& name, const s
 	if (particle == nullptr)
 		return nullptr;
 
+	particle->SetParticleSystem(this);
 	mParticles.insert(std::pair(name, particle));
 
 	return particle;
+}
+
+bool ParticleSystem::AddParticle(ParticleFormat* particle, const std::wstring& name)
+{
+	const auto& iter = mParticles.find(name);
+	if (iter != mParticles.end())
+		return false;
+
+	mParticles.insert(std::pair(name, particle));
+	return true;
 }
 
 ParticleFormat* ParticleSystem::Play(const std::wstring& name, int activeCount, bool loop)
@@ -144,6 +156,15 @@ ParticleFormat* ParticleSystem::Play(const std::wstring& name, int activeCount, 
 		};
 
 	mbLoop = loop;
+
+	return iter->second;
+}
+
+ParticleFormat* ParticleSystem::GetParticleFormat(const std::wstring& name)
+{
+	const auto& iter = mParticles.find(name);
+	if (iter == mParticles.end())
+		return nullptr;
 
 	return iter->second;
 }

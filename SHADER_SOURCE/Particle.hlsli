@@ -25,6 +25,8 @@ struct Particle
     
     uint texture_x_index;
     uint texture_y_index;
+    
+    float wakeUpTime;
 };
 
 
