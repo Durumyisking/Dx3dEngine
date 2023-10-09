@@ -30,6 +30,7 @@ public:
 	bool AddParticle(ParticleFormat* particle, const std::wstring& name);
 
 	ParticleFormat* Play(const std::wstring& name, int activeCount = 1, bool loop = true);
+	void Stop();
 
 	ParticleFormat* GetParticleFormat(const std::wstring& name);
 
@@ -37,7 +38,7 @@ private:
 	std::map<std::wstring, ParticleFormat*> mParticles;
 	ParticleFormat* mCurParticle;
 
-	std::function<void()> mOnParticle;
+	std::function<void()> mParticleEventFunC;
 	ParticleShader* mCS;
 
 	bool mbLoop;

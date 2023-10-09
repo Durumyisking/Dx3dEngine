@@ -114,7 +114,8 @@ void FootSmokeParticle::Reset()
 
 	for (size_t i = 0; i < mParticleData.size(); ++i)
 	{
-		mParticleData[i].active = 0;
 		mParticleData[i].elapsedTime = 0.f;
+		mParticleData[i].active = 0;
+		mParticleData[i].particleWorld = math::Matrix::Identity;
 	}
 }

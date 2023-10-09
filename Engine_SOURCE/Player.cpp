@@ -500,6 +500,20 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 		});
 	}
 
+	{
+		cilp = animator->GetAnimationClip(L"Run");
+		if (cilp)
+			cilp->SetEndEvent([this]()
+				{
+					ParticleSystem* particle = GetParticle();
+					if (particle)
+					{
+						particle->Stop();
+					}
+				});
+	}
+	
+
 	//멈추는 애니메이션 후 idle로
 	{
 		cilp = animator->GetAnimationClip(L"Brake");

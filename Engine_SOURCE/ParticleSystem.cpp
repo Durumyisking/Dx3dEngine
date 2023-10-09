@@ -18,7 +18,7 @@ ParticleSystem::ParticleSystem()
 	: BaseRenderer(eComponentType::Particle)
 	, mParticles{}
 	, mCurParticle(nullptr)
-	, mOnParticle(nullptr)
+	, mParticleEventFunC(nullptr)
 	, mCS(nullptr)
 	, mbLoop(false)
 {
@@ -40,10 +40,10 @@ ParticleSystem::~ParticleSystem()
 void ParticleSystem::FixedUpdate()
 {
 	//==========================================================================
-	if (mOnParticle)
+	if (mParticleEventFunC)
 	{
-		mOnParticle();
-		mOnParticle = nullptr;
+		mParticleEventFunC();
+		mParticleEventFunC = nullptr;
 	}
 
 	if (mCurParticle == nullptr)
@@ -149,7 +149,7 @@ ParticleFormat* ParticleSystem::Play(const std::wstring& name, int activeCount, 
 	if (iter == mParticles.end())
 		return nullptr;
 
-	mOnParticle = [this,iter, name, activeCount]()
+	mParticleEventFunC = [this,iter, name, activeCount]()
 		{
 			mCurParticle = iter->second;
 			mCurParticle->Reset();
@@ -159,6 +159,20 @@ ParticleFormat* ParticleSystem::Play(const std::wstring& name, int activeCount, 
 	mbLoop = loop;
 
 	return iter->second;
+}
+
+void ParticleSystem::Stop()
+{
+	if (mCurParticle == nullptr)
+		return;
+
+	mParticleEventFunC = [this]()
+		{
+			mCurParticle->Reset();
+			mCurParticle = nullptr;
+		};
+
+	mbLoop = false;
 }
 
 ParticleFormat* ParticleSystem::GetParticleFormat(const std::wstring& name)
