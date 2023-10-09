@@ -28,7 +28,7 @@ void SceneLoading::Initialize()
 	thread1.detach();
 	thread2.detach();
 
-	Panal* panal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(0.0f, 0.0f, 0.f), Vector3(10.0f, 10.0f, 1.0f), L"LoadingScenePanal", this, eUIType::TitleImg));
+	Panal* panal = (GETSINGLE(UIFactory)->CreatePanal(mUICamera, Vector3(0.0f, 0.0f, 0.f), Vector3(10.0f, 10.0f, 1.0f), L"LoadingScenePanal", this));
 	ImageUI* filter = (GETSINGLE(UIFactory)->CreateImage(L"LoadingImg", L"loadingImgMaterial", Vector3(0.f, 0.f, 99.f), Vector3(20.f, 20.f, 1.f), panal, this));
 
 
@@ -39,7 +39,7 @@ void SceneLoading::update()
 {
 	if (GETSINGLE(AsyncLoad)->IsLoadFinish())
 	{
-		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Title);
+		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
 		return;
 	}
 

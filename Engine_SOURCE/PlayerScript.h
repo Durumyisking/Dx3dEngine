@@ -33,3 +33,4 @@ private:
 	PhysXRigidBody* mPhyXRigidBody;
 	PxController* mController;
 };
+ 

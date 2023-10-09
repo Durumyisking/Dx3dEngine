@@ -4,6 +4,7 @@
 
 class Panal;
 class HUD;
+class Player;
 class ScenePlay :
 	public Scene
 {
@@ -24,10 +25,14 @@ public:
 
 
 	void CreatePlayerUI();
+	Player* GetPlayer() { return player; }
 private:
 	Panal* mCoinPanal;
 	Panal* mCityCoinPanal;
 	Panal* mLifePanal;
 	Panal* mLunaPanal;
 	Panal* mCompassPanal;
+	Panal* mDieUIPanal;
+
+	Player* player;
 };

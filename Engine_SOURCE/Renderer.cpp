@@ -1767,6 +1767,9 @@ namespace renderer
 		CreateMaterial(L"Compass", L"UISpriteShader", L"CompassMaterial", eRenderingMode::Transparent);
 		CreateMaterial(L"CompassBar", L"UISpriteShader", L"CompassBarMaterial", eRenderingMode::Transparent);
 		CreateMaterial(L"CompassNeedle", L"UISpriteShader", L"CompassNeedleMaterial", eRenderingMode::Transparent);
+
+		CreateMaterial(L"DieCircle", L"UISpriteShader", L"DieCircleMaterial", eRenderingMode::Opaque);
+		CreateMaterial(L"DieTexture", L"UISpriteShader", L"DieTextureMaterial", eRenderingMode::Transparent);
 #pragma endregion
 	}
 
@@ -1820,6 +1823,9 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Compass", L"Textures/UI/Compass/Compass.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"CompassBar", L"Textures/UI/Compass/CompassBar.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"CompassNeedle", L"Textures/UI/Compass/CompassNeedle.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"DieTexture", L"Textures/UI/DieTexture/DieTexture.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"DieCircle", L"Textures/UI/DieTexture/DieCircle.png");
 	}
 
 	////////////////////////////////////////////////////////

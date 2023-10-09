@@ -376,9 +376,6 @@
     <ClCompile Include="UIFactory.cpp">
       <Filter>UI\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Panal.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
@@ -394,8 +391,23 @@
     <ClCompile Include="PowerMoonScript.cpp">
       <Filter>UI\Script</Filter>
     </ClCompile>
+    <ClCompile Include="HelpUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="MilestoneScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="DieUIEffectScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="DieCircleUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Panal.cpp">
+      <Filter>UI\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -825,6 +837,18 @@
       <Filter>UI\Script</Filter>
     </ClInclude>
     <ClInclude Include="PowerMoonScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="MilestoneScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="DieUIEffectScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="DieCircleUIScript.h">
       <Filter>UI\Script</Filter>
     </ClInclude>
   </ItemGroup>

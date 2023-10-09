@@ -1,5 +1,6 @@
 #pragma once
 #include "UIScript.h"
+#include "Panal.h"
 
 class TitleUIBarScript : public UIScript
 {
@@ -21,8 +22,12 @@ public:
 	void ScaleChange();
 	void Select();
 private:
+	Panal* mTitleTextPanal;
+
 	float mCurrentTime;
 	State mState;
 	Vector3 mOriginScale;
 	Vector3 mChangeSize;
+
+	int mCount;
 };
