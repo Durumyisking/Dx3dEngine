@@ -33,7 +33,7 @@ public:
 
 
 	virtual void CaptureEvent() = 0;
-	virtual void CaptureEnter(MarioCap* cap) = 0;
+	virtual void CaptureEnter(MarioCap* cap) override;
 
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerStay(GameObj* gameObject)  override;

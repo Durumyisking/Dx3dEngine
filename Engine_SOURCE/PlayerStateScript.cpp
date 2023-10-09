@@ -196,7 +196,7 @@ void PlayerStateScript::Jump()
 	{
 		if (mJumpCount == 0)
 		{
-			mAnimator->Play(L"Jump");
+			mAnimator->Play(L"Jump", false);
 
 			rigidbody->SetMaxVelocity_Y(13.f);
 			rigidbody->ApplyGravity();
@@ -206,7 +206,7 @@ void PlayerStateScript::Jump()
 		}
 		else if (mJumpCount == 1)
 		{
-			mAnimator->Play(L"Jump2");
+			mAnimator->Play(L"Jump2", false);
 
 			rigidbody->SetMaxVelocity_Y(15.f);
 			rigidbody->ApplyGravity();
@@ -217,7 +217,7 @@ void PlayerStateScript::Jump()
 		}
 		else if (mJumpCount == 2)
 		{
-			mAnimator->Play(L"Jump3");
+			mAnimator->Play(L"Jump3",false);
 
 			rigidbody->SetMaxVelocity_Y(18.f);
 			rigidbody->ApplyGravity();
@@ -233,7 +233,7 @@ void PlayerStateScript::Jump()
 		|| ((mAnimator->PlayAnimationName() == L"Jump3" && mAnimator->IsComplete()))
 		||rigidbody->GetVelocity().y < 0)
 	{
-		mAnimator->Play(L"Fall");
+		mAnimator->Play(L"Fall",false);
 		mPlayer->SetPlayerState(Player::ePlayerState::Fall);
 	}
 }

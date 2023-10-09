@@ -73,9 +73,8 @@ void Player::Initialize()
 
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f));
 	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
-	mr->SetMaterialByKey(L"PBRMaterial",0);
-	mr->GetMaterial()->SetMetallic(0.01f);
-	mr->GetMaterial()->SetRoughness(0.99f);
+	mMeshRenderer->GetMaterial()->SetMetallic(0.01f);
+	mMeshRenderer->GetMaterial()->SetRoughness(0.99f);
 
 	GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
 
@@ -222,6 +221,11 @@ void Player::FontRender()
 void Player::OnCollisionEnter(GameObj* gameObject)
 {
 
+
+}
+
+void Player::OnTriggerEnter(GameObj* gameObject)
+{
 	if (eLayerType::Platforms == gameObject->GetLayerType())
 	{
 		if (mRigidBody->IsOnAir())
@@ -246,14 +250,6 @@ void Player::OnCollisionEnter(GameObj* gameObject)
 			mRigidBody->SetVelocity(AXIS::Y, 0.f);
 			SetPlayerState(Player::ePlayerState::Jump);
 		}
-	}
-}
-
-void Player::OnTriggerEnter(GameObj* gameObject)
-{
-	if (eLayerType::Platforms == gameObject->GetLayerType())
-	{
-		//GetPhysXRigidBody()->SetAirOff();
 	}
 
 }

@@ -313,6 +313,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PhysXRayCast.h" />
     <ClInclude Include="PhysXRigidBody.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerCameraScript.h" />
     <ClInclude Include="PlayerStateScript.h" />
     <ClInclude Include="PostProcess.h" />
     <ClInclude Include="PostProcessRenderer.h" />
@@ -455,6 +456,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PhysXRayCast.cpp" />
     <ClCompile Include="PhysXRigidBody.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerCameraScript.cpp" />
     <ClCompile Include="PlayerStateScript.cpp" />
     <ClCompile Include="PostProcess.cpp" />
     <ClCompile Include="PostProcessRenderer.cpp" />

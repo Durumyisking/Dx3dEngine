@@ -397,6 +397,9 @@
     <ClCompile Include="ParticleFormat.cpp">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerCameraScript.cpp">
+      <Filter>Common\Component\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -828,6 +831,9 @@
     </ClInclude>
     <ClInclude Include="ParticleFormat.h">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCameraScript.h">
+      <Filter>Common\Component\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
