@@ -23,6 +23,7 @@ public:
 
 public:
 	ParticleFormat(int maxCount, eParticleType type);
+	ParticleFormat(int maxCount, eParticleType type, eAccessType accType);
 	virtual ~ParticleFormat();
 
 	virtual void Update();
@@ -35,7 +36,7 @@ public:
 
 	void SetTexture(int slot, class Texture* texture, int xCount, int yCount);
 
-	void Reset();
+	virtual void Reset();
 
 	// Cpu Acc 타입에면 구현하여 파티클의
 	// 움직임을 직접 구현가능함

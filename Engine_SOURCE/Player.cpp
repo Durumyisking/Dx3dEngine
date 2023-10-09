@@ -117,22 +117,17 @@ void Player::Initialize()
 	int particleCount = 5;
 	//particle->InsertParticle(L"Default", L"CloudParticle", static_cast<UINT>(1), particleCount);
 	//particle->SetComputeShader(L"ParticleCS");
-	FootSmokeParticle* footSmokeparticle = new FootSmokeParticle(5, static_cast<ParticleFormat::eParticleType>(1));
+	FootSmokeParticle* footSmokeparticle = new FootSmokeParticle(3, static_cast<ParticleFormat::eParticleType>(1));
 	particle->AddParticle(footSmokeparticle, L"Default");
 	ParticleFormat* particleFormat = particle->GetParticleFormat(L"Default");
 	if (particleFormat)
 	{
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CloudParticle");
+		if (model)
+			particleFormat->SetModel(model);
+
 		Texture* tex = GETSINGLE(ResourceMgr)->Load<Texture>(L"SmokeParticle", L"SmokeParticle/Image/smoke01.png");
 		particleFormat->SetTexture(static_cast<int>(eTextureSlot::Albedo), tex, 1, 1);
-
-		std::vector<Particle> data = {};
-		data.resize(particleCount);
-
-		for (size_t i = 0; i < particleCount; ++i)
-		{
-			data[i].wakeUpTime = 1.0f / static_cast<float>(particleCount) * i;
-		}
-		particleFormat->SetParticleData(data);
 	}
 
 	mStateInfo.resize(static_cast<int>(ePlayerState::Die) + 1);

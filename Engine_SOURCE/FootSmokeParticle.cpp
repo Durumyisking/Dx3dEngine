@@ -4,12 +4,16 @@
 #include "Transform.h"
 #include "TimeMgr.h"
 
-#define OFFSET 0.1f
+#define OFFSET_TIME 0.05f
 FootSmokeParticle::FootSmokeParticle(int maxCount, eParticleType type)
-	: ParticleFormat(maxCount, type)
-	, mActiveOffset(OFFSET)
+	: ParticleFormat(maxCount, type, eAccessType::CPU)
+	, mActiveOffset(OFFSET_TIME)
 {
 	mAccType = eAccessType::CPU;
+	mParticleCB.maxLifeTime = (OFFSET_TIME * static_cast<float>(maxCount + 1));
+
+	Initalize();
+
 }
 
 FootSmokeParticle::~FootSmokeParticle()
@@ -26,8 +30,6 @@ void FootSmokeParticle::Update()
 
 void FootSmokeParticle::Initalize()
 {
-	SUPER::Initalize();
-
 	for (size_t i = 0; i < mParticleData.size(); ++i)
 	{
 		mParticleData[i].startScale = mParticleCB.startSize.XYZ();
@@ -36,7 +38,7 @@ void FootSmokeParticle::Initalize()
 		mParticleData[i].q_startRotation = mParticleCB.startAngle;
 		mParticleData[i].q_endRotation = mParticleCB.endAngle;
 
-
+		mParticleData[i].lifeTime = 0.2f;
 		mParticleData[i].active = 0;
 	}
 }
@@ -46,6 +48,18 @@ void FootSmokeParticle::Calculator()
 	if (mParticleSystem == nullptr)
 		return;
 
+	std::function<void(Particle& particle)> resetParameter = [this](Particle& particle)
+		{
+			mActiveOffset = OFFSET_TIME;
+			particle.active = 1;
+
+			ParticleSystem* system = mParticleSystem;
+			Transform* transform = mParticleSystem->GetOwner()->GetTransform();
+			Vector3 Pos = transform->GetPhysicalPosition();
+
+			particle.position = Vector4(Pos, 1.0f);
+		};
+
 	Vector3 pos = mParticleSystem->GetOwner()->GetTransform()->GetPhysicalPosition();
 	for (size_t i = 0; i < mParticleData.size(); ++i)
 	{
@@ -53,19 +67,16 @@ void FootSmokeParticle::Calculator()
 		{
 			if (mActiveOffset <= 0.f)
 			{
-				mActiveOffset = OFFSET;
-				mParticleData[i].active = 1;
-
-				ParticleSystem* system = mParticleSystem;
-				Vector3 Pos = mParticleSystem->GetOwner()->GetTransform()->GetPhysicalPosition();
-
-				mParticleData[i].position = Vector4(Pos, 1.0f);
+				resetParameter(mParticleData[i]);
 			}
 			break;
 		}
 
 		if (mParticleData[i].elapsedTime > mParticleData[i].lifeTime)
-			continue;
+		{
+			mParticleData[i].elapsedTime = 0.f;
+			resetParameter(mParticleData[i]);
+		}
 
 		mParticleData[i].elapsedTime += DT;
 
@@ -94,5 +105,16 @@ void FootSmokeParticle::Calculator()
 		mParticleData[i].particleWorld._41 = mParticleData[i].position.x;
 		mParticleData[i].particleWorld._42 = mParticleData[i].position.y;
 		mParticleData[i].particleWorld._43 = mParticleData[i].position.z;
+	}
+}
+
+void FootSmokeParticle::Reset()
+{
+	SUPER::Reset();
+
+	for (size_t i = 0; i < mParticleData.size(); ++i)
+	{
+		mParticleData[i].active = 0;
+		mParticleData[i].elapsedTime = 0.f;
 	}
 }

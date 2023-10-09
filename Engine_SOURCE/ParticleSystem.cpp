@@ -138,6 +138,7 @@ bool ParticleSystem::AddParticle(ParticleFormat* particle, const std::wstring& n
 	if (iter != mParticles.end())
 		return false;
 
+	particle->SetParticleSystem(this);
 	mParticles.insert(std::pair(name, particle));
 	return true;
 }

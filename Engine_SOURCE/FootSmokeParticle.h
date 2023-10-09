@@ -10,6 +10,7 @@ public:
 	virtual void Initalize() override;
 	virtual void Calculator() override;
 
+	virtual void Reset() override;
 private:
 	float mActiveOffset;
 };

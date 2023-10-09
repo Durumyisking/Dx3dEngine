@@ -9,7 +9,7 @@
 
 ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 	: mParticleType(type)
-	, mParitlceMaxCount(1)
+	, mParitlceMaxCount(maxCount)
 	, mModel(nullptr)
 	, mMesh(nullptr)
 	, mMaterial(nullptr)
@@ -21,6 +21,34 @@ ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 	, mTexture_Y_Count(1)
 	, mActiveCount(1)
 	, mAccType(eAccessType::ComputShader)
+	, mParticleSystem(nullptr)
+{
+	if (type == eParticleType::D2D)
+	{
+		Material* mater = GETSINGLE(ResourceMgr)->Find<Material>(L"ParticleMaterial");
+		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"PointMesh");
+
+		mMaterial = mater;
+		mMesh = mesh;
+	}
+
+	Initalize();
+}
+
+ParticleFormat::ParticleFormat(int maxCount, eParticleType type, eAccessType accType)
+	: mParticleType(type)
+	, mParitlceMaxCount(maxCount)
+	, mModel(nullptr)
+	, mMesh(nullptr)
+	, mMaterial(nullptr)
+	, mParticleData{}
+	, mParticleCB{}
+	, mBuffer(nullptr)
+	, mSharedBuffer(nullptr)
+	, mTexture_X_Count(1)
+	, mTexture_Y_Count(1)
+	, mActiveCount(1)
+	, mAccType(accType)
 	, mParticleSystem(nullptr)
 {
 	if (type == eParticleType::D2D)
@@ -139,7 +167,7 @@ void ParticleFormat::Render()
 	mMaterial->SetData(eGPUParam::Vector2_1, &textureSize);
 
 	if (mAccType == eAccessType::CPU)
-		mBuffer->SetData(mParticleData.data(), mParticleData.size());
+		mBuffer->SetData(mParticleData.data(), static_cast<UINT>(mParticleData.size()));
 
 	mBuffer->BindSRV(eShaderStage::VS, 16);
 	mBuffer->BindSRV(eShaderStage::PS, 16);
