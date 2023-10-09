@@ -30,12 +30,12 @@ float4 main(VSOut In) : SV_Target
             || UV.y > LT.y + spriteSize.y)
             discard;
         
-        color = atlasTexture.Sample(anisotropicSampler, UV);
+        color = atlasTexture.Sample(linearSampler, UV);
     }
     else
     {
         //UV.x = -UV.x;
-        color = colorTexture.Sample(anisotropicSampler, In.UV);
+        color = colorTexture.Sample(linearSampler, In.UV);
     }
     
     

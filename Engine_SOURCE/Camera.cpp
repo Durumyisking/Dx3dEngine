@@ -333,7 +333,7 @@ void Camera::renderShadow()
 {
 	for (size_t i = 0; i < renderer::lights.size(); i++)
 	{
-		bindLightConstantBuffer(i);
+		renderer::lights[i]->PrevRender();
 
 		for (GameObj* obj : mDeferredOpaqueGameObjects)
 		{
@@ -468,24 +468,6 @@ bool Camera::renderPassCheck(GameObj* obj)
 	}
 
 	return true;
-}
-
-void Camera::bindLightConstantBuffer(size_t lightIdx)
-{
-	if (!renderer::lights.empty())
-	{
-		Transform Lighttr = *(renderer::lights[lightIdx]->GetOwner()->GetComponent<Transform>());
-		Lighttr.SetRotation(DecomposeRotMat(Lighttr.GetWorldRotationMatrix()));
-
-		ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
-
-		LightMatrixCB data = {};
-		data.lightView = CreateViewMatrix(&Lighttr);
-		data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, static_cast<float>(application.GetWidth()), static_cast<float>(application.GetHeight()), 1.0f, 1000.0f);
-		lightCB->SetData(&data);
-		lightCB->Bind(eShaderStage::VS);
-		lightCB->Bind(eShaderStage::PS);
-	}
 }
 
 void Camera::deferredRenderingOperate()

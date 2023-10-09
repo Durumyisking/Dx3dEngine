@@ -279,12 +279,12 @@ namespace renderer
 		samplerDesc.MipLODBias = 0.0f;
 		samplerDesc.MinLOD = 0.0f;
 
-		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
+		//samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		//GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
 		samplerDesc.Filter = D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
-		samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
-		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
+		//samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+		//GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
 
 		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
 		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
@@ -304,12 +304,23 @@ namespace renderer
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::ShadowPoint)].GetAddressOf());
 
-		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Point), 1, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+		samplerDesc.BorderColor[0] = 100.0f; // Å« Z°ª
+		samplerDesc.Filter =
+			D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
+		samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::ShadowCompare)].GetAddressOf());
+
+
+		//GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Point), 1, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Linear), 1, samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
-		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Anisotropic), 1, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
+		//GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Anisotropic), 1, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Skybox), 1, samplerState[static_cast<UINT>(eSamplerType::Skybox)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Clamp), 1, samplerState[static_cast<UINT>(eSamplerType::Clamp)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::ShadowPoint), 1, samplerState[static_cast<UINT>(eSamplerType::ShadowPoint)].GetAddressOf());
+		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::ShadowCompare), 1, samplerState[static_cast<UINT>(eSamplerType::ShadowCompare)].GetAddressOf());
 
 #pragma endregion
 
@@ -437,8 +448,7 @@ namespace renderer
 		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)] = new ConstantBuffer(eCBType::CubeMapProj);
 		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Create(sizeof(SkyCB));
 
-		constantBuffers[static_cast<UINT>(eCBType::LightMatrix)] = new ConstantBuffer(eCBType::LightMatrix);
-		constantBuffers[static_cast<UINT>(eCBType::LightMatrix)]->Create(sizeof(LightMatrixCB));
+		
 
 		lightBuffer = new StructedBuffer();
 		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
