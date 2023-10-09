@@ -37,6 +37,7 @@ public:
 	bool IsComplete() { return mPlayAnimation == nullptr ? true :mPlayAnimation->IsComplete(); }
 	const std::wstring PlayAnimationName() const;
 	AnimationClip* GetAnimationClip(const std::wstring& animationName) const;
+	AnimationClip* GetPlayAnimation() const { return mPlayAnimation; }
 
 	const std::map<std::wstring, aiMatrix4x4>& GetFrameAnimationData() { return mFrameAnimationVector; }
 	void ClearFrameAnimationData() { mFrameAnimationVector.clear(); }
@@ -47,6 +48,7 @@ public:
 	void FrameAnimationClear() { mFrameAnimationVector.clear(); }
 public:
 	GETSET(float, mIntervalAnimation, IntervalAnimation)
+	GETSET(bool, mbLoop, Loop)
 private:
 	// 애니메이션들을 담을곳
 	std::map<std::wstring, AnimationClip*> mAnimationClips;

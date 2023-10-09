@@ -49,6 +49,7 @@ public:
 	GETSET(const float, mRecognizeRadius, GetRecognizeRadius)
 	GETSET(const bool, mFoundPlayer, IsFoundPlayer)
 
+
 private:
 	eMonsterState mMonsterState;
 

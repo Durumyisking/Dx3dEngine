@@ -20,7 +20,6 @@ MarioCap::MarioCap()
 	, mOwner(nullptr)
 {
 	SetLayerType(eLayerType::Cap);
-	RenderingBlockOn();
 }
 
 MarioCap::~MarioCap()
@@ -159,6 +158,7 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 
 		SetCapState(MarioCap::eCapState::Capture);
 
+		//dynamic_cast<Player*>(GetOwner())->SetPlayerState(Player::ePlayerState::Capture);
 		GetOwner()->Pause();
 		//GetOwner()->GetPhysical()->RemoveActorToPxScene();
 	}
@@ -242,8 +242,7 @@ void MarioCap::FlyStart()
 	if (animator->IsRunning())
 		animator->Stop();
 
-	RenderingBlockOff();
-
+	
 	// 플레이어의 현재 포지션과 Player forWard 를 가져옴
 	Transform* tr = GetTransform();
 	Vector3 pos = tr->GetPhysicalPosition();
@@ -335,7 +334,6 @@ void MarioCap::FlyEnd()
 		}
 
 		SetCapState(eCapState::Return);
-		RenderingBlockOn();
 		GetPhysical()->RemoveActorToPxScene();
 		Pause();
 	};

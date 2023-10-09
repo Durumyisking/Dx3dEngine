@@ -29,6 +29,8 @@ struct VTX_OUT
 #define MAGENTA float4(1.f, 0.f, 1.f, 1.f)
 #define ALPHA(target, value) float4(target.r, target.g, target.b, (float)value)
 
+#define RESOLUTION float2(1600.f, 900.f)
+
 
 float3 RotatePointZ(float3 pointVal, float radian, float3 rotationCenter)
 {
@@ -112,3 +114,22 @@ float2 SampleSphericalMap(float3 v)
     uv += 0.5;
     return uv;
 }
+
+
+//float4 TexcoordToView(float2 texcoord)
+//{
+//    float4 posProj;
+
+//    // [0, 1]x[0, 1] -> [-1, 1]x[-1, 1]
+//    posProj.xy = texcoord * 2.0 - 1.0;
+//    posProj.y *= -1; // y 좌표 뒤집기
+//    posProj.z = depthOnlyTex.Sample(clampSampler, texcoord).r;
+//    posProj.w = 1.0;
+    
+//    // ProjectSpace -> ViewSpace
+//    //float4 posView = mul(posProj, lights[0].invProj);
+//    float4 posView = mul(posProj, inverseProjection);
+//    posView.xyz /= posView.w;
+    
+//    return posView;
+//}

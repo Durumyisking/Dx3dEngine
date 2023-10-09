@@ -259,6 +259,13 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LensFlareShader");
+			GetDevice()->CreateInputLayout(arrLayout, 2
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
 #pragma endregion
 
 #pragma region SamplerState
@@ -687,7 +694,15 @@ namespace renderer
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"BasicPostProcessShader", shader);
 		}
 #pragma endregion
-
+#pragma region lensFlareShader
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"PostProcessVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"LensFlarePS.hlsl", "main");
+			shader->SetDSState(eDepthStencilType::NoWrite);
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"LensFlareShader", shader);
+		}
+#pragma endregion
 	}
 
 	void LoadLoadingSceneTexture()
@@ -718,6 +733,7 @@ namespace renderer
 
 		postProcessTexture = new Texture();
 		postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
+		//postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PostProcessTexture", postProcessTexture);
 	}
@@ -1898,7 +1914,7 @@ namespace renderer
 
 	void Render()
 	{
-		//GetDevice()->OMSetRenderTarget();
+		GetDevice()->OMSetRenderTarget();
 
 		BindNoiseTexture();
 		BindLight();

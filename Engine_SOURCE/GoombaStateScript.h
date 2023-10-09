@@ -5,7 +5,7 @@
 //class PhysXRigidBody;
 //class PhysicalMovement;
 //class Transform		;
-#define GOOMBA_SPPED 5000.f
+#define GOOMBA_SPPED 15000.f
 #define GOOMBA_JUMPFORCE 7000.f
 #define GOOMBA_MASS 1.f
 #define GOOMBA_WALK_VELOCITY 3.f

@@ -57,6 +57,8 @@ public:
 	void SetMarioCap(MarioCap* cap);
 	MarioCap* GetMarioCap() const { return mMarioCap; }
 
+
+
 private:
 	std::vector<MarioParts*> mParts;
 	MarioCap* mMarioCap;

@@ -31,6 +31,7 @@ public:
 
 	bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag);
 	bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT numQualityLevels, UINT bindflag);
+	bool Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture, UINT width, UINT height);
 	bool Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture);
 	bool Create(D3D11_TEXTURE2D_DESC& desc);
 
@@ -52,6 +53,9 @@ public:
 
 	UINT GetHeight() { return mDesc.Height; }
 	UINT GetWidth() { return mDesc.Width; }
+
+	void SetHeight(UINT height) { mDesc.Height = height; }
+	void SetWidth (UINT width) {  mDesc.Width = width; }
 
 
 

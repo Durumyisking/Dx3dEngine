@@ -71,8 +71,8 @@ void Goomba::Initialize()
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
@@ -96,21 +96,41 @@ void Goomba::Initialize()
 
 void Goomba::Update()
 {
+
 	Monster::Update();
 
 	// 잡다한 계산 끝난 후
 	if (mLowerLayerGoombas.size())
 	{
+		// 트랜스포밍
 		PxTransform bottomTr = mLowerLayerGoombas[0]->GetTransform()->GetPxTransform();
 		PxTransform tr = GetTransform()->GetPxTransform();
 
 		tr.p.x = bottomTr.p.x;
 		tr.p.z = bottomTr.p.z;
-		tr.p.y = bottomTr.p.y + 0.75f; // 캡슐의 크기 더해봄
+		tr.p.y = bottomTr.p.y + 1.5f * mGoombaLayerIdx;
+		GetTransform()->SetPhysicalPosition(convert::PxVec3ToVector3(tr.p));
+
 		tr.q = bottomTr.q; // 회전은 동일하게
-		GetTransform()->SetPxTransform(tr);
+		GetTransform()->SetPhysicalRotation(tr.q);
 	}
 
+	// 애니메이터 업데이트 전에 돌아야함
+	if (mLowerLayerGoombas.size())
+	{
+		// 애니메이션 동일하게
+		std::wstring animName = GetBoneAnimator()->PlayAnimationName();
+		std::wstring lowerGoombaAnimName = mLowerLayerGoombas[0]->GetBoneAnimator()->PlayAnimationName();
+		bool loop = mLowerLayerGoombas[0]->GetBoneAnimator()->GetLoop();
+
+		if (animName != lowerGoombaAnimName)
+		{
+			GetBoneAnimator()->Play(lowerGoombaAnimName, loop);
+			GetBoneAnimator()->GetPlayAnimation()->SetSkeletonData(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetSkeletonData());
+			GetBoneAnimator()->GetPlayAnimation()->SetCurIndex(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetCurIndex());
+			GetBoneAnimator()->GetPlayAnimation()->SetDuration(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetDuration());
+		}
+	}
 }
 
 void Goomba::FixedUpdate()
@@ -155,7 +175,7 @@ void Goomba::CaptureEvent()
 
 	//// 점프
 	//able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Jump);
+	stateEvent(eKeyState::TAP, eKeyCode::SPACE, eMonsterState::Move);
 
 	// 특수
 	//able = false;
@@ -196,8 +216,15 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		{
 			Goomba* goomba = dynamic_cast<Goomba*>(gameObject);
 
-			// 윗굼바
-			if (Calculate_RelativeDirection_ByCosTheta(gameObject) > 0.95f)
+			// if 걸리면 윗굼바
+			/*
+			맨 윗굼바의 모델에 마리오 콧수염, 눈 모자 씌워야함
+			애니메이션 모든 굼바가 동일하게 재생해야함
+			맨 아랫굼바 기준으로 이동해야함(capture 대상을 맨 아랫굼바로 변경해야할거같음)
+
+			
+			*/
+			if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.9f)
 			{
 				// 아랫굼바 벡터 복사
 				std::vector<Goomba*> vec = goomba->GetGoombaLayer();
@@ -209,6 +236,11 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 				++mGoombaLayerIdx;
 
 				GetPhysXRigidBody()->SetSwitchState(false);
+				GetPhysXRigidBody()->RemoveGravity();
+				GetScript<GoombaStateScript>()->SetSwitchState(false);
+
+				OffCapture();
+				mLowerLayerGoombas[0]->OnCapture();
 			}
 
 			//// 아랫굼바

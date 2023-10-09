@@ -17,7 +17,7 @@ struct PSOut
 
 };
 
-PSOut main(VSOut vsIn) : SV_Target
+PSOut main(VSOut vsIn) : SV_TARGET
 {
     PSOut psOut = (PSOut) 0.f;
     

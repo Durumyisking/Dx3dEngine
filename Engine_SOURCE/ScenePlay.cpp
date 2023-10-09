@@ -129,10 +129,10 @@ void ScenePlay::Initialize()
 	}
 
 
-	//{
-	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, renderer::mainCamera->GetOwner(), L"PostProcess_LensFlare");
-	//	mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
-	//}
+	{
+		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+		mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
+	}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);

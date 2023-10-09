@@ -46,6 +46,7 @@ CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 		Matrix view;
 		Matrix inverseView;
 		Matrix projection;
+		Matrix inverseProjection;
 		Matrix fovForSkySphere;
 		Vector4 cameraWorldPos;
 	};

@@ -180,6 +180,7 @@ void Transform::SetConstantBuffer()
 	trCb.view = Camera::GetGpuViewMatrix();
 	trCb.inverseView = trCb.view.Invert();
 	trCb.projection = Camera::GetGpuProjectionMatrix();
+	trCb.inverseProjection = trCb.projection.Invert();
 	trCb.fovForSkySphere= Camera::GetSkySphereFov();
 	Vector3 p = renderer::mainCamera->GetOwnerWorldPos();
 	trCb.cameraWorldPos = Vector4(p.x, p.y, p.z, 1.f);
@@ -248,6 +249,18 @@ void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 	PxQuat finalRotation = rotationX * rotationY * rotationZ;
 	mPxTransform.q = finalRotation;
 	//GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+
+	// 보간도착 지점에 쿼터니언
+	mArriveQuternion = math::Quaternion(finalRotation.x, finalRotation.y, finalRotation.z, finalRotation.w);
+	mTickPerSceond = 0.f;
+}
+
+void Transform::SetPhysicalRotation(const PxQuat& quat)
+{
+	assert(GetOwner()->GetComponent<Physical>());
+
+	PxQuat finalRotation = quat;
+	mPxTransform.q = finalRotation;
 
 	// 보간도착 지점에 쿼터니언
 	mArriveQuternion = math::Quaternion(finalRotation.x, finalRotation.y, finalRotation.z, finalRotation.w);
