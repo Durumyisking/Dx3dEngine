@@ -17,7 +17,7 @@ struct PSOut
 
 };
 
-PSOut main(VSOut vsIn) : SV_Target
+PSOut main(VSOut vsIn) : SV_TARGET
 {
     PSOut psOut = (PSOut) 0.f;
     
@@ -29,7 +29,6 @@ PSOut main(VSOut vsIn) : SV_Target
     //output = (depth.xxx, 1.0f);
     psOut.depthColor.r = depth;
     psOut.depthColor.g = depth * depth;
-    psOut.depthColor.w = 1.0f;
     //output.rgb = In.ProjPosition.z / In.ProjPosition.w;
     //output.rgb *= (900 / 1600);
     

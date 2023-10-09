@@ -24,9 +24,7 @@ Physical::Physical()
 
 Physical::~Physical()
 {
-	// todo:
-	// 피직스 액터 및 shape 삭제해야함
-
+	RemoveActorToPxScene();
 }
 
 void Physical::Initialize()

@@ -2,6 +2,8 @@
 #include "MonsterAiScript.h"
 #include "MonsterStateScript.h"
 #include "BoneAnimator.h"
+#include "PhysXRigidBody.h"
+#include "TimeMgr.h"
 
 Monster::Monster()
 	: DynamicObject()
@@ -50,7 +52,7 @@ void Monster::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Cap == gameObject->GetLayerType())
 	{
-		int i = 0;
+		OnCapture();
 	}
 }
 
@@ -75,3 +77,4 @@ void Monster::SetMonsterState(eMonsterState monsterState)
 	if (script)
 		script->Reset();
 }
+

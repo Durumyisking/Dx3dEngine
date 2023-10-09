@@ -92,8 +92,6 @@ void Camera::Render()
 
 	sortGameObjects();
 
-	bindLightConstantBuffer();
-
 	// shadow	
 	renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->OMSetRenderTarget();
 	renderShadow();
@@ -103,6 +101,14 @@ void Camera::Render()
 	renderOpaque();
 	renderCutout();
 	renderTransparent();
+	
+	// ParticleFunTest
+	for (auto fun : renderer::ParticleFunCArr)
+	{
+		if (nullptr != fun)
+			fun();
+	}
+	renderer::ParticleFunCArr.clear();
 
 	// merged object가 있는게 아니라 분류가 되지 않는다 따라서 ui 카메라는 해당 작업 수행하면 안됨.
 
@@ -111,6 +117,8 @@ void Camera::Render()
 		deferredRenderingOperate();
 		renderMergedOutput();
 	}
+
+	renderPostProcess();
 }
 
 void Camera::CreateViewMatrix()
@@ -331,20 +339,25 @@ void Camera::sortGameObjects()
 
 void Camera::renderShadow()
 {
-	for (GameObj* obj : mDeferredOpaqueGameObjects)
+	for (size_t i = 0; i < renderer::lights.size(); i++)
 	{
-		if (obj == nullptr || !renderPassCheck(obj))
-			continue;
+		bindLightConstantBuffer(i);
 
-		obj->PrevRender();
-	}
+		for (GameObj* obj : mDeferredOpaqueGameObjects)
+		{
+			if (obj == nullptr || !renderPassCheck(obj))
+				continue;
 
-	for (GameObj* obj : mOpaqueGameObjects)
-	{
-		if (obj == nullptr || !renderPassCheck(obj))
-			continue;
+			obj->PrevRender();
+		}
 
-		obj->PrevRender();
+		for (GameObj* obj : mOpaqueGameObjects)
+		{
+			if (obj == nullptr || !renderPassCheck(obj))
+				continue;
+
+			obj->PrevRender();
+		}
 	}
 }
 
@@ -398,6 +411,7 @@ void Camera::renderPostProcess()
 	{
 		if (renderPassCheck(obj))
 		{
+			//GetDevice()->AdjustToDefaultResolutionViewPorts();
 			renderer::CopyRenderTarget();
 			obj->Render();
 		}
@@ -464,17 +478,17 @@ bool Camera::renderPassCheck(GameObj* obj)
 	return true;
 }
 
-void Camera::bindLightConstantBuffer()
+void Camera::bindLightConstantBuffer(size_t lightIdx)
 {
 	if (!renderer::lights.empty())
 	{
-		Transform directionLighttr = *(renderer::lights[0]->GetOwner()->GetComponent<Transform>());
-		directionLighttr.SetRotation(DecomposeRotMat(directionLighttr.GetWorldRotationMatrix()));
+		Transform Lighttr = *(renderer::lights[lightIdx]->GetOwner()->GetComponent<Transform>());
+		Lighttr.SetRotation(DecomposeRotMat(Lighttr.GetWorldRotationMatrix()));
 
 		ConstantBuffer* lightCB = renderer::constantBuffers[static_cast<UINT>(eCBType::LightMatrix)];
 
 		LightMatrixCB data = {};
-		data.lightView = CreateViewMatrix(&directionLighttr);
+		data.lightView = CreateViewMatrix(&Lighttr);
 		data.lightProjection = CreateProjectionMatrix(eProjectionType::Perspective, static_cast<float>(application.GetWidth()), static_cast<float>(application.GetHeight()), 1.0f, 1000.0f);
 		lightCB->SetData(&data);
 		lightCB->Bind(eShaderStage::VS);

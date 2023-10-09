@@ -59,7 +59,7 @@ PS_OUT main(VSOut vsin)
                          / (lightAttributes[lightIndex].fallOffEnd - lightAttributes[lightIndex].fallOffStart));
 
         
-    float3 radiance = lightAttributes[lightIndex].color.diffuse * att; // * shadowFactor;
+    float3 radiance = lightAttributes[lightIndex].color.diffuse.xyz * att; // * shadowFactor;
     
     directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal, metallic, roughness) * radiance;
 

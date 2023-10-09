@@ -88,14 +88,20 @@ void GameObj::Update()
 				continue;
 			}
 		}
-
-		comp->Update();
+		if (comp->IsSwitchOn())
+		{
+			comp->Update();
+		}
 	}
 	for (Component* script : mScripts)
 	{
 		if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause )
 			continue;
-		script->Update();
+
+		if (script->IsSwitchOn())
+		{
+			script->Update();
+		}
 	}
 }
 
@@ -115,14 +121,20 @@ void GameObj::FixedUpdate()
 				continue;
 			}
 		}
-		comp->FixedUpdate();
+		if (comp->IsSwitchOn())
+		{
+			comp->FixedUpdate();
+		}
 	}
 
 	for (Component* script : mScripts)
 	{
 		if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause)
 			continue;
-		script->FixedUpdate();
+		if (script->IsSwitchOn())
+		{
+			script->FixedUpdate();
+		}
 	}
 }
 
@@ -135,25 +147,35 @@ void GameObj::Render()
 	{
 		if (nullptr == comp)
 			continue;
-		comp->Render();
+		if (comp->IsSwitchOn())
+		{
+			comp->Render();
+		}
 	}
 		
 	for (Component* script : mScripts)
 	{
 		if (nullptr == script)
 			continue;
-		script->Render();
+		if (script->IsSwitchOn())
+		{
+			script->Render();
+		}
 	}
 }
 
 void GameObj::PrevRender()
 {
-	for (Component* comp : mComponents)
+	if (eState::Active == mState)
 	{
-		if (comp == nullptr)
-			continue;
-
-		comp->PrevRender();
+		MeshRenderer* mr = GetComponent<MeshRenderer>();
+		if (mr)
+		{
+			if (mr->IsSwitchOn())
+			{
+				mr->PrevRender();
+			}
+		}
 	}
 }
 
@@ -272,6 +294,37 @@ void GameObj::SetMesh(Mesh* mesh)
 	{
 		GetComponent<SpriteRenderer>()->SetMesh(mesh);
 	}
+}
+
+float GameObj::Calculate_RelativeDirection_ByCosTheta(GameObj* otherObj)
+{
+	Vector3 thisToOther = otherObj->GetWorldPos() - GetWorldPos();
+	thisToOther.Normalize();
+	Vector3 thisUpVector = GetTransform()->WorldUp();
+
+	float cosTheta = thisToOther.Dot(thisUpVector);
+
+	return cosTheta;
+}
+
+bool GameObj::IsObjectInFOV(GameObj* otherObj, float FOV)
+{
+	Vector3 faceDir = -GetTransform()->WorldForward();
+	Vector3 a = otherObj->GetTransform()->GetWorldPosition();
+	Vector3 b = GetTransform()->GetWorldPosition();
+
+	Vector3 thisToOther = a - b;
+	thisToOther.Normalize();
+
+	float costTheta = faceDir.Dot(thisToOther);
+	float FovRadian = cosf(toRadian(FOV));
+
+	if (costTheta > FovRadian)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 bool GameObj::MoveToTarget_Smooth_bool(GameObj* target, float speed, bool zOn, eDir dir)
@@ -428,16 +481,12 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 				if (vResult.y < 0.f)
 				{
 					GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-					GetPhysXRigidBody()->RemoveGravity();
-					GetPhysXRigidBody()->SetAirOff();
 					vResult *= -1.f;
 					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				}
 				else
 				{
 					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
-					GetPhysXRigidBody()->RemoveGravity();
-					GetPhysXRigidBody()->SetAirOff();
 				}
 				break;
 			case enums::AXIS::Z:

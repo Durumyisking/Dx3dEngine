@@ -33,6 +33,7 @@ public:
 
 
 	virtual void CaptureEvent() = 0;
+	virtual void CaptureEnter(MarioCap* cap) = 0;
 
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerStay(GameObj* gameObject)  override;
@@ -47,6 +48,7 @@ public:
 
 	GETSET(const float, mRecognizeRadius, GetRecognizeRadius)
 	GETSET(const bool, mFoundPlayer, IsFoundPlayer)
+
 
 private:
 	eMonsterState mMonsterState;

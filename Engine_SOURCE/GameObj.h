@@ -246,4 +246,10 @@ public:
 	eLayerType GetLayerType() const { return mType; }
 	void SetLayerType(eLayerType type) { mType = type; }
 
+	// this에서 other로 향하는 벡터와 this->up벡터의 내적으로 어느방향으로 충돌했는지 계산
+	float Calculate_RelativeDirection_ByCosTheta(GameObj* otherObj);
+
+	// this의 시야 내에 들어왔는지를 계산합니다.
+	bool IsObjectInFOV(GameObj* otherObj, float FOV);
+
 };

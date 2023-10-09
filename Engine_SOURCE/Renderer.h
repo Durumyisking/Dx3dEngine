@@ -46,6 +46,7 @@ CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 		Matrix view;
 		Matrix inverseView;
 		Matrix projection;
+		Matrix inverseProjection;
 		Matrix fovForSkySphere;
 		Vector4 cameraWorldPos;
 	};
@@ -134,8 +135,12 @@ CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 	{
 		Vector4 worldPosition;
 		Vector4 startSize;
+		Vector4 endSize;
 		Vector4 startColor;
+
 		Vector4 endColor;
+		Vector4 startAngle;
+		Vector4 endAngle;
 
 		UINT maxParticles;
 		UINT simulationSpace;
@@ -147,14 +152,10 @@ CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 		float maxLifeTime;
 		float minLifeTime;
 
-		float startAngle;
-		float endAngle;
 		float elapsedTime;
 		float gravity;
-
 		float force;
 		float radian;
-		Vector2 padding;
 	};
 	CBUFFER(NoiseCB, CBSLOT_NOISE)
 	{
@@ -206,6 +207,7 @@ CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 	extern GameObj* outlineGameObject;
 
 	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
+	extern std::vector<std::function<void()>> ParticleFunCArr;
 
 	void Initialize();
 	void release(); // 그리는 방식이 여러개일때 여러개를 할당하는게 아니라

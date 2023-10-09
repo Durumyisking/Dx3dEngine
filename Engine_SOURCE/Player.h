@@ -3,6 +3,10 @@
 #include "MarioParts.h"
 #include "MarioCap.h"
 
+class MeshRenderer;
+class PlayerStateScript;
+class PhysXRigidBody;
+
 class Player :
 	public DynamicObject
 {
@@ -22,9 +26,10 @@ public:
 
 		Hit,
 		Groggy,
-
+		
 		ThrowCap,
 		CatchCap,
+		Capture,
 		Die,
 	};
 
@@ -52,6 +57,8 @@ public:
 	void SetMarioCap(MarioCap* cap);
 	MarioCap* GetMarioCap() const { return mMarioCap; }
 
+
+
 private:
 	std::vector<MarioParts*> mParts;
 	MarioCap* mMarioCap;
@@ -66,6 +73,7 @@ public:
 
 private:
 	ePlayerState mPlayerState;
-
-
+	MeshRenderer* mMeshRenderer;
+	PlayerStateScript* mScript;
+	PhysXRigidBody* mRigidBody;
 };

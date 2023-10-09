@@ -55,7 +55,7 @@ void CapMoveScript::Update()
 		}
 
 		pos.x += DT * 0.5f;
-		scale.x -= DT * 0.5;
+		scale.x -= DT * 0.5f;
 	}
 	else if (mbGoAndReturn)
 	{
@@ -66,7 +66,7 @@ void CapMoveScript::Update()
 		}
 
 		pos.x -= DT * 0.5f;
-		scale.x += DT * 0.5;
+		scale.x += DT * 0.5f;
 	}
 
 	tr->SetPosition(pos);

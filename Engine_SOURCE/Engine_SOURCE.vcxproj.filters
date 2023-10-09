@@ -147,9 +147,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Common\GameObj\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerScript.cpp">
-      <Filter>Common\GameObj\Player</Filter>
-    </ClCompile>
     <ClCompile Include="PostProcess.cpp">
       <Filter>Common\GameObj\PostProcess</Filter>
     </ClCompile>
@@ -319,9 +316,6 @@
     <ClCompile Include="MarioCap.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
-    <ClCompile Include="MarioParts.cpp">
-      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
-    </ClCompile>
     <ClCompile Include="CapStateScript.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
@@ -376,6 +370,9 @@
     <ClCompile Include="UIFactory.cpp">
       <Filter>UI\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Panal.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
@@ -391,27 +388,17 @@
     <ClCompile Include="PowerMoonScript.cpp">
       <Filter>UI\Script</Filter>
     </ClCompile>
-    <ClCompile Include="HelpUIScript.cpp">
-      <Filter>UI\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="MilestoneScript.cpp">
-      <Filter>UI\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="DieUIEffectScript.cpp">
-      <Filter>UI\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="DieCircleUIScript.cpp">
-      <Filter>UI\Script</Filter>
-    </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>UI\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Panal.cpp">
-      <Filter>UI\Base</Filter>
+    <ClCompile Include="MarioParts.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleFormat.cpp">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraScript.h" />
     <ClInclude Include="FMod.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="PackunPostionBall.h" />
@@ -556,9 +543,6 @@
       <Filter>Common\GameObj\PhysicalGameObj</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Common\GameObj\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerScript.h">
       <Filter>Common\GameObj\Player</Filter>
     </ClInclude>
     <ClInclude Include="PostProcess.h">
@@ -839,17 +823,11 @@
     <ClInclude Include="PowerMoonScript.h">
       <Filter>UI\Script</Filter>
     </ClInclude>
-    <ClInclude Include="HelpUIScript.h">
-      <Filter>UI\Script</Filter>
+    <ClInclude Include="CameraScript.h">
+      <Filter>Common\Component\Camera\Script</Filter>
     </ClInclude>
-    <ClInclude Include="MilestoneScript.h">
-      <Filter>UI\Script</Filter>
-    </ClInclude>
-    <ClInclude Include="DieUIEffectScript.h">
-      <Filter>UI\Script</Filter>
-    </ClInclude>
-    <ClInclude Include="DieCircleUIScript.h">
-      <Filter>UI\Script</Filter>
+    <ClInclude Include="ParticleFormat.h">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1001,9 +979,6 @@
     </ClCompile>
     <ClCompile Include="FontWrapper.cpp">
       <Filter>Common\Font</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerScript.cpp">
-      <Filter>Common\GameObj\Player</Filter>
     </ClCompile>
     <ClCompile Include="druEnums.cpp">
       <Filter>Common</Filter>

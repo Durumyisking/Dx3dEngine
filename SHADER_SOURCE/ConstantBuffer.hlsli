@@ -6,6 +6,7 @@ cbuffer Transform : register(b0)
     row_major matrix view;
     row_major matrix inverseView;
     row_major matrix projection;
+    row_major matrix inverseProjection;
     row_major matrix fovForSkySphere;
     float4 cameraWorldPos;
 }
@@ -65,7 +66,7 @@ cbuffer Grid : register(b2)
 {
     float3 cameraPosition;
     float2 gridOffset;
-    float2 resolution;
+    float2 gridResolution;
     float thickness;
 }
 
@@ -95,8 +96,12 @@ cbuffer ParticleSystem : register(b6)
 {
     float4 worldPosition;
     float4 startSize;
+    float4 endSize;
     float4 startColor;
+    
     float4 endColor;
+    float4 startAngle;
+    float4 endAngle;
     
     uint maxParticles;
     uint simulationSpace;
@@ -108,14 +113,10 @@ cbuffer ParticleSystem : register(b6)
     float maxLifeTime;
     float minLifeTime;
     
-    float startAngle;
-    float endAngle;
     float elapsedTime;
     float gravity;    
-
     float force;
     float radian;
-    int2 padding;    
 }
 
 // noise b7

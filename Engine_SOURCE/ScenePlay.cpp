@@ -37,7 +37,6 @@
 #include "Physical.h"
 #include "PhysXRigidBody.h"
 #include "PhysXCollider.h"
-#include "PlayerScript.h"
 #include "PhysicalMovement.h"
 #include "PhysicsMgr.h"
 #include "PhysicsScene.h"
@@ -73,6 +72,8 @@
 
 #include "Goomba.h"
 #include "Packun.h"
+
+#include "PostProcess.h"
 
 
 ScenePlay::ScenePlay()
@@ -122,7 +123,22 @@ void ScenePlay::Initialize()
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
+
 	}	
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	}
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
+	}
+
+
+	{
+		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+		mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
+	}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);

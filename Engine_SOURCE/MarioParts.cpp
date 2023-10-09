@@ -6,7 +6,6 @@
 #include "PhysXRigidBody.h"
 #include "PhysicalMovement.h"
 #include "PhysXCollider.h"
-#include "PlayerScript.h"
 #include "Transform.h"
 
 MarioParts::MarioParts()
@@ -87,7 +86,7 @@ void MarioParts::BoneInitialize()
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandL");
 		assert(model);
 		mr->SetModel(model);
-		mr->SetMaterialByKey(L"marioHandLMaterial", 0);
+		mr->SetMaterialByKey(L"marioHandMaterial", 0);
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
 		animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioHandL/Animation/Walk.smd", 0.05f);
@@ -110,7 +109,7 @@ void MarioParts::BoneInitialize()
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandR");
 		assert(model);
 		mr->SetModel(model);
-		mr->SetMaterialByKey(L"marioHandRMaterial", 0);
+		mr->SetMaterialByKey(L"marioHandMaterial", 0);
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
 		//animator->LoadAnimations(L"..//Resources/MarioHandR/Animation");

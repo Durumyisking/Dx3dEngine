@@ -64,6 +64,7 @@ PS_OUT main(VSOut vsin)
         (lightProj.x * 0.5) + 0.5f,
         -(lightProj.y * 0.5) + 0.5f
     );
+
     float lit = 1.f;
     if (depthMapUV.x < 0.f || depthMapUV.x > 1.f || depthMapUV.y < 0.f || depthMapUV.y > 1.f)
     {
@@ -71,10 +72,9 @@ PS_OUT main(VSOut vsin)
     }
     else
     {
-        lit = VSM_FILTER(ShadowMap.Sample(linearSampler, depthMapUV).rg, lightProj.z);        
+        lit = VSM_FILTER(ShadowMap.Sample(linearSampler, depthMapUV).rg, lightProj.z);      
     }
-    int myidx = lightIndex;
-        
+    
     float3 lightVec = -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz;
     directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness);
 
