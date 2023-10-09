@@ -29,6 +29,8 @@ struct VTX_OUT
 #define MAGENTA float4(1.f, 0.f, 1.f, 1.f)
 #define ALPHA(target, value) float4(target.r, target.g, target.b, (float)value)
 
+#define RESOLUTION float2(1600.f, 900.f)
+
 
 float3 RotatePointZ(float3 pointVal, float radian, float3 rotationCenter)
 {

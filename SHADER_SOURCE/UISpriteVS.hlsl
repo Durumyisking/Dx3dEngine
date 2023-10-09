@@ -24,7 +24,7 @@ VSOut main(VSIn In)
     //Out.WorldPos = worldPosition.xyz;
     Out.Pos = ProjPosition;
     //Out.Pos = ProjPosition;
-    Out.WorldPos = worldPosition;
+    Out.WorldPos = worldPosition.xyz;
     Out.UV = In.UV;
    
     return Out;

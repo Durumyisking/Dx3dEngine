@@ -37,7 +37,7 @@ float4 main(VSOut vsIn) : SV_Target
     
     // 빛 타입에 따라 다르게 적용되도록해야함 현재는 dir light만 적용중
     
-    for (int i = 0; i < lightCount; ++i)
+    for (unsigned int i = 0; i < lightCount; ++i)
     {
         float3 lightVec = lightAttributes[i].type == LIGHT_DIRECTIONAL 
         ? -lightAttributes[i].direction.xyz
@@ -66,7 +66,7 @@ float4 main(VSOut vsIn) : SV_Target
         : saturate((lightAttributes[i].fallOffEnd - lightDist) / (lightAttributes[i].fallOffEnd - lightAttributes[i].fallOffStart)) * ndotl;
 
         
-        float3 radiance = lightAttributes[i].color.diffuse * spotFator * att; // * shadowFactor;
+        float3 radiance = lightAttributes[i].color.diffuse.xyz * spotFator * att; // * shadowFactor;
 
         
         directLighting += PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness) * radiance;

@@ -66,7 +66,7 @@ cbuffer Grid : register(b2)
 {
     float3 cameraPosition;
     float2 gridOffset;
-    float2 resolution;
+    float2 gridResolution;
     float thickness;
 }
 

@@ -250,6 +250,13 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LensFlareShader");
+			GetDevice()->CreateInputLayout(arrLayout, 2
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
 #pragma endregion
 
 #pragma region SamplerState
@@ -674,7 +681,15 @@ namespace renderer
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"BasicPostProcessShader", shader);
 		}
 #pragma endregion
-
+#pragma region lensFlareShader
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"PostProcessVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"LensFlarePS.hlsl", "main");
+			shader->SetDSState(eDepthStencilType::NoWrite);
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"LensFlareShader", shader);
+		}
+#pragma endregion
 	}
 
 	void LoadLoadingSceneTexture()

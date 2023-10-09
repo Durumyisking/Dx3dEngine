@@ -185,6 +185,16 @@ void AsyncLoad::LoadMaterials()
 		material->SetTextureByKey(L"PostProcessTexture", eTextureSlot::Albedo);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"BasicPostProcessMaterial", material);
 	}
+#pragma region lensFlare Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LensFlareShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetRenderingMode(eRenderingMode::PostProcess);
+		material->SetTextureByKey(L"PostProcessTexture", eTextureSlot::Albedo);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"LensFlareMaterial", material);
+	}
+
 #pragma endregion
 
 	loadGoomba(L"DeferredShader");
