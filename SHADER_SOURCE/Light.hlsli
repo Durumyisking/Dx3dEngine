@@ -223,59 +223,10 @@ float3 AmbientLightingByIBL(float3 albedo, float3 normalW, float3 pixelToEye,
     return (diffuseIBL + specularIBL);
 }
 
-float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, Texture2D shadowMap)
-{
-    // Directional light
-    //float3 lightVec = light.type & 0
-    //                  ? -light.direction
-    //                  : light.position.xyz - posWorld;
-    float3 lightVec = -light.direction.xyz;
-                              
-    float lightDist = length(lightVec);
-    lightVec /= lightDist;
-
-    float spotFator = 1.0f;
-        
-    // Distance attenuation
-    float att = saturate((20.f - lightDist)
-                         / (20.f - 0.f));
-
-    // Shadow map
-    float shadowFactor = 1.0;
-    
-    {
-        const float nearZ = 0.01; // 카메라 설정과 동일
-        
-        // 1. Project posWorld to light screen    
-        float4 lightScreen = mul(float4(posWorld, 1.0), lightProjection);
-        lightScreen.xyz /= lightScreen.w;
-        
-        // 2. 카메라(광원)에서 볼 때의 텍스춰 좌표 계산
-        float2 lightTexcoord = float2(lightScreen.x, -lightScreen.y);
-        lightTexcoord += 1.0;
-        lightTexcoord *= 0.5;
-        
-        // 3. 쉐도우맵에서 값 가져오기
-        float depth = shadowMap.Sample(linearSampler, lightTexcoord).r;
-        //float depth = shadowMap.Sample(shadowPointSampler, lightTexcoord).r;
-        
-        // 4. 가려져 있다면 그림자로 표시
-        if (depth + 0.001 < lightScreen.z)
-            shadowFactor = 0.0;
-        
-    }
-    //              light.radiance
-    float3 radiance =    5.f    * spotFator * att * shadowFactor;
-
-    return radiance;
-}
-
-
-
 float VSM_FILTER(float2 moments, float fragDepth)
 {
     float lit = (float) 1.0f;
-    float E_x2 = moments.y;  
+    float E_x2 = moments.y;
     float Ex_2 = moments.x * moments.x;
     float variance = E_x2 - Ex_2;
     variance = max(variance, 0.00005f);
@@ -288,6 +239,121 @@ float VSM_FILTER(float2 moments, float fragDepth)
     
     return lit;
 }
+
+float3 LightRadiance(in LightAttribute light, in float3 posWorld, in float3 normalWorld)
+{
+    // Directional light
+    float3 lightVec = light.type & LIGHT_DIRECTIONAL
+                      ? -light.direction
+                      : light.position.xyz - posWorld;
+        
+    float lightDist = length(lightVec);
+    lightVec /= lightDist;
+
+    // Spot light
+    float spotFator = light.type & LIGHT_SPOT
+                     ? pow(max(-dot(lightVec, light.direction.xyz), 0.0f), light.spotPower)
+                      : 1.0f;
+        
+    // Distance attenuation
+    //float att = saturate((light.fallOffEnd - lightDist)
+    //                     / (light.fallOffEnd - light.fallOffStart));
+
+    float att = light.type == LIGHT_DIRECTIONAL
+        ? 1.0f
+        : saturate((light.fallOffEnd - lightDist) / (light.fallOffEnd - light.fallOffStart));
+
+    
+    // Shadow map
+    float shadowFactor = 1.0;
+    float3 radiance = light.color.diffuse.xyz * spotFator * att * shadowFactor;
+
+    return radiance;
+}
+float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, Texture2D shadowMap)
+{
+     // Directional light
+    float3 lightVec = light.type & LIGHT_DIRECTIONAL
+                      ? -light.direction
+                      : light.position.xyz - posWorld;
+        
+    float lightDist = length(lightVec);
+    lightVec /= lightDist;
+
+    // Spot light
+    float spotFator = light.type & LIGHT_SPOT
+                     ? pow(max(-dot(lightVec, light.direction.xyz), 0.0f), light.spotPower)
+                      : 1.0f;
+        
+     // Distance attenuation
+    //float att = saturate((light.fallOffEnd - lightDist)
+    //                     / (light.fallOffEnd - light.fallOffStart));
+
+    float att = light.type == LIGHT_DIRECTIONAL
+        ? 1.0f
+        : saturate((light.fallOffEnd - lightDist) / (light.fallOffEnd - light.fallOffStart));
+
+    // Shadow map
+    float shadowFactor = 1.0;
+
+    { 
+        // 1. Project posWorld to light screen    
+        //float4 lightScreen = mul(float4(posWorld, 1.0), light.viewProj);
+        float4 lightScreen = mul(float4(posWorld, 1.0), lightView);
+        lightScreen = mul(float4(lightScreen.xyz, 1.0), lightProjection);
+        lightScreen.xyz /= lightScreen.w;
+        
+        // 2. 카메라(광원)에서 볼 때의 텍스춰 좌표 계산
+        float2 lightTexcoord =
+        float2(
+            (lightScreen.x * 0.5) + 0.5f,
+            -(lightScreen.y * 0.5) + 0.5f
+        );
+        
+        // Baisc Shadow
+        /*
+            // 3. 쉐도우맵에서 값 가져오기
+            float depth = shadowMap.Sample(clampSampler, lightTexcoord).r;
+        
+            // 4. 가려져 있다면 그림자로 표시
+            if (depth + 0.00001 < lightScreen.z)
+                shadowFactor = 0.0;
+        */
+        
+        // pcf sampliing
+        uint width, height, numMips;
+        shadowMap.GetDimensions(0, width, height, numMips);
+        
+        // Texel size
+        float dx = 5.0 / (float) width;
+       // shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.001, dx, shadowMap);
+        shadowFactor = PCSS(lightTexcoord, lightScreen.z - 0.01, shadowMap, light.invProj, light.radius);
+        
+        // vsm sampling
+        //shadowFactor = VSM_FILTER(ShadowMap.Sample(linearSampler, lightTexcoord).rg, lightScreen.z);
+        
+        /*
+        shadowMap.SampleCmpLevelZero(shadowCompareSampler, lightTexcoord.xy, lightScreen.z - 0.001).r;
+        
+        uint width, height, numMips;
+        shadowMap.GetDimensions(0, width, height, numMips);
+        float dx = 5.0 / (float) width;
+        float percentLit = 0.0;
+        const float2 offsets[9] =
+        {
+            float2(-1, -1), float2(0, -1), float2(1, -1),
+            float2(-1, 0), float2(0, 0), float2(1, 0),
+            float2(-1, +1), float2(0, +1), float2(1, +1)
+        };
+        */
+    }
+
+    float3 radiance = light.color.diffuse.xyz * spotFator * att * shadowFactor;
+
+    return radiance;
+}
+
+
 
 float3 PBR_DirectLighting(float3 pixelToEye, float3 lightDir, float3 albedo, float3 normal, float metallic, float roughness)
 {

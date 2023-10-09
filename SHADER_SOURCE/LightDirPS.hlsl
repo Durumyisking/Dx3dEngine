@@ -49,36 +49,16 @@ PS_OUT main(VSOut vsin)
     
     // 현재 camera로 보고있는 projection 화면을
     // light 입장에서 본 proejction으로 바꿔야 한다.
-    // ViewPos -> WorldPos
+
     
-    // WorldPos -> Light 투영
-    float4 lightProj = mul(float4(worldPos.xyz, 1.f), lightView);
-    lightProj = mul(float4(lightProj.xyz, 1.f), lightProjection);
-
-    lightProj.xy /=lightProj .w;    
-    lightProj.z /= lightProj.w;
-
-    // 샘플링을 하기 위해서 투영좌표계를 UV 좌표계로 변환
-    float2 depthMapUV = 
-    float2(
-        (lightProj.x * 0.5) + 0.5f,
-        -(lightProj.y * 0.5) + 0.5f
-    );
-
-    float lit = 1.f;
-    if (depthMapUV.x < 0.f || depthMapUV.x > 1.f || depthMapUV.y < 0.f || depthMapUV.y > 1.f)
-    {
-        lit = 1.f;
-    }
-    else
-    {
-        lit = VSM_FILTER(ShadowMap.Sample(linearSampler, depthMapUV).rg, lightProj.z);      
-    }
+    float3 radiance = 0.0f;
+            
+    radiance = LightRadiance(lightAttributes[0], worldPos.xyz, normal.xyz, ShadowMap);
     
     float3 lightVec = -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz;
     directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness);
 
-    output.vDiffuse.xyz = ambientLighting + directLighting * lit;
+    output.vDiffuse.xyz = ambientLighting + directLighting * radiance;
     
     output.vDiffuse.a = 1.f;
     //output.vSpecular.a = 1.f;
