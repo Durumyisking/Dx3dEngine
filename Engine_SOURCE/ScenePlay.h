@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "Player.h"
 
 
 class Panal;
@@ -30,4 +31,6 @@ private:
 	Panal* mLifePanal;
 	Panal* mLunaPanal;
 	Panal* mCompassPanal;
+
+	Player* mPlayer;
 };
