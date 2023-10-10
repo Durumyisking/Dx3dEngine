@@ -57,7 +57,7 @@ void main(uint3 DTid : SV_DispatchThreadID) // 쓰레드 그룹 xyz를 인자로 받음
             
           ParticleBufferUAV[DTid.x].lifeTime = (maxLifeTime - minLifeTime) * (2.f * r5 - 1.f) + minLifeTime;
           if (minLifeTime == 0.f)
-              ParticleBufferUAV[DTid.x].lifeTime = maxLifeTime;
+                ParticleBufferUAV[DTid.x].lifeTime = maxLifeTime + ParticleBufferUAV[DTid.x].wakeUpTime;
             
             ParticleBufferUAV[DTid.x].texture_x_index = 0;
             ParticleBufferUAV[DTid.x].texture_y_index = 0;
@@ -65,17 +65,19 @@ void main(uint3 DTid : SV_DispatchThreadID) // 쓰레드 그룹 xyz를 인자로 받음
     }
     else // active == 1
     {
+        float wakeUpTiem = ParticleBufferUAV[DTid.x].wakeUpTime;
         ParticleBufferUAV[DTid.x].elapsedTime += deltaTime;
-        if (ParticleBufferUAV[DTid.x].lifeTime < ParticleBufferUAV[DTid.x].elapsedTime)
+        if (ParticleBufferUAV[DTid.x].lifeTime + wakeUpTiem < ParticleBufferUAV[DTid.x].elapsedTime)
         {
-            ParticleBufferUAV[DTid.x].active = 0;
+            //ParticleBufferUAV[DTid.x].active = 0;
         }
-        else
+        else if (ParticleBufferUAV[DTid.x].elapsedTime > wakeUpTiem)
         {
             ParticleBufferUAV[DTid.x].position
             += ParticleBufferUAV[DTid.x].direction * ParticleBufferUAV[DTid.x].speed * deltaTime;
             
-            float3 scale = lerp(ParticleBufferUAV[DTid.x].startScale, ParticleBufferUAV[DTid.x].endScale, ParticleBufferUAV[DTid.x].elapsedTime / ParticleBufferUAV[DTid.x].lifeTime);
+            float3 scale = lerp(ParticleBufferUAV[DTid.x].startScale, ParticleBufferUAV[DTid.x].endScale,
+            ParticleBufferUAV[DTid.x].elapsedTime / ParticleBufferUAV[DTid.x].lifeTime + wakeUpTiem);
             
              // scale
             row_major matrix worldMatrix = matrix
@@ -88,7 +90,9 @@ void main(uint3 DTid : SV_DispatchThreadID) // 쓰레드 그룹 xyz를 인자로 받음
             float4 q_startAngle = EulerToQuternion(ParticleBufferUAV[DTid.x].q_startRotation.xyz);
             float4 q_endAngle = EulerToQuternion(ParticleBufferUAV[DTid.x].q_endRotation.xyz);
             
-            float4 q_rotation = q_slerp(q_startAngle, q_endAngle, ParticleBufferUAV[DTid.x].elapsedTime / ParticleBufferUAV[DTid.x].lifeTime);
+            float4 q_rotation = q_slerp(q_startAngle, q_endAngle
+            , ParticleBufferUAV[DTid.x].elapsedTime / ParticleBufferUAV[DTid.x].lifeTime + wakeUpTiem);
+            
             float4x4 rotationMatrix = quaternion_to_matrix(q_rotation);
             
             //  S * R * T

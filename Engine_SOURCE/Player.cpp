@@ -15,6 +15,7 @@
 #include "GenericAnimator.h"
 
 #include "ParticleSystem.h"
+#include "FootSmokeParticle.h"
 
 Player::Player()
 	: mPlayerState(ePlayerState::Idle)
@@ -111,17 +112,23 @@ void Player::Initialize()
 	}
 
 	ParticleSystem* particle = AddComponent<ParticleSystem>(eComponentType::Particle);
-	particle->InsertParticle(L"Default", L"CloudParticle");
-	particle->SetComputeShader(L"ParticleCS");
-	
-	ParticleFormat* particleFormat = particle->Play(L"Default");
+
+															// 0 D2D, 1 D3D
+	int particleCount = 5;
+	//particle->InsertParticle(L"Default", L"CloudParticle", static_cast<UINT>(1), particleCount);
+	//particle->SetComputeShader(L"ParticleCS");
+	FootSmokeParticle* footSmokeparticle = new FootSmokeParticle(3, static_cast<ParticleFormat::eParticleType>(1));
+	particle->AddParticle(footSmokeparticle, L"Default");
+	ParticleFormat* particleFormat = particle->GetParticleFormat(L"Default");
 	if (particleFormat)
 	{
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CloudParticle");
+		if (model)
+			particleFormat->SetModel(model);
+
 		Texture* tex = GETSINGLE(ResourceMgr)->Load<Texture>(L"SmokeParticle", L"SmokeParticle/Image/smoke01.png");
 		particleFormat->SetTexture(static_cast<int>(eTextureSlot::Albedo), tex, 1, 1);
 	}
-
-
 
 	mStateInfo.resize(static_cast<int>(ePlayerState::Die) + 1);
 	stateInfoInitalize();
@@ -500,11 +507,30 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 	{
 		cilp = animator->GetAnimationClip(L"RunStart");
 		if (cilp)
-			cilp->SetCompleteEvent([animator]()
+			cilp->SetCompleteEvent([animator, this]()
 		{
 			animator->Play(L"Run");
+			ParticleSystem* particle = GetParticle();
+			if (particle)
+			{
+				particle->Play(L"Default");
+			}
 		});
 	}
+
+	{
+		cilp = animator->GetAnimationClip(L"Run");
+		if (cilp)
+			cilp->SetEndEvent([this]()
+				{
+					ParticleSystem* particle = GetParticle();
+					if (particle)
+					{
+						particle->Stop();
+					}
+				});
+	}
+	
 
 	//멈추는 애니메이션 후 idle로
 	{
