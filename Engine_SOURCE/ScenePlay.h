@@ -29,12 +29,13 @@ public:
 
 
 	void CreatePlayerUI();
-	Player* GetPlayer() { return player; }
+	Player* GetPlayer() { return mPlayer; }
 private:
 	Panal* mCoinPanal;
 	Panal* mCityCoinPanal;
 	Panal* mLifePanal;
 	Panal* mLunaPanal;
 	Panal* mCompassPanal;
+	Panal* mDieUIPanal;
 	Player* mPlayer;
 };

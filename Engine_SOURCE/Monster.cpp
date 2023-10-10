@@ -2,6 +2,11 @@
 #include "MonsterAiScript.h"
 #include "MonsterStateScript.h"
 #include "BoneAnimator.h"
+#include "GenericAnimator.h"
+#include "MarioCap.h"
+#include "TimeMgr.h"
+#include "Player.h"
+
 Monster::Monster()
 	: DynamicObject()
 	, mMonsterState(eMonsterState::Idle)
