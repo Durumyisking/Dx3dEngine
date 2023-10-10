@@ -6,6 +6,8 @@
 #include "CameraScript.h"
 #include "Player.h"
 #include "TimerMgr.h"
+#include "AudioListener.h"
+
 Scene::Scene()
 	: mDeleteObj(true)
 	, mType(SceneMgr::eSceneType::End)
@@ -177,6 +179,8 @@ void Scene::CreateCameras()
 			cameraComp->SetNear(0.01f);
 
 			CameraScript* cameraScript = mCamera->AddComponent<CameraScript>(eComponentType::Script);
+
+			mCamera->AddComponent<AudioListener>(eComponentType::AudioListener);
 
 		}
 		if (!mUICamera)

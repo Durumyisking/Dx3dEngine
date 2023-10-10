@@ -1,7 +1,7 @@
 #include "ResourceMgr.h"
 #include "Material.h"
 #include "FileMgr.h"
-
+#include "AudioClip.h"
 
 ResourceMgr::ResourceMgr()
 	: mResources{}
@@ -65,8 +65,7 @@ Material* ResourceMgr::CreateMaterial(std::wstring textureColor, std::wstring te
 
 void ResourceMgr::Initalize()
 {
-
-
+	//Load<AudioClip>(L"TitleBGM", L"Resources\\Sound\\Title\\TitleBGM.wav");
 }
 
 void ResourceMgr::Release()

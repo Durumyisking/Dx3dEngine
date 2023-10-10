@@ -69,6 +69,9 @@
 #include "CompassNeedleScript.h"
 #include "DieUIEffectScript.h"
 #include "DieCircleUIScript.h"
+#include "AudioListener.h"
+#include "AudioSource.h"
+
 
 #include "Goomba.h"
 #include "Packun.h"

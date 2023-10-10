@@ -4,6 +4,7 @@
 #include "InputMgr.h"
 #include "UIManager.h"
 #include "SceneMgr.h"
+#include "AudioSource.h"
 
 TitleUIBarScript::TitleUIBarScript()
 	:UIScript()
@@ -42,17 +43,16 @@ void TitleUIBarScript::Update()
 	case TitleUIBarScript::State::ScaleChange:
 		ScaleChange();
 		break;
+	case TitleUIBarScript::State::SelectUIButton:
+		SelectUIButton();
+		break;
+	case TitleUIBarScript::State::ChangeScene:
+		ChangeScene();
+		break;
 	default:
 		break;
 	}
 }
-
-//	for (size_t i = 0; i < (GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds().size()); i++)
-//	{
-//		(GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false));
-//	}
-
-//	(GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[GETSINGLE(UIManager)->mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true));
 
 
 void TitleUIBarScript::Idle()
@@ -65,6 +65,8 @@ void TitleUIBarScript::Idle()
 		pos = mOriginScale * mChangeSize;  //Vector3(1.f, 0.9f, 1.0f)
 		this->GetOwner()->GetComponent<Transform>()->SetScale(pos);
 
+		this->GetOwner()->GetComponent<AudioSource>()->Play(L"UIBarMove", false);
+
 		mCount--;
 		mState = State::ScaleChange;
 	}
@@ -75,6 +77,8 @@ void TitleUIBarScript::Idle()
 
 		pos = mOriginScale * mChangeSize;
 		this->GetOwner()->GetComponent<Transform>()->SetScale(pos);
+
+		this->GetOwner()->GetComponent<AudioSource>()->Play(L"UIBarMove", false);
 
 		mCount++;
 		mState = State::ScaleChange;
@@ -105,23 +109,37 @@ void TitleUIBarScript::ScaleChange()
 	mTitleTextPanal->GetChilds()[mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true);
 }
 
-void TitleUIBarScript::Select()
+void TitleUIBarScript::SelectUIButton()
 {
-	if (mTitleTextPanal == nullptr)
-	{
-		mTitleTextPanal = dynamic_cast<Panal*>(GETSINGLE(UIManager)->GetTitlePanal(eUIType::TitleText));
-	}
+	this->GetOwner()->GetComponent<AudioSource>()->Play(L"GameStartSoundEffect", false);
+	mCurrentTime = 0;
+	mState = State::ChangeScene;
+}
 
-	switch (mCount)
+void TitleUIBarScript::ChangeScene()
+{
+	mCurrentTime += DT;
+
+	if (mCurrentTime >= 2)
 	{
-	case 0:
-		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
-		break;
-	case 1:
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
+		if (mTitleTextPanal == nullptr)
+		{
+			mTitleTextPanal = dynamic_cast<Panal*>(GETSINGLE(UIManager)->GetTitlePanal(eUIType::TitleText));
+		}
+
+		switch (mCount)
+		{
+		case 0:
+			GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		}
+
+		mCurrentTime = 0;
 	}
 }

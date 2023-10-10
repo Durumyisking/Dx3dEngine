@@ -397,6 +397,11 @@
     <ClCompile Include="ParticleFormat.cpp">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClCompile>
+    <ClCompile Include="DieCircleUIScript.cpp" />
+    <ClCompile Include="DieUIEffectScript.cpp" />
+    <ClCompile Include="HelpUIScript.cpp" />
+    <ClCompile Include="MilestoneScript.cpp" />
+    <ClCompile Include="TitleBGMScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -829,6 +834,11 @@
     <ClInclude Include="ParticleFormat.h">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClInclude>
+    <ClInclude Include="DieCircleUIScript.h" />
+    <ClInclude Include="DieUIEffectScript.h" />
+    <ClInclude Include="HelpUIScript.h" />
+    <ClInclude Include="MilestoneScript.h" />
+    <ClInclude Include="TitleBGMScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
