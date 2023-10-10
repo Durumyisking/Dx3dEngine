@@ -21,7 +21,8 @@ extern gui::Editor editor;
 namespace gui
 {
 	Hierarchy::Hierarchy()
-		: mTreeWidget(nullptr)
+		: mbForceReset(false)
+		, mTreeWidget(nullptr)
 		, mTargetObject(nullptr)
 		, mCurrentScene(nullptr)
 	{
@@ -64,15 +65,18 @@ namespace gui
 		//ImGui::SetNextWindowContentSize(ImVec2(10, 10));  // ÄÁÅÙÃ÷ Å©±â ÃÊ±âÈ­
 
 		Scene* mActiveScene = GETSINGLE(SceneMgr)->GetActiveScene();
-		//if (mCurrentScene != mActiveScene)
-		//{
+		if (mCurrentScene != mActiveScene || mbForceReset)
+		{
 			if (mActiveScene != nullptr)
 			{
 				mCurrentScene = mActiveScene;
 
 				InitializeScene();
+				mbForceReset = false;
+
+				InitializeOutline(mTargetObject);
 			}
-		//}
+		}
 
 
 		if (KEY_UP(LSHIFT))

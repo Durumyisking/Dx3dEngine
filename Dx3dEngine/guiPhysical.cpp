@@ -14,7 +14,7 @@ namespace gui
         , mGeometryType(eGeometryType::End)
     {
         SetName("Physical");
-        SetSize(ImVec2(200.0f, 120.0f));
+        SetSize(ImVec2(250.0f, 200.0f));
     }
 
     GUIPhysical::~GUIPhysical()

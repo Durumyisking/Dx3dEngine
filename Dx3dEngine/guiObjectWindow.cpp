@@ -132,7 +132,11 @@ namespace gui
 		if (!mInputText.empty())
 			NewObj->SetName(StringToWStringReturn(mInputText));
 
-		AddObjectToScene(NewObj, mInputLayer);
+		if (AddObjectToScene(NewObj, mInputLayer))
+		{
+			Hierarchy* hierarchy = GETSINGLE(WidgetMgr)->GetWidget<Hierarchy>("Hierarchy");
+			hierarchy->ForceReset();
+		}
 	}
 
 	void ObjectWindow::DeleteObject()
@@ -147,6 +151,7 @@ namespace gui
 
 		hierarchy->GetTargetObject()->Die();
 		hierarchy->SetTargetObject(nullptr);
+		hierarchy->ForceReset();
 	}
 
 	void ObjectWindow::SetObjectLayerType(UINT num)

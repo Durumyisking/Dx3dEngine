@@ -19,9 +19,10 @@ namespace gui
 {
 	using namespace enums;
 	Inspector::Inspector()
-		:mTargetResource(nullptr)
+		: mTargetResource(nullptr)
 		, mTransform(nullptr)
 		, mMeshRenderer(nullptr)
+		, mbPhysical(false)
 	{
 		SetName("Inspector");
 		SetSize(ImVec2(300.0f, 100.0f));
@@ -178,6 +179,9 @@ namespace gui
 	void Inspector::InitializeTargetGameObject()
 	{
 		ClearTarget();
+
+		if (mTargetGameObject == nullptr)
+			return;
 
 		std::vector<Component*> targetComponents = mTargetGameObject->GetComponentsVec();
 

@@ -103,8 +103,7 @@ public:
 	template <typename T>
 	T* GetComponent()
 	{
-		T* component;
-		for (auto c : mComponents)
+		T* component;		for (auto c : mComponents)
 		{
 			component = dynamic_cast<T*>(c);
 
