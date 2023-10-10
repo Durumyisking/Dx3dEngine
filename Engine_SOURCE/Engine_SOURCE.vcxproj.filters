@@ -413,6 +413,9 @@
     <ClCompile Include="PathMgr.cpp">
       <Filter>Path</Filter>
     </ClCompile>
+    <ClCompile Include="FootSmokeParticle.cpp">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -855,6 +858,8 @@
     </ClInclude>
     <ClInclude Include="PathMgr.h">
       <Filter>Path</Filter>
+    <ClInclude Include="FootSmokeParticle.h">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
