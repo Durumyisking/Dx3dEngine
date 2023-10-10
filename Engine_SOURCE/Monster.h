@@ -36,11 +36,13 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
 
-	virtual void OnTriggerEnter(GameObj* gameObject);
-	virtual void OnTriggerStay(GameObj* gameObject);
-	virtual void OnTriggerExit(GameObj* gameObject);
 
-	virtual void CaptureEvent() {};
+	virtual void CaptureEvent() = 0;
+	virtual void CaptureEnter(MarioCap* cap) override;
+
+	virtual void OnTriggerEnter(GameObj* gameObject) override;
+	virtual void OnTriggerStay(GameObj* gameObject)  override;
+	virtual void OnTriggerExit(GameObj* gameObject)  override;
 
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) {};

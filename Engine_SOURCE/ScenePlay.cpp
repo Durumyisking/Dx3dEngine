@@ -139,6 +139,10 @@ void ScenePlay::Initialize()
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
 		player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetMarioCap(mariocap);
+		mPlayer = player;
+		//dynamic_cast<Camera*>(mCamera)->SetTarget(player);
+		
+		//mCamera->GetScript<CameraScript>()->SetTargetObject(player);
 	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
@@ -258,6 +262,8 @@ void ScenePlay::Enter()
 
 	mCamera->SetPos(Vector3(0.f, 150.f, -150.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
+	mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+
 }
 
 void ScenePlay::Exit()
