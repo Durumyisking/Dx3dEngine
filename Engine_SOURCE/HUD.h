@@ -4,8 +4,6 @@
 class HUD : public UIBase
 {
 
-	eHUDState mState;
-
 public:
 	HUD();
 	HUD(eUIType type);
@@ -21,18 +19,10 @@ public:
 	virtual void OnClear() override;
 
 	void SetSpeed(float speed) { mSpeed = speed; }
-	void SetState(eHUDState state) { mState = state; mActivate = true; }
 	void SetActive(bool isActive) { mActivate = isActive; }
 	void SetChangeSize(Vector3 size) { mChangeSize = size; }
 	void SetTargetPos(Vector3 pos) { mTargetPos = pos; }
 	void SetCount(int count) { mCount = count; }
-
-	void MoveBlink(Vector3 changeSize);
-	void MoveTowards();
-	void Rotate();
-	void Size();
-	void TitleCapMove();
-	void PlayAnimation();
 
 
 	void SetColor(Vector4 color, bool isColor) override;

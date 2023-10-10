@@ -15,6 +15,7 @@ public:
 	enum class eSceneType
 	{
 		None = -1,
+		Loading,
 		Title,
 		Play,
 		Test,

@@ -147,9 +147,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Common\GameObj\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerScript.cpp">
-      <Filter>Common\GameObj\Player</Filter>
-    </ClCompile>
     <ClCompile Include="PostProcess.cpp">
       <Filter>Common\GameObj\PostProcess</Filter>
     </ClCompile>
@@ -303,7 +300,7 @@
     <ClCompile Include="GameNetSerializer.cpp">
       <Filter>Server</Filter>
     </ClCompile>
-    <ClCompile Include="GameNetThread.cpp">
+    <ClCompile Include="GameThread.cpp">
       <Filter>Server</Filter>
     </ClCompile>
     <ClCompile Include="TimeMgr.cpp">
@@ -312,33 +309,6 @@
     <ClCompile Include="TimerMgr.cpp">
       <Filter>Timer</Filter>
     </ClCompile>
-    <ClCompile Include="CapUI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CapEyeUI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="UIFactory.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageUI.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Panal.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="UIBase.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
     <ClCompile Include="GenericAnimator.cpp" />
     <ClCompile Include="PlayerStateScript.cpp">
       <Filter>Common\GameObj\Player</Filter>
@@ -346,6 +316,86 @@
     <ClCompile Include="MarioCap.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
+    <ClCompile Include="CapStateScript.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLoading.cpp">
+      <Filter>Common\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="AsyncLoad.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="RotationUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="UIScript.cpp">
+      <Filter>UI\Script\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeUI.cpp">
+      <Filter>UI\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUI.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleUIBarScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CapMoveScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CapUI.cpp">
+      <Filter>UI\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp">
+      <Filter>UI\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFactory.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Panal.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CompassUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CompassNeedleScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerMoonScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioParts.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleFormat.cpp">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     <ClCompile Include="CapStateScript.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
@@ -365,7 +415,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraScript.h" />
     <ClInclude Include="FMod.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="PackunPostionBall.h" />
@@ -510,9 +559,6 @@
       <Filter>Common\GameObj\PhysicalGameObj</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Common\GameObj\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerScript.h">
       <Filter>Common\GameObj\Player</Filter>
     </ClInclude>
     <ClInclude Include="PostProcess.h">
@@ -695,7 +741,7 @@
     <ClInclude Include="GameNetSerializer.h">
       <Filter>Server</Filter>
     </ClInclude>
-    <ClInclude Include="GameNetThread.h">
+    <ClInclude Include="GameThread.h">
       <Filter>Server</Filter>
     </ClInclude>
     <ClInclude Include="ServerHeader.h">
@@ -706,12 +752,6 @@
     </ClInclude>
     <ClInclude Include="TimerMgr.h">
       <Filter>Timer</Filter>
-    </ClInclude>
-    <ClInclude Include="CapUI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CapEyeUI.h">
-      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>UI\Manager</Filter>
@@ -748,6 +788,63 @@
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClInclude>
     <ClInclude Include="CustomPhysXMemory.h" />
+    <ClInclude Include="SceneLoading.h">
+      <Filter>Common\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncLoad.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="RotationUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="UIScript.h">
+      <Filter>UI\Script\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CapEyeUI.h">
+      <Filter>UI\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CapUI.h">
+      <Filter>UI\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeUI.h">
+      <Filter>UI\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleUIBarScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CapMoveScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CapEyeScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CompassUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CompassNeedleScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerMoonScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraScript.h">
+      <Filter>Common\Component\Camera\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleFormat.h">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClInclude>
     <ClInclude Include="CompassUI.h" />
     <ClInclude Include="LifeUI.h" />
     <ClInclude Include="NavigationMgr.h">
@@ -910,9 +1007,6 @@
     <ClCompile Include="FontWrapper.cpp">
       <Filter>Common\Font</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerScript.cpp">
-      <Filter>Common\GameObj\Player</Filter>
-    </ClCompile>
     <ClCompile Include="druEnums.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -992,9 +1086,6 @@
       <Filter>Server</Filter>
     </ClCompile>
     <ClCompile Include="GameNetSerializer.cpp">
-      <Filter>Server</Filter>
-    </ClCompile>
-    <ClCompile Include="GameNetThread.cpp">
       <Filter>Server</Filter>
     </ClCompile>
     <ClCompile Include="GameNetObject.cpp">
@@ -1336,6 +1427,17 @@
     <None Include="druMath.ini">
       <Filter>Common\Math</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="UI\Script">
+      <UniqueIdentifier>{7e443b8d-9f15-4ae7-a3e1-5b2aa8eee7e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Script\Base">
+      <UniqueIdentifier>{a1205e1e-51cd-4b0d-b34e-2c8637c850fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UIObject">
+      <UniqueIdentifier>{9ce3c0ca-6cf4-4526-a443-57ba40870484}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common\Navigation">

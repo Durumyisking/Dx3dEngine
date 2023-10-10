@@ -22,6 +22,7 @@ MarioCap::MarioCap()
 	SetLayerType(eLayerType::Player);
 
 	mObjectTypeName = "MarioCap";
+	SetLayerType(eLayerType::Cap);
 }
 
 MarioCap::MarioCap(const MarioCap& Obj)
@@ -60,15 +61,14 @@ void MarioCap::Initialize()
 	//AddComponent<Transform>(eComponentType::Transform);
 
 	//model initialize
-	SetPos(Vector3(0.f, 0.f, 0.f));
+	SetPos(Vector3(0.f, 20.f, 0.f));
 
-	// TEST
-	SetPos(Vector3(-20.f, 0.f, 0.f));
 
 	SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioCap");
-	GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+	GetComponent<MeshRenderer>()->SetModel(model);
+	GetComponent<MeshRenderer>()->SetMaterialByKey(L"marioCapMaterial");
 
 	BoneAnimator* animator = GetComponent<BoneAnimator>(); 
 	boneAnimatorInit(animator);
@@ -77,8 +77,8 @@ void MarioCap::Initialize()
 
 	//Phsical
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Sphere, Vector3(0.5f, 0.5f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Sphere, Vector3(0.5f, 1.0f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.25f, 0.125f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.25f, 0.125f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	physical->RemoveActorToPxScene();
 
@@ -102,9 +102,10 @@ void MarioCap::Initialize()
 	stateInfoInitalize();
 	Physicalinit();
 
-
-
 	DynamicObject::Initialize();
+
+	GetComponent<MeshRenderer>()->SetBoneAnimator(nullptr);
+	Pause();
 }
 
 void MarioCap::Update()
@@ -180,7 +181,12 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		rigidbody->SetMaxVelocity(0.0f);
 
 		GetComponent<BoneAnimator>()->Play(L"Capture", false);
+
 		SetCapState(MarioCap::eCapState::Capture);
+
+		//dynamic_cast<Player*>(GetOwner())->SetPlayerState(Player::ePlayerState::Capture);
+		GetOwner()->Pause();
+		//GetOwner()->GetPhysical()->RemoveActorToPxScene();
 	}
 }
 
@@ -262,6 +268,7 @@ void MarioCap::FlyStart()
 	if (animator->IsRunning())
 		animator->Stop();
 
+	
 	// 플레이어의 현재 포지션과 Player forWard 를 가져옴
 	Transform* tr = GetTransform();
 	Vector3 pos = tr->GetPhysicalPosition();
@@ -353,11 +360,8 @@ void MarioCap::FlyEnd()
 		}
 
 		SetCapState(eCapState::Return);
-		// 마리오의 모자를 씌워줌
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
-		model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
-
 		GetPhysical()->RemoveActorToPxScene();
+		Pause();
 	};
 
 	// 이벤트 시작

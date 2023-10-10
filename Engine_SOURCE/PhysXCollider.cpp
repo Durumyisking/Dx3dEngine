@@ -110,18 +110,18 @@ void PhysXCollider::OnCollisionExit(PhysXCollider* otherCollider)
 
 void PhysXCollider::OnTriggerEnter(PhysXCollider* otherCollider)
 {
-	//GameObj* owner = GetOwner(); 
-	//std::string type= owner->GetObjectTypeName();
-	//std::wstring Name = owner->GetName();
-	GetOwner()->OnTriggerEnter(otherCollider->GetOwner());
+	if (otherCollider)
+		GetOwner()->OnTriggerEnter(otherCollider->GetOwner());
 }
 void PhysXCollider::OnTriggerStay(PhysXCollider* otherCollider)
 {
-	GetOwner()->OnTriggerStay(otherCollider->GetOwner());
+	if (otherCollider)
+		GetOwner()->OnTriggerStay(otherCollider->GetOwner());
 }
 void PhysXCollider::OnTriggerExit(PhysXCollider* otherCollider)
 {
-	GetOwner()->OnTriggerExit(otherCollider->GetOwner());
+	if(otherCollider)
+		GetOwner()->OnTriggerExit(otherCollider->GetOwner());
 }
 
 bool PhysXCollider::Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance)
@@ -319,6 +319,7 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
+		break;
 		default:
 			break;
 		}	

@@ -2,14 +2,12 @@
 
 #include "Animator.h"
 #include "BoneAnimator.h"
-#include "MeshRenderer.h"#
-
+#include "MeshRenderer.h"
 
 #include "RigidBody.h"
 #include "Physical.h"
 #include "PhysXRigidBody.h"
 #include "PhysXCollider.h"
-#include "PlayerScript.h"
 #include "PhysicalMovement.h"
 #include "PhysicsMgr.h"
 #include "PhysicsScene.h"

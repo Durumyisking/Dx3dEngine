@@ -24,8 +24,7 @@ struct VSOut
 VSOut main(VSIn vsIn)
 {
     VSOut vsOut = (VSOut) 0.f;
-    
-    
+        
     float4 weights = vsIn.BlendWeight;
     weights.w = 1.f - (weights.x + weights.y + weights.z);
   
@@ -49,7 +48,7 @@ VSOut main(VSIn vsIn)
     Normal = normalize(Normal);
     
     float4 Tangent = float4(vsIn.Tangent, 0.f);
-    Tangent = mul(Tangent, world);
+    Tangent = mul(Tangent, worldIT);
     Tangent = normalize(Tangent);
 
     

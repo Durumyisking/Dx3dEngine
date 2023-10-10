@@ -18,7 +18,8 @@ public:
 	virtual void FixedUpdate() final;
 
 	virtual void CaptureEvent() final;
-	virtual void DivideEvnet() final;
+	virtual void CaptureEnter(MarioCap* cap) final;
+	virtual void DivideEvent() final;
 
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 

@@ -2,6 +2,8 @@
 #include "MonsterAiScript.h"
 #include "MonsterStateScript.h"
 #include "BoneAnimator.h"
+#include "PhysXRigidBody.h"
+#include "TimeMgr.h"
 
 Monster::Monster()
 	: DynamicObject()
@@ -72,6 +74,22 @@ void Monster::FixedUpdate()
 	GameObj::FixedUpdate();
 }
 
+void Monster::OnTriggerEnter(GameObj* gameObject)
+{
+	if (eLayerType::Cap == gameObject->GetLayerType())
+	{
+		OnCapture();
+	}
+}
+
+void Monster::OnTriggerStay(GameObj* gameObject)
+{
+}
+
+void Monster::OnTriggerExit(GameObj* gameObject)
+{
+}
+
 void Monster::SetMonsterState(eMonsterState monsterState)
 {
 	std::set<UINT>::iterator iter;
@@ -85,3 +103,4 @@ void Monster::SetMonsterState(eMonsterState monsterState)
 	if (script)
 		script->Reset();
 }
+

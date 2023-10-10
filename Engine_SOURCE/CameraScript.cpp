@@ -56,11 +56,11 @@ void CameraScript::Update()
 
 	mTransform->SetPosition(mLookAt);
 
-	if (mUICameraObject != nullptr)
-	{
-		//mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
-		//mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());z
-	}
+	//if (mUICameraObject != nullptr)
+	//{
+	//	//mUICameraObject->GetComponent<Transform>()->SetPosition(mLookAt);
+	//	//mUICameraObject->GetComponent<Transform>()->SetRotation(mTransform->GetRotation());z
+	//}
 }
 
 void CameraScript::FixedUpdate()
@@ -90,7 +90,12 @@ void CameraScript::KeyBoardMove()
 {
 	// Keyboard Move
 
-	float speed = 100.f;
+	float speed = 50.f;
+	if (KEY_DOWN(LSHIFT))
+	{
+		speed = 100.f;
+	}
+
 	if (KEY_DOWN(W))
 	{
 		mLookAt += speed * mTransform->Forward() * DT;

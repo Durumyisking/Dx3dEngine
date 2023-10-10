@@ -16,6 +16,8 @@ public:
 	virtual void FixedUpdate();
 	virtual void Render();
 
+	void DeferredLightRender();
+
 	void SetType(eLightType type);
 
 	LightAttribute& GetAttribute() { return mAttribute; }
@@ -23,14 +25,21 @@ public:
 	void SetDiffuse(math::Vector4 diffuse) { mAttribute.diffuse = diffuse; }
 	void SetSpecular(math::Vector4 spec) { mAttribute.specular = spec; }
 	void SetAmbient(math::Vector4 ambient) { mAttribute.ambient = ambient; }
+
 	void SetRadius(float radius) { mAttribute.radius = radius; }
-	void SetAngle(float angle) { mAttribute.angle = angle; }
+	void SetFallOffStart(float fallOffStart) { mAttribute.fallOffStart= fallOffStart; }
+	void SetFallOffEnd(float fallOffEnd) { mAttribute.fallOffEnd = fallOffEnd; }
+	void SetSpotPower(float spotPower) { mAttribute.spotPower = spotPower; }
 
 	math::Vector4 GetDiffuse() { return mAttribute.diffuse ; }
 	math::Vector4 GetAmbient() { return mAttribute.ambient; }
 	enums::eLightType GetType() { return mAttribute.type; }
-	float GetRadius() { return mAttribute.radius; }
-	float GetAngle() { return mAttribute.angle; }
+
+	float GetRadius() const { return mAttribute.radius; }
+	float GetFallOffStart(float fallOffStart) const { return  mAttribute.fallOffStart; }
+	float GetFallOffEnd(float fallOffEnd) const { return mAttribute.fallOffEnd; }
+	float GetSpotPower(float spotPower) const {	return mAttribute.spotPower; }
+
 	void SetIndex(UINT idx) { mIndex = idx; }
 
 

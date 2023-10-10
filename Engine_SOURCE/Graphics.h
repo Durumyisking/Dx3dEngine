@@ -169,7 +169,7 @@ enum class eTextureSlot
 
 	ShadowMap = 19,
 
-//	Atlas = 29,					// atlasTexture
+	PostProcess = 20,					// atlasTexture
 
 	End,
 };
@@ -263,11 +263,12 @@ struct LightAttribute
 	math::Vector4 direction;
 
 	float radius;
-	float angle;
-		
-	enums::eLightType type;
+	float fallOffStart = 0.f;
+	float fallOffEnd = 0.f;
+	float spotPower;
 
-	int padding; // 상수버퍼 패딩
+	enums::eLightType type;
+	math::Vector3 padding; // 상수버퍼 패딩
 };
 
 struct Particle
@@ -282,15 +283,23 @@ struct Particle
 
 	float lifeTime;
 	float elapsedTime;
+
+	math::Vector4 q_startRotation;
+	math::Vector4 q_endRotation;
+
 	float speed;
-	math::Vector2 gravityAcc;
 	float radian;
+	float gravityAcc;
 	UINT active;
 
+	math::Matrix particleWorld = {};
+
+	UINT texture_x_index;
+	UINT texture_y_index;
 };
 struct ParticleShared
 {
-	UINT activeCount;
+	UINT activeCount = 1;
 };
 
 struct Vertex

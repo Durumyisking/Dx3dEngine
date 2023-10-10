@@ -68,6 +68,16 @@ void AnimationClip::Update()
 
 		return;
 	}
+	if (mAnimator)
+	{
+		mAnimator->ClearFrameAnimationData();
+	}
+
+
+	if (mAnimator)
+	{
+		mAnimator->FrameAnimationClear();
+	}
 
 	SetBoneMatrix(mSkeletonData[mCurIndex], mSkeletonData[mCurIndex + 1], mDuration);
 }
@@ -216,6 +226,9 @@ void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, cons
 
 		// T * R
 		node->SetTransformation(ToLeftHandMatrix(positionVec, result.GetMatrix()));
+
+		// 애니메이터의 현재 이동정보들을 세팅해줄거다
+		mAnimator->AddNodeTransform(mNodeData[curData.Translation[i].first].Name, ToLeftHandMatrix(positionVec, result.GetMatrix()));
 	}
 }
 
@@ -233,6 +246,16 @@ void AnimationClip::InterpolationPrveToCurAnimation()
 		mTickPerSceond = 0.0f;
 		mPreveAnimationData = nullptr;
 		return;
+	}
+	if (mAnimator)
+	{
+		mAnimator->ClearFrameAnimationData();
+	}
+
+
+	if (mAnimator)
+	{
+		mAnimator->FrameAnimationClear();
 	}
 
 	SetBoneMatrix(*mPreveAnimationData, mSkeletonData[mCurIndex], mConnectionDuration);
@@ -343,7 +366,7 @@ const animation::NodeData AnimationClip::readNodes(std::string& buf) const
 	fPos += 1;
 
 	str = buf.substr(fPos, lPos - fPos);
-	Data.Name = ConvertToW_String(str.c_str());
+	Data.Name = L"Armature_" + ConvertToW_String(str.c_str());
 
 
 	fPos = buf.find_last_of(' ', buf.size() - 1);

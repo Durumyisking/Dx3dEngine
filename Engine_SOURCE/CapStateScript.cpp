@@ -54,15 +54,19 @@ void CapStateScript::Initialize()
 
 void CapStateScript::Idle()
 {
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
-	model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
 	//BoneAnimator* animator = mCap->GetComponent<BoneAnimator>();
 	//if (animator == nullptr)
 	//	return;
 	//if (!(animator->PlayAnimationName() == L"Wait"))
 	//	animator->Play(L"Wait");
 	//mInitialForce = 33.f;
+	/*if (mCap->GetState() == GameObj::eState::Paused)
+	{
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
+		model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
+	}*/
 	mCap->Pause();
+
 }
 
 void CapStateScript::Throw()
@@ -91,6 +95,9 @@ void CapStateScript::Return()
 	if (mAnimator->PlayAnimationName() != L"CatchCap")
 	{
 		mAnimator->Play(L"CatchCap", false);
+		// ¸¶¸®¿ÀÀÇ ¸ðÀÚ¸¦ ¾º¿öÁÜ
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
+		model->MeshRenderSwtich(L"Cap__CapMT-mesh", true);
 	}
 }
 

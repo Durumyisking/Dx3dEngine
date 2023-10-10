@@ -170,3 +170,30 @@ AnimationClip* BoneAnimator::GetAnimationClip(const std::wstring& animationName)
 
 	return iter->second;
 }
+
+aiMatrix4x4 BoneAnimator::GetAnimationNodeTransform(const std::wstring& name) const
+{
+	auto iter = mFrameAnimationVector.find(name);
+	if (iter == mFrameAnimationVector.end())
+		return aiMatrix4x4();
+
+	return iter->second;
+}
+
+void BoneAnimator::AddNodeTransform(const std::wstring& name, aiMatrix4x4 transform)
+{
+	auto iter = mFrameAnimationVector.find(name);
+	if (iter != mFrameAnimationVector.end())
+		iter->second = transform;
+	else
+		mFrameAnimationVector.insert(std::pair(name, transform));
+}
+
+void BoneAnimator::DeleteNodeTransform(const std::wstring& name)
+{
+	auto iter = mFrameAnimationVector.find(name);
+	if (iter == mFrameAnimationVector.end())
+		return;
+
+	mFrameAnimationVector.erase(iter);
+}

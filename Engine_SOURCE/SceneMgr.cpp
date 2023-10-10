@@ -1,6 +1,7 @@
 #include "SceneMgr.h"
 
 #include "Scene.h"
+#include "SceneLoading.h"
 #include "SceneTitle.h"
 #include "ScenePlay.h"
 #include "Layer.h"
@@ -35,25 +36,24 @@ SceneMgr::~SceneMgr()
 
 void SceneMgr::Initialize()
 {
+	mScenes[static_cast<UINT>(eSceneType::Loading)] = new SceneLoading;
+	mScenes[static_cast<UINT>(eSceneType::Loading)]->SetType(eSceneType::Loading);
+
 	mScenes[static_cast<UINT>(eSceneType::Title)] = new SceneTitle;
 	mScenes[static_cast<UINT>(eSceneType::Title)]->SetType(eSceneType::Title);
 
 	mScenes[static_cast<UINT>(eSceneType::Play)] = new ScenePlay;
 	mScenes[static_cast<UINT>(eSceneType::Play)]->SetType(eSceneType::Play);
 
+	mActiveScene = mScenes[static_cast<UINT>(eSceneType::Loading)];
 	mScenes[static_cast<UINT>(eSceneType::Test)] = new ScenePlay;
 	mScenes[static_cast<UINT>(eSceneType::Test)]->SetType(eSceneType::Test);
 
-	mActiveScene = mScenes[static_cast<UINT>(eSceneType::Title)];
-
-	for (UINT i = 0; i < static_cast<UINT>(eSceneType::End); i++)
-	{
-		if (i > 1)
-			continue;
-
-		if(mScenes[i])
-			mScenes[i]->Initialize();
-	}
+	//for (UINT i = 0; i < static_cast<UINT>(eSceneType::End); i++)
+	//{
+	//	if(mScenes[i])
+	//		mScenes[i]->Initialize();
+	//}
 
 	CreateCDO();
 

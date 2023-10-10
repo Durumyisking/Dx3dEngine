@@ -1,6 +1,6 @@
 #pragma once
 #include "ServerHeader.h"
-#include "GameNetThread.h"
+#include "GameThread.h"
 #include "GameNet.h"
 
 namespace server
@@ -31,7 +31,7 @@ namespace server
 	private:
 		GameNetSerializer	mSendSer;
 		SOCKET				mClientSocket;
-		GameNetThread		mRecvThread;
+		GameThread		mRecvThread;
 
 	};
 }

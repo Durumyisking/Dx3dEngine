@@ -10,7 +10,7 @@ Texture2D positionTarget        : register(t5);
 Texture2D albedoTarget          : register(t6);
 Texture2D normalTarget          : register(t7);
 Texture2D MRDTarget             : register(t8); // metallic roughness Depth target
-Texture2D EmissiveTarget        : register(t9);
+Texture2D emissiveTarget        : register(t9);
 
 // Merge Light
 Texture2D diffuseLightTarget    : register(t10);
@@ -28,6 +28,9 @@ Texture2D BRDF : register(t15);
 Texture2D SkySphere : register(t18);
 
 Texture2D ShadowMap : register(t19);
+
+// postProcess
+Texture2D postProcessTexture : register(t20);
 
 
 //StructuredBuffer<LightAttribute> lightAttributes : register(t22);

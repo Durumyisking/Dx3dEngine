@@ -6,7 +6,6 @@
 #include "PhysXRigidBody.h"
 #include "PhysicalMovement.h"
 #include "PhysXCollider.h"
-#include "PlayerScript.h"
 #include "Transform.h"
 
 MarioParts::MarioParts()
@@ -55,6 +54,8 @@ void MarioParts::Initialize()
 
 	BoneInitialize();
 	DynamicObject::Initialize();
+
+	GetComponent<MeshRenderer>()->SetBoneAnimator(nullptr);
 }
 
 void MarioParts::Update()
@@ -70,6 +71,11 @@ void MarioParts::FixedUpdate()
 void MarioParts::Render()
 {
 	DynamicObject::Render();
+}
+
+void MarioParts::PrevRender()
+{
+	DynamicObject::PrevRender();
 }
 
 void MarioParts::FontRender()
@@ -91,13 +97,18 @@ void MarioParts::OnTriggerExit(GameObj* gameObject)
 
 void MarioParts::BoneInitialize()
 {
+	MeshRenderer* mr = GetComponent<MeshRenderer>();
+	assert(mr);
+
 	if (GetName() == L"HandL") {
 
 		SetPos(Vector3(0.f, 0.f, 0.f));
 		SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandL");
-		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		assert(model);
+		mr->SetModel(model);
+		mr->SetMaterialByKey(L"marioHandMaterial", 0);
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
 		animator->CreateAnimation(L"Walk", L"..//..//Resources/MarioHandL/Animation/Walk.smd", 0.05f);
@@ -118,7 +129,9 @@ void MarioParts::BoneInitialize()
 		SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHandR");
-		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		assert(model);
+		mr->SetModel(model);
+		mr->SetMaterialByKey(L"marioHandMaterial", 0);
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
 		//animator->LoadAnimations(L"..//Resources/MarioHandR/Animation");
@@ -139,7 +152,11 @@ void MarioParts::BoneInitialize()
 		SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
-		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		assert(model);
+		mr->SetModel(model);
+		mr->SetMaterialByKey(L"marioCapMaterial", 0);
+		mr->SetMaterialByKey(L"marioHairMaterial", 1);
+		mr->SetMaterialByKey(L"marioHairMaterial", 2);
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
 		//animator->LoadAnimations(L"..//Resources/MarioHead/Animation");
@@ -161,7 +178,16 @@ void MarioParts::BoneInitialize()
 		SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioFace");
-		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		assert(model);
+		mr->SetModel(model);
+		mr->SetMaterialByKey(L"marioEyeBallMaterial", 0);
+		mr->SetMaterialByKey(L"marioFaceMaterial", 1);
+		mr->SetMaterialByKey(L"marioHairFaceMaterial", 2);
+		mr->SetMaterialByKey(L"marioHairFaceMaterial", 3);
+		mr->SetMaterialByKey(L"marioHairFaceMaterial", 4);
+		mr->SetMaterialByKey(L"marioFaceMaterial", 5);
+		mr->SetMaterialByKey(L"marioFaceMaterial", 6);
+		mr->SetMaterialByKey(L"marioFaceMaterial", 7);
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
 		//animator->LoadAnimations(L"..//Resources/MarioFace/Animation");
@@ -180,7 +206,14 @@ void MarioParts::BoneInitialize()
 		SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioEye");
-		GetComponent<MeshRenderer>()->SetModel(model, model->GetMaterial(0));
+		assert(model);
+		mr->SetModel(model);
+		mr->SetMaterialByKey(L"marioEyePupilMaterial", 0);
+		mr->SetMaterialByKey(L"marioEyePupilMaterial", 1);
+		mr->SetMaterialByKey(L"marioEyeMaterial", 2);
+		mr->SetMaterialByKey(L"marioEyeMaterial", 3);
+		mr->SetMaterialByKey(L"marioEyeMaterial", 4);
+		mr->SetMaterialByKey(L"marioEyeMaterial", 5	);
 
 		BoneAnimator* animator = GetComponent<BoneAnimator>();
 		//animator->LoadAnimations(L"..//Resources/MarioEye/Animation");

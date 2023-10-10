@@ -13,7 +13,6 @@ namespace fs = std::filesystem;
 
 Model::Model()
 	: Resource(eResourceType::Model)
-	, mOwner(nullptr)
 	, mStructure(nullptr)
 	, mAssimpImporter{}
 	, mNodes{}
@@ -145,7 +144,6 @@ void Model::Bind_Render(bool bindMaterial)
 
 	for (Bone* bone : mBones)
 	{
-
 		aiMatrix4x4 finalMat = bone->mFinalMatrix;
 		boneInfo.FinalTransformation = ConvertMatrix(finalMat);
 		boneMat.emplace_back(boneInfo);
@@ -178,14 +176,21 @@ void Model::Bind_Render(bool bindMaterial)
 
 			mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
+
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
 		mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
 	}
 
+	mFrameAnimationVector = nullptr;
 	mStructure->Clear();
 	boneMat.clear();
+}
+
+void Model::SetFrameAnimationVector(const std::map<std::wstring, aiMatrix4x4>* animationVector)
+{
+	mFrameAnimationVector = animationVector;
 }
 
 
@@ -198,6 +203,14 @@ void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
 			(*iter)->SetRender(renderSwitch);
 			break;
 		}
+	}
+}
+
+void Model::AllMeshRenderSwtichOff()
+{
+	for (auto iter = mMeshes.begin(); iter != mMeshes.end(); ++iter)
+	{
+		(*iter)->SetRender(false);
 	}
 }
 
@@ -392,8 +405,8 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 		//Material
 		Material* inMaterial = new Material();
-		inMaterial->SetRenderingMode(eRenderingMode::Transparent);
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PhongShader");
+		inMaterial->SetRenderingMode(eRenderingMode::DeferredMask);
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
 		inMaterial->SetShader(shader);
 
 		mMaterials.emplace_back(inMaterial);
@@ -535,6 +548,15 @@ void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& n
 {
 	const ModelNode* modelNode = FindNode(nodeName);
 	aiMatrix4x4 transform = modelNode->mTransformation;
+
+	if (mFrameAnimationVector)
+	{
+		auto iter = mFrameAnimationVector->find(nodeName);
+		if (iter != mFrameAnimationVector->end())
+		{
+			transform = iter->second;
+		}
+	}
 
 	matrix = matrix * transform;
 

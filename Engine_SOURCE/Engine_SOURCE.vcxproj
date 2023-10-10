@@ -216,6 +216,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="ApplyPacketScript.h" />
+    <ClInclude Include="AsyncLoad.h" />
     <ClInclude Include="AudioClip.h" />
     <ClInclude Include="AudioListener.h" />
     <ClInclude Include="AudioSource.h" />
@@ -226,17 +227,21 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraScript.h" />
+    <ClInclude Include="CapEyeScript.h" />
     <ClInclude Include="CapEyeUI.h" />
+    <ClInclude Include="CapMoveScript.h" />
     <ClInclude Include="CapStateScript.h" />
     <ClInclude Include="CaptureObj.h" />
     <ClInclude Include="CapUI.h" />
     <ClInclude Include="ChracterController.h" />
     <ClInclude Include="ClientToServer.h" />
+    <ClInclude Include="CoinUIScript.h" />
     <ClInclude Include="Collider2D.h" />
     <ClInclude Include="Collider3D.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="CommonInclude.h" />
-    <ClInclude Include="CompassUI.h" />
+    <ClInclude Include="CompassNeedleScript.h" />
+    <ClInclude Include="CompassUIScript.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="ConstantBuffer.h" />
@@ -259,7 +264,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="GameNetPacket.h" />
     <ClInclude Include="GameNetSerializer.h" />
     <ClInclude Include="GameNetServer.h" />
-    <ClInclude Include="GameNetThread.h" />
+    <ClInclude Include="GameThread.h" />
     <ClInclude Include="GameObj.h" />
     <ClInclude Include="GenericAnimator.h" />
     <ClInclude Include="GlobalPacket.h" />
@@ -273,8 +278,10 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LifeUI.h" />
+    <ClInclude Include="LifeUIScript.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="MainMenuScript.h" />
     <ClInclude Include="MarioCap.h" />
     <ClInclude Include="MarioParts.h" />
     <ClInclude Include="Material.h" />
@@ -293,6 +300,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PackunPostionBall.h" />
     <ClInclude Include="PackunStateScript.h" />
     <ClInclude Include="Panal.h" />
+    <ClInclude Include="ParticleFormat.h" />
     <ClInclude Include="ParticleShader.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PathMgr.h" />
@@ -308,11 +316,11 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="PhysXRayCast.h" />
     <ClInclude Include="PhysXRigidBody.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="PlayerStateScript.h" />
     <ClInclude Include="PostProcess.h" />
     <ClInclude Include="PostProcessRenderer.h" />
     <ClInclude Include="PostProcessWave.h" />
+    <ClInclude Include="PowerMoonScript.h" />
     <ClInclude Include="Prefab.h" />
     <ClInclude Include="ProjectileObj.h" />
     <ClInclude Include="PxDispathcer.h" />
@@ -323,7 +331,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="EngineResource.h" />
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="RotationUIScript.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneLoading.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="ScenePlay.h" />
     <ClInclude Include="SceneTitle.h" />
@@ -344,10 +354,13 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="TimerMgr.h" />
+    <ClInclude Include="TitleUIBarScript.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIFactory.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIScript.h" />
+    <ClInclude Include="WorldMapScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AiScript.cpp" />
@@ -356,6 +369,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="ApplyPacketScript.cpp" />
+    <ClCompile Include="AsyncLoad.cpp" />
     <ClCompile Include="AudioClip.cpp" />
     <ClCompile Include="AudioListener.cpp" />
     <ClCompile Include="AudioSource.cpp" />
@@ -366,15 +380,19 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraScript.cpp" />
+    <ClCompile Include="CapEyeScript.cpp" />
     <ClCompile Include="CapEyeUI.cpp" />
+    <ClCompile Include="CapMoveScript.cpp" />
     <ClCompile Include="CapStateScript.cpp" />
     <ClCompile Include="CaptureObj.cpp" />
     <ClCompile Include="CapUI.cpp" />
     <ClCompile Include="ChracterController.cpp" />
+    <ClCompile Include="CoinUIScript.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collider3D.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
-    <ClCompile Include="CompassUI.cpp" />
+    <ClCompile Include="CompassNeedleScript.cpp" />
+    <ClCompile Include="CompassUIScript.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
@@ -395,7 +413,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="GameNetPacket.cpp" />
     <ClCompile Include="GameNetSerializer.cpp" />
     <ClCompile Include="GameNetServer.cpp" />
-    <ClCompile Include="GameNetThread.cpp" />
+    <ClCompile Include="GameThread.cpp" />
     <ClCompile Include="GameObj.cpp" />
     <ClCompile Include="GenericAnimator.cpp" />
     <ClCompile Include="Goomba.cpp" />
@@ -407,7 +425,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LifeUI.cpp" />
+    <ClCompile Include="LifeUIScript.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="MainMenuScript.cpp" />
     <ClCompile Include="MarioCap.cpp" />
     <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -425,6 +445,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PackunPostionBall.cpp" />
     <ClCompile Include="PackunStateScript.cpp" />
     <ClCompile Include="Panal.cpp" />
+    <ClCompile Include="ParticleFormat.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PathMgr.cpp" />
@@ -440,11 +461,11 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="PhysXRayCast.cpp" />
     <ClCompile Include="PhysXRigidBody.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="PlayerStateScript.cpp" />
     <ClCompile Include="PostProcess.cpp" />
     <ClCompile Include="PostProcessRenderer.cpp" />
     <ClCompile Include="PostProcessWave.cpp" />
+    <ClCompile Include="PowerMoonScript.cpp" />
     <ClCompile Include="Prefab.cpp" />
     <ClCompile Include="ProjectileObj.cpp" />
     <ClCompile Include="PxDispathcer.cpp" />
@@ -455,7 +476,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="EngineResource.cpp" />
     <ClCompile Include="ResourceMgr.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="RotationUIScript.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneLoading.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="ScenePlay.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
@@ -473,10 +496,13 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="TimerMgr.cpp" />
+    <ClCompile Include="TitleUIBarScript.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIFactory.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UIScript.cpp" />
+    <ClCompile Include="WorldMapScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini" />

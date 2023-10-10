@@ -56,10 +56,14 @@ public:
 	void CreateTexture();
 	void CreateMaterial();
 	std::vector<Texture*> GetTexture(int index);
+	Mesh* GetMesh(UINT index) { return mMeshes[index]; }
+	Material* GetMaterial(UINT index) { return mMaterials[index]; }
 	Material* GetMaterial(UINT index);
 
 	void AddMaterial(Material* mater) { mMaterials.emplace_back(mater); }
 	void MeshRenderSwtich(const std::wstring& name, bool renderSwitch = true);
+	void AllMeshRenderSwtichOff();
+
 
 private:
 	void recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode);
@@ -83,12 +87,13 @@ public:
 public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
 	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)
-	GETSET(GameObj*, mOwner, Owner)
 	GETSET(Model*, mParentModel, ParentModel)
 	GETSET(const std::wstring&, mParentTargetBone, ParentTargetBone)
 	GETSET(const std::wstring&, mTargetBone, TargetBone)
 	GETSET(math::Vector3, mOffsetRotation, OffsetRotation)
 	const std::vector<Mesh*>& GetMeshes() { return mMeshes; }
+
+	void SetFrameAnimationVector(const std::map<std::wstring, aiMatrix4x4>* animationVector);
 private:
 	Assimp::Importer mAssimpImporter;
 
@@ -102,8 +107,9 @@ private:
 
 	std::vector<std::vector<TextureInfo>> mTextures;
 
+	const std::map<std::wstring, aiMatrix4x4>* mFrameAnimationVector;
+
 	StructedBuffer* mStructure;
-	GameObj* mOwner;
 
 	std::wstring mRootNodeName;
 	std::wstring mCurDirectoryPath;

@@ -55,6 +55,9 @@ protected :
 
 	bool mDeleteObj;
 
+	bool mbInitialized;
+
+
 public:
 	bool mbPause;
 

@@ -3,10 +3,12 @@
 #include "BoneAnimator.h"
 
 #define PLAYER_SPPED 7000.f
-#define PLAYER_JUMPFORCE 7000.f
+#define PLAYER_JUMPFORCE 10000.f
 #define PLAYER_MASS 1.f
 #define PLAYER_WALK_VELOCITY 3.f
-#define PLAYER_RUN_VELOCITY 10.f
+#define PLAYER_SQUATWALK_VELOCITY 1.f
+#define PLAYER_RUN_VELOCITY 8.f
+#define PLAYER_ROLLING_VELOCITY 10.f
 
 class Player;
 class PlayerStateScript : public Script
@@ -31,16 +33,23 @@ public:
 	virtual void Groggy() final;
 	virtual void ThrowCap() final;
 	virtual void CatchCap() final;
+	virtual void Capture() final;
 	virtual void Die() final;
 
 public:
 	void Reset() { mbAnimationRunning = false; }
-
+	void ResetJumpCount() { mJumpCount = 0; }
+	
+	GETSET(bool, mbHavingCap, HavingCap)
+	
 private:
 	std::vector<std::function<void()>> mStateEventList;
-	float mInitialForce = 33.0f; // 초기 힘
-	float mForceIncrement = 0.05f; // 시간에 따른 힘의 증가량
+	float mInitialForce = 7000.f; // 초기 힘
+	float mForceIncrement = 20.f; // 시간에 따른 힘의 증가량
+	UINT mJumpCount;
 	//float mMoveTime = 0.0f;
+
+	bool mbHavingCap;
 
 protected:
 	Player* mPlayer;

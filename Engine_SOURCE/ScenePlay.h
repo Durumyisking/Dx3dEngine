@@ -29,11 +29,8 @@ public:
 	void CreatePlayerUI();
 private:
 	Panal* mCoinPanal;
+	Panal* mCityCoinPanal;
 	Panal* mLifePanal;
 	Panal* mLunaPanal;
-
-	Panal* mCoinTextPanal;
-	Panal* mLunaTextPanal;
-
 	Panal* mCompassPanal;
 };

@@ -16,6 +16,7 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
 	virtual void Render() override;
+	virtual void PrevRender() override;
 	virtual void FontRender() override;
 
 public:

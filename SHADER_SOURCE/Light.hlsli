@@ -6,25 +6,35 @@
 struct LightColor
 {
     float4 diffuse;
+
+    // pbr에서 아래 내용들은 쓰지 않도록 합시다
     float4 specular;
-    float4 ambient;
-    
+    float4 ambient;    
 };
 
 struct LightAttribute
 {
     LightColor color;
+
     float4 position;
     float4 direction;
     
+    // point and spot 
     float radius;
-    float angle;    
-
-    int type;
+    float fallOffStart;
+    float fallOffEnd;
+    float spotPower;
     
-    int padding;
+    int type;      
+    float3 padding;
 
 };
+
+//#define LIGHT_OFF 0x00
+#define LIGHT_DIRECTIONAL 0
+#define LIGHT_POINT 1
+#define LIGHT_SPOT 2
+//#define LIGHT_SHADOW3 0x10
 
 
 StructuredBuffer<LightAttribute> lightAttributes : register(t22);
@@ -265,23 +275,48 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
 float VSM_FILTER(float2 moments, float fragDepth)
 {
     float lit = (float) 1.0f;
-    float E_x2 = moments.y;
+    float E_x2 = moments.y;  
     float Ex_2 = moments.x * moments.x;
     float variance = E_x2 - Ex_2;
-    variance = max(variance, 0.0000005f);
+    variance = max(variance, 0.00005f);
 
-    float mD = fragDepth - moments.x;
+    float mD = moments.x - fragDepth; // mean dist
+    float mD_2 = mD * mD;
+    float p = variance / (variance + mD_2);
+
+    lit = max(p, fragDepth <= moments.x);
     
-    float p = 1.f;
-    if (mD > 0.f)
-    {
-        float mD_2 = mD * mD;
-        p = variance / (variance + mD_2);
-    }
-        
-    lit = max(p, 0.4f);
-
     return lit;
+}
+
+float3 PBR_DirectLighting(float3 pixelToEye, float3 lightDir, float3 albedo, float3 normal, float metallic, float roughness)
+{
+    float3 directLighting = (float3) 0.f;   
+    
+    // dir light빛 방향 월드 기준일거임
+    float3 lightVec = -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz;
+
+    float3 halfway = normalize(pixelToEye + lightVec);
+        
+    float NdotI = max(0.0, dot(normal.xyz, lightVec));
+    float NdotH = max(0.0, dot(normal.xyz, halfway));
+    float NdotO = max(0.0, dot(normal.xyz, pixelToEye));
+        
+    const float3 Fdielectric = 0.4f; // 비금속(Dielectric) 재질의 F0
+    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic);
+    float3 F = fresnelSchlick(F0, max(0.0, dot(halfway, pixelToEye)));
+    float3 kd = lerp(float3(1, 1, 1) - F, float3(0, 0, 0), metallic);
+    float3 diffuseBRDF = kd * albedo.xyz;
+
+    float D = ndfGGX(NdotH, roughness);
+    float3 G = gaSchlickGGX(NdotI, NdotO, roughness);
+    float3 specularBRDF = (F * D * G) / max(1e-5, 4.0 * NdotI * NdotO);
+
+    // float3 radiance = lightAttributes[0].color.diffuse.xyz;
+      
+    directLighting += (diffuseBRDF + specularBRDF); // * NdotI;
+    
+    return directLighting;
 }
 
 

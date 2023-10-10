@@ -25,6 +25,7 @@ Physical::Physical()
 
 Physical::~Physical()
 {
+	RemoveActorToPxScene();
 }
 
 void Physical::Initialize()
@@ -544,8 +545,7 @@ void Physical::initializeActor()
 			해당 플래그를 키면 Kinematic 객체가 시각화 목적으로 사용됩니다.
 		*/
 
-		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
-		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+		mMainShape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
 		mMainShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 		break;
 	}
