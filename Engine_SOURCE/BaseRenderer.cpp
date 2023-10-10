@@ -12,8 +12,10 @@ BaseRenderer::BaseRenderer(eComponentType type)
 	, mbUseLOD(false)
 	, mSpriteSize(Vector2::Zero)
 	, mMesh (nullptr)
+	, mMeshKey()
 	, mModel (nullptr)
 	, mMaterial (nullptr)
+	, mMaterialKey()
 {
 	// 디폴트 매시 지정
 	Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Cubemesh");
@@ -45,6 +47,7 @@ void BaseRenderer::Render()
 void BaseRenderer::SetMeshByKey(std::wstring key)
 {
 	mMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(key);
+	mMeshKey = key;
 }
 
 void BaseRenderer::SetMaterial(Material* material, UINT modelMeshSlot)
@@ -65,10 +68,12 @@ void BaseRenderer::SetMaterialByKey(std::wstring key, UINT modelMeshSlot)
 	{
 		mModel->SetVariableMaterialsByKey(modelMeshSlot, key);
 		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+		mMaterialKey = key;
 	}
 	else
 	{
 		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+		mMaterialKey = key;
 	}
 }
 
@@ -88,6 +93,7 @@ void BaseRenderer::SetModelByKey(std::wstring modelKey, std::wstring materialKey
 {
 	mModel = GETSINGLE(ResourceMgr)->Find<Model>(modelKey);
 	mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(materialKey);
+	mMaterialKey = materialKey;
 }
 
 

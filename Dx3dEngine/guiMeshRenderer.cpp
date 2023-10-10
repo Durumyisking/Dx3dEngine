@@ -47,9 +47,16 @@ namespace gui
 			//if (spriteRenderer == nullptr)
 			//	return;
 
+			if (meshRenderer->GetModel())
+				true;
+			else
+				false;
+
 
 			mMaterial = meshRenderer->GetMaterial();
 			mMesh = meshRenderer->GetMesh();
+
+
 		}
 	}
 

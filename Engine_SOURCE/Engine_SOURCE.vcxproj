@@ -259,6 +259,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="FileMgr.h" />
     <ClInclude Include="FMod.h" />
     <ClInclude Include="FontWrapper.h" />
+    <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="GameNet.h" />
     <ClInclude Include="GameNetClient.h" />
     <ClInclude Include="GameNetDispatcher.h" />
@@ -293,10 +294,12 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MilestoneScript.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelNode.h" />
+    <ClInclude Include="ModelObj.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterAiScript.h" />
     <ClInclude Include="MonsterStateScript.h" />
     <ClInclude Include="MultiRenderTarget.h" />
+    <ClInclude Include="NavigationMgr.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Packun.h" />
     <ClInclude Include="PackunPostionBall.h" />
@@ -305,6 +308,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ParticleFormat.h" />
     <ClInclude Include="ParticleShader.h" />
     <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="PathMgr.h" />
     <ClInclude Include="Physical.h" />
     <ClInclude Include="PhysicalGameObj.h" />
     <ClInclude Include="PhysicalMovement.h" />
@@ -409,6 +413,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="FileMgr.cpp" />
     <ClCompile Include="FMod.cpp" />
     <ClCompile Include="FontWrapper.cpp" />
+    <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="GameNet.cpp" />
     <ClCompile Include="GameNetClient.cpp" />
     <ClCompile Include="GameNetDispatcher.cpp" />
@@ -440,10 +445,12 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MilestoneScript.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelNode.cpp" />
+    <ClCompile Include="ModelObj.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterAiScript.cpp" />
     <ClCompile Include="MonsterStateScript.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
+    <ClCompile Include="NavigationMgr.cpp" />
     <ClCompile Include="Packun.cpp" />
     <ClCompile Include="PackunPostionBall.cpp" />
     <ClCompile Include="PackunStateScript.cpp" />
@@ -451,6 +458,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="ParticleFormat.cpp" />
     <ClCompile Include="ParticleShader.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="PathMgr.cpp" />
     <ClCompile Include="Physical.cpp" />
     <ClCompile Include="PhysicalGameObj.cpp" />
     <ClCompile Include="PhysicalMovement.cpp" />

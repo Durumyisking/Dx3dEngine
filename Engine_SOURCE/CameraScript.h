@@ -35,6 +35,9 @@ public:
     void ShakeMove();
 
     void SetUICameraObject(GameObj* obj) { mUICameraObject = obj; }
+
+    void SetTargetObject(GameObj* target) { mTarget = target; }
+
 private:
     Camera* mCameraObject;
     GameObj* mUICameraObject;
@@ -43,7 +46,7 @@ private:
     GameObj* mTarget;
     Vector3 mLookAt;
     Vector3 mLookTo;
-
+     
     float	mSpeed;
     float	mCamStep;
 
