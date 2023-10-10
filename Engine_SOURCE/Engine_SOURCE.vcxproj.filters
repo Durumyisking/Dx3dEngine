@@ -396,6 +396,7 @@
     </ClCompile>
     <ClCompile Include="ParticleFormat.cpp">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClCompile>
     <ClCompile Include="CapStateScript.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
@@ -858,6 +859,7 @@
     </ClInclude>
     <ClInclude Include="PathMgr.h">
       <Filter>Path</Filter>
+    </ClInclude>
     <ClInclude Include="FootSmokeParticle.h">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClInclude>
