@@ -38,7 +38,9 @@ struct LightAttribute
 #define LIGHT_POINT 1
 #define LIGHT_SPOT 2
 //#define LIGHT_SHADOW3 0x10
-
+#define NEAR_PLANE 1.f
+// #define LIGHT_WORLD_RADIUS 0.001
+#define LIGHT_FRUSTUM_WIDTH 0.61584 // <- 계산해서 찾은 값
 
 StructuredBuffer<LightAttribute> lightAttributes : register(t22);
 //StructuredBuffer<LightAttribute> lightAttributes3D : register(t14);
@@ -46,17 +48,6 @@ StructuredBuffer<LightAttribute> lightAttributes : register(t22);
 static const float Epsilon = 0.00001f;
 static const float3 Fdielectric = 0.04f;
 
-static const float2 poissonDisk[16] =
-{
-    float2(-0.94201624, -0.39906216), float2(0.94558609, -0.76890725),
-            float2(-0.094184101, -0.92938870), float2(0.34495938, 0.29387760),
-            float2(-0.91588581, 0.45771432), float2(-0.81544232, -0.87912464),
-            float2(-0.38277543, 0.27676845), float2(0.97484398, 0.75648379),
-            float2(0.44323325, -0.97511554), float2(0.53742981, -0.47373420),
-            float2(-0.26496911, -0.41893023), float2(0.79197514, 0.19090188),
-            float2(-0.24188840, 0.99706507), float2(-0.81409955, 0.91437590),
-            float2(0.19984126, 0.78641367), float2(0.14383161, -0.14100790)
-};
         
 static const float2 diskSamples64[64] =
 {
@@ -93,6 +84,25 @@ static const float2 diskSamples64[64] =
             float2(-0.5484582700240663, -0.7880790100251422), float2(0.9446610338564589, 0.2124041692463835),
             float2(-0.8470120123194587, 0.48548496473788055), float2(0.29904134279525085, -0.9377229203230629),
             float2(0.41623562331748715, 0.9006236205438447),
+};
+
+static const float2 poissonDisk[16] =
+{
+    float2(-0.94201624, -0.39906216), float2(0.94558609, -0.76890725),
+            float2(-0.094184101, -0.92938870), float2(0.34495938, 0.29387760),
+            float2(-0.91588581, 0.45771432), float2(-0.81544232, -0.87912464),
+            float2(-0.38277543, 0.27676845), float2(0.97484398, 0.75648379),
+            float2(0.44323325, -0.97511554), float2(0.53742981, -0.47373420),
+            float2(-0.26496911, -0.41893023), float2(0.79197514, 0.19090188),
+            float2(-0.24188840, 0.99706507), float2(-0.81409955, 0.91437590),
+            float2(0.19984126, 0.78641367), float2(0.14383161, -0.14100790)
+};
+
+static const float2 mySamples9[9] =
+{
+    float2(-1.f, -1.f), float2(0.f, -1.f), float2(1.f, -1.f),
+    float2(-1.f, 0.f), float2(0.f, 0.f), float2(1.f, 0.f),
+    float2(-1.f, 1.f), float2(0.f, 1.f), float2(1.f, 1.f),
 };
 
 
@@ -299,9 +309,7 @@ float N2V(float ndcDepth, matrix invProj)
     return pointView.z / pointView.w;
 }
 
-#define NEAR_PLANE 0.1
-// #define LIGHT_WORLD_RADIUS 0.001
-#define LIGHT_FRUSTUM_WIDTH 0.34641 // <- 계산해서 찾은 값
+
 
 // Assuming that LIGHT_FRUSTUM_WIDTH == LIGHT_FRUSTUM_HEIGHT
 // #define LIGHT_RADIUS_UV (LIGHT_WORLD_RADIUS / LIGHT_FRUSTUM_WIDTH)
@@ -450,34 +458,35 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
             // 4. 가려져 있다면 그림자로 표시
             if (depth + 0.00001 < lightScreen.z)
                 shadowFactor = 0.0;
+        
+            
+            ///////////////////////////////////////////////////////////////
+            dx11에서는 위 코드를 함수로 사용할 수 있게 만들어놓음
+            shadowMap.SampleCmpLevelZero(
+            shadowCompareSampler, lightTexcoord.xy, lightScreen.z - 0.00001);
+        
+            SampleCmpLevelZero : SampleCompare의 Mip 수준을 0으로 사용하는 것
+            SampleCmp          : 텍스처에서 샘플링 해 오는 값들 중 r 값만 3번째 인자인 compare value와 비교하는 것 (depth texture을 샘플링해서 값을 가져오고 그 값이 compare value보다 작으면 0 else = 1로 처리)
+                                 샘플링 하는 픽셀 주변 4개값의 평균값을 구해서 샘플링한다. 즉 (0~1의 값이 나온다)
         */
         
+        
         // pcf sampliing
+        
         uint width, height, numMips;
         shadowMap.GetDimensions(0, width, height, numMips);
-        
+
         // Texel size
         float dx = 5.0 / (float) width;
         shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.00001, dx, shadowMap);
-        //shadowFactor = PCSS(lightTexcoord, lightScreen.z - 0.01, shadowMap, light.projection, light.radius);
+        
+        
+        // pcss sampling
+        //shadowFactor = PCSS(lightTexcoord, lightScreen.z - 0.01, shadowMap, light.inverseProjection, 10.f);
         
         // vsm sampling
         //shadowFactor = VSM_FILTER(ShadowMap.Sample(linearSampler, lightTexcoord).rg, lightScreen.z);
         
-        /*
-        shadowMap.SampleCmpLevelZero(shadowCompareSampler, lightTexcoord.xy, lightScreen.z - 0.001).r;
-        
-        uint width, height, numMips;
-        shadowMap.GetDimensions(0, width, height, numMips);
-        float dx = 5.0 / (float) width;
-        float percentLit = 0.0;
-        const float2 offsets[9] =
-        {
-            float2(-1, -1), float2(0, -1), float2(1, -1),
-            float2(-1, 0), float2(0, 0), float2(1, 0),
-            float2(-1, +1), float2(0, +1), float2(1, +1)
-        };
-        */
     }
 
     float3 radiance = light.color.diffuse.xyz * spotFator * att * shadowFactor;

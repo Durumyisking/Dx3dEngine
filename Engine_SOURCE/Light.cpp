@@ -60,6 +60,15 @@ void Light::FixedUpdate()
 
 	mAttribute.inverseProjection = mAttribute.projection.Invert();
 
+	 //Vector4 eye(0.0f, 0.0f, 0.0f, 1.0f);
+	 //Vector4 xLeft(-1.0f, -1.0f, 0.0f, 1.0f);
+	 //Vector4 xRight(1.0f, 1.0f, 0.0f, 1.0f);
+	 //eye = Vector4::Transform(eye, mAttribute.projection);
+	 //xLeft = Vector4::Transform(xLeft, mAttribute.projection.Invert());
+	 //xRight = Vector4::Transform(xRight, mAttribute.projection.Invert());
+	 //xLeft /= xLeft.w;
+	 //xRight /= xRight.w;
+	 //std::cout << "LIGHT_FRUSTUM_WIDTH = " << xRight.x - xLeft.x << std::endl;
 
 	renderer::PushLightAttribute(mAttribute);
 }
