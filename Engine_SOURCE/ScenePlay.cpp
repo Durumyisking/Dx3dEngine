@@ -201,7 +201,7 @@ void ScenePlay::Enter()
 	Scene::Enter();
 	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
-	//mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
+	mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 
 }
 

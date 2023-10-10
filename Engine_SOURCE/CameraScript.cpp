@@ -43,16 +43,16 @@ void CameraScript::Update()
 	this->GetOwner();
 	mLookAt = mTransform->GetPosition();
 
-	//mTarget = mCameraObject->GetTarget();
+	mTarget = mCameraObject->GetTarget();
 
 	mSpeed = mCameraObject->GetCamSpeed();
 	mCamStep = 0.f;
 
 	mCamStep = mSpeed * GETSINGLE(TimeMgr)->DeltaTimeConstant();
 		
-	//KeyBoardMove();
+	KeyBoardMove();
 	TargetMove();
-	//ShakeMove();
+	ShakeMove();
 
 	mTransform->SetPosition(mLookAt);
 
