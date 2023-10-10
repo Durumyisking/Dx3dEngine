@@ -128,6 +128,9 @@ namespace gui
 	{
 		switch (type)
 		{
+		case SceneMgr::eSceneType::Loading:
+			name = "Loading";
+			break;
 		case SceneMgr::eSceneType::Title:
 			name = "Title";
 			break;

@@ -9,9 +9,13 @@ namespace gui
 {
 	GUITransform::GUITransform()
 		: GUIComponent(eComponentType::Transform)
+		, mbPhysical(false)
+		, mPosition()
+		, mRotation()
+		, mScale()
 	{
 		SetName("Transform");
-		SetSize(ImVec2(200.0f, 120.0f));
+		SetSize(ImVec2(250.0f, 100.0f));
 	}
 
 	GUITransform::~GUITransform()
@@ -42,7 +46,11 @@ namespace gui
 		GUIComponent::Update();
 
 
-		float pos[3] = { mPosition.x, mPosition.y, mPosition.z };
+		bool posChanged = false;
+		bool rotChanged = false;
+		bool scaleChanged = false;
+
+		/*float pos[3] = { mPosition.x, mPosition.y, mPosition.z };
 		float rot[3] = { mRotation.x, mRotation.y, mRotation.z };
 		float scale[3] = { mScale.x, mScale.y, mScale.z };
 
@@ -59,16 +67,16 @@ namespace gui
 		ImGui::Text("Scale"); ImGui::SameLine();
 		if (ImGui::InputFloat3("##Scale", scale)) {
 			mScale = { scale[0], scale[1], scale[2] };
-		}
+		}*/
 
-		//ImGui::Text("Position"); ImGui::SameLine();
-		//ImGui::InputFloat3("##Position", (float*)&mPosisition);
+		posChanged = ImGui::InputFloat3("#Position", (float*)&mPosition);
 
-		//ImGui::Text("Rotation"); ImGui::SameLine();
-		//ImGui::InputFloat3("##Rotation", (float*)&mRotation);
+		rotChanged = ImGui::InputFloat3("#Rotation", (float*)&mRotation);
 
-		//ImGui::Text("Scale"); ImGui::SameLine();
-		//ImGui::InputFloat3("##Scale", (float*)&mScale);
+		scaleChanged = ImGui::InputFloat3("#Scale", (float*)&mScale);
+
+		if (!(posChanged || rotChanged || scaleChanged))
+			return;
 
 		if (GetTarget())
 		{

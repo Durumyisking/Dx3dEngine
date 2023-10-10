@@ -536,13 +536,6 @@ std::vector<Texture*> Model::GetTexture(int index)
 	return outTexVector;
 }
 
-Material* Model::GetMaterial(UINT index)
-{ 
-	if (mMaterials.empty())
-		return nullptr;
-
-	return mMaterials[index];
-}
 
 void Model::recursiveProcessBoneMatrix(aiMatrix4x4 matrix, const std::wstring& nodeName)
 {

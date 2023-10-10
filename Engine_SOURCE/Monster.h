@@ -36,6 +36,9 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
 
+	virtual void OnTriggerEnter(GameObj* gameObject);
+	virtual void OnTriggerStay(GameObj* gameObject);
+	virtual void OnTriggerExit(GameObj* gameObject);
 
 	virtual void CaptureEvent() {};
 
