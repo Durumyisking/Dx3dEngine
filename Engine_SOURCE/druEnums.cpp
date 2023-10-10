@@ -95,4 +95,44 @@ namespace enums
 		L"ComputeShader",
 		L"Script",
 	};
+
+	const char* charLayerType[(int)eLayerType::End] =
+	{
+		"None",
+		"Camera",
+		"Grid",
+		"Objects",
+		"PhysicalObject",
+		"Monster",
+		"Boss",
+		"Player",
+		"Cap",
+		"Platforms",
+		"Particle",
+		"FX",
+		"SkySphere",
+		"CubeMap",
+		"PostProcess",
+		"UI",
+	};
+
+	const wchar_t* wcharLayerType[(int)eLayerType::End] =
+	{
+		L"None",
+		L"Camera",
+		L"Grid",
+		L"Objects",
+		L"PhysicalObject",
+		L"Monster",
+		L"Boss",
+		L"Player",
+		L"Cap",
+		L"Platforms",
+		L"Particle",
+		L"FX",
+		L"SkySphere",
+		L"CubeMap",
+		L"PostProcess",
+		L"UI",
+	};
 }

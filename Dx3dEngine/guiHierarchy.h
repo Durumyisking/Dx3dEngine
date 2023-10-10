@@ -20,9 +20,8 @@ namespace gui
 		void InitializeScene();
 		void AddGameObject(TreeWidget::Node* parent, GameObj* gameObject);
 
-		void InitializeTreeWidget();
-
 		GameObj* GetTargetObject() { return mTargetObject; }
+		void SetTargetObject(GameObj* obj) { mTargetObject = obj; }
 
 	private:
 		Scene* mCurrentScene;

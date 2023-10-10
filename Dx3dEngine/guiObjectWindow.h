@@ -20,17 +20,17 @@ namespace gui
 		virtual void LateUpdate() override;
 
 		void CreateObject();
+		void DeleteObject();
+		void SetObjectLayerType(UINT num);
 		bool AddObjectToScene(GameObj* obj, eLayerType type);
 
 		void GetObjectCDO(const std::string& CDOTypeName);
 
 	private:
 		std::string mCDOName;
-		std::wstring mObjectName;
-		std::wstring mInputText;
+		std::string mInputText;
 		eLayerType mInputLayer;
 
-		TreeWidget* mTreeWidget;
 		GroupWidget* mGroupWidget;
     };
 }
