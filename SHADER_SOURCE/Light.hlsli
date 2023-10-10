@@ -458,7 +458,7 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         
         // Texel size
         float dx = 5.0 / (float) width;
-        shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.001, dx, shadowMap);
+        shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.00001, dx, shadowMap);
         //shadowFactor = PCSS(lightTexcoord, lightScreen.z - 0.01, shadowMap, light.projection, light.radius);
         
         // vsm sampling

@@ -87,7 +87,11 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 	}
 	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
 	{
-		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), nullptr, mDSV.GetAddressOf()))
+		D3D11_DEPTH_STENCIL_VIEW_DESC DSVdesc = {};
+		ZeroMemory(&DSVdesc, sizeof(DSVdesc));
+		DSVdesc.Format = DXGI_FORMAT_D32_FLOAT;
+		DSVdesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), &DSVdesc, mDSV.GetAddressOf()))
 		{
 			return false;
 		}

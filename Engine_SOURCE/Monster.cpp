@@ -4,6 +4,8 @@
 #include "BoneAnimator.h"
 #include "PhysXRigidBody.h"
 #include "TimeMgr.h"
+#include "MarioCap.h"
+#include "Player.h"
 
 Monster::Monster()
 	: DynamicObject()
@@ -52,7 +54,10 @@ void Monster::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Cap == gameObject->GetLayerType())
 	{
+		MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
 		OnCapture();
+		SetObject(cap);
+		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
 	}
 }
 

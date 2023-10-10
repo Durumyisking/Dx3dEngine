@@ -85,7 +85,7 @@ void Scene::Enter()
 	mUICamera->SetRotation(Vector3::Zero);
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLight");
-		directionalLight->SetPos({ 0.f, 10.5f, 0.f });
+		directionalLight->SetPos({ 0.f, 25.f, 0.f });
 		directionalLight->SetRotation(Vector3(90.f, 0.f, 0.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
