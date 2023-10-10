@@ -33,5 +33,5 @@ private:
 	//Panal* mStart2PTextPanal;
 	//Panal* mOptionTextPanal;
 	//Panal* mExitTextPanal;
-	//Panal* mBarPanal;
+	Panal* mBarPanal;
 };

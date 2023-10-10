@@ -7,6 +7,7 @@
 #include "ImageUI.h"
 #include "Button.h"
 #include "UIManager.h"
+#include "SceneMgr.h"
 
 UIFactory::UIFactory()
 {
@@ -31,6 +32,31 @@ Panal* UIFactory::CreatePanal(GameObj* parent, Vector3 pos, Vector3 scale, const
 
 
 	(GETSINGLE(UIManager)->PushPanal(type, panal));
+	return panal;
+}
+
+Panal* UIFactory::CreatePanal(GameObj* parent, Vector3 pos, Vector3 scale, const std::wstring& name, Scene* sceene)
+{
+	Panal* panal = object::Instantiate<Panal>(eLayerType::UI, sceene);
+	panal->SetPos(pos);
+	panal->SetScale(scale);
+	panal->SetName(name);
+	panal->GetComponent<Transform>()->SetParent(parent);
+
+	return panal;
+}
+
+Panal* UIFactory::CreatePanal(GameObj* parent, Vector3 pos, Vector3 scale, const std::wstring& name, eUIType type)
+{
+	Scene* scene = (GETSINGLE(SceneMgr)->GetScene<Scene>(SceneMgr::eSceneType::Title));
+
+	Panal* panal = object::Instantiate<Panal>(eLayerType::UI, scene);
+	panal->SetPos(pos);
+	panal->SetScale(scale);
+	panal->SetName(name);
+	panal->GetComponent<Transform>()->SetParent(parent);
+
+	(GETSINGLE(UIManager)->PushTitlePanal(type, panal));
 	return panal;
 }
 
