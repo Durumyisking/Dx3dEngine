@@ -5,7 +5,12 @@ class Goomba : public Monster
 {
 public:
 	Goomba();
+	Goomba(const Goomba& Obj);
 	virtual ~Goomba();
+
+	virtual Goomba* Clone() const;
+	virtual void Save(FILE* File) final;
+	virtual void Load(FILE* File) final;
 
 	virtual void Initialize() final;
 	virtual void Update() final;

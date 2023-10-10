@@ -68,6 +68,7 @@
 
 #include "Goomba.h"
 #include "Packun.h"
+#include "ModelObj.h"
 
 #include "PostProcess.h"
 
@@ -85,30 +86,49 @@ ScenePlay::~ScenePlay()
 {
 }
 
+bool ScenePlay::Save()
+{
+	return false;
+}
+
+bool ScenePlay::Load()
+{
+	return false;
+}
+
 void ScenePlay::Initialize()
 {
 	CreateCameras();
 
+	//TestScene 로드 테스트 로드시에 반복해서 몬스터 정의 방지
+	if (GetType() == SceneMgr::eSceneType::Test)
+	{
+		{
+			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+			skySphere->SetName(L"SkySphere");
+		}
+
+		CreatePlayerUI();
+		Scene::Initialize();
+
+		return;
+	}
+
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
-	//Convex and Triangle Mesh TEST
-	
-		////TriangleMesh Test
-		//{
-		//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		//	obj->SetPos(Vector3(0.f, -10.f, 300.f));
-		//	obj->SetScale(Vector3(0.04f, 0.04f, 0.04f));
-		//	obj->SetName(L"CityWorldHomeGroundCollider");
 
-		//	// SetModel
-		//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_CityWorldHomeGround000");
-		//	obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetModel(model, model->GetMaterial(0));
-		//
-		//}
-
+	////TriangleMesh Test
+	//{
+	//	ModelObj* obj = object::Instantiate<ModelObj>(eLayerType::Platforms, this);
+	//	obj->SetPos(Vector3(0.f, -5.f, 300.f));
+	//	obj->SetScale(Vector3(0.06f, 0.06f, 0.06f));
+	//	obj->SetName(L"CityWorld_NaviCollider");
+	//}
 	{
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
 		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
@@ -117,8 +137,7 @@ void ScenePlay::Initialize()
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-
-	}	
+	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
@@ -129,6 +148,30 @@ void ScenePlay::Initialize()
 	}
 
 
+		////Sphere 
+		//{
+		//	GameObj* Sphere = object::Instantiate<GameObj>(eLayerType::Player, this);
+		//	Sphere->SetPos(Vector3(32.f, 25.f, -9.5f));
+		//	Sphere->SetScale(Vector3(15.f, 15.f, 15.f));
+		//	Sphere->SetName(L"Sphere");
+		//
+		//
+		//	Sphere->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		//	Sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
+		//	Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
+		//	Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
+		//
+		//	Sphere->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
+		//
+		//	Physical* physical = Sphere->AddComponent<Physical>(eComponentType::Physical);
+		//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(7.5f, 7.5f, 7.5f));
+		//
+		//	PhysXRigidBody* rigid = Sphere->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		//
+		//	Sphere->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//	//Sphere->AddComponent<PhysicalMovement>(eComponentType::Movement);
+		//	Sphere->AddComponent<PlayerScript>(eComponentType::Script);
+		//}
 	{
 		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
 		mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
@@ -170,7 +213,7 @@ void ScenePlay::Initialize()
 
 void ScenePlay::update()
 {
-	if (KEY_TAP(N_9))
+	if (KEY_TAP(F_1))
 	{
 		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
@@ -195,7 +238,8 @@ void ScenePlay::render()
 void ScenePlay::Enter()
 {
 	Scene::Enter();
-	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
+
+	mCamera->SetPos(Vector3(0.f, 150.f, -150.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 }
 

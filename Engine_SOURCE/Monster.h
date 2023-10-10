@@ -25,23 +25,26 @@ public:
 public:
 
 	Monster();
+	Monster(const Monster& Obj);
 	virtual ~Monster();
+
+	virtual Monster* Clone() const;
+	virtual void Save(FILE* File) override;
+	virtual void Load(FILE* File) override;
 
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
 
+	virtual void OnTriggerEnter(GameObj* gameObject);
+	virtual void OnTriggerStay(GameObj* gameObject);
+	virtual void OnTriggerExit(GameObj* gameObject);
 
-	virtual void CaptureEvent() = 0;
-	virtual void CaptureEnter(MarioCap* cap) = 0;
-
-	virtual void OnTriggerEnter(GameObj* gameObject) override;
-	virtual void OnTriggerStay(GameObj* gameObject)  override;
-	virtual void OnTriggerExit(GameObj* gameObject)  override;
+	virtual void CaptureEvent() {};
 
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) {};
-	virtual void stateInfoInitalize() = 0;
+	virtual void stateInfoInitalize() {};
 public:
 	eMonsterState GetMonsterState() { return mMonsterState; }
 	void SetMonsterState(eMonsterState monsterState);

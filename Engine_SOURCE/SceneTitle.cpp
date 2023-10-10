@@ -65,6 +65,16 @@ SceneTitle::~SceneTitle()
 
 }
 
+bool SceneTitle::Save()
+{
+	return false;
+}
+
+bool SceneTitle::Load()
+{
+	return false;
+}
+
 void SceneTitle::Initialize()
 {
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
@@ -80,11 +90,11 @@ void SceneTitle::Initialize()
 
 void SceneTitle::update()
 {
-	if (KEY_TAP(N_9))
+	if (KEY_TAP(F_9))
 	{
 		GETSINGLE(server::ServerMgr)->OpenServer();
 	}
-	if (KEY_TAP(N_0))
+	if (KEY_TAP(F_10))
 	{
 		GETSINGLE(server::ServerMgr)->ConnectAsClient();
 	}

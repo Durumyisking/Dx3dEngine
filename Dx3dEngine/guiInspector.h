@@ -1,6 +1,10 @@
 #pragma once
 #include "guiWidget.h"
 #include "GameObj.h"
+#include "guiTransform.h"
+#include "guiMeshRenderer.h"
+#include "guiTexture.h"
+#include "guiPhysical.h"
 
 namespace gui
 {
@@ -27,9 +31,13 @@ namespace gui
 		void InitializeTargetResource();
 
 	private:
+		bool mbPhysical;
 		GameObj* mTargetGameObject;
 		Resource* mTargetResource;
 		std::vector<gui::GUIComponent*> mComponents;
 		std::vector<gui::GUIResource*> mResources;
+
+		GUITransform* mTransform;
+		GUIMeshRenderer* mMeshRenderer;
 	};
 }

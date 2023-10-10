@@ -6,7 +6,12 @@ class Packun : public Monster
 {
 public:
 	Packun();
+	Packun(const Packun& Obj);
 	virtual ~Packun();
+	
+	virtual Packun* Clone() const;
+	virtual void Save(FILE* File) final;
+	virtual void Load(FILE* File) final;
 
 	virtual void Initialize() final;
 	virtual void Update() final;
