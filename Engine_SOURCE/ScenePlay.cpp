@@ -54,6 +54,7 @@
 
 #include "BoneAnimator.h"
 
+#include "UIManager.h"
 #include "Panal.h"
 #include "Button.h"
 #include "ImageUI.h"
@@ -65,6 +66,9 @@
 #include "LifeUIScript.h"
 #include "CompassUIScript.h"
 #include "PowerMoonScript.h"
+#include "CompassNeedleScript.h"
+#include "DieUIEffectScript.h"
+#include "DieCircleUIScript.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -78,6 +82,8 @@ ScenePlay::ScenePlay()
 	, mLifePanal(nullptr)
 	, mLunaPanal(nullptr)
 	, mCompassPanal(nullptr)
+	, mDieUIPanal(nullptr)
+	, player(nullptr)
 {
 }
 
@@ -111,7 +117,7 @@ void ScenePlay::Initialize()
 
 	{
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
-		Player* player = object::Instantiate<Player>(eLayerType::Player, this);
+		player = object::Instantiate<Player>(eLayerType::Player, this);
 		player->SetMarioCap(mariocap);
 	}
 	{
@@ -174,7 +180,18 @@ void ScenePlay::update()
 	{
 		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
-		mLunaPanal->GetScript<PowerMoonScript>()->GetPowerMoon();
+		(GETSINGLE(UIManager)->PlayerDie());
+		//mCoinPanal->GetScript<CoinUIScript>()->ActionToPlayerDied();
+	}
+
+	if (KEY_TAP(N_2))
+	{
+		mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
+	}
+
+	if (KEY_TAP(N_3))
+	{
+		mCoinPanal->GetScript<CoinUIScript>()->Reset();
 	}
 
 
@@ -249,6 +266,7 @@ void ScenePlay::CreatePlayerUI()
 			mCoinPanal->Addchild(image);
 		}
 
+		mCoinPanal->Addchild(bar);
 
 		mCityCoinPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CityCoinPanal", this, eUIType::CityCoin));
 		mCityCoinPanal->AddComponent<CoinUIScript>(eComponentType::Script);
@@ -278,20 +296,29 @@ void ScenePlay::CreatePlayerUI()
 			{
 				Vector3 position = Vector3(-7.f + (0.33f * i), (2.5f - (0.35f * j)) + (0.01f * i), 0.f);
 
-
 				ImageUI* luna = (GETSINGLE(UIFactory)->CreateImage(L"Luna" + std::to_wstring(i) + std::to_wstring(j * 10), L"LunaMaterial",
 					position,
 					Vector3(0.3f, 0.3f, 1.f),
 					mLunaPanal, this));
+
+				luna->SetUIOn(false);
 				luna->InActivate();
 				mLunaPanal->Addchild(luna);
+			}
+		}
+
+		for (size_t i = 0; i < 10; i++)
+		{
+			for (size_t j = 0; j < 2; j++)
+			{
+				Vector3 position = Vector3(-7.f + (0.33f * i), (2.5f - (0.35f * j)) + (0.01f * i), 0.f);
 
 				ImageUI* dottedLine = (GETSINGLE(UIFactory)->CreateImage(L"DottedLine" + std::to_wstring(i) + std::to_wstring(j * 10), L"DottedLineMaterial",
 					position,
 					Vector3(0.3f, 0.3f, 1.f),
 					mLunaPanal, this));
 
-				//mLunaPanal->Addchild(dottedLine);
+				mLunaPanal->Addchild(dottedLine);
 			}
 		}
 	}
@@ -300,14 +327,31 @@ void ScenePlay::CreatePlayerUI()
 	{
 		mCompassPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"CompassPanal", this, eUIType::Compass));
 
-
 		ImageUI* compassBar = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassBar", L"CompassBarMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3::One, mCompassPanal, this));
 		ImageUI* compassNeedle = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"CompassNeedle", L"CompassNeedleMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3(2.0f, 2.0f, 1.0f), mCompassPanal, this));
 		ImageUI* compass = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"Compass", L"CompassMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3::One, mCompassPanal, this));
 		compassBar->AddComponent<CompassUIScript>(eComponentType::Script);
+		compassNeedle->AddComponent<CompassNeedleScript>(eComponentType::Script);
+		compassNeedle->GetScript<CompassNeedleScript>()->SetPlayer(player);
 
 		mCompassPanal->Addchild(compassBar);
 		mCompassPanal->Addchild(compassNeedle);
 		mCompassPanal->Addchild(compass);
+	}
+
+	// DieUI
+	{
+		mDieUIPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"DiePanal", this, eUIType::DiePanal));
+		mDieUIPanal->AddComponent<DieUIEffectScript>(eComponentType::Script);
+
+		ImageUI* dieCircle = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"DieCircle", L"DieCircleMaterial", eUIType::None, Vector3(0.f, 0.f, 0.f), Vector3(20.0f,20.0f,1.0f), mDieUIPanal, this));
+		dieCircle->AddComponent<DieCircleUIScript>(eComponentType::Script);
+
+		ImageUI* dieTexture = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"DieTexture", L"DieTextureMaterial", eUIType::None, Vector3(0.f, 0.f, 0.f), Vector3(20.0f,10.0f,1.0f), mDieUIPanal, this));
+
+		dieCircle->SetColor(Vector4(1.0f, 1.0f, 1.f, 0.1f), true);
+		mDieUIPanal->Addchild(dieCircle);
+		mDieUIPanal->Addchild(dieTexture);
+		mDieUIPanal->InActivate();
 	}
 }

@@ -11,6 +11,7 @@ UIBase::UIBase(eUIType type)
 	:mUIType(type)
 	, mUIbFullScreen(false)
 	, mbUIEnable(true)
+	, mbUIOn(true)
 	, mbColor(false)
 	, mUIParent(nullptr)
 	, mUIScreenPos(Vector3::Zero)
@@ -37,9 +38,16 @@ void UIBase::Activate()
 	OnActive();
 
 	for (UIBase* child : mChilds)
-	{
-		child->mbUIEnable = true;
-		child->OnActive();
+	{	
+		if (child->GetUIIsOn())
+		{
+			child->OnActive();
+			child->mbUIEnable = true;
+		}
+		else
+		{
+			continue;
+		}
 	}
 }
 
@@ -47,8 +55,8 @@ void UIBase::InActivate()
 {
 	for (UIBase* child : mChilds)
 	{
-		child->mbUIEnable = false;
 		child->OnInActive();
+		child->mbUIEnable = false;
 	}
 	OnInActive();
 	mbUIEnable = false;

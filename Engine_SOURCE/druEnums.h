@@ -168,6 +168,7 @@ namespace enums
 		Luna,
 		LunaText,
 		Compass,
+		DiePanal,
 		End,
 	};
 

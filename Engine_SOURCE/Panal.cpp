@@ -31,7 +31,7 @@ void Panal::OnActive()
 
 void Panal::OnInActive()
 {
-	this->Die();
+
 }
 
 void Panal::OnUpdate()

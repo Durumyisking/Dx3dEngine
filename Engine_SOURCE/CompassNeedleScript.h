@@ -1,5 +1,6 @@
 #pragma once
 #include "UIScript.h"
+#include "Player.h"
 
 class CompassNeedleScript : public UIScript
 {
@@ -10,6 +11,8 @@ public:
 	virtual void Initialize() override;
 	virtual void Update() override;
 
-private:
 
+	void SetPlayer(Player* player) { mPlayer = player; }
+private:
+	Player* mPlayer;
 };
