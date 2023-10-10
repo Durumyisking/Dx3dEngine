@@ -11,12 +11,7 @@ public:
 
 public:
 	DynamicObject();
-	DynamicObject(const DynamicObject& Obj);
 	virtual ~DynamicObject();
-
-	virtual DynamicObject* Clone() const;
-	virtual void Save(FILE* File) override;
-	virtual void Load(FILE* File) override;
 
 	virtual void Initialize() override;
 	virtual void Update() override;
@@ -37,7 +32,7 @@ public:
 	void InsertLockState(UINT curState, UINT lockState);
 
 protected:
-	virtual void stateInfoInitalize() {};
+	virtual void stateInfoInitalize() = 0;
 
 protected:
 	std::vector<StateInfo> mStateInfo;

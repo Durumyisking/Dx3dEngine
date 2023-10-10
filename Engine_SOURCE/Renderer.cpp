@@ -31,6 +31,7 @@ namespace renderer
 
 	Texture* postProcessTexture = nullptr;
 	Texture* dsTexture = nullptr;
+	GameObj* outlineGameObject = nullptr;
 
 	std::vector<std::function<void()>> ParticleFunCArr = {};
 

@@ -27,10 +27,6 @@ enum class eKeyCode
 	N_0, N_1, N_2, N_3, N_4, N_5,
 	N_6, N_7, N_8, N_9,
 
-	//Function Key
-	F_0, F_1, F_2, F_3, F_4, F_5, F_6,
-	F_7, F_8, F_9, F_10, F_11, F_12,
-
 	END,
 };
 enum class eKeyState

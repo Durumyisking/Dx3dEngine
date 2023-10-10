@@ -40,4 +40,3 @@ void Set##__METHODNAME__(__TYPE__ value)			 \
 }													 \
 
 #define NEW_SHARED(name) std::make_shared<name>();
-#define SUPER __super

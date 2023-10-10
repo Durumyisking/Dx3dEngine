@@ -397,26 +397,6 @@
     <ClCompile Include="ParticleFormat.cpp">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClCompile>
-    <ClCompile Include="CapStateScript.cpp">
-      <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
-    </ClCompile>
-    <ClCompile Include="CompassUI.cpp" />
-    <ClCompile Include="LifeUI.cpp" />
-    <ClCompile Include="NavigationMgr.cpp">
-      <Filter>Common\Navigation</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelObj.cpp">
-      <Filter>Common\GameObj\ModelObj</Filter>
-    </ClCompile>
-    <ClCompile Include="MarioParts.cpp">
-      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
-    </ClCompile>
-    <ClCompile Include="PathMgr.cpp">
-      <Filter>Path</Filter>
-    </ClCompile>
-    <ClCompile Include="FootSmokeParticle.cpp">
-      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -847,20 +827,6 @@
       <Filter>Common\Component\Camera\Script</Filter>
     </ClInclude>
     <ClInclude Include="ParticleFormat.h">
-      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="CompassUI.h" />
-    <ClInclude Include="LifeUI.h" />
-    <ClInclude Include="NavigationMgr.h">
-      <Filter>Common\Navigation</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelObj.h">
-      <Filter>Common\GameObj\ModelObj</Filter>
-    </ClInclude>
-    <ClInclude Include="PathMgr.h">
-      <Filter>Path</Filter>
-    </ClInclude>
-    <ClInclude Include="FootSmokeParticle.h">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1444,17 +1410,6 @@
     </Filter>
     <Filter Include="UI\UIObject">
       <UniqueIdentifier>{9ce3c0ca-6cf4-4526-a443-57ba40870484}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Common\Navigation">
-      <UniqueIdentifier>{c9afd7c8-42af-4f1e-9186-771c0333a93f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\GameObj\ModelObj">
-      <UniqueIdentifier>{eb066cb6-46d6-4287-b5c6-99f710d47602}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Path">
-      <UniqueIdentifier>{96fc8e58-9452-47fd-8ead-6e2570360962}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

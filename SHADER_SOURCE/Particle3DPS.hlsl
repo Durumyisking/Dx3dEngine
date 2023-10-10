@@ -32,7 +32,7 @@ float4 main(VSOut vsIn) : SV_TARGET
     float fLifeTime = particleBuffer[vsIn.Instance].lifeTime;
 
     
-    //float alpharatio = 1.f - fElapsedTime / fLifeTime;
+    float alpharatio = 1.f - fElapsedTime / fLifeTime;
 
     if (1 == cbbAlbedo)
     {
@@ -45,7 +45,7 @@ float4 main(VSOut vsIn) : SV_TARGET
         outColor = colorTexture.Sample(linearSampler, UV);
     }
     
-    //outColor.w = alpharatio;
+    outColor.w = alpharatio;
     if (outColor.w <= 0.1f)
         discard;
 

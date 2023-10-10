@@ -9,7 +9,7 @@
 
 ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 	: mParticleType(type)
-	, mParitlceMaxCount(maxCount)
+	, mParitlceMaxCount(1)
 	, mModel(nullptr)
 	, mMesh(nullptr)
 	, mMaterial(nullptr)
@@ -20,8 +20,6 @@ ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 	, mTexture_X_Count(1)
 	, mTexture_Y_Count(1)
 	, mActiveCount(1)
-	, mAccType(eAccessType::ComputShader)
-	, mParticleSystem(nullptr)
 {
 	if (type == eParticleType::D2D)
 	{
@@ -32,35 +30,55 @@ ParticleFormat::ParticleFormat(int maxCount, eParticleType type)
 		mMesh = mesh;
 	}
 
-	Initalize();
-}
+	// CB 초기화
+	renderer::ParticleSystemCB info = {};
+	info.deltaTime = 0.0f;
+	info.elapsedTime = 0.0f;
 
-ParticleFormat::ParticleFormat(int maxCount, eParticleType type, eAccessType accType)
-	: mParticleType(type)
-	, mParitlceMaxCount(maxCount)
-	, mModel(nullptr)
-	, mMesh(nullptr)
-	, mMaterial(nullptr)
-	, mParticleData{}
-	, mParticleCB{}
-	, mBuffer(nullptr)
-	, mSharedBuffer(nullptr)
-	, mTexture_X_Count(1)
-	, mTexture_Y_Count(1)
-	, mActiveCount(1)
-	, mAccType(accType)
-	, mParticleSystem(nullptr)
-{
-	if (type == eParticleType::D2D)
+	info.maxLifeTime = 10.0f;
+	info.minLifeTime = 0.0f;
+
+	info.startAngle = Vector4::Zero;
+	info.endAngle = Vector4(0.0f, 180.f,0.0f,1.0f);
+
+	info.worldPosition = Vector4::Zero;
+	info.startSize = Vector4(0.001f, 0.001f, 0.001f, 1.0f);
+	info.endSize = Vector4(0.001f, 0.001f, 0.001f, 1.0f);
+
+	info.startColor = Vector4(1.0f, 0.f, 1.0f, 1.0f);
+	info.endColor = Vector4(1.0f, 0.f, 1.0f, 1.0f);
+
+	info.maxParticles = maxCount;
+	info.simulationSpace = 1; // world
+
+	info.radius = 1.0f;
+	info.startSpeed = 10.f;
+	info.endSpeed = 10.f;
+
+	info.gravity = -9.8f;
+	info.force = 0.0f;
+
+	SetCB_Data(info);
+
+	// InitParticleData
+	mParticleData.resize(mParitlceMaxCount);
+	for (size_t i = 0; i < mParitlceMaxCount; i++)
 	{
-		Material* mater = GETSINGLE(ResourceMgr)->Find<Material>(L"ParticleMaterial");
-		Mesh* mesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"PointMesh");
-
-		mMaterial = mater;
-		mMesh = mesh;
+		mParticleData[i].position = Vector4::Zero;
+		mParticleData[i].direction.Normalize();
+		mParticleData[i].lifeTime = info.maxLifeTime;
+		mParticleData[i].speed = info.startSpeed;
+		mParticleData[i].radian = info.radius;
+		mParticleData[i].active = 0;
+		mParticleData[i].particleWorld = math::Matrix::Identity;
 	}
 
-	Initalize();
+	// StructureBuffer
+	mBuffer = new StructedBuffer();
+	mBuffer->Create(sizeof(Particle), maxCount, eSRVType::UAV, &mParticleData, true);
+
+	mSharedBuffer = new StructedBuffer();
+	mSharedBuffer->Create(sizeof(ParticleShared), 1, eSRVType::UAV, nullptr, true);
 }
 
 ParticleFormat::~ParticleFormat()
@@ -94,62 +112,6 @@ void ParticleFormat::Update()
 	mParticleCB.gravity += -DT;
 }
 
-void ParticleFormat::Initalize()
-{
-	// CB 초기화
-	renderer::ParticleSystemCB info = {};
-	info.deltaTime = 0.0f;
-	info.elapsedTime = 0.0f;
-
-	info.maxLifeTime = 0.5f;
-	info.minLifeTime = 0.0f;
-
-	info.startAngle = Vector4::Zero;
-	info.endAngle = Vector4(0.0f, 360.f, 0.0f, 1.0f);
-
-	info.worldPosition = Vector4::Zero;
-	info.startSize = Vector4(0.003f, 0.003f, 0.003f, 1.0f);
-	info.endSize = Vector4(0.0f, 0.0f, 0.0f, 1.0f);
-
-	info.startColor = Vector4(1.0f, 0.f, 1.0f, 1.0f);
-	info.endColor = Vector4(1.0f, 0.f, 1.0f, 1.0f);
-
-	info.maxParticles = mParitlceMaxCount;
-	info.simulationSpace = 1; // world
-
-	info.radius = 1.0f;
-	info.startSpeed = 10.f;
-	info.endSpeed = 10.f;
-
-	info.gravity = -9.8f;
-	info.force = 0.0f;
-
-	SetCB_Data(info);
-
-	// InitParticleData
-	mParticleData.resize(mParitlceMaxCount);
-	for (size_t i = 0; i < mParitlceMaxCount; i++)
-	{
-		mParticleData[i].position = Vector4::Zero;
-		mParticleData[i].direction.Normalize();
-		mParticleData[i].lifeTime = info.maxLifeTime;
-		mParticleData[i].speed = info.startSpeed;
-		mParticleData[i].radian = info.radius;
-		mParticleData[i].active = 0;
-		mParticleData[i].particleWorld = math::Matrix::Identity;
-	}
-
-	// StructureBuffer
-	mBuffer = new StructedBuffer();
-	mBuffer->Create(sizeof(Particle), mParitlceMaxCount, eSRVType::UAV, &mParticleData, true);
-
-	if (mAccType == eAccessType::ComputShader)
-	{
-		mSharedBuffer = new StructedBuffer();
-		mSharedBuffer->Create(sizeof(ParticleShared), 1, eSRVType::UAV, nullptr, true);
-	}
-}
-
 void ParticleFormat::CB_Bind(Vector3 pos)
 {
 	ConstantBuffer* cb = renderer::constantBuffers[static_cast<UINT>(eCBType::ParticleSystem)];
@@ -165,9 +127,6 @@ void ParticleFormat::Render()
 
 	Vector2 textureSize(static_cast<float>(mTexture_X_Count), static_cast<float>(mTexture_Y_Count));
 	mMaterial->SetData(eGPUParam::Vector2_1, &textureSize);
-
-	if (mAccType == eAccessType::CPU)
-		mBuffer->SetData(mParticleData.data(), static_cast<UINT>(mParticleData.size()));
 
 	mBuffer->BindSRV(eShaderStage::VS, 16);
 	mBuffer->BindSRV(eShaderStage::PS, 16);
@@ -227,11 +186,6 @@ void ParticleFormat::Reset()
 	mActiveCount = 1;
 }
 
-StructedBuffer* ParticleFormat::GetDataBuffer() const
-{
-	return mBuffer;
-}
-
 StructedBuffer* ParticleFormat::GetShaderDataBuffer() const
 {
 	ParticleShared info = {};
@@ -239,29 +193,4 @@ StructedBuffer* ParticleFormat::GetShaderDataBuffer() const
 	mSharedBuffer->SetData(&info,1);
 
 	return mSharedBuffer;
-}
-
-void ParticleFormat::SetParticleData(const Particle& particleData)
-{
-	mParticleData.clear();
-
-	mParticleData.resize(mParitlceMaxCount);
-	for (size_t i = 0; i < mParitlceMaxCount; ++i)
-	{
-		mParticleData[i] = particleData;
-	}
-}
-
-void ParticleFormat::SetParticleData(const std::vector<Particle>& particleDatas)
-{
-	mParticleData.clear();
-	mParticleData.resize(particleDatas.size());
-	for (size_t i = 0; i < particleDatas.size(); ++i)
-	{
-		mParticleData[i] = particleDatas[i];
-	}
-
-	mParitlceMaxCount = particleDatas.size();
-
-	mBuffer->SetData(mParticleData.data(), mParitlceMaxCount);
 }
