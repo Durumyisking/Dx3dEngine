@@ -59,6 +59,9 @@ void Layer::update()
 		if (nullptr == Obj)
 			continue;
 
+		std::wstring DebugName = Obj->GetName();
+		std::string ObjName = Obj->GetObjectTypeName();
+
 		if(GameObj::eState::Active == Obj->GetState())
 			Obj->Update();
 	}

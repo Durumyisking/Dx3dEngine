@@ -13,10 +13,13 @@ namespace gui
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		void EditTransform(float* cameraView, float* cameraProjection, float* matrix, bool editTransformDecomposition);
+		void InputFloatValues(math::Vector3& value);
+
+		void IsPhysical(bool tf) { mbPhysical = tf; }
 
 	private:
-		math::Vector3 mPosisition;
+		bool mbPhysical;
+		math::Vector3 mPosition;
 		math::Vector3 mRotation;
 		math::Vector3 mScale;
 	};

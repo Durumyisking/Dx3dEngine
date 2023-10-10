@@ -33,7 +33,7 @@ namespace server
 
 	ServerMgr::~ServerMgr()
 	{
-
+		GameObj::ClearObjectCDO();
 	}
 
 	void ServerMgr::Update()

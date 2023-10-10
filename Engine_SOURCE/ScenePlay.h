@@ -12,6 +12,9 @@ public:
 	ScenePlay();
 	virtual ~ScenePlay();
 
+	virtual bool Save();
+	virtual bool Load();
+
 	virtual void Initialize();
 	virtual void update();
 	virtual void fixedUpdate();
