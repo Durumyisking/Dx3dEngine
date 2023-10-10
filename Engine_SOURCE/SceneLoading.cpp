@@ -39,7 +39,7 @@ void SceneLoading::update()
 {
 	if (GETSINGLE(AsyncLoad)->IsLoadFinish())
 	{
-		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
+		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Title);
 		return;
 	}
 
