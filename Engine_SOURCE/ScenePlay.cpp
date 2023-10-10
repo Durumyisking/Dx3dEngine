@@ -158,34 +158,10 @@ void ScenePlay::Initialize()
 	}
 
 
-		////Sphere 
-		//{
-		//	GameObj* Sphere = object::Instantiate<GameObj>(eLayerType::Player, this);
-		//	Sphere->SetPos(Vector3(32.f, 25.f, -9.5f));
-		//	Sphere->SetScale(Vector3(15.f, 15.f, 15.f));
-		//	Sphere->SetName(L"Sphere");
-		//
-		//
-		//	Sphere->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//	Sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-		//	Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
-		//	Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
-		//
-		//	Sphere->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-		//
-		//	Physical* physical = Sphere->AddComponent<Physical>(eComponentType::Physical);
-		//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(7.5f, 7.5f, 7.5f));
-		//
-		//	PhysXRigidBody* rigid = Sphere->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		//
-		//	Sphere->AddComponent<PhysXCollider>(eComponentType::Collider);
-		//	//Sphere->AddComponent<PhysicalMovement>(eComponentType::Movement);
-		//	Sphere->AddComponent<PlayerScript>(eComponentType::Script);
-		//}
-	{
-		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-		mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
-	}
+	//{
+	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+	//	mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
+	//}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
