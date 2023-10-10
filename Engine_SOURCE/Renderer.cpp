@@ -31,7 +31,6 @@ namespace renderer
 
 	Texture* postProcessTexture = nullptr;
 	Texture* dsTexture = nullptr;
-	GameObj* outlineGameObject = nullptr;
 
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
 

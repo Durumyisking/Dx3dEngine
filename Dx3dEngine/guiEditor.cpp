@@ -62,7 +62,7 @@ namespace gui
 
 	void Editor::Run()
 	{
-		if (KEY_UP(N_8))
+		if (KEY_TAP(F_6))
 		{
 			if (mEnable == false)
 			{

@@ -38,7 +38,6 @@ namespace gui
 	WidgetMgr::WidgetMgr()
 		: mWidgets{}
 		, mVisualEditor(nullptr)
-		, mHierarchy(nullptr)
 	{
 
 	}
@@ -57,7 +56,7 @@ namespace gui
 		//Game* game = new Game();
 		//mWidgets.insert(std::make_pair("Game", game));
 
-		mHierarchy = new Hierarchy();
+		Hierarchy* mHierarchy = new Hierarchy();
 		mWidgets.insert(std::make_pair("Hierarchy", mHierarchy));
 
 		Gizmo* gizmo = new Gizmo();
@@ -114,7 +113,6 @@ namespace gui
 
 		delete mVisualEditor;
 		mVisualEditor = nullptr;
-		mHierarchy = nullptr;
 
 	}
 

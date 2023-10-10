@@ -204,7 +204,7 @@ void ScenePlay::Initialize()
 
 void ScenePlay::update()
 {
-	if (KEY_TAP(N_1))
+	if (KEY_TAP(F_1))
 	{
 		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Title);
 	}

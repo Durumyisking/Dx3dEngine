@@ -39,17 +39,15 @@ namespace gui
 		////GroupWidget Template
 		mGroupWidget = new GroupWidget();
 		mGroupWidget->SetName("ObjectWindowGroup");
-		mGroupWidget->SetSpacing();
-		mGroupWidget->SetNextLine(3);
+		mGroupWidget->SetSpacing(10.f, 5.f);
+		mGroupWidget->SetNextLine(2);
 		AddWidget(mGroupWidget);
 
 
-
-		ListWidget* CDOList = mGroupWidget->CreateWidget<ListWidget>(100.f, 200.f);
+		ListWidget* CDOList = mGroupWidget->CreateWidget<ListWidget>(150.f, 300.f);
 		CDOList->SetState(eState::Active);
 		CDOList->SetAllOpen(true);
 
-		//모든 메쉬의 리소스를 가져와야한다.
 		std::vector<std::string> CDOTypeVec;
 		GameObj::GetAllCDOType(&CDOTypeVec);
 
@@ -58,8 +56,10 @@ namespace gui
 
 
 		ButtonWidget* button = mGroupWidget->CreateWidget<ButtonWidget>(110.f, 70.f);
-		button->SetButtonText("CreateObject");
+		button->SetName("CreateObject");
 		button->SetClickCallback(&ObjectWindow::CreateObject, this);
+
+		//
 	}
 
 	void ObjectWindow::FixedUpdate()

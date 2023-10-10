@@ -53,7 +53,7 @@ namespace gui
 
     void Gizmo::Update()
     {
-        mTargetGameObject = GETSINGLE(WidgetMgr)->GetHierachy()->GetTargetObject();
+        mTargetGameObject = GETSINGLE(WidgetMgr)->GetWidget<Hierarchy>("Hierarchy")->GetTargetObject();
 
         if (mTargetGameObject == nullptr)
             return;
