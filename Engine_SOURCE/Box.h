@@ -8,12 +8,7 @@ class Box :
 {
 public:
 	Box();
-	Box(const Box& Obj);
 	virtual ~Box();
-
-	virtual Box* Clone() const;
-	virtual void Save(FILE* File);
-	virtual void Load(FILE* File);
 
 	virtual void Initialize() override;
 	virtual void Update() override;

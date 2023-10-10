@@ -9,12 +9,7 @@ class Sphere :
 
 public:
 	Sphere();
-	Sphere(const Sphere& Obj);
 	virtual ~Sphere();
-
-	virtual Sphere* Clone() const;
-	virtual void Save(FILE* File) override;
-	virtual void Load(FILE* File) override;
 
 	virtual void Initialize() override;
 	virtual void Update() override;

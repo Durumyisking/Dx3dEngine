@@ -28,13 +28,6 @@ Player::Player()
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
 
-	mObjectTypeName = "Player";
-}
-
-Player::Player(const Player& Obj)
-	: DynamicObject(Obj)
-{
-	SetLayerType(eLayerType::Player);
 }
 
 Player::~Player()
@@ -53,21 +46,6 @@ Player::~Player()
 	//	delete mMarioCap;
 	//	mMarioCap = nullptr;
 	//}
-}
-
-Player* Player::Clone() const
-{
-	return new Player(*this);
-}
-
-void Player::Save(FILE* File)
-{
-	DynamicObject::Save(File);
-}
-
-void Player::Load(FILE* File)
-{
-	DynamicObject::Load(File);
 }
 
 void Player::Initialize()

@@ -109,12 +109,11 @@ namespace gui
 	{
 	}
 
-	TreeWidget::Node* TreeWidget::AddNode(Node* parent, const std::string& name, void* data, bool isFrame, UINT num)
+	TreeWidget::Node* TreeWidget::AddNode(Node* parent, const std::string& name, void* data, bool isFrame)
 	{
 		Node* node = new Node;
 		node->SetName(name);
 		node->SetData(data);
-		node->SetNumber(num);
 		node->SetStem(isFrame);
 		node->mTreeWidget = this;
 
@@ -147,11 +146,6 @@ namespace gui
 		if (mSelectedNode && mEvent)
 		{
 			mEvent(mSelectedNode->mData);
-		}
-
-		if (mSelectedNode && mSimpleEvent)
-		{
-			mSimpleEvent(mSelectedNode->mNumber);
 		}
 	}
 }

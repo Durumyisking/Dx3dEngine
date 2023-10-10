@@ -22,32 +22,10 @@ Packun::Packun()
 	: Monster()
 {
 
-	mObjectTypeName = "Packun";
-}
-
-Packun::Packun(const Packun& Obj)
-	: Monster(Obj)
-{
-
 }
 
 Packun::~Packun()
 {
-}
-
-Packun* Packun::Clone() const
-{
-	return new Packun(*this);
-}
-
-void Packun::Save(FILE* File)
-{
-	Monster::Save(File);
-}
-
-void Packun::Load(FILE* File)
-{
-	Monster::Load(File);
 }
 
 void Packun::Initialize()

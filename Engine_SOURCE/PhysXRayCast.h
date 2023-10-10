@@ -8,7 +8,7 @@
 
 class PhysXRayCast
 {
-	SINGLE(PhysXRayCast)
+	SINGLE(PhysXRayCast);
 public:
 
 	GameObj* Raycast();

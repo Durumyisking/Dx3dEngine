@@ -112,14 +112,19 @@ namespace gui
 	{
 		mTargetObject = static_cast<GameObj*>(data);
 
-		OutLiner* outline = GETSINGLE(WidgetMgr)->GetWidget<OutLiner>("OutLiner");
+		renderer::outlineGameObject
+			= static_cast<GameObj*>(data);
 
+		OutLiner* outline = GETSINGLE(WidgetMgr)->GetWidget<OutLiner>("OutLiner");
 		if (outline == nullptr)
 			return;
-
 		outline->ClearTarget();
-		outline->SetTargetGameObject(mTargetObject);
+		outline->SetTargetGameObject(renderer::outlineGameObject);
 		outline->InitializeTargetGameObject();
+
+		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
+		inspector->SetTargetGameObject(renderer::outlineGameObject);
+		inspector->InitializeTargetGameObject();
 	}
 
 	void SetLayerTypeName(enums::eLayerType type, std::string& name)

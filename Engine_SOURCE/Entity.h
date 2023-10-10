@@ -9,9 +9,6 @@ public:
 	Entity(const Entity& other);
 	virtual ~Entity();
 
-	virtual void Save(FILE* File);
-	virtual void Load(FILE* File);
-
 	void SetName(const std::wstring& name) { mName = name; }
 	const std::wstring& GetName() { return mName; }
 	uintptr_t GetID() { return mID; }
