@@ -376,7 +376,7 @@ float3 LightRadiance(in LightAttribute light, in float3 posWorld, in float3 norm
 {
     // Directional light
     float3 lightVec = light.type & LIGHT_DIRECTIONAL
-                      ? -light.direction
+                      ? -light.direction.xyz
                       : light.position.xyz - posWorld;
         
     float lightDist = length(lightVec);
@@ -406,7 +406,7 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
 {
      // Directional light
     float3 lightVec = light.type & LIGHT_DIRECTIONAL
-                      ? -light.direction
+                      ? -light.direction.xyz
                       : light.position.xyz - posWorld;
         
     float lightDist = length(lightVec);
@@ -458,8 +458,8 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         
         // Texel size
         float dx = 5.0 / (float) width;
-       // shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.001, dx, shadowMap);
-        shadowFactor = PCSS(lightTexcoord, lightScreen.z - 0.01, shadowMap, light.projection, light.radius);
+        shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.001, dx, shadowMap);
+        //shadowFactor = PCSS(lightTexcoord, lightScreen.z - 0.01, shadowMap, light.projection, light.radius);
         
         // vsm sampling
         //shadowFactor = VSM_FILTER(ShadowMap.Sample(linearSampler, lightTexcoord).rg, lightScreen.z);

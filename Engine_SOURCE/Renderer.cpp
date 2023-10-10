@@ -270,7 +270,8 @@ namespace renderer
 
 		samplerDesc.MipLODBias = 0.0f;
 		samplerDesc.MaxAnisotropy = 1;
-		samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+		//samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
 		samplerDesc.BorderColor[0] = 0;
 		samplerDesc.BorderColor[1] = 0;
 		samplerDesc.BorderColor[2] = 0;
@@ -304,13 +305,10 @@ namespace renderer
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::ShadowPoint)].GetAddressOf());
 
-		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
-		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
-		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
 		samplerDesc.BorderColor[0] = 100.0f; // 큰 Z값
 		samplerDesc.Filter =
-			D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
-		samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+			D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT; // 축소 및 확대에 선형 보간법을 사용합니다. 밉 수준 샘플링에는 포인트 샘플링을 사용합니다. 결과를 비교값과 비교합니다.
+		samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL; // 소스 데이터가 대상 데이터보다 작거나 같으면 비교가 통과됩니다.
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::ShadowCompare)].GetAddressOf());
 
 
@@ -451,7 +449,7 @@ namespace renderer
 		
 
 		lightBuffer = new StructedBuffer();
-		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
+		lightBuffer->Create(sizeof(LightAttribute), 1, eSRVType::SRV, nullptr, true); // 128에서 1로 변경했습니다. (light binding시 생기는 오류 없애는 시도)
 	}
 
 	void LoadShader()
@@ -1034,7 +1032,7 @@ namespace renderer
 			Texture* shadowMap = new Texture();
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapTexture", shadowMap);
 			vecRTTex.emplace_back(shadowMap);
-			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32_FLOAT
+			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			Texture* depthStencilTex = new Texture();

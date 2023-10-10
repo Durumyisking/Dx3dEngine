@@ -40,21 +40,21 @@ void Light::FixedUpdate()
 	mAttribute.position = Vector4(position.x, position.y, position.z, 1.0f);
 	mAttribute.direction = Vector4(tr->Forward().x, tr->Forward().y, tr->Forward().z, 0.0f);
 
-	Matrix view = Matrix::Identity;
-	//Vector3 up = Vector3(0.f, 1.f, 0.f);
-	Vector3 up = tr->Up();
-	Vector3 right = tr->Right();
-	Vector3 forward = tr->Forward();
+	//Matrix view = Matrix::Identity;
+	////Vector3 up = Vector3(0.f, 1.f, 0.f);
+	//Vector3 up = tr->Up();
+	//Vector3 right = tr->Right();
+	//Vector3 forward = tr->Forward();
 
-	Vector3 pos = forward * -50.f;
+	//Vector3 pos = forward * -50.f;
 
-	view *= Matrix::CreateTranslation(-pos);
+	//view *= Matrix::CreateTranslation(-pos);
 
-	view *= XMMatrixLookToLH(pos, forward, up);
+	//view *= XMMatrixLookToLH(pos, forward, up);
 
-	mAttribute.view = view;
-		//XMMatrixLookAtLH(
-		//mAttribute.position, mAttribute.position + mAttribute.direction, tr->Up());
+	mAttribute.view = 
+		XMMatrixLookAtLH(
+		mAttribute.position, mAttribute.position + mAttribute.direction, tr->Up());
 
 	mAttribute.projection = XMMatrixPerspectiveFovLH(
 		XM_PI / 4.0f, 1600.f / 900.f, 1.f, 100.f);
