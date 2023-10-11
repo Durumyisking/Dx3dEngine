@@ -70,6 +70,7 @@ void Monster::OnTriggerExit(GameObj* gameObject)
 {
 }
 
+
 void Monster::SetMonsterState(eMonsterState monsterState)
 {
 	std::set<UINT>::iterator iter;
@@ -148,15 +149,7 @@ void Monster::CaptureEnter(MarioCap* cap)
 	param.CompleteFunc = [this, cap](float inCurValue)
 	{
 		OnCapture();
-
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
-		if (!model)
-			return;
-
-		// 오프
-		model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
-		model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
-		model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
+		captureEnterModelOperation();
 
 		// 마리오 본체 pause
 		cap->GetOwner()->Pause();
