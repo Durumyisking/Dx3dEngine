@@ -12,7 +12,6 @@ public:
 	virtual void FixedUpdate() final;
 
 	virtual void CaptureEvent() final;
-	virtual void CaptureEnter(MarioCap* cap) final {};
 
 	virtual void OnCollisionEnter(GameObj* gameObject) final;
 	virtual void OnTriggerEnter(GameObj* gameObject) final;
@@ -26,6 +25,7 @@ public:
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) final;
 	virtual void stateInfoInitalize() final;
+	virtual void captureEnterModelOperation() final;
 
 private:
 	UINT				mGoombaLayerIdx;

@@ -403,6 +403,7 @@
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
+    <ClCompile Include="FootSmokeParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -841,6 +842,7 @@
     <ClInclude Include="MilestoneScript.h" />
     <ClInclude Include="TitleBGMScript.h" />
     <ClInclude Include="MarioBlock.h" />
+    <ClInclude Include="FootSmokeParticle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

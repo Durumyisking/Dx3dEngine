@@ -49,11 +49,11 @@ Player::~Player()
 
 void Player::Initialize()
 {
-	//ê¸°ë³¸ ì„¤ì •
+	//±âº» ¼³Á¤
 	SetPos(Vector3(20.f, 5.f, 10.f));
 	SetScale(Vector3(1.f, 1.f, 1.f));
 
-	//ë§ˆë¦¬ì˜¤ body ì´ˆê¸°í™”
+	//¸¶¸®¿À body ÃÊ±âÈ­
 	mMeshRenderer = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mScript = AddComponent<PlayerStateScript>(eComponentType::Script);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
@@ -86,7 +86,7 @@ void Player::Initialize()
 	//animation setting
 	boneAnimatorInit(animator);
 
-	//ë§ˆë¦¬ì˜¤ íŒŒì¸  ê´€ë¦¬
+	//¸¶¸®¿À ÆÄÃ÷ °ü¸®
 	MarioParts* mHandL = new MarioParts();
 	MarioParts* mHandR = new MarioParts();
 	MarioParts* mHead = new MarioParts();
@@ -127,7 +127,7 @@ void Player::Initialize()
 	stateInfoInitalize();
 	//mPlayerState = ePlayerState::Idle;
 
-	//mariocap ìƒì„±
+	//mariocap »ı¼º
 	//mMarioCap = object::LateInstantiate<MarioCap>(eLayerType::Objects);
 	//mMarioCap->Initialize();
 	//mMarioCap->Physicalinit();
@@ -252,7 +252,7 @@ void Player::OnTriggerExit(GameObj* gameObject)
 
 void Player::KeyCheck()
 {
-	// ìº¡ì²˜ ì´ë²¤íŠ¸ êµ¬í˜„ë¶€
+	// Ä¸Ã³ ÀÌº¥Æ® ±¸ÇöºÎ
 	bool able = false;
 
 	std::vector<std::function<bool(eKeyCode)>> keyEvent;
@@ -263,7 +263,7 @@ void Player::KeyCheck()
 	keyEvent[static_cast<UINT>(eKeyState::UP)] = std::bind(&InputMgr::GetKeyUp, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::NONE)] = std::bind(&InputMgr::GetKeyNone, GETSINGLE(InputMgr), std::placeholders::_1);
 
-	// í‚¤ ì…ë ¥ ì´ë²¤íŠ¸ ì²˜ë¦¬í•˜ëŠ” ëŒë‹¤ì‹
+	// Å° ÀÔ·Â ÀÌº¥Æ® Ã³¸®ÇÏ´Â ¶÷´Ù½Ä
 	std::function<void(eKeyState, eKeyCode, ePlayerState)> stateEvent =
 		[&]
 	(eKeyState keyState, eKeyCode curPress, ePlayerState nextState) ->void
@@ -277,25 +277,25 @@ void Player::KeyCheck()
 		}
 	};
 
-	// ì›…í¬ë¦¬ê¸°
+	// ¿õÅ©¸®±â
 	stateEvent(eKeyState::TAP, eKeyCode::Z, ePlayerState::Squat);
 
-	// ì í”„
+	// Á¡ÇÁ
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, ePlayerState::Jump);
 
-	// ëŒ€ê¸°
+	// ´ë±â
  
-	// ì´ë™
+	// ÀÌµ¿
 	stateEvent(eKeyState::DOWN, eKeyCode::UP, ePlayerState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, ePlayerState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, ePlayerState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::RIGHT, ePlayerState::Move);
 
-	// ëª¨ì ë˜ì§€ê¸°
+	// ¸ğÀÚ ´øÁö±â
 	able = false;
 	stateEvent(eKeyState::TAP, eKeyCode::LCTRL, ePlayerState::ThrowCap);
 
-	// íŠ¹ìˆ˜
+	// Æ¯¼ö
 	able = false;
 }
 
@@ -305,7 +305,7 @@ void Player::BoneInitialize()
 
 //void Player::PlayerAnimation(std::wstring name)
 //{
-//	//ì¼ê´„ì ìœ¼ë¡œ ì• ë‹ˆë©”ì´ì…˜ì„ ì¬ìƒì‹œì¼œì£¼ëŠ” í•¨ìˆ˜
+//	//ÀÏ°ıÀûÀ¸·Î ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Àç»ı½ÃÄÑÁÖ´Â ÇÔ¼ö
 //	BoneAnimator* animator = GetComponent<BoneAnimator>();
 //	animator->Play(name);
 //	for (auto i : mParts)
@@ -317,7 +317,7 @@ void Player::BoneInitialize()
 void Player::stateInfoInitalize()
 {
 	//Idle
-	// í˜„ì¬ëŠ” ëŒ€ê¸°ìƒíƒœì—ì„œ ëª»ê°€ëŠ”ìƒíƒœê°€ ì—†ë‹¤
+	// ÇöÀç´Â ´ë±â»óÅÂ¿¡¼­ ¸ø°¡´Â»óÅÂ°¡ ¾ø´Ù
 
 	//Move
 	
@@ -327,16 +327,16 @@ void Player::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Groggy));
 	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Die));
 
-	//Squat - ì›ë˜ëŠ” ì›…í¬ë¦¬ê¸° ìƒíƒœì—ì„œëŠ” ì¼ë°˜ ì í”„ê°€ ì•ˆëœë‹¤. í•˜ì§€ë§Œ ê°„ëµí™” í• ì§€ ê³ ë¯¼ì¤‘
+	//Squat - ¿ø·¡´Â ¿õÅ©¸®±â »óÅÂ¿¡¼­´Â ÀÏ¹İ Á¡ÇÁ°¡ ¾ÈµÈ´Ù. ÇÏÁö¸¸ °£·«È­ ÇÒÁö °í¹ÎÁß
 	InsertLockState(static_cast<UINT>(ePlayerState::Squat), static_cast<UINT>(ePlayerState::Move));
 	InsertLockState(static_cast<UINT>(ePlayerState::Squat), static_cast<UINT>(ePlayerState::Groggy));
 	InsertLockState(static_cast<UINT>(ePlayerState::Squat), static_cast<UINT>(ePlayerState::Die));
 
-	//SquatMove - ì›…í¬ë¦¬ê¸° í›„ ì›€ì§ì´ëŠ” ìƒíƒœ, ì´ ìƒíƒœì—ì„œë§Œ í•  ìˆ˜ ìˆëŠ” ì•¡ì…˜ë“¤ì´ ì¡´ì¬í•œë‹¤.
+	//SquatMove - ¿õÅ©¸®±â ÈÄ ¿òÁ÷ÀÌ´Â »óÅÂ, ÀÌ »óÅÂ¿¡¼­¸¸ ÇÒ ¼ö ÀÖ´Â ¾×¼ÇµéÀÌ Á¸ÀçÇÑ´Ù.
 	InsertLockState(static_cast<UINT>(ePlayerState::SquatMove), static_cast<UINT>(ePlayerState::Move));
 	InsertLockState(static_cast<UINT>(ePlayerState::SquatMove), static_cast<UINT>(ePlayerState::Wall));
 
-	//Air - ê³µì¤‘ì— ë– ìˆëŠ” ìƒíƒœì—ì„œëŠ” ë§ˆë¦¬ì˜¤ì˜ ë°©í–¥ íšŒì „ë§Œ ê°€ëŠ¥í•˜ë©°, ì´ë™í•˜ì§€ëŠ” ëª»í•œë‹¤.
+	//Air - °øÁß¿¡ ¶°ÀÖ´Â »óÅÂ¿¡¼­´Â ¸¶¸®¿ÀÀÇ ¹æÇâ È¸Àü¸¸ °¡´ÉÇÏ¸ç, ÀÌµ¿ÇÏÁö´Â ¸øÇÑ´Ù.
 	InsertLockState(static_cast<UINT>(ePlayerState::Air), static_cast<UINT>(ePlayerState::Move));
 	InsertLockState(static_cast<UINT>(ePlayerState::Air), static_cast<UINT>(ePlayerState::Jump));
 	InsertLockState(static_cast<UINT>(ePlayerState::Air), static_cast<UINT>(ePlayerState::Squat));
@@ -348,7 +348,7 @@ void Player::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::Squat));
 	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::SquatMove));
 
-	//Wall -ë²½ì„ ì†ìœ¼ë¡œ ì§šìœ¼ë©´ì„œ ë‚´ë ¤ì˜¤ëŠ” ìƒíƒœ, ì´ ìƒíƒœì—ì„œ ì í”„ë¥¼ í•˜ë©´ ë²½ì°¨ê¸°ê°€ ëœë‹¤. 
+	//Wall -º®À» ¼ÕÀ¸·Î Â¤À¸¸é¼­ ³»·Á¿À´Â »óÅÂ, ÀÌ »óÅÂ¿¡¼­ Á¡ÇÁ¸¦ ÇÏ¸é º®Â÷±â°¡ µÈ´Ù. 
 	InsertLockState(static_cast<UINT>(ePlayerState::Wall), static_cast<UINT>(ePlayerState::Move));
 	InsertLockState(static_cast<UINT>(ePlayerState::Wall), static_cast<UINT>(ePlayerState::SquatMove));
 	InsertLockState(static_cast<UINT>(ePlayerState::Wall), static_cast<UINT>(ePlayerState::Air));
@@ -462,7 +462,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 	animator->CreateAnimation(L"RunStart", L"..//..//Resources/MarioBody/Animation/RunStart.smd");
 	animator->Play(L"Wait");
 
-	// ëª¨ì ë˜ì§€ê¸°
+	// ¸ğÀÚ ´øÁö±â
 	{
 		cilp = animator->GetAnimationClip(L"ThrowCap");
 		if (cilp)
@@ -496,7 +496,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 		}
 	}
 
-	// runstart í›„ runìœ¼ë¡œ
+	// runstart ÈÄ runÀ¸·Î
 	{
 		cilp = animator->GetAnimationClip(L"RunStart");
 		if (cilp)
@@ -506,7 +506,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 		});
 	}
 
-	//ë©ˆì¶”ëŠ” ì• ë‹ˆë©”ì´ì…˜ í›„ idleë¡œ
+	//¸ØÃß´Â ¾Ö´Ï¸ŞÀÌ¼Ç ÈÄ idle·Î
 	{
 		cilp = animator->GetAnimationClip(L"Brake");
 		if (cilp)
@@ -576,3 +576,4 @@ void Player::SetMarioCap(MarioCap* cap)
 	mMarioCap = cap;
 	cap->SetOwner(this);
 }
+

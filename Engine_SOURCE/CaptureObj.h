@@ -22,10 +22,14 @@ public:
 
 public:
 	GETSET(bool, mbCapture, Capture)
-	GETSET(MarioCap*, mCap, Object)
+	GETSET(MarioCap*, mCap, Cap)
 	GETSET(Player*, mPlayer, Player)
 
 	bool IsCapture() { return mbCapture; }
+
+	void CopyCaptureData(CaptureObj* other);
+	void ClearCaptureData();
+
 private:
 	MarioCap* mCap    = nullptr;
 	Player* mPlayer		= nullptr;

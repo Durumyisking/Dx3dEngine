@@ -202,7 +202,7 @@ void Packun::CaptureEnter(MarioCap* cap)
 
 		// 캡의 오너변경
 		cap->SetOwner(this);
-		SetObject(cap);
+		SetCap(cap);
 
 		// 캡의 Capture 상태
 		cap->SetCapState(MarioCap::eCapState::Capture);
@@ -247,7 +247,7 @@ void Packun::OnTriggerEnter(GameObj* gameObject)
 
 		dynamic_cast<Player*>(cap->GetOwner())->SetPlayerState(Player::ePlayerState::Capture);
 		
-		CaptureEnter(cap);
+		//CaptureEnter(cap);
 	
 	}
 }
@@ -294,6 +294,18 @@ void Packun::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Attack));
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::SpecialSituation));
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Groggy));
+}
+
+void Packun::captureEnterModelOperation()
+{
+	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
+	if (!model)
+		return;
+
+	// 오프
+	model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
+	model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
+	model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
 }
 
 void Packun::boneAnimatorInit(BoneAnimator* animator)

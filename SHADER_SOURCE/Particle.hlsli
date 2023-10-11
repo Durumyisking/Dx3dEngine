@@ -21,10 +21,12 @@ struct Particle
     float gravityAcc;
     uint active;
     
-    matrix particleWorld;
+    row_major matrix particleWorld;
     
     uint texture_x_index;
     uint texture_y_index;
+    
+    float wakeUpTime;
 };
 
 

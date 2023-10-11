@@ -244,6 +244,8 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 
 				OffCapture();
 				mLowerLayerGoombas[0]->OnCapture();
+				mLowerLayerGoombas[0]->CopyCaptureData(dynamic_cast<CaptureObj*>(this));
+
 			}
 
 			//// ¾Æ·§±À¹Ù
@@ -324,4 +326,10 @@ void Goomba::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Hit));
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::SpecialSituation));
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Groggy));
+}
+
+void Goomba::captureEnterModelOperation()
+{
+	// todo : ±À¹Ù Ä¸Ã³ÇßÀ»¶§ ¸ðµ¨ Ã³¸®ÇÏ´Â ÇÔ¼ö
+
 }

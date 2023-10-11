@@ -159,7 +159,7 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		SetCapState(MarioCap::eCapState::Capture);
 
 		//dynamic_cast<Player*>(GetOwner())->SetPlayerState(Player::ePlayerState::Capture);
-		GetOwner()->Pause();
+		//GetOwner()->Pause();
 		//GetOwner()->GetPhysical()->RemoveActorToPxScene();
 	}
 }
