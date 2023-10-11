@@ -17,8 +17,9 @@ namespace gui
 		void EditTransform(float* cameraView, float* cameraProjection, float* matrix, bool editTransformDecomposition);
 
 	private:
-		eActorType mActorType;
-		eGeometryType mGeometryType;
+		math::Vector3 mPosisition;
+		math::Vector3 mRotation;
+		math::Vector3 mScale;
     };
 }
 

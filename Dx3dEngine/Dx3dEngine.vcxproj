@@ -168,8 +168,7 @@
     <ClInclude Include="guiGizmo.h" />
     <ClInclude Include="guiComponent.h" />
     <ClInclude Include="guiConsole.h" />
-    <ClInclude Include="guiObjectWindow.h" />
-    <ClInclude Include="guiSceneSaveWindow.h" />
+    <ClInclude Include="guiContentsBrowser.h" />
     <ClInclude Include="guiDebugObject.h" />
     <ClInclude Include="guiEditor.h" />
     <ClInclude Include="guiEditorObject.h" />
@@ -210,8 +209,7 @@
     <ClCompile Include="guiGizmo.cpp" />
     <ClCompile Include="guiComponent.cpp" />
     <ClCompile Include="guiConsole.cpp" />
-    <ClCompile Include="guiObjectWindow.cpp" />
-    <ClCompile Include="guiSceneSaveWindow.cpp" />
+    <ClCompile Include="guiContentsBrowser.cpp" />
     <ClCompile Include="guiDebugObject.cpp" />
     <ClCompile Include="guiEditor.cpp" />
     <ClCompile Include="guiEditorObject.cpp" />

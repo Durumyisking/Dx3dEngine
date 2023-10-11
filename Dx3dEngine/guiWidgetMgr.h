@@ -22,6 +22,7 @@ namespace gui
 		void ImGui_Run();
 		void ImGui_Release();
 
+		class Hierarchy* GetHierachy() { return mHierarchy; }
 		class VisualEditor* GetVisualEditor() { return mVisualEditor; }
 		
 		template<typename T>
@@ -45,6 +46,7 @@ namespace gui
 	private:
 		std::map<std::string, Widget*> mWidgets;
 
+		class Hierarchy* mHierarchy;
 		class VisualEditor* mVisualEditor;
 	};
 

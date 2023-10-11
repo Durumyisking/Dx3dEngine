@@ -5,11 +5,11 @@
 #include "imgui_impl_dx11.h"
 
 #include "Renderer.h"
-#include "Component.h"
-#include "MeshRenderer.h"
 
-#include "guiWidgetMgr.h"
-#include "guiHierarchy.h"
+#include "guiTransform.h"
+#include "guiMeshRenderer.h"
+#include "guiTexture.h"
+
 #include "guiComponent.h"
 #include "guiResource.h"
 
@@ -20,28 +20,24 @@ namespace gui
 	using namespace enums;
 	Inspector::Inspector()
 		:mTargetResource(nullptr)
-		, mTransform(nullptr)
-		, mMeshRenderer(nullptr)
 	{
 		SetName("Inspector");
 		SetSize(ImVec2(300.0f, 100.0f));
 		
 		mComponents.resize(static_cast<UINT>(eComponentType::End));
-		mTargetGameObject = GETSINGLE(WidgetMgr)->GetWidget<Hierarchy>("Hierarchy")->GetTargetObject();
+		mTargetGameObject = renderer::outlineGameObject;
 
-		mTransform = new gui::GUITransform();
-		mComponents[static_cast<UINT>(eComponentType::Transform)] = mTransform;
+		mComponents[static_cast<UINT>(eComponentType::Transform)] = new gui::GUITransform();
 		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetName("InspectorTransform");
 		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetTarget(mTargetGameObject);
 		AddWidget(mComponents[static_cast<UINT>(eComponentType::Transform)]);
 
-		mComponents[static_cast<UINT>(eComponentType::Physical)] = new gui::GUIPhysical();
+		mComponents[static_cast<UINT>(eComponentType::Physical)] = new gui::GUITransform();
 		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetName("InspectorPhysical");
 		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetTarget(mTargetGameObject);
 		AddWidget(mComponents[static_cast<UINT>(eComponentType::Physical)]);
 
-		mMeshRenderer = new gui::GUIMeshRenderer();
-		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)] = mMeshRenderer;
+		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)] = new gui::GUIMeshRenderer();
 		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetName("InspectorMeshRenderer");
 		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetTarget(mTargetGameObject);
 		AddWidget(mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]);
@@ -179,31 +175,12 @@ namespace gui
 	{
 		ClearTarget();
 
-		std::vector<Component*> targetComponents = mTargetGameObject->GetComponentsVec();
-
-		for (size_t i = 0; i < static_cast<UINT>(enums::eComponentType::End); i++)
-		{
-			if (!targetComponents[i])
-				continue;
-
-			if (i == static_cast<UINT>(eComponentType::Transform))
-			{
-				mComponents[static_cast<UINT>(eComponentType::Transform)]->SetState(eState::Active);
-				mComponents[static_cast<UINT>(eComponentType::Transform)]->SetTarget(mTargetGameObject);
-				mTransform->IsPhysical(false);
-			}
-			else if (i == static_cast<UINT>(eComponentType::Physical))
-			{
-				mComponents[static_cast<UINT>(eComponentType::Physical)]->SetState(eState::Active);
-				mComponents[static_cast<UINT>(eComponentType::Physical)]->SetTarget(mTargetGameObject);
-				mTransform->IsPhysical(true);
-			}
-			else if (i == static_cast<UINT>(eComponentType::MeshRenderer))
-			{
-				mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetState(eState::Active);
-				mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetTarget(mTargetGameObject);
-			}
-		}
+		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetState(eState::Active);
+		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetTarget(mTargetGameObject);
+		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetState(eState::Active);
+		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetTarget(mTargetGameObject);
+		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetState(eState::Active);
+		mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]->SetTarget(mTargetGameObject);
 	}
 
 	void Inspector::InitializeTargetResource()

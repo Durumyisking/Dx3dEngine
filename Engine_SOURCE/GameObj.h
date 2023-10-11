@@ -39,12 +39,7 @@ public:
 
 public:
 	GameObj();
-	GameObj(const GameObj& Obj);
 	virtual ~GameObj();
-
-	virtual GameObj* Clone() const;
-	virtual void Save(FILE* File) override;
-	virtual void Load(FILE* File) override;
 
 	virtual void Initialize();
 	virtual void Update();
@@ -174,53 +169,9 @@ public:
 	Light* GetLight();
 
 
-private:
-	static std::map<std::string, GameObj*> mObjectCDO;
-
-public:
-	static void AddObjectCDO(const std::string& Name, GameObj* CDO)
-	{
-		mObjectCDO.insert(std::make_pair(Name, CDO));
-	}
-
-	static GameObj* FindObjectCDO(const std::string& Name)
-	{
-		auto	iter = mObjectCDO.find(Name);
-
-		if (iter == mObjectCDO.end())
-			return nullptr;
-
-		return iter->second;
-	}
-
-	static void ClearObjectCDO()
-	{
-		for (auto& iter : mObjectCDO)
-		{
-			if (iter.second == nullptr)
-				continue;
-
-			delete iter.second;
-			iter.second = nullptr;
-		}
-
-		mObjectCDO.clear();
-	}
-
-	static void GetAllCDOType(std::vector<std::string>* objectTypeVec)
-	{
-		for (const auto& pair : mObjectCDO) 
-		{
-			objectTypeVec->push_back(pair.first);
-		}
-	}
-
-
-	const std::string& GetObjectTypeName()	const { return mObjectTypeName; }
-
 protected:
 	std::vector<Component*> mComponents;
-	std::string				mObjectTypeName;
+
 
 private:
 	eLayerType mType;

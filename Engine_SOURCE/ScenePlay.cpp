@@ -69,10 +69,12 @@
 #include "CompassNeedleScript.h"
 #include "DieUIEffectScript.h"
 #include "DieCircleUIScript.h"
+#include "AudioListener.h"
+#include "AudioSource.h"
+
 
 #include "Goomba.h"
 #include "Packun.h"
-#include "ModelObj.h"
 
 #include "PostProcess.h"
 
@@ -92,61 +94,43 @@ ScenePlay::~ScenePlay()
 {
 }
 
-bool ScenePlay::Save()
-{
-	return false;
-}
-
-bool ScenePlay::Load()
-{
-	return false;
-}
-
 void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene 로드 테스트 로드시에 반복해서 몬스터 정의 방지
-	if (GetType() == SceneMgr::eSceneType::Test)
-	{
-		{
-			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
-			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-			skySphere->SetName(L"SkySphere");
-		}
-
-		CreatePlayerUI();
-		Scene::Initialize();
-
-		return;
-	}
-
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
-	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
+	//Convex and Triangle Mesh TEST
+	
+		////TriangleMesh Test
+		//{
+		//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+		//	obj->SetPos(Vector3(0.f, -10.f, 300.f));
+		//	obj->SetScale(Vector3(0.04f, 0.04f, 0.04f));
+		//	obj->SetName(L"CityWorldHomeGroundCollider");
 
-	////TriangleMesh Test
-	//{
-	//	ModelObj* obj = object::Instantiate<ModelObj>(eLayerType::Platforms, this);
-	//	obj->SetPos(Vector3(0.f, -5.f, 300.f));
-	//	obj->SetScale(Vector3(0.06f, 0.06f, 0.06f));
-	//	obj->SetName(L"CityWorld_NaviCollider");
-	//}
+		//	// SetModel
+		//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_CityWorldHomeGround000");
+		//	obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetModel(model, model->GetMaterial(0));
+		//
+		//}
+
 	{
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 		mPlayer->SetMarioCap(mariocap);
 		//dynamic_cast<Camera*>(mCamera)->SetTarget(mPlayer);
 		
-		mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
+		//mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
 	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-	}
+
+	}	
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
@@ -198,7 +182,7 @@ void ScenePlay::Initialize()
 
 void ScenePlay::update()
 {
-	if (KEY_TAP(F_1))
+	if (KEY_TAP(N_9))
 	{
 		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
@@ -234,11 +218,9 @@ void ScenePlay::render()
 void ScenePlay::Enter()
 {
 	Scene::Enter();
-
-	mCamera->SetPos(Vector3(0.f, 25.f, -25.f));
+	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
-
 }
 
 void ScenePlay::Exit()

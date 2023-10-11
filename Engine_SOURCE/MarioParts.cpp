@@ -12,33 +12,11 @@ MarioParts::MarioParts()
 {
 	SetLayerType(eLayerType::Player);
 
-	mObjectTypeName = "MarioParts";
-}
-
-MarioParts::MarioParts(const MarioParts& Obj)
-	: DynamicObject(Obj)
-{
-	SetLayerType(eLayerType::Player);
 }
 
 MarioParts::~MarioParts()
 {
 
-}
-
-MarioParts* MarioParts::Clone() const
-{
-	return new MarioParts(*this);
-}
-
-void MarioParts::Save(FILE* File)
-{
-	DynamicObject::Save(File);
-}
-
-void MarioParts::Load(FILE* File)
-{
-	DynamicObject::Load(File);
 }
 
 void MarioParts::Initialize()
