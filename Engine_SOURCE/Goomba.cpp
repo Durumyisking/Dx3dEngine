@@ -96,7 +96,6 @@ void Goomba::Initialize()
 
 void Goomba::Update()
 {
-
 	Monster::Update();
 
 	// 잡다한 계산 끝난 후
@@ -131,6 +130,8 @@ void Goomba::Update()
 			GetBoneAnimator()->GetPlayAnimation()->SetDuration(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetDuration());
 		}
 	}
+
+
 }
 
 void Goomba::FixedUpdate()
@@ -237,7 +238,9 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 
 				GetPhysXRigidBody()->SetSwitchState(false);
 				GetPhysXRigidBody()->RemoveGravity();
+				GetPhysXRigidBody()->SetVelocity(Vector3::Zero);
 				GetScript<GoombaStateScript>()->SetSwitchState(false);
+				SetMonsterState(eMonsterState::Idle);
 
 				OffCapture();
 				mLowerLayerGoombas[0]->OnCapture();
