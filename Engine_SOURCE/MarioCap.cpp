@@ -20,7 +20,7 @@ MarioCap::MarioCap()
 	, mOwner(nullptr)
 {
 	SetLayerType(eLayerType::Cap);
-	RenderingBlockOn();
+	//RenderingBlockOn();
 }
 
 MarioCap::~MarioCap()
@@ -242,7 +242,7 @@ void MarioCap::FlyStart()
 	if (animator->IsRunning())
 		animator->Stop();
 
-	RenderingBlockOff();
+	//RenderingBlockOff();
 
 	// 플레이어의 현재 포지션과 Player forWard 를 가져옴
 	Transform* tr = GetTransform();
@@ -335,7 +335,7 @@ void MarioCap::FlyEnd()
 		}
 
 		SetCapState(eCapState::Return);
-		RenderingBlockOn();
+		//RenderingBlockOn();
 		GetPhysical()->RemoveActorToPxScene();
 		Pause();
 	};
