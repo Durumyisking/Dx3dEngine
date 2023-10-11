@@ -529,7 +529,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 				model->MeshRenderSwtich(L"Cap__CapMT-mesh", false);
 			});
 
-				cilp->SetCompleteEvent([this]()
+			cilp->SetCompleteEvent([this]()
 			{
 				SetPlayerState(ePlayerState::Idle);
 			});
