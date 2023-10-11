@@ -66,7 +66,7 @@ void PhysicalGameObj::Load(FILE* File)
 
 	std::wstring meshKey;
 	std::wstring materialKey;
-
+	
 	int numWChars = 0;
 
 	fread(&numWChars, sizeof(int), 1, File);

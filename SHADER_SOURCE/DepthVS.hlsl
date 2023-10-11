@@ -34,8 +34,8 @@ VSOut main(VSIn vsIn)
     
     
     float4 worldPosition = mul(float4(pos.xyz, 1.f), world);
-    float4 viewPosition = mul(worldPosition, lightView);
-    float4 ProjPosition = mul(viewPosition, lightProjection);
+    float4 viewPosition = mul(worldPosition, lightAttributes[0].view);
+    float4 ProjPosition = mul(viewPosition, lightAttributes[0].projection);
     
     output.Position = ProjPosition;
     output.ProjPosition = ProjPosition;

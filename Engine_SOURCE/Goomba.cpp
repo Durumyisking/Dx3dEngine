@@ -14,7 +14,7 @@ Goomba::Goomba()
 	: Monster()
 	, mGoombaLayerIdx(0)
 	, mLowerLayerGoombas{}
-{	
+{
 	SetName(L"Goomba");
 	mObjectTypeName = "Goomba";
 }
@@ -119,7 +119,6 @@ void Goomba::Initialize()
 
 void Goomba::Update()
 {
-
 	Monster::Update();
 
 	// 잡다한 계산 끝난 후
@@ -154,6 +153,8 @@ void Goomba::Update()
 			GetBoneAnimator()->GetPlayAnimation()->SetDuration(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetDuration());
 		}
 	}
+
+
 }
 
 void Goomba::FixedUpdate()
@@ -260,10 +261,14 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 
 				GetPhysXRigidBody()->SetSwitchState(false);
 				GetPhysXRigidBody()->RemoveGravity();
+				GetPhysXRigidBody()->SetVelocity(Vector3::Zero);
 				GetScript<GoombaStateScript>()->SetSwitchState(false);
+				SetMonsterState(eMonsterState::Idle);
 
 				OffCapture();
 				mLowerLayerGoombas[0]->OnCapture();
+				mLowerLayerGoombas[0]->CopyCaptureData(dynamic_cast<CaptureObj*>(this));
+
 			}
 
 			//// 아랫굼바
@@ -293,10 +298,6 @@ void Goomba::OnTriggerExit(GameObj* gameObject)
 
 void Goomba::boneAnimatorInit(BoneAnimator* animator)
 {
-	//std::wstring rPath = GETSINGLE(PathMgr)->FindPath(RESOURCE_PATH);
-
-	//animator->LoadAnimations(rPath + L"goomba/Animation");
-
 	animator->LoadAnimations(L"..//Resources/goomba/Animation");
 
 	AnimationClip* cilp = animator->GetAnimationClip(L"Attack");

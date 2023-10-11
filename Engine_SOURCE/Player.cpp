@@ -15,7 +15,6 @@
 #include "GenericAnimator.h"
 
 #include "ParticleSystem.h"
-#include "FootSmokeParticle.h"
 
 Player::Player()
 	: mPlayerState(ePlayerState::Idle)
@@ -72,11 +71,11 @@ void Player::Load(FILE* File)
 
 void Player::Initialize()
 {
-	//±âº» ¼³Á¤
+	//ê¸°ë³¸ ì„¤ì •
 	SetPos(Vector3(20.f, 5.f, 10.f));
 	SetScale(Vector3(1.f, 1.f, 1.f));
 
-	//¸¶¸®¿À body ÃÊ±âÈ­
+	//ë§ˆë¦¬ì˜¤ body ì´ˆê¸°í™”
 	mMeshRenderer = AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mScript = AddComponent<PlayerStateScript>(eComponentType::Script);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
@@ -109,7 +108,7 @@ void Player::Initialize()
 	//animation setting
 	boneAnimatorInit(animator);
 
-	//¸¶¸®¿À ÆÄÃ÷ °ü¸®
+	//ë§ˆë¦¬ì˜¤ íŒŒì¸  ê´€ë¦¬
 	MarioParts* mHandL = new MarioParts();
 	MarioParts* mHandR = new MarioParts();
 	MarioParts* mHead = new MarioParts();
@@ -134,29 +133,23 @@ void Player::Initialize()
 	}
 
 	ParticleSystem* particle = AddComponent<ParticleSystem>(eComponentType::Particle);
-
-															// 0 D2D, 1 D3D
-	int particleCount = 5;
-	//particle->InsertParticle(L"Default", L"CloudParticle", static_cast<UINT>(1), particleCount);
-	//particle->SetComputeShader(L"ParticleCS");
-	FootSmokeParticle* footSmokeparticle = new FootSmokeParticle(3, static_cast<ParticleFormat::eParticleType>(1));
-	particle->AddParticle(footSmokeparticle, L"Default");
-	ParticleFormat* particleFormat = particle->GetParticleFormat(L"Default");
+	particle->InsertParticle(L"Default", L"CloudParticle");
+	particle->SetComputeShader(L"ParticleCS");
+	
+	ParticleFormat* particleFormat = particle->Play(L"Default");
 	if (particleFormat)
 	{
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CloudParticle");
-		if (model)
-			particleFormat->SetModel(model);
-
 		Texture* tex = GETSINGLE(ResourceMgr)->Load<Texture>(L"SmokeParticle", L"SmokeParticle/Image/smoke01.png");
 		particleFormat->SetTexture(static_cast<int>(eTextureSlot::Albedo), tex, 1, 1);
 	}
+
+
 
 	mStateInfo.resize(static_cast<int>(ePlayerState::Die) + 1);
 	stateInfoInitalize();
 	//mPlayerState = ePlayerState::Idle;
 
-	//mariocap »ı¼º
+	//mariocap ìƒì„±
 	//mMarioCap = object::LateInstantiate<MarioCap>(eLayerType::Objects);
 	//mMarioCap->Initialize();
 	//mMarioCap->Physicalinit();
@@ -281,7 +274,7 @@ void Player::OnTriggerExit(GameObj* gameObject)
 
 void Player::KeyCheck()
 {
-	// Ä¸Ã³ ÀÌº¥Æ® ±¸ÇöºÎ
+	// ìº¡ì²˜ ì´ë²¤íŠ¸ êµ¬í˜„ë¶€
 	bool able = false;
 
 	std::vector<std::function<bool(eKeyCode)>> keyEvent;
@@ -292,7 +285,7 @@ void Player::KeyCheck()
 	keyEvent[static_cast<UINT>(eKeyState::UP)] = std::bind(&InputMgr::GetKeyUp, GETSINGLE(InputMgr), std::placeholders::_1);
 	keyEvent[static_cast<UINT>(eKeyState::NONE)] = std::bind(&InputMgr::GetKeyNone, GETSINGLE(InputMgr), std::placeholders::_1);
 
-	// Å° ÀÔ·Â ÀÌº¥Æ® Ã³¸®ÇÏ´Â ¶÷´Ù½Ä
+	// í‚¤ ì…ë ¥ ì´ë²¤íŠ¸ ì²˜ë¦¬í•˜ëŠ” ëŒë‹¤ì‹
 	std::function<void(eKeyState, eKeyCode, ePlayerState)> stateEvent =
 		[&]
 	(eKeyState keyState, eKeyCode curPress, ePlayerState nextState) ->void
@@ -306,25 +299,25 @@ void Player::KeyCheck()
 		}
 	};
 
-	// ¿õÅ©¸®±â
+	// ì›…í¬ë¦¬ê¸°
 	stateEvent(eKeyState::TAP, eKeyCode::Z, ePlayerState::Squat);
 
-	// Á¡ÇÁ
+	// ì í”„
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, ePlayerState::Jump);
 
-	// ´ë±â
+	// ëŒ€ê¸°
  
-	// ÀÌµ¿
+	// ì´ë™
 	stateEvent(eKeyState::DOWN, eKeyCode::UP, ePlayerState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, ePlayerState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, ePlayerState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::RIGHT, ePlayerState::Move);
 
-	// ¸ğÀÚ ´øÁö±â
+	// ëª¨ì ë˜ì§€ê¸°
 	able = false;
 	stateEvent(eKeyState::TAP, eKeyCode::LCTRL, ePlayerState::ThrowCap);
 
-	// Æ¯¼ö
+	// íŠ¹ìˆ˜
 	able = false;
 }
 
@@ -334,7 +327,7 @@ void Player::BoneInitialize()
 
 //void Player::PlayerAnimation(std::wstring name)
 //{
-//	//ÀÏ°ıÀûÀ¸·Î ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Àç»ı½ÃÄÑÁÖ´Â ÇÔ¼ö
+//	//ì¼ê´„ì ìœ¼ë¡œ ì• ë‹ˆë©”ì´ì…˜ì„ ì¬ìƒì‹œì¼œì£¼ëŠ” í•¨ìˆ˜
 //	BoneAnimator* animator = GetComponent<BoneAnimator>();
 //	animator->Play(name);
 //	for (auto i : mParts)
@@ -346,7 +339,7 @@ void Player::BoneInitialize()
 void Player::stateInfoInitalize()
 {
 	//Idle
-	// ÇöÀç´Â ´ë±â»óÅÂ¿¡¼­ ¸ø°¡´Â»óÅÂ°¡ ¾ø´Ù
+	// í˜„ì¬ëŠ” ëŒ€ê¸°ìƒíƒœì—ì„œ ëª»ê°€ëŠ”ìƒíƒœê°€ ì—†ë‹¤
 
 	//Move
 	
@@ -356,16 +349,16 @@ void Player::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Groggy));
 	InsertLockState(static_cast<UINT>(ePlayerState::Jump), static_cast<UINT>(ePlayerState::Die));
 
-	//Squat - ¿ø·¡´Â ¿õÅ©¸®±â »óÅÂ¿¡¼­´Â ÀÏ¹İ Á¡ÇÁ°¡ ¾ÈµÈ´Ù. ÇÏÁö¸¸ °£·«È­ ÇÒÁö °í¹ÎÁß
+	//Squat - ì›ë˜ëŠ” ì›…í¬ë¦¬ê¸° ìƒíƒœì—ì„œëŠ” ì¼ë°˜ ì í”„ê°€ ì•ˆëœë‹¤. í•˜ì§€ë§Œ ê°„ëµí™” í• ì§€ ê³ ë¯¼ì¤‘
 	InsertLockState(static_cast<UINT>(ePlayerState::Squat), static_cast<UINT>(ePlayerState::Move));
 	InsertLockState(static_cast<UINT>(ePlayerState::Squat), static_cast<UINT>(ePlayerState::Groggy));
 	InsertLockState(static_cast<UINT>(ePlayerState::Squat), static_cast<UINT>(ePlayerState::Die));
 
-	//SquatMove - ¿õÅ©¸®±â ÈÄ ¿òÁ÷ÀÌ´Â »óÅÂ, ÀÌ »óÅÂ¿¡¼­¸¸ ÇÒ ¼ö ÀÖ´Â ¾×¼ÇµéÀÌ Á¸ÀçÇÑ´Ù.
+	//SquatMove - ì›…í¬ë¦¬ê¸° í›„ ì›€ì§ì´ëŠ” ìƒíƒœ, ì´ ìƒíƒœì—ì„œë§Œ í•  ìˆ˜ ìˆëŠ” ì•¡ì…˜ë“¤ì´ ì¡´ì¬í•œë‹¤.
 	InsertLockState(static_cast<UINT>(ePlayerState::SquatMove), static_cast<UINT>(ePlayerState::Move));
 	InsertLockState(static_cast<UINT>(ePlayerState::SquatMove), static_cast<UINT>(ePlayerState::Wall));
 
-	//Air - °øÁß¿¡ ¶°ÀÖ´Â »óÅÂ¿¡¼­´Â ¸¶¸®¿ÀÀÇ ¹æÇâ È¸Àü¸¸ °¡´ÉÇÏ¸ç, ÀÌµ¿ÇÏÁö´Â ¸øÇÑ´Ù.
+	//Air - ê³µì¤‘ì— ë– ìˆëŠ” ìƒíƒœì—ì„œëŠ” ë§ˆë¦¬ì˜¤ì˜ ë°©í–¥ íšŒì „ë§Œ ê°€ëŠ¥í•˜ë©°, ì´ë™í•˜ì§€ëŠ” ëª»í•œë‹¤.
 	InsertLockState(static_cast<UINT>(ePlayerState::Air), static_cast<UINT>(ePlayerState::Move));
 	InsertLockState(static_cast<UINT>(ePlayerState::Air), static_cast<UINT>(ePlayerState::Jump));
 	InsertLockState(static_cast<UINT>(ePlayerState::Air), static_cast<UINT>(ePlayerState::Squat));
@@ -377,7 +370,7 @@ void Player::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::Squat));
 	InsertLockState(static_cast<UINT>(ePlayerState::Fall), static_cast<UINT>(ePlayerState::SquatMove));
 
-	//Wall -º®À» ¼ÕÀ¸·Î Â¤À¸¸é¼­ ³»·Á¿À´Â »óÅÂ, ÀÌ »óÅÂ¿¡¼­ Á¡ÇÁ¸¦ ÇÏ¸é º®Â÷±â°¡ µÈ´Ù. 
+	//Wall -ë²½ì„ ì†ìœ¼ë¡œ ì§šìœ¼ë©´ì„œ ë‚´ë ¤ì˜¤ëŠ” ìƒíƒœ, ì´ ìƒíƒœì—ì„œ ì í”„ë¥¼ í•˜ë©´ ë²½ì°¨ê¸°ê°€ ëœë‹¤. 
 	InsertLockState(static_cast<UINT>(ePlayerState::Wall), static_cast<UINT>(ePlayerState::Move));
 	InsertLockState(static_cast<UINT>(ePlayerState::Wall), static_cast<UINT>(ePlayerState::SquatMove));
 	InsertLockState(static_cast<UINT>(ePlayerState::Wall), static_cast<UINT>(ePlayerState::Air));
@@ -491,7 +484,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 	animator->CreateAnimation(L"RunStart", L"..//..//Resources/MarioBody/Animation/RunStart.smd");
 	animator->Play(L"Wait");
 
-	// ¸ğÀÚ ´øÁö±â
+	// ëª¨ì ë˜ì§€ê¸°
 	{
 		cilp = animator->GetAnimationClip(L"ThrowCap");
 		if (cilp)
@@ -525,36 +518,17 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 		}
 	}
 
-	// runstart ÈÄ runÀ¸·Î
+	// runstart í›„ runìœ¼ë¡œ
 	{
 		cilp = animator->GetAnimationClip(L"RunStart");
 		if (cilp)
-			cilp->SetCompleteEvent([animator, this]()
+			cilp->SetCompleteEvent([animator]()
 		{
 			animator->Play(L"Run");
-			ParticleSystem* particle = GetParticle();
-			if (particle)
-			{
-				particle->Play(L"Default");
-			}
 		});
 	}
 
-	{
-		cilp = animator->GetAnimationClip(L"Run");
-		if (cilp)
-			cilp->SetEndEvent([this]()
-				{
-					ParticleSystem* particle = GetParticle();
-					if (particle)
-					{
-						particle->Stop();
-					}
-				});
-	}
-	
-
-	//¸ØÃß´Â ¾Ö´Ï¸ŞÀÌ¼Ç ÈÄ idle·Î
+	//ë©ˆì¶”ëŠ” ì• ë‹ˆë©”ì´ì…˜ í›„ idleë¡œ
 	{
 		cilp = animator->GetAnimationClip(L"Brake");
 		if (cilp)

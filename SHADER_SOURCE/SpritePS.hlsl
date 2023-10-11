@@ -12,7 +12,7 @@ float4 main(VTX_OUT vsIn) : SV_Target
     
     if (0 == animationType)
     {
-        color = colorTexture.SampleLevel(anisotropicSampler, vsIn.vUV, 0.f);
+        color = colorTexture.SampleLevel(linearSampler, vsIn.vUV, 0.f);
     }
     else if (1 == animationType)
     {
@@ -22,7 +22,7 @@ float4 main(VTX_OUT vsIn) : SV_Target
         if (UV.x < LT.x || UV.y < LT.y || UV.x > LT.x + spriteSize.x || UV.y > LT.y + spriteSize.y)
             discard;
         
-        color = atlasTexture.Sample(pointSampler, UV);
+        color = atlasTexture.Sample(linearSampler, UV);
     }
     else if (2 == animationType)
     {

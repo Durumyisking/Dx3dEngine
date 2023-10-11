@@ -69,10 +69,12 @@
 #include "CompassNeedleScript.h"
 #include "DieUIEffectScript.h"
 #include "DieCircleUIScript.h"
+#include "AudioListener.h"
+#include "AudioSource.h"
+
 
 #include "Goomba.h"
 #include "Packun.h"
-#include "ModelObj.h"
 
 #include "PostProcess.h"
 
@@ -84,22 +86,12 @@ ScenePlay::ScenePlay()
 	, mLunaPanal(nullptr)
 	, mCompassPanal(nullptr)
 	, mDieUIPanal(nullptr)
-	, player(nullptr)
+	, mPlayer(nullptr)
 {
 }
 
 ScenePlay::~ScenePlay()
 {
-}
-
-bool ScenePlay::Save()
-{
-	return false;
-}
-
-bool ScenePlay::Load()
-{
-	return false;
 }
 
 void ScenePlay::Initialize()
@@ -127,23 +119,34 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
+	//Convex and Triangle Mesh TEST
+	
+		////TriangleMesh Test
+		//{
+		//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+		//	obj->SetPos(Vector3(0.f, -10.f, 300.f));
+		//	obj->SetScale(Vector3(0.04f, 0.04f, 0.04f));
+		//	obj->SetName(L"CityWorldHomeGroundCollider");
 
-	////TriangleMesh Test
-	//{
-	//	ModelObj* obj = object::Instantiate<ModelObj>(eLayerType::Platforms, this);
-	//	obj->SetPos(Vector3(0.f, -5.f, 300.f));
-	//	obj->SetScale(Vector3(0.06f, 0.06f, 0.06f));
-	//	obj->SetName(L"CityWorld_NaviCollider");
-	//}
+		//	// SetModel
+		//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_CityWorldHomeGround000");
+		//	obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetModel(model, model->GetMaterial(0));
+		//
+		//}
+
 	{
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
-		player = object::Instantiate<Player>(eLayerType::Player, this);
-		player->SetMarioCap(mariocap);
+		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+		mPlayer->SetMarioCap(mariocap);
+		//dynamic_cast<Camera*>(mCamera)->SetTarget(mPlayer);
+		
+		//mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
 	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-	}
+
+	}	
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
@@ -153,34 +156,11 @@ void ScenePlay::Initialize()
 		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
 	}
 
-		////Sphere 
-		//{
-		//	GameObj* Sphere = object::Instantiate<GameObj>(eLayerType::Player, this);
-		//	Sphere->SetPos(Vector3(32.f, 25.f, -9.5f));
-		//	Sphere->SetScale(Vector3(15.f, 15.f, 15.f));
-		//	Sphere->SetName(L"Sphere");
-		//
-		//
-		//	Sphere->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-		//	Sphere->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
-		//	Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetMetallic(0.99f);
-		//	Sphere->GetComponent<MeshRenderer>()->GetMaterial()->SetRoughness(0.01f);
-		//
-		//	Sphere->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");
-		//
-		//	Physical* physical = Sphere->AddComponent<Physical>(eComponentType::Physical);
-		//	physical->InitialDefaultProperties(eActorType::Dynamic, eGeometryType::Capsule, Vector3(7.5f, 7.5f, 7.5f));
-		//
-		//	PhysXRigidBody* rigid = Sphere->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		//
-		//	Sphere->AddComponent<PhysXCollider>(eComponentType::Collider);
-		//	//Sphere->AddComponent<PhysicalMovement>(eComponentType::Movement);
-		//	Sphere->AddComponent<PlayerScript>(eComponentType::Script);
-		//}
-	{
-		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-		mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
-	}
+
+	//{
+	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+	//	mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
+	//}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -218,7 +198,7 @@ void ScenePlay::Initialize()
 
 void ScenePlay::update()
 {
-	if (KEY_TAP(F_1))
+	if (KEY_TAP(N_9))
 	{
 		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
@@ -257,6 +237,7 @@ void ScenePlay::Enter()
 
 	mCamera->SetPos(Vector3(0.f, 150.f, -150.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
+	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }
 
 void ScenePlay::Exit()
@@ -375,7 +356,7 @@ void ScenePlay::CreatePlayerUI()
 		ImageUI* compass = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"Compass", L"CompassMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3::One, mCompassPanal, this));
 		compassBar->AddComponent<CompassUIScript>(eComponentType::Script);
 		compassNeedle->AddComponent<CompassNeedleScript>(eComponentType::Script);
-		compassNeedle->GetScript<CompassNeedleScript>()->SetPlayer(player);
+		compassNeedle->GetScript<CompassNeedleScript>()->SetPlayer(mPlayer);
 
 		mCompassPanal->Addchild(compassBar);
 		mCompassPanal->Addchild(compassNeedle);

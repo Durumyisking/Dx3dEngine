@@ -5,6 +5,9 @@
 #include "ResourceMgr.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "SceneMgr.h"
+#include "Scene.h"
+
 
 Light::Light()
 	: Component(eComponentType::Light)
@@ -37,13 +40,44 @@ void Light::FixedUpdate()
 	}
 
 	Vector3 position = tr->GetPosition();
+
+	GameObj* p = GETSINGLE(SceneMgr)->GetActiveScene()->GetPlayer();
+	if (nullptr != p)
+	{
+		position= p->GetWorldPos();
+		position.y += 25.f;
+	}
+
 	mAttribute.position = Vector4(position.x, position.y, position.z, 1.0f);
-	mAttribute.direction = Vector4(tr->Forward().x, tr->Forward().y, tr->Forward().z, 0.0f);
+	mAttribute.direction = Vector4(tr->Forward().x, tr->Forward().y, tr->Forward().z, 0.0f);	
+
+	mAttribute.view = 
+		XMMatrixLookAtLH(
+		mAttribute.position, mAttribute.position + mAttribute.direction, tr->Up());
+
+	mAttribute.projection = XMMatrixPerspectiveFovLH(
+		toRadian(120.f), 1600.f / 900.f, 1.f, 100.f);
+
+	mAttribute.inverseProjection = mAttribute.projection.Invert();
+
+	 //Vector4 eye(0.0f, 0.0f, 0.0f, 1.0f);
+	 //Vector4 xLeft(-1.0f, -1.0f, 0.0f, 1.0f);
+	 //Vector4 xRight(1.0f, 1.0f, 0.0f, 1.0f);
+	 //eye = Vector4::Transform(eye, mAttribute.projection);
+	 //xLeft = Vector4::Transform(xLeft, mAttribute.projection.Invert());
+	 //xRight = Vector4::Transform(xRight, mAttribute.projection.Invert());
+	 //xLeft /= xLeft.w;
+	 //xRight /= xRight.w;
+	 //std::cout << "LIGHT_FRUSTUM_WIDTH = " << xRight.x - xLeft.x << std::endl;
 
 	renderer::PushLightAttribute(mAttribute);
 }
 
 void Light::Render()
+{
+}
+
+void Light::PrevRender()
 {
 }
 

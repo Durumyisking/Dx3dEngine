@@ -12,9 +12,6 @@ public:
 	ScenePlay();
 	virtual ~ScenePlay();
 
-	virtual bool Save();
-	virtual bool Load();
-
 	virtual void Initialize();
 	virtual void update();
 	virtual void fixedUpdate();
@@ -28,7 +25,7 @@ public:
 
 
 	void CreatePlayerUI();
-	Player* GetPlayer() { return player; }
+	Player* GetPlayer() { return mPlayer; }
 private:
 	Panal* mCoinPanal;
 	Panal* mCityCoinPanal;
@@ -37,5 +34,5 @@ private:
 	Panal* mCompassPanal;
 	Panal* mDieUIPanal;
 
-	Player* player;
+	Player* mPlayer;
 };

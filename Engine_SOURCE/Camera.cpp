@@ -341,7 +341,7 @@ void Camera::renderShadow()
 {
 	for (size_t i = 0; i < renderer::lights.size(); i++)
 	{
-		bindLightConstantBuffer(i);
+		renderer::lights[i]->PrevRender();
 
 		for (GameObj* obj : mDeferredOpaqueGameObjects)
 		{

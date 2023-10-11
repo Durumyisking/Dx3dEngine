@@ -6,6 +6,7 @@
 #include "CameraScript.h"
 #include "Player.h"
 #include "TimerMgr.h"
+#include "AudioListener.h"
 
 
 Scene::Scene()
@@ -26,10 +27,10 @@ Scene::~Scene()
 
 void Scene::Save(FILE* File)
 {
-	//·¹ÀÌ¾î ¼øÈ¸ÇÏ¸é¼­ ¿ÀºêÁ§Æ® ÀúÀå
+	//ë ˆì´ì–´ ìˆœíšŒí•˜ë©´ì„œ ì˜¤ë¸Œì íŠ¸ ì €ì¥
 	for (UINT i = 0; i < static_cast<UINT>(eLayerType::End); i++)
 	{
-		//·¹ÀÌ¾î Å¸ÀÔ
+		//ë ˆì´ì–´ íƒ€ì…
 		eLayerType layerType = static_cast<eLayerType>(i);
 		fwrite(&layerType, sizeof(eLayerType), 1, File);
 
@@ -39,14 +40,14 @@ void Scene::Save(FILE* File)
 			int	ObjCount = 0;
 			fwrite(&ObjCount, sizeof(int), 1, File);
 			continue;
-		}
+}
 
-		//·¹ÀÌ¾î ³»ÀÇ ¿ÀºêÁ§Æ® ¼ö
+		//ë ˆì´ì–´ ë‚´ì˜ ì˜¤ë¸Œì íŠ¸ ìˆ˜
 		std::vector<GameObj*> gameObjs = mLayers[i].GetGameObjects();
 		int	ObjCount = static_cast<int>(gameObjs.size());
 		fwrite(&ObjCount, sizeof(int), 1, File);
 
-		//°¢ ¿ÀºêÁ§Æ®
+		//ê° ì˜¤ë¸Œì íŠ¸
 		for (GameObj* obj : gameObjs)
 		{
 			std::string	ClassTypeName = obj->GetObjectTypeName();
@@ -61,15 +62,15 @@ void Scene::Save(FILE* File)
 	}
 }
 
-//// Loading ½Ã Thread »ç¿ë½Ã »ç¿ëÇÑ´Ù´Âµ¥ ÀÏ´Ü ¸ğ¾Æ³õ¾Ò½À´Ï´Ù
+//// Loading ì‹œ Thread ì‚¬ìš©ì‹œ ì‚¬ìš©í•œë‹¤ëŠ”ë° ì¼ë‹¨ ëª¨ì•„ë†“ì•˜ìŠµë‹ˆë‹¤
 //{
 //	fseek(File, 0, SEEK_END);
 //	int	FileSize = (int)ftell(File);
 //	fseek(File, 0, SEEK_SET);
-//	int	LoadSize = 0; // Loading Thread ¿ë, Thread ¹öÆÛ ÇÒ´ç Å©±â Ã¥Á¤½Ã »ç¿ë
+//	int	LoadSize = 0; // Loading Thread ìš©, Thread ë²„í¼ í• ë‹¹ í¬ê¸° ì±…ì •ì‹œ ì‚¬ìš©
 //
 //	int	CurPos = (int)ftell(File);
-//	//Load(File);  // Thread¿¡ À§ÀÓÇÒ ·Îµå ºÎºĞ
+//	//Load(File);  // Threadì— ìœ„ì„í•  ë¡œë“œ ë¶€ë¶„
 //	int	NextPos = (int)ftell(File);
 //
 //	int	CurLoadSize = NextPos - CurPos;
@@ -80,8 +81,8 @@ void Scene::Save(FILE* File)
 //
 //		int bufferSize = LoadSize / (float)FileSize;
 //
-//		// ThreadÀÇ ¹öÆÛ¿¡ Å©±â ÇÒ´çÇØÁÖ´Â ºÎºĞ
-//		// bufferSize ¸¸Å­ Thread Å©±â ÇÒ´çÇÏ¸é µÈ´Ù
+//		// Threadì˜ ë²„í¼ì— í¬ê¸° í• ë‹¹í•´ì£¼ëŠ” ë¶€ë¶„
+//		// bufferSize ë§Œí¼ Thread í¬ê¸° í• ë‹¹í•˜ë©´ ëœë‹¤
 //	}
 //
 //	CurPos = NextPos;
@@ -89,7 +90,7 @@ void Scene::Save(FILE* File)
 
 void Scene::Load(FILE* File)
 {
-	// ¾À ·Îµå
+	// ì”¬ ë¡œë“œ
 	for (UINT i = 0; i < static_cast<UINT>(eLayerType::End); i++)
 	{
 		eLayerType layerType;
@@ -180,12 +181,13 @@ void Scene::Enter()
 	mUICamera->SetRotation(Vector3::Zero);
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLight");
-		directionalLight->SetRotation(Vector3(45.f, -45.f, 0.f));
-		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
+		directionalLight->SetPos({ 0.f, 25.f, 0.f });
+		directionalLight->SetRotation(Vector3(90.f, 0.f, 0.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetRadius(0.02f);
 	}
 }
 
@@ -272,6 +274,8 @@ void Scene::CreateCameras()
 			cameraComp->SetNear(0.01f);
 
 			CameraScript* cameraScript = mCamera->AddComponent<CameraScript>(eComponentType::Script);
+
+			mCamera->AddComponent<AudioListener>(eComponentType::AudioListener);
 
 		}
 		if (!mUICamera)

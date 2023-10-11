@@ -141,7 +141,7 @@ bool SceneMgr::SaveSceneFile(eSceneType type, const std::wstring& filePath)
 		return false;
 
 	fwrite(&type, sizeof(eSceneType), 1, File);
-	
+
 	mActiveScene->Save(File);
 
 	fclose(File);
@@ -182,7 +182,7 @@ void SceneMgr::DontDestroyOnLoad(GameObj* gameObj)
 
 void SceneMgr::CreateCDO()
 {
-///////// GameObject ///////////
+	///////// GameObject ///////////
 	GameObj* GameObjCDO = new GameObj();
 	GameObj::AddObjectCDO("GameObj", GameObjCDO);
 

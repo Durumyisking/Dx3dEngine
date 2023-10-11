@@ -7,7 +7,6 @@
 #include "Renderer.h"
 #include "Model.h"
 
-#include "NavigationMgr.h"
 
 Physical::Physical()
 	: Component(eComponentType::Physical)

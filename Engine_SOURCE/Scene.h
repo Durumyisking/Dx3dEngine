@@ -28,6 +28,7 @@ public:
 	virtual void Enter();
 	virtual void Exit();
 
+
 	void AddGameObject(GameObj* gameObj, const eLayerType eLayer);
 
 	void SetType(SceneMgr::eSceneType eType) { mType = eType; }

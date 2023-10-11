@@ -77,7 +77,7 @@ void GameObj::Save(FILE* File)
 {
 	DruEntity::Save(File);	
 
-	////ÄÄÆ÷³ÍÆ® µû·Î ÀúÀåÇÒ°Å¸é »ç¿ë(¹Ì¿Ï)
+	////ì»´í¬ë„ŒíŠ¸ ë”°ë¡œ ì €ì¥í• ê±°ë©´ ì‚¬ìš©(ë¯¸ì™„)
 	//{
 	//	auto	iter = mComponents.begin();
 	//	auto	iterEnd = mComponents.end();

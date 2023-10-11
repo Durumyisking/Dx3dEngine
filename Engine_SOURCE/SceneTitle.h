@@ -11,9 +11,6 @@ public:
 	SceneTitle();
 	virtual ~SceneTitle();
 
-	virtual bool Save();
-	virtual bool Load();
-
 	virtual void Initialize();
 	virtual void update();
 	virtual void fixedUpdate();
@@ -28,7 +25,7 @@ public:
 private:
 
 
-	//Panal* mMainMenuPanal;
+	Panal* mMainMenuPanal;
 	//Panal* mStartTextPanal;
 	//Panal* mStart2PTextPanal;
 	//Panal* mOptionTextPanal;

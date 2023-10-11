@@ -2,6 +2,7 @@
 #include "InputMgr.h"
 
 #include "Player.h"
+#include "PlayerStateScript.h"
 #include "PhysXRigidBody.h"
 
 #include "MarioCap.h"
@@ -33,15 +34,15 @@ void CaptureObj::Divide()
 	OffCapture();
 	DivideEvent();
 
-	if (mObject == nullptr)
+	if (mCap == nullptr)
 		return;
 
 	if (mPlayer == nullptr)
 		return;
 
-	mPlayer->SetMarioCap(mObject);
+	mPlayer->SetMarioCap(mCap);
 	mPlayer->Active();
-	mObject->Pause();
+	mCap->Pause();
 
 	// 마리오의 모자를 씌워줌
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
@@ -55,13 +56,14 @@ void CaptureObj::Divide()
 	if (monsterTr == nullptr)
 		return;
 
-	Transform* tr = mObject->GetTransform();
+	Transform* tr = mCap->GetTransform();
 	Transform* playertr = mPlayer->GetTransform();
 
 	playertr->SetPhysicalPosition(monsterTr->GetPhysicalPosition());
 	playertr->SetPhysicalRotation(Vector3(0.f, 0.0f, 0.f));
 
 	mPlayer->SetPlayerState(Player::ePlayerState::Idle);
+	mPlayer->GetScript<PlayerStateScript>()->SetHavingCap(true);
 
 	BoneAnimator* animator = mPlayer->GetBoneAnimator();
 	PhysXRigidBody* rigidbody = mPlayer->GetPhysXRigidBody();
@@ -75,6 +77,22 @@ void CaptureObj::Divide()
 
 
 	mPlayer->SetPlayerState(Player::ePlayerState::Jump);
+}
+
+void CaptureObj::CopyCaptureData(CaptureObj* other)
+{
+	mPlayer = other->GetPlayer();
+	mCap = other->GetCap();
+	other->ClearCaptureData();
+
+	// todo : 위험한 코드입니다 captureobj랑 gameobj는 별개의 오브젝트임 적절한 방법 찾아서 고쳐야함
+	mCap->SetOwner(dynamic_cast<GameObj*>(this));
+}
+
+void CaptureObj::ClearCaptureData()
+{
+	mPlayer = nullptr;
+	mCap = nullptr;
 }
 
 

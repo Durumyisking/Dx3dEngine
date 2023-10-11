@@ -28,7 +28,6 @@
 #define CBSLOT_NOISE			7
 #define CBSLOT_POSTPROCESS		8
 #define CBSLOT_SKY 9
-#define CBSLOT_LIGHTMATRIX 10
 
 
 enum class eValidationMode
@@ -62,12 +61,13 @@ enum class eBufferStage
 
 enum class eSamplerType
 {
-	Point,
+	//Point,
 	Linear,
-	Anisotropic,
+	//Anisotropic,
 	Skybox,
 	Clamp,
 	ShadowPoint,
+	ShadowCompare,
 	End,
 };
 
@@ -186,7 +186,6 @@ enum class eCBType
 	Noise, 
 	PostProcess,
 	CubeMapProj,
-	LightMatrix,
 	End,
 };
 
@@ -269,6 +268,10 @@ struct LightAttribute
 
 	enums::eLightType type;
 	math::Vector3 padding; // 상수버퍼 패딩
+
+	math::Matrix view;
+	math::Matrix projection;
+	math::Matrix inverseProjection;
 };
 
 struct Particle
@@ -296,8 +299,6 @@ struct Particle
 
 	UINT texture_x_index;
 	UINT texture_y_index;
-
-	float wakeUpTime;
 };
 struct ParticleShared
 {

@@ -11,10 +11,11 @@ public:
 	Light();
 	virtual ~Light();
 
-	virtual void Initialize();
-	virtual void Update();
-	virtual void FixedUpdate();
-	virtual void Render();
+	virtual void Initialize() final;
+	virtual void Update() final;
+	virtual void FixedUpdate() final;
+	virtual void Render() final;
+	virtual void PrevRender() final;
 
 	void DeferredLightRender();
 
