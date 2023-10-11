@@ -106,7 +106,7 @@ void TitleUIBarScript::ScaleChange()
 		mTitleTextPanal->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false);
 	}
 
-	mTitleTextPanal->GetChilds()[mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true);
+	mTitleTextPanal->GetChilds()[mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4f, 1.0f), true);
 }
 
 void TitleUIBarScript::SelectUIButton()

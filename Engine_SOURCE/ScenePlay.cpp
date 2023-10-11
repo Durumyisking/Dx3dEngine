@@ -72,12 +72,12 @@
 #include "AudioListener.h"
 #include "AudioSource.h"
 
+
 #include "Goomba.h"
 #include "Packun.h"
 
 #include "PostProcess.h"
 
-#include "MarioBlock.h"
 
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
@@ -119,13 +119,12 @@ void ScenePlay::Initialize()
 		//}
 
 	{
-		//MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
-		//player = object::Instantiate<Player>(eLayerType::Player, this);
-		//player->SetMarioCap(mariocap);
-		//mPlayer = player;
-		//dynamic_cast<Camera*>(mCamera)->SetTarget(player);
-
-		//mCamera->GetScript<CameraScript>()->SetTargetObject(player);
+		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
+		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+		mPlayer->SetMarioCap(mariocap);
+		//dynamic_cast<Camera*>(mCamera)->SetTarget(mPlayer);
+		
+		mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
 	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
@@ -140,6 +139,7 @@ void ScenePlay::Initialize()
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
 	}
+
 
 	//{
 	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
@@ -174,10 +174,6 @@ void ScenePlay::Initialize()
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
 
-	{
-		MarioBlock* block = object::Instantiate<MarioBlock>(eLayerType::Monster, this);
-		block->SetPos(Vector3(40.f, -10.f, 0.f));
-	}
 	CreatePlayerUI();
 
 	Scene::Initialize();
@@ -224,6 +220,7 @@ void ScenePlay::Enter()
 	Scene::Enter();
 	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
+	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }
 
 void ScenePlay::Exit()
@@ -299,7 +296,6 @@ void ScenePlay::CreatePlayerUI()
 	{
 		mLunaPanal = (GETSINGLE(UIFactory)->CreatePanal(renderer::UICamera->GetOwner(), Vector3(0.0f, 0.0f, 0.f), Vector3(100.0f, 100.0f, 1.0f), L"LunaPanal", this, eUIType::Luna));
 		mLunaPanal->AddComponent<PowerMoonScript>(eComponentType::Script);
-		mLunaPanal->AddComponent<AudioSource>(eComponentType::AudioSource)->AddClipByKey(L"GetMoonSoundEffect");
 
 		for (size_t i = 0; i < 10; i++)
 		{
