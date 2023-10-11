@@ -206,7 +206,7 @@ void ScenePlay::Initialize()
 
 void ScenePlay::update()
 {
-	if (KEY_TAP(N_9))
+	if (KEY_TAP(F_9))
 	{
 		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
@@ -214,12 +214,12 @@ void ScenePlay::update()
 		//mCoinPanal->GetScript<CoinUIScript>()->ActionToPlayerDied();
 	}
 
-	if (KEY_TAP(N_2))
+	if (KEY_TAP(F_2))
 	{
 		mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 	}
 
-	if (KEY_TAP(N_3))
+	if (KEY_TAP(F_3))
 	{
 		mCoinPanal->GetScript<CoinUIScript>()->Reset();
 	}

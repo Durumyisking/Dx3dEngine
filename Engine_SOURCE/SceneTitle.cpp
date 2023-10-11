@@ -95,15 +95,15 @@ void SceneTitle::Initialize()
 
 void SceneTitle::update()
 {
-	if (KEY_TAP(N_9))
+	if (KEY_TAP(F_9))
 	{
 		GETSINGLE(server::ServerMgr)->OpenServer();
 	}
-	if (KEY_TAP(N_0))
+	if (KEY_TAP(F_10))
 	{
 		GETSINGLE(server::ServerMgr)->ConnectAsClient();
 	}
-	if (KEY_TAP(N_1))
+	if (KEY_TAP(F_1))
 	{
 		mBarPanal->GetChilds()[0]->GetScript<TitleUIBarScript>()->SelectUI();
 	}
