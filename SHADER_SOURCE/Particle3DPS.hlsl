@@ -31,6 +31,8 @@ float4 main(VSOut vsIn) : SV_TARGET
     float fElapsedTime = particleBuffer[vsIn.Instance].elapsedTime;
     float fLifeTime = particleBuffer[vsIn.Instance].lifeTime;
 
+    if (particleBuffer[vsIn.Instance].active == 0)
+        discard;
     
     //float alpharatio = 1.f - fElapsedTime / fLifeTime;
 
@@ -38,10 +40,10 @@ float4 main(VSOut vsIn) : SV_TARGET
     {
         float2 startUV = float2(float(particleBuffer[vsIn.Instance].texture_x_index) / cbxy1.x, float(particleBuffer[vsIn.Instance].texture_y_index) / cbxy1.y);
         float2 endUV = float2(float(particleBuffer[vsIn.Instance].texture_x_index + 1) / cbxy1.x, float(particleBuffer[vsIn.Instance].texture_y_index + 1) / cbxy1.y);
-        
+    
         float UV = abs(endUV - startUV) * vsIn.UV;
         UV += startUV;
-        
+    
         outColor = colorTexture.Sample(linearSampler, UV);
     }
     
