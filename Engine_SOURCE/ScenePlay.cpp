@@ -71,7 +71,7 @@
 #include "DieCircleUIScript.h"
 #include "AudioListener.h"
 #include "AudioSource.h"
-
+#include "MarioBlock.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -124,7 +124,7 @@ void ScenePlay::Initialize()
 		mPlayer->SetMarioCap(mariocap);
 		//dynamic_cast<Camera*>(mCamera)->SetTarget(mPlayer);
 		
-		mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
+		//mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
 	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
@@ -172,6 +172,12 @@ void ScenePlay::Initialize()
 		rigid->RemoveGravity();
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+	}
+
+
+	{
+		MarioBlock* block = object::Instantiate<MarioBlock>(eLayerType::Monster, this);
+		block->SetPos(Vector3(40.f, -10.f, 0.f));
 	}
 
 	CreatePlayerUI();
