@@ -86,7 +86,7 @@ ScenePlay::ScenePlay()
 	, mLunaPanal(nullptr)
 	, mCompassPanal(nullptr)
 	, mDieUIPanal(nullptr)
-	, mPlayer(nullptr)
+	, player(nullptr)
 {
 }
 
@@ -119,13 +119,9 @@ void ScenePlay::Initialize()
 		//}
 
 	{
-		//MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
-		//player = object::Instantiate<Player>(eLayerType::Player, this);
-		//player->SetMarioCap(mariocap);
-		//mPlayer = player;
-		//dynamic_cast<Camera*>(mCamera)->SetTarget(player);
-		
-		//mCamera->GetScript<CameraScript>()->SetTargetObject(player);
+		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
+		player = object::Instantiate<Player>(eLayerType::Player, this);
+		player->SetMarioCap(mariocap);
 	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
@@ -221,7 +217,6 @@ void ScenePlay::Enter()
 	Scene::Enter();
 	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
-	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }
 
 void ScenePlay::Exit()
@@ -340,7 +335,7 @@ void ScenePlay::CreatePlayerUI()
 		ImageUI* compass = (GETSINGLE(UIFactory)->CreateUI<ImageUI>(L"Compass", L"CompassMaterial", eUIType::None, Vector3(7.f, 2.5f, 0.f), Vector3::One, mCompassPanal, this));
 		compassBar->AddComponent<CompassUIScript>(eComponentType::Script);
 		compassNeedle->AddComponent<CompassNeedleScript>(eComponentType::Script);
-		compassNeedle->GetScript<CompassNeedleScript>()->SetPlayer(mPlayer);
+		compassNeedle->GetScript<CompassNeedleScript>()->SetPlayer(player);
 
 		mCompassPanal->Addchild(compassBar);
 		mCompassPanal->Addchild(compassNeedle);

@@ -25,7 +25,7 @@ public:
 
 
 	void CreatePlayerUI();
-	Player* GetPlayer() { return mPlayer; }
+	Player* GetPlayer() { return player; }
 private:
 	Panal* mCoinPanal;
 	Panal* mCityCoinPanal;
@@ -34,5 +34,5 @@ private:
 	Panal* mCompassPanal;
 	Panal* mDieUIPanal;
 
-	Player* mPlayer;
+	Player* player;
 };
