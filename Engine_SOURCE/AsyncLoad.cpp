@@ -203,6 +203,18 @@ void AsyncLoad::LoadMaterials()
 	renderer::CreateUIMaterial();
 }
 
+void AsyncLoad::LoadSounds()
+{
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"SuperMarioOdyssey", L"Sound/Title/SuperMarioOdyssey.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"TitleBGM", L"Sound/Title/TitleBGM.wav");
+
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"GameStartSoundEffect", L"Sound/UI/GameStartSoundEffect.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"GetCoin", L"Sound/UI/GetCoin.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"MoonSoundEffect", L"Sound/UI/MoonSoundEffect.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"TextSelectSoundEffect", L"Sound/UI/TextSelectSoundEffect.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"UIBarMove", L"Sound/UI/UIBarMove.wav");
+}
+
 void AsyncLoad::loadGoomba(std::wstring shaderName)
 {
 #pragma region goombaBody Material

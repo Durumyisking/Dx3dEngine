@@ -249,6 +249,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="CursorScript.h" />
     <ClInclude Include="CustomPhysXMemory.h" />
     <ClInclude Include="def.h" />
+    <ClInclude Include="DieCircleUIScript.h" />
+    <ClInclude Include="DieUIEffectScript.h" />
     <ClInclude Include="druEnums.h" />
     <ClInclude Include="druMath.h" />
     <ClInclude Include="DynamicObject.h" />
@@ -274,6 +276,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="GraphicDevice.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GridScript.h" />
+    <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="ImageUI.h" />
     <ClInclude Include="InputMgr.h" />
@@ -288,6 +291,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="MilestoneScript.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelNode.h" />
     <ClInclude Include="Monster.h" />
@@ -352,6 +356,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="TimerMgr.h" />
+    <ClInclude Include="TitleBGMScript.h" />
     <ClInclude Include="TitleUIBarScript.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIBase.h" />
@@ -397,6 +402,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="CubeMap.cpp" />
     <ClCompile Include="CursorScript.cpp" />
     <ClCompile Include="CustomPhysXMemory.cpp" />
+    <ClCompile Include="DieCircleUIScript.cpp" />
+    <ClCompile Include="DieUIEffectScript.cpp" />
     <ClCompile Include="druEnums.cpp" />
     <ClCompile Include="druMath.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
@@ -419,6 +426,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="GoombaStateScript.cpp" />
     <ClCompile Include="GraphicDevice.cpp" />
     <ClCompile Include="GridScript.cpp" />
+    <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="InputMgr.cpp" />
@@ -432,6 +440,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="MilestoneScript.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelNode.cpp" />
     <ClCompile Include="Monster.cpp" />
@@ -492,6 +501,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="TimerMgr.cpp" />
+    <ClCompile Include="TitleBGMScript.cpp" />
     <ClCompile Include="TitleUIBarScript.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIBase.cpp" />

@@ -12,6 +12,7 @@ public:
 	void LoadModels();
 	void LoadTextures();
 	void LoadMaterials();
+	void LoadSounds();
 
 	bool IsLoadFinish() const { return mbLoadFinish; }
 
