@@ -32,6 +32,7 @@ ImageUI::~ImageUI()
 
 void ImageUI::OnInit()
 {
+
 }
 
 void ImageUI::OnActive()

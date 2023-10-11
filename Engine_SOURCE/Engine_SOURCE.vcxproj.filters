@@ -364,9 +364,6 @@
     <ClCompile Include="CapEyeUI.cpp">
       <Filter>UI\UIObject</Filter>
     </ClCompile>
-    <ClCompile Include="UIBase.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
     <ClCompile Include="UIFactory.cpp">
       <Filter>UI\Manager</Filter>
     </ClCompile>
@@ -402,6 +399,10 @@
     <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
+    <ClCompile Include="MarioBlock.cpp" />
+    <ClCompile Include="UIBase.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -839,6 +840,7 @@
     <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="MilestoneScript.h" />
     <ClInclude Include="TitleBGMScript.h" />
+    <ClInclude Include="MarioBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
