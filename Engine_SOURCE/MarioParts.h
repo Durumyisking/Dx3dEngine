@@ -5,12 +5,7 @@ class MarioParts :
 {
 public:
 	MarioParts();
-	MarioParts(const MarioParts& Obj);
 	virtual ~MarioParts();
-
-	virtual MarioParts* Clone() const;
-	virtual void Save(FILE* File) final;
-	virtual void Load(FILE* File) final;
 
 	virtual void Initialize() override;
 	virtual void Update() override;

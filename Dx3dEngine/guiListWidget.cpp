@@ -6,7 +6,6 @@ namespace gui
 	ListWidget::ListWidget()
 		: Widget()
 		, mListIndex(-1)
-		, mbAllwaysOpen(false)
 	{
 		SetName("ListWidget");
 		SetState(eState::Paused);
@@ -43,10 +42,7 @@ namespace gui
 					{
 						mEvent(mResourceList[i].c_str());
 					}
-					if (!mbAllwaysOpen)
-					{
-						Close();
-					}
+					Close();
 				}
 
 			}

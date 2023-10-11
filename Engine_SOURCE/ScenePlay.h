@@ -1,6 +1,5 @@
 #pragma once
 #include "Scene.h"
-#include "Player.h"
 
 
 class Panal;
@@ -12,9 +11,6 @@ class ScenePlay :
 public:
 	ScenePlay();
 	virtual ~ScenePlay();
-
-	virtual bool Save();
-	virtual bool Load();
 
 	virtual void Initialize();
 	virtual void update();
@@ -37,5 +33,6 @@ private:
 	Panal* mLunaPanal;
 	Panal* mCompassPanal;
 	Panal* mDieUIPanal;
+
 	Player* mPlayer;
 };

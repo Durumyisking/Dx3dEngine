@@ -21,15 +21,11 @@ namespace gui
 		void SetItemList(const std::vector<std::wstring>& list);
 		void SetItemList(const std::vector<std::string>& list);
 
-		void SetAllOpen(bool tf) { mbAllwaysOpen = tf; }
-
 	private:
 		std::vector<std::string> mResourceList;
 		int mListIndex;
 
 		Widget* mEventWidget;
 		std::function<void(std::string key)> mEvent;
-
-		bool mbAllwaysOpen;
 	};
 }

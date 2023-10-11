@@ -361,7 +361,6 @@ namespace math
         Vector4 operator+ () const noexcept { return *this; }
         Vector4 operator- () const noexcept;
 
-        Vector3 XYZ() { return Vector3(x, y, z); }
         // Vector operations
         bool InBounds(const Vector4& Bounds) const noexcept;
 

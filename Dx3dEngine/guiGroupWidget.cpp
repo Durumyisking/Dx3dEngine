@@ -5,7 +5,7 @@ namespace gui
 	GroupWidget::GroupWidget()
 		: Widget()
 		, mSpace{10.f, 0.f}
-		, mNextLine(1)
+		, mNextLine(10)
 		, mbCollapse(false)
 		, mbGroupOpen(false)
 	{
@@ -13,7 +13,7 @@ namespace gui
 	GroupWidget::GroupWidget(std::string name)
 		: Widget()
 		, mSpace(10.f, 0.f)
-		, mNextLine(1)
+		, mNextLine(10)
 		, mbCollapse(false)
 		, mbGroupOpen(false)
 	{

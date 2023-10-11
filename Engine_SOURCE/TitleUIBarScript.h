@@ -8,6 +8,8 @@ class TitleUIBarScript : public UIScript
 	{
 		Idle,
 		ScaleChange,
+		SelectUIButton,
+		ChangeScene,
 	};
 
 public:
@@ -18,10 +20,14 @@ public:
 	virtual void Initialize() override;
 	virtual void Update() override;
 
+
+	void SelectUI() { mState = State::SelectUIButton; }
+private:
 	void Idle();
 	void ScaleChange();
-	void Select();
-private:
+	void SelectUIButton();
+	void ChangeScene();
+
 	Panal* mTitleTextPanal;
 
 	float mCurrentTime;

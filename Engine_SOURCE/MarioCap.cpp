@@ -19,37 +19,11 @@ MarioCap::MarioCap()
 	, mCapState(eCapState::Idle)
 	, mOwner(nullptr)
 {
-	SetLayerType(eLayerType::Player);
-
-	mObjectTypeName = "MarioCap";
 	SetLayerType(eLayerType::Cap);
-}
-
-MarioCap::MarioCap(const MarioCap& Obj)
-	: DynamicObject(Obj)
-	, mCapState(Obj.mCapState)
-	, mOwner(Obj.mOwner)
-{
-	SetLayerType(eLayerType::Player);
 }
 
 MarioCap::~MarioCap()
 {
-}
-
-MarioCap* MarioCap::Clone() const
-{
-	return new MarioCap(*this);
-}
-
-void MarioCap::Save(FILE* File)
-{
-	DynamicObject::Save(File);
-}
-
-void MarioCap::Load(FILE* File)
-{
-	DynamicObject::Load(File);
 }
 
 void MarioCap::Initialize()

@@ -68,14 +68,12 @@ void PlayerStateScript::Idle()
 	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
 	if (!rigidbody)
 		return;
-
 	BoneAnimator* animator = mPlayer->GetComponent<BoneAnimator>();
-	if (!animator)
+	if (animator == nullptr)
 		return;
-
 	if(animator->PlayAnimationName() != L"Wait")
 		animator->Play(L"Wait");
-	
+	//rigidbody->SetAirOff();
 }
 
 void PlayerStateScript::Move()
@@ -195,7 +193,7 @@ void PlayerStateScript::Jump()
 	{
 		if (mJumpCount == 0)
 		{
-			mAnimator->Play(L"Jump", false);
+			mAnimator->Play(L"Jump");
 
 			rigidbody->SetMaxVelocity_Y(13.f);
 			rigidbody->ApplyGravity();
@@ -205,7 +203,7 @@ void PlayerStateScript::Jump()
 		}
 		else if (mJumpCount == 1)
 		{
-			mAnimator->Play(L"Jump2", false);
+			mAnimator->Play(L"Jump2");
 
 			rigidbody->SetMaxVelocity_Y(15.f);
 			rigidbody->ApplyGravity();
@@ -216,7 +214,7 @@ void PlayerStateScript::Jump()
 		}
 		else if (mJumpCount == 2)
 		{
-			mAnimator->Play(L"Jump3",false);
+			mAnimator->Play(L"Jump3");
 
 			rigidbody->SetMaxVelocity_Y(18.f);
 			rigidbody->ApplyGravity();
@@ -232,7 +230,7 @@ void PlayerStateScript::Jump()
 		|| ((mAnimator->PlayAnimationName() == L"Jump3" && mAnimator->IsComplete()))
 		||rigidbody->GetVelocity().y < 0)
 	{
-		mAnimator->Play(L"Fall",false);
+		mAnimator->Play(L"Fall");
 		mPlayer->SetPlayerState(Player::ePlayerState::Fall);
 	}
 }
@@ -403,14 +401,6 @@ void PlayerStateScript::Air()
 void PlayerStateScript::Fall()
 {
 
-	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
-	assert(rigidbody);
-
-	//if (rigidbody->GetVelocity().y == 0)
-	//	if (!rigidbody->IsOnAir())
-	//	{
-	//		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
-	//	}
 }
 
 void PlayerStateScript::Wall()
@@ -419,12 +409,10 @@ void PlayerStateScript::Wall()
 
 void PlayerStateScript::Hit()
 {
-
 }
 
 void PlayerStateScript::Groggy()
 {
-
 }
 
 void PlayerStateScript::ThrowCap()
