@@ -124,7 +124,7 @@ void ScenePlay::Initialize()
 		mPlayer->SetMarioCap(mariocap);
 		//dynamic_cast<Camera*>(mCamera)->SetTarget(mPlayer);
 		
-		mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
+		//mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
 	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);

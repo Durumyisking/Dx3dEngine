@@ -32,7 +32,7 @@ public:
 	virtual void FixedUpdate() override;
 
 	virtual void CaptureEvent() override {};
-	virtual void CaptureEnter(MarioCap* cap) override;
+	virtual void CaptureEnter(class MarioCap* cap) override {};
 
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerStay(GameObj* gameObject)  override;

@@ -259,6 +259,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="FileMgr.h" />
     <ClInclude Include="FMod.h" />
     <ClInclude Include="FontWrapper.h" />
+    <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="GameNet.h" />
     <ClInclude Include="GameNetClient.h" />
     <ClInclude Include="GameNetDispatcher.h" />
@@ -410,6 +411,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="FileMgr.cpp" />
     <ClCompile Include="FMod.cpp" />
     <ClCompile Include="FontWrapper.cpp" />
+    <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="GameNet.cpp" />
     <ClCompile Include="GameNetClient.cpp" />
     <ClCompile Include="GameNetDispatcher.cpp" />

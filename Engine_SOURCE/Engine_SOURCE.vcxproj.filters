@@ -402,6 +402,7 @@
     <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
+    <ClCompile Include="FootSmokeParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -839,6 +840,7 @@
     <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="MilestoneScript.h" />
     <ClInclude Include="TitleBGMScript.h" />
+    <ClInclude Include="FootSmokeParticle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
