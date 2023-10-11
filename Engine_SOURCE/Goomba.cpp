@@ -327,3 +327,9 @@ void Goomba::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::SpecialSituation));
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Groggy));
 }
+
+void Goomba::captureEnterModelOperation()
+{
+	// todo : ±À¹Ù Ä¸Ã³ÇßÀ»¶§ ¸ðµ¨ Ã³¸®ÇÏ´Â ÇÔ¼ö
+
+}
