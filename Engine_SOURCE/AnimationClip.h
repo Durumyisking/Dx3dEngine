@@ -25,6 +25,7 @@ public:
 	void CreateAnimation(const std::wstring& name ,const std::wstring& path, double duration);
 	void CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount);
 	void SetBoneMatrix(const animation::SkeletonData& inCurData, const animation::SkeletonData& inNextData, double drutation = 1.f/ 60.f);
+
 	void Reset();
 
 	void InterpolationPrveToCurAnimation();
@@ -57,7 +58,8 @@ public:
 	GETSET(const animation::SkeletonData*, mPreveAnimationData, PreveAnimationData)
 	GETSET(float , mConnectionDuration, ConnectionDuration)
 	GETSET(UINT, mCurIndex, CurIndex)
-
+	GETSET(std::vector<animation::SkeletonData>, mSkeletonData, SkeletonData)
+	//GETSET(std::vector<animation::SkeletonData>, mSkeletonData, SkeletonData)
 	void SetDuration(int frame) { mDuration = static_cast<double>(1.f / static_cast<float>(frame)); }
 
 	const animation::SkeletonData* GetCurFrameAnimation(UINT index) const;

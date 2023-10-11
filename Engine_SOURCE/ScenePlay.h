@@ -1,10 +1,10 @@
 #pragma once
 #include "Scene.h"
-#include "Player.h"
 
 
 class Panal;
 class HUD;
+class Player;
 class ScenePlay :
 	public Scene
 {
@@ -25,12 +25,14 @@ public:
 
 
 	void CreatePlayerUI();
+	Player* GetPlayer() { return mPlayer; }
 private:
 	Panal* mCoinPanal;
 	Panal* mCityCoinPanal;
 	Panal* mLifePanal;
 	Panal* mLunaPanal;
 	Panal* mCompassPanal;
+	Panal* mDieUIPanal;
 
 	Player* mPlayer;
 };

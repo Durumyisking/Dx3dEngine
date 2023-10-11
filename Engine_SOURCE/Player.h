@@ -26,7 +26,7 @@ public:
 
 		Hit,
 		Groggy,
-
+		
 		ThrowCap,
 		CatchCap,
 		Capture,
@@ -57,6 +57,8 @@ public:
 	void SetMarioCap(MarioCap* cap);
 	MarioCap* GetMarioCap() const { return mMarioCap; }
 
+
+
 private:
 	std::vector<MarioParts*> mParts;
 	MarioCap* mMarioCap;
@@ -68,6 +70,8 @@ public:
 	ePlayerState GetPlayerState() { return mPlayerState; }
 	void SetPlayerState(ePlayerState playerState);
 	//void PlayerAnimation(std::wstring name);
+
+	bool IsCaptureing();
 
 private:
 	ePlayerState mPlayerState;

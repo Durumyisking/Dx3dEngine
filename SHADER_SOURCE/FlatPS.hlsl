@@ -17,7 +17,7 @@ float4 main(VSOut vsIn) : SV_Target
 
     float4 albedo = float4(0.5f, 0.5f, 0.5f, 1.0f);
     float3 normal = vsIn.ViewNormal;
-    float3 worldPos = mul(float4(vsIn.ViewPos, 1.f), inverseWorld);
+    float3 worldPos = mul(float4(vsIn.ViewPos, 1.f), inverseWorld).xyz;
     float pixelToCam = distance(cameraWorldPos.xyz, worldPos);
 
     

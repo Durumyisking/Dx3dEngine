@@ -6,6 +6,8 @@
 #include "CameraScript.h"
 #include "Player.h"
 #include "TimerMgr.h"
+#include "AudioListener.h"
+
 Scene::Scene()
 	: mDeleteObj(true)
 	, mType(SceneMgr::eSceneType::End)
@@ -85,12 +87,13 @@ void Scene::Enter()
 	mUICamera->SetRotation(Vector3::Zero);
 	{
 		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLight");
-		directionalLight->SetRotation(Vector3(45.f, -45.f, 0.f));
-		directionalLight->SetScale(Vector3(15.f, 15.f, 15.f));
+		directionalLight->SetPos({ 0.f, 25.f, 0.f });
+		directionalLight->SetRotation(Vector3(90.f, 0.f, 0.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
 		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetRadius(0.02f);
 	}
 }
 
@@ -177,6 +180,8 @@ void Scene::CreateCameras()
 			cameraComp->SetNear(0.01f);
 
 			CameraScript* cameraScript = mCamera->AddComponent<CameraScript>(eComponentType::Script);
+
+			mCamera->AddComponent<AudioListener>(eComponentType::AudioListener);
 
 		}
 		if (!mUICamera)

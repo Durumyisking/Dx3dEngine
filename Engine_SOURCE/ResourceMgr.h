@@ -3,6 +3,7 @@
 #include "EngineResource.h"
 #include "SimpleMath.h"
 #include "Graphics.h"
+#include "AudioClip.h"
 
 
 class Material;

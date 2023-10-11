@@ -6,6 +6,7 @@ cbuffer Transform : register(b0)
     row_major matrix view;
     row_major matrix inverseView;
     row_major matrix projection;
+    row_major matrix inverseProjection;
     row_major matrix fovForSkySphere;
     float4 cameraWorldPos;
 }
@@ -65,7 +66,7 @@ cbuffer Grid : register(b2)
 {
     float3 cameraPosition;
     float2 gridOffset;
-    float2 resolution;
+    float2 gridResolution;
     float thickness;
 }
 
@@ -127,8 +128,3 @@ cbuffer Sky : register(b9)
     matrix cubemapMat;
 }
 
-cbuffer LightMatrix : register(b10)
-{
-    row_major Matrix lightView;
-    row_major Matrix lightProjection;
-};

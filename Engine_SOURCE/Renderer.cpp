@@ -259,6 +259,13 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LensFlareShader");
+			GetDevice()->CreateInputLayout(arrLayout, 2
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
 #pragma endregion
 
 #pragma region SamplerState
@@ -272,7 +279,8 @@ namespace renderer
 
 		samplerDesc.MipLODBias = 0.0f;
 		samplerDesc.MaxAnisotropy = 1;
-		samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+		//samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
 		samplerDesc.BorderColor[0] = 0;
 		samplerDesc.BorderColor[1] = 0;
 		samplerDesc.BorderColor[2] = 0;
@@ -281,12 +289,12 @@ namespace renderer
 		samplerDesc.MipLODBias = 0.0f;
 		samplerDesc.MinLOD = 0.0f;
 
-		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
+		//samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		//GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
 		samplerDesc.Filter = D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
-		samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
-		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
+		//samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+		//GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
 
 		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
 		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
@@ -306,12 +314,20 @@ namespace renderer
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::ShadowPoint)].GetAddressOf());
 
-		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Point), 1, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
+		samplerDesc.BorderColor[0] = 100.0f; // 큰 Z값
+		samplerDesc.Filter =
+			D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT; // 축소 및 확대에 선형 보간법을 사용합니다. 밉 수준 샘플링에는 포인트 샘플링을 사용합니다. 결과를 비교값과 비교합니다.
+		samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL; // 소스 데이터가 대상 데이터보다 작거나 같으면 비교가 통과됩니다.
+		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::ShadowCompare)].GetAddressOf());
+
+
+		//GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Point), 1, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Linear), 1, samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
-		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Anisotropic), 1, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
+		//GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Anisotropic), 1, samplerState[static_cast<UINT>(eSamplerType::Anisotropic)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Skybox), 1, samplerState[static_cast<UINT>(eSamplerType::Skybox)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Clamp), 1, samplerState[static_cast<UINT>(eSamplerType::Clamp)].GetAddressOf());
 		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::ShadowPoint), 1, samplerState[static_cast<UINT>(eSamplerType::ShadowPoint)].GetAddressOf());
+		GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::ShadowCompare), 1, samplerState[static_cast<UINT>(eSamplerType::ShadowCompare)].GetAddressOf());
 
 #pragma endregion
 
@@ -439,11 +455,10 @@ namespace renderer
 		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)] = new ConstantBuffer(eCBType::CubeMapProj);
 		constantBuffers[static_cast<UINT>(eCBType::CubeMapProj)]->Create(sizeof(SkyCB));
 
-		constantBuffers[static_cast<UINT>(eCBType::LightMatrix)] = new ConstantBuffer(eCBType::LightMatrix);
-		constantBuffers[static_cast<UINT>(eCBType::LightMatrix)]->Create(sizeof(LightMatrixCB));
+		
 
 		lightBuffer = new StructedBuffer();
-		lightBuffer->Create(sizeof(LightAttribute), 128, eSRVType::SRV, nullptr, true);
+		lightBuffer->Create(sizeof(LightAttribute), 1, eSRVType::SRV, nullptr, true); // 128에서 1로 변경했습니다. (light binding시 생기는 오류 없애는 시도)
 	}
 
 	void LoadShader()
@@ -687,7 +702,15 @@ namespace renderer
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"BasicPostProcessShader", shader);
 		}
 #pragma endregion
-
+#pragma region lensFlareShader
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"PostProcessVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"LensFlarePS.hlsl", "main");
+			shader->SetDSState(eDepthStencilType::NoWrite);
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"LensFlareShader", shader);
+		}
+#pragma endregion
 	}
 
 	void LoadLoadingSceneTexture()
@@ -718,6 +741,7 @@ namespace renderer
 
 		postProcessTexture = new Texture();
 		postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
+		//postProcessTexture->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 		postProcessTexture->BindShaderResource(eShaderStage::PS, 60);
 		GETSINGLE(ResourceMgr)->Insert<Texture>(L"PostProcessTexture", postProcessTexture);
 	}
@@ -1028,7 +1052,7 @@ namespace renderer
 			Texture* shadowMap = new Texture();
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapTexture", shadowMap);
 			vecRTTex.emplace_back(shadowMap);
-			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32_FLOAT
+			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			Texture* depthStencilTex = new Texture();
@@ -1801,6 +1825,9 @@ namespace renderer
 		CreateMaterial(L"Compass", L"UISpriteShader", L"CompassMaterial", eRenderingMode::Transparent);
 		CreateMaterial(L"CompassBar", L"UISpriteShader", L"CompassBarMaterial", eRenderingMode::Transparent);
 		CreateMaterial(L"CompassNeedle", L"UISpriteShader", L"CompassNeedleMaterial", eRenderingMode::Transparent);
+
+		CreateMaterial(L"DieCircle", L"UISpriteShader", L"DieCircleMaterial", eRenderingMode::Opaque);
+		CreateMaterial(L"DieTexture", L"UISpriteShader", L"DieTextureMaterial", eRenderingMode::Transparent);
 #pragma endregion
 	}
 
@@ -1854,6 +1881,9 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Compass", L"Textures/UI/Compass/Compass.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"CompassBar", L"Textures/UI/Compass/CompassBar.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"CompassNeedle", L"Textures/UI/Compass/CompassNeedle.png");
+
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"DieTexture", L"Textures/UI/DieTexture/DieTexture.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"DieCircle", L"Textures/UI/DieTexture/DieCircle.png");
 	}
 
 	////////////////////////////////////////////////////////
@@ -1898,7 +1928,7 @@ namespace renderer
 
 	void Render()
 	{
-		//GetDevice()->OMSetRenderTarget();
+		GetDevice()->OMSetRenderTarget();
 
 		BindNoiseTexture();
 		BindLight();

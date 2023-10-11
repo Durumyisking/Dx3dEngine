@@ -3,14 +3,10 @@
 
 cbuffer PostProcess : register(b8)
 {
-    float2 Resolution;
-
-    float ElapsedTime;
-    
+    float ElapsedTime;   
     float wave_amount;
     float wave_speed;
     float wave_distortion;
-
 }
 
 

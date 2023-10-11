@@ -32,6 +32,7 @@ void PowerMoonScript::GetPowerMoon()
 		}
 		else
 		{
+			mPanal->GetChilds()[i]->SetUIOn(true);
 			mPanal->GetChilds()[i]->Activate();
 			break;
 		}

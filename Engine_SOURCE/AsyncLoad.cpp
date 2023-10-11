@@ -185,12 +185,34 @@ void AsyncLoad::LoadMaterials()
 		material->SetTextureByKey(L"PostProcessTexture", eTextureSlot::Albedo);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"BasicPostProcessMaterial", material);
 	}
+#pragma region lensFlare Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"LensFlareShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetRenderingMode(eRenderingMode::PostProcess);
+		material->SetTextureByKey(L"PostProcessTexture", eTextureSlot::Albedo);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"LensFlareMaterial", material);
+	}
+
 #pragma endregion
 
 	loadGoomba(L"DeferredShader");
 	loadMario( L"DeferredShader");
 
 	renderer::CreateUIMaterial();
+}
+
+void AsyncLoad::LoadSounds()
+{
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"SuperMarioOdyssey", L"Sound/Title/SuperMarioOdyssey.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"TitleBGM", L"Sound/Title/TitleBGM.wav");
+
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"GameStartSoundEffect", L"Sound/UI/GameStartSoundEffect.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"GetCoin", L"Sound/UI/GetCoin.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"MoonSoundEffect", L"Sound/UI/MoonSoundEffect.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"TextSelectSoundEffect", L"Sound/UI/TextSelectSoundEffect.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"UIBarMove", L"Sound/UI/UIBarMove.wav");
 }
 
 void AsyncLoad::loadGoomba(std::wstring shaderName)

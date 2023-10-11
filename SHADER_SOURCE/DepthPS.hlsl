@@ -17,7 +17,7 @@ struct PSOut
 
 };
 
-PSOut main(VSOut vsIn) : SV_Target
+PSOut main(VSOut vsIn) : SV_TARGET
 {
     PSOut psOut = (PSOut) 0.f;
     
@@ -28,7 +28,9 @@ PSOut main(VSOut vsIn) : SV_Target
     float depth = vsIn.ProjPosition.z / vsIn.ProjPosition.w; // z값이 클수록 더 큰 값이 나온다
     //output = (depth.xxx, 1.0f);
     psOut.depthColor.r = depth;
-    psOut.depthColor.g = depth * depth;
+    
+    // vsm 쓸때 풀기
+    //psOut.depthColor.g = depth * depth;
     //output.rgb = In.ProjPosition.z / In.ProjPosition.w;
     //output.rgb *= (900 / 1600);
     

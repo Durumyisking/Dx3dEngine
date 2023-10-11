@@ -27,7 +27,7 @@ public:
 
 public:
 	void Reset() { mbAnimationRunning = false; }
-
+	void MoveForward(float speed);
 private:
 	std::vector<std::function<void()>> mStateEventList;
 

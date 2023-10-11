@@ -4,6 +4,9 @@
 #include "Material.h"
 
 #include "LifeUI.h"
+#include "Panal.h"
+
+#include "DieCircleUIScript.h"
 
 //std::unordered_map<eUIType, UIBase*> UIManager::mUIPanals;
 //std::queue<eUIType> UIManager::mRequestUIQueue;
@@ -17,6 +20,7 @@
 
 UIManager::UIManager()
 	:mUIPanals{}
+	, mTitleUIPanal{}
 	, mRequestUIQueue{}
 	, mUIBases{}
 	, mCurrentData(nullptr)
@@ -51,22 +55,22 @@ void UIManager::OnLoad(eUIType type)
 
 void UIManager::Update()
 {
-	switch (mCurrentUI)
-	{
-	case enums::currentUI::None:
-		break;
-	case enums::currentUI::MainMenu:
-		MainMenuUI();
-		break;
-	case enums::currentUI::Play:
-		PlayScene();
-		PlayerHit();
-		break;
-	case enums::currentUI::End:
-		break;
-	default:
-		break;
-	}
+	//switch (mCurrentUI)
+	//{
+	//case enums::currentUI::None:
+	//	break;
+	//case enums::currentUI::MainMenu:
+	//	MainMenuUI();
+	//	break;
+	//case enums::currentUI::Play:
+	//	PlayScene();
+	//	PlayerHit();
+	//	break;
+	//case enums::currentUI::End:
+	//	break;
+	//default:
+	//	break;
+	//}
 }
 
 void UIManager::Render()
@@ -169,6 +173,11 @@ void UIManager::PushPanal(eUIType type, UIBase* base)
 	mUIPanals.insert(std::make_pair(type, base));
 }
 
+void UIManager::PushTitlePanal(eUIType type, UIBase* base)
+{
+	mTitleUIPanal.insert(std::make_pair(type, base));
+}
+
 void UIManager::UIActivate()
 {
 
@@ -187,44 +196,57 @@ UIBase* UIManager::GetPanal(eUIType type)
 	return iter->second;
 }
 
+UIBase* UIManager::GetTitlePanal(eUIType type)
+{
+	std::unordered_map<eUIType, UIBase*>::iterator iter = mTitleUIPanal.find(type);
+
+	if (iter == mTitleUIPanal.end())
+	{
+		OnFail();
+		return nullptr;
+	}
+
+	return iter->second;
+}
+
 void UIManager::MainMenuUI()
 {
-	if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::UP)))
-	{
-		if (GETSINGLE(UIManager)->mCount >= 3)
-			return;
+	//if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::UP)))
+	//{
+	//	if (GETSINGLE(UIManager)->mCount >= 3)
+	//		return;
 
-		(GETSINGLE(UIManager)->mCount++);
+	//	(GETSINGLE(UIManager)->mCount++);
 
-		for (size_t i = 0; i < (GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds().size()); i++)
-		{
-			(GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false));
-		}
+	//	for (size_t i = 0; i < (GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds().size()); i++)
+	//	{
+	//		(GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false));
+	//	}
 
-		(GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[GETSINGLE(UIManager)->mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true));
-	}
-	else if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::DOWN)))
-	{
-		if (GETSINGLE(UIManager)->mCount <= 0)
-			return;
+	//	(GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[GETSINGLE(UIManager)->mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true));
+	//}
+	//else if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::DOWN)))
+	//{
+	//	if (GETSINGLE(UIManager)->mCount <= 0)
+	//		return;
 
-		GETSINGLE(UIManager)->mCount--;
+	//	GETSINGLE(UIManager)->mCount--;
 
-		for (size_t i = 0; i < GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds().size(); i++)
-		{
-			GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false);
-		}
+	//	for (size_t i = 0; i < GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds().size(); i++)
+	//	{
+	//		GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false);
+	//	}
 
-		GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[GETSINGLE(UIManager)->mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4f, 1.0f), true);
-	}
+	//	GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[GETSINGLE(UIManager)->mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true);
+	//}
 
-	if (KEY_TAP(N_1))
-	{
-		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
-		GETSINGLE(UIManager)->mCurrentUI = currentUI::Play;
-		GETSINGLE(UIManager)->mCount = 3;
-		return;
-	}
+	//if (KEY_TAP(N_1))
+	//{
+	//	GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
+	//	GETSINGLE(UIManager)->mCurrentUI = currentUI::Play;
+	//	GETSINGLE(UIManager)->mCount = 3;
+	//	return;
+	//}
 }
 
 void UIManager::GetCoin()
@@ -242,7 +264,32 @@ void UIManager::PlayScene()
 
 }
 
-void UIManager::PlayerHit()
+void UIManager::PlayerDie()
 {
+	for (const auto& [key, value] : mUIPanals) 
+	{
+		if (key == eUIType::DiePanal)
+			value->Activate();
+		else
+			value->InActivate();
+	}
 
+	std::unordered_map<eUIType, UIBase*>::iterator iter = mUIPanals.find(eUIType::DiePanal);
+
+	iter->second->GetChilds()[0]->GetScript<DieCircleUIScript>()->DieEffectOn();
+}
+
+void UIManager::PlayerDieReset()
+{
+	for (const auto& [key, value] : mUIPanals)
+	{
+		if (key == eUIType::DiePanal)
+		{
+			value->InActivate();
+		}
+		else
+		{
+			value->Activate();
+		}
+	}
 }

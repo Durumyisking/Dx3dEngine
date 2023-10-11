@@ -87,7 +87,11 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 	}
 	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
 	{
-		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), nullptr, mDSV.GetAddressOf()))
+		D3D11_DEPTH_STENCIL_VIEW_DESC DSVdesc = {};
+		ZeroMemory(&DSVdesc, sizeof(DSVdesc));
+		DSVdesc.Format = DXGI_FORMAT_D32_FLOAT;
+		DSVdesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), &DSVdesc, mDSV.GetAddressOf()))
 		{
 			return false;
 		}
@@ -193,6 +197,57 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT numQualit
 			return false;
 	}
 
+
+	return true;
+}
+
+bool Texture::Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture, UINT width, UINT height)
+{
+	mTexture = texture;
+	mTexture->GetDesc(&mDesc);
+	mDesc.Width = width;
+	mDesc.Height = height;
+
+
+	if (mDesc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
+	{
+		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), nullptr, mDSV.GetAddressOf()))
+		{
+			return false;
+		}
+	}
+	if (mDesc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET)
+	{
+		if (!GetDevice()->CreateRenderTargetView(mTexture.Get(), nullptr, mRTV.GetAddressOf()))
+		{
+			return false;
+		}
+	}
+	if (mDesc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE)
+	{
+		D3D11_SHADER_RESOURCE_VIEW_DESC tSRVdesc = {};
+		tSRVdesc.Format = mDesc.Format;
+		tSRVdesc.Texture2D.MipLevels = 0;
+		tSRVdesc.Texture2D.MostDetailedMip = 0;
+		tSRVdesc.ViewDimension = D3D11_SRV_DIMENSION::D3D11_SRV_DIMENSION_TEXTURE2D;
+
+		if (!GetDevice()->CreateShaderResourceView(mTexture.Get(), nullptr, mSRV.GetAddressOf()))
+		{
+			return false;
+		}
+	}
+	if (mDesc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS)
+	{
+		D3D11_UNORDERED_ACCESS_VIEW_DESC tUAVdesc = {};
+		tUAVdesc.Format = mDesc.Format;
+		tUAVdesc.Texture2D.MipSlice = 0;
+		tUAVdesc.ViewDimension = D3D11_UAV_DIMENSION::D3D11_UAV_DIMENSION_TEXTURE2D;
+
+		if (!GetDevice()->CreateUnorderedAccessView(mTexture.Get(), nullptr, mUAV.GetAddressOf()))
+		{
+			return false;
+		}
+	}
 
 	return true;
 }

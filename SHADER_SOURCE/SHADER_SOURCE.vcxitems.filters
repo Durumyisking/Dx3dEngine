@@ -175,7 +175,7 @@
     <None Include="$(MSBuildThisFileDirectory)Particle.hlsli">
       <Filter>Particle</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)LensFlarePS.hlsli">
+    <None Include="$(MSBuildThisFileDirectory)LensFlarePS.hlsl">
       <Filter>PostProcess</Filter>
     </None>
   </ItemGroup>

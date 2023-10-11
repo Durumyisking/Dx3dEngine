@@ -20,6 +20,7 @@ public:
 	~AudioClip();
 
 	virtual HRESULT Load(const std::wstring& path) override;
+	virtual HRESULT LoadFullpath(const std::wstring& path) override;
 
 	void Play();
 	void Stop();

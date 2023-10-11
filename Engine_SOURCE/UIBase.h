@@ -59,6 +59,9 @@ public:
 	virtual void SetColor(Vector4 color, bool isColor) {};
 
 	void ChangeTexture(const std::wstring& key);
+
+	void SetUIOn(bool isBool) { mbUIOn = isBool; }
+	bool GetUIIsOn() { return mbUIOn; }
 protected:
 	UIBase* mUIParent;
 	Vector3 mUIScreenPos;
@@ -67,6 +70,7 @@ protected:
 
 	bool mbColor;
 	bool mbUIEnable;
+	bool mbUIOn;
 
 private:
 	virtual void OnInit() {};
