@@ -119,13 +119,12 @@ void ScenePlay::Initialize()
 		//}
 
 	{
-		//MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
-		//player = object::Instantiate<Player>(eLayerType::Player, this);
-		//player->SetMarioCap(mariocap);
-		//mPlayer = player;
-		//dynamic_cast<Camera*>(mCamera)->SetTarget(player);
+		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
+		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+		mPlayer->SetMarioCap(mariocap);
+		//dynamic_cast<Camera*>(mCamera)->SetTarget(mPlayer);
 		
-		//mCamera->GetScript<CameraScript>()->SetTargetObject(player);
+		mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
 	}
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
@@ -142,10 +141,10 @@ void ScenePlay::Initialize()
 	}
 
 
-	{
-		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-		mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
-	}
+	//{
+	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+	//	mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
+	//}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);

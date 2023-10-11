@@ -128,8 +128,3 @@ cbuffer Sky : register(b9)
     matrix cubemapMat;
 }
 
-cbuffer LightMatrix : register(b10)
-{
-    row_major Matrix lightView;
-    row_major Matrix lightProjection;
-};
