@@ -2,6 +2,7 @@
 #include "InputMgr.h"
 
 #include "Player.h"
+#include "PlayerStateScript.h"
 #include "PhysXRigidBody.h"
 
 #include "MarioCap.h"
@@ -33,15 +34,15 @@ void CaptureObj::Divide()
 	OffCapture();
 	DivideEvent();
 
-	if (mObject == nullptr)
+	if (mCap == nullptr)
 		return;
 
 	if (mPlayer == nullptr)
 		return;
 
-	mPlayer->SetMarioCap(mObject);
+	mPlayer->SetMarioCap(mCap);
 	mPlayer->Active();
-	mObject->Pause();
+	mCap->Pause();
 
 	// ¸¶¸®¿ÀÀÇ ¸ðÀÚ¸¦ ¾º¿öÁÜ
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
@@ -55,13 +56,14 @@ void CaptureObj::Divide()
 	if (monsterTr == nullptr)
 		return;
 
-	Transform* tr = mObject->GetTransform();
+	Transform* tr = mCap->GetTransform();
 	Transform* playertr = mPlayer->GetTransform();
 
 	playertr->SetPhysicalPosition(monsterTr->GetPhysicalPosition());
 	playertr->SetPhysicalRotation(Vector3(0.f, 0.0f, 0.f));
 
 	mPlayer->SetPlayerState(Player::ePlayerState::Idle);
+	mPlayer->GetScript<PlayerStateScript>()->SetHavingCap(true);
 
 	BoneAnimator* animator = mPlayer->GetBoneAnimator();
 	PhysXRigidBody* rigidbody = mPlayer->GetPhysXRigidBody();

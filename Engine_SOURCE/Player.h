@@ -71,6 +71,8 @@ public:
 	void SetPlayerState(ePlayerState playerState);
 	//void PlayerAnimation(std::wstring name);
 
+	bool IsCaptureing();
+
 private:
 	ePlayerState mPlayerState;
 	MeshRenderer* mMeshRenderer;
