@@ -400,7 +400,6 @@
     <ClCompile Include="CapStateScript.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
     </ClCompile>
-    <ClCompile Include="CompassUI.cpp" />
     <ClCompile Include="LifeUI.cpp" />
     <ClCompile Include="NavigationMgr.cpp">
       <Filter>Common\Navigation</Filter>
@@ -421,9 +420,8 @@
     <ClCompile Include="DieUIEffectScript.cpp" />
     <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
-    <ClCompile Include="TitleBGMScript.cpp" />
     <ClCompile Include="FootSmokeParticle.cpp" />
-
+    <ClCompile Include="TitleBGMScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -856,7 +854,6 @@
     <ClInclude Include="ParticleFormat.h">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClInclude>
-    <ClInclude Include="CompassUI.h" />
     <ClInclude Include="LifeUI.h" />
     <ClInclude Include="NavigationMgr.h">
       <Filter>Common\Navigation</Filter>
@@ -874,8 +871,8 @@
     <ClInclude Include="DieUIEffectScript.h" />
     <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="MilestoneScript.h" />
-    <ClInclude Include="TitleBGMScript.h" />
     <ClInclude Include="FootSmokeParticle.h" />
+    <ClInclude Include="TitleBGMScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

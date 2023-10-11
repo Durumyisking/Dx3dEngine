@@ -72,6 +72,14 @@ SceneTitle::~SceneTitle()
 
 }
 
+void SceneTitle::Save(FILE* File)
+{
+}
+
+void SceneTitle::Load(FILE* File)
+{
+}
+
 void SceneTitle::Initialize()
 {
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);

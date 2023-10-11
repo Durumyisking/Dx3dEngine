@@ -31,7 +31,7 @@ SceneMgr::SceneMgr()
 
 SceneMgr::~SceneMgr()
 {
-
+	GameObj::ClearObjectCDO();
 }
 
 void SceneMgr::Initialize()

@@ -94,6 +94,14 @@ ScenePlay::~ScenePlay()
 {
 }
 
+void ScenePlay::Save(FILE* File)
+{
+}
+
+void ScenePlay::Load(FILE* File)
+{
+}
+
 void ScenePlay::Initialize()
 {
 	CreateCameras();

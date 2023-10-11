@@ -359,6 +359,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="TimerMgr.h" />
+    <ClInclude Include="TitleBGMScript.h" />
     <ClInclude Include="TitleUIBarScript.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIBase.h" />
@@ -506,6 +507,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="TimerMgr.cpp" />
+    <ClCompile Include="TitleBGMScript.cpp" />
     <ClCompile Include="TitleUIBarScript.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIBase.cpp" />
