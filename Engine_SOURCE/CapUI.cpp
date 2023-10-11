@@ -40,10 +40,10 @@ void CapUI::Move()
 	{
 		mCurrentTime += DT;
 
-		if (mCurrentTime >= 1)
+		if (mCurrentTime >= 1.f)
 		{
 			mCount = 0;
-			mCurrentTime = 0;
+			mCurrentTime = 0.f;
 		}
 
 		return;
@@ -60,8 +60,8 @@ void CapUI::Move()
 		if (fabs(mTargetPos.x - pos.x) <= 0.01f)
 			mbGoAndReturn = true;
 
-		pos.x += DT / 3;
-		scale.x -= DT / 3;
+		pos.x += DT / 3.f;
+		scale.x -= DT / 3.f;
 	}
 	else if (mbGoAndReturn)
 	{
@@ -71,8 +71,8 @@ void CapUI::Move()
 			mCount++;
 		}
 
-		pos.x -= DT / 3;
-		scale.x += DT / 3;
+		pos.x -= DT / 3.f;
+		scale.x += DT / 3.f;
 	}
 
 	tr->SetPosition(pos);

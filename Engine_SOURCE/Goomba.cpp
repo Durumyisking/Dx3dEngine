@@ -244,6 +244,8 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 
 				OffCapture();
 				mLowerLayerGoombas[0]->OnCapture();
+				mLowerLayerGoombas[0]->CopyCaptureData(dynamic_cast<CaptureObj*>(this));
+
 			}
 
 			//// ¾Æ·§±À¹Ù

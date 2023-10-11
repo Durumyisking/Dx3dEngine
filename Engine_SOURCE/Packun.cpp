@@ -202,7 +202,7 @@ void Packun::CaptureEnter(MarioCap* cap)
 
 		// Ä¸ÀÇ ¿À³Êº¯°æ
 		cap->SetOwner(this);
-		SetObject(cap);
+		SetCap(cap);
 
 		// Ä¸ÀÇ Capture »óÅÂ
 		cap->SetCapState(MarioCap::eCapState::Capture);
@@ -247,7 +247,7 @@ void Packun::OnTriggerEnter(GameObj* gameObject)
 
 		dynamic_cast<Player*>(cap->GetOwner())->SetPlayerState(Player::ePlayerState::Capture);
 		
-		CaptureEnter(cap);
+		//CaptureEnter(cap);
 	
 	}
 }
