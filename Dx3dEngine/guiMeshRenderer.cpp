@@ -55,8 +55,7 @@ namespace gui
 
 			mMaterial = meshRenderer->GetMaterial();
 			mMesh = meshRenderer->GetMesh();
-
-
+			mModel = meshRenderer->GetModel();
 		}
 	}
 
@@ -64,14 +63,16 @@ namespace gui
 	{
 		GUIComponent::Update();
 
-		if (mMesh == nullptr
-			|| mMaterial == nullptr)
-			return;
+		std::string meshName = "NoMeshes";
+		std::string materialName = "NoMaterial";
+		std::string modelName = "NoModel";
 
-		std::string meshName
-			= std::string(mMesh->GetName().begin(), mMesh->GetName().end());
-		std::string materialName
-			= std::string(mMaterial->GetName().begin(), mMaterial->GetName().end());
+		if (mMesh)
+			meshName = std::string(mMesh->GetName().begin(), mMesh->GetName().end());
+		if (mMaterial)
+			materialName = std::string(mMaterial->GetName().begin(), mMaterial->GetName().end());
+		if (mModel)
+			modelName = std::string(mModel->GetName().begin(), mModel->GetName().end());
 
 		ImGui::Text("Mesh"); 
 		ImGui::InputText("##MeshName", (char*)meshName.data()
@@ -125,8 +126,8 @@ namespace gui
 		}
 
 		ImGui::Text("Model"); //ImGui::SameLine();
-		ImGui::InputText("##Moel", (char*)materialName.data()
-			, materialName.length() + 20, ImGuiInputTextFlags_ReadOnly);
+		ImGui::InputText("##Moel", (char*)modelName.data()
+			, modelName.length() + 20, ImGuiInputTextFlags_ReadOnly);
 		
 		ImGui::SameLine();
 		if (ImGui::Button("##ModelBtn", ImVec2(15.0f, 15.0f)))
@@ -178,6 +179,14 @@ namespace gui
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(wKey);
 
 		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
-		inspector->GetTargetGameObject()->GetComponent<MeshRenderer>()->SetModel(model);
+		GameObj* target = inspector->GetTargetGameObject();
+		MeshRenderer* mr = target->GetComponent<MeshRenderer>();
+		Material* mt = model->GetMaterial(0);
+
+		if (mt == nullptr)
+			mt = GETSINGLE(ResourceMgr)->Find<Material>(L"PhongMaterial");
+
+		mr->SetMaterial(mt);
+		mr->SetModel(model, mt);
 	}
 }

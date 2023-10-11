@@ -40,9 +40,8 @@ namespace gui
 			, std::bind(&OutLiner::toInspector, this, std::placeholders::_1));
 
 		mTreeWidget->SetDummyRoot(true);
-
-		InitializeGameObject();
 	}
+
 	OutLiner::~OutLiner()
 	{
 		for (size_t i = 0; i < mChilds.size(); ++i)
@@ -52,7 +51,7 @@ namespace gui
 				delete mChilds[i];
 				mChilds[i] = nullptr;
 			}
-		}
+		}	
 
 		mChilds.clear();
 
@@ -67,11 +66,6 @@ namespace gui
 	}
 	void OutLiner::LateUpdate()
 	{
-	}
-
-	void OutLiner::InitializeGameObject()
-	{	
-
 	}
 
 	void OutLiner::ClearTarget()

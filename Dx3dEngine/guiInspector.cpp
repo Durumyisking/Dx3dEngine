@@ -21,6 +21,7 @@ namespace gui
 	Inspector::Inspector()
 		: mTargetResource(nullptr)
 		, mTransform(nullptr)
+		, mPhysical(nullptr)
 		, mMeshRenderer(nullptr)
 		, mbPhysical(false)
 	{
@@ -36,7 +37,8 @@ namespace gui
 		mComponents[static_cast<UINT>(eComponentType::Transform)]->SetTarget(mTargetGameObject);
 		AddWidget(mComponents[static_cast<UINT>(eComponentType::Transform)]);
 
-		mComponents[static_cast<UINT>(eComponentType::Physical)] = new gui::GUIPhysical();
+		mPhysical = new gui::GUIPhysical();
+		mComponents[static_cast<UINT>(eComponentType::Physical)] = mPhysical;
 		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetName("InspectorPhysical");
 		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetTarget(mTargetGameObject);
 		AddWidget(mComponents[static_cast<UINT>(eComponentType::Physical)]);
@@ -155,6 +157,14 @@ namespace gui
 		ImGui::End();
 	}
 
+	void Inspector::AddPhysical()
+	{
+		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetState(eState::Active);
+		mComponents[static_cast<UINT>(eComponentType::Physical)]->SetTarget(mTargetGameObject);
+
+		mPhysical->AddingPhysical(true);
+	}
+
 	void Inspector::ClearTarget()
 	{
 		for (gui::GUIComponent* comp : mComponents)
@@ -194,13 +204,12 @@ namespace gui
 			{
 				mComponents[static_cast<UINT>(eComponentType::Transform)]->SetState(eState::Active);
 				mComponents[static_cast<UINT>(eComponentType::Transform)]->SetTarget(mTargetGameObject);
-				mTransform->IsPhysical(false);
 			}
 			else if (i == static_cast<UINT>(eComponentType::Physical))
 			{
 				mComponents[static_cast<UINT>(eComponentType::Physical)]->SetState(eState::Active);
 				mComponents[static_cast<UINT>(eComponentType::Physical)]->SetTarget(mTargetGameObject);
-				mTransform->IsPhysical(true);
+				mPhysical->AddingPhysical(false);
 			}
 			else if (i == static_cast<UINT>(eComponentType::MeshRenderer))
 			{

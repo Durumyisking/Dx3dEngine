@@ -153,7 +153,6 @@ void ScenePlay::Initialize()
 		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
 	}
 
-
 		////Sphere 
 		//{
 		//	GameObj* Sphere = object::Instantiate<GameObj>(eLayerType::Player, this);

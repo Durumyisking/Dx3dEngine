@@ -4,18 +4,20 @@
 #include "guiWidgetMgr.h"
 #include "guiGizmo.h"
 #include <charconv>
+#include "Physical.h"
+#include "guiInspector.h"
+
 
 namespace gui
 {
 	GUITransform::GUITransform()
 		: GUIComponent(eComponentType::Transform)
-		, mbPhysical(false)
 		, mPosition()
 		, mRotation()
 		, mScale()
 	{
 		SetName("Transform");
-		SetSize(ImVec2(250.0f, 100.0f));
+		SetSize(ImVec2(285.0f, 100.0f));
 	}
 
 	GUITransform::~GUITransform()
@@ -75,6 +77,22 @@ namespace gui
 
 		scaleChanged = ImGui::InputFloat3("#Scale", (float*)&mScale);
 
+		ImGui::SameLine(0.f, 10.f);
+		if (ImGui::Button("AddPhysical", ImVec2(70.f, 20.f)))
+		{
+			GameObj* targetObj = GetTarget();
+
+			if (targetObj != nullptr)
+			{
+				if (targetObj->GetComponent<Physical>() == nullptr)
+				{
+					Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
+
+					inspector->AddPhysical();
+				}
+			}
+		}
+
 		if (!(posChanged || rotChanged || scaleChanged))
 			return;
 
@@ -85,7 +103,7 @@ namespace gui
 			if (tr == nullptr)
 				return;
 
-			if (mbPhysical)
+			if (GetTarget()->GetComponent<Physical>() != nullptr)
 			{
 				tr->SetPhysicalPosition(mPosition);
 				tr->SetPhysicalRotation(mRotation);

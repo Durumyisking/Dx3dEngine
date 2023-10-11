@@ -15,10 +15,7 @@ namespace gui
 
 		void InputFloatValues(math::Vector3& value);
 
-		void IsPhysical(bool tf) { mbPhysical = tf; }
-
 	private:
-		bool mbPhysical;
 		math::Vector3 mPosition;
 		math::Vector3 mRotation;
 		math::Vector3 mScale;

@@ -36,8 +36,14 @@ void Physical::Initialize()
 
 void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, math::Vector3 geometrySize, MassProperties massProperties)
 {
-	if (geometryType == eGeometryType::ConvexMesh || geometryType == eGeometryType::TriangleMesh)
-		assert(false);
+	if (geometryType == eGeometryType::ConvexMesh)
+	{
+		InitialConvexMeshProperties(actorType, geometrySize);
+	}
+	if (geometryType == eGeometryType::TriangleMesh)
+	{
+		InitialTriangleMeshProperties(geometrySize);
+	}
 
 	mActorType = actorType;
 	mGeometryType = geometryType;

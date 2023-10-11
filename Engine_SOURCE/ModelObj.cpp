@@ -24,7 +24,7 @@ ModelObj::ModelObj(const ModelObj& Obj)
 	, mActorType(Obj.mActorType)
 	, mPhysicalScale(Obj.mPhysicalScale)
 {
-	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	this->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 }
 
 ModelObj::~ModelObj()
@@ -39,6 +39,29 @@ ModelObj* ModelObj::Clone() const
 void ModelObj::Save(FILE* File)
 {
 	GameObj::Save(File);
+
+
+	MeshRenderer* mrd = GetComponent<MeshRenderer>();
+
+	if (mModelName.empty())
+	{
+		if (mrd->GetModel() != nullptr)
+		{
+			mModelName = mrd->GetModel()->GetName();
+		}
+	}
+		
+	if (!mbPhysical)
+	{
+		if (GetComponent<Physical>() != nullptr)
+		{
+			mbPhysical = true;
+			Physical* physical = GetComponent<Physical>();
+			mGeomType = physical->GetGeometryType();
+			mActorType = physical->GetActorType();
+			mPhysicalScale = GetComponent<Transform>()->GetScale();
+		}
+	}
 
 	// 이름 저장
 	int numWChars = (int)mModelName.length();
@@ -71,53 +94,52 @@ void ModelObj::Load(FILE* File)
 
 void ModelObj::Initialize()
 {
-	if (mModelName.empty())
-		return;
-
-	// SetModel
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(mModelName);
-	MeshRenderer* mrd = GetComponent<MeshRenderer>();
-	Material* mt = model->GetMaterial(0);
-
-	if (mt == nullptr)
-		mt = GETSINGLE(ResourceMgr)->Find<Material>(L"PhongMaterial");
-
-	mrd->SetModel(model, mt);
-
-	if (!mbPhysical)
-		return;
-
-
-	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-
-	switch (mGeomType)
+	if (!mModelName.empty())
 	{
-	case enums::eGeometryType::Box:
-		physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
-		break;
-	case enums::eGeometryType::Capsule:
-		physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
-		break;
-	case enums::eGeometryType::Sphere:
-		physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
-		break;
-	case enums::eGeometryType::Plane:
-		physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
-		break;
-	case enums::eGeometryType::ConvexMesh:
-		physical->InitialConvexMeshProperties(mActorType, mPhysicalScale);
-		break;
-	case enums::eGeometryType::TriangleMesh:
-		physical->InitialTriangleMeshProperties(mPhysicalScale);
-		break;
-	case enums::eGeometryType::End:
-		break;
-	default:
-		break;
+		// SetModel
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(mModelName);
+		MeshRenderer* mrd = GetComponent<MeshRenderer>();
+		Material* mt = model->GetMaterial(0);
+
+		if (mt == nullptr)
+			mt = GETSINGLE(ResourceMgr)->Find<Material>(L"PhongMaterial");
+
+		mrd->SetModel(model, mt);
 	}
 
-	AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	AddComponent<PhysXCollider>(eComponentType::Collider);
+	if (mbPhysical)
+	{
+		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
+
+		switch (mGeomType)
+		{
+		case enums::eGeometryType::Box:
+			physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
+			break;
+		case enums::eGeometryType::Capsule:
+			physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
+			break;
+		case enums::eGeometryType::Sphere:
+			physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
+			break;
+		case enums::eGeometryType::Plane:
+			physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
+			break;
+		case enums::eGeometryType::ConvexMesh:
+			physical->InitialConvexMeshProperties(mActorType, mPhysicalScale);
+			break;
+		case enums::eGeometryType::TriangleMesh:
+			physical->InitialTriangleMeshProperties(mPhysicalScale);
+			break;
+		case enums::eGeometryType::End:
+			break;
+		default:
+			break;
+		}
+
+		AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		AddComponent<PhysXCollider>(eComponentType::Collider);
+	}
 
 	GameObj::Initialize();
 }
@@ -135,9 +157,4 @@ void ModelObj::FixedUpdate()
 void ModelObj::Render()
 {
 	GameObj::Render();
-}
-
-void ModelObj::FontRender()
-{
-	GameObj::FontRender();
 }

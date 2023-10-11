@@ -45,6 +45,7 @@ namespace gui
 		void Clear();
 		void SetDummyRoot(bool enable) { mbDummyRootUse = enable; }
 		void SetSelectedNode(Node* node);
+		Node* GetSelectedNode() { return mSelectedNode; }
 
 		void SetEvent(Widget* widget, std::function<void(void* data)> func)
 		{

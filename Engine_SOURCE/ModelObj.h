@@ -18,7 +18,6 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
 	virtual void Render() override;
-	virtual void FontRender() override;
 
 	void SetModel(std::wstring ModelName) { mModelName = ModelName; }
 	void SetPhysical(bool Physical, eGeometryType GeomType, math::Vector3 PhysicalScale

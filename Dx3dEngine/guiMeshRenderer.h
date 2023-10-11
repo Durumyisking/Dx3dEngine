@@ -25,5 +25,6 @@ namespace gui
 	private:
 		Material*	mMaterial;
 		Mesh*		mMesh;
+		Model*		mModel;
 	};
 }

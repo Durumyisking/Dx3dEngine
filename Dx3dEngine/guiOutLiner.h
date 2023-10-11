@@ -4,6 +4,7 @@
 #include "GameObj.h"
 #include "guiComponent.h"
 #include "guiResource.h"
+#include "guiGroupWidget.h"
 
 namespace gui
 {
@@ -20,18 +21,19 @@ namespace gui
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		void InitializeGameObject();
-
 		void ClearTarget();
 		void InitializeTargetGameObject();
 
 		GameObj* GetTargetGameObject() { return mTargetGameObject; }
 		void SetTargetGameObject(GameObj* target) { mTargetGameObject = target; }
+		
 
+		void AddComponent(std::string str);
 		void toInspector(void* data);
 
 	private:
 		TreeWidget* mTreeWidget;
+		GroupWidget* mGroupWidget;
 
 		GameObj* mTargetGameObject;
 		std::vector<Component*> mComponents;

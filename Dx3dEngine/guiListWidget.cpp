@@ -10,7 +10,7 @@ namespace gui
 	{
 		SetName("ListWidget");
 		SetState(eState::Paused);
-		SetSize(ImVec2(200.0f, 200.0f));
+		SetSize(ImVec2(400.0f, 800.0f));
 
 	}
 

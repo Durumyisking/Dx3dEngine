@@ -14,11 +14,17 @@ namespace gui
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
+		void Initialize();
+		bool AddPhysical();
+		void AddingPhysical(bool tf);
+
 		void EditTransform(float* cameraView, float* cameraProjection, float* matrix, bool editTransformDecomposition);
 
 	private:
+		bool mAddingPhysical;
 		eActorType mActorType;
 		eGeometryType mGeometryType;
+		Vector3 mScale;
     };
 }
 

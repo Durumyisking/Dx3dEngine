@@ -63,11 +63,9 @@ namespace gui
 		mWidgets.insert(std::make_pair("Gizmo", gizmo));
 
 		OutLiner* outLiner = new OutLiner();
-		//Insert<Inspector>("Inspector", inspector);
 		mWidgets.insert(std::make_pair("OutLiner", outLiner));
 
 		Inspector* inspector = new Inspector();
-		//Insert<Inspector>("Inspector", inspector);
 		mWidgets.insert(std::make_pair("Inspector", inspector));
 
 		Project* project = new Project();

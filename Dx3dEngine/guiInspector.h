@@ -21,6 +21,8 @@ namespace gui
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
+		void AddPhysical();
+
 		GameObj* GetTargetGameObject() { return mTargetGameObject; }
 		void SetTargetGameObject(GameObj* target) { mTargetGameObject = target; }
 		Resource* GetTargetResource() { return mTargetResource; }
@@ -38,6 +40,7 @@ namespace gui
 		std::vector<gui::GUIResource*> mResources;
 
 		GUITransform* mTransform;
+		GUIPhysical* mPhysical;
 		GUIMeshRenderer* mMeshRenderer;
 	};
 }

@@ -103,7 +103,8 @@ public:
 	template <typename T>
 	T* GetComponent()
 	{
-		T* component;		for (auto c : mComponents)
+		T* component;		
+		for (auto c : mComponents)
 		{
 			component = dynamic_cast<T*>(c);
 
@@ -143,6 +144,16 @@ public:
 				return returnScript;
 		}
 		return nullptr;
+	}
+
+	void DeleteComponent(eComponentType type)
+	{
+		Component* comp = mComponents[static_cast<UINT>(type)];
+		
+		mComponents[static_cast<UINT>(type)] = nullptr;
+
+		delete comp;
+		comp = nullptr;
 	}
 
 	bool IsRenderingBlock() const { return mbBlockRendering; }
