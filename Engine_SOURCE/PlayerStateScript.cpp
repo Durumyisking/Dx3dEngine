@@ -47,6 +47,7 @@ void PlayerStateScript::Update()
 	// enum 상태와 매칭되는 배열을 인덱스로 접근
 	mStateEventList[iState]();
 
+
 	Script::Update();
 }
 
@@ -99,9 +100,7 @@ void PlayerStateScript::Move()
 	{
 		mAnimator->Play(L"Brake");
 		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
-		//mMoveTime = 0.0f;
-		//rigidbody->SetLinearMaxVelocityForDynamic(5.f);
-		//mInitialForce = 33.f;
+
 		return;
 	}
 
