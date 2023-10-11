@@ -82,8 +82,9 @@ void Monster::OnTriggerEnter(GameObj* gameObject)
 	{
 		MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
 		OnCapture();
-		SetObject(cap);
+		SetCap(cap);
 		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
+		CaptureEnter(cap);
 	}
 }
 
@@ -189,7 +190,7 @@ void Monster::CaptureEnter(MarioCap* cap)
 
 		// Ä¸ÀÇ ¿À³Êº¯°æ
 		cap->SetOwner(this);
-		SetObject(cap);
+		SetCap(cap);
 
 		// Ä¸ÀÇ Capture »óÅÂ
 		cap->SetCapState(MarioCap::eCapState::Capture);

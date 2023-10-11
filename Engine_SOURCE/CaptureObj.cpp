@@ -79,6 +79,22 @@ void CaptureObj::Divide()
 	mPlayer->SetPlayerState(Player::ePlayerState::Jump);
 }
 
+void CaptureObj::CopyCaptureData(CaptureObj* other)
+{
+	mPlayer = other->GetPlayer();
+	mCap = other->GetCap();
+	other->ClearCaptureData();
+
+	// todo : 위험한 코드입니다 captureobj랑 gameobj는 별개의 오브젝트임 적절한 방법 찾아서 고쳐야함
+	mCap->SetOwner(dynamic_cast<GameObj*>(this));
+}
+
+void CaptureObj::ClearCaptureData()
+{
+	mPlayer = nullptr;
+	mCap = nullptr;
+}
+
 
 
 
