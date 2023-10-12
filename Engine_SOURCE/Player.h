@@ -62,7 +62,8 @@ public:
 	void SetMarioCap(MarioCap* cap);
 	MarioCap* GetMarioCap() const { return mMarioCap; }
 
-
+	void CapturingProcess();
+	void UnCapturingProcess();
 
 private:
 	std::vector<MarioParts*> mParts;
@@ -76,11 +77,9 @@ public:
 	void SetPlayerState(ePlayerState playerState);
 	//void PlayerAnimation(std::wstring name);
 
-	bool IsCaptureing();
-
 private:
-	ePlayerState mPlayerState;
-	MeshRenderer* mMeshRenderer;
+	ePlayerState	mPlayerState;
+	MeshRenderer*	mMeshRenderer;
 	PlayerStateScript* mScript;
 	PhysXRigidBody* mRigidBody;
 };
