@@ -14,12 +14,35 @@ Goomba::Goomba()
 	: Monster()
 	, mGoombaLayerIdx(0)
 	, mLowerLayerGoombas{}
-{	
+{
+	SetName(L"Goomba");
+	mObjectTypeName = "Goomba";
+}
+
+Goomba::Goomba(const Goomba& Obj)
+	: Monster(Obj)
+{
+	OnCapture();
 	SetName(L"Goomba");
 }
 
 Goomba::~Goomba()
 {
+}
+
+Goomba* Goomba::Clone() const
+{
+	return new Goomba(*this);
+}
+
+void Goomba::Save(FILE* File)
+{
+	Monster::Save(File);
+}
+
+void Goomba::Load(FILE* File)
+{
+	Monster::Load(File);
 }
 
 void Goomba::Initialize()

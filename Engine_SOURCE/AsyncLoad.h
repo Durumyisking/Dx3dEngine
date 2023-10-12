@@ -39,6 +39,7 @@ private:
 	bool mbMarioLoadFinish;
 	bool mbMonsterLoadFinish;
 	bool mbMapLoadFinish;
+	bool mbSoundLoad;
 
 };
 

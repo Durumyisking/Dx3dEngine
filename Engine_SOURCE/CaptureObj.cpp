@@ -42,6 +42,7 @@ void CaptureObj::Divide()
 
 	mPlayer->SetMarioCap(mCap);
 	mPlayer->Active();
+	mPlayer->UnCapturingProcess();
 	mCap->Pause();
 
 	// 마리오의 모자를 씌워줌

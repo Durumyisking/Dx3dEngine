@@ -16,17 +16,28 @@
 
 #include "ParticleSystem.h"
 
+#include "FootSmokeParticle.h"
+
 Player::Player()
 	: mPlayerState(ePlayerState::Idle)
 	, mMeshRenderer(nullptr)
 	, mScript(nullptr)
 	, mRigidBody(nullptr)
+	, mParts{}
+	, mMarioCap(nullptr)
 {
 	SetLayerType(eLayerType::Player);
 	SetName(L"Player");
 
 //		RigidBody* rigidbody = this->AddComponent<RigidBody>(eComponentType::RigidBody);
 
+	mObjectTypeName = "Player";
+}
+
+Player::Player(const Player& Obj)
+	: DynamicObject(Obj)
+{
+	SetLayerType(eLayerType::Player);
 }
 
 Player::~Player()
@@ -45,6 +56,21 @@ Player::~Player()
 	//	delete mMarioCap;
 	//	mMarioCap = nullptr;
 	//}
+}
+
+Player* Player::Clone() const
+{
+	return new Player(*this);
+}
+
+void Player::Save(FILE* File)
+{
+	DynamicObject::Save(File);
+}
+
+void Player::Load(FILE* File)
+{
+	DynamicObject::Load(File);
 }
 
 void Player::Initialize()
@@ -111,14 +137,19 @@ void Player::Initialize()
 	}
 
 	ParticleSystem* particle = AddComponent<ParticleSystem>(eComponentType::Particle);
-	particle->InsertParticle(L"Default", L"CloudParticle");
-	particle->SetComputeShader(L"ParticleCS");
-	
-	ParticleFormat* particleFormat = particle->Play(L"Default");
-	if (particleFormat)
+
+	int particleCount = 5;
+	FootSmokeParticle* footsmokeparticle = new FootSmokeParticle(3, static_cast<ParticleFormat::eParticleType>(1));
+	particle->AddParticle(footsmokeparticle, L"Default");
+	ParticleFormat* pairtlceformat = particle->GetParticleFormat(L"Default");
+	if (pairtlceformat)
 	{
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CloudParticle");
+		if (model)
+			pairtlceformat->SetModel(model);
+
 		Texture* tex = GETSINGLE(ResourceMgr)->Load<Texture>(L"SmokeParticle", L"SmokeParticle/Image/smoke01.png");
-		particleFormat->SetTexture(static_cast<int>(eTextureSlot::Albedo), tex, 1, 1);
+		pairtlceformat->SetTexture(static_cast<int>(eTextureSlot::Albedo), tex, 1, 1);
 	}
 
 
@@ -500,10 +531,28 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 	{
 		cilp = animator->GetAnimationClip(L"RunStart");
 		if (cilp)
-			cilp->SetCompleteEvent([animator]()
+			cilp->SetCompleteEvent([animator, this]()
 		{
 			animator->Play(L"Run");
+			ParticleSystem* particle = GetParticle();
+			if (particle)
+			{
+				particle->Play(L"Default");
+			}
 		});
+	}
+
+	{
+		cilp = animator->GetAnimationClip(L"Run");
+		if (cilp)
+			cilp->SetEndEvent([animator, this]()
+				{
+					ParticleSystem* particle = GetParticle();
+					if (particle)
+					{
+						particle->Stop();
+					}
+				});
 	}
 
 	//멈추는 애니메이션 후 idle로
@@ -575,5 +624,20 @@ void Player::SetMarioCap(MarioCap* cap)
 {
 	mMarioCap = cap;
 	cap->SetOwner(this);
+}
+
+void Player::CapturingProcess()
+{
+	GetPhysical()->RemoveActorToPxScene();
+	mRigidBody->SetVelocity(Vector3::Zero);
+	mRigidBody->RemoveGravity();
+
+}
+
+void Player::UnCapturingProcess()
+{
+	GetPhysical()->AddActorToPxScene();
+	//mRigidBody->SetVelocity(Vector3::Zero);
+	mRigidBody->ApplyGravity();
 }
 

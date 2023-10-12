@@ -94,11 +94,35 @@ ScenePlay::~ScenePlay()
 {
 }
 
+void ScenePlay::Save(FILE* File)
+{
+}
+
+void ScenePlay::Load(FILE* File)
+{
+}
+
 void ScenePlay::Initialize()
 {
 	CreateCameras();
 
+	//TestScene 로드 테스트 로드시에 반복해서 몬스터 정의 방지
+	if (GetType() == SceneMgr::eSceneType::Test)
+	{
+		{
+			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+			skySphere->SetName(L"SkySphere");
+		}
+
+		CreatePlayerUI();
+		Scene::Initialize();
+
+		return;
+	}
+
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
@@ -175,10 +199,10 @@ void ScenePlay::Initialize()
 	}
 
 
-	{
-		MarioBlock* block = object::Instantiate<MarioBlock>(eLayerType::Monster, this);
-		block->SetPos(Vector3(40.f, -10.f, 0.f));
-	}
+	//{
+	//	MarioBlock* block = object::Instantiate<MarioBlock>(eLayerType::Monster, this);
+	//	block->SetPos(Vector3(40.f, -10.f, 0.f));
+	//}
 
 	CreatePlayerUI();
 
@@ -188,7 +212,7 @@ void ScenePlay::Initialize()
 
 void ScenePlay::update()
 {
-	if (KEY_TAP(N_9))
+	if (KEY_TAP(F_9))
 	{
 		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
@@ -196,12 +220,12 @@ void ScenePlay::update()
 		//mCoinPanal->GetScript<CoinUIScript>()->ActionToPlayerDied();
 	}
 
-	if (KEY_TAP(N_2))
+	if (KEY_TAP(F_2))
 	{
 		mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 	}
 
-	if (KEY_TAP(N_3))
+	if (KEY_TAP(F_3))
 	{
 		mCoinPanal->GetScript<CoinUIScript>()->Reset();
 	}
@@ -224,7 +248,8 @@ void ScenePlay::render()
 void ScenePlay::Enter()
 {
 	Scene::Enter();
-	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
+
+	mCamera->SetPos(Vector3(0.f, 25.f, -25.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }

@@ -13,6 +13,14 @@ SceneLoading::~SceneLoading()
 {
 }
 
+void SceneLoading::Save(FILE* File)
+{
+}
+
+void SceneLoading::Load(FILE* File)
+{
+}
+
 void SceneLoading::Initialize()
 {
 	CreateCameras();
@@ -27,7 +35,7 @@ void SceneLoading::Initialize()
 	});
 	std::thread thread3([]()
 	{
-			GETSINGLE(AsyncLoad)->LoadSounds();
+		GETSINGLE(AsyncLoad)->LoadSounds();
 	});
 		
 	thread1.detach();

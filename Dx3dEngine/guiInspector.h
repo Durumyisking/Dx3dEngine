@@ -1,6 +1,10 @@
 #pragma once
 #include "guiWidget.h"
 #include "GameObj.h"
+#include "guiTransform.h"
+#include "guiMeshRenderer.h"
+#include "guiTexture.h"
+#include "guiPhysical.h"
 
 namespace gui
 {
@@ -17,6 +21,8 @@ namespace gui
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
+		void AddPhysical();
+
 		GameObj* GetTargetGameObject() { return mTargetGameObject; }
 		void SetTargetGameObject(GameObj* target) { mTargetGameObject = target; }
 		Resource* GetTargetResource() { return mTargetResource; }
@@ -27,9 +33,14 @@ namespace gui
 		void InitializeTargetResource();
 
 	private:
+		bool mbPhysical;
 		GameObj* mTargetGameObject;
 		Resource* mTargetResource;
 		std::vector<gui::GUIComponent*> mComponents;
 		std::vector<gui::GUIResource*> mResources;
+
+		GUITransform* mTransform;
+		GUIPhysical* mPhysical;
+		GUIMeshRenderer* mMeshRenderer;
 	};
 }

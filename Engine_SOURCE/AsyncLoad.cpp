@@ -5,10 +5,11 @@
 
 AsyncLoad::AsyncLoad()
 	: mbLoadFinish(false)
-	, mbTextureLoadFinish (nullptr)
-	, mbMarioLoadFinish (nullptr)
-	, mbMonsterLoadFinish (nullptr)
-	, mbMapLoadFinish (nullptr)
+	, mbTextureLoadFinish (false)
+	, mbMarioLoadFinish (false)
+	, mbMonsterLoadFinish (false)
+	, mbMapLoadFinish (false)
+	, mbSoundLoad(false)
 {
 }
 AsyncLoad::~AsyncLoad()
@@ -21,7 +22,8 @@ void AsyncLoad::Update()
 	if (mbTextureLoadFinish &&
 		mbMarioLoadFinish &&
 		mbMonsterLoadFinish &&
-		mbMapLoadFinish )
+		mbMapLoadFinish &&
+		mbSoundLoad)
 	{
 		mbLoadFinish = true;
 	}
@@ -44,6 +46,7 @@ void AsyncLoad::LoadModels()
 	thread1.detach();
 	thread2.detach();
 	thread3.detach();
+
 }
 
 void AsyncLoad::LoadTextures()
@@ -317,6 +320,8 @@ void AsyncLoad::LoadSounds()
 	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"UIBarMove", L"Sound/UI/UIBarMove.wav");
 
 	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"GetMoonSoundEffect", L"Sound/GetMoon/YOU GOT A MOON_01.wav");
+
+	mbSoundLoad = true;
 }
 
 void AsyncLoad::loadGoomba(std::wstring shaderName)

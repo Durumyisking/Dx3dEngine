@@ -137,7 +137,7 @@
     <ClInclude Include="guiEditor.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="guiContentsBrowser.h">
+    <ClInclude Include="guiSceneSaveWindow.h">
       <Filter>View</Filter>
     </ClInclude>
     <ClInclude Include="guiGroupWidget.h">
@@ -175,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="guiTransform.h">
       <Filter>WidgetComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="guiObjectWindow.h">
+      <Filter>View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -263,7 +266,7 @@
     <ClCompile Include="guiEditor.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="guiContentsBrowser.cpp">
+    <ClCompile Include="guiSceneSaveWindow.cpp">
       <Filter>View</Filter>
     </ClCompile>
     <ClCompile Include="guiGroupWidget.cpp">
@@ -301,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="guiTransform.cpp">
       <Filter>WidgetComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="guiObjectWindow.cpp">
+      <Filter>View</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
