@@ -36,6 +36,12 @@ Player::Player()
 
 Player::Player(const Player& Obj)
 	: DynamicObject(Obj)
+	, mPlayerState(ePlayerState::Idle)
+	, mMeshRenderer(nullptr)
+	, mScript(nullptr)
+	, mRigidBody(nullptr)
+	, mParts{}
+	, mMarioCap(nullptr)
 {
 	SetLayerType(eLayerType::Player);
 }
@@ -85,7 +91,7 @@ void Player::Initialize()
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	mRigidBody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-	AddComponent<PhysXCollider>(eComponentType::Collider);
+	AddComponent<PhysXCollider>(eComponentType::Collider)->SetSwitchState(false);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
 	AddComponent<GenericAnimator>(eComponentType::GenericAnimator);
 
@@ -249,32 +255,35 @@ void Player::OnCollisionEnter(GameObj* gameObject)
 
 void Player::OnTriggerEnter(GameObj* gameObject)
 {
-	if (eLayerType::Platforms == gameObject->GetLayerType())
+	// todo : 캡처 들어가거나 나가는중일때 어떠한 충돌 처리를 수행하면 안됨)
+	if (L"Bind" != GetBoneAnimator()->PlayAnimationName())
 	{
-		if (mRigidBody->IsOnAir())
+		if (eLayerType::Platforms == gameObject->GetLayerType())
 		{
-			mRigidBody->SetAirOff();
-			SetPlayerState(Player::ePlayerState::Idle);
+			if (mRigidBody->IsOnAir())
+			{
+				mRigidBody->SetAirOff();
+				SetPlayerState(Player::ePlayerState::Idle);
+			}
+		}
+
+		if (eLayerType::Monster == gameObject->GetLayerType())
+		{
+			Vector3 monToPlayer = GetWorldPos() - gameObject->GetWorldPos();
+			monToPlayer.Normalize();
+			Vector3 monUpVector = gameObject->GetTransform()->WorldUp();
+
+			float cosTheta = monToPlayer.Dot(monUpVector);
+
+			if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.95f)
+			{
+				mScript->ResetJumpCount();
+				mRigidBody->SetAirOff();
+				mRigidBody->SetVelocity(AXIS::Y, 0.f);
+				SetPlayerState(Player::ePlayerState::Jump);
+			}
 		}
 	}
-
-	if (eLayerType::Monster == gameObject->GetLayerType())
-	{
-		Vector3 monToPlayer = GetWorldPos() - gameObject->GetWorldPos();
-		monToPlayer.Normalize();
-		Vector3 monUpVector = gameObject->GetTransform()->WorldUp();
-
-		float cosTheta = monToPlayer.Dot(monUpVector);
-
-		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.95f)
-		{
-			mScript->ResetJumpCount();
-			mRigidBody->SetAirOff();
-			mRigidBody->SetVelocity(AXIS::Y, 0.f);
-			SetPlayerState(Player::ePlayerState::Jump);
-		}
-	}
-
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)
@@ -416,7 +425,7 @@ void Player::stateInfoInitalize()
 	//ThrowCap
 	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Idle));
 	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Move));
-	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Jump));
+	//InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Jump));
 	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Squat));
 	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::SquatMove));
 	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Air));
@@ -614,8 +623,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 		if (cilp)
 			cilp->SetEndEvent([this]()
 		{
-			Pause();
-			//GetPhysical()->RemoveActorToPxScene();
+			int i = 0;
 		});
 	}
 }

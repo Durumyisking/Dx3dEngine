@@ -153,7 +153,6 @@ void ScenePlay::Initialize()
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-
 	}	
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
