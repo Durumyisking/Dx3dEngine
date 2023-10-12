@@ -299,6 +299,8 @@ struct Particle
 
 	UINT texture_x_index;
 	UINT texture_y_index;
+
+	float wakeUpTime;
 };
 struct ParticleShared
 {

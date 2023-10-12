@@ -31,6 +31,7 @@ public:
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) final;
 	virtual void stateInfoInitalize() final;
+	virtual void captureEnterModelOperation() final;
 
 private:
 	UINT				mGoombaLayerIdx;

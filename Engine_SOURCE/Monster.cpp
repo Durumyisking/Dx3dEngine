@@ -2,6 +2,7 @@
 #include "MonsterAiScript.h"
 #include "MonsterStateScript.h"
 #include "BoneAnimator.h"
+#include "PhysXRigidBody.h"
 #include "GenericAnimator.h"
 #include "MarioCap.h"
 #include "TimeMgr.h"
@@ -76,6 +77,10 @@ void Monster::FixedUpdate()
 	GameObj::FixedUpdate();
 }
 
+void Monster::CaptureEnter(MarioCap* cap)
+{
+}
+
 void Monster::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Cap == gameObject->GetLayerType())
@@ -95,6 +100,7 @@ void Monster::OnTriggerStay(GameObj* gameObject)
 void Monster::OnTriggerExit(GameObj* gameObject)
 {
 }
+
 
 void Monster::SetMonsterState(eMonsterState monsterState)
 {
@@ -174,15 +180,7 @@ void Monster::CaptureEnter(MarioCap* cap)
 	param.CompleteFunc = [this, cap](float inCurValue)
 	{
 		OnCapture();
-
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
-		if (!model)
-			return;
-
-		// 오프
-		model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
-		model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
-		model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
+		captureEnterModelOperation();
 
 		// 마리오 본체 pause
 		cap->GetOwner()->Pause();

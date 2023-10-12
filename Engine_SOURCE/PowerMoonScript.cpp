@@ -1,8 +1,10 @@
 #include "PowerMoonScript.h"
 #include "ImageUI.h"
+#include "AudioSource.h"
 
 PowerMoonScript::PowerMoonScript()
 	:UIScript()
+	,mPanal(nullptr)
 {
 
 }

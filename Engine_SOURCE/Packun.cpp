@@ -318,6 +318,18 @@ void Packun::stateInfoInitalize()
 	InsertLockState(static_cast<UINT>(eMonsterState::Die), static_cast<UINT>(eMonsterState::Groggy));
 }
 
+void Packun::captureEnterModelOperation()
+{
+	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Packun");
+	if (!model)
+		return;
+
+	// ¿ÀÇÁ
+	model->MeshRenderSwtich(L"Head2__BodyMT-mesh", true);
+	model->MeshRenderSwtich(L"Head2__HeadMT-mesh", true);
+	model->MeshRenderSwtich(L"mustache__HairMT-mesh", true);
+}
+
 void Packun::boneAnimatorInit(BoneAnimator* animator)
 {
 	animator->LoadAnimations(L"..//Resources/Packun/Animation");
