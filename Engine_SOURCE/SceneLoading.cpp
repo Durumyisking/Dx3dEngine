@@ -13,6 +13,14 @@ SceneLoading::~SceneLoading()
 {
 }
 
+void SceneLoading::Save(FILE* File)
+{
+}
+
+void SceneLoading::Load(FILE* File)
+{
+}
+
 void SceneLoading::Initialize()
 {
 	CreateCameras();

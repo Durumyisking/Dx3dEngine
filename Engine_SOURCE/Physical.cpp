@@ -35,8 +35,14 @@ void Physical::Initialize()
 
 void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, math::Vector3 geometrySize, MassProperties massProperties)
 {
-	if (geometryType == eGeometryType::ConvexMesh || geometryType == eGeometryType::TriangleMesh)
-		assert(false);
+	if (geometryType == eGeometryType::ConvexMesh)
+	{
+		InitialConvexMeshProperties(actorType, geometrySize);
+	}
+	if (geometryType == eGeometryType::TriangleMesh)
+	{
+		InitialTriangleMeshProperties(geometrySize);
+	}
 
 	mActorType = actorType;
 	mGeometryType = geometryType;
@@ -152,11 +158,6 @@ PxTriangleMesh* Physical::MakeTriangleMesh(Model* model)
 		allVertexCount += vertexCount;
 		allIndexCount += indexCount;
 
-		if (vertexCount * 3 != indexCount) 
-		{
-			int problemMesh = 0;
-		}
-
 		// Copy from cvector array to PxVec3 array
 		for (UINT i = 0; i < vertexCount; i++)
 		{
@@ -171,9 +172,6 @@ PxTriangleMesh* Physical::MakeTriangleMesh(Model* model)
 		currentIndexOffset += vertexCount;
 	}
 	
-	if (allVertexCount * 3 == allIndexCount)
-		int a = 0;
-
 	PxVec3* v = vertices.data(); // use for Debug can be delete
 	PxU32* v1 = indexes.data(); // use for Debug can be delete
 

@@ -13,10 +13,10 @@ namespace gui
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 
-		void EditTransform(float* cameraView, float* cameraProjection, float* matrix, bool editTransformDecomposition);
+		void InputFloatValues(math::Vector3& value);
 
 	private:
-		math::Vector3 mPosisition;
+		math::Vector3 mPosition;
 		math::Vector3 mRotation;
 		math::Vector3 mScale;
 	};

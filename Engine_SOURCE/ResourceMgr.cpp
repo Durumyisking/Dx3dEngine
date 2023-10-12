@@ -106,7 +106,7 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 
 void ResourceMgr::LoadModel_CityWorld(bool* bfinish)
 {
-	//GETSINGLE(FileMgr)->StageFolderLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorld");
+	GETSINGLE(FileMgr)->StageFolderLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorld");
 
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
 

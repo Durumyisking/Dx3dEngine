@@ -17,10 +17,36 @@ Monster::Monster()
 	//StateInfoSetting
 	mStateInfo.resize(static_cast<int>(eMonsterState::Die) + 1);
 
+	mObjectTypeName = "Monster";
+}
+
+Monster::Monster(const Monster& Obj)
+	: DynamicObject(Obj)
+	, mMonsterState(Obj.mMonsterState)
+	, mRecognizeRadius(Obj.mRecognizeRadius)
+	, mFoundPlayer(Obj.mFoundPlayer)
+{
+	//StateInfoSetting
+	mStateInfo.resize(static_cast<int>(eMonsterState::Die) + 1);
 }
 
 Monster::~Monster()
 {
+}
+
+Monster* Monster::Clone() const
+{
+	return new Monster(*this);
+}
+
+void Monster::Save(FILE* File)
+{
+	DynamicObject::Save(File);
+}
+
+void Monster::Load(FILE* File)
+{
+	DynamicObject::Load(File);
 }
 
 void Monster::Initialize()

@@ -17,7 +17,12 @@ public:
 	};
 
 	MarioCap();
+	MarioCap(const MarioCap& Obj);
 	virtual ~MarioCap();
+
+	virtual MarioCap* Clone() const;
+	virtual void Save(FILE* File) final;
+	virtual void Load(FILE* File) final;
 
 	virtual void Initialize() final;
 	virtual void Update() final;

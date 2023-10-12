@@ -15,6 +15,9 @@ public:
 	Scene();
 	virtual ~Scene();
 
+	virtual void Save(FILE* File);
+	virtual void Load(FILE* File);
+
 	virtual void Initialize();
 	virtual void update();
 	virtual void fixedUpdate();

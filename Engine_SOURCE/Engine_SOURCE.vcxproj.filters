@@ -394,16 +394,38 @@
     <ClCompile Include="ParticleFormat.cpp">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClCompile>
+    <ClCompile Include="CapStateScript.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioCap</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeUI.cpp" />
+    <ClCompile Include="NavigationMgr.cpp">
+      <Filter>Common\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelObj.cpp">
+      <Filter>Common\GameObj\ModelObj</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioParts.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClCompile>
+    <ClCompile Include="PathMgr.cpp">
+      <Filter>Path</Filter>
+    </ClCompile>
+    <ClCompile Include="FootSmokeParticle.cpp">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClCompile>
     <ClCompile Include="DieCircleUIScript.cpp" />
     <ClCompile Include="DieUIEffectScript.cpp" />
     <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
+
     <ClCompile Include="TitleBGMScript.cpp" />
     <ClCompile Include="MarioBlock.cpp" />
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
+
     <ClCompile Include="FootSmokeParticle.cpp" />
+    <ClCompile Include="TitleBGMScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -836,13 +858,29 @@
     <ClInclude Include="ParticleFormat.h">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClInclude>
+    <ClInclude Include="LifeUI.h" />
+    <ClInclude Include="NavigationMgr.h">
+      <Filter>Common\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelObj.h">
+      <Filter>Common\GameObj\ModelObj</Filter>
+    </ClInclude>
+    <ClInclude Include="PathMgr.h">
+      <Filter>Path</Filter>
+    </ClInclude>
+    <ClInclude Include="FootSmokeParticle.h">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClInclude>
     <ClInclude Include="DieCircleUIScript.h" />
     <ClInclude Include="DieUIEffectScript.h" />
     <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="MilestoneScript.h" />
+
     <ClInclude Include="TitleBGMScript.h" />
     <ClInclude Include="MarioBlock.h" />
+
     <ClInclude Include="FootSmokeParticle.h" />
+    <ClInclude Include="TitleBGMScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -1424,6 +1462,17 @@
     </Filter>
     <Filter Include="UI\UIObject">
       <UniqueIdentifier>{9ce3c0ca-6cf4-4526-a443-57ba40870484}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Common\Navigation">
+      <UniqueIdentifier>{c9afd7c8-42af-4f1e-9186-771c0333a93f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\ModelObj">
+      <UniqueIdentifier>{eb066cb6-46d6-4287-b5c6-99f710d47602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Path">
+      <UniqueIdentifier>{96fc8e58-9452-47fd-8ead-6e2570360962}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
