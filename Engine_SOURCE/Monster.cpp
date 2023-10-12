@@ -7,6 +7,7 @@
 #include "MarioCap.h"
 #include "TimeMgr.h"
 #include "Player.h"
+#include "Physical.h"
 
 Monster::Monster()
 	: DynamicObject()
@@ -180,6 +181,7 @@ void Monster::CaptureEnter(MarioCap* cap)
 
 		// 마리오 본체 pause
 		cap->GetOwner()->Pause();
+		cap->GetPhysical()->RemoveActorToPxScene();
 		cap->Pause();
 		Player* player = dynamic_cast<Player*>(cap->GetOwner());
 		SetPlayer(player);

@@ -283,7 +283,7 @@ void MarioCap::FlyStart()
 	param.EndValue= 15.f;
 
 	// 진행시간
-	param.DurationTime = 0.5;
+	param.DurationTime = 0.5f;
 
 	// 진행 함수 std::function<void(float)>
 	param.DurationFunc = [this, tr, pos, playerforward](float inCurValue)
