@@ -47,9 +47,9 @@ public:
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) {};
 
-	virtual void stateInfoInitalize() = 0;
+	virtual void stateInfoInitalize() {};
 
-	virtual void captureEnterModelOperation() = 0;
+	virtual void captureEnterModelOperation() {};
 
 public:
 	eMonsterState GetMonsterState() { return mMonsterState; }

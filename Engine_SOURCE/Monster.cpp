@@ -77,10 +77,6 @@ void Monster::FixedUpdate()
 	GameObj::FixedUpdate();
 }
 
-void Monster::CaptureEnter(MarioCap* cap)
-{
-}
-
 void Monster::OnTriggerEnter(GameObj* gameObject)
 {
 	if (eLayerType::Cap == gameObject->GetLayerType())
