@@ -31,6 +31,7 @@ public:
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
 
+
 	virtual void CaptureEvent() override {};
 	virtual void CaptureEnter(class MarioCap* cap) override ;
 

@@ -2,6 +2,7 @@
 #include "MonsterAiScript.h"
 #include "MonsterStateScript.h"
 #include "BoneAnimator.h"
+#include "PhysXRigidBody.h"
 #include "GenericAnimator.h"
 #include "MarioCap.h"
 #include "TimeMgr.h"
@@ -48,6 +49,10 @@ void Monster::Update()
 void Monster::FixedUpdate()
 {
 	GameObj::FixedUpdate();
+}
+
+void Monster::CaptureEnter(MarioCap* cap)
+{
 }
 
 void Monster::OnTriggerEnter(GameObj* gameObject)
