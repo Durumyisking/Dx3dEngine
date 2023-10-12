@@ -200,8 +200,8 @@ void ScenePlay::Initialize()
 
 
 	{
-		MarioBlock* block = object::Instantiate<MarioBlock>(eLayerType::Objects, this);
-		block->SetPos(Vector3(40.f, -10.f, 0.f));
+		//MarioBlock* block = object::Instantiate<MarioBlock>(eLayerType::Objects, this);
+		//block->SetPos(Vector3(40.f, -10.f, 0.f));
 	}
 
 	CreatePlayerUI();

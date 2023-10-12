@@ -147,47 +147,9 @@ void AsyncLoad::LoadTextures()
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly9", L"Cube/people/SkyOnly_Scenario9.dds");
 
 
-	//Building
-	TextureLoad(L"GlassBuildingWall00", L"CityWorldHomeBuilding002/Image", TextureState::AlEmMtNrRg);
-	TextureLoad(L"RoofConcrete00", L"CityWorldHomeBuilding002/Image", TextureState::AlNrRg);
-	TextureLoad(L"RoofConcrete01", L"CityWorldHomeBuilding002/Image", TextureState::AlNrRg);
-	TextureLoad(L"WallGlassPaintedSteel00", L"CityWorldHomeBuilding002/Image", TextureState::AlNr);
-
-	//CityGround
-	TextureLoad(L"AsphaltSeal00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"BaseAsphaltRoad01", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"BlueseatStepRepeat00", L"CityGround/Image", TextureState::AlNr);
-	TextureLoad(L"CityLitter00", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"CityLitter01", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"ConcreteWall00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"DrainageCover00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"Font_BaseRoadSign00", L"CityGround/Image", TextureState::Al);
-	TextureLoad(L"Font_BaseRoadSign01", L"CityGround/Image", TextureState::Al);
-	TextureLoad(L"GrassFlowerSet00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundCityLogo00", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"GroundCityLogo02", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundEarth01", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"GroundLawn00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundLawn01", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundLight00", L"CityGround/Image", TextureState::AlEmMsNrRg);
-	TextureLoad(L"GroundMoon01", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"GroundSoil00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundTile00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundTile01", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"MetalManhole01", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"MetalManhole03", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"MetalScaffold00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"MetalScaffoldRepeat00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"RoadAsphaltGlossy00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"RoadManhole00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"SideWalk00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"SideWalk01", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"SideWalk02", L"CityGround/Image", TextureState::AlNr);
-	TextureLoad(L"WallFastener00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"WallGrunge00", L"CityGround/Image", TextureState::Al);
-	TextureLoad(L"WallGrunge01", L"CityGround/Image", TextureState::Al);
-
 	renderer::CreateUITexture();
+
+	//LoadCityTexture();
 
 	LoadMaterials();
 
@@ -241,6 +203,16 @@ void AsyncLoad::LoadMaterials()
 
 #pragma endregion
 
+	loadGoomba(L"DeferredShader");
+	loadMario( L"DeferredShader");
+
+	//LoadCityObjectMaterial();
+
+	renderer::CreateUIMaterial();
+}
+
+void AsyncLoad::LoadCityObjectMaterial()
+{
 #pragma region GlassBuilding Material
 	{
 		CreateMaterial(L"GlassBuildingWall00", L"DeferredShader", L"GlassBuildingWallMaterial", TextureState::AlEmMtNrRg);
@@ -289,11 +261,49 @@ void AsyncLoad::LoadMaterials()
 	}
 
 #pragma endregion
+}
 
-	loadGoomba(L"DeferredShader");
-	loadMario( L"DeferredShader");
+void AsyncLoad::LoadCityTexture()
+{
+	//Building
+	TextureLoad(L"GlassBuildingWall00", L"CityWorldHomeBuilding002/Image", TextureState::AlEmMtNrRg);
+	TextureLoad(L"RoofConcrete00", L"CityWorldHomeBuilding002/Image", TextureState::AlNrRg);
+	TextureLoad(L"RoofConcrete01", L"CityWorldHomeBuilding002/Image", TextureState::AlNrRg);
+	TextureLoad(L"WallGlassPaintedSteel00", L"CityWorldHomeBuilding002/Image", TextureState::AlNr);
 
-	renderer::CreateUIMaterial();
+	//CityGround
+	TextureLoad(L"AsphaltSeal00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"BaseAsphaltRoad01", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"BlueseatStepRepeat00", L"CityGround/Image", TextureState::AlNr);
+	TextureLoad(L"CityLitter00", L"CityGround/Image", TextureState::AlMtNrRg);
+	TextureLoad(L"CityLitter01", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"ConcreteWall00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"DrainageCover00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"Font_BaseRoadSign00", L"CityGround/Image", TextureState::Al);
+	TextureLoad(L"Font_BaseRoadSign01", L"CityGround/Image", TextureState::Al);
+	TextureLoad(L"GrassFlowerSet00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"GroundCityLogo00", L"CityGround/Image", TextureState::AlMtNrRg);
+	TextureLoad(L"GroundCityLogo02", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"GroundEarth01", L"CityGround/Image", TextureState::AlMtNrRg);
+	TextureLoad(L"GroundLawn00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"GroundLawn01", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"GroundLight00", L"CityGround/Image", TextureState::AlEmMsNrRg);
+	TextureLoad(L"GroundMoon01", L"CityGround/Image", TextureState::AlMtNrRg);
+	TextureLoad(L"GroundSoil00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"GroundTile00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"GroundTile01", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"MetalManhole01", L"CityGround/Image", TextureState::AlMtNrRg);
+	TextureLoad(L"MetalManhole03", L"CityGround/Image", TextureState::AlMtNrRg);
+	TextureLoad(L"MetalScaffold00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"MetalScaffoldRepeat00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"RoadAsphaltGlossy00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"RoadManhole00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"SideWalk00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"SideWalk01", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"SideWalk02", L"CityGround/Image", TextureState::AlNr);
+	TextureLoad(L"WallFastener00", L"CityGround/Image", TextureState::AlNrRg);
+	TextureLoad(L"WallGrunge00", L"CityGround/Image", TextureState::Al);
+	TextureLoad(L"WallGrunge01", L"CityGround/Image", TextureState::Al);
 }
 
 void AsyncLoad::LoadSounds()

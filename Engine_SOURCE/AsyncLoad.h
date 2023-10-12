@@ -30,6 +30,9 @@ private:
 	void loadGoomba(std::wstring shaderName);
 	void loadMario(std::wstring shaderName);
 
+	void LoadCityObjectMaterial();
+	void LoadCityTexture();
+
 
 	void CreateMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state);
 	void TextureLoad(std::wstring fileName,std::wstring _PathAndUntilfileName,TextureState state);
