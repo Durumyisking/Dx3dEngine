@@ -163,6 +163,43 @@ void AsyncLoad::LoadTextures()
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"WallGlassPaintedSteel00_nrm", L"CityWorldHomeBuilding002/Image/WallGlassPaintedSteel00_nrm.png");
 
 
+	//CityGround
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"AsphaltSeal00_alb", L"CityGround/Image/AsphaltSeal00_alb.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"AsphaltSeal00_nrm", L"CityGround/Image/AsphaltSeal00_nrm.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"AsphaltSeal00_rgh", L"CityGround/Image/AsphaltSeal00_rgh.png");
+
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"BaseAsphaltRoad01_alb", L"CityGround/Image/BaseAsphaltRoad01_alb.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"BaseAsphaltRoad01_nrm", L"CityGround/Image/BaseAsphaltRoad01_nrm.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"BaseAsphaltRoad01_rgh", L"CityGround/Image/BaseAsphaltRoad01_rgh.png");
+
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"BlueseatStepRepeat00_alb", L"CityGround/Image/BlueseatStepRepeat00_alb.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"BlueseatStepRepeat00_nrm", L"CityGround/Image/BlueseatStepRepeat00_nrm.png");
+
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"CityLitter00_alb", L"CityGround/Image/CityLitter00_alb.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"CityLitter00_mtl", L"CityGround/Image/CityLitter00_mtl.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"CityLitter00_nrm", L"CityGround/Image/CityLitter00_nrm.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"CityLitter00_rgh", L"CityGround/Image/CityLitter00_rgh.png");
+
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"CityLitter01_alb", L"CityGround/Image/CityLitter01_alb.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"CityLitter01_nrm", L"CityGround/Image/CityLitter01_nrm.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"CityLitter01_rgh", L"CityGround/Image/CityLitter01_rgh.png");
+
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"ConcreteWall00_alb", L"CityGround/Image/ConcreteWall00_alb.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"ConcreteWall00_nrm", L"CityGround/Image/ConcreteWall00_nrm.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"ConcreteWall00_rgh", L"CityGround/Image/ConcreteWall00_rgh.png");
+
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"DrainageCover00_alb", L"CityGround/Image/DrainageCover00_alb.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"DrainageCover00_nrm", L"CityGround/Image/DrainageCover00_nrm.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"DrainageCover00_rgh", L"CityGround/Image/DrainageCover00_rgh.png");
+
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"Font_BaseRoadSign00_alb", L"CityGround/Image/Font_BaseRoadSign00_alb.png");
+
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"Font_BaseRoadSign01_alb", L"CityGround/Image/Font_BaseRoadSign01_alb.png");
+
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"GrassFlowerSet00_alb", L"CityGround/Image/GrassFlowerSet00_alb.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"GrassFlowerSet00_nrm", L"CityGround/Image/GrassFlowerSet00_nrm.png");
+	//GETSINGLE(ResourceMgr)->Load<Texture>(L"GrassFlowerSet00_rgh", L"CityGround/Image/GrassFlowerSet00_rgh.png");
+
 	renderer::CreateUITexture();
 
 	LoadMaterials();
@@ -436,4 +473,43 @@ void AsyncLoad::loadMario(std::wstring shaderName)
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"marioHairMaterial", material);
 	}
 #pragma endregion
+}
+
+void AsyncLoad::CreateMaterial()
+{
+
+}
+
+void AsyncLoad::TextureLoad(std::wstring& fileName, std::wstring& _PathAndUntilfileName, TextureState state)
+{
+	switch (state)
+	{
+	case AsyncLoad::TextureState::Al:
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_alb", _PathAndUntilfileName + L"_alb");
+		break;
+	case AsyncLoad::TextureState::AlNr:
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_alb", _PathAndUntilfileName + L"_alb");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_nrm", _PathAndUntilfileName + L"_nrm");
+		break;
+	case AsyncLoad::TextureState::AlNrRg:
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_alb", _PathAndUntilfileName + L"_alb");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_nrm", _PathAndUntilfileName + L"_nrm");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_rgh", _PathAndUntilfileName + L"_rgh");
+		break;
+	case AsyncLoad::TextureState::AlMtNrRg:
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_alb", _PathAndUntilfileName + L"_alb");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_mtl", _PathAndUntilfileName + L"_mtl");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_nrm", _PathAndUntilfileName + L"_nrm");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_rgh", _PathAndUntilfileName + L"_rgh");
+		break;
+	case AsyncLoad::TextureState::AlEmMtNrRg:
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_alb", _PathAndUntilfileName + L"_alb");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_emm", _PathAndUntilfileName + L"_emm");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_mtl", _PathAndUntilfileName + L"_mtl");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_nrm", _PathAndUntilfileName + L"_nrm");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_rgh", _PathAndUntilfileName + L"_rgh");
+		break;
+	default:
+		break;
+	}
 }
