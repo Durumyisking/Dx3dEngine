@@ -19,9 +19,11 @@ public:
 	{
 		Al,
 		AlNr,
+		AlRg,
 		AlNrRg,
 		AlMtNrRg,
 		AlEmMtNrRg,
+		AlEmMsNrRg,
 	};
 
 private:
@@ -29,8 +31,8 @@ private:
 	void loadMario(std::wstring shaderName);
 
 
-	void CreateMaterial();
-	void TextureLoad(std::wstring& fileName,std::wstring& _PathAndUntilfileName,TextureState state);
+	void CreateMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state);
+	void TextureLoad(std::wstring fileName,std::wstring _PathAndUntilfileName,TextureState state);
 private:
 	bool mbLoadFinish;
 
