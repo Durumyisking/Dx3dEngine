@@ -78,6 +78,8 @@
 
 #include "PostProcess.h"
 
+#include "NavigationMgr.h"
+
 
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
@@ -228,6 +230,13 @@ void ScenePlay::update()
 	if (KEY_TAP(F_3))
 	{
 		mCoinPanal->GetScript<CoinUIScript>()->Reset();
+	}
+
+	if (KEY_TAP(F_5))
+	{
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_NaviRoadCollider");
+		if (model != nullptr)
+			GETSINGLE(NavigationMgr)->CreateNavigationMesh(model);
 	}
 
 

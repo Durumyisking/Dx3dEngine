@@ -5,6 +5,8 @@
 #include "../External/Detour/include/DetourNavMesh.h"
 #include "../External/Detour/include/DetourNavMeshBuilder.h"
 
+#include "SoloNavMesh.h"
+
 class Model;
 class NavigationMgr
 {
@@ -20,5 +22,5 @@ public:
 	void Navigation();
 
 private:
-
+	std::map<std::wstring, SoloNavMesh*> mSoloNavMeshs;
 };

@@ -417,15 +417,16 @@
     <ClCompile Include="DieUIEffectScript.cpp" />
     <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
-
     <ClCompile Include="TitleBGMScript.cpp" />
     <ClCompile Include="MarioBlock.cpp" />
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
-
     <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
+    <ClCompile Include="SoloNavMesh.cpp">
+      <Filter>Common\Navigation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -875,12 +876,13 @@
     <ClInclude Include="DieUIEffectScript.h" />
     <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="MilestoneScript.h" />
-
     <ClInclude Include="TitleBGMScript.h" />
     <ClInclude Include="MarioBlock.h" />
-
     <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="TitleBGMScript.h" />
+    <ClInclude Include="SoloNavMesh.h">
+      <Filter>Common\Navigation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
