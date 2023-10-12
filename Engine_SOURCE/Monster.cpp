@@ -180,7 +180,11 @@ void Monster::CaptureEnter(MarioCap* cap)
 
 		// 마리오 본체 pause
 		cap->GetOwner()->Pause();
-		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
+		cap->Pause();
+		Player* player = dynamic_cast<Player*>(cap->GetOwner());
+		SetPlayer(player);
+		player->CapturingProcess();
+
 
 		// 캡의 오너변경
 		cap->SetOwner(this);

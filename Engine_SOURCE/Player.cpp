@@ -23,6 +23,8 @@ Player::Player()
 	, mMeshRenderer(nullptr)
 	, mScript(nullptr)
 	, mRigidBody(nullptr)
+	, mParts{}
+	, mMarioCap(nullptr)
 {
 	SetLayerType(eLayerType::Player);
 	SetName(L"Player");
@@ -622,5 +624,20 @@ void Player::SetMarioCap(MarioCap* cap)
 {
 	mMarioCap = cap;
 	cap->SetOwner(this);
+}
+
+void Player::CapturingProcess()
+{
+	GetPhysical()->RemoveActorToPxScene();
+	mRigidBody->SetVelocity(Vector3::Zero);
+	mRigidBody->RemoveGravity();
+
+}
+
+void Player::UnCapturingProcess()
+{
+	GetPhysical()->AddActorToPxScene();
+	//mRigidBody->SetVelocity(Vector3::Zero);
+	mRigidBody->ApplyGravity();
 }
 
