@@ -35,7 +35,12 @@ public:
 
 public:
 	Player();
+	Player(const Player& Obj);
 	virtual ~Player();
+
+	virtual Player* Clone() const;
+	virtual void Save(FILE* File) override;
+	virtual void Load(FILE* File) override;
 
 	virtual void Initialize() override;
 	virtual void Update() override;

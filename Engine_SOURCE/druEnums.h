@@ -199,5 +199,7 @@ namespace enums
 	extern const wchar_t* wcharComponentType[(int)eComponentType::End];
 	extern const char* charResourceType[(int)eResourceType::End];
 	extern const wchar_t* wcharResourceType[(int)eResourceType::End];
+	extern const char* charLayerType[(int)eLayerType::End];
+	extern const wchar_t* wcharLayerType[(int)eLayerType::End];
 
 }

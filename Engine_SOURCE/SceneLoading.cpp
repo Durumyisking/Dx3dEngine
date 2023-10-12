@@ -13,6 +13,14 @@ SceneLoading::~SceneLoading()
 {
 }
 
+void SceneLoading::Save(FILE* File)
+{
+}
+
+void SceneLoading::Load(FILE* File)
+{
+}
+
 void SceneLoading::Initialize()
 {
 	CreateCameras();
@@ -45,7 +53,7 @@ void SceneLoading::update()
 {
 	if (GETSINGLE(AsyncLoad)->IsLoadFinish())
 	{
-		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Title);
+		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
 		return;
 	}
 

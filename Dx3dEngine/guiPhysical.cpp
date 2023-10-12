@@ -1,16 +1,44 @@
 #include "guiPhysical.h"
 #include "Transform.h"
 #include "ImGuizmo.h"
-#include "guiWidgetMgr.h"
 #include "guiGizmo.h"
+#include "guiOutLiner.h"
+
+#include "guiWidgetMgr.h"
+#include "Physical.h"
+#include "PhysXRigidBody.h"
+#include "PhysXCollider.h"
+#include "PhysicalMovement.h"
+
+const char* charActorType[(int)eActorType::End] =
+{
+    "Static", // 정적인 물체 (물리적으로 움직이지 않을 물체)
+    "Dynamic", // 동적인 물체 (물리엔진에 직접적인 영향을 받는다)
+    "Kinematic", // 프로그래밍 운동제어 물리 시뮬레이션 영향을 받지 않고 스크립트로 움직인다.
+    "Character", // 일반적인 액터들과 다른 움직임을 처리하기 위해 사용한다. (컨트롤러를 붙여줘야한다)
+    "Monster", // 커스텀
+};
+
+const char* charGeometryType[(int)eGeometryType::End] =
+{
+    "Box",
+    "Capsule",
+    "Sphere",
+    "Plane",
+    "ConvexMesh",
+    "TriangleMesh",
+};
 
 namespace gui
 {
     GUIPhysical::GUIPhysical()
         : GUIComponent(eComponentType::Physical)
+        , mActorType(eActorType::End)
+        , mGeometryType(eGeometryType::End)
+        , mScale(Vector3::Zero)
     {
         SetName("Physical");
-        SetSize(ImVec2(200.0f, 120.0f));
+        SetSize(ImVec2(300.0f, 200.0f));
     }
 
     GUIPhysical::~GUIPhysical()
@@ -21,38 +49,139 @@ namespace gui
     void GUIPhysical::FixedUpdate()
     {
         GUIComponent::FixedUpdate();
-
-
-        if (GetTarget() == nullptr)
-            return;
-
-        Transform* tr = GetTarget()->GetComponent<Transform>();
-
-        mPosisition = tr->GetPosition();
-        mRotation = tr->GetRotation();
-        mScale = tr->GetScale();
     }
 
     void GUIPhysical::Update()
     {
         GUIComponent::Update();
 
-        ImGui::Text("Position"); ImGui::SameLine();
-        ImGui::InputFloat3("##Position", (float*)&mPosisition);
+        if (GetTarget() == nullptr)
+            return;
 
-        ImGui::Text("Rotation"); ImGui::SameLine();
-        ImGui::InputFloat3("##Rotation", (float*)&mRotation);
+        //ActorType Edit
+        ImGui::Text("ActorType:"); 
+        ImGui::SameLine();
 
-        ImGui::Text("Scale"); ImGui::SameLine();
-        ImGui::InputFloat3("##Scale", (float*)&mScale);
+        std::string actorName;
 
-        if (GetTarget())
+        switch (mActorType)
         {
-            Transform* tr = GetTarget()->GetComponent<Transform>();
+        case enums::eActorType::Static:
+            actorName = "Static";
+            break;
+        case enums::eActorType::Dynamic:
+            actorName = "Dynamic";
+            break;
+        case enums::eActorType::Kinematic:
+            actorName = "Kinematic";
+            break;
+        case enums::eActorType::Character:
+            actorName = "Character";
+            break;
+        case enums::eActorType::Monster:
+            actorName = "Monster";
+            break;
+        default:
+            actorName = "None";
+            break;
+        }
 
-            tr->SetPosition(mPosisition);
-            tr->SetRotation(mRotation);
-            tr->SetScale(mScale);
+        ImGui::PushID(0);
+        ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.0f, 0.0f, 0.6f));
+        ImGui::Button(actorName.c_str());
+        ImGui::PopStyleColor(1);
+        ImGui::PopID();
+
+
+        if (mAddingPhysical)
+        {
+            if (ImGui::TreeNodeEx("Select Actor :", ImGuiTreeNodeFlags_DefaultOpen)) // 메인 트리
+            {
+                for (int i = 0; i < static_cast<int>(eActorType::End); i++)
+                {
+                    if (ImGui::TreeNodeEx((void*)(intptr_t)i
+                        , (mActorType == static_cast<eActorType>(i) ? ImGuiTreeNodeFlags_Selected : 0)
+                        , charActorType[i]))
+                    {
+                        if (ImGui::IsItemClicked())
+                        {
+                            mActorType = static_cast<eActorType>(i);
+                        }
+                        ImGui::TreePop();
+                    }
+                }
+                ImGui::TreePop();
+            }
+        }
+
+        //GeometryType Edit
+        ImGui::Text("GeomType:");
+        ImGui::SameLine();
+
+        std::string geomName;
+
+        switch (mGeometryType)
+        {
+        case enums::eGeometryType::Box:
+            geomName = "Box";
+            break;
+        case enums::eGeometryType::Capsule:
+            geomName = "Capsule";
+            break;
+        case enums::eGeometryType::Sphere:
+            geomName = "Sphere";
+            break;
+        case enums::eGeometryType::Plane:
+            geomName = "Plane";
+            break;
+        case enums::eGeometryType::ConvexMesh:
+            geomName = "ConvexMesh";
+            break;
+        case enums::eGeometryType::TriangleMesh:
+            geomName = "TriangleMesh";
+            break;
+        default:
+            geomName = "None";
+            break;
+        }
+
+        ImGui::PushID(0);
+        ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.0f, 0.0f, 0.6f));
+        ImGui::Button(geomName.c_str());
+        ImGui::PopStyleColor(1);
+        ImGui::PopID();
+
+
+        if (mAddingPhysical)
+        {
+            if (ImGui::TreeNodeEx("Select Geometry :", ImGuiTreeNodeFlags_DefaultOpen)) // 메인 트리
+            {
+                for (int i = 0; i < static_cast<int>(eGeometryType::End); i++)
+                {
+                    if (ImGui::TreeNodeEx((void*)(intptr_t)i
+                        , (mGeometryType == static_cast<eGeometryType>(i) ? ImGuiTreeNodeFlags_Selected : 0)
+                        , charGeometryType[i]))
+                    {
+                        if (ImGui::IsItemClicked())
+                        {
+                            mGeometryType = static_cast<eGeometryType>(i);
+                        }
+                        ImGui::TreePop();
+                    }
+                }
+                ImGui::TreePop();
+            }
+        }
+
+        if (mAddingPhysical)
+        {
+            ImGui::InputFloat3("#ColliderScale", (float*)&mScale);
+
+
+            if(ImGui::Button("Create", ImVec2(120.f, 60.f)))
+            {
+                AddPhysical();
+            }
         }
     }
 
@@ -60,6 +189,64 @@ namespace gui
     {
         GUIComponent::LateUpdate();
 
+    }
+
+    void GUIPhysical::Initialize()
+    {
+        if (GetTarget() == nullptr)
+            return;
+
+        Physical* physical = GetTarget()->GetComponent<Physical>();
+
+        if (physical == nullptr)
+        {
+            mActorType = eActorType::End;
+            mGeometryType = eGeometryType::End;
+        }
+        else
+        {
+            mActorType = physical->GetActorType();
+            mGeometryType = physical->GetGeometryType();
+        }
+    }
+
+    bool GUIPhysical::AddPhysical()
+    {
+        GameObj* target = GetTarget();
+        Physical* physical = target->AddComponent<Physical>(eComponentType::Physical);
+
+
+        physical->InitialDefaultProperties(mActorType, mGeometryType, mScale);
+
+        target->AddComponent<PhysXRigidBody>(eComponentType::RigidBody)->Initialize();
+        target->AddComponent<PhysXCollider>(eComponentType::Collider)->Initialize();
+
+        physical->Initialize();
+
+        if (mActorType != eActorType::Static)
+        {
+            target->AddComponent<PhysicalMovement>(eComponentType::Movement);
+        }
+
+
+        GETSINGLE(WidgetMgr)->GetWidget<OutLiner>("OutLiner")->InitializeTargetGameObject();
+
+        return true;
+    }
+
+    void GUIPhysical::AddingPhysical(bool tf)
+    {
+        mAddingPhysical = tf; 
+
+        if (mAddingPhysical)
+        {
+            mScale = Vector3::Zero;
+            SetSize(ImVec2(300.0f, 400.0f));
+        }
+        else
+        {
+            SetSize(ImVec2(300.0f, 200.0f));
+        }
     }
 
     void GUIPhysical::EditTransform(float* cameraView, float* cameraProjection, float* matrix, bool editTransformDecomposition)
@@ -132,41 +319,5 @@ namespace gui
                 ImGui::PopID();
             }
         }
-
-        /*ImGuiIO& io = ImGui::GetIO();
-        float viewManipulateRight = io.DisplaySize.x;
-        float viewManipulateTop = 0;
-        static ImGuiWindowFlags gizmoWindowFlags = 0;
-        if (useWindow)
-        {
-            ImGui::SetNextWindowSize(ImVec2(800, 400), ImGuiCond_Appearing);
-            ImGui::SetNextWindowPos(ImVec2(400, 20), ImGuiCond_Appearing);
-            ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0.35f, 0.3f, 0.3f));
-            ImGui::Begin("Gizmo", 0, gizmoWindowFlags);
-            ImGuizmo::SetDrawlist();
-            float windowWidth = (float)ImGui::GetWindowWidth();
-            float windowHeight = (float)ImGui::GetWindowHeight();
-            ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
-            viewManipulateRight = ImGui::GetWindowPos().x + windowWidth;
-            viewManipulateTop = ImGui::GetWindowPos().y;
-            ImGuiWindow* window = ImGui::GetCurrentWindow();
-            gizmoWindowFlags = ImGui::IsWindowHovered() && ImGui::IsMouseHoveringRect(window->InnerRect.Min, window->InnerRect.Max) ? ImGuiWindowFlags_NoMove : 0;
-        }
-        else
-        {
-            ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-        }
-
-        ImGuizmo::DrawGrid(cameraView, cameraProjection, identityMatrix, 100.f);
-        ImGuizmo::DrawCubes(cameraView, cameraProjection, &objectMatrix[0][0], gizmoCount);
-        ImGuizmo::Manipulate(cameraView, cameraProjection, mCurrentGizmoOperation, mCurrentGizmoMode, matrix, NULL, useSnap ? &snap[0] : NULL, boundSizing ? bounds : NULL, boundSizingSnap ? boundsSnap : NULL);
-
-        ImGuizmo::ViewManipulate(cameraView, camDistance, ImVec2(viewManipulateRight - 128, viewManipulateTop), ImVec2(128, 128), 0x10101010);
-
-        if (useWindow)
-        {
-            ImGui::End();
-            ImGui::PopStyleColor(1);
-        }*/
     }
 }

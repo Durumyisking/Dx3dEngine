@@ -15,6 +15,24 @@ Entity::~Entity()
 {
 }
 
+void Entity::Save(FILE* File)
+{
+	int numWChars = (int)mName.length();
+
+	fwrite(&numWChars, sizeof(int), 1, File);
+	fwrite(mName.c_str(), sizeof(wchar_t), numWChars, File);
+}
+
+void Entity::Load(FILE* File)
+{
+	int numWChars = 0;
+
+	fread(&numWChars, sizeof(int), 1, File);
+
+	mName.resize(numWChars);
+	fread(&mName[0], sizeof(wchar_t), numWChars, File);
+}
+
 
 namespace gui
 {

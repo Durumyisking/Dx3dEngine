@@ -143,6 +143,26 @@ void AsyncLoad::LoadTextures()
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly8", L"Cube/people/SkyOnly_Scenario8.dds");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly9", L"Cube/people/SkyOnly_Scenario9.dds");
 
+
+	//Building
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"GlassBuildingWall00_alb", L"CityWorldHomeBuilding002/Image/GlassBuildingWall00_alb.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"GlassBuildingWall00_emm", L"CityWorldHomeBuilding002/Image/GlassBuildingWall00_emm.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"GlassBuildingWall00_mtl", L"CityWorldHomeBuilding002/Image/GlassBuildingWall00_mtl.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"GlassBuildingWall00_nrm", L"CityWorldHomeBuilding002/Image/GlassBuildingWall00_nrm.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"GlassBuildingWall00_rgh", L"CityWorldHomeBuilding002/Image/GlassBuildingWall00_rgh.png");
+
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"RoofConcrete00_alb", L"CityWorldHomeBuilding002/Image/RoofConcrete00_alb.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"RoofConcrete00_nrm", L"CityWorldHomeBuilding002/Image/RoofConcrete00_nrm.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"RoofConcrete00_rgh", L"CityWorldHomeBuilding002/Image/RoofConcrete00_rgh.png");
+
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"RoofConcrete01_alb", L"CityWorldHomeBuilding002/Image/RoofConcrete01_alb.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"RoofConcrete01_nrm", L"CityWorldHomeBuilding002/Image/RoofConcrete01_nrm.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"RoofConcrete01_rgh", L"CityWorldHomeBuilding002/Image/RoofConcrete01_rgh.png");
+
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"WallGlassPaintedSteel00_alb", L"CityWorldHomeBuilding002/Image/WallGlassPaintedSteel00_alb.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"WallGlassPaintedSteel00_nrm", L"CityWorldHomeBuilding002/Image/WallGlassPaintedSteel00_nrm.png");
+
+
 	renderer::CreateUITexture();
 
 	LoadMaterials();
@@ -197,6 +217,51 @@ void AsyncLoad::LoadMaterials()
 
 #pragma endregion
 
+#pragma region GlassBuilding Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"GlassBuildingWall00_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"GlassBuildingWall00_emm", eTextureSlot::Emissive);
+		material->SetTextureByKey(L"GlassBuildingWall00_mtl", eTextureSlot::Metallic);
+		material->SetTextureByKey(L"GlassBuildingWall00_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"GlassBuildingWall00_rgh", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"GlassBuildingWallMaterial", material);
+	}
+	
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"RoofConcrete00_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"RoofConcrete00_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"RoofConcrete00_rgh", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete00Material", material);
+	}
+
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"RoofConcrete01_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"RoofConcrete01_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"RoofConcrete01_rgh", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete01Material", material);
+	}
+
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"WallGlassPaintedSteel00_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"WallGlassPaintedSteel00_nrm", eTextureSlot::Normal);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"WallGlassPaintedSteelMaterial", material);
+	}
+
+
+#pragma endregion
+
 	loadGoomba(L"DeferredShader");
 	loadMario( L"DeferredShader");
 
@@ -213,6 +278,8 @@ void AsyncLoad::LoadSounds()
 	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"MoonSoundEffect", L"Sound/UI/MoonSoundEffect.wav");
 	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"TextSelectSoundEffect", L"Sound/UI/TextSelectSoundEffect.wav");
 	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"UIBarMove", L"Sound/UI/UIBarMove.wav");
+
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"GetMoonSoundEffect", L"Sound/GetMoon/YOU GOT A MOON_01.wav");
 }
 
 void AsyncLoad::loadGoomba(std::wstring shaderName)

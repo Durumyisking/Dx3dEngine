@@ -14,6 +14,7 @@
 #include "ServerMgr.h"
 #include "UIManager.h"
 #include "UIFactory.h"
+#include "PathMgr.h"
 #include "AsyncLoad.h"
 
 Application::Application()
@@ -33,6 +34,7 @@ Application::~Application()
 }
 void Application::Initialize()
 {
+	GETSINGLE(PathMgr)->Initialize();
 	GETSINGLE(TimeMgr)->Initialize();
 	GETSINGLE(InputMgr)->Initialize();
 	GETSINGLE(Fmod)->Initialize();
@@ -145,6 +147,7 @@ void Application::DestroySingle()
 	GETSINGLE(FileMgr)->DestroyInstance();
 	GETSINGLE(PhysicsMgr)->DestroyInstance();
 	GETSINGLE(TimerMgr)->DestroyInstance();
+	GETSINGLE(PathMgr)->DestroyInstance();
 }
 
 void Application::SetWindow(HWND hwnd, UINT width, UINT height)

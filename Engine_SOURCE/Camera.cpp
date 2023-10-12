@@ -432,6 +432,10 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 		return;
 
 	Material* material = renderer->GetMaterial();
+
+	if (material == nullptr)
+		return;	
+
 	eRenderingMode mode = material->GetRenderingMode();
 
 	switch (mode)
