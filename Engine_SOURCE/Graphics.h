@@ -171,6 +171,9 @@ enum class eTextureSlot
 
 	PostProcess = 20,					// atlasTexture
 
+
+	DepthMap = 21,
+
 	End,
 };
 

@@ -952,6 +952,10 @@ namespace renderer
 			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularLightTargetTexture");
 			mergeMaterial->SetTexture(eTextureSlot::SpecularLightTarget, mergeTex);
 
+			// TEST
+			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DepthMapTexture");
+			mergeMaterial->SetTexture(eTextureSlot::DepthMap, mergeTex);
+
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"MergeMRT_Material", mergeMaterial);
 		}
 #pragma endregion
@@ -1051,9 +1055,16 @@ namespace renderer
 		{	
 			Texture* shadowMap = new Texture();
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapTexture", shadowMap);
+			Texture* depthMap = new Texture();
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"DepthMapTexture", depthMap);
+
 			vecRTTex.emplace_back(shadowMap);
 			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			vecRTTex.emplace_back(depthMap);
+			vecRTTex[1]->Create(width, height, DXGI_FORMAT_R32_FLOAT
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+
 
 			Texture* depthStencilTex = new Texture();
 			depthStencilTex->Create(width, height, DXGI_FORMAT_D32_FLOAT

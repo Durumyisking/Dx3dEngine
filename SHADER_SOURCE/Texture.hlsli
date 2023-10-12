@@ -31,6 +31,7 @@ Texture2D ShadowMap : register(t19);
 
 // postProcess
 Texture2D postProcessTexture : register(t20);
+Texture2D DepthMap : register(t21);
 
 
 //StructuredBuffer<LightAttribute> lightAttributes : register(t22);
