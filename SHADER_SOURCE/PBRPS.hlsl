@@ -45,8 +45,9 @@ float4 main(VSOut vsIn) : SV_Target
           
         float3 radiance = LightRadiance(lightAttributes[i], vsIn.WorldPos, normal);
                 
-        directLighting += PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness) * radiance;
-            
+        directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness) ;
+        directLighting *= radiance;
+
     }
 
     

@@ -14,7 +14,7 @@ struct VSOut
 struct PS_OUT
 {
     float4 vDiffuse : SV_Target;
-    float4 vSpecular : SV_Target1;
+    //float4 vSpecular : SV_Target1;
 };
 
 /*
@@ -41,6 +41,7 @@ PS_OUT main(VSOut vsin)
     float4 mrg = MRDTarget.Sample(linearSampler, uv);
     float metallic = saturate(mrg.r);
     float roughness = saturate(mrg.g);
+    float4 emissive = emissiveTarget.Sample(linearSampler, uv);
     
     float pixelToCam = distance(cameraWorldPos.xyz, worldPos.xyz);
     float3 pixelToEye = normalize(cameraWorldPos.xyz - worldPos.xyz);
@@ -58,9 +59,9 @@ PS_OUT main(VSOut vsin)
     float3 lightVec = -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz;
     directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness);
 
-    output.vDiffuse.xyz = ambientLighting + directLighting * radiance;
+    output.vDiffuse.xyz = ambientLighting + (directLighting * radiance) + emissive.xyz;
     
-    output.vDiffuse.a = 1.f;
+    //output.vSpecular.a = 1.f;
     //output.vSpecular.a = 1.f;
     
     return output;
