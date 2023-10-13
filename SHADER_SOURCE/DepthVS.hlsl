@@ -15,6 +15,7 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float4 ProjPosition : POSITION;
+    float4 WVP : POSITION1;
 };
 
 
@@ -37,8 +38,13 @@ VSOut main(VSIn vsIn)
     float4 viewPosition = mul(worldPosition, lightAttributes[0].view);
     float4 ProjPosition = mul(viewPosition, lightAttributes[0].projection);
     
-    output.Position = ProjPosition;
+    float4 W = mul(float4(pos.xyz, 1.f), world);
+    float4 V = mul(W, view);
+    float4 P = mul(V, projection);
+    
+    output.Position = P;
     output.ProjPosition = ProjPosition;
+    output.WVP = V;
     
     return output;
 }

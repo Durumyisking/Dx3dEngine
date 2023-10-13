@@ -24,6 +24,9 @@ float4 main(VSOut vsIn) : SV_Target
     if (0.0f == viewPos.a)
         discard;
     
+    float dp = DepthMap.SampleLevel(shadowPointSampler, UV, 0.f).r;
+    return float4(dp, 0.0f, 0.0f, 1.0f);
+    
     outColor = albedoTarget.Sample(linearSampler, UV);
     
     
