@@ -106,7 +106,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ·Îµå Å×½ºÆ® ·Îµå½Ã¿¡ ¹İº¹ÇØ¼­ ¸ó½ºÅÍ Á¤ÀÇ ¹æÁö
+	//TestScene ë¡œë“œ í…ŒìŠ¤íŠ¸ ë¡œë“œì‹œì— ë°˜ë³µí•´ì„œ ëª¬ìŠ¤í„° ì •ì˜ ë°©ì§€
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		{
