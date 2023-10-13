@@ -23,6 +23,7 @@
 
 std::map<std::string, GameObj*> GameObj::mObjectCDO;
 	
+
 GameObj::GameObj()
 	:mState(eState::Active)
 	, mType(eLayerType::None)
@@ -77,7 +78,7 @@ void GameObj::Save(FILE* File)
 {
 	DruEntity::Save(File);	
 
-	////ì»´í¬ë„ŒíŠ¸ ë”°ë¡œ ì €ì¥í• ê±°ë©´ ì‚¬ìš©(ë¯¸ì™„)
+	////ÄÄÆ÷³ÍÆ® µû·Î ÀúÀåÇÒ°Å¸é »ç¿ë(¹Ì¿Ï)
 	//{
 	//	auto	iter = mComponents.begin();
 	//	auto	iterEnd = mComponents.end();

@@ -17,7 +17,6 @@ Scene::Scene()
 	, mUICamera(nullptr)
 	, mCamera(nullptr)
 	, mbInitialized(false)
-
 {
 	mLayers.resize(static_cast<UINT>(eLayerType::End));
 }
@@ -27,10 +26,10 @@ Scene::~Scene()
 
 void Scene::Save(FILE* File)
 {
-	//ë ˆì´ì–´ ìˆœíšŒí•˜ë©´ì„œ ì˜¤ë¸Œì íŠ¸ ì €ì¥
+	//·¹ÀÌ¾î ¼øÈ¸ÇÏ¸é¼­ ¿ÀºêÁ§Æ® ÀúÀå
 	for (UINT i = 0; i < static_cast<UINT>(eLayerType::End); i++)
 	{
-		//ë ˆì´ì–´ íƒ€ì…
+		//·¹ÀÌ¾î Å¸ÀÔ
 		eLayerType layerType = static_cast<eLayerType>(i);
 		fwrite(&layerType, sizeof(eLayerType), 1, File);
 
@@ -42,12 +41,12 @@ void Scene::Save(FILE* File)
 			continue;
 }
 
-		//ë ˆì´ì–´ ë‚´ì˜ ì˜¤ë¸Œì íŠ¸ ìˆ˜
+		//·¹ÀÌ¾î ³»ÀÇ ¿ÀºêÁ§Æ® ¼ö
 		std::vector<GameObj*> gameObjs = mLayers[i].GetGameObjects();
 		int	ObjCount = static_cast<int>(gameObjs.size());
 		fwrite(&ObjCount, sizeof(int), 1, File);
 
-		//ê° ì˜¤ë¸Œì íŠ¸
+		//°¢ ¿ÀºêÁ§Æ®
 		for (GameObj* obj : gameObjs)
 		{
 			std::string	ClassTypeName = obj->GetObjectTypeName();
@@ -62,15 +61,15 @@ void Scene::Save(FILE* File)
 	}
 }
 
-//// Loading ì‹œ Thread ì‚¬ìš©ì‹œ ì‚¬ìš©í•œë‹¤ëŠ”ë° ì¼ë‹¨ ëª¨ì•„ë†“ì•˜ìŠµë‹ˆë‹¤
+//// Loading ½Ã Thread »ç¿ë½Ã »ç¿ëÇÑ´Ù´Âµ¥ ÀÏ´Ü ¸ğ¾Æ³õ¾Ò½À´Ï´Ù
 //{
 //	fseek(File, 0, SEEK_END);
 //	int	FileSize = (int)ftell(File);
 //	fseek(File, 0, SEEK_SET);
-//	int	LoadSize = 0; // Loading Thread ìš©, Thread ë²„í¼ í• ë‹¹ í¬ê¸° ì±…ì •ì‹œ ì‚¬ìš©
+//	int	LoadSize = 0; // Loading Thread ¿ë, Thread ¹öÆÛ ÇÒ´ç Å©±â Ã¥Á¤½Ã »ç¿ë
 //
 //	int	CurPos = (int)ftell(File);
-//	//Load(File);  // Threadì— ìœ„ì„í•  ë¡œë“œ ë¶€ë¶„
+//	//Load(File);  // Thread¿¡ À§ÀÓÇÒ ·Îµå ºÎºĞ
 //	int	NextPos = (int)ftell(File);
 //
 //	int	CurLoadSize = NextPos - CurPos;
@@ -81,8 +80,8 @@ void Scene::Save(FILE* File)
 //
 //		int bufferSize = LoadSize / (float)FileSize;
 //
-//		// Threadì˜ ë²„í¼ì— í¬ê¸° í• ë‹¹í•´ì£¼ëŠ” ë¶€ë¶„
-//		// bufferSize ë§Œí¼ Thread í¬ê¸° í• ë‹¹í•˜ë©´ ëœë‹¤
+//		// ThreadÀÇ ¹öÆÛ¿¡ Å©±â ÇÒ´çÇØÁÖ´Â ºÎºĞ
+//		// bufferSize ¸¸Å­ Thread Å©±â ÇÒ´çÇÏ¸é µÈ´Ù
 //	}
 //
 //	CurPos = NextPos;
@@ -90,7 +89,7 @@ void Scene::Save(FILE* File)
 
 void Scene::Load(FILE* File)
 {
-	// ì”¬ ë¡œë“œ
+	// ¾À ·Îµå
 	for (UINT i = 0; i < static_cast<UINT>(eLayerType::End); i++)
 	{
 		eLayerType layerType;

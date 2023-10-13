@@ -29,14 +29,14 @@ public:
 private:
 	void loadGoomba(std::wstring shaderName);
 	void loadMario(std::wstring shaderName);
-	void loadBuildings(std::wstring shaderName);
+	//void loadBuildings(std::wstring shaderName);
 
-	void LoadCityObjectMaterial();
-	void LoadCityTexture();
+	void loadCityObjectMaterial();
+	void loadCityTexture();
 
 
-	void CreateMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state);
-	void TextureLoad(std::wstring fileName,std::wstring _PathAndUntilfileName,TextureState state);
+	void createMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state);
+	void textureLoad(std::wstring fileName,std::wstring _PathAndUntilfileName,TextureState state);
 private:
 	bool mbLoadFinish;
 

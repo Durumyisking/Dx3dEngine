@@ -391,7 +391,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 	if (mesh->mMaterialIndex >= 0)
 	{
-		// TextureLoad
+		// textureLoad
 		aiMaterial* aiMater = scene->mMaterials[mesh->mMaterialIndex];
 		std::vector<Model::TextureInfo> textureBuff = {};
 		for (int type = static_cast<int>(aiTextureType_NONE); type < static_cast<int>(aiTextureType_UNKNOWN); ++type)
