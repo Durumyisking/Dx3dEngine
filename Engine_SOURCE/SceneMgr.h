@@ -52,7 +52,6 @@ public:
 		return dynamic_cast<T*>(mScenes[(static_cast<UINT>(type))]);
 	}
 
-
 	GETSET(Scene*, mActiveScene, ActiveScene)
 private:
 	Scene* mScenes[(static_cast<UINT>(eSceneType::End))];	// ¸ðµç ¾À ¸ñ·Ï

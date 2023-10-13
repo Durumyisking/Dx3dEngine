@@ -71,7 +71,7 @@
 #include "DieCircleUIScript.h"
 #include "AudioListener.h"
 #include "AudioSource.h"
-#include "MarioBlock.h"
+#include "Building.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -106,7 +106,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ·Îµå Å×½ºÆ® ·Îµå½Ã¿¡ ¹Ýº¹ÇØ¼­ ¸ó½ºÅÍ Á¤ÀÇ ¹æÁö
+	//TestScene ë¡œë“œ í…ŒìŠ¤íŠ¸ ë¡œë“œì‹œì— ë°˜ë³µí•´ì„œ ëª¬ìŠ¤í„° ì •ì˜ ë°©ì§€
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		{
@@ -124,6 +124,7 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Objects);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
@@ -150,19 +151,18 @@ void ScenePlay::Initialize()
 		
 		//mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
 	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-
-	}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
-	}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(5.f, 10.f, 0.f));
+	//}	
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	//}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
+	//}
 
 
 	//{
@@ -200,8 +200,8 @@ void ScenePlay::Initialize()
 
 
 	{
-		//MarioBlock* block = object::Instantiate<MarioBlock>(eLayerType::Objects, this);
-		//block->SetPos(Vector3(40.f, -10.f, 0.f));
+		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+		block->SetPos(Vector3(40.f, -10.f, 0.f));
 	}
 
 	CreatePlayerUI();

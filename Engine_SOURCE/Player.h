@@ -52,6 +52,7 @@ public:
 public:
 	virtual void OnCollisionEnter(GameObj* gameObject) override;
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
+	virtual void OnTriggerPersist(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
 	void KeyCheck();
 	virtual void BoneInitialize();

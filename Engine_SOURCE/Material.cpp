@@ -300,6 +300,10 @@ void Material::Bind()
 	{
 		mMaterialConstantBuffer.bRoughness = 1;
 	}
+	if (mTexture[static_cast<UINT>((UINT)eTextureSlot::Emissive)])
+	{
+		mMaterialConstantBuffer.bEmissive = 1;
+	}
 
 	ConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::Material];
 	pCB->SetData(&mMaterialConstantBuffer);

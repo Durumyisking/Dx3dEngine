@@ -283,7 +283,7 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 	Monster::OnTriggerEnter(gameObject);
 }
 
-void Goomba::OnTriggerStay(GameObj* gameObject)
+void Goomba::OnTriggerPersist(GameObj* gameObject)
 {
 }
 
