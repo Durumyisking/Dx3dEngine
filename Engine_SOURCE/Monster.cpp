@@ -90,7 +90,7 @@ void Monster::OnTriggerEnter(GameObj* gameObject)
 	}
 }
 
-void Monster::OnTriggerStay(GameObj* gameObject)
+void Monster::OnTriggerPersist(GameObj* gameObject)
 {
 }
 

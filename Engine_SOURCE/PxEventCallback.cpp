@@ -115,6 +115,28 @@ void PxEventCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
             }
         }
 
+        if (pair.status & PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
+        {
+            if (pair.triggerActor && pair.otherActor)
+            {
+                GameObj* trigger = static_cast<GameObj*>(pair.triggerActor->userData);
+                GameObj* other = static_cast<GameObj*>(pair.otherActor->userData);
+
+                if (trigger && other)
+                {
+                    PhysXCollider* triggerColl = trigger->GetComponent<PhysXCollider>();
+                    PhysXCollider* otherColl = other->GetComponent<PhysXCollider>();
+
+                    if (triggerColl)
+                        triggerColl->OnTriggerPersist(otherColl);
+
+                    // 어차피 쌍방으로 trigger 호출하기때문에 둘 다 해줄필요 없어보임
+                    //if (otherColl)
+                    //    otherColl->OnTriggerExit(triggerColl);
+                }
+            }
+        }
+
         if (pair.status & PxPairFlag::eNOTIFY_TOUCH_LOST)
         {
             if (pair.triggerActor && pair.otherActor)

@@ -20,6 +20,7 @@ public:
 private:
 	void loadGoomba(std::wstring shaderName);
 	void loadMario(std::wstring shaderName);
+	void loadBuildings(std::wstring shaderName);
 
 private:
 	bool mbLoadFinish;

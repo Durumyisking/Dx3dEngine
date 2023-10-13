@@ -96,19 +96,19 @@ void ResourceMgr::LoadModel_Mario(bool* bfinish)
 
 void ResourceMgr::LoadModel_Monster(bool* bfinish)
 {
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/goomba", L"goomba");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/goomba", L"goomba");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Packun", L"Packun");
 
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/SmokeParticle", L"CloudParticle");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
 	*bfinish = true;
 }
 
 
-void ResourceMgr::LoadModel_CityWorld(bool* bfinish)
-{
-	//GETSINGLE(FileMgr)->StageFolderLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorld");
-
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
-
-	*bfinish = true;
-}
+//void ResourceMgr::LoadModel_CityWorld(bool* bfinish)
+//{
+//	//GETSINGLE(FileMgr)->StageFolderLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorld");
+//
+//
+//	*bfinish = true;
+//}

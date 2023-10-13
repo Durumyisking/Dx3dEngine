@@ -20,7 +20,7 @@ float4 main(VSOut vsIn) : SV_Target
     float4  albedo = float4(0.25f, 0.25f, 0.25f, 1.f);
     float3  normal = vsIn.WorldNormal;
     float   metallic = 0.f; 
-    float   roughness = 0.f;
+    float   roughness = 0.99f;
     float3  emission = (float3) 0.f;
     float3  A0 = (float3) 1.f;
 
@@ -42,36 +42,11 @@ float4 main(VSOut vsIn) : SV_Target
         float3 lightVec = lightAttributes[i].type == LIGHT_DIRECTIONAL 
         ? -lightAttributes[i].direction.xyz
         : lightAttributes[i].position.xyz - vsIn.WorldPos;
-        
-        
-        float lightDist = length(lightVec);
-
-        if (lightAttributes[i].type != LIGHT_DIRECTIONAL
-             && lightDist > lightAttributes[i].fallOffEnd)
-        {
-            continue;
-        }
-        
-        lightVec /= lightDist;
-        float ndotl = max(dot(lightVec, normal), 0.0f);
-        
-        // Spot light
-        float spotFator = lightAttributes[i].type == LIGHT_SPOT
-                      ? pow(max(-dot(lightVec, lightAttributes[i].direction.xyz), 0.0f), lightAttributes[i].spotPower)
-                      : 1.0f;
-        
-        // Distance attenuation
-        float att = lightAttributes[i].type == LIGHT_DIRECTIONAL
-        ? 1.0f
-        : saturate((lightAttributes[i].fallOffEnd - lightDist) / (lightAttributes[i].fallOffEnd - lightAttributes[i].fallOffStart)) * ndotl;
-
-        
-        float3 radiance = lightAttributes[i].color.diffuse.xyz * spotFator * att; // * shadowFactor;
-
-        
+          
+        float3 radiance = LightRadiance(lightAttributes[i], vsIn.WorldPos, normal);
+                
         directLighting += PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness) * radiance;
             
-        
     }
 
     

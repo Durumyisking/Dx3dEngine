@@ -22,7 +22,7 @@ void AsyncLoad::Update()
 	if (mbTextureLoadFinish &&
 		mbMarioLoadFinish &&
 		mbMonsterLoadFinish &&
-		mbMapLoadFinish &&
+		//mbMapLoadFinish &&
 		mbSoundLoad)
 	{
 		mbLoadFinish = true;
@@ -35,17 +35,20 @@ void AsyncLoad::LoadModels()
 	{
 		GETSINGLE(ResourceMgr)->LoadModel_Mario(&mbMarioLoadFinish);
 	});
+	thread1.detach();
+	
 	std::thread thread2([this]()
 	{
 		GETSINGLE(ResourceMgr)->LoadModel_Monster(&mbMonsterLoadFinish);
 	});
-	std::thread thread3([this]()
-	{
-		GETSINGLE(ResourceMgr)->LoadModel_CityWorld(&mbMapLoadFinish);
-	});
-	thread1.detach();
 	thread2.detach();
-	thread3.detach();
+
+	// 쓰레드를 너무 많이 돌리면 제대로 동작을 안하나봄? 똑같은 코드 LoadModel_Monster 여기서 돌리면 잘 됨
+	//std::thread thread3([this]()
+	//{
+	//	GETSINGLE(ResourceMgr)->LoadModel_CityWorld(&mbMapLoadFinish);
+	//});
+	//thread3.detach();
 
 }
 
@@ -220,53 +223,10 @@ void AsyncLoad::LoadMaterials()
 
 #pragma endregion
 
-#pragma region GlassBuilding Material
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"GlassBuildingWall00_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"GlassBuildingWall00_emm", eTextureSlot::Emissive);
-		material->SetTextureByKey(L"GlassBuildingWall00_mtl", eTextureSlot::Metallic);
-		material->SetTextureByKey(L"GlassBuildingWall00_nrm", eTextureSlot::Normal);
-		material->SetTextureByKey(L"GlassBuildingWall00_rgh", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"GlassBuildingWallMaterial", material);
-	}
-	
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"RoofConcrete00_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"RoofConcrete00_nrm", eTextureSlot::Normal);
-		material->SetTextureByKey(L"RoofConcrete00_rgh", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete00Material", material);
-	}
-
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"RoofConcrete01_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"RoofConcrete01_nrm", eTextureSlot::Normal);
-		material->SetTextureByKey(L"RoofConcrete01_rgh", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete01Material", material);
-	}
-
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"WallGlassPaintedSteel00_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"WallGlassPaintedSteel00_nrm", eTextureSlot::Normal);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"WallGlassPaintedSteelMaterial", material);
-	}
-
-
-#pragma endregion
 
 	loadGoomba(L"DeferredShader");
 	loadMario( L"DeferredShader");
+	loadBuildings(L"DeferredShader");
 
 	renderer::CreateUIMaterial();
 }
@@ -441,4 +401,49 @@ void AsyncLoad::loadMario(std::wstring shaderName)
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"marioHairMaterial", material);
 	}
 #pragma endregion
+}
+
+void AsyncLoad::loadBuildings(std::wstring shaderName)
+{
+
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"GlassBuildingWall00_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"GlassBuildingWall00_emm", eTextureSlot::Emissive);
+		material->SetTextureByKey(L"GlassBuildingWall00_mtl", eTextureSlot::Metallic);
+		material->SetTextureByKey(L"GlassBuildingWall00_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"GlassBuildingWall00_rgh", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"GlassBuildingWallMaterial", material);
+	}
+
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"RoofConcrete00_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"RoofConcrete00_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"RoofConcrete00_rgh", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete00Material", material);
+	}
+
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"RoofConcrete01_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"RoofConcrete01_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"RoofConcrete01_rgh", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete01Material", material);
+	}
+
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"WallGlassPaintedSteel00_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"WallGlassPaintedSteel00_nrm", eTextureSlot::Normal);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"WallGlassPaintedSteelMaterial", material);
+	}
 }

@@ -284,6 +284,19 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			}
 		}
 	}
+	if (eLayerType::Objects == gameObject->GetLayerType())
+	{
+		ReorganizePosition(AXIS::X, eLayerType::Objects);
+	}
+
+}
+
+void Player::OnTriggerPersist(GameObj* gameObject)
+{
+	if (eLayerType::Objects == gameObject->GetLayerType())
+	{
+		ReorganizePosition(AXIS::X, eLayerType::Objects);
+	}
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)
