@@ -113,10 +113,10 @@ void PhysXCollider::OnTriggerEnter(PhysXCollider* otherCollider)
 	if (otherCollider)
 		GetOwner()->OnTriggerEnter(otherCollider->GetOwner());
 }
-void PhysXCollider::OnTriggerStay(PhysXCollider* otherCollider)
+void PhysXCollider::OnTriggerPersist(PhysXCollider* otherCollider)
 {
 	if (otherCollider)
-		GetOwner()->OnTriggerStay(otherCollider->GetOwner());
+		GetOwner()->OnTriggerPersist(otherCollider->GetOwner());
 }
 void PhysXCollider::OnTriggerExit(PhysXCollider* otherCollider)
 {

@@ -43,7 +43,7 @@ void CaptureObj::Divide()
 	mPlayer->SetMarioCap(mCap);
 	mPlayer->Active();
 	mPlayer->UnCapturingProcess();
-	mCap->Pause();
+	
 
 	// ¸¶¸®¿ÀÀÇ ¸ðÀÚ¸¦ ¾º¿öÁÜ
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");

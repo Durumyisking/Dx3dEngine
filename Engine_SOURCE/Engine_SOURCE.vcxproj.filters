@@ -417,13 +417,11 @@
     <ClCompile Include="DieUIEffectScript.cpp" />
     <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
-
     <ClCompile Include="TitleBGMScript.cpp" />
-    <ClCompile Include="MarioBlock.cpp" />
+    <ClCompile Include="Building.cpp" />
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
-
     <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
   </ItemGroup>
@@ -875,10 +873,8 @@
     <ClInclude Include="DieUIEffectScript.h" />
     <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="MilestoneScript.h" />
-
     <ClInclude Include="TitleBGMScript.h" />
-    <ClInclude Include="MarioBlock.h" />
-
+    <ClInclude Include="Building.h" />
     <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="TitleBGMScript.h" />
   </ItemGroup>

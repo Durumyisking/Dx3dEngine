@@ -908,6 +908,8 @@ namespace renderer
 			lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
 			lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
 			lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
+			lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"EmissiveTargetTexture");
+			lightDirMaterial->SetTexture(eTextureSlot::EmissiveTarget, lightDirTex);
 			lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"ShadowMapTexture");
 			lightDirMaterial->SetTexture(eTextureSlot::ShadowMap, lightDirTex);
 
@@ -930,6 +932,11 @@ namespace renderer
 			lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
 			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
 			lightPointMaterial->SetTexture(eTextureSlot::MRDTarget, lightPointTex);
+			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"EmissiveTargetTexture");
+			lightPointMaterial->SetTexture(eTextureSlot::EmissiveTarget, lightPointTex);
+			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"ShadowMapTexture");
+			lightPointMaterial->SetTexture(eTextureSlot::ShadowMap, lightPointTex);
+
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
 		}
 #pragma endregion
@@ -944,12 +951,12 @@ namespace renderer
 
 			Texture* mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 			mergeMaterial->SetTexture(eTextureSlot::PositionTarget, mergeTex);
-			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
-			mergeMaterial->SetTexture(eTextureSlot::AlbedoTarget, mergeTex);
+			//mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
+			//mergeMaterial->SetTexture(eTextureSlot::AlbedoTarget, mergeTex);
 			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DiffuseLightTargetTexture");
 			mergeMaterial->SetTexture(eTextureSlot::DiffuseLightTarget, mergeTex);
-			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularLightTargetTexture");
-			mergeMaterial->SetTexture(eTextureSlot::SpecularLightTarget, mergeTex);
+			//mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularLightTargetTexture");
+			//mergeMaterial->SetTexture(eTextureSlot::SpecularLightTarget, mergeTex);
 
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"MergeMRT_Material", mergeMaterial);
 		}
@@ -1000,16 +1007,19 @@ namespace renderer
 			Texture* albedo = new Texture();
 			Texture* normal = new Texture();
 			Texture* mrd = new Texture();
+			Texture* emissive = new Texture();
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"PositionTargetTexture", pos);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"AlbedoTargetTexture", albedo);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"NormalTargetTexture", normal);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MRDTargetTexture", mrd);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"EmissiveTargetTexture", emissive);
 			vecRTTex.emplace_back(pos);
 			vecRTTex.emplace_back(albedo);
 			vecRTTex.emplace_back(normal);
 			vecRTTex.emplace_back(mrd);
-		
+			vecRTTex.emplace_back(emissive);
+
 			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 			vecRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
@@ -1017,6 +1027,8 @@ namespace renderer
 			vecRTTex[2]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 			vecRTTex[3]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			vecRTTex[4]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			Texture* dsTex = nullptr;
@@ -1029,18 +1041,18 @@ namespace renderer
 		// Light MultiRenderTargets
 		{
 			Texture* diffuse = new Texture();
-			Texture* specular = new Texture();
+			//Texture* specular = new Texture();
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"DiffuseLightTargetTexture", diffuse);
-			GETSINGLE(ResourceMgr)->Insert<Texture>(L"SpecularLightTargetTexture", specular);
+			//GETSINGLE(ResourceMgr)->Insert<Texture>(L"SpecularLightTargetTexture", specular);
 
 			vecRTTex.emplace_back(diffuse);
-			vecRTTex.emplace_back(specular);
+			//vecRTTex.emplace_back(specular);
 
 			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-			vecRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
-				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			//vecRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+			//	, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			renderTargets[static_cast<UINT>(eRenderTargetType::Light)] = new MultiRenderTarget();
 			renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->Create(vecRTTex, nullptr);
