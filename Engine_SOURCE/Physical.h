@@ -129,6 +129,10 @@ public:
 
     void AddActorToPxScene();
     void RemoveActorToPxScene();
+    void DynamicActorSleep();
+    void DynamicActorWakeup();
+    void KinematicActorSleep();
+    void KinematicActorWakeup();
     void ShapesPause();
 
     void SetGeometrySize(const Vector3& newSize);

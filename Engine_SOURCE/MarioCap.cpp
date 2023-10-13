@@ -80,7 +80,7 @@ void MarioCap::Initialize()
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.25f, 0.125f, 0.5f));
 	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.25f, 0.125f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
-	physical->RemoveActorToPxScene();
+	physical->KinematicActorSleep();
 
 	// Rigidbody
 	PhysXRigidBody* rigidbody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
@@ -360,7 +360,7 @@ void MarioCap::FlyEnd()
 		}
 
 		SetCapState(eCapState::Return);
-		GetPhysical()->RemoveActorToPxScene();
+		GetPhysical()->KinematicActorSleep();
 		Pause();
 	};
 

@@ -649,7 +649,7 @@ void Player::SetMarioCap(MarioCap* cap)
 
 void Player::CapturingProcess()
 {
-	GetPhysical()->RemoveActorToPxScene();
+	GetPhysical()->KinematicActorSleep();
 	mRigidBody->SetVelocity(Vector3::Zero);
 	mRigidBody->RemoveGravity();
 
@@ -657,7 +657,7 @@ void Player::CapturingProcess()
 
 void Player::UnCapturingProcess()
 {
-	GetPhysical()->AddActorToPxScene();
+	GetPhysical()->KinematicActorWakeup();
 	//mRigidBody->SetVelocity(Vector3::Zero);
 	mRigidBody->ApplyGravity();
 }

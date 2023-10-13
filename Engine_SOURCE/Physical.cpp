@@ -206,6 +206,28 @@ void Physical::RemoveActorToPxScene()
 	mbSceneIncludActor = false;
 }
 
+void Physical::DynamicActorSleep()
+{
+	// 한 simulate sleep 합니다.
+	mActor->is<PxRigidDynamic>()->putToSleep();
+}
+
+void Physical::DynamicActorWakeup()
+{
+	// 다음 simulate때 wakeup 합니다.
+	mActor->is<PxRigidDynamic>()->wakeUp();
+}
+
+void Physical::KinematicActorSleep()
+{
+	mActor->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, true);
+}
+
+void Physical::KinematicActorWakeup()
+{
+	mActor->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, false);
+}
+
 void Physical::ShapesPause()
 {
 	mMainShape->acquireReference();
