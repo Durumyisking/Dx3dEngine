@@ -134,6 +134,12 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)Particle3DPS.hlsl">
       <Filter>Particle</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DecalVS.hlsl">
+      <Filter>VS</Filter>
+    </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DecalPS.hlsl">
+      <Filter>PS</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Blur.hlsli">

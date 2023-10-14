@@ -115,6 +115,7 @@ enum class eRenderingMode
 	Opaque, // 불투명
 	Cutout, // 일부만 투명
 	Transparent,
+	Decal,
 	PostProcess,
 
 	None,

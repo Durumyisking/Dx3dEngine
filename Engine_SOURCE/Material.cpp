@@ -302,6 +302,7 @@ void Material::Bind()
 	}
 
 	ConstantBuffer* pCB = renderer::constantBuffers[(UINT)eCBType::Material];
+
 	pCB->SetData(&mMaterialConstantBuffer);
 	pCB->Bind(eShaderStage::VS);
 	pCB->Bind(eShaderStage::GS);

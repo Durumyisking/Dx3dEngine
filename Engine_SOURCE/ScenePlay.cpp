@@ -77,6 +77,7 @@
 #include "Packun.h"
 
 #include "PostProcess.h"
+#include "DecalCube.h"
 
 
 ScenePlay::ScenePlay()
@@ -162,6 +163,9 @@ void ScenePlay::Initialize()
 	{
 		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
+	}
+	{
+		DecalCube* decal = object::Instantiate<DecalCube>(eLayerType::FX, this);
 	}
 
 

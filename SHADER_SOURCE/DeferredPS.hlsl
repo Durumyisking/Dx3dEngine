@@ -13,7 +13,8 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float2 UV : TEXCOORD;
-    float3 WorldPos : POSITION;
+    float3 WorldPos : POSITION0;
+    float4 WorldViewPos : POSITION1;
     
     float3 WorldTangent : TANGENT;
     float3 WorldNormal : NORMAL;
@@ -25,6 +26,7 @@ struct PSOut
     float4 Albedo : SV_Target1;
     float4 Normal : SV_Target2;
     float4 MRD    : SV_Target3;
+    float DepthColor : SV_Target4;
 };
 
 
@@ -36,6 +38,7 @@ PSOut main(VSOut vsIn) : SV_TARGET
     float3 normal = vsIn.WorldNormal;
     float metallic = cbMetallic;
     float roughness = cbRoughness;
+    float depth = vsIn.WorldViewPos.z / 1000.f;
     
     float pixelToCam = distance(cameraWorldPos.xyz, vsIn.WorldPos);
 
@@ -53,6 +56,7 @@ PSOut main(VSOut vsIn) : SV_TARGET
     vsOutColor.MRD.g = roughness;
     vsOutColor.MRD.b = 0.f;
     vsOutColor.MRD.w = 1.f;//vsIn.UV.y;
+    vsOutColor.DepthColor.r = depth;
     
     return vsOutColor;
 }

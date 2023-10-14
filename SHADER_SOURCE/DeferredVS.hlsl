@@ -15,7 +15,8 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float2 UV : TEXCOORD;
-    float3 WorldPos : POSITION;
+    float3 WorldPos : POSITION0;
+    float4 WorldViewPos: POSITION1;
     
     float3 WorldTangent : TANGENT;
     float3 WorldNormal : NORMAL;
@@ -53,6 +54,7 @@ VSOut main(VSIn vsIn)
 
     
     vsOut.WorldPos = worldPosition.xyz;
+    vsOut.WorldViewPos = viewPosition;
     vsOut.WorldNormal = Normal.xyz;
     vsOut.WorldTangent = Tangent.xyz;
     

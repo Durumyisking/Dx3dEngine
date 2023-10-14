@@ -239,6 +239,7 @@ private:
 	bool mbDestroy;
 
 	bool mbBlockRendering;
+	UINT mDepthRecorde;
 
 public:
 	void SetPos(Vector3 value);

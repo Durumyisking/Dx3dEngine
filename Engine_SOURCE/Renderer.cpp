@@ -265,6 +265,13 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DecalShader");
+			GetDevice()->CreateInputLayout(arrLayout, 1
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
 #pragma endregion
 
 #pragma region SamplerState
@@ -587,6 +594,7 @@ namespace renderer
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"DeferredVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"DeferredPS.hlsl", "main");
+			shader->SetBSState(eBlendStateType::Default);
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"DeferredShader", shader);
 		}
 #pragma endregion
@@ -708,6 +716,18 @@ namespace renderer
 			shader->Create(eShaderStage::PS, L"LensFlarePS.hlsl", "main");
 			shader->SetDSState(eDepthStencilType::NoWrite);
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"LensFlareShader", shader);
+		}
+#pragma endregion
+#pragma region DecalShader
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"DecalVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"DecalPS.hlsl", "main");
+
+			shader->SetRSState(eRasterizerType::SolidNone);
+			shader->SetDSState(eDepthStencilType::NoWrite);
+			shader->SetTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"DecalShader", shader);
 		}
 #pragma endregion
 	}
@@ -968,6 +988,7 @@ namespace renderer
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"ShadowMaterial", material);
 		}
 #pragma endregion
+
 #pragma region LoadingImgMaterial
 		Texture* loadingImgTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"loading");
 		Shader* uiSpriteShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"UISpriteShader");
@@ -1004,15 +1025,20 @@ namespace renderer
 			Texture* albedo = new Texture();
 			Texture* normal = new Texture();
 			Texture* mrd = new Texture();
+			Texture* depth = new Texture();
+
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"PositionTargetTexture", pos);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"AlbedoTargetTexture", albedo);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"NormalTargetTexture", normal);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MRDTargetTexture", mrd);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"DepthMapTexture", depth);
+
 			vecRTTex.emplace_back(pos);
 			vecRTTex.emplace_back(albedo);
 			vecRTTex.emplace_back(normal);
 			vecRTTex.emplace_back(mrd);
+			vecRTTex.emplace_back(depth);
 		
 			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
@@ -1021,6 +1047,8 @@ namespace renderer
 			vecRTTex[2]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 			vecRTTex[3]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			vecRTTex[4]->Create(width, height, DXGI_FORMAT_R32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			Texture* dsTex = nullptr;
@@ -1054,16 +1082,10 @@ namespace renderer
 		{	
 			Texture* shadowMap = new Texture();
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"ShadowMapTexture", shadowMap);
-			Texture* depthMap = new Texture();
-			GETSINGLE(ResourceMgr)->Insert<Texture>(L"DepthMapTexture", depthMap);
 
 			vecRTTex.emplace_back(shadowMap);
 			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-			vecRTTex.emplace_back(depthMap);
-			vecRTTex[1]->Create(width, height, DXGI_FORMAT_R32_FLOAT
-				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-
 
 			Texture* depthStencilTex = new Texture();
 			depthStencilTex->Create(width, height, DXGI_FORMAT_D32_FLOAT
@@ -1073,6 +1095,7 @@ namespace renderer
 			renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)] = new MultiRenderTarget();
 			renderTargets[static_cast<UINT>(eRenderTargetType::Shadow)]->Create(vecRTTex, depthStencilTex);
 		}
+		vecRTTex.clear();
 	}
 
 	void ClearRenderTargets()

@@ -91,6 +91,7 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindflag)
 		ZeroMemory(&DSVdesc, sizeof(DSVdesc));
 		DSVdesc.Format = DXGI_FORMAT_D32_FLOAT;
 		DSVdesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		DSVdesc.Flags = 0;
 		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), &DSVdesc, mDSV.GetAddressOf()))
 		{
 			return false;

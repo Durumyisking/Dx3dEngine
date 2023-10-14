@@ -29,6 +29,7 @@ GameObj::GameObj()
 	, mScripts{}
 	, mbDestroy(true)
 	, mbBlockRendering(false)
+	, mDepthRecorde(1)
 {
 	mComponents.resize(static_cast<UINT>(eComponentType::End));
 	this->AddComponent<Transform>(eComponentType::Transform);

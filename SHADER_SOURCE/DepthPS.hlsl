@@ -9,13 +9,11 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float4 ProjPosition : POSITION;
-    float4 WVP : POSITION1;
 };
 
 struct PSOut
 {
     float4 depthColor : SV_Target0;
-    float4 depthMap : SV_Target1;
 };
 
 PSOut main(VSOut vsIn) : SV_TARGET
@@ -29,8 +27,6 @@ PSOut main(VSOut vsIn) : SV_TARGET
     float depth = vsIn.ProjPosition.z / vsIn.ProjPosition.w; // z값이 클수록 더 큰 값이 나온다
     //output = (depth.xxx, 1.0f);
     psOut.depthColor.r = depth;
-    // decal
-    psOut.depthMap.r = vsIn.WVP.z / 1000.f;
     
     // vsm 쓸때 풀기
     //psOut.depthColor.g = depth * depth;

@@ -116,6 +116,7 @@ void Camera::Render()
 	{
 		deferredRenderingOperate();
 		renderMergedOutput();
+		renderDecal();
 	}
 
 	renderPostProcess();
@@ -314,6 +315,7 @@ void Camera::sortGameObjects()
 	mOpaqueGameObjects.clear();
 	mCutoutGameObjects.clear();
 	mTransparentGameObjects.clear();
+	mDecalGameObjects.clear();
 	mPostProcessGameObjects.clear();
 
 	Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
@@ -418,6 +420,17 @@ void Camera::renderPostProcess()
 	}
 }
 
+void Camera::renderDecal()
+{
+	for (GameObj* obj : mDecalGameObjects)
+	{
+		if (obj == nullptr)
+			continue;
+
+		obj->Render();
+	}
+}
+
 
 void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 {
@@ -455,6 +468,9 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 		break;
 	case eRenderingMode::PostProcess:
 		mPostProcessGameObjects.push_back(obj);
+		break;
+	case eRenderingMode::Decal:
+		mDecalGameObjects.push_back(obj);
 		break;
 	default:
 		break;

@@ -67,7 +67,7 @@ public:
 	void SetNear(float value) { mNear = value; }
 
 	bool Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance = 100.f);
-
+	const float GetFar() const { return mFar; }
 
 private:
 	void sortGameObjects();
@@ -77,6 +77,7 @@ private:
 	void renderCutout();
 	void renderTransparent();
 	void renderPostProcess();
+	void renderDecal();
 		
 	void pushGameObjectToRenderingModes(GameObj* obj);
 	bool renderPassCheck(GameObj* obj);
@@ -106,6 +107,7 @@ private:
 	std::vector<GameObj*> mOpaqueGameObjects;
 	std::vector<GameObj*> mCutoutGameObjects;
 	std::vector<GameObj*> mTransparentGameObjects;
+	std::vector<GameObj*> mDecalGameObjects;
 	std::vector<GameObj*> mPostProcessGameObjects;
 
 	PxRaycastHit    mRaycastHit;
