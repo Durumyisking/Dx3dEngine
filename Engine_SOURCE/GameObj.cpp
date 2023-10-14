@@ -539,16 +539,8 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 			case enums::AXIS::X:
 				vResult.y = 0.f;
 				vResult.z = 0.f;
-				if (vResult.x < 0.f)
-				{
-					GetPhysXRigidBody()->SetVelocity(AXIS::X, Vector3(0.f, 0.f, 0.f));
-					vResult *= -1.f;
-					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
-				}
-				else
-				{
-					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
-				}
+				GetPhysXRigidBody()->SetVelocity(AXIS::X, Vector3(0.f, 0.f, 0.f));
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::Y:
 				vResult.x = 0.f;
@@ -576,6 +568,7 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 			case enums::AXIS::XZ:
 				vResult.y = 0.f;
 				GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::YZ:
 				vResult.x = 0.f;
