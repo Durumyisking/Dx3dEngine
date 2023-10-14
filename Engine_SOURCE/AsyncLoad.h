@@ -36,7 +36,7 @@ private:
 
 
 	void CreateMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state);
-	void TextureLoad(std::wstring fileName,std::wstring _PathAndUntilfileName,TextureState state);
+	void TextureLoad(std::wstring fileName, std::wstring path, TextureState state);
 private:
 	bool mbLoadFinish;
 

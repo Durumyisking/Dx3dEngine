@@ -127,7 +127,7 @@ public:
 
 	void LoadModel_Mario(bool* bfinish);
 	void LoadModel_Monster(bool* bfinish);
-	//void LoadModel_CityWorld(bool* bfinish);
+	void LoadModel_CityWorld(bool* bfinish);
 
 private:
 	std::map<std::wstring, Resource* > mResources;

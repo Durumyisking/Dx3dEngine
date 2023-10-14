@@ -40,6 +40,7 @@ void AsyncLoad::LoadModels()
 	std::thread thread2([this]()
 	{
 		GETSINGLE(ResourceMgr)->LoadModel_Monster(&mbMonsterLoadFinish);
+	    GETSINGLE(ResourceMgr)->LoadModel_CityWorld(&mbMapLoadFinish);
 	});
 	thread2.detach();
 
@@ -152,7 +153,7 @@ void AsyncLoad::LoadTextures()
 
 	renderer::CreateUITexture();
 
-	//LoadCityTexture();
+	LoadCityTexture();
 
 	LoadMaterials();
 
@@ -209,7 +210,7 @@ void AsyncLoad::LoadMaterials()
 	loadGoomba(L"DeferredShader");
 	loadMario( L"DeferredShader");
 
-	//LoadCityObjectMaterial();
+	LoadCityObjectMaterial();
 
 	renderer::CreateUIMaterial();
 }
@@ -237,6 +238,7 @@ void AsyncLoad::LoadCityObjectMaterial()
 		CreateMaterial(L"DrainageCover00", L"DeferredShader", L"DrainageCover00Material", TextureState::AlNrRg);
 		CreateMaterial(L"Font_BaseRoadSign00", L"DeferredShader", L"Font_BaseRoadSign00Material", TextureState::Al);
 		CreateMaterial(L"Font_BaseRoadSign01", L"DeferredShader", L"Font_BaseRoadSign01Material", TextureState::Al);
+		CreateMaterial(L"GrassGround00", L"DeferredShader", L"GrassGround00Material", TextureState::Al);
 		CreateMaterial(L"GrassFlowerSet00", L"DeferredShader", L"GrassFlowerSet00Material", TextureState::AlNrRg);
 		CreateMaterial(L"GroundCityLogo00", L"DeferredShader", L"GroundCityLogo00Material", TextureState::AlMtNrRg);
 		CreateMaterial(L"GroundCityLogo02", L"DeferredShader", L"GroundCityLogo02Material", TextureState::AlNrRg);
@@ -284,6 +286,7 @@ void AsyncLoad::LoadCityTexture()
 	TextureLoad(L"DrainageCover00", L"CityGround/Image", TextureState::AlNrRg);
 	TextureLoad(L"Font_BaseRoadSign00", L"CityGround/Image", TextureState::Al);
 	TextureLoad(L"Font_BaseRoadSign01", L"CityGround/Image", TextureState::Al);
+	TextureLoad(L"GrassGround00", L"CityGround/Image", TextureState::Al);
 	TextureLoad(L"GrassFlowerSet00", L"CityGround/Image", TextureState::AlNrRg);
 	TextureLoad(L"GroundCityLogo00", L"CityGround/Image", TextureState::AlMtNrRg);
 	TextureLoad(L"GroundCityLogo02", L"CityGround/Image", TextureState::AlNrRg);
@@ -600,6 +603,8 @@ void AsyncLoad::TextureLoad(std::wstring fileName, std::wstring path, TextureSta
 		break;
 	default:
 		break;
+	}
+}
 
   void AsyncLoad::loadBuildings(std::wstring shaderName)
 {

@@ -109,8 +109,8 @@ void ResourceMgr::LoadModel_CityWorld(bool* bfinish)
 {
 	//GETSINGLE(FileMgr)->StageFolderLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorld");
 
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityGround", L"CityGround");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityGround", L"CityGround");
 
 	*bfinish = true;
 }

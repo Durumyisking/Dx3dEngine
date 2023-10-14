@@ -2,12 +2,12 @@
 #include "GameObj.h"
 
 class MeshRenderer;
-class Building : public GameObj
+class CityGround : public GameObj
 {
 
 public:
-	Building();
-	virtual ~Building();
+	CityGround();
+	virtual ~CityGround();
 
 	virtual void Initialize() override;
 	virtual void Update() override;
