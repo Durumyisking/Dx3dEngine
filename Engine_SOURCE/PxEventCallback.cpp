@@ -91,6 +91,10 @@ void PxEventCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 {
     for (PxU32 i = 0; i < count; i++)
     {
+        if (pairs[i].flags & (PxTriggerPairFlag::eREMOVED_SHAPE_TRIGGER |
+            PxTriggerPairFlag::eREMOVED_SHAPE_OTHER))
+            continue;
+
         const PxTriggerPair& pair = pairs[i];
 
         if (pair.status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
