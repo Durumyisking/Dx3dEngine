@@ -279,6 +279,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="ImageUI.h" />
+    <ClInclude Include="InputGeom.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LifeUI.h" />
@@ -301,6 +302,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MonsterStateScript.h" />
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="NavigationMgr.h" />
+    <ClInclude Include="NaviMesh.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Packun.h" />
     <ClInclude Include="PackunPostionBall.h" />
@@ -352,7 +354,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="SkySphere.h" />
     <ClInclude Include="SkySphereRenderer.h" />
-    <ClInclude Include="SoloNavMesh.h" />
+    <ClInclude Include="SoloNaviMesh.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="StringFunctions.h" />
@@ -434,6 +436,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="ImageUI.cpp" />
+    <ClCompile Include="InputGeom.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LifeUI.cpp" />
@@ -455,6 +458,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MonsterStateScript.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="NavigationMgr.cpp" />
+    <ClCompile Include="NaviMesh.cpp" />
     <ClCompile Include="Packun.cpp" />
     <ClCompile Include="PackunPostionBall.cpp" />
     <ClCompile Include="PackunStateScript.cpp" />
@@ -503,7 +507,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="SimpleMath.cpp" />
     <ClCompile Include="SkySphere.cpp" />
     <ClCompile Include="SkySphereRenderer.cpp" />
-    <ClCompile Include="SoloNavMesh.cpp" />
+    <ClCompile Include="SoloNaviMesh.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="StringFunctions.cpp" />

@@ -5,7 +5,7 @@
 #include "../External/Detour/include/DetourNavMesh.h"
 #include "../External/Detour/include/DetourNavMeshBuilder.h"
 
-#include "SoloNavMesh.h"
+#include "SoloNaviMesh.h"
 
 class Model;
 class NavigationMgr
@@ -16,11 +16,21 @@ public:
 	void Update();
 	void FixedUpdate();
 
-	void CreateNavigationMesh(Model* model);
+	void CreateNavigationMesh(const std::wstring& name);
 	void SetRecast(math::Vector3* verts, int vertCount, int* indices, int indexCount);
 	
 	void Navigation();
 
+	template<typename T>
+	T* GetNaviMesh(const std::wstring& name)
+	{
+		auto iter = mNavMeshes.find(name);
+		if (iter == mNavMeshes.end())
+			return nullptr;
+
+		return dynamic_cast<T*>(iter->second);
+	}
+
 private:
-	std::map<std::wstring, SoloNavMesh*> mSoloNavMeshs;
+	std::map<std::wstring, SoloNaviMesh*> mNavMeshes;
 };

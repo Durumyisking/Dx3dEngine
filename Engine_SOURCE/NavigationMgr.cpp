@@ -9,6 +9,15 @@ NavigationMgr::NavigationMgr()
 
 NavigationMgr::~NavigationMgr()
 {
+	for (auto navMesh : mNavMeshes)
+	{
+		navMesh.second->Clear();
+
+		delete navMesh.second;
+		navMesh.second = nullptr;
+	}
+
+	mNavMeshes.clear();
 }
 
 void NavigationMgr::Update()
@@ -19,19 +28,11 @@ void NavigationMgr::FixedUpdate()
 {
 }
 
-void NavigationMgr::CreateNavigationMesh(Model* model)
+void NavigationMgr::CreateNavigationMesh(const std::wstring& name)
 {
-	SoloNavMesh* soloMesh = new SoloNavMesh();
+	SoloNaviMesh* soloMesh = new SoloNaviMesh();
 
-	if (soloMesh->CreateByModel(model))
-	{
-		mSoloNavMeshs.insert(std::make_pair(model->GetName().c_str(), soloMesh));
-	}
-	else
-	{
-		delete soloMesh;
-		soloMesh = nullptr;
-	}
+	mNavMeshes.insert(std::make_pair(name, soloMesh));
 }
 
 void NavigationMgr::SetRecast(math::Vector3* verts, int vertCount, int* indices, int indexCount)

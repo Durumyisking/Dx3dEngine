@@ -424,7 +424,13 @@
     </ClCompile>
     <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
-    <ClCompile Include="SoloNavMesh.cpp">
+    <ClCompile Include="NaviMesh.cpp">
+      <Filter>Common\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="SoloNaviMesh.cpp">
+      <Filter>Common\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="InputGeom.cpp">
       <Filter>Common\Navigation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -880,7 +886,13 @@
     <ClInclude Include="MarioBlock.h" />
     <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="TitleBGMScript.h" />
-    <ClInclude Include="SoloNavMesh.h">
+    <ClInclude Include="NaviMesh.h">
+      <Filter>Common\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloNaviMesh.h">
+      <Filter>Common\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="InputGeom.h">
       <Filter>Common\Navigation</Filter>
     </ClInclude>
   </ItemGroup>
