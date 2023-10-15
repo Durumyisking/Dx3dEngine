@@ -103,8 +103,8 @@ void Player::Initialize()
 	mMeshRenderer->SetMaterialByKey(L"marioBodyMaterial", 0);
 
 
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.1f, 0.25f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.1f, 0.25f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	mRigidBody->SetFriction(Vector3(40.f, 0.f, 40.f));
 
@@ -267,14 +267,20 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			}
 		}
 
+		if (eLayerType::Objects == gameObject->GetLayerType())
+		{
+			if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
+			{
+				if (mRigidBody->IsOnAir())
+				{
+					mRigidBody->SetAirOff();
+					SetPlayerState(Player::ePlayerState::Idle);
+				}
+			}
+		}
+
 		if (eLayerType::Monster == gameObject->GetLayerType())
 		{
-			Vector3 monToPlayer = GetWorldPos() - gameObject->GetWorldPos();
-			monToPlayer.Normalize();
-			Vector3 monUpVector = gameObject->GetTransform()->WorldUp();
-
-			float cosTheta = monToPlayer.Dot(monUpVector);
-
 			if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.95f)
 			{
 				mScript->ResetJumpCount();
@@ -289,10 +295,23 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 
 void Player::OnTriggerPersist(GameObj* gameObject)
 {
+
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)
 {
+	if (eLayerType::Objects == gameObject->GetLayerType())
+	{
+		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
+		{
+			if (!mRigidBody->IsOnAir())
+			{
+				mRigidBody->SetAirOn();
+				mRigidBody->ApplyGravity();
+				SetPlayerState(Player::ePlayerState::Fall);
+			}
+		}
+	}
 }
 
 void Player::KeyCheck()

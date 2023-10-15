@@ -16,6 +16,8 @@ BlockBrick::~BlockBrick()
 
 void BlockBrick::Initialize()
 {
+	SetScale(Vector3(1.f, 1.f, 1.f));
+
 	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"BlockBrick");
@@ -26,7 +28,7 @@ void BlockBrick::Initialize()
 
 	mr->SetMaterialByKey(L"BrickBlockMaterial", 0);
 
-	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
+	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 0.5f, 0.5f, 0.5f });
