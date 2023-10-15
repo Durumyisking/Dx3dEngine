@@ -347,6 +347,57 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"MetalFlagPole00", L"DeferredShader", L"CItyWorldFlag_1Material", TextureState::AlNr);
 
 #pragma endregion
+
+#pragma region Coin Material
+	createMaterial(L"coinbody00", L"DeferredShader", L"CoinMaterial", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region BlockEmpty Material
+	createMaterial(L"BlockEmptyBody", L"DeferredShader", L"BlockEmptyMaterial", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region BlockQuestion Material
+	createMaterial(L"BlockQuestionBody", L"DeferredShader", L"BlockQuestionMaterial", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region BlockQuestion Material
+	createMaterial(L"BlockQuestionBody", L"DeferredShader", L"BlockTransparentMaterial", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region BlockBrick Material
+	createMaterial(L"BlockBrickBody", L"DeferredShader", L"BlockBrickMaterial", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region BlockBrickBreak Material
+	createMaterial(L"BlockBrickBody", L"DeferredShader", L"BlockBrickBreakMaterial", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldBarrel Material
+	createMaterial(L"CityWorldBarrelBody", L"DeferredShader", L"CityWorldBarrelMaterial", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region Motorcycle Material
+	createMaterial(L"motorcyclebody", L"DeferredShader", L"MotorcycleMaterial", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region TaxiCar Material
+	createMaterial(L"carbody", L"DeferredShader", L"TaxiCar_0Material", TextureState::AlEmMtNrRg);
+	createMaterial(L"carwindow", L"DeferredShader", L"TaxiCar_1Material", TextureState::AlNrRg);
+
+#pragma endregion
+
+#pragma region CarBreakable Material
+	createMaterial(L"carbodyBreakable", L"DeferredShader", L"CarBreakableMaterial", TextureState::AlEmMtNrRg);
+
+#pragma endregion
 }
 
 void AsyncLoad::loadCityTexture()
@@ -452,6 +503,57 @@ void AsyncLoad::loadCityTexture()
 #pragma region CItyWorldFlag
 		textureLoad(L"ClothFlagCity00", L"CItyWorldFlag/Image", TextureState::AlNr);
 		textureLoad(L"MetalFlagPole00", L"CItyWorldFlag/Image", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region Coin
+		textureLoad(L"coinbody00", L"Coin/Image", TextureState::AlNrRg);
+
+#pragma endregion
+
+#pragma region BlockEmpty
+		textureLoad(L"BlockEmptyBody", L"Block/BlockEmpty/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region BlockQuestion
+		textureLoad(L"BlockQuestionBody", L"Block/BlockQuestion/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region BlockTransparent
+		//textureLoad(L"BlockQuestionBody", L"Block/BlockTransparent/Image", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region BlockBrick
+		textureLoad(L"BlockBrickBody", L"Block/BlockBrick/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region BlockBrickBreak
+		//textureLoad(L"BlockBrickBody", L"Block/BlockBrickBreak/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region BlockBrickBreak
+		textureLoad(L"CityWorldBarrelBody", L"CityWorldBarrel/Image", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region Motorcycle
+		textureLoad(L"motorcyclebody", L"Motorcycle/Image", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region TaxiCar
+		textureLoad(L"carbody", L"TaxiCar/Car/Image", TextureState::AlEmMtNrRg);
+		textureLoad(L"carwindow", L"TaxiCar/Car/Image", TextureState::AlNrRg);
+
+#pragma endregion
+
+#pragma region CarBreakable
+		textureLoad(L"carbodyBreakable", L"TaxiCar/CarBreakable/Image", TextureState::AlEmMtNrRg);
 
 #pragma endregion
 }
