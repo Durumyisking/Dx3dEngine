@@ -17,6 +17,7 @@ AsyncLoad::~AsyncLoad()
 
 }
 
+
 void AsyncLoad::Update()
 {
 	if (mbTextureLoadFinish &&
@@ -40,11 +41,10 @@ void AsyncLoad::LoadModels()
 	std::thread thread2([this]()
 	{
 		GETSINGLE(ResourceMgr)->LoadModel_Monster(&mbMonsterLoadFinish);
-	    GETSINGLE(ResourceMgr)->LoadModel_CityWorld(&mbMapLoadFinish);
 	});
 	thread2.detach();
 
-	// ì“°ë ˆë“œë¥¼ ë„ˆë¬´ ë§Žì´ ëŒë¦¬ë©´ ì œëŒ€ë¡œ ë™ìž‘ì„ ì•ˆí•˜ë‚˜ë´„? ë˜‘ê°™ì€ ì½”ë“œ LoadModel_Monster ì—¬ê¸°ì„œ ëŒë¦¬ë©´ ìž˜ ë¨
+	// ¾²·¹µå¸¦ ³Ê¹« ¸¹ÀÌ µ¹¸®¸é Á¦´ë·Î µ¿ÀÛÀ» ¾ÈÇÏ³ªº½? ¶È°°Àº ÄÚµå LoadModel_Monster ¿©±â¼­ µ¹¸®¸é Àß µÊ
 	//std::thread thread3([this]()
 	//{
 	//	GETSINGLE(ResourceMgr)->LoadModel_CityWorld(&mbMapLoadFinish);
@@ -153,8 +153,7 @@ void AsyncLoad::LoadTextures()
 
 	renderer::CreateUITexture();
 
-	LoadCityTexture();
-
+	loadCityTexture();
 	LoadMaterials();
 
 	mbTextureLoadFinish = true;
@@ -209,107 +208,104 @@ void AsyncLoad::LoadMaterials()
 
 	loadGoomba(L"DeferredShader");
 	loadMario( L"DeferredShader");
-
-	LoadCityObjectMaterial();
+	loadCityObjectMaterial();
 
 	renderer::CreateUIMaterial();
 }
 
-void AsyncLoad::LoadCityObjectMaterial()
+void AsyncLoad::loadCityObjectMaterial()
 {
 #pragma region GlassBuilding Material
 	{
-		CreateMaterial(L"GlassBuildingWall00", L"DeferredShader", L"GlassBuildingWallMaterial", TextureState::AlEmMtNrRg);
-		CreateMaterial(L"RoofConcrete00", L"DeferredShader", L"RoofConcrete00Material", TextureState::AlNrRg);
-		CreateMaterial(L"RoofConcrete01", L"DeferredShader", L"RoofConcrete01Material", TextureState::AlNrRg);
-		CreateMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"WallGlassPaintedSteelMaterial", TextureState::AlNr);
+		createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"GlassBuildingWallMaterial", TextureState::AlEmMtNrRg);
+		createMaterial(L"RoofConcrete00", L"DeferredShader", L"RoofConcrete00Material", TextureState::AlNrRg);
+		createMaterial(L"RoofConcrete01", L"DeferredShader", L"RoofConcrete01Material", TextureState::AlNrRg);
+		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"WallGlassPaintedSteelMaterial", TextureState::AlNr);
 	}
 
 #pragma endregion
 
 #pragma region CityGround Material
 	{
-		CreateMaterial(L"AsphaltSeal00", L"DeferredShader", L"AsphaltSeal00Material", TextureState::AlNrRg);
-		CreateMaterial(L"BaseAsphaltRoad01", L"DeferredShader", L"BaseAsphaltRoad01Material", TextureState::AlNrRg);
-		CreateMaterial(L"BlueseatStepRepeat00", L"DeferredShader", L"BlueseatStepRepeat00Material", TextureState::AlNr);
-		CreateMaterial(L"CityLitter00", L"DeferredShader", L"CityLitter00Material", TextureState::AlNrRg);
-		CreateMaterial(L"CityLitter01", L"DeferredShader", L"CityLitter01Material", TextureState::AlNrRg);
-		CreateMaterial(L"ConcreteWall00", L"DeferredShader", L"ConcreteWall00Material", TextureState::AlNrRg);
-		CreateMaterial(L"DrainageCover00", L"DeferredShader", L"DrainageCover00Material", TextureState::AlNrRg);
-		CreateMaterial(L"Font_BaseRoadSign00", L"DeferredShader", L"Font_BaseRoadSign00Material", TextureState::Al);
-		CreateMaterial(L"Font_BaseRoadSign01", L"DeferredShader", L"Font_BaseRoadSign01Material", TextureState::Al);
-		CreateMaterial(L"GrassGround00", L"DeferredShader", L"GrassGround00Material", TextureState::Al);
-		CreateMaterial(L"GrassFlowerSet00", L"DeferredShader", L"GrassFlowerSet00Material", TextureState::AlNrRg);
-		CreateMaterial(L"GroundCityLogo00", L"DeferredShader", L"GroundCityLogo00Material", TextureState::AlMtNrRg);
-		CreateMaterial(L"GroundCityLogo02", L"DeferredShader", L"GroundCityLogo02Material", TextureState::AlNrRg);
-		CreateMaterial(L"GroundEarth01", L"DeferredShader", L"GroundEarth01Material", TextureState::AlMtNrRg);
-		CreateMaterial(L"GroundLawn00", L"DeferredShader", L"GroundLawn00Material", TextureState::AlNrRg);
-		CreateMaterial(L"GroundLawn01", L"DeferredShader", L"GroundLawn01Material", TextureState::AlNrRg);
-		CreateMaterial(L"GroundLight00", L"DeferredShader", L"GroundLight00Material", TextureState::AlEmMsNrRg);
-		CreateMaterial(L"GroundMoon01", L"DeferredShader", L"GroundMoon01Material", TextureState::AlMtNrRg);
-		CreateMaterial(L"GroundSoil00", L"DeferredShader", L"GroundSoil00Material", TextureState::AlNrRg);
-		CreateMaterial(L"GroundTile00", L"DeferredShader", L"GroundTile00Material", TextureState::AlNrRg);
-		CreateMaterial(L"GroundTile01", L"DeferredShader", L"GroundTile01Material", TextureState::AlNrRg);
-		CreateMaterial(L"MetalManhole01", L"DeferredShader", L"MetalManhole01Material", TextureState::AlMtNrRg);
-		CreateMaterial(L"MetalManhole03", L"DeferredShader", L"MetalManhole03Material", TextureState::AlMtNrRg);
-		CreateMaterial(L"MetalScaffold00", L"DeferredShader", L"MetalScaffold00Material", TextureState::AlNrRg);
-		CreateMaterial(L"MetalScaffoldRepeat00", L"DeferredShader", L"MetalScaffoldRepeat00Material", TextureState::AlNrRg);
-		CreateMaterial(L"RoadAsphaltGlossy00", L"DeferredShader", L"RoadAsphaltGlossy00Material", TextureState::AlNrRg);
-		CreateMaterial(L"RoadManhole00", L"DeferredShader", L"RoadManhole00Material", TextureState::AlNrRg);
-		CreateMaterial(L"SideWalk00", L"DeferredShader", L"SideWalk00Material", TextureState::AlNrRg);
-		CreateMaterial(L"SideWalk01", L"DeferredShader", L"SideWalk01Material", TextureState::AlNrRg);
-		CreateMaterial(L"SideWalk02", L"DeferredShader", L"SideWalk02Material", TextureState::AlNr);
-		CreateMaterial(L"WallFastener00", L"DeferredShader", L"WallFastener00Material", TextureState::AlNrRg);
-		CreateMaterial(L"WallGrunge00", L"DeferredShader", L"WallGrunge00Material", TextureState::Al);
-		CreateMaterial(L"WallGrunge01", L"DeferredShader", L"WallGrunge01Material", TextureState::Al);
+		createMaterial(L"AsphaltSeal00", L"DeferredShader", L"AsphaltSeal00Material", TextureState::AlNrRg);
+		createMaterial(L"BaseAsphaltRoad01", L"DeferredShader", L"BaseAsphaltRoad01Material", TextureState::AlNrRg);
+		createMaterial(L"BlueseatStepRepeat00", L"DeferredShader", L"BlueseatStepRepeat00Material", TextureState::AlNr);
+		createMaterial(L"CityLitter00", L"DeferredShader", L"CityLitter00Material", TextureState::AlNrRg);
+		createMaterial(L"CityLitter01", L"DeferredShader", L"CityLitter01Material", TextureState::AlNrRg);
+		createMaterial(L"ConcreteWall00", L"DeferredShader", L"ConcreteWall00Material", TextureState::AlNrRg);
+		createMaterial(L"DrainageCover00", L"DeferredShader", L"DrainageCover00Material", TextureState::AlNrRg);
+		createMaterial(L"Font_BaseRoadSign00", L"DeferredShader", L"Font_BaseRoadSign00Material", TextureState::Al);
+		createMaterial(L"Font_BaseRoadSign01", L"DeferredShader", L"Font_BaseRoadSign01Material", TextureState::Al);
+		createMaterial(L"GrassFlowerSet00", L"DeferredShader", L"GrassFlowerSet00Material", TextureState::AlNrRg);
+		createMaterial(L"GroundCityLogo00", L"DeferredShader", L"GroundCityLogo00Material", TextureState::AlMtNrRg);
+		createMaterial(L"GroundCityLogo02", L"DeferredShader", L"GroundCityLogo02Material", TextureState::AlNrRg);
+		createMaterial(L"GroundEarth01", L"DeferredShader", L"GroundEarth01Material", TextureState::AlMtNrRg);
+		createMaterial(L"GroundLawn00", L"DeferredShader", L"GroundLawn00Material", TextureState::AlNrRg);
+		createMaterial(L"GroundLawn01", L"DeferredShader", L"GroundLawn01Material", TextureState::AlNrRg);
+		createMaterial(L"GroundLight00", L"DeferredShader", L"GroundLight00Material", TextureState::AlEmMsNrRg);
+		createMaterial(L"GroundMoon01", L"DeferredShader", L"GroundMoon01Material", TextureState::AlMtNrRg);
+		createMaterial(L"GroundSoil00", L"DeferredShader", L"GroundSoil00Material", TextureState::AlNrRg);
+		createMaterial(L"GroundTile00", L"DeferredShader", L"GroundTile00Material", TextureState::AlNrRg);
+		createMaterial(L"GroundTile01", L"DeferredShader", L"GroundTile01Material", TextureState::AlNrRg);
+		createMaterial(L"MetalManhole01", L"DeferredShader", L"MetalManhole01Material", TextureState::AlMtNrRg);
+		createMaterial(L"MetalManhole03", L"DeferredShader", L"MetalManhole03Material", TextureState::AlMtNrRg);
+		createMaterial(L"MetalScaffold00", L"DeferredShader", L"MetalScaffold00Material", TextureState::AlNrRg);
+		createMaterial(L"MetalScaffoldRepeat00", L"DeferredShader", L"MetalScaffoldRepeat00Material", TextureState::AlNrRg);
+		createMaterial(L"RoadAsphaltGlossy00", L"DeferredShader", L"RoadAsphaltGlossy00Material", TextureState::AlNrRg);
+		createMaterial(L"RoadManhole00", L"DeferredShader", L"RoadManhole00Material", TextureState::AlNrRg);
+		createMaterial(L"SideWalk00", L"DeferredShader", L"SideWalk00Material", TextureState::AlNrRg);
+		createMaterial(L"SideWalk01", L"DeferredShader", L"SideWalk01Material", TextureState::AlNrRg);
+		createMaterial(L"SideWalk02", L"DeferredShader", L"SideWalk02Material", TextureState::AlNr);
+		createMaterial(L"WallFastener00", L"DeferredShader", L"WallFastener00Material", TextureState::AlNrRg);
+		createMaterial(L"WallGrunge00", L"DeferredShader", L"WallGrunge00Material", TextureState::Al);
+		createMaterial(L"WallGrunge01", L"DeferredShader", L"WallGrunge01Material", TextureState::Al);
 
 	}
 
 #pragma endregion
 }
 
-void AsyncLoad::LoadCityTexture()
+void AsyncLoad::loadCityTexture()
 {
 	//Building
-	TextureLoad(L"GlassBuildingWall00", L"CityWorldHomeBuilding002/Image", TextureState::AlEmMtNrRg);
-	TextureLoad(L"RoofConcrete00", L"CityWorldHomeBuilding002/Image", TextureState::AlNrRg);
-	TextureLoad(L"RoofConcrete01", L"CityWorldHomeBuilding002/Image", TextureState::AlNrRg);
-	TextureLoad(L"WallGlassPaintedSteel00", L"CityWorldHomeBuilding002/Image", TextureState::AlNr);
+	textureLoad(L"GlassBuildingWall00", L"CityWorldHomeBuilding002/Image", TextureState::AlEmMtNrRg);
+	textureLoad(L"RoofConcrete00", L"CityWorldHomeBuilding002/Image", TextureState::AlNrRg);
+	textureLoad(L"RoofConcrete01", L"CityWorldHomeBuilding002/Image", TextureState::AlNrRg);
+	textureLoad(L"WallGlassPaintedSteel00", L"CityWorldHomeBuilding002/Image", TextureState::AlNr);
 
 	//CityGround
-	TextureLoad(L"AsphaltSeal00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"BaseAsphaltRoad01", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"BlueseatStepRepeat00", L"CityGround/Image", TextureState::AlNr);
-	TextureLoad(L"CityLitter00", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"CityLitter01", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"ConcreteWall00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"DrainageCover00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"Font_BaseRoadSign00", L"CityGround/Image", TextureState::Al);
-	TextureLoad(L"Font_BaseRoadSign01", L"CityGround/Image", TextureState::Al);
-	TextureLoad(L"GrassGround00", L"CityGround/Image", TextureState::Al);
-	TextureLoad(L"GrassFlowerSet00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundCityLogo00", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"GroundCityLogo02", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundEarth01", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"GroundLawn00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundLawn01", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundLight00", L"CityGround/Image", TextureState::AlEmMsNrRg);
-	TextureLoad(L"GroundMoon01", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"GroundSoil00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundTile00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"GroundTile01", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"MetalManhole01", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"MetalManhole03", L"CityGround/Image", TextureState::AlMtNrRg);
-	TextureLoad(L"MetalScaffold00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"MetalScaffoldRepeat00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"RoadAsphaltGlossy00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"RoadManhole00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"SideWalk00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"SideWalk01", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"SideWalk02", L"CityGround/Image", TextureState::AlNr);
-	TextureLoad(L"WallFastener00", L"CityGround/Image", TextureState::AlNrRg);
-	TextureLoad(L"WallGrunge00", L"CityGround/Image", TextureState::Al);
-	TextureLoad(L"WallGrunge01", L"CityGround/Image", TextureState::Al);
+	textureLoad(L"AsphaltSeal00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"BaseAsphaltRoad01", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"BlueseatStepRepeat00", L"CityGround/Image", TextureState::AlNr);
+	textureLoad(L"CityLitter00", L"CityGround/Image", TextureState::AlMtNrRg);
+	textureLoad(L"CityLitter01", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"ConcreteWall00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"DrainageCover00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"Font_BaseRoadSign00", L"CityGround/Image", TextureState::Al);
+	textureLoad(L"Font_BaseRoadSign01", L"CityGround/Image", TextureState::Al);
+	textureLoad(L"GrassFlowerSet00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"GroundCityLogo00", L"CityGround/Image", TextureState::AlMtNrRg);
+	textureLoad(L"GroundCityLogo02", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"GroundEarth01", L"CityGround/Image", TextureState::AlMtNrRg);
+	textureLoad(L"GroundLawn00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"GroundLawn01", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"GroundLight00", L"CityGround/Image", TextureState::AlEmMsNrRg);
+	textureLoad(L"GroundMoon01", L"CityGround/Image", TextureState::AlMtNrRg);
+	textureLoad(L"GroundSoil00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"GroundTile00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"GroundTile01", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"MetalManhole01", L"CityGround/Image", TextureState::AlMtNrRg);
+	textureLoad(L"MetalManhole03", L"CityGround/Image", TextureState::AlMtNrRg);
+	textureLoad(L"MetalScaffold00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"MetalScaffoldRepeat00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"RoadAsphaltGlossy00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"RoadManhole00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"SideWalk00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"SideWalk01", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"SideWalk02", L"CityGround/Image", TextureState::AlNr);
+	textureLoad(L"WallFastener00", L"CityGround/Image", TextureState::AlNrRg);
+	textureLoad(L"WallGrunge00", L"CityGround/Image", TextureState::Al);
+	textureLoad(L"WallGrunge01", L"CityGround/Image", TextureState::Al);
 }
 
 void AsyncLoad::LoadSounds()
@@ -379,7 +375,7 @@ void AsyncLoad::loadGoomba(std::wstring shaderName)
 
 void AsyncLoad::loadMario(std::wstring shaderName)
 {
-	// ë§ˆë¦¬ì˜¤
+	// ¸¶¸®¿À
 #pragma region marioBody Material
 	{
 		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
@@ -484,7 +480,7 @@ void AsyncLoad::loadMario(std::wstring shaderName)
 #pragma endregion
 }
 
-void AsyncLoad::CreateMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state)
+void AsyncLoad::createMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state)
 {
 	Shader* shader = nullptr;
 	Material* material = nullptr;
@@ -551,7 +547,7 @@ void AsyncLoad::CreateMaterial(std::wstring fileName, std::wstring shaderName, s
 		material->SetShader(shader);
 		material->SetTextureByKey(fileName + L"_alb", eTextureSlot::Albedo);
 		material->SetTextureByKey(fileName + L"_emm", eTextureSlot::Emissive);
-		//material->SetTextureByKey(fileName + L"_msk", eTextureSlot::m); //.mskê°€ ë¬´ì—‡ì¸ì§€ ì•Œ í•„ìš”ê°€  ìžˆìŒ
+		//material->SetTextureByKey(fileName + L"_msk", eTextureSlot::m); //.msk°¡ ¹«¾ùÀÎÁö ¾Ë ÇÊ¿ä°¡  ÀÖÀ½
 		material->SetTextureByKey(fileName + L"_nrm", eTextureSlot::Normal);
 		material->SetTextureByKey(fileName + L"_rgh", eTextureSlot::Roughness);
 		GETSINGLE(ResourceMgr)->Insert<Material>(materialName, material);
@@ -561,7 +557,7 @@ void AsyncLoad::CreateMaterial(std::wstring fileName, std::wstring shaderName, s
 	}
 }
 
-void AsyncLoad::TextureLoad(std::wstring fileName, std::wstring path, TextureState state)
+void AsyncLoad::textureLoad(std::wstring fileName, std::wstring path, TextureState state)
 {
 	switch (state)
 	{
@@ -606,48 +602,48 @@ void AsyncLoad::TextureLoad(std::wstring fileName, std::wstring path, TextureSta
 	}
 }
 
-  void AsyncLoad::loadBuildings(std::wstring shaderName)
-{
-
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"GlassBuildingWall00_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"GlassBuildingWall00_emm", eTextureSlot::Emissive);
-		material->SetTextureByKey(L"GlassBuildingWall00_mtl", eTextureSlot::Metallic);
-		material->SetTextureByKey(L"GlassBuildingWall00_nrm", eTextureSlot::Normal);
-		material->SetTextureByKey(L"GlassBuildingWall00_rgh", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"GlassBuildingWallMaterial", material);
-	}
-
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"RoofConcrete00_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"RoofConcrete00_nrm", eTextureSlot::Normal);
-		material->SetTextureByKey(L"RoofConcrete00_rgh", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete00Material", material);
-	}
-
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"RoofConcrete01_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"RoofConcrete01_nrm", eTextureSlot::Normal);
-		material->SetTextureByKey(L"RoofConcrete01_rgh", eTextureSlot::Roughness);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete01Material", material);
-	}
-
-	{
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
-		Material* material = new Material();
-		material->SetShader(shader);
-		material->SetTextureByKey(L"WallGlassPaintedSteel00_alb", eTextureSlot::Albedo);
-		material->SetTextureByKey(L"WallGlassPaintedSteel00_nrm", eTextureSlot::Normal);
-		GETSINGLE(ResourceMgr)->Insert<Material>(L"WallGlassPaintedSteelMaterial", material);
-
-	}
-}
+//  void AsyncLoad::loadBuildings(std::wstring shaderName)
+//{
+//
+//	{
+//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+//		Material* material = new Material();
+//		material->SetShader(shader);
+//		material->SetTextureByKey(L"GlassBuildingWall00_alb", eTextureSlot::Albedo);
+//		material->SetTextureByKey(L"GlassBuildingWall00_emm", eTextureSlot::Emissive);
+//		material->SetTextureByKey(L"GlassBuildingWall00_mtl", eTextureSlot::Metallic);
+//		material->SetTextureByKey(L"GlassBuildingWall00_nrm", eTextureSlot::Normal);
+//		material->SetTextureByKey(L"GlassBuildingWall00_rgh", eTextureSlot::Roughness);
+//		GETSINGLE(ResourceMgr)->Insert<Material>(L"GlassBuildingWallMaterial", material);
+//	}
+//
+//	{
+//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+//		Material* material = new Material();
+//		material->SetShader(shader);
+//		material->SetTextureByKey(L"RoofConcrete00_alb", eTextureSlot::Albedo);
+//		material->SetTextureByKey(L"RoofConcrete00_nrm", eTextureSlot::Normal);
+//		material->SetTextureByKey(L"RoofConcrete00_rgh", eTextureSlot::Roughness);
+//		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete00Material", material);
+//	}
+//
+//	{
+//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+//		Material* material = new Material();
+//		material->SetShader(shader);
+//		material->SetTextureByKey(L"RoofConcrete01_alb", eTextureSlot::Albedo);
+//		material->SetTextureByKey(L"RoofConcrete01_nrm", eTextureSlot::Normal);
+//		material->SetTextureByKey(L"RoofConcrete01_rgh", eTextureSlot::Roughness);
+//		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete01Material", material);
+//	}
+//
+//	{
+//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+//		Material* material = new Material();
+//		material->SetShader(shader);
+//		material->SetTextureByKey(L"WallGlassPaintedSteel00_alb", eTextureSlot::Albedo);
+//		material->SetTextureByKey(L"WallGlassPaintedSteel00_nrm", eTextureSlot::Normal);
+//		GETSINGLE(ResourceMgr)->Insert<Material>(L"WallGlassPaintedSteelMaterial", material);
+//
+//	}
+//}
