@@ -221,6 +221,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="AudioListener.h" />
     <ClInclude Include="AudioSource.h" />
     <ClInclude Include="BaseRenderer.h" />
+    <ClInclude Include="BlockBrick.h" />
     <ClInclude Include="Bone.h" />
     <ClInclude Include="BoneAnimator.h" />
     <ClInclude Include="Box.h" />
@@ -381,6 +382,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="AudioListener.cpp" />
     <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="BaseRenderer.cpp" />
+    <ClCompile Include="BlockBrick.cpp" />
     <ClCompile Include="Bone.cpp" />
     <ClCompile Include="BoneAnimator.cpp" />
     <ClCompile Include="Box.cpp" />

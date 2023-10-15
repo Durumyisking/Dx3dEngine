@@ -340,12 +340,6 @@
     <ClCompile Include="UIScript.cpp">
       <Filter>UI\Script\Base</Filter>
     </ClCompile>
-    <ClCompile Include="LifeUI.cpp">
-      <Filter>UI\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageUI.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
     <ClCompile Include="WorldMapScript.cpp">
       <Filter>UI\Script</Filter>
     </ClCompile>
@@ -358,19 +352,7 @@
     <ClCompile Include="HUD.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
-    <ClCompile Include="CapUI.cpp">
-      <Filter>UI\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="CapEyeUI.cpp">
-      <Filter>UI\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="UIFactory.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Panal.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
     <ClCompile Include="CapEyeScript.cpp">
@@ -384,9 +366,6 @@
     </ClCompile>
     <ClCompile Include="PowerMoonScript.cpp">
       <Filter>UI\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>UI\Manager</Filter>
     </ClCompile>
     <ClCompile Include="MarioParts.cpp">
       <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
@@ -413,17 +392,49 @@
     <ClCompile Include="FootSmokeParticle.cpp">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClCompile>
-    <ClCompile Include="DieCircleUIScript.cpp" />
-    <ClCompile Include="DieUIEffectScript.cpp" />
-    <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
-    <ClCompile Include="Building.cpp" />
+    <ClCompile Include="FootSmokeParticle.cpp" />
+    <ClCompile Include="TitleBGMScript.cpp" />
+    <ClCompile Include="Button.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp">
+      <Filter>UI\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="CapUI.cpp">
+      <Filter>UI\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUI.cpp">
+      <Filter>UI\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeUI.cpp">
+      <Filter>UI\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFactory.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
     </ClCompile>
-    <ClCompile Include="FootSmokeParticle.cpp" />
-    <ClCompile Include="TitleBGMScript.cpp" />
+    <ClCompile Include="DieCircleUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="DieUIEffectScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="HelpUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockBrick.cpp">
+      <Filter>Common\GameObj\BlockBrick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -820,15 +831,6 @@
     <ClInclude Include="UIScript.h">
       <Filter>UI\Script\Base</Filter>
     </ClInclude>
-    <ClInclude Include="CapEyeUI.h">
-      <Filter>UI\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="CapUI.h">
-      <Filter>UI\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="LifeUI.h">
-      <Filter>UI\UIObject</Filter>
-    </ClInclude>
     <ClInclude Include="WorldMapScript.h">
       <Filter>UI\Script</Filter>
     </ClInclude>
@@ -869,14 +871,34 @@
     <ClInclude Include="FootSmokeParticle.h">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
     </ClInclude>
-    <ClInclude Include="DieCircleUIScript.h" />
-    <ClInclude Include="DieUIEffectScript.h" />
-    <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="MilestoneScript.h" />
     <ClInclude Include="TitleBGMScript.h" />
-    <ClInclude Include="Building.h" />
     <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="TitleBGMScript.h" />
+    <ClInclude Include="LifeUI.h">
+      <Filter>UI\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="DieCircleUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="DieUIEffectScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CapEyeUI.h">
+      <Filter>UI\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CapUI.h">
+      <Filter>UI\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockBrick.h">
+      <Filter>Common\GameObj\BlockBrick</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -1456,8 +1478,14 @@
     <Filter Include="UI\Script\Base">
       <UniqueIdentifier>{a1205e1e-51cd-4b0d-b34e-2c8637c850fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\UIObject">
-      <UniqueIdentifier>{9ce3c0ca-6cf4-4526-a443-57ba40870484}</UniqueIdentifier>
+    <Filter Include="Common\GameObj\BlockBrick">
+      <UniqueIdentifier>{f95ea44e-1fdc-4933-a3c4-1f866ef9f44b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UIObjects">
+      <UniqueIdentifier>{d076f29a-9928-44a7-a654-c110e5330fa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Buildings">
+      <UniqueIdentifier>{6456ee2a-b264-454b-a381-cf551de53e3e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

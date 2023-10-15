@@ -72,6 +72,7 @@
 #include "AudioListener.h"
 #include "AudioSource.h"
 #include "Building.h"
+#include "BlockBrick.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -152,18 +153,18 @@ void ScenePlay::Initialize()
 		
 		//mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
 	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-	}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
-	}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(5.f, 10.f, 0.f));
+	//}	
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	//}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
+	//}
 
 
 	//{
@@ -203,6 +204,10 @@ void ScenePlay::Initialize()
 	{
 		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
 		block->SetPos(Vector3(40.f, -10.f, 0.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(0.f, 5.f, 0.f));
 	}
 
 	CreatePlayerUI();

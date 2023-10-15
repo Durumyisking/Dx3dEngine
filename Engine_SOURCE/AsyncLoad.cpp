@@ -55,11 +55,11 @@ void AsyncLoad::LoadModels()
 
 void AsyncLoad::LoadTextures()
 {
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"brick/BlockBrickBody_alb.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"brick/BlockBrickBody_nrm.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"brick/BlockBrickBody_mtl.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"brick/BlockBrickBody_rgh.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"brick/BlockBrickBody_emm.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"Brick/Image/BlockBrickBody_alb.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"Brick/Image/BlockBrickBody_nrm.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"Brick/Image/BlockBrickBody_mtl.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"Brick/Image/BlockBrickBody_rgh.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"Brick/Image/BlockBrickBody_emm.png");
 
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_alb", L"goomba/Image/KuriboBody_alb.png");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_nrm", L"goomba/Image/KuriboBody_nrm.png");
@@ -203,8 +203,9 @@ void AsyncLoad::LoadMaterials()
 		material->SetTextureByKey(L"PostProcessTexture", eTextureSlot::Albedo);
 		GETSINGLE(ResourceMgr)->Insert<Material>(L"LensFlareMaterial", material);
 	}
-
 #pragma endregion
+
+	createMaterial(L"BrickBlockBody", L"DeferredShader", L"BrickBlockMaterial", TextureState::AlEmMtNrRg);
 
 	loadGoomba(L"DeferredShader");
 	loadMario( L"DeferredShader");

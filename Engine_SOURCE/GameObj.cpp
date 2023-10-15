@@ -576,6 +576,7 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 				break;
 			case enums::AXIS::XYZ:
 				GetPhysXRigidBody()->SetVelocity(AXIS::XYZ, Vector3(0.f, 0.f, 0.f));
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::END:
 				break;
