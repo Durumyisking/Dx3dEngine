@@ -1,4 +1,4 @@
-#include "AsyncLoad.h"
+ï»¿#include "AsyncLoad.h"
 #include "ResourceMgr.h"
 #include "Texture.h"
 #include "Material.h"
@@ -44,7 +44,7 @@ void AsyncLoad::LoadModels()
 	});
 	thread2.detach();
 
-	// ¾²·¹µå¸¦ ³Ê¹« ¸¹ÀÌ µ¹¸®¸é Á¦´ë·Î µ¿ÀÛÀ» ¾ÈÇÏ³ªº½? ¶È°°Àº ÄÚµå LoadModel_Monster ¿©±â¼­ µ¹¸®¸é Àß µÊ
+	// ì“°ë ˆë“œë¥¼ ë„ˆë¬´ ë§Žì´ ëŒë¦¬ë©´ ì œëŒ€ë¡œ ë™ìž‘ì„ ì•ˆí•˜ë‚˜ë´„? ë˜‘ê°™ì€ ì½”ë“œ LoadModel_Monster ì—¬ê¸°ì„œ ëŒë¦¬ë©´ ìž˜ ë¨
 	//std::thread thread3([this]()
 	//{
 	//	GETSINGLE(ResourceMgr)->LoadModel_CityWorld(&mbMapLoadFinish);
@@ -375,7 +375,7 @@ void AsyncLoad::loadGoomba(std::wstring shaderName)
 
 void AsyncLoad::loadMario(std::wstring shaderName)
 {
-	// ¸¶¸®¿À
+	// ë§ˆë¦¬ì˜¤
 #pragma region marioBody Material
 	{
 		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
@@ -547,7 +547,7 @@ void AsyncLoad::createMaterial(std::wstring fileName, std::wstring shaderName, s
 		material->SetShader(shader);
 		material->SetTextureByKey(fileName + L"_alb", eTextureSlot::Albedo);
 		material->SetTextureByKey(fileName + L"_emm", eTextureSlot::Emissive);
-		//material->SetTextureByKey(fileName + L"_msk", eTextureSlot::m); //.msk°¡ ¹«¾ùÀÎÁö ¾Ë ÇÊ¿ä°¡  ÀÖÀ½
+		//material->SetTextureByKey(fileName + L"_msk", eTextureSlot::m); //.mskê°€ ë¬´ì—‡ì¸ì§€ ì•Œ í•„ìš”ê°€  ìžˆìŒ
 		material->SetTextureByKey(fileName + L"_nrm", eTextureSlot::Normal);
 		material->SetTextureByKey(fileName + L"_rgh", eTextureSlot::Roughness);
 		GETSINGLE(ResourceMgr)->Insert<Material>(materialName, material);
