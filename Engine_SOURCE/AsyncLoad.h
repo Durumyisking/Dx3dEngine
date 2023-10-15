@@ -24,6 +24,7 @@ public:
 		AlMtNrRg,
 		AlEmMtNrRg,
 		AlEmMsNrRg,
+		AlMtMsNrRg,
 	};
 
 private:
