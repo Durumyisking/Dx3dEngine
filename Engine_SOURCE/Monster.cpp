@@ -181,7 +181,7 @@ void Monster::CaptureEnter(MarioCap* cap)
 
 		// 마리오 본체 pause
 		cap->GetOwner()->Pause();
-		cap->GetPhysical()->RemoveActorToPxScene();
+		cap->GetPhysical()->KinematicActorSleep();
 		cap->Pause();
 		Player* player = dynamic_cast<Player*>(cap->GetOwner());
 		SetPlayer(player);

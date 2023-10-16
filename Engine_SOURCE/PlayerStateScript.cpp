@@ -195,7 +195,7 @@ void PlayerStateScript::Jump()
 		{
 			mAnimator->Play(L"Jump");
 
-			rigidbody->SetMaxVelocity_Y(13.f);
+			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY);
 			rigidbody->ApplyGravity();
 			rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
@@ -205,7 +205,7 @@ void PlayerStateScript::Jump()
 		{
 			mAnimator->Play(L"Jump2");
 
-			rigidbody->SetMaxVelocity_Y(15.f);
+			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 2.f);
 			rigidbody->ApplyGravity();
 			rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
@@ -216,7 +216,7 @@ void PlayerStateScript::Jump()
 		{
 			mAnimator->Play(L"Jump3");
 
-			rigidbody->SetMaxVelocity_Y(18.f);
+			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 5.f);
 			rigidbody->ApplyGravity();
 			rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
@@ -400,6 +400,7 @@ void PlayerStateScript::Air()
 
 void PlayerStateScript::Fall()
 {
+	GetPhysXRigidBody()->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY);
 
 }
 
@@ -421,7 +422,7 @@ void PlayerStateScript::ThrowCap()
 	{
 		if (mAnimator->PlayAnimationName() != L"ThrowCap")
 		{
-			mPlayer->GetMarioCap()->GetPhysical()->AddActorToPxScene();
+			mPlayer->GetMarioCap()->GetPhysical()->KinematicActorWakeup();
 			mAnimator->Play(L"ThrowCap", false);
 			mbHavingCap = false;
 		}

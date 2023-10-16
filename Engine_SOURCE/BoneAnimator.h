@@ -46,6 +46,9 @@ public:
 	void DeleteNodeTransform(const std::wstring& name);
 
 	void FrameAnimationClear() { mFrameAnimationVector.clear(); }
+
+	void ResetAnimator() {
+		mPlayAnimation = nullptr; mbLoop = false; ClearFrameAnimationData(); }
 public:
 	GETSET(float, mIntervalAnimation, IntervalAnimation)
 	GETSET(bool, mbLoop, Loop)

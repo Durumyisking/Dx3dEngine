@@ -10,6 +10,9 @@
 #define PLAYER_RUN_VELOCITY 8.f
 #define PLAYER_ROLLING_VELOCITY 10.f
 
+#define PLAYER_JUMP_VELOCITY 15.f
+
+
 class Player;
 class PlayerStateScript : public Script
 {
