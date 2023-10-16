@@ -58,11 +58,10 @@ void Camera::Update()
 {
 	if (mTargetObj) // Å¸°Ù ¿ÀºêÁ§Æ®¸¦ ÂÑ¾Æ°¨
 	{
+		Vector3 start = GetOwner()->GetPos();
+		Vector3 dest =  mTargetObj->GetPos();
 
-		Vector2 v2Start = Vector2(GetOwner()->GetPos().x, GetOwner()->GetPos().y);
-		Vector2 v2Dest = Vector2(mTargetObj->GetPos().x, mTargetObj->GetPos().y);
-
-		mFarDist = (v2Start - v2Dest).Length();
+		mFarDist = (start - dest).Length();
 
 		if (mSmooth)
 			mCamSpeed = mFarDist / mTime;
@@ -70,9 +69,8 @@ void Camera::Update()
 		if (mFarDist < 0.001f)
 			mCamSpeed = 1.f;
 
-		Vector3 Dir = mTargetObj->GetPos() - GetOwner()->GetPos();
-		Dir.z = GetOwner()->GetPos().z;
-		(Dir).Normalize(mCamDir);
+		mCamDir = dest - start;
+		mCamDir.Normalize();
 	}
 }
 
