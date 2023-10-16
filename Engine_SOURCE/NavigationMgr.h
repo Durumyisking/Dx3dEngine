@@ -16,8 +16,7 @@ public:
 	void Update();
 	void FixedUpdate();
 
-	void CreateNavigationMesh(const std::wstring& name);
-	void SetRecast(math::Vector3* verts, int vertCount, int* indices, int indexCount);
+	SoloNaviMesh* CreateNavigationMesh(const std::wstring& name);
 	
 	void Navigation();
 

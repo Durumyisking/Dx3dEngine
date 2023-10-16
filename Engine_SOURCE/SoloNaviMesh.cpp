@@ -19,17 +19,20 @@ SoloNaviMesh::~SoloNaviMesh()
 
 bool SoloNaviMesh::Build()
 {
-	if (!SettingMesh())
+	if (mGeom == nullptr || mGeom->GetName().empty())
+	{
+		std::cout << "buildNavigation: Input mesh is not specified." << std::endl;
 		return false;
+	}
 
 	Clear();
 
-	const float* bmin = mGeom->getNavMeshBoundsMin();
-	const float* bmax = mGeom->getNavMeshBoundsMax();
-	const float* verts = mGeom->getMesh()->getVerts();
-	const int nverts = mGeom->getMesh()->getVertCount();
-	const int* tris = mGeom->getMesh()->getTris();
-	const int ntris = mGeom->getMesh()->getTriCount();
+	const float* bmin = mGeom->GetNavMeshBoundsMin();
+	const float* bmax = mGeom->GetNavMeshBoundsMax();
+	const float* verts = mGeom->GetVerts();
+	const int nverts = mGeom->GetNumVerts();
+	const int* tris = mGeom->GetTriangles();
+	const int ntris = mGeom->GetNumTriangles();
 
 	//build settings
 	memset(&mConfig, 0, sizeof(mConfig));
@@ -54,7 +57,7 @@ bool SoloNaviMesh::Build()
 	rcVcopy(mConfig.bmax, bmax);
 	rcCalcGridSize(mConfig.bmin, mConfig.bmax, mConfig.cs, &mConfig.width, &mConfig.height);
 
-	rcContext* m_ctx = new rcContext(); // 디버그용인데 안씀
+	rcContext* m_ctx = new rcContext(); // rcContext는 디버그용인데 안씀
 
 	mHeightField = rcAllocHeightfield();
 	if (!mHeightField)
@@ -242,90 +245,24 @@ bool SoloNaviMesh::Build()
 
 
 	// Show performance stats.
-	std::cout << ">> Polymesh: "<< mPolyMesh->nverts << "vertices" << mPolyMesh->npolys << "polygons" << std::endl;
+	std::cout << ">> Polymesh: "<< mPolyMesh->nverts << "  bvertices" << mPolyMesh->npolys << "  polygons" << std::endl;
 
 	if (mTool)
 		mTool->init(this);
-	initToolStates(this);
+	InitToolStates(this);
 
 	return true;
 }
 
-bool SoloNaviMesh::SettingMesh(Mesh* mesh)
+bool SoloNaviMesh::SettingMesh(const std::wstring& name, GameObj* obj)
 {
-	return false;
-}
+	mGeom = new InputGeom();
 
-bool SoloNaviMesh::SettingMeshes(const std::vector<Mesh>& meshes)
-{
-	return false;
-}
+	if (obj == nullptr)
+		return false;
 
-
-bool SoloNaviMesh::SettingModel(Model* model)
-{
-	const std::vector<Mesh*> meshes = model->GetMeshes();
-	std::vector<float> vertices;
-	std::vector<int> indexes;
-	int allVertexCount = 0;
-	int allIndexCount = 0;
-	int currentIndexOffset = 0;
-
-	for (Mesh* mesh : meshes)
-	{
-		std::vector<Vertex> meshVertices;
-		std::vector<UINT> meshIndexes;
-		mesh->GetVerticesFromBuffer(&meshVertices);
-		mesh->GetIndexesFromBuffer(&meshIndexes);
-		int vertexCount = mesh->GetVertexCount();
-		int indexCount = mesh->GetIndexCount();
-		allVertexCount += vertexCount;
-		allIndexCount += indexCount;
-
-		// Copy from cvector array to PxVec3 array
-		for (int i = 0; i < vertexCount; i++)
-		{
-			vertices.push_back(meshVertices[i].pos.x);
-			vertices.push_back(meshVertices[i].pos.y);
-			vertices.push_back(meshVertices[i].pos.z);
-		}
-
-		for (int i = 0; i < indexCount; i++)
-		{
-			indexes.emplace_back(static_cast<int>(meshIndexes[i]) + currentIndexOffset);
-		}
-
-		currentIndexOffset += vertexCount;
-	}
-
-
-	rcConfig cfg;
-	memset(&cfg, 0, sizeof(cfg));
-
-	// Configure the cfg based on your specific needs (size, agent height, walkable slope, etc.)
-	// Example:
-	cfg.cs = 0.3f;
-	cfg.ch = 0.2f;
-	cfg.walkableSlopeAngle = 45.0f;
-	cfg.walkableHeight = (int)ceilf(2.0f / cfg.ch);
-	cfg.walkableClimb = (int)floorf(0.9f / cfg.ch);
-	cfg.walkableRadius = (int)ceilf(0.6f / cfg.cs);
-	cfg.maxEdgeLen = (int)(12.0f / cfg.cs);
-	cfg.maxSimplificationError = 1.3f;
-	cfg.minRegionArea = (int)rcSqr(8);
-	cfg.mergeRegionArea = (int)rcSqr(20);
-	cfg.maxVertsPerPoly = 6;
-	cfg.detailSampleDist = 6.0f < 0.9f ? 0 : cfg.cs * 6.0f;
-	cfg.detailSampleMaxError = cfg.ch * 1.0f;
-
-	// Calculate the bounding box of the input geometry
-	rcVcopy(cfg.bmin, &vertices[0]);
-	rcVcopy(cfg.bmax, &vertices[0]);
-	for (int i = 1; i < vertices.size(); ++i)
-	{
-		rcVmin(cfg.bmin, &vertices[i]);
-		rcVmax(cfg.bmax, &vertices[i]);
-	}
+	if (mGeom->CreateGeom(name, obj))
+		return true;
 
 	return false;
 }

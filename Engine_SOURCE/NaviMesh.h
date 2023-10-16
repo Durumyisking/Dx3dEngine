@@ -3,6 +3,7 @@
 #include "../External/Recast/include/Recast.h"
 #include "../External/Detour/include/DetourNavMesh.h"
 #include "../External/Detour/include/DetourCrowd.h"
+#include "../External/Detour/include/DetourCommon.h"
 #include "../External/Detour/include/DetourNavMeshBuilder.h"
 #include "../External/Detour/include/DetourNavMeshQuery.h"
 #include "../External/Detour/include/DetourTileCacheBuilder.h"
@@ -56,7 +57,7 @@ struct NaviMeshTool
 {
 	virtual ~NaviMeshTool();
 	virtual int type() = 0;
-	virtual void init(NaviMesh* sample) = 0;
+	virtual void init(class NaviMesh* sample) = 0;
 	virtual void reset() = 0;
 	virtual void handleMenu() = 0;
 	virtual void handleClick(const float* s, const float* p, bool shift) = 0;
@@ -69,7 +70,7 @@ struct NaviMeshTool
 
 struct NaviMeshToolState {
 	virtual ~NaviMeshToolState();
-	virtual void init(NaviMesh* sample) = 0;
+	virtual void init(class NaviMesh* sample) = 0;
 	virtual void reset() = 0;
 	virtual void handleRender() = 0;
 	virtual void handleRenderOverlay(double* proj, double* model, int* view) = 0;
@@ -91,9 +92,9 @@ public:
 	virtual float GetAgentHeight() { return mAgentHeight; }
 	virtual float GetAgentClimb() { return mAgentMaxClimb; }
 
-	virtual dtNavMesh* getNavMesh() { return mNavMesh; }
-	virtual dtNavMeshQuery* getNavMeshQuery() { return mNavQuery; }
-	virtual dtCrowd* getCrowd() { return mCrowd; }
+	virtual dtNavMesh* GetNavMesh() { return mNavMesh; }
+	virtual dtNavMeshQuery* GetNavMeshQuery() { return mNavQuery; }
+	virtual dtCrowd* GetCrowd() { return mCrowd; }
 
 	void UpdateToolStates(const float dt);
 	void InitToolStates(NaviMesh* sample);

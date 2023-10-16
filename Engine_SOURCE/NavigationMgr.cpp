@@ -28,15 +28,16 @@ void NavigationMgr::FixedUpdate()
 {
 }
 
-void NavigationMgr::CreateNavigationMesh(const std::wstring& name)
+SoloNaviMesh* NavigationMgr::CreateNavigationMesh(const std::wstring& name)
 {
 	SoloNaviMesh* soloMesh = new SoloNaviMesh();
 
-	mNavMeshes.insert(std::make_pair(name, soloMesh));
-}
+	if (soloMesh == nullptr)
+		return nullptr;
 
-void NavigationMgr::SetRecast(math::Vector3* verts, int vertCount, int* indices, int indexCount)
-{
+	mNavMeshes.insert(std::make_pair(name, soloMesh));
+
+	return soloMesh;
 }
 
 void NavigationMgr::Navigation()

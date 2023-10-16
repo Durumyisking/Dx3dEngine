@@ -13,9 +13,7 @@ public:
 
 	bool Build();
 
-	bool SettingMesh(Mesh* mesh);
-	bool SettingMeshes(const std::vector<Mesh>& meshes);
-	bool SettingModel(Model* model);
+	bool SettingMesh(const std::wstring& name, GameObj* obj);
 
 	void Clear();
 

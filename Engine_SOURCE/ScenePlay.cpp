@@ -80,7 +80,6 @@
 
 #include "NavigationMgr.h"
 
-
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
 	, mCityCoinPanal(nullptr)
@@ -198,6 +197,7 @@ void ScenePlay::Initialize()
 		rigid->RemoveGravity();
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+
 	}
 
 
@@ -232,14 +232,6 @@ void ScenePlay::update()
 		mCoinPanal->GetScript<CoinUIScript>()->Reset();
 	}
 
-	if (KEY_TAP(F_5))
-	{
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_NaviRoadCollider");
-		if (model != nullptr)
-			GETSINGLE(NavigationMgr)->CreateNavigationMesh(model);
-	}
-
-
 	Scene::update();
 }
 
@@ -247,6 +239,24 @@ void ScenePlay::fixedUpdate()
 {
 
 	Scene::fixedUpdate();
+
+	static bool start = true;
+	if (start)
+	{
+		GameObj* obj = FindSceneGameObject(L"Plane");
+
+		if (obj == nullptr)
+			return;
+
+		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh(L"TestNaviMesh");
+
+		if (!naviMesh->SettingMesh(L"TestNaviMesh_Geom", obj))
+			int debug = 0;
+		if (!naviMesh->Build())
+			int debug = 0;
+
+		start = false;
+	}
 }
 
 void ScenePlay::render()

@@ -399,7 +399,7 @@
     </ClCompile>
     <ClCompile Include="LifeUI.cpp" />
     <ClCompile Include="NavigationMgr.cpp">
-      <Filter>Common\Navigation</Filter>
+      <Filter>Navigation</Filter>
     </ClCompile>
     <ClCompile Include="ModelObj.cpp">
       <Filter>Common\GameObj\ModelObj</Filter>
@@ -425,13 +425,13 @@
     <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
     <ClCompile Include="NaviMesh.cpp">
-      <Filter>Common\Navigation</Filter>
+      <Filter>Navigation</Filter>
     </ClCompile>
     <ClCompile Include="SoloNaviMesh.cpp">
-      <Filter>Common\Navigation</Filter>
+      <Filter>Navigation</Filter>
     </ClCompile>
     <ClCompile Include="InputGeom.cpp">
-      <Filter>Common\Navigation</Filter>
+      <Filter>Navigation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -867,7 +867,7 @@
     </ClInclude>
     <ClInclude Include="LifeUI.h" />
     <ClInclude Include="NavigationMgr.h">
-      <Filter>Common\Navigation</Filter>
+      <Filter>Navigation</Filter>
     </ClInclude>
     <ClInclude Include="ModelObj.h">
       <Filter>Common\GameObj\ModelObj</Filter>
@@ -887,13 +887,13 @@
     <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="TitleBGMScript.h" />
     <ClInclude Include="NaviMesh.h">
-      <Filter>Common\Navigation</Filter>
+      <Filter>Navigation</Filter>
     </ClInclude>
     <ClInclude Include="SoloNaviMesh.h">
-      <Filter>Common\Navigation</Filter>
+      <Filter>Navigation</Filter>
     </ClInclude>
     <ClInclude Include="InputGeom.h">
-      <Filter>Common\Navigation</Filter>
+      <Filter>Navigation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1477,11 +1477,11 @@
     <Filter Include="UI\UIObject">
       <UniqueIdentifier>{9ce3c0ca-6cf4-4526-a443-57ba40870484}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Common\Navigation">
+    <Filter Include="Navigation">
       <UniqueIdentifier>{c9afd7c8-42af-4f1e-9186-771c0333a93f}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
     <Filter Include="Common\GameObj\ModelObj">
       <UniqueIdentifier>{eb066cb6-46d6-4287-b5c6-99f710d47602}</UniqueIdentifier>
     </Filter>
