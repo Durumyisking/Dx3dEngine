@@ -103,6 +103,8 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Coin", L"Coin");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
 
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/HomeStageGroundCollider", L"HomeStageGroundCollider");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/NaviCollider", L"NaviCollider");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/TaxiCar/Car", L"Car");
 
 	*bfinish = true;
@@ -118,8 +120,6 @@ void ResourceMgr::LoadModel_CityWorld(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding003", L"CityWorldHomeBuilding003");
 	
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityGround", L"CityGround");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/HomeStageGroundCollider", L"HomeStageGroundCollider");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/NaviCollider", L"NaviCollider");
 
 
 	*bfinish = true;

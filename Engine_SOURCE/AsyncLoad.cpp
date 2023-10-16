@@ -244,26 +244,25 @@ void AsyncLoad::loadCityObjectMaterial()
 #pragma endregion
 
 #pragma region NaviCollider Material
-	createMaterial(L"BlueseatStepRepeat00", L"DeferredShader", L"NaviCollider_0Material", TextureState::AlNr);
-	createMaterial(L"MetalScaffoldRepeat00", L"DeferredShader", L"NaviCollider_1Material", TextureState::AlNrRg);
-	createMaterial(L"MetalScaffold00", L"DeferredShader", L"NaviCollider_2Material", TextureState::AlNrRg);
-	createMaterial(L"SideWalk00", L"DeferredShader", L"NaviCollider_3Material", TextureState::AlNrRg);
-	createMaterial(L"GroundCityLogo00", L"DeferredShader", L"NaviCollider_3Material", TextureState::AlMtNrRg);
-	createMaterial(L"GroundEarth00", L"DeferredShader", L"NaviCollider_4Material", TextureState::AlMtNrRg);
-	createMaterial(L"GroundMoon00", L"DeferredShader", L"NaviCollider_5Material", TextureState::AlNrRg);
-	createMaterial(L"GroundCityLogo02", L"DeferredShader", L"NaviCollider_6Material", TextureState::AlNrRg);
-	createMaterial(L"MetalManhole03", L"DeferredShader", L"NaviCollider_7Material", TextureState::AlMtNrRg);
-	createMaterial(L"GroundTile00", L"DeferredShader", L"NaviCollider_8Material", TextureState::AlNrRg);
-	createMaterial(L"GroundTile01", L"DeferredShader", L"NaviCollider_9Material", TextureState::AlNrRg);
-	createMaterial(L"MetalManhole01", L"DeferredShader", L"NaviCollider_10Material", TextureState::AlMtNrRg);
-	createMaterial(L"GroundLawn00", L"DeferredShader", L"NaviCollider_11Material", TextureState::AlNrRg);
-	createMaterial(L"GroundLawn01", L"DeferredShader", L"NaviCollider_12Material", TextureState::AlNrRg);
-	createMaterial(L"GroundSoil00", L"DeferredShader", L"NaviCollider_13Material", TextureState::AlNrRg);
-	createMaterial(L"SideWalk01", L"DeferredShader", L"NaviCollider_14Material", TextureState::AlNrRg);
-	createMaterial(L"SideWalk02", L"DeferredShader", L"NaviCollider_15Material", TextureState::AlNr);
-	createMaterial(L"ConcreteWall00", L"DeferredShader", L"NaviCollider_16Material", TextureState::AlNrRg);
-	createMaterial(L"RoadAsphaltGlossy00", L"DeferredShader", L"NaviCollider_17Material", TextureState::AlNrRg);
-
+	createMaterial(L"BlueseatStepRepeat00", L"DeferredShader", L"NaviCollider_0Material", TextureState::Nr); //AlNr
+	createMaterial(L"MetalScaffoldRepeat00", L"DeferredShader", L"NaviCollider_1Material", TextureState::Nr); //AlNrRg
+	createMaterial(L"MetalScaffold00", L"DeferredShader", L"NaviCollider_2Material", TextureState::Nr); //AlNrRg
+ 	createMaterial(L"SideWalk00", L"DeferredShader", L"NaviCollider_3Material", TextureState::Nr); //AlNrRg
+	createMaterial(L"GroundCityLogo00", L"DeferredShader", L"NaviCollider_4Material", TextureState::Nr); //AlMtNrRg
+	createMaterial(L"GroundEarth00", L"DeferredShader", L"NaviCollider_5Material", TextureState::Nr); //AlMtNrRg
+	createMaterial(L"GroundMoon00", L"DeferredShader", L"NaviCollider_6Material", TextureState::Nr); //AlNrRg
+	createMaterial(L"GroundCityLogo02", L"DeferredShader", L"NaviCollider_7Material", TextureState::Nr); //AlNrRg
+	createMaterial(L"RoadAsphaltGlossy00", L"DeferredShader", L"NaviCollider_8Material", TextureState::Nr); //AlMtNrRg
+	createMaterial(L"GroundTile00", L"DeferredShader", L"NaviCollider_9Material", TextureState::Nr); //AlNrRg
+	createMaterial(L"GroundTile01", L"DeferredShader", L"NaviCollider_10Material", TextureState::Nr);//AlNrRg
+	createMaterial(L"MetalManhole01", L"DeferredShader", L"NaviCollider_11Material", TextureState::Nr); //AlMtNrRg
+	createMaterial(L"GroundLawn00", L"DeferredShader", L"NaviCollider_12Material", TextureState::Nr); //AlNrRg
+	createMaterial(L"GroundLawn01", L"DeferredShader", L"NaviCollider_13Material", TextureState::Nr); //AlNrRg
+	createMaterial(L"GroundSoil00", L"DeferredShader", L"NaviCollider_14Material", TextureState::Nr); //AlNrRg
+	createMaterial(L"SideWalk01", L"DeferredShader", L"NaviCollider_15Material", TextureState::Nr); //AlNrRg
+	createMaterial(L"SideWalk02", L"DeferredShader", L"NaviCollider_16Material", TextureState::Nr); //AlNr
+	createMaterial(L"ConcreteWall00", L"DeferredShader", L"NaviCollider_17Material", TextureState::Nr); //AlNrRg
+	createMaterial(L"MetalManhole03", L"DeferredShader", L"NaviCollider_18Material", TextureState::Nr); //AlNrRg
 
 #pragma endregion
 
@@ -742,6 +741,13 @@ void AsyncLoad::createMaterial(std::wstring fileName, std::wstring shaderName, s
 		material = new Material();
 		material->SetShader(shader);
 		material->SetTextureByKey(fileName + L"_alb", eTextureSlot::Albedo);
+		GETSINGLE(ResourceMgr)->Insert<Material>(materialName, material);
+		break;
+	case AsyncLoad::TextureState::Nr:
+		shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
+		material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(fileName + L"_nrm", eTextureSlot::Normal);
 		GETSINGLE(ResourceMgr)->Insert<Material>(materialName, material);
 		break;
 	case AsyncLoad::TextureState::AlNr:

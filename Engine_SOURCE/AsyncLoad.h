@@ -18,6 +18,7 @@ public:
 	enum class TextureState
 	{
 		Al,
+		Nr,
 		AlNr,
 		AlRg,
 		AlNrRg,

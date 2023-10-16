@@ -75,6 +75,7 @@
 #include "CityGround.h"
 #include "CoinObject.h"
 #include "Car.h"
+#include "CityMapNaviObject.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -215,6 +216,9 @@ void ScenePlay::Initialize()
 
 		//Car* car = object::Instantiate<Car>(eLayerType::Objects, this, L"car");
 		//car->SetPos(Vector3(40.f, 10.f, 0.f));
+
+		//CityMapNaviObject* nai = object::Instantiate<CityMapNaviObject>(eLayerType::Objects, this, L"navi");
+		//nai->SetPos(Vector3(0.f, 10.f, 0.f));
 	}
 
 	CreatePlayerUI();
