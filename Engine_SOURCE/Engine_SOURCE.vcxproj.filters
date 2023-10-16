@@ -424,6 +424,17 @@
     </ClCompile>
     <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
+    <ClCompile Include="CityGround.cpp" />
+    <ClCompile Include="CoinObject.cpp" />
+    <ClCompile Include="Car.cpp" />
+    <ClCompile Include="CityMapNaviObject.cpp" />
+    <ClCompile Include="CityWorldBush.cpp" />
+    <ClCompile Include="CityWorldBushA.cpp" />
+    <ClCompile Include="CityWorldChairA.cpp" />
+    <ClCompile Include="CityWorldChairB.cpp" />
+    <ClCompile Include="CityWorldFlag.cpp" />
+    <ClCompile Include="BenchA.cpp" />
+    <ClCompile Include="CheckpointFlag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -877,6 +888,17 @@
     <ClInclude Include="Building.h" />
     <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="TitleBGMScript.h" />
+    <ClInclude Include="CityGround.h" />
+    <ClInclude Include="CoinObject.h" />
+    <ClInclude Include="Car.h" />
+    <ClInclude Include="CityMapNaviObject.h" />
+    <ClInclude Include="CityWorldBush.h" />
+    <ClInclude Include="CityWorldBushA.h" />
+    <ClInclude Include="CityWorldChairA.h" />
+    <ClInclude Include="CityWorldChairB.h" />
+    <ClInclude Include="CityWorldFlag.h" />
+    <ClInclude Include="BenchA.h" />
+    <ClInclude Include="CheckpointFlag.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

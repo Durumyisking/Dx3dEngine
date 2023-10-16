@@ -100,7 +100,19 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Packun", L"Packun");
 
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/SmokeParticle", L"CloudParticle");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Coin", L"Coin");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
+
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/HomeStageGroundCollider", L"HomeStageGroundCollider");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/NaviCollider", L"NaviCollider");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/TaxiCar/Car", L"Car");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldBush", L"CityWorldBush");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldBushA", L"CityWorldBushA");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldChairA", L"CityWorldChairA");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldChairB", L"CityWorldChairB");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBench000", L"CityWorldHomeBench000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CheckpointFlag", L"CheckpointFlag");
+
 	*bfinish = true;
 }
 
@@ -109,8 +121,12 @@ void ResourceMgr::LoadModel_CityWorld(bool* bfinish)
 {
 	//GETSINGLE(FileMgr)->StageFolderLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorld");
 
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding001", L"CityWorldHomeBuilding001");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding003", L"CityWorldHomeBuilding003");
+	
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityGround", L"CityGround");
+
 
 	*bfinish = true;
 }

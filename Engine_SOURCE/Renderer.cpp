@@ -1708,7 +1708,7 @@ namespace renderer
 #pragma endregion
 
 #pragma region CoinMaterial
-		Texture* coinTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Coin");
+		Texture* coinTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"CoinTexture");
 		Material* coinMaterial = new Material();
 		coinMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		coinMaterial->SetShader(uiSpriteShader);
@@ -1850,7 +1850,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Gauge_3", L"Textures/UI/Life/Gauge_3.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Lifeheart", L"Textures/UI/Life/heart.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"Coin", L"Textures/UI/CoinUI/Coin.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CoinTexture", L"Textures/UI/CoinUI/Coin.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"CityCoin", L"Textures/UI/CoinUI/CityCoin.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Bar", L"Textures/UI/CoinUI/bar.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"DottedLine", L"Textures/UI/Luna/DottedLine.png");

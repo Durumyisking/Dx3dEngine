@@ -18,12 +18,14 @@ public:
 	enum class TextureState
 	{
 		Al,
+		Nr,
 		AlNr,
 		AlRg,
 		AlNrRg,
 		AlMtNrRg,
 		AlEmMtNrRg,
 		AlEmMsNrRg,
+		AlMtMsNrRg,
 	};
 
 private:
