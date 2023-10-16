@@ -1,4 +1,4 @@
-#include "ScenePlay.h"
+Ôªø#include "ScenePlay.h"
 //#include "TimeMgr.h"
 //#include "InputMgr.h"
 //
@@ -72,7 +72,20 @@
 #include "AudioListener.h"
 #include "AudioSource.h"
 #include "Building.h"
+
 #include "BlockBrick.h"
+
+#include "CityGround.h"
+#include "CoinObject.h"
+#include "Car.h"
+#include "CityMapNaviObject.h"
+#include "CityWorldBush.h"
+#include "CityWorldBushA.h"
+#include "CityWorldChairA.h"
+#include "CityWorldChairB.h"
+#include "CityWorldFlag.h"
+#include "BenchA.h"
+#include "CheckpointFlag.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -108,7 +121,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ∑ŒµÂ ≈◊Ω∫∆Æ ∑ŒµÂΩ√ø° π›∫π«ÿº≠ ∏ÛΩ∫≈Õ ¡§¿« πÊ¡ˆ
+	//TestScene Î°úÎìú ÌÖåÏä§Ìä∏ Î°úÎìúÏãúÏóê Î∞òÎ≥µÌï¥ÏÑú Î™¨Ïä§ÌÑ∞ Ï†ïÏùò Î∞©ÏßÄ
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		{
@@ -201,8 +214,41 @@ void ScenePlay::Initialize()
 
 
 	{
-		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
-		block->SetPos(Vector3(40.f, -10.f, 0.f));
+		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+		//block->SetPos(Vector3(40.f, -10.f, 0.f));
+
+		//CityGround* ground = object::Instantiate<CityGround>(eLayerType::Objects, this, L"CityGround");
+		//ground->SetPos(Vector3(100.f, -10.f, 0.f));
+
+		//CoinObject* coin = object::Instantiate<CoinObject>(eLayerType::Objects, this, L"CoinObject");
+		//coin->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//Car* car = object::Instantiate<Car>(eLayerType::Objects, this, L"car");
+		//car->SetPos(Vector3(40.f, 10.f, 0.f));
+
+		//CityMapNaviObject* nai = object::Instantiate<CityMapNaviObject>(eLayerType::Objects, this, L"navi");
+		//nai->SetPos(Vector3(0.f, 10.f, 0.f));
+
+		//CityWorldBush* bush = object::Instantiate<CityWorldBush>(eLayerType::Objects, this, L"bush");
+		//bush->SetPos(Vector3(0.f, 10.f, 0.f));
+
+		//CityWorldBushA* bush = object::Instantiate<CityWorldBushA>(eLayerType::Objects, this, L"bushA");
+		//bush->SetPos(Vector3(0.f, 10.f, 0.f));
+
+		//CityWorldChairA* chair = object::Instantiate<CityWorldChairA>(eLayerType::Objects, this, L"chairA");
+		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//CityWorldChairB* chair = object::Instantiate<CityWorldChairB>(eLayerType::Objects, this, L"chairB");
+		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//CityWorldFlag* chair = object::Instantiate<CityWorldFlag>(eLayerType::Objects, this, L"CityWorldFlag");
+		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//BenchA* bench = object::Instantiate<BenchA>(eLayerType::Objects, this, L"BenchA");
+		//bench->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//CheckpointFlag* checkPointFlag = object::Instantiate<CheckpointFlag>(eLayerType::Objects, this, L"CheckpointFlag");
+		//checkPointFlag->SetPos(Vector3(0.f, 1.f, 0.f));
 	}
 	{
 		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
