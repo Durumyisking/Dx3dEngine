@@ -237,6 +237,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ChracterController.h" />
     <ClInclude Include="CityGround.h" />
     <ClInclude Include="CityMapNaviObject.h" />
+    <ClInclude Include="CityWorldBush.h" />
+    <ClInclude Include="CityWorldBushA.h" />
     <ClInclude Include="ClientToServer.h" />
     <ClInclude Include="CoinObject.h" />
     <ClInclude Include="CoinUIScript.h" />
@@ -401,6 +403,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="ChracterController.cpp" />
     <ClCompile Include="CityGround.cpp" />
     <ClCompile Include="CityMapNaviObject.cpp" />
+    <ClCompile Include="CityWorldBush.cpp" />
+    <ClCompile Include="CityWorldBushA.cpp" />
     <ClCompile Include="CoinObject.cpp" />
     <ClCompile Include="CoinUIScript.cpp" />
     <ClCompile Include="Collider2D.cpp" />

@@ -76,6 +76,8 @@
 #include "CoinObject.h"
 #include "Car.h"
 #include "CityMapNaviObject.h"
+#include "CityWorldBush.h"
+#include "CityWorldBushA.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -219,6 +221,12 @@ void ScenePlay::Initialize()
 
 		//CityMapNaviObject* nai = object::Instantiate<CityMapNaviObject>(eLayerType::Objects, this, L"navi");
 		//nai->SetPos(Vector3(0.f, 10.f, 0.f));
+
+		//CityWorldBush* bush = object::Instantiate<CityWorldBush>(eLayerType::Objects, this, L"bush");
+		//bush->SetPos(Vector3(0.f, 10.f, 0.f));
+
+		//CityWorldBushA* bush = object::Instantiate<CityWorldBushA>(eLayerType::Objects, this, L"bush");
+		//bush->SetPos(Vector3(0.f, 10.f, 0.f));
 	}
 
 	CreatePlayerUI();

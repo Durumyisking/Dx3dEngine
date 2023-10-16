@@ -428,6 +428,8 @@
     <ClCompile Include="CoinObject.cpp" />
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="CityMapNaviObject.cpp" />
+    <ClCompile Include="CityWorldBush.cpp" />
+    <ClCompile Include="CityWorldBushA.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -885,6 +887,8 @@
     <ClInclude Include="CoinObject.h" />
     <ClInclude Include="Car.h" />
     <ClInclude Include="CityMapNaviObject.h" />
+    <ClInclude Include="CityWorldBush.h" />
+    <ClInclude Include="CityWorldBushA.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

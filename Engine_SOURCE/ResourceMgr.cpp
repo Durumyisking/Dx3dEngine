@@ -106,6 +106,8 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/HomeStageGroundCollider", L"HomeStageGroundCollider");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/NaviCollider", L"NaviCollider");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/TaxiCar/Car", L"Car");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldBush", L"CityWorldBush");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldBushA", L"CityWorldBushA");
 
 	*bfinish = true;
 }
