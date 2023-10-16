@@ -434,7 +434,7 @@ void AsyncLoad::loadCityTexture()
 
 #pragma region CityWorldHomeBuilding004
 
-	textureLoad(L"BillEntrance00", L"CityWorldHomeBuilding/Image", TextureState::alem);
+	textureLoad(L"BillEntrance00", L"CityWorldHomeBuilding/Image", TextureState::AlEm);
 	textureLoad(L"MetalFence00", L"CityWorldHomeBuilding/Image", TextureState::AlMtNrRg);
 
 #pragma endregion
