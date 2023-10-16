@@ -153,7 +153,7 @@ void AsyncLoad::LoadTextures()
 
 	renderer::CreateUITexture();
 
-	loadCityTexture();
+	//loadCityTexture();
 	LoadMaterials();
 
 	mbTextureLoadFinish = true;
@@ -208,7 +208,7 @@ void AsyncLoad::LoadMaterials()
 
 	loadGoomba(L"DeferredShader");
 	loadMario( L"DeferredShader");
-	loadCityObjectMaterial();
+	//loadCityObjectMaterial();
 
 	renderer::CreateUIMaterial();
 }
