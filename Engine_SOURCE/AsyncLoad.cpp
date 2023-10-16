@@ -347,7 +347,7 @@ void AsyncLoad::loadCityObjectMaterial()
 #pragma endregion
 
 #pragma region Coin Material
-	createMaterial(L"coinbody00", L"DeferredShader", L"CoinMaterial", TextureState::AlNrRg);
+	createMaterial(L"coinbody00", L"DeferredShader", L"CoinObjectMaterial", TextureState::AlNrRg);
 
 #pragma endregion
 

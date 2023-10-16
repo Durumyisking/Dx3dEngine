@@ -218,8 +218,8 @@ void ScenePlay::Initialize()
 		//CityGround* ground = object::Instantiate<CityGround>(eLayerType::Objects, this, L"CityGround");
 		//ground->SetPos(Vector3(100.f, -10.f, 0.f));
 
-		//CoinObject* coin = object::Instantiate<CoinObject>(eLayerType::Objects, this, L"Coin");
-		//coin->SetPos(Vector3(-40.f, 0.f, 0.f));
+		//CoinObject* coin = object::Instantiate<CoinObject>(eLayerType::Objects, this, L"CoinObject");
+		//coin->SetPos(Vector3(0.f, 1.f, 0.f));
 
 		//Car* car = object::Instantiate<Car>(eLayerType::Objects, this, L"car");
 		//car->SetPos(Vector3(40.f, 10.f, 0.f));

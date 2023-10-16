@@ -25,19 +25,19 @@ void CoinObject::Initialize()
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
 	mr->SetModel(model);
 
-	mr->SetMaterialByKey(L"CoinMaterial",0);
+	mr->SetMaterialByKey(L"CoinObjectMaterial");
 
-	//this->GetComponent<Transform>()->SetOffsetScale(0.005f);
+	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Capsule, { 5.f, 5.f, 10.f });
+	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 1.f, 1.f, 1.f });
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();
 
 	AddComponent<PhysXCollider>(eComponentType::Collider);
 
-
+	this->GetComponent<Transform>()->SetPhysicalRotation(Vector3(90.f, 0.f, 0.f));
 
 	GameObj::Initialize();
 }
