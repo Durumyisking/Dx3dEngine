@@ -433,6 +433,8 @@
     <ClCompile Include="CityWorldChairA.cpp" />
     <ClCompile Include="CityWorldChairB.cpp" />
     <ClCompile Include="CityWorldFlag.cpp" />
+    <ClCompile Include="BenchA.cpp" />
+    <ClCompile Include="CheckpointFlag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -895,6 +897,8 @@
     <ClInclude Include="CityWorldChairA.h" />
     <ClInclude Include="CityWorldChairB.h" />
     <ClInclude Include="CityWorldFlag.h" />
+    <ClInclude Include="BenchA.h" />
+    <ClInclude Include="CheckpointFlag.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

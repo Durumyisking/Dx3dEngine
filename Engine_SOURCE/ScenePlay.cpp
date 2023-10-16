@@ -81,6 +81,8 @@
 #include "CityWorldChairA.h"
 #include "CityWorldChairB.h"
 #include "CityWorldFlag.h"
+#include "BenchA.h"
+#include "CheckpointFlag.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -237,9 +239,14 @@ void ScenePlay::Initialize()
 		//CityWorldChairB* chair = object::Instantiate<CityWorldChairB>(eLayerType::Objects, this, L"chairB");
 		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
 
-
 		//CityWorldFlag* chair = object::Instantiate<CityWorldFlag>(eLayerType::Objects, this, L"CityWorldFlag");
 		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//BenchA* bench = object::Instantiate<BenchA>(eLayerType::Objects, this, L"BenchA");
+		//bench->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//CheckpointFlag* checkPointFlag = object::Instantiate<CheckpointFlag>(eLayerType::Objects, this, L"CheckpointFlag");
+		//checkPointFlag->SetPos(Vector3(0.f, 1.f, 0.f));
 	}
 
 	CreatePlayerUI();

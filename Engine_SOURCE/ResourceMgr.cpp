@@ -110,7 +110,8 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldBushA", L"CityWorldBushA");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldChairA", L"CityWorldChairA");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldChairB", L"CityWorldChairB");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CItyWorldFlag", L"CItyWorldFlag");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBench000", L"CityWorldHomeBench000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CheckpointFlag", L"CheckpointFlag");
 
 	*bfinish = true;
 }
