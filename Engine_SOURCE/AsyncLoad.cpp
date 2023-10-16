@@ -41,7 +41,6 @@ void AsyncLoad::LoadModels()
 	std::thread thread2([this]()
 	{
 		GETSINGLE(ResourceMgr)->LoadModel_Monster(&mbMonsterLoadFinish);
-	   // GETSINGLE(ResourceMgr)->LoadModel_CityWorld(&mbMapLoadFinish);
 	});
 	thread2.detach();
 
@@ -154,7 +153,7 @@ void AsyncLoad::LoadTextures()
 
 	renderer::CreateUITexture();
 
-	//loadCityTexture();
+	loadCityTexture();
 	LoadMaterials();
 
 	mbTextureLoadFinish = true;
@@ -209,7 +208,7 @@ void AsyncLoad::LoadMaterials()
 
 	loadGoomba(L"DeferredShader");
 	loadMario( L"DeferredShader");
-	//loadCityObjectMaterial();
+	loadCityObjectMaterial();
 
 	renderer::CreateUIMaterial();
 }
@@ -349,7 +348,7 @@ void AsyncLoad::loadCityObjectMaterial()
 #pragma endregion
 
 #pragma region Coin Material
-	createMaterial(L"coinbody00", L"DeferredShader", L"CoinMaterial", TextureState::AlNr);
+	createMaterial(L"coinbody00", L"DeferredShader", L"CoinMaterial", TextureState::AlNrRg);
 
 #pragma endregion
 

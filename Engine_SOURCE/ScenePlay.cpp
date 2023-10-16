@@ -73,6 +73,8 @@
 #include "AudioSource.h"
 #include "Building.h"
 #include "CityGround.h"
+#include "CoinObject.h"
+#include "Car.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -202,11 +204,17 @@ void ScenePlay::Initialize()
 
 
 	{
-		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
-		block->SetPos(Vector3(40.f, -10.f, 0.f));
+		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+		//block->SetPos(Vector3(40.f, -10.f, 0.f));
 
-		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Objects, this, L"CityGround");
-		ground->SetPos(Vector3(100.f, -10.f, 0.f));
+		//CityGround* ground = object::Instantiate<CityGround>(eLayerType::Objects, this, L"CityGround");
+		//ground->SetPos(Vector3(100.f, -10.f, 0.f));
+
+		//CoinObject* coin = object::Instantiate<CoinObject>(eLayerType::Objects, this, L"Coin");
+		//coin->SetPos(Vector3(-40.f, 0.f, 0.f));
+
+		//Car* car = object::Instantiate<Car>(eLayerType::Objects, this, L"car");
+		//car->SetPos(Vector3(40.f, 10.f, 0.f));
 	}
 
 	CreatePlayerUI();

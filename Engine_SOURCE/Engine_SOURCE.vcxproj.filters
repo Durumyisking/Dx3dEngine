@@ -425,6 +425,8 @@
     <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
     <ClCompile Include="CityGround.cpp" />
+    <ClCompile Include="CoinObject.cpp" />
+    <ClCompile Include="Car.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -879,6 +881,8 @@
     <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="TitleBGMScript.h" />
     <ClInclude Include="CityGround.h" />
+    <ClInclude Include="CoinObject.h" />
+    <ClInclude Include="Car.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
