@@ -78,6 +78,9 @@
 #include "CityMapNaviObject.h"
 #include "CityWorldBush.h"
 #include "CityWorldBushA.h"
+#include "CityWorldChairA.h"
+#include "CityWorldChairB.h"
+#include "CityWorldFlag.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -225,8 +228,18 @@ void ScenePlay::Initialize()
 		//CityWorldBush* bush = object::Instantiate<CityWorldBush>(eLayerType::Objects, this, L"bush");
 		//bush->SetPos(Vector3(0.f, 10.f, 0.f));
 
-		//CityWorldBushA* bush = object::Instantiate<CityWorldBushA>(eLayerType::Objects, this, L"bush");
+		//CityWorldBushA* bush = object::Instantiate<CityWorldBushA>(eLayerType::Objects, this, L"bushA");
 		//bush->SetPos(Vector3(0.f, 10.f, 0.f));
+
+		//CityWorldChairA* chair = object::Instantiate<CityWorldChairA>(eLayerType::Objects, this, L"chairA");
+		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//CityWorldChairB* chair = object::Instantiate<CityWorldChairB>(eLayerType::Objects, this, L"chairB");
+		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
+
+
+		//CityWorldFlag* chair = object::Instantiate<CityWorldFlag>(eLayerType::Objects, this, L"CityWorldFlag");
+		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
 	}
 
 	CreatePlayerUI();

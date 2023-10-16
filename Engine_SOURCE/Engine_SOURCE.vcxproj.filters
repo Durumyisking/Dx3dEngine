@@ -430,6 +430,9 @@
     <ClCompile Include="CityMapNaviObject.cpp" />
     <ClCompile Include="CityWorldBush.cpp" />
     <ClCompile Include="CityWorldBushA.cpp" />
+    <ClCompile Include="CityWorldChairA.cpp" />
+    <ClCompile Include="CityWorldChairB.cpp" />
+    <ClCompile Include="CityWorldFlag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -889,6 +892,9 @@
     <ClInclude Include="CityMapNaviObject.h" />
     <ClInclude Include="CityWorldBush.h" />
     <ClInclude Include="CityWorldBushA.h" />
+    <ClInclude Include="CityWorldChairA.h" />
+    <ClInclude Include="CityWorldChairB.h" />
+    <ClInclude Include="CityWorldFlag.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
