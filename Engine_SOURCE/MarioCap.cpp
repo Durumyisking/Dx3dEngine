@@ -185,6 +185,7 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		SetCapState(MarioCap::eCapState::Capture);
 
 		dynamic_cast<Player*>(GetOwner())->SetPlayerState(Player::ePlayerState::Capture);
+		GetComponent<GenericAnimator>()->Stop();
 		Pause();
 		//GetOwner()->GetPhysical()->RemoveActorToPxScene();
 
@@ -271,10 +272,9 @@ void MarioCap::FlyStart()
 	if (animator->IsRunning())
 		animator->Stop();
 
-	
 	// 플레이어의 현재 포지션과 Player forWard 를 가져옴
 	Transform* tr = GetTransform();
-	Vector3 pos = tr->GetPhysicalPosition();
+	Vector3 pos = mOwner->GetTransform()->GetPhysicalPosition();
 	Vector3 playerforward = mOwner->GetTransform()->WorldForward();
 
 	AnimatorParam param;
