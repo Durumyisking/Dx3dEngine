@@ -21,6 +21,7 @@ public:
 		Nr,
 		AlNr,
 		AlRg,
+		AlEm,
 		AlNrRg,
 		AlMtNrRg,
 		AlEmMtNrRg,

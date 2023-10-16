@@ -39,8 +39,6 @@ void Building::Initialize()
 
 	AddComponent<PhysXCollider>(eComponentType::Collider);
 
-
-
 	GameObj::Initialize();
 }
 

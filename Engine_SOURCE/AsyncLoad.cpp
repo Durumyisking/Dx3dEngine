@@ -230,12 +230,27 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding001_3Material", TextureState::AlNr);
 
 #pragma endregion
+
 #pragma region CityWorldHomeBuilding003 Material
 	createMaterial(L"GroundLawn00", L"DeferredShader", L"HomeBuilding003_0Material", TextureState::AlNrRg);
 	createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding003_1Material", TextureState::AlMtNrRg);
 
 #pragma endregion
 
+#pragma region CityWorldHomeBuilding004 Material
+	createMaterial(L"GroundLawn00", L"DeferredShader", L"HomeBuilding004_0Material", TextureState::AlNrRg);
+	createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding004_1Material", TextureState::AlMtNrRg);
+	createMaterial(L"GroundLawn00", L"DeferredShader", L"HomeBuilding004_2Material", TextureState::AlNrRg);
+	createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding004_3Material", TextureState::AlMtNrRg);
+	createMaterial(L"GroundLawn00", L"DeferredShader", L"HomeBuilding004_4Material", TextureState::AlNrRg);
+	createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding004_5Material", TextureState::AlMtNrRg);
+	createMaterial(L"GroundLawn00", L"DeferredShader", L"HomeBuilding004_6Material", TextureState::AlNrRg);
+	createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding004_7Material", TextureState::AlMtNrRg);
+	createMaterial(L"GroundLawn00", L"DeferredShader", L"HomeBuilding004_8Material", TextureState::AlNrRg);
+	createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding004_9Material", TextureState::AlMtNrRg);
+	createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding004_10Material", TextureState::AlMtNrRg);
+
+#pragma endregion
 #pragma region HomeStageGroundCollider Material
 	createMaterial(L"SideWalk01", L"DeferredShader", L"StageGroundCollider_0Material", TextureState::AlNrRg);
 	createMaterial(L"ConcreteWall00", L"DeferredShader", L"StageGroundCollider_1Material", TextureState::AlNrRg);
@@ -414,6 +429,13 @@ void AsyncLoad::loadCityTexture()
 	//CityWorldHomeBuilding003
 	textureLoad(L"GroundLawn00", L"CityWorldHomeBuilding003/Image", TextureState::AlNrRg);
 	textureLoad(L"MetalFence00", L"CityWorldHomeBuilding003/Image", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeBuilding004
+
+	textureLoad(L"BillEntrance00", L"CityWorldHomeBuilding/Image", TextureState::alem);
+	textureLoad(L"MetalFence00", L"CityWorldHomeBuilding/Image", TextureState::AlMtNrRg);
 
 #pragma endregion
 
@@ -837,6 +859,10 @@ void AsyncLoad::textureLoad(std::wstring fileName, std::wstring path, TextureSta
 	case AsyncLoad::TextureState::AlRg:
 		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_alb", path + L"/" + fileName + L"_alb.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_rgh", path + L"/" + fileName + L"_rgh.png");
+		break;
+	case AsyncLoad::TextureState::AlEm:
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_alb", path + L"/" + fileName + L"_alb.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_emm", path + L"/" + fileName + L"_emm.png");
 		break;
 	case AsyncLoad::TextureState::AlNrRg:
 		GETSINGLE(ResourceMgr)->Load<Texture>(fileName + L"_alb", path + L"/" + fileName + L"_alb.png");
