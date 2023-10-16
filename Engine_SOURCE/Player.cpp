@@ -103,8 +103,8 @@ void Player::Initialize()
 	mMeshRenderer->SetMaterialByKey(L"marioBodyMaterial", 0);
 
 
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.1f, 0.25f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.1f, 0.25f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	mRigidBody->SetFriction(Vector3(40.f, 0.f, 40.f));
 
@@ -287,6 +287,7 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 				mRigidBody->SetAirOff();
 				mRigidBody->SetVelocity(AXIS::Y, 0.f);
 				SetPlayerState(Player::ePlayerState::Jump);
+				GetBoneAnimator()->ResetAnimator();
 			}
 		}
 	}

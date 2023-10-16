@@ -23,8 +23,11 @@ CameraScript::CameraScript()
 	, mbShaking(false)
 	, mShakeParams{}
 	, mShakeTimer(0.f)
-
+	, mTargetOffsetDir(Vector3(0.f, 1.f, 1.f))
+	, mTargetOffsetScalar(20.f)
+	, mbTargetMoveInstant(true)
 {
+	mTargetOffsetDir.Normalize();
 }
 
 CameraScript::~CameraScript()
@@ -39,8 +42,6 @@ void CameraScript::Initialize()
 
 void CameraScript::Update()
 {
-
-	this->GetOwner();
 	mLookAt = mTransform->GetPosition();
 
 	mTarget = mCameraObject->GetTarget();
@@ -151,16 +152,26 @@ void CameraScript::TargetMove()
 			mTarget = nullptr;
 		else
 		{
-			if (mCamStep > mCameraObject->GetFarDistFromTarget())
+			// 타겟에 카메라 고정
+			if (mbTargetMoveInstant)
 			{
-				mLookAt.x = mCameraObject->GetTarget()->GetPos().x;
-				mLookAt.y = mCameraObject->GetTarget()->GetPos().y;
-
-				mCameraObject->SetTarget(nullptr);
+				// 타겟이랑 동일한 위치에서 front의 음수방향으로 offsetScalar만큼 더해주면 된다.
+				mLookAt = mCameraObject->GetTarget()->GetPos();
+				mLookAt += -mTransform->Forward() * mTargetOffsetScalar;
 			}
 			else
 			{
-				mLookAt += mCameraObject->GetCamDir() * mCamStep;
+				// 컷씬등에서 카메라 이동하는거 하고싶으면 사용하면 됨
+				// todo : 버그 있음 고쳐야함
+				if (mCamStep + mTargetOffsetScalar > mCameraObject->GetFarDistFromTarget())
+				{
+					mLookAt = mCameraObject->GetTarget()->GetPos();
+					mCameraObject->SetTarget(nullptr);
+				}
+				else
+				{
+					mLookAt += mCameraObject->GetCamDir() * mCamStep;
+				}
 			}
 		}
 	}

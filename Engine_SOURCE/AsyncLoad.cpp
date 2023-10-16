@@ -207,8 +207,8 @@ void AsyncLoad::LoadMaterials()
 
 	createMaterial(L"BrickBlockBody", L"DeferredShader", L"BrickBlockMaterial", TextureState::AlEmMtNrRg);
 
-	loadGoomba(L"DeferredShader");
-	loadMario( L"DeferredShader");
+	loadGoomba(L"PBRShader");
+	loadMario( L"PBRShader");
 	loadCityObjectMaterial();
 
 	renderer::CreateUIMaterial();

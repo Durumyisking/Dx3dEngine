@@ -58,6 +58,30 @@ void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geom
 //		createUniversalShape();
 }
 
+void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, Vector3 localPos, MassProperties massProperties)
+{
+	if (geometryType == eGeometryType::ConvexMesh)
+	{
+		InitialConvexMeshProperties(actorType, geometrySize);
+	}
+	if (geometryType == eGeometryType::TriangleMesh)
+	{
+		InitialTriangleMeshProperties(geometrySize);
+	}
+
+	mActorType = actorType;
+	mGeometryType = geometryType;
+	mSize = geometrySize;
+
+	createPhysicsProperties(massProperties);
+	mMainGeometry = std::make_shared<Geometry>(createGeometry(mGeometryType, mSize));
+	createActor();
+	CreateMainShape(localPos);
+	AddActorToPxScene();
+
+	mbSceneIncludActor = true;
+}
+
 void Physical::InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, Model* model, MassProperties massProperties)
 {
 	if (model == nullptr)

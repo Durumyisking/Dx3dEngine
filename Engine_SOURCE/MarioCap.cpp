@@ -187,6 +187,9 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		dynamic_cast<Player*>(GetOwner())->SetPlayerState(Player::ePlayerState::Capture);
 		Pause();
 		//GetOwner()->GetPhysical()->RemoveActorToPxScene();
+
+		// 카메라의 주인을 캡처 대상으로 바꿔준다.
+		renderer::mainCamera->SetTarget(gameObject);
 	}
 }
 
