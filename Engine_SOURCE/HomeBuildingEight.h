@@ -2,13 +2,11 @@
 #include "GameObj.h"
 
 class MeshRenderer;
-class Building : public GameObj
+class HomeBuildingEight : public GameObj
 {
-
 public:
-	Building();
-	Building(const std::wstring& modelKey, std::vector<std::wstring> array);
-	virtual ~Building();
+	HomeBuildingEight();
+	virtual ~HomeBuildingEight();
 
 	virtual void Initialize() override;
 	virtual void Update() override;
@@ -20,6 +18,8 @@ public:
 	virtual void OnTriggerPersist(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
 
+	void CreateBuilding(const std::wstring& modelKey, int count, const std::wstring& ...);
+
 private:
-	std::vector<std::wstring> MaterialArray;
+
 };
