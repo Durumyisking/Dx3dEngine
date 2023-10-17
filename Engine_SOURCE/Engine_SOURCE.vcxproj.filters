@@ -492,6 +492,7 @@
     <ClCompile Include="HomeBuildingEight.cpp">
       <Filter>Common\GameObj\Buildings</Filter>
     </ClCompile>
+    <ClCompile Include="CreateObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -1011,6 +1012,7 @@
     <ClInclude Include="HomeBuildingEight.h">
       <Filter>Common\GameObj\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="CreateObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

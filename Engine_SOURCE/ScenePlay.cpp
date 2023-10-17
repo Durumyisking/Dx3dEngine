@@ -91,6 +91,8 @@
 #include "HomeBuildingSeven.h"
 #include "HomeBuildingEight.h"
 
+#include "CreateObject.h"
+
 #include "Goomba.h"
 #include "Packun.h"
 
@@ -263,11 +265,16 @@ void ScenePlay::Initialize()
 		//HomeBuildingSeven* homeBuildingSeven = object::Instantiate<HomeBuildingSeven>(eLayerType::Objects, this, L"homeBuildingSeven");
 		//homeBuildingSeven->SetPos(Vector3(0.f, 1.f, 0.f));
 
-		HomeBuildingEight* homeBuildingEight = object::Instantiate<HomeBuildingEight>(eLayerType::Objects, this, L"homeBuildingEight");
-		homeBuildingEight->SetPos(Vector3(0.f, 1.f, 0.f));
+		//HomeBuildingEight* homeBuildingEight = object::Instantiate<HomeBuildingEight>(eLayerType::Objects, this, L"homeBuildingEight");
+		//homeBuildingEight->SetPos(Vector3(0.f, 1.f, 0.f));
 
-		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+		//std::vector<std::wstring> array = { L"GlassBuildingWallMaterial" ,L"RoofConcrete00Material" ,L"RoofConcrete01Material" ,L"WallGlassPaintedSteelMaterial" };
+		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building", L"CityWorldHomeBuilding002",array);
 		//block->SetPos(Vector3(40.f, -10.f, 0.f));
+
+		//std::vector<std::wstring> array = { L"GlassBuildingWallMaterial" ,L"RoofConcrete00Material" ,L"RoofConcrete01Material" ,L"WallGlassPaintedSteelMaterial" };
+		//CreateObject* object = object::Instantiate<CreateObject>(eLayerType::Objects, this, L"Building", L"CityWorldHomeBuilding002", array);
+		//object->SetPos(Vector3(40.f, -10.f, 0.f));
 
 	}
 	{

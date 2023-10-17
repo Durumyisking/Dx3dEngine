@@ -80,8 +80,8 @@ namespace object
 	template <typename T>
 	static T* Instantiate(enums::eLayerType layerType, Scene* scene, std::wstring name , std::wstring materialKey, std::vector<std::wstring> array)
 	{
-		T* gameObj = new T();
-		Layer& layer = scene->GetLayer(layerType, materialKey, array);
+		T* gameObj = new T(materialKey, array);
+		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
 		layer.PushAddedObject(gameObj);
 

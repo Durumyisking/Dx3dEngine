@@ -6,39 +6,9 @@
 #include "PhysXCollider.h"
 
 Building::Building()
-	:MaterialArray{}
 {
 
 }
-
-Building::Building(const std::wstring& modelKey, std::vector<std::wstring> array)
-	:MaterialArray(array)
-{
-	//assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
-	//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(modelKey);
-	//assert(model);
-
-	//MeshRenderer* mr = GetComponent<MeshRenderer>();
-	//mr->SetModel(model);
-
-
-	//for (size_t i = 0; i < MaterialArray.size(); i++)
-	//{
-	//	mr->SetMaterialByKey(MaterialArray[i], i);
-	//}
-
-	//this->GetComponent<Transform>()->SetOffsetScale(0.005f);
-
-	//Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	//physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 10.f, 50.f, 10.f });
-
-	//PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	//rigid->RemoveGravity();
-
-	//AddComponent<PhysXCollider>(eComponentType::Collider);
-}
-
 Building::~Building()
 {
 
