@@ -330,6 +330,122 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 	return Vector3::Zero;
 }
 
+Vector3 PhysXCollider::ComputePenetration_Direction(GameObj* gameObject)
+{
+	eGeometryType eGeometryType = GetPhysical()->GetGeometryType();
+	if (!gameObject->GetPhysical())
+		return Vector3::Zero;
+
+	switch (eGeometryType)
+	{
+	case eGeometryType::Box:
+	{
+		PxBoxGeometry boxGeom = GetPhysical()->GetGeometries()->boxGeom;
+		PxTransform otherTransform = gameObject->GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose();
+		bool bIsPenet = false;
+		switch (gameObject->GetPhysical()->GetGeometryType())
+		{
+		case eGeometryType::Box:
+		{
+			PxBoxGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->boxGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, boxGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			return convert::PxVec3ToVector3(mPenetDir);
+		}
+		break;
+		case eGeometryType::Capsule:
+		{
+			PxCapsuleGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->capsuleGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, boxGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			return convert::PxVec3ToVector3(mPenetDir);
+		}
+		break;
+		case eGeometryType::Sphere:
+		{
+			PxSphereGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->sphereGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, boxGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			return convert::PxVec3ToVector3(mPenetDir);
+		}
+		break;
+		default:
+			break;
+		}
+	}
+	break;
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	case eGeometryType::Capsule:
+	{
+		PxCapsuleGeometry capsuleGeom = GetPhysical()->GetGeometries()->capsuleGeom;
+		PxTransform otherTransform = gameObject->GetTransform()->GetPxTransform();
+
+		bool bIsPenet = false;
+		switch (gameObject->GetPhysical()->GetGeometryType())
+		{
+		case eGeometryType::Box:
+		{
+			PxBoxGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->boxGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, capsuleGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			return convert::PxVec3ToVector3(mPenetDir);
+		}
+		break;
+		case eGeometryType::Capsule:
+		{
+			PxCapsuleGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->capsuleGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, capsuleGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			return convert::PxVec3ToVector3(mPenetDir);
+		}
+		break;
+		case eGeometryType::Sphere:
+		{
+			PxSphereGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->sphereGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, capsuleGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			return convert::PxVec3ToVector3(mPenetDir);
+		}
+		break;
+		default:
+			break;
+		}
+	}
+	break;
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	case eGeometryType::Sphere:
+	{
+		PxTransform otherTransform = gameObject->GetTransform()->GetPxTransform();
+		PxSphereGeometry sphereGeom = GetPhysical()->GetGeometries()->sphereGeom;
+		bool bIsPenet = false;
+		switch (gameObject->GetPhysical()->GetGeometryType())
+		{
+		case eGeometryType::Box:
+		{
+			PxBoxGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->boxGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, sphereGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			return convert::PxVec3ToVector3(mPenetDir);
+		}
+		break;
+		case eGeometryType::Capsule:
+		{
+			PxCapsuleGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->capsuleGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, sphereGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			return convert::PxVec3ToVector3(mPenetDir);
+		}
+		break;
+		case eGeometryType::Sphere:
+		{
+			PxSphereGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->sphereGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, sphereGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			return convert::PxVec3ToVector3(mPenetDir);
+		}
+		break;
+		default:
+			break;
+		}
+	}
+	break;
+	}
+
+	return Vector3::Zero;
+}
+
 void PhysXCollider::createDebugGeometry(std::shared_ptr<Geometry> geometries)
 {
 	switch (geometries->eGeomType)

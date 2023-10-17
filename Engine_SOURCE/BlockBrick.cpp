@@ -26,7 +26,7 @@ void BlockBrick::Initialize()
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
 	mr->SetModel(model);
 
-	mr->SetMaterialByKey(L"BrickBlockMaterial", 0);
+	mr->SetMaterialByKey(L"BlockBrickMaterial", 0);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 

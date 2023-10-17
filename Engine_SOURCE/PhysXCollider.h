@@ -29,6 +29,7 @@ public:
 
     bool Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance);
     Vector3 ComputePenetration(GameObj* gameObject);
+    Vector3 ComputePenetration_Direction(GameObj* gameObject);
 
 
     PxFilterData& GetFilterData()  { return mFilterData; }
