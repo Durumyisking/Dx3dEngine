@@ -1,10 +1,6 @@
 #pragma once
 #include "Engine.h"
 #include "SimpleMath.h"
-#include "../External/Recast/include/Recast.h"
-#include "../External/Detour/include/DetourNavMesh.h"
-#include "../External/Detour/include/DetourNavMeshBuilder.h"
-
 #include "SoloNaviMesh.h"
 
 class Model;
@@ -17,8 +13,11 @@ public:
 	void FixedUpdate();
 
 	SoloNaviMesh* CreateNavigationMesh(const std::wstring& name);
-	
-	void Navigation();
+
+	bool SettingMesh(SoloNaviMesh* soloMesh, std::wstring path);
+
+	void EnableLog(bool tf) { mContext->enableLog(tf); }
+	void EnableTimer(bool tf) { mContext->enableTimer(tf); }
 
 	template<typename T>
 	T* GetNaviMesh(const std::wstring& name)
@@ -32,4 +31,5 @@ public:
 
 private:
 	std::map<std::wstring, SoloNaviMesh*> mNavMeshes;
+	rcContext* mContext;
 };

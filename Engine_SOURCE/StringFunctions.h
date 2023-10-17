@@ -20,6 +20,8 @@ void UniCodeToUTF8(const std::wstring& text, std::string& out);
 void AnsiToUTF8(const std::string& text, std::string& out);
 std::string AnsiToUTF8Return(const std::string& text);
 std::wstring StringToWStringReturn(const std::string& text);
+std::string WStringToStringReturn(const std::wstring& wstr);
+
 
 bool UniCodeToAnsi(const std::wstring& uniCode, std::string& ansiString);
 bool UTF8ToUniCode(const std::string& UTF8, std::wstring& uniCode);

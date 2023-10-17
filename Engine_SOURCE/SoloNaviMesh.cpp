@@ -1,6 +1,14 @@
 #include "SoloNaviMesh.h"
 #include "Model.h"
 #include "Mesh.h"
+#include "../External/Detour/include/DetourNavMesh.h"
+#include "../External/Detour/include/DetourCrowd.h"
+#include "../External/Detour/include/DetourCommon.h"
+#include "../External/Detour/include/DetourNavMeshBuilder.h"
+#include "../External/Detour/include/DetourNavMeshQuery.h"
+#include "../External/Detour/include/DetourTileCacheBuilder.h"
+
+#include "InputGeom.h"
 
 SoloNaviMesh::SoloNaviMesh()
 	: NaviMesh()
@@ -10,6 +18,7 @@ SoloNaviMesh::SoloNaviMesh()
 	, mContourSet(nullptr)
 	, mPolyMesh(nullptr)
 	, mDetailMesh(nullptr)
+	, mKeepInterResults(false)
 {
 }
 
@@ -17,22 +26,41 @@ SoloNaviMesh::~SoloNaviMesh()
 {
 }
 
+void SoloNaviMesh::HandleSettings()
+{
+	NaviMesh::HandleCommonSettings();
+}
+
+
+void SoloNaviMesh::saveAll()
+{
+	NaviMesh::saveAll("solo_navmesh.bin", mNavMesh);
+}
+
+void SoloNaviMesh::loadAll()
+{
+	dtFreeNavMesh(mNavMesh);
+	mNavMesh = NaviMesh::loadAll("solo_navmesh.bin");
+	mNavQuery->init(mNavMesh, 2048);
+}
+
 bool SoloNaviMesh::Build()
 {
-	if (mGeom == nullptr || mGeom->GetName().empty())
+	if (!mGeom || !mGeom->getMesh())
 	{
-		std::cout << "buildNavigation: Input mesh is not specified." << std::endl;
+		//m_ctx->log(RC_LOG_ERROR, "buildNavigation: Input mesh is not specified.");
+		std::cout<< "buildNavigation: Input mesh is not specified." << std::endl;
 		return false;
 	}
 
 	Clear();
 
-	const float* bmin = mGeom->GetNavMeshBoundsMin();
-	const float* bmax = mGeom->GetNavMeshBoundsMax();
-	const float* verts = mGeom->GetVerts();
-	const int nverts = mGeom->GetNumVerts();
-	const int* tris = mGeom->GetTriangles();
-	const int ntris = mGeom->GetNumTriangles();
+	const float* bmin = mGeom->getNavMeshBoundsMin();
+	const float* bmax = mGeom->getNavMeshBoundsMax();
+	const float* verts = mGeom->getMesh()->getVerts();
+	const int nverts = mGeom->getMesh()->getVertCount();
+	const int* tris = mGeom->getMesh()->getTris();
+	const int ntris = mGeom->getMesh()->getTriCount();
 
 	//build settings
 	memset(&mConfig, 0, sizeof(mConfig));
@@ -57,7 +85,6 @@ bool SoloNaviMesh::Build()
 	rcVcopy(mConfig.bmax, bmax);
 	rcCalcGridSize(mConfig.bmin, mConfig.bmax, mConfig.cs, &mConfig.width, &mConfig.height);
 
-	rcContext* m_ctx = new rcContext(); // rcContext는 디버그용인데 안씀
 
 	mHeightField = rcAllocHeightfield();
 	if (!mHeightField)
@@ -252,19 +279,6 @@ bool SoloNaviMesh::Build()
 	InitToolStates(this);
 
 	return true;
-}
-
-bool SoloNaviMesh::SettingMesh(const std::wstring& name, GameObj* obj)
-{
-	mGeom = new InputGeom();
-
-	if (obj == nullptr)
-		return false;
-
-	if (mGeom->CreateGeom(name, obj))
-		return true;
-
-	return false;
 }
 
 void SoloNaviMesh::Clear()

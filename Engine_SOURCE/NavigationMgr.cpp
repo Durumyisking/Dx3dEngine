@@ -3,8 +3,11 @@
 #include "Graphics.h"
 #include "Model.h"
 
+#include "InputGeom.h"
+
 NavigationMgr::NavigationMgr()
 {
+	mContext = new rcContext(false);
 }
 
 NavigationMgr::~NavigationMgr()
@@ -18,6 +21,11 @@ NavigationMgr::~NavigationMgr()
 	}
 
 	mNavMeshes.clear();
+
+	mContext->resetLog();
+
+	delete mContext;
+	mContext = nullptr;
 }
 
 void NavigationMgr::Update()
@@ -36,12 +44,25 @@ SoloNaviMesh* NavigationMgr::CreateNavigationMesh(const std::wstring& name)
 		return nullptr;
 
 	mNavMeshes.insert(std::make_pair(name, soloMesh));
+	soloMesh->SetContext(mContext);
 
 	return soloMesh;
 }
 
-void NavigationMgr::Navigation()
+bool NavigationMgr::SettingMesh(SoloNaviMesh* soloMesh, std::wstring path)
 {
+	InputGeom* geom = new InputGeom();
+	
+	if (geom->load(mContext, path))
+	{
+		soloMesh->HandleMeshChanged(geom);
+		return true;
+	}
+
+	delete geom;
+	geom = nullptr;
+
+	return false;
 }
 
 //수동으로 Recast NaviMesh 정보를 넣을경우의 예시

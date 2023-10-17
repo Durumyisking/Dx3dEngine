@@ -1,10 +1,18 @@
 #include "NaviMesh.h"
+#include "../External/Detour/include/DetourNavMesh.h"
+#include "../External/Detour/include/DetourCrowd.h"
+#include "../External/Detour/include/DetourCommon.h"
+#include "../External/Detour/include/DetourNavMeshBuilder.h"
+#include "../External/Detour/include/DetourNavMeshQuery.h"
+#include "../External/Detour/include/DetourTileCacheBuilder.h"
+
+#include "InputGeom.h"
 
 NaviMesh::NaviMesh()
-	: mGeom(0)
-	, mNavMesh(0)
-	, mNavQuery(0)
-	, mCrowd(0)
+	: mGeom(nullptr)
+	, mNavMesh(nullptr)
+	, mNavQuery(nullptr)
+	, mCrowd(nullptr)
 	, mFilterLowHangingObstacles(true)
 	, mFilterLedgeSpans(true)
 	, mFilterWalkableLowHeightSpans(true)
@@ -21,6 +29,39 @@ NaviMesh::NaviMesh()
 
 NaviMesh::~NaviMesh()
 {
+	delete mGeom;
+	mGeom = nullptr;
+
+	dtFreeNavMeshQuery(mNavQuery);
+	dtFreeNavMesh(mNavMesh);
+	dtFreeCrowd(mCrowd);
+	delete mTool;
+	for (int i = 0; i < MAX_TOOLS; i++)
+		delete mToolStates[i];
+}
+
+void NaviMesh::HandleMeshChanged(InputGeom* geom)
+{
+	mGeom = geom;
+
+	const BuildSettings* buildSettings = geom->getBuildSettings();
+	if (buildSettings)
+	{
+		mCellSize = buildSettings->cellSize;
+		mCellHeight = buildSettings->cellHeight;
+		mAgentHeight = buildSettings->agentHeight;
+		mAgentRadius = buildSettings->agentRadius;
+		mAgentMaxClimb = buildSettings->agentMaxClimb;
+		mAgentMaxSlope = buildSettings->agentMaxSlope;
+		mRegionMinSize = buildSettings->regionMinSize;
+		mRegionMergeSize = buildSettings->regionMergeSize;
+		mEdgeMaxLen = buildSettings->edgeMaxLen;
+		mEdgeMaxError = buildSettings->edgeMaxError;
+		mVertsPerPoly = buildSettings->vertsPerPoly;
+		mDetailSampleDist = buildSettings->detailSampleDist;
+		mDetailSampleMaxError = buildSettings->detailSampleMaxError;
+		mPartitionType = buildSettings->partitionType;
+	}
 }
 
 
@@ -53,12 +94,12 @@ void NaviMesh::ResetToolStates()
 
 void NaviMesh::ResetCommonSettings()
 {
-	mCellSize = 0.3f;
-	mCellHeight = 0.2f;
-	mAgentHeight = 2.0f;
-	mAgentRadius = 0.6f;
-	mAgentMaxClimb = 0.9f;
-	mAgentMaxSlope = 45.0f;
+	mCellSize = 0.88f;
+	mCellHeight = 0.48f;
+	mAgentHeight = 3.0f;
+	mAgentRadius = 2.0f;
+	mAgentMaxClimb = 1.2f;
+	mAgentMaxSlope = 65.0f;
 	mRegionMinSize = 8;
 	mRegionMergeSize = 20;
 	mEdgeMaxLen = 12.0f;
@@ -66,10 +107,10 @@ void NaviMesh::ResetCommonSettings()
 	mVertsPerPoly = 6.0f;
 	mDetailSampleDist = 6.0f;
 	mDetailSampleMaxError = 1.0f;
-	mPartitionType = PARTITION_WATERSHED;
+	mPartitionType = PartitionType::PARTITION_MONOTONE;
 }
 
-void NaviMesh::handleCommonSettings()
+void NaviMesh::HandleCommonSettings()
 {
 	/*imguiLabel("Rasterization");
 	imguiSlider("Cell Size", &m_cellSize, 0.1f, 1.0f, 0.01f);
@@ -136,4 +177,132 @@ NaviMeshTool::~NaviMeshTool()
 
 NaviMeshToolState::~NaviMeshToolState()
 {
+}
+
+static const int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';
+static const int NAVMESHSET_VERSION = 1;
+
+struct NavMeshSetHeader
+{
+	int magic;
+	int version;
+	int numTiles;
+	dtNavMeshParams params;
+};
+
+struct NavMeshTileHeader
+{
+	dtTileRef tileRef;
+	int dataSize;
+};
+
+dtNavMesh* NaviMesh::loadAll(const char* path)
+{
+	FILE* fp = nullptr;
+	fopen_s(&fp, path, "rb");
+	if (!fp) return 0;
+
+	// Read header.
+	NavMeshSetHeader header;
+	size_t readLen = fread(&header, sizeof(NavMeshSetHeader), 1, fp);
+	if (readLen != 1)
+	{
+		fclose(fp);
+		return 0;
+	}
+	if (header.magic != NAVMESHSET_MAGIC)
+	{
+		fclose(fp);
+		return 0;
+	}
+	if (header.version != NAVMESHSET_VERSION)
+	{
+		fclose(fp);
+		return 0;
+	}
+
+	dtNavMesh* mesh = dtAllocNavMesh();
+	if (!mesh)
+	{
+		fclose(fp);
+		return 0;
+	}
+	dtStatus status = mesh->init(&header.params);
+	if (dtStatusFailed(status))
+	{
+		fclose(fp);
+		return 0;
+	}
+
+	// Read tiles.
+	for (int i = 0; i < header.numTiles; ++i)
+	{
+		NavMeshTileHeader tileHeader;
+		readLen = fread(&tileHeader, sizeof(tileHeader), 1, fp);
+		if (readLen != 1)
+		{
+			fclose(fp);
+			return 0;
+		}
+
+		if (!tileHeader.tileRef || !tileHeader.dataSize)
+			break;
+
+		unsigned char* data = (unsigned char*)dtAlloc(tileHeader.dataSize, DT_ALLOC_PERM);
+		if (!data) break;
+		memset(data, 0, tileHeader.dataSize);
+		readLen = fread(data, tileHeader.dataSize, 1, fp);
+		if (readLen != 1)
+		{
+			dtFree(data);
+			fclose(fp);
+			return 0;
+		}
+
+		mesh->addTile(data, tileHeader.dataSize, DT_TILE_FREE_DATA, tileHeader.tileRef, 0);
+	}
+
+	fclose(fp);
+
+	return mesh;
+}
+
+void NaviMesh::saveAll(const char* path, const dtNavMesh* mesh)
+{
+	if (!mesh) return;
+
+	FILE* fp = nullptr;
+	fopen_s(&fp, path, "wb");
+	if (!fp)
+		return;
+
+	// Store header.
+	NavMeshSetHeader header;
+	header.magic = NAVMESHSET_MAGIC;
+	header.version = NAVMESHSET_VERSION;
+	header.numTiles = 0;
+	for (int i = 0; i < mesh->getMaxTiles(); ++i)
+	{
+		const dtMeshTile* tile = mesh->getTile(i);
+		if (!tile || !tile->header || !tile->dataSize) continue;
+		header.numTiles++;
+	}
+	memcpy(&header.params, mesh->getParams(), sizeof(dtNavMeshParams));
+	fwrite(&header, sizeof(NavMeshSetHeader), 1, fp);
+
+	// Store tiles.
+	for (int i = 0; i < mesh->getMaxTiles(); ++i)
+	{
+		const dtMeshTile* tile = mesh->getTile(i);
+		if (!tile || !tile->header || !tile->dataSize) continue;
+
+		NavMeshTileHeader tileHeader;
+		tileHeader.tileRef = mesh->getTileRef(tile);
+		tileHeader.dataSize = tile->dataSize;
+		fwrite(&tileHeader, sizeof(tileHeader), 1, fp);
+
+		fwrite(tile->data, tile->dataSize, 1, fp);
+	}
+
+	fclose(fp);
 }

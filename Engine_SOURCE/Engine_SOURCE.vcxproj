@@ -234,6 +234,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="CaptureObj.h" />
     <ClInclude Include="CapUI.h" />
     <ClInclude Include="ChracterController.h" />
+    <ClInclude Include="ChunkyTriMesh.h" />
     <ClInclude Include="ClientToServer.h" />
     <ClInclude Include="CoinUIScript.h" />
     <ClInclude Include="Collider2D.h" />
@@ -292,6 +293,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MarioParts.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshLoaderObj.h" />
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="MilestoneScript.h" />
     <ClInclude Include="Model.h" />
@@ -397,6 +399,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="CaptureObj.cpp" />
     <ClCompile Include="CapUI.cpp" />
     <ClCompile Include="ChracterController.cpp" />
+    <ClCompile Include="ChunkyTriMesh.cpp" />
     <ClCompile Include="CoinUIScript.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collider3D.cpp" />
@@ -448,6 +451,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshLoaderObj.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
     <ClCompile Include="Model.cpp" />

@@ -3,6 +3,7 @@
 
 class Mesh;
 class Model;
+class GameObj;
 
 class SoloNaviMesh :
     public NaviMesh
@@ -11,9 +12,12 @@ public:
     SoloNaviMesh();
     virtual ~SoloNaviMesh();
 
-	bool Build();
+	void HandleSettings();
 
-	bool SettingMesh(const std::wstring& name, GameObj* obj);
+	void saveAll();
+	void loadAll();
+
+	bool Build();
 
 	void Clear();
 

@@ -8,6 +8,7 @@
 #define	SAVE_PATH		"Save"
 #define	SCENE_SAVE_PATH	"SceneSave"
 #define	MESH_SAVE_PATH	"MeshSave"
+#define	OBJ_SAVE_PATH	"ObjSave"
 #define	SOUND_PATH		"Sound"
 #define	FONT_PATH		"Font"
 

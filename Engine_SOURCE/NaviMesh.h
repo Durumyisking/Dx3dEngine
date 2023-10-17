@@ -1,14 +1,12 @@
 #pragma once
 #include "Entity.h"
 #include "../External/Recast/include/Recast.h"
-#include "../External/Detour/include/DetourNavMesh.h"
-#include "../External/Detour/include/DetourCrowd.h"
-#include "../External/Detour/include/DetourCommon.h"
-#include "../External/Detour/include/DetourNavMeshBuilder.h"
-#include "../External/Detour/include/DetourNavMeshQuery.h"
-#include "../External/Detour/include/DetourTileCacheBuilder.h"
 
-#include "InputGeom.h"
+
+class InputGeom;
+class dtNavMesh;
+class dtNavMeshQuery;
+class dtCrowd;
 
 /// Tool types.
 enum NaviMeshToolType
@@ -84,6 +82,9 @@ public:
 	NaviMesh();
 	virtual ~NaviMesh();
 
+	void SetContext(rcContext* context) { m_ctx = context; }
+
+	virtual void HandleMeshChanged(class InputGeom* geom);
 
 	virtual void SetAgentRadius(float radius) { mAgentRadius = radius; }
 	virtual void SetAgentHeight(float Height) { mAgentHeight = Height; }
@@ -101,7 +102,7 @@ public:
 	void ResetToolStates();
 
 	void ResetCommonSettings();
-	void handleCommonSettings();
+	void HandleCommonSettings();
 
 protected:
 	dtNavMesh* loadAll(const char* path);
@@ -110,6 +111,7 @@ protected:
 protected:
 	InputGeom* mGeom;
 
+	rcContext* m_ctx;
 	dtNavMesh* mNavMesh;
 	dtNavMeshQuery* mNavQuery;
 	dtCrowd* mCrowd;

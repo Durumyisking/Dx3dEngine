@@ -79,6 +79,7 @@
 #include "PostProcess.h"
 
 #include "NavigationMgr.h"
+#include "PathMgr.h"
 
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
@@ -151,19 +152,19 @@ void ScenePlay::Initialize()
 		
 		//mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
 	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(5.f, 10.f, 0.f));
 
-	}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
-	}
+	//}	
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	//}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
+	//}
 
 
 	//{
@@ -206,6 +207,16 @@ void ScenePlay::Initialize()
 		block->SetPos(Vector3(40.f, -10.f, 0.f));
 	}
 
+	{
+		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh(L"TestNaviMesh");
+
+		if (GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"Test.Obj"))
+			int debug = 0;
+		if (!naviMesh->Build())
+			int debug = 0;
+	}
+
+
 	CreatePlayerUI();
 
 	Scene::Initialize();
@@ -240,23 +251,6 @@ void ScenePlay::fixedUpdate()
 
 	Scene::fixedUpdate();
 
-	static bool start = true;
-	if (start)
-	{
-		GameObj* obj = FindSceneGameObject(L"Plane");
-
-		if (obj == nullptr)
-			return;
-
-		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh(L"TestNaviMesh");
-
-		if (!naviMesh->SettingMesh(L"TestNaviMesh_Geom", obj))
-			int debug = 0;
-		if (!naviMesh->Build())
-			int debug = 0;
-
-		start = false;
-	}
 }
 
 void ScenePlay::render()

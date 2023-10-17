@@ -430,7 +430,13 @@
     <ClCompile Include="SoloNaviMesh.cpp">
       <Filter>Navigation</Filter>
     </ClCompile>
+    <ClCompile Include="MeshLoaderObj.cpp">
+      <Filter>Navigation</Filter>
+    </ClCompile>
     <ClCompile Include="InputGeom.cpp">
+      <Filter>Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="ChunkyTriMesh.cpp">
       <Filter>Navigation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -892,7 +898,13 @@
     <ClInclude Include="SoloNaviMesh.h">
       <Filter>Navigation</Filter>
     </ClInclude>
+    <ClInclude Include="MeshLoaderObj.h">
+      <Filter>Navigation</Filter>
+    </ClInclude>
     <ClInclude Include="InputGeom.h">
+      <Filter>Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="ChunkyTriMesh.h">
       <Filter>Navigation</Filter>
     </ClInclude>
   </ItemGroup>
