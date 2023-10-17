@@ -49,9 +49,9 @@ float4 main(VSOut vsIn) : SV_Target
     // VS_OUT 으로 전달한 SV_Position 값은 PixelShader 에 입력될 때 픽셀좌표로 변환해서 입력
     float2 UV = vsIn.Pos.xy / RESOLUTION;
             
-    color = postProcessTexture.Sample(linearSampler, vsIn.UV).xyz;
+    color = clamp(postProcessTexture.Sample(linearSampler, vsIn.UV).xyz, 0.f, 1.f);
 
-    color = LinearToneMapping(color);
+    color = clamp(LinearToneMapping(color), 0.f, 1.f);
     
     return float4(color, 1.f);
 }

@@ -103,7 +103,7 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/SmokeParticle", L"CloudParticle");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Coin", L"Coin");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldHomeBuilding/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
 
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/HomeStageGroundCollider", L"HomeStageGroundCollider");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/NaviCollider", L"NaviCollider");

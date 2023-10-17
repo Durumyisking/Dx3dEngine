@@ -113,14 +113,16 @@ void CameraScript::KeyBoardMove()
 	{
 		mLookAt += speed * mTransform->Right() * DT;
 	}
+
 	if (KEY_DOWN(Q))
 	{
-		mLookAt -= 20.f * mTransform->Up() * DT;
+		mTargetOffsetScalar -= 20.f * DT;
 	}
 	if (KEY_DOWN(E))
 	{
-		mLookAt += 20.f * mTransform->Up() * DT;
-	}	
+		mTargetOffsetScalar += 20.f * DT;
+	}
+
 	//if (KEY_DOWN(Q))
 	//{
 	//	mLookAt -= 20.f * mPxTransform->Forward() * DT;

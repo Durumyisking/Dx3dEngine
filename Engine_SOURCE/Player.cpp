@@ -322,15 +322,15 @@ void Player::OnTriggerExit(GameObj* gameObject)
 {
 	if (eLayerType::Objects == gameObject->GetLayerType())
 	{
-		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
-		{
-			if (!mRigidBody->IsOnAir())
-			{
-				mRigidBody->SetAirOn();
-				mRigidBody->ApplyGravity();
-				SetPlayerState(Player::ePlayerState::Fall);
-			}
-		}
+		//if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
+		//{
+		//	if (!mRigidBody->IsOnAir())
+		//	{
+		//		mRigidBody->SetAirOn();
+		//		mRigidBody->ApplyGravity();
+		//		SetPlayerState(Player::ePlayerState::Fall);
+		//	}
+		//}
 	}
 }
 
