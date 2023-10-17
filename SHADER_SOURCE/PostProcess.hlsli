@@ -52,7 +52,7 @@ float noise(float2 uv, Texture2D<float4> noiseTexture)
 {
     float2 offset = float2(1.0f, 2.0f * cos(ElapsedTime)) * ElapsedTime * 8.0f + uv * 1.0f; // 노이즈텍스처의 좌표 가져옴 uv와 시간값을 인자로 넘겨주어 노이즈값의 변화를 만듬
     offset = clamp(offset, -1.5f, 2.5f); // 0보다 작은값은 0 1보다큰값은 1로 0~1사이의 값만 나오게 제한한다. (빼도된다)
-    float s = noiseTexture.SampleLevel(pointSampler, offset, 0).x; // offset위치에 있는 색의 R값을 가져올것
+    float s = noiseTexture.SampleLevel(shadowPointSampler, offset, 0).x; // offset위치에 있는 색의 R값을 가져올것
     s *= s;
     return s;
 }
