@@ -240,35 +240,38 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		{
 			Goomba* goomba = dynamic_cast<Goomba*>(gameObject);
 
-			// if 걸리면 윗굼바
-			/*
-			맨 윗굼바의 모델에 마리오 콧수염, 눈 모자 씌워야함
-			애니메이션 모든 굼바가 동일하게 재생해야함
-			맨 아랫굼바 기준으로 이동해야함(capture 대상을 맨 아랫굼바로 변경해야할거같음)
-
-			
-			*/
-			if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.9f)
+			Vector3 pent = GetPhysXCollider()->ComputePenetration(gameObject);
+			if (pent.y == 0.f && GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
 			{
-				// 아랫굼바 벡터 복사
-				std::vector<Goomba*> vec = goomba->GetGoombaLayer();
-				mLowerLayerGoombas.clear();
-				mLowerLayerGoombas.assign(vec.begin(), vec.end());	
-				
-				// 아랫굼바 pushback
-				mLowerLayerGoombas.emplace_back(goomba);
-				++mGoombaLayerIdx;
+				GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent);
+			}
 
-				GetPhysXRigidBody()->SetSwitchState(false);
-				GetPhysXRigidBody()->RemoveGravity();
-				GetPhysXRigidBody()->SetVelocity(Vector3::Zero);
-				GetScript<GoombaStateScript>()->SetSwitchState(false);
-				SetMonsterState(eMonsterState::Idle);
+			// if 걸리면 윗굼바 (굼바 타워일때는 맨 밑 굼바만 계산하자)
+			if (mLowerLayerGoombas.empty())
+			{
+				if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.9f)
+				{
+					// 아랫굼바 벡터 복사
+					std::vector<Goomba*> vec = goomba->GetGoombaLayer();
+					mLowerLayerGoombas.clear();
+					mLowerLayerGoombas.assign(vec.begin(), vec.end());
 
-				OffCapture();
-				mLowerLayerGoombas[0]->OnCapture();
-				mLowerLayerGoombas[0]->CopyCaptureData(dynamic_cast<CaptureObj*>(this));
+					// 아랫굼바 pushback
+					mLowerLayerGoombas.emplace_back(goomba);
+					++mGoombaLayerIdx;
 
+					GetPhysXRigidBody()->SetSwitchState(false);
+					GetPhysXRigidBody()->RemoveGravity();
+					GetPhysXRigidBody()->SetVelocity(Vector3::Zero);
+					GetScript<GoombaStateScript>()->SetSwitchState(false);
+					SetMonsterState(eMonsterState::Idle);
+
+					OffCapture();
+
+					mLowerLayerGoombas[0]->OnCapture();
+					mLowerLayerGoombas[0]->CopyCaptureData(dynamic_cast<CaptureObj*>(this));
+				}
 			}
 
 			//// 아랫굼바
