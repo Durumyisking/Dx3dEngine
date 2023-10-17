@@ -38,7 +38,6 @@ PSOut main(VSOut vsIn) : SV_TARGET
     float3 normal = vsIn.WorldNormal;
     float metallic = cbMetallic;
     float roughness = cbRoughness;
-    float depth = vsIn.WorldViewPos.z / 1000.f;
     
     float pixelToCam = distance(cameraWorldPos.xyz, vsIn.WorldPos);
 
@@ -56,7 +55,7 @@ PSOut main(VSOut vsIn) : SV_TARGET
     vsOutColor.MRD.g = roughness;
     vsOutColor.MRD.b = 0.f;
     vsOutColor.MRD.w = 1.f;//vsIn.UV.y;
-    vsOutColor.DepthColor.r = depth;
+    vsOutColor.DepthColor.r = vsIn.WorldViewPos.r;
     
     return vsOutColor;
 }

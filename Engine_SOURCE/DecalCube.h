@@ -10,6 +10,7 @@ public:
 
 	virtual void Initialize() override;
 	virtual void Render() override;
+	virtual void Update() override;
 	
 public:
 	GETSET(Material*, mMateiral, Mateiral)

@@ -9,6 +9,7 @@ struct VSOut
 {
     float4 Position : SV_Position;
     float4 Projection : POSITION0;
+    float4 worldView : POSITION1;
 };
 
 
@@ -16,38 +17,28 @@ float4 main(VSOut _in) : SV_TARGET
 {
     float4 output = (float4) 0.f;
     
-    return float4(1.0f, 0.0f, 1.0f, 1.0f);
+    float2 screenPos = _in.Projection.xy / _in.Projection.w;
     
-    // decal box의 위치를 UV 좌표로 변환
-    float3 screenposition = _in.Projection.xyz / _in.Projection.w;
-    screenposition.x = screenposition.x * 0.5 + 0.5;
-    screenposition.y = -screenposition.y * 0.5 + 0.5;
+    float2 UV = screenPos * float2(0.5f, -0.5f) + 0.5f;
+    float depth = DepthMap.Sample(shadowPointSampler, UV);
     
-    // Depth탐색
-    float depth = DepthMap.Sample(shadowPointSampler, screenposition.xy);
-    float viewZ = depth * 1000.f;
+    float3 viewRay = _in.worldView.xyz * (1000.f / -_in.worldView.z);
+    float3 viewPos = viewRay * depth;
     
-    // 깊이를 로컬좌표로 변환
-    float4 invProjecPos = (float4)0.0f;
+    float4 worldPos = mul(float4(viewPos, 1.0f), inverseView);
+    float4 localPos = mul(worldPos, inverseWorld);
     
-    invProjecPos.x = (screenposition.x * 2.f - 1.f) * viewZ;
-    invProjecPos.y = (screenposition.y * -2.f + 1.f) * viewZ;
-    invProjecPos.z = depth * viewZ;
-    invProjecPos.w = viewZ;
     
-    float4 invVeiwPos = mul(invProjecPos, inverseProjection);
-    float4 invWorldPos = mul(invVeiwPos, inverseView);
-    float4 invLocalPos = mul(invWorldPos, inverseWorld);
     
-    // decal 밖의 밖 이면 클리핑
-    float3 ObjPos = abs(invLocalPos.xyz);
     
+    
+    // decal 박스의 밖 이면 클리핑
     // 0 보다 작으면 픽셀 삭제
-    clip(0.5f - ObjPos);
+    clip(0.5f - abs(localPos.xyz));
     
     // 데칼 박스 범위가 -0.5 ~ 0.5 사이이므로 0 ~ 1사이의 UV 좌표로만들어줌
-    float2 decalUV = invLocalPos.xz + 0.5f;
-    return float4(1.0f, 0.0f, 1.0f, 1.0f);
+    //float2 decalUV = invLocalPos.xz + 0.5f;
+    return float4(localPos.x, localPos.y, localPos.z, 1.0f);
     
     return output;
 }

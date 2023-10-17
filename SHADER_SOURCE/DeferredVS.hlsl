@@ -54,7 +54,7 @@ VSOut main(VSIn vsIn)
 
     
     vsOut.WorldPos = worldPosition.xyz;
-    vsOut.WorldViewPos = viewPosition;
+    vsOut.WorldViewPos = float4(viewPosition.z / 1000.f, 0.f, 0.f, 0.f);
     vsOut.WorldNormal = Normal.xyz;
     vsOut.WorldTangent = Tangent.xyz;
     

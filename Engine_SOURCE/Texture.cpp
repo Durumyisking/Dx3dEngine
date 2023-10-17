@@ -162,6 +162,11 @@ bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT numQualit
 	}
 	if (bindflag & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
 	{
+		D3D11_DEPTH_STENCIL_VIEW_DESC DSVdesc = {};
+		ZeroMemory(&DSVdesc, sizeof(DSVdesc));
+		DSVdesc.Format = format;
+		DSVdesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		DSVdesc.Flags = 0;
 		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), nullptr, mDSV.GetAddressOf()))
 		{
 			return false;
@@ -212,6 +217,12 @@ bool Texture::Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture, UINT width
 
 	if (mDesc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
 	{
+		D3D11_DEPTH_STENCIL_VIEW_DESC DSVdesc = {};
+		ZeroMemory(&DSVdesc, sizeof(DSVdesc));
+		DSVdesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		DSVdesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		DSVdesc.Flags = 0;
+
 		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), nullptr, mDSV.GetAddressOf()))
 		{
 			return false;
@@ -260,6 +271,12 @@ bool Texture::Create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture)
 
 	if (mDesc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
 	{
+		D3D11_DEPTH_STENCIL_VIEW_DESC DSVdesc = {};
+		ZeroMemory(&DSVdesc, sizeof(DSVdesc));
+		DSVdesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		DSVdesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		DSVdesc.Flags = 0;
+
 		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), nullptr, mDSV.GetAddressOf()))
 		{
 			return false;
@@ -310,6 +327,12 @@ bool Texture::Create(D3D11_TEXTURE2D_DESC& desc)
 	}
 	if (mDesc.BindFlags & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL)
 	{
+		D3D11_DEPTH_STENCIL_VIEW_DESC DSVdesc = {};
+		ZeroMemory(&DSVdesc, sizeof(DSVdesc));
+		DSVdesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		DSVdesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		DSVdesc.Flags = 0;
+
 		if (!GetDevice()->CreateDepthStencilView(mTexture.Get(), nullptr, mDSV.GetAddressOf()))
 		{
 			return false;

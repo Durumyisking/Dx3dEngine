@@ -724,9 +724,11 @@ namespace renderer
 			shader->Create(eShaderStage::VS, L"DecalVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"DecalPS.hlsl", "main");
 
-			shader->SetRSState(eRasterizerType::SolidNone);
+			shader->SetRSState(eRasterizerType::SolidBack);
 			shader->SetDSState(eDepthStencilType::NoWrite);
-			shader->SetTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+			shader->SetBSState(eBlendStateType::Default);
+
+			shader->SetTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"DecalShader", shader);
 		}
 #pragma endregion
@@ -976,6 +978,7 @@ namespace renderer
 			mergeMaterial->SetTexture(eTextureSlot::DepthMap, mergeTex);
 
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"MergeMRT_Material", mergeMaterial);
+			mergeMaterial->SetTexture(eTextureSlot::DepthMap, mergeTex);
 		}
 #pragma endregion
 

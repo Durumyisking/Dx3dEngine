@@ -1,6 +1,8 @@
 #include "DecalCube.h"
 #include "MeshRenderer.h"
 #include "ResourceMgr.h"
+#include "InputMgr.h"
+#include "TimeMgr.h"
 
 
 DecalCube::DecalCube()
@@ -44,4 +46,40 @@ void DecalCube::Initialize()
 void DecalCube::Render()
 {
 	SUPER::Render();
+}
+
+void DecalCube::Update()
+{
+	SUPER::Update();
+
+	Transform* tr = GetTransform();
+	Vector3 pos = tr->GetPosition();
+	Vector3 sacle = tr->GetScale();
+	if (KEY_DOWN(UP))
+	{
+		pos.y += 10.f * DT;
+	}
+	else if (KEY_DOWN(DOWN))
+	{
+		pos.y -= 10.f * DT;
+	}
+
+	if (KEY_DOWN(LEFT))
+	{
+		pos.x -= 10.f * DT;
+	}
+	else if (KEY_DOWN(RIGHT))
+	{
+		pos.x += 10.f * DT;
+	}
+
+	if (KEY_DOWN(SPACE))
+	{
+		sacle.x += 1.f*DT;
+		sacle.y += 1.f * DT;
+		sacle.z += 1.f * DT;
+	}
+
+	tr->SetPosition(pos);
+	tr->SetScale(sacle);
 }

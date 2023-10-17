@@ -166,6 +166,7 @@ void ScenePlay::Initialize()
 	}
 	{
 		DecalCube* decal = object::Instantiate<DecalCube>(eLayerType::FX, this);
+		decal->SetPos(Vector3(0.f, 0.5f, 0.f));
 	}
 
 
