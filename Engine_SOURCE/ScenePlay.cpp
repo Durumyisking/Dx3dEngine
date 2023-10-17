@@ -272,8 +272,9 @@ void ScenePlay::Initialize()
 		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building", L"CityWorldHomeBuilding002",array);
 		//block->SetPos(Vector3(40.f, -10.f, 0.f));
 
-		//std::vector<std::wstring> array = { L"GlassBuildingWallMaterial" ,L"RoofConcrete00Material" ,L"RoofConcrete01Material" ,L"WallGlassPaintedSteelMaterial" };
-		//CreateObject* object = object::Instantiate<CreateObject>(eLayerType::Objects, this, L"Building", L"CityWorldHomeBuilding002", array);
+		//std::vector<std::wstring> array = { L"HomeBuilding009_0Material" ,L"HomeBuilding009_1Material" ,L"HomeBuilding009_2Material" ,L"HomeBuilding009_2Material",L"HomeBuilding009_4Material"
+		//	,L"HomeBuilding009_5Material",  L"HomeBuilding009_6Material" ,L"HomeBuilding009_7Material" ,L"HomeBuilding009_8Material" };
+		//CreateObject* object = object::Instantiate<CreateObject>(eLayerType::Objects, this, L"Building", L"CityWorldHomeBuilding009", array);
 		//object->SetPos(Vector3(40.f, -10.f, 0.f));
 
 	}
