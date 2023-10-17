@@ -257,6 +257,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="ConstantBuffer.h" />
+    <ClInclude Include="CreateObject.h" />
     <ClInclude Include="CubeMap.h" />
     <ClInclude Include="CursorScript.h" />
     <ClInclude Include="CustomPhysXMemory.h" />
@@ -289,6 +290,10 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GridScript.h" />
     <ClInclude Include="HelpUIScript.h" />
+    <ClInclude Include="HomeBuildingEight.h" />
+    <ClInclude Include="HomeBuildingFive.h" />
+    <ClInclude Include="HomeBuildingFour.h" />
+    <ClInclude Include="HomeBuildingSeven.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="ImageUI.h" />
     <ClInclude Include="InputMgr.h" />
@@ -427,6 +432,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
+    <ClCompile Include="CreateObject.cpp" />
     <ClCompile Include="CubeMap.cpp" />
     <ClCompile Include="CursorScript.cpp" />
     <ClCompile Include="CustomPhysXMemory.cpp" />
@@ -455,6 +461,10 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="GraphicDevice.cpp" />
     <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="HelpUIScript.cpp" />
+    <ClCompile Include="HomeBuildingEight.cpp" />
+    <ClCompile Include="HomeBuildingFive.cpp" />
+    <ClCompile Include="HomeBuildingFour.cpp" />
+    <ClCompile Include="HomeBuildingSeven.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="InputMgr.cpp" />

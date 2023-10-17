@@ -5,6 +5,8 @@
 #include "GameObj.h"
 #include "PhysicalGameObj.h"
 
+#include <cstdarg>
+
 namespace object
 {
 	template <typename T>
@@ -66,6 +68,19 @@ namespace object
 	static T* Instantiate(enums::eLayerType layerType, Scene* scene, std::wstring name)
 	{
 		T* gameObj = new T();
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
+		layer.PushAddedObject(gameObj);
+
+		gameObj->SetName(name);
+
+		return gameObj;
+	}
+
+	template <typename T>
+	static T* Instantiate(enums::eLayerType layerType, Scene* scene, std::wstring name , std::wstring materialKey, std::vector<std::wstring> array)
+	{
+		T* gameObj = new T(materialKey, array);
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
 		layer.PushAddedObject(gameObj);

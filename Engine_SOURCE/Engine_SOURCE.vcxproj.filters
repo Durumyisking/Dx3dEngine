@@ -480,6 +480,21 @@
     <ClCompile Include="StructedBuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="HomeBuildingFour.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuildingFive.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuildingSeven.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuildingEight.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateObject.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -986,6 +1001,21 @@
     </ClInclude>
     <ClInclude Include="StructedBuffer.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingFour.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingFive.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingSeven.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingEight.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateObject.h">
+      <Filter>Common\GameObj\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

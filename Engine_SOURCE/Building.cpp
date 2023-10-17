@@ -7,8 +7,8 @@
 
 Building::Building()
 {
-}
 
+}
 Building::~Building()
 {
 
@@ -38,8 +38,6 @@ void Building::Initialize()
 	rigid->RemoveGravity();
 
 	AddComponent<PhysXCollider>(eComponentType::Collider);
-
-
 
 	GameObj::Initialize();
 }

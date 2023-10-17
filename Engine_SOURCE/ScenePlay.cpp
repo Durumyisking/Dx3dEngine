@@ -86,6 +86,12 @@
 #include "CityWorldFlag.h"
 #include "BenchA.h"
 #include "CheckpointFlag.h"
+#include "HomeBuildingFour.h"
+#include "HomeBuildingFive.h"
+#include "HomeBuildingSeven.h"
+#include "HomeBuildingEight.h"
+
+#include "CreateObject.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -249,6 +255,28 @@ void ScenePlay::Initialize()
 
 		//CheckpointFlag* checkPointFlag = object::Instantiate<CheckpointFlag>(eLayerType::Objects, this, L"CheckpointFlag");
 		//checkPointFlag->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//HomeBuildingFour* homeBuildingFour = object::Instantiate<HomeBuildingFour>(eLayerType::Objects, this, L"homeBuildingFour");
+		//homeBuildingFour->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//HomeBuildingFive* homeBuildingFive = object::Instantiate<HomeBuildingFive>(eLayerType::Objects, this, L"homeBuildingFive");
+		//homeBuildingFive->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//HomeBuildingSeven* homeBuildingSeven = object::Instantiate<HomeBuildingSeven>(eLayerType::Objects, this, L"homeBuildingSeven");
+		//homeBuildingSeven->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//HomeBuildingEight* homeBuildingEight = object::Instantiate<HomeBuildingEight>(eLayerType::Objects, this, L"homeBuildingEight");
+		//homeBuildingEight->SetPos(Vector3(0.f, 1.f, 0.f));
+
+		//std::vector<std::wstring> array = { L"GlassBuildingWallMaterial" ,L"RoofConcrete00Material" ,L"RoofConcrete01Material" ,L"WallGlassPaintedSteelMaterial" };
+		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building", L"CityWorldHomeBuilding002",array);
+		//block->SetPos(Vector3(40.f, -10.f, 0.f));
+
+		//std::vector<std::wstring> array = { L"HomeBuilding009_0Material" ,L"HomeBuilding009_1Material" ,L"HomeBuilding009_2Material" ,L"HomeBuilding009_2Material",L"HomeBuilding009_4Material"
+		//	,L"HomeBuilding009_5Material",  L"HomeBuilding009_6Material" ,L"HomeBuilding009_7Material" ,L"HomeBuilding009_8Material" };
+		//CreateObject* object = object::Instantiate<CreateObject>(eLayerType::Objects, this, L"Building", L"CityWorldHomeBuilding009", array);
+		//object->SetPos(Vector3(40.f, -10.f, 0.f));
+
 	}
 	{
 		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
