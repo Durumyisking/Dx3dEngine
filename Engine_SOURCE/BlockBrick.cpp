@@ -4,14 +4,30 @@
 #include "MeshRenderer.h"
 #include "PhysXRigidBody.h"
 #include "PhysXCollider.h"
-
+#include "BlockBrickContainer.h"
 
 BlockBrick::BlockBrick()
+	:mContainer{}
 {
 }
 
 BlockBrick::~BlockBrick()
 {
+}
+
+BlockBrick* BlockBrick::Clone() const
+{
+	return new BlockBrick(*this);
+}
+
+void BlockBrick::Save(FILE* File)
+{
+	DynamicObject::Save(File);
+}
+
+void BlockBrick::Load(FILE* File)
+{
+	DynamicObject::Load(File);
 }
 
 void BlockBrick::Initialize()
@@ -42,12 +58,26 @@ void BlockBrick::Initialize()
 
 void BlockBrick::Update()
 {
-	GameObj::Update();
+	DynamicObject::Update();
 }
 
 void BlockBrick::FixedUpdate()
 {
-	GameObj::FixedUpdate();
+	DynamicObject::FixedUpdate();
+}
+
+void BlockBrick::Render()
+{
+	//DynamicObject::Render();
+}
+
+void BlockBrick::PrevRender()
+{
+	//DynamicObject::PrevRender();
+}
+
+void BlockBrick::FontRender()
+{
 }
 
 void BlockBrick::OnCollisionEnter(GameObj* gameObject)

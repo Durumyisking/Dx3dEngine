@@ -27,6 +27,7 @@ Model::Model()
 	, mParentTargetBone(L"")
 	, mTargetBone(L"")
 	, mOffsetRotation(math::Vector3(0.0f, 0.0f, 0.0f))
+	, mbUseInstance(false)
 {
 
 }
@@ -182,6 +183,66 @@ void Model::Bind_Render(bool bindMaterial)
 		mMeshes[i]->Render();
 
 		if(!(mVariableMaterials.empty() && mMaterials.empty()))
+			mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+	}
+
+	mFrameAnimationVector = nullptr;
+	mStructure->Clear();
+	boneMat.clear();
+}
+
+void Model::Bind_RenderInstance(UINT instanceCount, bool bindMaterial)
+{
+	if (mStructure == nullptr)
+		return;
+
+	BoneMat boneInfo = {};
+	std::vector<BoneMat> boneMat = {};
+
+	BindBoneMatrix();
+
+	boneMat.reserve(mBones.size());
+
+	for (Bone* bone : mBones)
+	{
+		aiMatrix4x4 finalMat = bone->mFinalMatrix;
+		boneInfo.FinalTransformation = ConvertMatrix(finalMat);
+		boneMat.emplace_back(boneInfo);
+	}
+
+	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
+	mStructure->BindSRV(eShaderStage::VS, 30);
+
+	for (size_t i = 0; i < mMeshes.size(); ++i)
+	{
+		if (mMeshes[i] == nullptr)
+			continue;
+
+		//if (mMaterials[i] == nullptr)
+		//	continue;
+
+		if (mMeshes[i]->IsRender() == false)
+			continue;
+
+		if (bindMaterial)
+		{
+			//std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
+			//for (int slot = 0; slot < Textures.size(); ++slot)
+			//{
+			//	if (Textures[slot] == nullptr)
+			//		continue;
+
+			//	mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+			//}
+
+			if (!(mVariableMaterials.empty() && mMaterials.empty()))
+				mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
+		}
+
+		mMeshes[i]->BindBuffer(true);
+		mMeshes[i]->RenderInstanced(instanceCount);
+
+		if (!(mVariableMaterials.empty() && mMaterials.empty()))
 			mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
 	}
 
@@ -428,6 +489,27 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 	Mesh* inMesh = new Mesh();
 	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
+	if (mbUseInstance)
+	{
+		std::vector<Matrix> mats = {};
+		mats.resize(vertexes.size());
+		for (int i = 0; i < mats.size(); i++)
+		{
+			float x = (float)i;
+			Matrix mat =
+			{
+			0.01f, 0.f, 0.f, 0.f,
+			0.f, 0.01f, 0.f, 0.f,
+			0.f, 0.f, 0.01f, 0.f,
+			x, 1.f, 0.f, 1.f,
+			};
+
+			//mats[i] = Matrix::Identity;
+			mats[i] = mat;			
+		}
+		inMesh->CreateInstanceBuffer(mats.data());
+	}
+
 	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
 

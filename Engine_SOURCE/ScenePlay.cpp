@@ -98,6 +98,8 @@
 
 #include "PostProcess.h"
 
+#include "BlockBrickContainer.h"
+
 
 
 ScenePlay::ScenePlay()
@@ -171,18 +173,18 @@ void ScenePlay::Initialize()
 		
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-	}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
-	}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(35.f, 10.f, 30.f));
+	//}	
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	//}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
+	//}
 
 
 	{
@@ -278,7 +280,7 @@ void ScenePlay::Initialize()
 		//object->SetPos(Vector3(40.f, -10.f, 0.f));
 
 	}
-
+	BlockBrickContainer* blockContainer = object::Instantiate<BlockBrickContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
 	for (size_t i = 0; i < 10; i++)
 	{
 		for (size_t j = 0; j < 10; j++)
@@ -290,6 +292,7 @@ void ScenePlay::Initialize()
 
 				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
 				block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
+				blockContainer->PushBlock(block);
 			}
 		}
 	}

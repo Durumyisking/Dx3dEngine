@@ -5,11 +5,11 @@
 
 
 class BoneAnimator;
-class MeshRenderer : public BaseRenderer
+class InstancedMeshRenderer : public BaseRenderer
 {
 public:
-	MeshRenderer();
-	virtual ~MeshRenderer();
+	InstancedMeshRenderer();
+	virtual ~InstancedMeshRenderer();
 
 	virtual void Initialize() final;
 	virtual void Update() final;
@@ -19,6 +19,9 @@ public:
 
 	void SetBoneAnimator(BoneAnimator* aniamtor) { mBoneAnimator = aniamtor; }
 
+	GETSET(UINT, mInstanceCount, InstanceCount)
+
 private:
 	BoneAnimator* mBoneAnimator;
+	UINT mInstanceCount;
 };

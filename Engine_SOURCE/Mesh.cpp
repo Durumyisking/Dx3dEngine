@@ -41,17 +41,17 @@ bool Mesh::CreateVertexBuffer(void* data, UINT count)
 	return true;
 }
 
-bool Mesh::CreateInstanceBuffer(void* worldMatrix)
+bool Mesh::CreateInstanceBuffer(void* data)
 {
 	mISTBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
 	mISTBDesc.ByteWidth = sizeof(Matrix);
 	mISTBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
 	mISTBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	mISTBDesc.MiscFlags = 0;
-	mISTBDesc.StructureByteStride = 0;
+	//mISTBDesc.MiscFlags = 0;
+	//mISTBDesc.StructureByteStride = 0;
 
 	D3D11_SUBRESOURCE_DATA subData = {};
-	subData.pSysMem = worldMatrix;
+	subData.pSysMem = data;
 
 	if (!GetDevice()->CreateBuffer(&mISTBDesc, &subData, mInstancedBuffer.GetAddressOf()))
 		return false;
@@ -77,13 +77,23 @@ bool Mesh::CreateIndexBuffer(void* data, UINT count)
 }
 
 
-void Mesh::BindBuffer()
+void Mesh::BindBuffer(bool drawInstance)
 {
-	UINT stride = sizeof(Vertex);
-	UINT offset = 0;
-
-	GetDevice()->BindVertexBuffer(0, 1, mVertexBuffer.GetAddressOf(), &stride, &offset);
-	GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	if (drawInstance)
+	{
+		UINT stride[2] = {sizeof(Vertex), sizeof(Matrix) };
+		UINT offset[2] = { 0, 0 };
+		ID3D11Buffer* vbs[2] = { mVertexBuffer.Get(), mInstancedBuffer.Get()};
+		GetDevice()->BindVertexBuffer(0, 2, vbs, stride, offset);
+		GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	}
+	else
+	{
+		UINT stride = sizeof(Vertex);
+		UINT offset = 0;
+		GetDevice()->BindVertexBuffer(0, 1, mVertexBuffer.GetAddressOf(), &stride, &offset);
+		GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	}
 }
 
 

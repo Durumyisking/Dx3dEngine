@@ -107,7 +107,7 @@ namespace renderer
 
 		////////////////////////////////////////
 		// instancing
-
+		offset = 0;
 		arrLayout[6].AlignedByteOffset = offset;
 		arrLayout[6].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
 		arrLayout[6].InputSlot = 1;
@@ -645,7 +645,7 @@ namespace renderer
 			Shader* shader = new Shader();
 			shader->Create(eShaderStage::VS, L"DeferredInstancedVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"DeferredPS.hlsl", "main");
-			GETSINGLE(ResourceMgr)->Insert<Shader>(L"DeferredShader", shader);
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"DeferredInstancedShader", shader);
 		}
 #pragma endregion
 

@@ -495,6 +495,12 @@
     <ClCompile Include="CreateObject.cpp">
       <Filter>Common\GameObj\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="InstancedMeshRenderer.cpp">
+      <Filter>Common\Component\Renderer\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockBrickContainer.cpp">
+      <Filter>Common\GameObj\Objects\Container</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -1016,6 +1022,12 @@
     </ClInclude>
     <ClInclude Include="CreateObject.h">
       <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedMeshRenderer.h">
+      <Filter>Common\Component\Renderer\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockBrickContainer.h">
+      <Filter>Common\GameObj\Objects\Container</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1610,6 +1622,9 @@
     </Filter>
     <Filter Include="Common\GameObj\Projectiles">
       <UniqueIdentifier>{0d0c5272-49a8-4d21-8620-e090726a1794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Objects\Container">
+      <UniqueIdentifier>{49b9b0d5-4764-413c-9526-d2fb9e55e31c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
