@@ -112,15 +112,17 @@ void PlayerStateScript::Move()
 		if (able)
 			return;
 
-		if (GETSINGLE(InputMgr)->GetKeyDown(key))
+		if (GETSINGLE(InputMgr)->GetKeyDown(key) || GETSINGLE(InputMgr)->GetKeyTap(key))
 		{
-			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
+			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key) || GETSINGLE(InputMgr)->GetKeyTap(mult_key))
 			{
+				rotation.y += renderer::mainCamera->GetTransform()->GetRotationY();
 				tr->SetPhysicalRotation(rotation);
 				able = true;
 			}
 		}
 	};
+
 
 	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
 	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225, 0.0f));

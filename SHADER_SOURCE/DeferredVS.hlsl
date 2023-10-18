@@ -9,6 +9,9 @@ struct VSIn
     
     float4 BlendID : BLENDINDICES;
     float4 BlendWeight : BLENDWEIGHT;
+    
+    //row_major matrix World : WORLD;
+    //uint InstanceID : SV_InstanceID;
 };
 
 struct VSOut

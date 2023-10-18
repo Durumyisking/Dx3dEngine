@@ -103,6 +103,17 @@ namespace renderer
 		arrLayout[5].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[5].SemanticName = "BLENDWEIGHT";
 		arrLayout[5].SemanticIndex = 0;
+		//offset += sizeof(float) * 4;
+
+		//arrLayout[6].AlignedByteOffset = offset;
+		//arrLayout[6].Format = DXGI_FORMAT_R32_FLOAT;
+		//arrLayout[6].InputSlot = 0;
+		//arrLayout[6].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA; // 입력  원소를 vertex자료로 넘길지 인스턴스별자료로 넘길지 결정
+		//arrLayout[6].InstanceDataStepRate = 1;						// 인스턴스별 자료 원소당 그릴 인스턴스 개수 (1:n 매칭이면 n vertex면 0)
+		//arrLayout[6].SemanticName = "SV_InstanceID";
+		//arrLayout[6].SemanticIndex = 0;
+		//offset += sizeof(Matrix);
+
 
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");

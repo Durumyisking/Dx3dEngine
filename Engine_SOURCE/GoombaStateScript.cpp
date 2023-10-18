@@ -278,8 +278,15 @@ void GoombaStateScript::rotateByKey()
 		{
 			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
 			{
-				mTransform->SetPhysicalRotation(rotation);
-				able = true;
+				if (GETSINGLE(InputMgr)->GetKeyDown(key) || GETSINGLE(InputMgr)->GetKeyTap(key))
+				{
+					if (GETSINGLE(InputMgr)->GetKeyDown(mult_key) || GETSINGLE(InputMgr)->GetKeyTap(mult_key))
+					{
+						rotation.y += renderer::mainCamera->GetTransform()->GetRotationY();
+						mTransform->SetPhysicalRotation(rotation);
+						able = true;
+					}
+				}
 			}
 		}
 	};
