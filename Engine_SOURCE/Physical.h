@@ -134,6 +134,7 @@ public:
     void DynamicActorWakeup();
     void KinematicActorSleep();
     void KinematicActorWakeup();
+    bool IsKinematicActorSleep();
     void ShapesPause();
 
     void SetGeometrySize(const Vector3& newSize);

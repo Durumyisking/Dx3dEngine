@@ -438,7 +438,6 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
 
     { 
         // 1. Project posWorld to light screen    
-        //float4 lightScreen = mul(float4(posWorld, 1.0), light.viewProj);
         float4 lightScreen = mul(float4(posWorld, 1.0), light.view);
         lightScreen = mul(float4(lightScreen.xyz, 1.0), light.projection);
         lightScreen.xyz /= lightScreen.w;
