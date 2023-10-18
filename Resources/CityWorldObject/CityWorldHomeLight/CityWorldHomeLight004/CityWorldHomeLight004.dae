@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset />
+  <library_images>
+    <image id="HeliportLight00_emm">
+      <init_from>HeliportLight00_emm.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="HeliportLight01">
+      <instance_effect url="#Effect_HeliportLight01" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect_HeliportLight01">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <color sid="diffuse">1 1 1 1</color>
+            </diffuse>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="pPlane1063__HeliportLight01-mesh" name="pPlane1063__HeliportLight01">
+      <mesh>
+        <source id="pPlane1063__HeliportLight01-position">
+          <float_array id="pPlane1063__HeliportLight01-position-array" count="72">-504.8763 -15.93065 652.4594 -400.8889 -15.93065 1000.781 -256.1699 -15.93065 772.9896 -749.2106 -15.93065 896.7938 -628.6802 -15.93065 1145.5 -811.6613 -15.93065 590.0079 -789.9247 -15.93065 568.2712 -833.3984 -15.93065 611.7453 729.2142 -15.93065 896.7947 380.893 -15.93065 1000.782 608.684 -15.93065 1145.501 484.8801 -15.93065 652.4606 236.1737 -15.93065 772.9908 791.666 -15.93065 590.0098 813.4027 -15.93065 611.7465 769.9286 -15.93065 568.2724 484.8795 -15.93065 2127.547 380.892 -15.93065 1779.226 236.1733 -15.93065 2007.017 729.2136 -15.93065 1883.213 608.6832 -15.93065 1634.507 791.6644 -15.93065 2189.999 769.9277 -15.93065 2211.736 813.4015 -15.93065 2168.262</float_array>
+          <technique_common>
+            <accessor source="#pPlane1063__HeliportLight01-position-array" count="24" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pPlane1063__HeliportLight01-normal">
+          <float_array id="pPlane1063__HeliportLight01-normal-array" count="72">0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#pPlane1063__HeliportLight01-normal-array" count="24" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pPlane1063__HeliportLight01-texcoord">
+          <float_array id="pPlane1063__HeliportLight01-texcoord-array" count="48">0.4196078 0.5058824 0.2509804 0.01176471 0.4745098 0.01960784 0.08235294 0.5058824 0.02745098 0.01960784 0.2509804 0.9960784 0.3294118 0.9960784 0.172549 0.9960784 0.4196078 0.5058824 0.2509804 0.01176471 0.4745098 0.01960784 0.08235294 0.5058824 0.02745098 0.01960784 0.2509804 0.9960784 0.3294118 0.9960784 0.172549 0.9960784 0.4196078 0.5058824 0.2509804 0.01176471 0.4745098 0.01960784 0.08235294 0.5058824 0.02745098 0.01960784 0.2509804 0.9960784 0.3294118 0.9960784 0.172549 0.9960784</float_array>
+          <technique_common>
+            <accessor source="#pPlane1063__HeliportLight01-texcoord-array" count="24" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="pPlane1063__HeliportLight01-vertex">
+          <input semantic="POSITION" source="#pPlane1063__HeliportLight01-position" />
+        </vertices>
+        <triangles material="HeliportLight01" count="18">
+          <input semantic="VERTEX" source="#pPlane1063__HeliportLight01-vertex" offset="0" />
+          <input semantic="NORMAL" source="#pPlane1063__HeliportLight01-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#pPlane1063__HeliportLight01-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 1 1 1 3 3 3 4 4 4 3 3 3 1 1 1 0 0 0 5 5 5 3 3 3 0 0 0 5 5 5 0 0 0 6 6 6 3 3 3 5 5 5 7 7 7 8 8 8 9 9 9 10 10 10 9 9 9 11 11 11 12 12 12 11 11 11 9 9 9 8 8 8 13 13 13 11 11 11 8 8 8 13 13 13 8 8 8 14 14 14 11 11 11 13 13 13 15 15 15 16 16 16 17 17 17 18 18 18 17 17 17 19 19 19 20 20 20 19 19 19 17 17 17 16 16 16 21 21 21 19 19 19 16 16 16 21 21 21 16 16 16 22 22 22 19 19 19 21 21 21 23 23 23 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_pPlane1063__HeliportLight01-mesh">
+      <skin source="#pPlane1063__HeliportLight01-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="pPlane1063__HeliportLight01-mesh-joint">
+          <Name_array id="pPlane1063__HeliportLight01-mesh-joint-array" count="1">CityWorldHomeLight004</Name_array>
+          <technique_common>
+            <accessor source="#pPlane1063__HeliportLight01-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pPlane1063__HeliportLight01-mesh-inv_bind_matrix">
+          <float_array id="pPlane1063__HeliportLight01-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#pPlane1063__HeliportLight01-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pPlane1063__HeliportLight01-mesh-weight">
+          <float_array id="pPlane1063__HeliportLight01-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#pPlane1063__HeliportLight01-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#pPlane1063__HeliportLight01-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#pPlane1063__HeliportLight01-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="24">
+          <input semantic="JOINT" source="#pPlane1063__HeliportLight01-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#pPlane1063__HeliportLight01-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="Armature_CityWorldHomeLight004" name="CityWorldHomeLight004" sid="CityWorldHomeLight004" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+      </node>
+      <node id="pPlane1063__HeliportLight01" name="pPlane1063__HeliportLight01" type="NODE">
+        <instance_controller url="#Armature_pPlane1063__HeliportLight01-mesh">
+          <skeleton>#Armature_CityWorldHomeLight004</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="HeliportLight01" target="#HeliportLight01" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

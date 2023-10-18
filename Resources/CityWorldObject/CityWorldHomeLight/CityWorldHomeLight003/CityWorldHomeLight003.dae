@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset />
+  <library_images>
+    <image id="HeliportLight00_emm">
+      <init_from>HeliportLight00_emm.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="HeliportLight01">
+      <instance_effect url="#Effect_HeliportLight01" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect_HeliportLight01">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <color sid="diffuse">1 1 1 1</color>
+            </diffuse>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="pPlane1049__HeliportLight01-mesh" name="pPlane1049__HeliportLight01">
+      <mesh>
+        <source id="pPlane1049__HeliportLight01-position">
+          <float_array id="pPlane1049__HeliportLight01-position-array" count="264">-2801.659 6.685929 -949.996 -2253.828 6.685929 -838.4758 -2762.845 6.685929 -988.81 -2690.139 6.685929 -402.1646 -1931.855 6.685928 -216.473 -1746.163 6.685928 -838.476 -2190.281 6.685928 -623.2429 -2690.139 6.685929 102.1622 -2068.137 6.685929 -83.5296 -2474.906 6.685929 -341.9562 -2068.136 6.685929 -216.4734 -1809.71 6.685929 -623.243 -2474.906 6.685929 41.95343 -1198.332 6.685928 -949.9956 -1237.146 6.685928 -988.8096 -1309.852 6.685928 -402.1647 -1159.518 6.685928 -911.1816 -1525.085 6.685928 41.95361 -1931.855 6.685928 -83.52905 -1309.852 6.685928 102.1621 -1525.085 6.685928 -341.9559 -1746.163 6.685928 538.4733 -2190.282 6.685928 323.2407 -2840.473 6.685929 -911.1821 -2253.828 6.685929 538.4734 -2801.659 6.685929 649.993 -2840.473 6.685929 611.1791 -2762.845 6.685929 688.807 -2228.383 6.685929 1066.081 -1937.505 6.685929 1646.387 -1753.64 6.685929 1200.922 -2582.301 6.685929 1571.529 -2787.26 6.685929 1051.384 -2818.744 6.685929 1096.349 -2755.774 6.685929 1006.418 -1809.71 6.685929 323.2404 -1198.332 6.685928 649.9935 -1237.146 6.685928 688.8074 -1159.518 6.685928 611.1795 -2293.22 6.685929 1971.523 -2582.304 6.685929 2126.839 -1937.506 6.685929 2051.978 -2293.22 6.685929 1726.843 -2787.26 6.685929 2646.981 -2818.746 6.685929 2602.015 -2228.386 6.685929 2632.286 -2755.773 6.685929 2691.948 -1753.64 6.685929 2497.443 580.6938 6.685928 1573.166 -64.10413 6.685928 1648.027 291.6105 6.685928 1973.162 226.7758 6.685928 1067.719 -247.97 6.685928 1202.561 785.6496 6.685928 1053.023 817.1339 6.685928 1097.987 754.1653 6.685928 1008.059 -64.10449 6.685928 2051.979 580.6938 6.685928 2126.839 291.6103 6.685928 1726.843 226.7759 6.685928 2632.286 -247.9702 6.685928 2497.444 785.6492 6.685928 2646.982 754.1649 6.685928 2691.947 817.1335 6.685928 2602.018 -789.9954 206.6847 -2941.666 -242.1646 206.6847 -2830.146 -751.1815 206.6847 -2980.48 -678.4758 206.6847 -2393.834 -828.8094 206.6847 -2902.852 -56.47278 206.6847 -2208.143 201.9538 206.6847 -2614.913 -463.2427 206.6847 -1949.717 -789.9958 206.6847 641.668 -678.4756 206.6847 93.8371 -828.8098 206.6847 602.854 -242.1644 206.6847 530.1483 -751.1819 206.6847 680.4819 -56.47321 206.6847 -91.85468 -463.2429 206.6847 -350.2813 201.9536 206.6847 314.9153 2242.164 206.6847 530.1483 2056.472 206.6847 -91.85413 1798.046 206.6847 314.9156 2678.475 206.6847 93.83704 2463.242 206.6847 -350.2809 2789.995 206.6847 641.6684 2828.809 206.6847 602.8544 2751.181 206.6847 680.4824</float_array>
+          <technique_common>
+            <accessor source="#pPlane1049__HeliportLight01-position-array" count="88" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pPlane1049__HeliportLight01-normal">
+          <float_array id="pPlane1049__HeliportLight01-normal-array" count="264">0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#pPlane1049__HeliportLight01-normal-array" count="88" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pPlane1049__HeliportLight01-color">
+          <float_array id="pPlane1049__HeliportLight01-color-array" count="352">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#pPlane1049__HeliportLight01-color-array" count="88" stride="4">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+              <param name="A" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pPlane1049__HeliportLight01-texcoord">
+          <float_array id="pPlane1049__HeliportLight01-texcoord-array" count="176">0.2509804 0.9960784 0.4196078 0.5058824 0.3294118 0.9960784 0.08235294 0.5058824 0.2509804 0.01176471 0.08235294 0.5058824 0.02745098 0.01960784 0.4196078 0.5058824 0.2509804 0.01176471 0.4745098 0.01960784 0.2509804 0.01176471 0.4745098 0.01960784 0.02745098 0.01960784 0.2509804 0.9960784 0.172549 0.9960784 0.4196078 0.5058824 0.3294118 0.9960784 0.4745098 0.01960784 0.2509804 0.01176471 0.08235294 0.5058824 0.02745098 0.01960784 0.4196078 0.5058824 0.4745098 0.01960784 0.172549 0.9960784 0.08235294 0.5058824 0.2509804 0.9960784 0.3294118 0.9960784 0.172549 0.9960784 0.4196078 0.5058824 0.2509804 0.01176471 0.4745098 0.01960784 0.08235294 0.5058824 0.2509804 0.9960784 0.172549 0.9960784 0.3294118 0.9960784 0.02745098 0.01960784 0.2509804 0.9960784 0.3294118 0.9960784 0.172549 0.9960784 0.02745098 0.01960784 0.4196078 0.5058824 0.2509804 0.01176471 0.4745098 0.01960784 0.2509804 0.9960784 0.3294118 0.9960784 0.08235294 0.5058824 0.172549 0.9960784 0.02745098 0.01960784 0.4196078 0.5058824 0.2509804 0.01176471 0.4745098 0.01960784 0.08235294 0.5058824 0.02745098 0.01960784 0.2509804 0.9960784 0.3294118 0.9960784 0.172549 0.9960784 0.2509804 0.01176471 0.08235294 0.5058824 0.02745098 0.01960784 0.4196078 0.5058824 0.4745098 0.01960784 0.2509804 0.9960784 0.3294118 0.9960784 0.172549 0.9960784 0.2509804 0.9960784 0.4196078 0.5058824 0.3294118 0.9960784 0.08235294 0.5058824 0.172549 0.9960784 0.2509804 0.01176471 0.4745098 0.01960784 0.02745098 0.01960784 0.2509804 0.9960784 0.4196078 0.5058824 0.3294118 0.9960784 0.08235294 0.5058824 0.172549 0.9960784 0.2509804 0.01176471 0.4745098 0.01960784 0.02745098 0.01960784 0.4196078 0.5058824 0.2509804 0.01176471 0.4745098 0.01960784 0.08235294 0.5058824 0.02745098 0.01960784 0.2509804 0.9960784 0.172549 0.9960784 0.3294118 0.9960784</float_array>
+          <technique_common>
+            <accessor source="#pPlane1049__HeliportLight01-texcoord-array" count="88" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="pPlane1049__HeliportLight01-vertex">
+          <input semantic="POSITION" source="#pPlane1049__HeliportLight01-position" />
+        </vertices>
+        <triangles material="HeliportLight01" count="66">
+          <input semantic="VERTEX" source="#pPlane1049__HeliportLight01-vertex" offset="0" />
+          <input semantic="NORMAL" source="#pPlane1049__HeliportLight01-normal" offset="1" />
+          <input semantic="COLOR" source="#pPlane1049__HeliportLight01-color" offset="2" set="0" />
+          <input semantic="TEXCOORD" source="#pPlane1049__HeliportLight01-texcoord" offset="3" set="0" />
+          <p>0 0 0 0 1 1 1 1 2 2 2 2 0 0 0 0 3 3 3 3 1 1 1 1 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 1 1 1 1 10 10 10 10 11 11 11 11 3 3 3 3 10 10 10 10 1 1 1 1 10 10 10 10 3 3 3 3 12 12 12 12 5 5 5 5 13 13 13 13 14 14 14 14 13 13 13 13 5 5 5 5 15 15 15 15 13 13 13 13 15 15 15 15 16 16 16 16 5 5 5 5 4 4 4 4 15 15 15 15 15 15 15 15 4 4 4 4 17 17 17 17 18 18 18 18 19 19 19 19 20 20 20 20 19 19 19 19 18 18 18 18 21 21 21 21 21 21 21 21 18 18 18 18 22 22 22 22 3 3 3 3 0 0 0 0 23 23 23 23 24 24 24 24 8 8 8 8 7 7 7 7 25 25 25 25 24 24 24 24 7 7 7 7 25 25 25 25 7 7 7 7 26 26 26 26 24 24 24 24 25 25 25 25 27 27 27 27 28 28 28 28 29 29 29 29 30 30 30 30 31 31 31 31 29 29 29 29 28 28 28 28 32 32 32 32 31 31 31 31 28 28 28 28 31 31 31 31 32 32 32 32 33 33 33 33 32 32 32 32 28 28 28 28 34 34 34 34 8 8 8 8 24 24 24 24 35 35 35 35 36 36 36 36 21 21 21 21 37 37 37 37 36 36 36 36 19 19 19 19 21 21 21 21 19 19 19 19 36 36 36 36 38 38 38 38 29 29 29 29 31 31 31 31 39 39 39 39 40 40 40 40 41 41 41 41 42 42 42 42 43 43 43 43 40 40 40 40 44 44 44 44 43 43 43 43 45 45 45 45 40 40 40 40 45 45 45 45 43 43 43 43 46 46 46 46 45 45 45 45 41 41 41 41 40 40 40 40 41 41 41 41 45 45 45 45 47 47 47 47 48 48 48 48 49 49 49 49 50 50 50 50 49 49 49 49 51 51 51 51 52 52 52 52 51 51 51 51 49 49 49 49 48 48 48 48 53 53 53 53 51 51 51 51 48 48 48 48 53 53 53 53 48 48 48 48 54 54 54 54 51 51 51 51 53 53 53 53 55 55 55 55 56 56 56 56 57 57 57 57 58 58 58 58 59 59 59 59 56 56 56 56 60 60 60 60 57 57 57 57 56 56 56 56 59 59 59 59 61 61 61 61 57 57 57 57 59 59 59 59 61 61 61 61 59 59 59 59 62 62 62 62 57 57 57 57 61 61 61 61 63 63 63 63 64 64 64 64 65 65 65 65 66 66 66 66 64 64 64 64 67 67 67 67 65 65 65 65 67 67 67 67 64 64 64 64 68 68 68 68 65 65 65 65 69 69 69 69 70 70 70 70 67 67 67 67 69 69 69 69 65 65 65 65 69 69 69 69 67 67 67 67 71 71 71 71 72 72 72 72 73 73 73 73 74 74 74 74 72 72 72 72 75 75 75 75 73 73 73 73 75 75 75 75 72 72 72 72 76 76 76 76 73 73 73 73 77 77 77 77 78 78 78 78 75 75 75 75 77 77 77 77 73 73 73 73 77 77 77 77 75 75 75 75 79 79 79 79 80 80 80 80 81 81 81 81 82 82 82 82 83 83 83 83 81 81 81 81 80 80 80 80 81 81 81 81 83 83 83 83 84 84 84 84 83 83 83 83 85 85 85 85 86 86 86 86 85 85 85 85 83 83 83 83 80 80 80 80 85 85 85 85 80 80 80 80 87 87 87 87 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_pPlane1049__HeliportLight01-mesh">
+      <skin source="#pPlane1049__HeliportLight01-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="pPlane1049__HeliportLight01-mesh-joint">
+          <Name_array id="pPlane1049__HeliportLight01-mesh-joint-array" count="1">CityWorldHomeLight003</Name_array>
+          <technique_common>
+            <accessor source="#pPlane1049__HeliportLight01-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pPlane1049__HeliportLight01-mesh-inv_bind_matrix">
+          <float_array id="pPlane1049__HeliportLight01-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#pPlane1049__HeliportLight01-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pPlane1049__HeliportLight01-mesh-weight">
+          <float_array id="pPlane1049__HeliportLight01-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#pPlane1049__HeliportLight01-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#pPlane1049__HeliportLight01-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#pPlane1049__HeliportLight01-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="88">
+          <input semantic="JOINT" source="#pPlane1049__HeliportLight01-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#pPlane1049__HeliportLight01-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="Armature_CityWorldHomeLight003" name="CityWorldHomeLight003" sid="CityWorldHomeLight003" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+      </node>
+      <node id="pPlane1049__HeliportLight01" name="pPlane1049__HeliportLight01" type="NODE">
+        <instance_controller url="#Armature_pPlane1049__HeliportLight01-mesh">
+          <skeleton>#Armature_CityWorldHomeLight003</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="HeliportLight01" target="#HeliportLight01" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>
