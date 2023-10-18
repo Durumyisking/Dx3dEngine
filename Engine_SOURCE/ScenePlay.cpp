@@ -1,4 +1,4 @@
-ï»¿#include "ScenePlay.h"
+#include "ScenePlay.h"
 //#include "TimeMgr.h"
 //#include "InputMgr.h"
 //
@@ -127,7 +127,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ë¡œë“œ í…ŒìŠ¤íŠ¸ ë¡œë“œì‹œì— ë°˜ë³µí•´ì„œ ëª¬ìŠ¤í„° ì •ì˜ ë°©ì§€
+	//TestScene ·Îµå Å×½ºÆ® ·Îµå½Ã¿¡ ¹Ýº¹ÇØ¼­ ¸ó½ºÅÍ Á¤ÀÇ ¹æÁö
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		{
@@ -278,13 +278,20 @@ void ScenePlay::Initialize()
 		//object->SetPos(Vector3(40.f, -10.f, 0.f));
 
 	}
+
+	for (size_t i = 0; i < 10; i++)
 	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(0.f, 0.5f, 0.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(1.f, 0.5f, 0.f));
+		for (size_t j = 0; j < 10; j++)
+		{
+			for (size_t k = 1; k < 6; k++)
+			{
+				if (j > 4 && k > 1)
+					continue;
+
+				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+				block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
+			}
+		}
 	}
 
 
