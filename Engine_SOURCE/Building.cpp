@@ -24,9 +24,9 @@ void Building::Initialize()
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
 	mr->SetModel(model);
 
-	mr->SetMaterialByKey(L"HomeBuilding002_0Material",0);
-	mr->SetMaterialByKey(L"HomeBuilding002_1Material",1);
-	mr->SetMaterialByKey(L"HomeBuilding002_2Material",2);
+	mr->SetMaterialByKey(L"HomeBuilding002_0Material", 0);
+	mr->SetMaterialByKey(L"HomeBuilding002_1Material", 1);
+	mr->SetMaterialByKey(L"HomeBuilding002_2Material", 2);
 	mr->SetMaterialByKey(L"HomeBuilding002_3Material", 3);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
