@@ -8,6 +8,7 @@ Mesh::Mesh()
 	: Resource(eResourceType::Mesh)
 	, mVBDesc{}
 	, mIBDesc{}
+	, mISTBDesc{}
 	, mVertexCount(0)
 	, mIndexCount(0)
 	, mbRender(true)
@@ -37,6 +38,24 @@ bool Mesh::CreateVertexBuffer(void* data, UINT count)
 	if (!GetDevice()->CreateBuffer(&mVBDesc, &subData, mVertexBuffer.GetAddressOf()))
 		return false;
 		
+	return true;
+}
+
+bool Mesh::CreateInstanceBuffer(void* worldMatrix)
+{
+	mISTBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
+	mISTBDesc.ByteWidth = sizeof(Matrix);
+	mISTBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
+	mISTBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	mISTBDesc.MiscFlags = 0;
+	mISTBDesc.StructureByteStride = 0;
+
+	D3D11_SUBRESOURCE_DATA subData = {};
+	subData.pSysMem = worldMatrix;
+
+	if (!GetDevice()->CreateBuffer(&mISTBDesc, &subData, mInstancedBuffer.GetAddressOf()))
+		return false;
+
 	return true;
 }
 

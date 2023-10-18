@@ -13,6 +13,7 @@ public:
 	virtual HRESULT LoadFullpath(const std::wstring& path) override;
 
 	bool CreateVertexBuffer(void* data, UINT count);
+	bool CreateInstanceBuffer(void* worldMatrix);
 	bool CreateIndexBuffer(void* data, UINT count);
 
 	void BindBuffer();
@@ -37,9 +38,11 @@ public:
 	UINT GetIndexCount() { return mIndexCount; }
 
 private:
-	// 메시 그릴때는 정점정보 인덱스 정보만 있으면 됨
 	Microsoft::WRL::ComPtr<ID3D11Buffer> mVertexBuffer;
 	D3D11_BUFFER_DESC mVBDesc;
+
+	Microsoft::WRL::ComPtr<ID3D11Buffer> mInstancedBuffer;
+	D3D11_BUFFER_DESC mISTBDesc;
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer> mIndexBuffer;
 	D3D11_BUFFER_DESC mIBDesc;

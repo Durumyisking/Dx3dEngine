@@ -46,7 +46,7 @@ void PhysicsMgr::Update()
 {
 	// 현재 작동중인 씬의
 
-	GetScene()->simulate(GETSINGLE(TimeMgr)->GetMaxFrameRate());
+	GetScene()->simulate(DT);
 	GetScene()->fetchResults(true);
 }
 
