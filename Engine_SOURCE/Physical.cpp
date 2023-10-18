@@ -252,6 +252,11 @@ void Physical::KinematicActorWakeup()
 	mActor->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, false);
 }
 
+bool Physical::IsKinematicActorSleep()
+{
+	return mActor->getActorFlags() & PxActorFlag::eDISABLE_SIMULATION;
+}
+
 void Physical::ShapesPause()
 {
 	mMainShape->acquireReference();

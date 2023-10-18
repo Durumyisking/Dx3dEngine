@@ -269,14 +269,33 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 
 		if (eLayerType::Objects == gameObject->GetLayerType())
 		{
-			if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
+			Vector3 pent = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
+			if ( pent.y > 0.f  && pent.x == 0.f && pent.z== 0.f)
 			{
-				if (mRigidBody->IsOnAir())
+				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
 				{
-					mRigidBody->SetAirOff();
-					SetPlayerState(Player::ePlayerState::Idle);
+					//GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent);
+					if (mRigidBody->IsOnAir())
+					{
+						GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+						mRigidBody->SetAirOff();
+						mRigidBody->RemoveGravity();
+						SetPlayerState(Player::ePlayerState::Idle);
+					}
 				}
 			}
+			
+			if (pent.y == 0.f)
+			{
+				Vector3 pent2 = GetPhysXCollider()->ComputePenetration(gameObject);
+				pent2.y = 0.f;
+				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+				{
+					GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
+					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent2);
+				}
+			}
+
 		}
 
 		if (eLayerType::Monster == gameObject->GetLayerType())
@@ -303,15 +322,15 @@ void Player::OnTriggerExit(GameObj* gameObject)
 {
 	if (eLayerType::Objects == gameObject->GetLayerType())
 	{
-		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
-		{
-			if (!mRigidBody->IsOnAir())
-			{
-				mRigidBody->SetAirOn();
-				mRigidBody->ApplyGravity();
-				SetPlayerState(Player::ePlayerState::Fall);
-			}
-		}
+		//if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
+		//{
+		//	if (!mRigidBody->IsOnAir())
+		//	{
+		//		mRigidBody->SetAirOn();
+		//		mRigidBody->ApplyGravity();
+		//		SetPlayerState(Player::ePlayerState::Fall);
+		//	}
+		//}
 	}
 }
 

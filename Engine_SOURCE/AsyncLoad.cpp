@@ -55,11 +55,6 @@ void AsyncLoad::LoadModels()
 
 void AsyncLoad::LoadTextures()
 {
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_alb", L"Brick/Image/BlockBrickBody_alb.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_nrm", L"Brick/Image/BlockBrickBody_nrm.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_mtl", L"Brick/Image/BlockBrickBody_mtl.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_rgh", L"Brick/Image/BlockBrickBody_rgh.png");
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"BrickBlockBody_emm", L"Brick/Image/BlockBrickBody_emm.png");
 
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_alb", L"goomba/Image/KuriboBody_alb.png");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_nrm", L"goomba/Image/KuriboBody_nrm.png");
@@ -123,7 +118,7 @@ void AsyncLoad::LoadTextures()
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"marioHair_rgh", L"MarioHead/Image/MarioHair_rgh.png");
 
 
-	GETSINGLE(ResourceMgr)->Load<Texture>(L"SkySphereTexture", L"SkyCityNightStar_color.png");
+	GETSINGLE(ResourceMgr)->Load<Texture>(L"SkySphereTexture", L"SkySphere/SkyCityNightStar_color.png");
 
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"night1", L"Cube/night/DarkNight_.dds");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"night2", L"Cube/night/DarkNight_Scenario2.dds");
@@ -153,7 +148,7 @@ void AsyncLoad::LoadTextures()
 
 	renderer::CreateUITexture();
 
-	//loadCityTexture();
+	loadCityTexture();
 	LoadMaterials();
 
 	mbTextureLoadFinish = true;
@@ -206,11 +201,9 @@ void AsyncLoad::LoadMaterials()
 #pragma endregion
 
 
-	createMaterial(L"BrickBlockBody", L"DeferredShader", L"BrickBlockMaterial", TextureState::AlEmMtNrRg);
-
 	loadGoomba(L"DeferredShader");
 	loadMario( L"DeferredShader");
-	//loadCityObjectMaterial();
+	loadCityObjectMaterial();
 
 
 	renderer::CreateUIMaterial();
@@ -1376,48 +1369,3 @@ void AsyncLoad::textureLoad(std::wstring fileName, std::wstring path, TextureSta
 	}
 }
 
-//  void AsyncLoad::loadBuildings(std::wstring shaderName)
-//{
-//
-//	{
-//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
-//		Material* material = new Material();
-//		material->SetShader(shader);
-//		material->SetTextureByKey(L"GlassBuildingWall00_alb", eTextureSlot::Albedo);
-//		material->SetTextureByKey(L"GlassBuildingWall00_emm", eTextureSlot::Emissive);
-//		material->SetTextureByKey(L"GlassBuildingWall00_mtl", eTextureSlot::Metallic);
-//		material->SetTextureByKey(L"GlassBuildingWall00_nrm", eTextureSlot::Normal);
-//		material->SetTextureByKey(L"GlassBuildingWall00_rgh", eTextureSlot::Roughness);
-//		GETSINGLE(ResourceMgr)->Insert<Material>(L"GlassBuildingWallMaterial", material);
-//	}
-//
-//	{
-//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
-//		Material* material = new Material();
-//		material->SetShader(shader);
-//		material->SetTextureByKey(L"RoofConcrete00_alb", eTextureSlot::Albedo);
-//		material->SetTextureByKey(L"RoofConcrete00_nrm", eTextureSlot::Normal);
-//		material->SetTextureByKey(L"RoofConcrete00_rgh", eTextureSlot::Roughness);
-//		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete00Material", material);
-//	}
-//
-//	{
-//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
-//		Material* material = new Material();
-//		material->SetShader(shader);
-//		material->SetTextureByKey(L"RoofConcrete01_alb", eTextureSlot::Albedo);
-//		material->SetTextureByKey(L"RoofConcrete01_nrm", eTextureSlot::Normal);
-//		material->SetTextureByKey(L"RoofConcrete01_rgh", eTextureSlot::Roughness);
-//		GETSINGLE(ResourceMgr)->Insert<Material>(L"RoofConcrete01Material", material);
-//	}
-//
-//	{
-//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(shaderName);
-//		Material* material = new Material();
-//		material->SetShader(shader);
-//		material->SetTextureByKey(L"WallGlassPaintedSteel00_alb", eTextureSlot::Albedo);
-//		material->SetTextureByKey(L"WallGlassPaintedSteel00_nrm", eTextureSlot::Normal);
-//		GETSINGLE(ResourceMgr)->Insert<Material>(L"WallGlassPaintedSteelMaterial", material);
-//
-//	}
-//}
