@@ -99,7 +99,7 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/goomba", L"goomba");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Packun", L"Packun");
 
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Brick", L"BlockBrick");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Brick", L"BlockBrick", true);
 
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/SmokeParticle", L"CloudParticle");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Coin", L"Coin");

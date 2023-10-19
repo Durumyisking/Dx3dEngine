@@ -54,7 +54,7 @@ namespace renderer
 	{
 
 #pragma region InputLayout
-		D3D11_INPUT_ELEMENT_DESC arrLayout[8] = {};
+		D3D11_INPUT_ELEMENT_DESC arrLayout[10] = {};
 
 		UINT offset = 0;
 		arrLayout[0].AlignedByteOffset = offset;
@@ -103,6 +103,47 @@ namespace renderer
 		arrLayout[5].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[5].SemanticName = "BLENDWEIGHT";
 		arrLayout[5].SemanticIndex = 0;
+		offset += sizeof(float) * 4;
+
+		////////////////////////////////////////
+		// instancing
+		offset = 0;
+		arrLayout[6].AlignedByteOffset = offset;
+		arrLayout[6].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
+		arrLayout[6].InputSlot = 1;
+		arrLayout[6].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA; // 입력  원소를 vertex자료로 넘길지 인스턴스별자료로 넘길지 결정
+		arrLayout[6].InstanceDataStepRate = 1;						// 인스턴스별 자료 원소당 그릴 인스턴스 개수 (1:n 매칭이면 n vertex면 0)	 
+																	// 예를들어 한번 인스턴싱으로 빨간나무 2개 파란나무 2개씩 그릴꺼면 2로하고 1개씩그릴꺼면 1
+		arrLayout[6].SemanticName = "WORLD";
+		arrLayout[6].SemanticIndex = 0;
+		offset += sizeof(float) * 4;
+
+		arrLayout[7].AlignedByteOffset = offset;
+		arrLayout[7].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[7].InputSlot = 1;
+		arrLayout[7].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA; 
+		arrLayout[7].InstanceDataStepRate = 1;
+		arrLayout[7].SemanticName = "WORLD";
+		arrLayout[7].SemanticIndex = 1;
+		offset += sizeof(float) * 4;
+
+		arrLayout[8].AlignedByteOffset = offset;
+		arrLayout[8].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[8].InputSlot = 1;
+		arrLayout[8].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		arrLayout[8].InstanceDataStepRate = 1;
+		arrLayout[8].SemanticName = "WORLD";
+		arrLayout[8].SemanticIndex = 2;
+		offset += sizeof(float) * 4;
+
+		arrLayout[9].AlignedByteOffset = offset;
+		arrLayout[9].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[9].InputSlot = 1;
+		arrLayout[9].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		arrLayout[9].InstanceDataStepRate = 1;
+		arrLayout[9].SemanticName = "WORLD";
+		arrLayout[9].SemanticIndex = 3;
+
 
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
@@ -195,6 +236,14 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredInstancedShader");
+			GetDevice()->CreateInputLayout(arrLayout, 10
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
 			GetDevice()->CreateInputLayout(arrLayout, 1
@@ -588,6 +637,15 @@ namespace renderer
 			shader->Create(eShaderStage::VS, L"DeferredVS.hlsl", "main");
 			shader->Create(eShaderStage::PS, L"DeferredPS.hlsl", "main");
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"DeferredShader", shader);
+		}
+#pragma endregion
+
+#pragma region DeferredInstancedShader
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"DeferredInstancedVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"DeferredPS.hlsl", "main");
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"DeferredInstancedShader", shader);
 		}
 #pragma endregion
 

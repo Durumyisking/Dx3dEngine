@@ -97,19 +97,19 @@ void CameraScript::KeyBoardMove()
 		speed = 100.f;
 	}
 
-	if (KEY_DOWN(W))
+	if (KEY_DOWN(UP))
 	{
 		mLookAt += speed * mTransform->Forward() * DT;
 	}
-	if (KEY_DOWN(S))
+	if (KEY_DOWN(DOWN))
 	{
 		mLookAt -= speed * mTransform->Forward() * DT;
 	}
-	if (KEY_DOWN(A))
+	if (KEY_DOWN(LEFT))
 	{
 		mLookAt -= speed * mTransform->Right() * DT;
 	}
-	if (KEY_DOWN(D))
+	if (KEY_DOWN(RIGHT))
 	{
 		mLookAt += speed * mTransform->Right() * DT;
 	}

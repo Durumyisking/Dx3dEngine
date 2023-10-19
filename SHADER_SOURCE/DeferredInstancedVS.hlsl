@@ -10,8 +10,7 @@ struct VSIn
     float4 BlendID : BLENDINDICES;
     float4 BlendWeight : BLENDWEIGHT;
     
-    //row_major matrix World : WORLD;
-    //uint InstanceID : SV_InstanceID;
+    row_major matrix World : WORLD;
 };
 
 struct VSOut
@@ -39,7 +38,7 @@ VSOut main(VSIn vsIn)
     pos = vsIn.BlendWeight.x + vsIn.BlendWeight.y + vsIn.BlendWeight.z + vsIn.BlendWeight.w == 0.0f ? vsIn.Position : pos;
     
     
-    float4 worldPosition = mul(float4(pos.xyz, 1.f), world);
+    float4 worldPosition = mul(float4(pos.xyz, 1.f), vsIn.World);
     float4 viewPosition = mul(worldPosition, view);
     float4 ProjPosition = mul(viewPosition, projection);
     
@@ -47,11 +46,11 @@ VSOut main(VSIn vsIn)
     vsOut.UV = vsIn.UV;
 
     float4 Normal = float4(vsIn.Normal, 0.f);
-    Normal = mul(Normal, worldIT);
+    Normal = mul(Normal, vsIn.World);
     Normal = normalize(Normal);
     
     float4 Tangent = float4(vsIn.Tangent, 0.f);
-    Tangent = mul(Tangent, world);
+    Tangent = mul(Tangent, vsIn.World);
     Tangent = normalize(Tangent);
 
     

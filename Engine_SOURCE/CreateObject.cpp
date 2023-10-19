@@ -18,7 +18,7 @@ CreateObject::CreateObject(const std::wstring& modelKey, std::vector<std::wstrin
 
 	for (size_t i = 0; i < MaterialArray.size(); i++)
 	{
-		mr->SetMaterialByKey(MaterialArray[i], i);
+		mr->SetMaterialByKey(MaterialArray[i], static_cast<UINT>(i));
 	}
 }
 
