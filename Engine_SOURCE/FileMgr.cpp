@@ -174,6 +174,10 @@ bool FileMgr::StageFolderLoad(const std::wstring& path, const std::wstring& stag
 				model->SetCurDirectoryPath(fullPath);
 				model->Load(entry.path());
 			}
+			else if (L".OBJ" == extension || L".Obj" == extension || L".obj" == extension)
+			{
+
+			}
 		}
 	}
 

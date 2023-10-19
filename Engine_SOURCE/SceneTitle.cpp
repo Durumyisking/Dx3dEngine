@@ -65,6 +65,7 @@ SceneTitle::SceneTitle()
 	,mBarPanal{}
 
 {
+	SetName(L"SceneTitle");
 }
 
 SceneTitle::~SceneTitle()

@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset />
+  <library_images>
+    <image id="WindowGlassEmm03_emm">
+      <init_from>WindowGlassEmm03_emm.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="WindowGlassEmm03">
+      <instance_effect url="#Effect_WindowGlassEmm03" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect_WindowGlassEmm03">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <color sid="diffuse">1 1 1 1</color>
+            </diffuse>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="polySurface5037__WindowGlassEmm03-mesh" name="polySurface5037__WindowGlassEmm03">
+      <mesh>
+        <source id="polySurface5037__WindowGlassEmm03-position">
+          <float_array id="polySurface5037__WindowGlassEmm03-position-array" count="108">37.5797 17 -0.0003051758 37.5797 237.9939 -0.0003051758 -37.57977 237.9939 -0.0003051758 -37.57977 17 -0.0003051758 37.5797 419.9211 -0.0003051758 37.5797 640.915 -0.0003051758 -37.57977 640.915 -0.0003051758 -37.57977 419.9211 -0.0003051758 37.5797 822.8362 -0.0003051758 37.5797 1043.836 -0.0003051758 -37.57977 1043.836 -0.0003051758 -37.57977 822.8362 -0.0003051758 37.5797 1225.768 -0.0003051758 37.5797 1446.757 -0.0003051758 -37.57977 1446.757 -0.0003051758 -37.57977 1225.768 -0.0003051758 -37.57977 1628.689 -0.0003051758 37.5797 1628.689 -0.0003051758 -37.57977 1849.678 -0.0003051758 37.5797 1849.678 -0.0003051758 37.5797 2031.611 -0.0003051758 37.5797 2252.611 -0.0003051758 -37.57977 2252.611 -0.0003051758 -37.57977 2031.611 -0.0003051758 -37.57977 2434.521 -0.0003051758 37.5797 2434.521 -0.0003051758 -37.57977 2655.532 -0.0003051758 37.5797 2655.532 -0.0003051758 37.5797 2837.453 -0.0003051758 37.5797 3058.442 -0.0003051758 -37.57977 3058.442 -0.0003051758 -37.57977 2837.453 -0.0003051758 37.5797 3240.374 -0.0003051758 37.5797 3461.374 -0.0003051758 -37.57977 3461.374 -0.0003051758 -37.57977 3240.374 -0.0003051758</float_array>
+          <technique_common>
+            <accessor source="#polySurface5037__WindowGlassEmm03-position-array" count="36" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface5037__WindowGlassEmm03-normal">
+          <float_array id="polySurface5037__WindowGlassEmm03-normal-array" count="108">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface5037__WindowGlassEmm03-normal-array" count="36" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface5037__WindowGlassEmm03-texcoord">
+          <float_array id="polySurface5037__WindowGlassEmm03-texcoord-array" count="72">0.06666667 0.003921568 0.06666667 0.07058823 0.03529412 0.07058823 0.03529412 0.003921568 0.06666667 0.0862745 0.06666667 0.1568627 0.03529412 0.1568627 0.03529412 0.0862745 0.06666667 0.172549 0.06666667 0.2392157 0.03529412 0.2392157 0.03529412 0.172549 0.06666667 0.2549019 0.06666667 0.3254902 0.03529412 0.3254902 0.03529412 0.2549019 0.03529412 0.3372549 0.06666667 0.3372549 0.03529412 0.4078431 0.06666667 0.4078431 0.06666667 0.4235294 0.06666667 0.4941176 0.03529412 0.4941176 0.03529412 0.4235294 0.03529412 0.5058824 0.06666667 0.5058824 0.03529412 0.5764706 0.06666667 0.5764706 0.06666667 0.5921569 0.06666667 0.6627451 0.03529412 0.6627451 0.03529412 0.5921569 0.06666667 0.6745098 0.06666667 0.745098 0.03529412 0.745098 0.03529412 0.6745098</float_array>
+          <technique_common>
+            <accessor source="#polySurface5037__WindowGlassEmm03-texcoord-array" count="36" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface5037__WindowGlassEmm03-vertex">
+          <input semantic="POSITION" source="#polySurface5037__WindowGlassEmm03-position" />
+        </vertices>
+        <triangles material="WindowGlassEmm03" count="18">
+          <input semantic="VERTEX" source="#polySurface5037__WindowGlassEmm03-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface5037__WindowGlassEmm03-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface5037__WindowGlassEmm03-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 3 3 3 0 0 0 2 2 2 4 4 4 5 5 5 6 6 6 7 7 7 4 4 4 6 6 6 8 8 8 9 9 9 10 10 10 11 11 11 8 8 8 10 10 10 12 12 12 13 13 13 14 14 14 15 15 15 12 12 12 14 14 14 16 16 16 17 17 17 18 18 18 17 17 17 19 19 19 18 18 18 20 20 20 21 21 21 22 22 22 23 23 23 20 20 20 22 22 22 24 24 24 25 25 25 26 26 26 25 25 25 27 27 27 26 26 26 28 28 28 29 29 29 30 30 30 31 31 31 28 28 28 30 30 30 32 32 32 33 33 33 34 34 34 35 35 35 32 32 32 34 34 34 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_polySurface5037__WindowGlassEmm03-mesh">
+      <skin source="#polySurface5037__WindowGlassEmm03-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface5037__WindowGlassEmm03-mesh-joint">
+          <Name_array id="polySurface5037__WindowGlassEmm03-mesh-joint-array" count="1">CityWorldHomeIndicator002</Name_array>
+          <technique_common>
+            <accessor source="#polySurface5037__WindowGlassEmm03-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface5037__WindowGlassEmm03-mesh-inv_bind_matrix">
+          <float_array id="polySurface5037__WindowGlassEmm03-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface5037__WindowGlassEmm03-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface5037__WindowGlassEmm03-mesh-weight">
+          <float_array id="polySurface5037__WindowGlassEmm03-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface5037__WindowGlassEmm03-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface5037__WindowGlassEmm03-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface5037__WindowGlassEmm03-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="36">
+          <input semantic="JOINT" source="#polySurface5037__WindowGlassEmm03-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface5037__WindowGlassEmm03-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="Armature_CityWorldHomeIndicator002" name="CityWorldHomeIndicator002" sid="CityWorldHomeIndicator002" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+      </node>
+      <node id="polySurface5037__WindowGlassEmm03" name="polySurface5037__WindowGlassEmm03" type="NODE">
+        <instance_controller url="#Armature_polySurface5037__WindowGlassEmm03-mesh">
+          <skeleton>#Armature_CityWorldHomeIndicator002</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="WindowGlassEmm03" target="#WindowGlassEmm03" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

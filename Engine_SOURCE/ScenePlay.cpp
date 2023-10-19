@@ -99,7 +99,10 @@
 #include "PostProcess.h"
 
 #include "InstancingContainer.h"
+#include "NavigationMgr.h"
+#include "PathMgr.h"
 
+#include "ModelObj.h"
 
 
 ScenePlay::ScenePlay()
@@ -111,6 +114,7 @@ ScenePlay::ScenePlay()
 	, mDieUIPanal(nullptr)
 	, mPlayer(nullptr)
 {
+	SetName(L"ScenePlay");
 }
 
 ScenePlay::~ScenePlay()
@@ -153,18 +157,21 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
 	//Convex and Triangle Mesh TEST
 	
-		////TriangleMesh Test
-		//{
-		//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		//	obj->SetPos(Vector3(0.f, -10.f, 300.f));
-		//	obj->SetScale(Vector3(0.04f, 0.04f, 0.04f));
-		//	obj->SetName(L"CityWorldHomeGroundCollider");
+	////TriangleMesh Test
+	//{
+	//	ModelObj* obj = object::Instantiate<ModelObj>(eLayerType::Platforms, this);
+	//	obj->SetPos(Vector3(0.f, 5.f, 0.f));
+	//	obj->SetScale(Vector3(0.01f, 0.01f, 0.01f));
+	//	obj->SetName(L"CityWorldHomeGroundCollider");
 
-		//	// SetModel
-		//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_CityWorldHomeGround000");
-		//	obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetModel(model, model->GetMaterial(0));
-		//
-		//}
+	//	// SetModel
+	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_RoadCollider");
+	//	if (model)
+	//	{
+	//		obj->SetModel(model->GetName());
+	//		obj->SetPhysical(eGeometryType::TriangleMesh, Vector3(1.f, 1.f, 1.f));
+	//	}
+	//}
 
 	{
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
@@ -218,6 +225,7 @@ void ScenePlay::Initialize()
 		rigid->RemoveGravity();
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+
 	}
 
 
@@ -298,6 +306,22 @@ void ScenePlay::Initialize()
 	}
 	blockContainer->ResizeObjectWorldMatrix();
 
+	{
+		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
+
+		//현재 .obj 파일만 로딩 가능 블랜더에서 .obj 로 내보내기 해서 사용하면 됩니다
+		if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
+			int debug = 0;
+
+		if (!naviMesh->Build())
+			int debug = 0;
+
+		//오브젝트에 std::<Vector3>mPath 추가 path에 이동경로가 추가되니 vector내의 위치를 사용해서 이동하면 됩니다
+		//위치가 내비메쉬 밖이면 계산이 안됩니다
+		if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
+			int debug = 0;
+	}
+
 
 	CreatePlayerUI();
 
@@ -325,7 +349,6 @@ void ScenePlay::update()
 		mCoinPanal->GetScript<CoinUIScript>()->Reset();
 	}
 
-
 	Scene::update();
 }
 
@@ -333,6 +356,7 @@ void ScenePlay::fixedUpdate()
 {
 
 	Scene::fixedUpdate();
+
 }
 
 void ScenePlay::render()

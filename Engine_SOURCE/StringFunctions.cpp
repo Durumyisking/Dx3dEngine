@@ -147,6 +147,19 @@ std::wstring StringToWStringReturn(const std::string& text)
 	return Return;
 }
 
+
+std::string WStringToStringReturn(const std::wstring& wstr)
+{
+	int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, NULL, 0, NULL, NULL);
+
+	std::string Return(size_needed, 0);
+
+	WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, &Return[0], size_needed, NULL, NULL);
+
+	return Return;
+}
+
+
 bool UniCodeToAnsi(const std::wstring& uniCode, std::string& ansiString)
 {
 	//_In_ UINT CodePage,
