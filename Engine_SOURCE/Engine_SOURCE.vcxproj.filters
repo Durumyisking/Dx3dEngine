@@ -365,7 +365,7 @@
     </ClCompile>
     <ClCompile Include="LifeUI.cpp" />
     <ClCompile Include="NavigationMgr.cpp">
-      <Filter>Common\Navigation</Filter>
+      <Filter>Navigation</Filter>
     </ClCompile>
     <ClCompile Include="ModelObj.cpp">
       <Filter>Common\GameObj\ModelObj</Filter>
@@ -395,6 +395,10 @@
       <Filter>Common\GameObj\Buildings</Filter>
     </ClCompile>
     <ClCompile Include="FootSmokeParticle.cpp" />
+    <ClCompile Include="DieCircleUIScript.cpp" />
+    <ClCompile Include="DieUIEffectScript.cpp" />
+    <ClCompile Include="HelpUIScript.cpp" />
+    <ClCompile Include="MilestoneScript.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
     <ClCompile Include="UIManager.cpp">
       <Filter>UI\Manager</Filter>
@@ -503,6 +507,26 @@
     </ClCompile>
     <ClCompile Include="InstantiativeObject.cpp">
       <Filter>Common\GameObj\Objects\InstantiativeObject</Filter>
+      </ClCompile>
+    <ClCompile Include="FootSmokeParticle.cpp" />
+    <ClCompile Include="TitleBGMScript.cpp" />
+    <ClCompile Include="InputGeom.cpp">
+      <Filter>Navigation\InputGeom</Filter>
+    </ClCompile>
+    <ClCompile Include="ChunkyTriMesh.cpp">
+      <Filter>Navigation\InputGeom</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLoaderObj.cpp">
+      <Filter>Navigation\InputGeom</Filter>
+    </ClCompile>
+    <ClCompile Include="SoloMeshPathTool.cpp">
+      <Filter>Navigation\PathTool</Filter>
+    </ClCompile>
+    <ClCompile Include="NaviMesh.cpp">
+      <Filter>Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="SoloNaviMesh.cpp">
+      <Filter>Navigation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -925,7 +949,7 @@
     </ClInclude>
     <ClInclude Include="LifeUI.h" />
     <ClInclude Include="NavigationMgr.h">
-      <Filter>Common\Navigation</Filter>
+      <Filter>Navigation</Filter>
     </ClInclude>
     <ClInclude Include="ModelObj.h">
       <Filter>Common\GameObj\ModelObj</Filter>
@@ -1023,6 +1047,7 @@
     <ClInclude Include="CreateObject.h">
       <Filter>Common\GameObj\Objects</Filter>
     </ClInclude>
+
     <ClInclude Include="InstancedMeshRenderer.h">
       <Filter>Common\Component\Renderer\Mesh</Filter>
     </ClInclude>
@@ -1034,6 +1059,33 @@
     </ClInclude>
     <ClInclude Include="InstantiativeObject.h">
       <Filter>Common\GameObj\Objects\InstantiativeObject</Filter>
+
+    <ClInclude Include="DieCircleUIScript.h" />
+    <ClInclude Include="DieUIEffectScript.h" />
+    <ClInclude Include="HelpUIScript.h" />
+    <ClInclude Include="MilestoneScript.h" />
+    <ClInclude Include="TitleBGMScript.h" />
+    <ClInclude Include="MarioBlock.h" />
+    <ClInclude Include="FootSmokeParticle.h" />
+    <ClInclude Include="TitleBGMScript.h" />
+    <ClInclude Include="InputGeom.h">
+      <Filter>Navigation\InputGeom</Filter>
+    </ClInclude>
+    <ClInclude Include="ChunkyTriMesh.h">
+      <Filter>Navigation\InputGeom</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLoaderObj.h">
+      <Filter>Navigation\InputGeom</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloMeshPathTool.h">
+      <Filter>Navigation\PathTool</Filter>
+    </ClInclude>
+    <ClInclude Include="SoloNaviMesh.h">
+      <Filter>Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="NaviMesh.h">
+      <Filter>Navigation</Filter>
+
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1629,6 +1681,7 @@
     <Filter Include="Common\GameObj\Projectiles">
       <UniqueIdentifier>{0d0c5272-49a8-4d21-8620-e090726a1794}</UniqueIdentifier>
     </Filter>
+
     <Filter Include="Common\GameObj\Objects\Container">
       <UniqueIdentifier>{49b9b0d5-4764-413c-9526-d2fb9e55e31c}</UniqueIdentifier>
     </Filter>
@@ -1637,9 +1690,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Common\Navigation">
+
+    <Filter Include="Navigation">
+
       <UniqueIdentifier>{c9afd7c8-42af-4f1e-9186-771c0333a93f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Navigation\InputGeom">
+      <UniqueIdentifier>{1ac17382-afcf-461e-a737-17ed4be5532c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Navigation\PathTool">
+      <UniqueIdentifier>{0774c527-31d6-49e9-aa00-c1daacd4f653}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
     <Filter Include="Common\GameObj\ModelObj">
       <UniqueIdentifier>{eb066cb6-46d6-4287-b5c6-99f710d47602}</UniqueIdentifier>
     </Filter>

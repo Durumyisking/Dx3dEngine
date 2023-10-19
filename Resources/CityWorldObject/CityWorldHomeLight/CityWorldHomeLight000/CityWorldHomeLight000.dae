@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset />
+  <library_images>
+    <image id="TowerLightMain01_alb">
+      <init_from>TowerLightMain01_alb.png</init_from>
+    </image>
+    <image id="TowerLightMain03_alb">
+      <init_from>TowerLightMain03_alb.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="TowerLightMain01">
+      <instance_effect url="#Effect_TowerLightMain01" />
+    </material>
+    <material id="TowerLightMain02">
+      <instance_effect url="#Effect_TowerLightMain02" />
+    </material>
+    <material id="TowerLightMain03">
+      <instance_effect url="#Effect_TowerLightMain03" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect_TowerLightMain01">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <color sid="diffuse">1 1 1 1</color>
+            </diffuse>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Effect_TowerLightMain02">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <color sid="diffuse">1 1 1 1</color>
+            </diffuse>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Effect_TowerLightMain03">
+      <profile_COMMON>
+        <newparam sid="surface_TowerLightMain03-diffuse">
+          <surface type="2D">
+            <init_from>TowerLightMain03_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_TowerLightMain03-diffuse">
+          <sampler2D>
+            <source>surface_TowerLightMain03-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_TowerLightMain03-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="polySurface4135__TowerLightMain01-mesh" name="polySurface4135__TowerLightMain01">
+      <mesh>
+        <source id="polySurface4135__TowerLightMain01-position">
+          <float_array id="polySurface4135__TowerLightMain01-position-array" count="552">-2207.365 1797.412 2274.952 -2262.572 1729.624 2274.952 -2207.365 747.7729 2274.952 -2159.993 758.3649 2274.952 -1886.819 1735.979 2274.952 -2238.271 1729.624 2274.952 -1969.333 758.3649 2274.952 -1915.606 1797.412 2274.952 -1915.606 747.7729 2274.952 -1868.235 758.3649 2274.952 -1595.06 1735.979 2274.952 -1798.271 1729.624 2274.952 -1529.333 758.3649 2274.952 -1475.606 1797.412 2274.952 -1475.606 747.7729 2274.952 -1428.235 758.3649 2274.952 -1155.06 1735.979 2274.952 -1358.271 1729.624 2274.952 -1089.333 758.3649 2274.952 -1035.606 1797.412 2274.952 -1035.606 747.7729 2274.952 -988.2349 758.3649 2274.952 -715.0602 1735.979 2274.952 -952.7649 1729.624 2274.952 -683.8266 758.3649 2274.952 -630.1002 1797.412 2274.952 -630.0999 747.7729 2274.952 -582.7286 758.3649 2274.952 -309.5539 1735.979 2274.952 1886.819 1735.979 2274.952 2159.993 758.3649 2274.952 2207.365 1797.412 2274.952 2207.365 747.7729 2274.952 2264 1729.624 2274.952 309.5539 1735.979 2274.952 582.7286 758.3649 2274.952 630.1002 1797.412 2274.952 630.0999 747.7729 2274.952 683.8265 758.3649 2274.952 952.7648 1729.624 2274.952 715.0602 1735.979 2274.952 988.2349 758.3649 2274.952 1035.606 1797.412 2274.952 1035.606 747.7729 2274.952 1089.333 758.3649 2274.952 1358.271 1729.624 2274.952 1155.06 1735.979 2274.952 1428.235 758.3649 2274.952 1475.606 1797.412 2274.952 1475.606 747.7729 2274.952 1529.333 758.3649 2274.952 1798.271 1729.624 2274.952 1595.06 1735.979 2274.952 1868.235 758.3649 2274.952 1915.606 1797.412 2274.952 1915.606 747.7729 2274.952 1969.333 758.3649 2274.952 2238.271 1729.624 2274.952 -291.8596 698.9887 2312.224 -194.8814 714.3696 2312.224 -291.8596 2349.954 2312.224 158.514 2349.954 2312.224 291.8596 698.9887 2312.224 291.8596 2349.954 2312.224 194.8813 714.3696 2312.224 -158.514 2349.954 2312.224 531.9549 717.4933 2312.224 531.9549 2374.096 2312.224 469.5464 2374.096 2312.224 469.5464 717.4933 2312.224 -469.5464 2374.096 2312.224 -531.9549 2374.096 2312.224 -531.9549 717.4933 2312.224 -469.5464 717.4933 2312.224 -469.5464 2374.096 2312.224 -469.5464 717.4933 2312.224 -443.1375 762.1638 2391.376 -443.1375 2374.096 2391.376 -392.9709 1330.898 2393.322 -392.9709 2374.096 2393.322 -291.8596 698.9887 2312.224 -291.8596 2349.954 2312.224 -318.2686 2349.954 2356.762 -318.2686 698.9887 2356.762 -368.4353 2349.954 2393.322 -368.4353 698.9887 2393.322 368.4353 698.9887 2393.322 368.4353 2349.954 2393.322 318.2686 698.9887 2356.762 318.2686 2349.954 2356.762 291.8596 698.9887 2312.224 291.8596 2349.954 2312.224 469.5464 717.4933 2312.224 469.5464 2374.096 2312.224 443.1375 762.1638 2391.376 443.1375 2374.096 2391.376 392.9708 1330.898 2393.322 392.9708 2374.096 2393.322 -581.8428 13447.79 859.4471 -687.1708 13307.96 859.4471 -616.534 11654.42 859.4471 -581.8428 11583.7 859.4471 -547.1516 11654.42 859.4471 -476.5147 13307.96 859.4471 -246.704 13447.79 859.4471 -352.032 13307.96 859.4471 -281.3952 11654.42 859.4471 -246.704 11583.7 859.4471 -212.0128 11654.42 859.4471 -141.3759 13307.96 859.4471 246.704 13447.79 859.4471 141.3759 13307.96 859.4471 212.0128 11654.42 859.4471 246.704 11583.7 859.4471 281.3952 11654.42 859.4471 352.032 13307.96 859.4471 581.8428 13447.79 859.4471 476.5147 13307.96 859.4471 547.1516 11654.42 859.4471 581.8428 11583.7 859.4471 616.534 11654.42 859.4471 687.1708 13307.96 859.4471 -2261.091 758.3649 2274.952 -2125.141 2324.815 2223.053 -2245.863 2305.186 2223.053 -2147.422 1988.388 2223.053 -2125.141 1983.115 2223.053 -2102.86 1988.388 2223.053 -2004.42 2305.186 2223.053 -1822.207 2324.815 2223.053 -1942.928 2305.186 2223.053 -1844.488 1988.388 2223.053 -1822.207 1983.115 2223.053 -1799.926 1988.388 2223.053 -1701.485 2305.186 2223.053 -1352.825 2324.815 2223.053 -1473.547 2305.186 2223.053 -1375.106 1988.388 2223.053 -1352.825 1983.115 2223.053 -1330.544 1988.388 2223.053 -1232.104 2305.186 2223.053 -880.1143 2324.815 2223.053 -1000.836 2305.186 2223.053 -902.3953 1988.388 2223.053 -880.1143 1983.115 2223.053 -857.8333 1988.388 2223.053 -759.3928 2305.186 2223.053 -590.4957 2324.815 2223.053 -711.2171 2305.186 2223.053 -612.7767 1988.388 2223.053 -590.4957 1983.115 2223.053 -568.2147 1988.388 2223.053 -469.7742 2305.186 2223.053 590.4957 2324.815 2223.053 469.7742 2305.186 2223.053 568.2146 1988.388 2223.053 590.4957 1983.115 2223.053 612.7767 1988.388 2223.053 711.2169 2305.186 2223.053 880.1143 2324.815 2223.053 759.3928 2305.186 2223.053 857.8333 1988.388 2223.053 880.1143 1983.115 2223.053 902.3953 1988.388 2223.053 1000.836 2305.186 2223.053 1352.825 2324.815 2223.053 1232.104 2305.186 2223.053 1330.544 1988.388 2223.053 1352.825 1983.115 2223.053 1375.106 1988.388 2223.053 1473.546 2305.186 2223.053 2261.091 758.3649 2274.952 2147.422 1988.388 2223.053 2245.863 2305.186 2223.053 2125.141 2324.815 2223.053 2125.141 1983.115 2223.053 2102.86 1988.388 2223.053 2004.42 2305.186 2223.053 1844.488 1988.388 2223.053 1942.928 2305.186 2223.053 1822.207 2324.815 2223.053 1822.207 1983.115 2223.053 1799.926 1988.388 2223.053 1701.485 2305.186 2223.053</float_array>
+          <technique_common>
+            <accessor source="#polySurface4135__TowerLightMain01-position-array" count="184" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4135__TowerLightMain01-normal">
+          <float_array id="polySurface4135__TowerLightMain01-normal-array" count="552">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -0.9491194 0 0.3170255 -0.9491194 0 0.3170255 -0.9432485 0 0.334638 -0.7690802 0 0.6399217 -0.03913894 0 1 -0.03913894 0 1 0.8610567 0 0.5107632 0.8610567 0 0.5107632 0.7279844 0 0.6868885 0.7279844 0 0.6868885 0.5890411 0 0.8082192 0.5890411 0 0.8082192 -0.5890411 0 0.8082192 -0.5890411 0 0.8082192 -0.7279844 0 0.6868885 -0.7279844 0 0.6868885 -0.8610567 0 0.5107632 -0.8610567 0 0.5107632 0.9491194 0 0.3170255 0.9491194 0 0.3170255 0.9432485 0 0.334638 0.7690802 0 0.6399217 0.03913894 0 1 0.03913894 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface4135__TowerLightMain01-normal-array" count="184" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4135__TowerLightMain01-texcoord">
+          <float_array id="polySurface4135__TowerLightMain01-texcoord-array" count="368">0.2500038 0.1679713 0.2789044 0.2145571 0.2500038 0.8893874 0.2251927 0.8821088 0.08213931 0.210193 0.418967 0.2145571 0.2781414 0.8821088 0.2500038 0.1679713 0.2500038 0.8893874 0.2251927 0.8821088 0.08213931 0.210193 0.418967 0.2145571 0.2781414 0.8821088 0.2500038 0.1679713 0.2500038 0.8893874 0.2251927 0.8821088 0.08213931 0.210193 0.418967 0.2145571 0.2781414 0.8821088 0.2500038 0.1679713 0.2500038 0.8893874 0.2251927 0.8821088 0.08213931 0.210193 0.418967 0.2145571 0.2781414 0.8821088 0.2500038 0.1679713 0.2500038 0.8893874 0.2251927 0.8821088 0.08213931 0.210193 0.08213931 0.210193 0.2251927 0.8821088 0.2500038 0.1679713 0.2500038 0.8893874 0.2796521 0.2145571 0.08213931 0.210193 0.2251927 0.8821088 0.2500038 0.1679713 0.2500038 0.8893874 0.2781414 0.8821088 0.418967 0.2145571 0.08213931 0.210193 0.2251927 0.8821088 0.2500038 0.1679713 0.2500038 0.8893874 0.2781414 0.8821088 0.418967 0.2145571 0.08213931 0.210193 0.2251927 0.8821088 0.2500038 0.1679713 0.2500038 0.8893874 0.2781414 0.8821088 0.418967 0.2145571 0.08213931 0.210193 0.2251927 0.8821088 0.2500038 0.1679713 0.2500038 0.8893874 0.2781414 0.8821088 0.418967 0.2145571 0.2500038 0.9091936 0.2904097 0.902327 0.2500038 0.1710994 0.437644 0.1710994 0.2500038 0.9091936 0.2500038 0.1710994 0.2904097 0.902327 0.437644 0.1710994 0.2894636 0.9009232 0.2894636 0.1603113 0.2500038 0.1603113 0.2500038 0.9009232 0.2500038 0.1603113 0.2894636 0.1603113 0.2894636 0.9009232 0.2500038 0.9009232 0.2500038 0.1603113 0.2500038 0.9009232 0.1289082 0.8809491 0.1289082 0.1603113 0.007812619 0.626688 0.007812619 0.1603113 0.2500038 0.9091936 0.2500038 0.1710994 0.1289082 0.1710994 0.1289082 0.9091936 0.007812619 0.1710994 0.007812619 0.9091936 0.007812619 0.9091936 0.007812619 0.1710994 0.1289082 0.9091936 0.1289082 0.1710994 0.2500038 0.9091936 0.2500038 0.1710994 0.2500038 0.9009232 0.2500038 0.1603113 0.1289082 0.8809491 0.1289082 0.1603113 0.007812619 0.626688 0.007812619 0.1603113 0.2500038 0.1485466 0.4544747 0.2056611 0.3173419 0.8811017 0.2500038 0.909987 0.1826505 0.8811017 0.04551766 0.2056611 0.2500038 0.1485466 0.4544747 0.2056611 0.3173419 0.8811017 0.2500038 0.909987 0.1826505 0.8811017 0.04551766 0.2056611 0.2500038 0.1485466 0.04551766 0.2056611 0.1826505 0.8811017 0.2500038 0.909987 0.3173419 0.8811017 0.4544747 0.2056611 0.2500038 0.1485466 0.04551766 0.2056611 0.1826505 0.8811017 0.2500038 0.909987 0.3173419 0.8811017 0.4544747 0.2056611 0.2781414 0.8821088 0.2500038 0.1514305 0.4327001 0.1943694 0.2837262 0.8873731 0.2500038 0.898909 0.2162814 0.8873731 0.06730755 0.1943694 0.2500038 0.1514305 0.4327001 0.1943694 0.2837262 0.8873731 0.2500038 0.898909 0.2162814 0.8873731 0.06730755 0.1943694 0.2500038 0.1514305 0.4327001 0.1943694 0.2837262 0.8873731 0.2500038 0.898909 0.2162814 0.8873731 0.06730755 0.1943694 0.2500038 0.1514305 0.4327001 0.1943694 0.2837262 0.8873731 0.2500038 0.898909 0.2162814 0.8873731 0.06730755 0.1943694 0.2500038 0.1514305 0.4327001 0.1943694 0.2837262 0.8873731 0.2500038 0.898909 0.2162814 0.8873731 0.06730755 0.1943694 0.2500038 0.1514305 0.06730755 0.1943694 0.2162814 0.8873731 0.2500038 0.898909 0.2837262 0.8873731 0.4327001 0.1943694 0.2500038 0.1514305 0.06730755 0.1943694 0.2162814 0.8873731 0.2500038 0.898909 0.2837262 0.8873731 0.4327001 0.1943694 0.2500038 0.1514305 0.06730755 0.1943694 0.2162814 0.8873731 0.2500038 0.898909 0.2837262 0.8873731 0.4327001 0.1943694 0.2781414 0.8821088 0.2837262 0.8873731 0.4327001 0.1943694 0.2500038 0.1514305 0.2500038 0.898909 0.2162814 0.8873731 0.06730755 0.1943694 0.2837262 0.8873731 0.4327001 0.1943694 0.2500038 0.1514305 0.2500038 0.898909 0.2162814 0.8873731 0.06730755 0.1943694</float_array>
+          <technique_common>
+            <accessor source="#polySurface4135__TowerLightMain01-texcoord-array" count="184" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface4135__TowerLightMain01-vertex">
+          <input semantic="POSITION" source="#polySurface4135__TowerLightMain01-position" />
+        </vertices>
+        <triangles material="TowerLightMain01" count="120">
+          <input semantic="VERTEX" source="#polySurface4135__TowerLightMain01-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface4135__TowerLightMain01-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface4135__TowerLightMain01-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 0 0 0 2 2 2 3 3 3 4 4 4 0 0 0 3 3 3 5 5 5 6 6 6 7 7 7 6 6 6 8 8 8 7 7 7 7 7 7 8 8 8 9 9 9 10 10 10 7 7 7 9 9 9 11 11 11 12 12 12 13 13 13 12 12 12 14 14 14 13 13 13 13 13 13 14 14 14 15 15 15 16 16 16 13 13 13 15 15 15 17 17 17 18 18 18 19 19 19 18 18 18 20 20 20 19 19 19 19 19 19 20 20 20 21 21 21 22 22 22 19 19 19 21 21 21 23 23 23 24 24 24 25 25 25 24 24 24 26 26 26 25 25 25 25 25 25 26 26 26 27 27 27 28 28 28 25 25 25 27 27 27 29 29 29 30 30 30 31 31 31 30 30 30 32 32 32 31 31 31 31 31 31 32 32 32 33 33 33 34 34 34 35 35 35 36 36 36 35 35 35 37 37 37 36 36 36 37 37 37 38 38 38 36 36 36 38 38 38 39 39 39 36 36 36 40 40 40 41 41 41 42 42 42 41 41 41 43 43 43 42 42 42 43 43 43 44 44 44 42 42 42 44 44 44 45 45 45 42 42 42 46 46 46 47 47 47 48 48 48 47 47 47 49 49 49 48 48 48 49 49 49 50 50 50 48 48 48 50 50 50 51 51 51 48 48 48 52 52 52 53 53 53 54 54 54 53 53 53 55 55 55 54 54 54 55 55 55 56 56 56 54 54 54 56 56 56 57 57 57 54 54 54 58 58 58 59 59 59 60 60 60 59 59 59 61 61 61 60 60 60 62 62 62 63 63 63 64 64 64 63 63 63 65 65 65 64 64 64 66 66 66 67 67 67 68 68 68 69 69 69 66 66 66 68 68 68 70 70 70 71 71 71 72 72 72 73 73 73 70 70 70 72 72 72 74 74 74 75 75 75 76 76 76 77 77 77 74 74 74 76 76 76 77 77 77 76 76 76 78 78 78 79 79 79 77 77 77 78 78 78 80 80 80 81 81 81 82 82 82 83 83 83 80 80 80 82 82 82 83 83 83 82 82 82 84 84 84 85 85 85 83 83 83 84 84 84 86 86 86 87 87 87 88 88 88 87 87 87 89 89 89 88 88 88 88 88 88 89 89 89 90 90 90 89 89 89 91 91 91 90 90 90 92 92 92 93 93 93 94 94 94 93 93 93 95 95 95 94 94 94 94 94 94 95 95 95 96 96 96 95 95 95 97 97 97 96 96 96 98 98 98 99 99 99 100 100 100 101 101 101 98 98 98 100 100 100 98 98 98 101 101 101 102 102 102 103 103 103 98 98 98 102 102 102 104 104 104 105 105 105 106 106 106 107 107 107 104 104 104 106 106 106 104 104 104 107 107 107 108 108 108 109 109 109 104 104 104 108 108 108 110 110 110 111 111 111 112 112 112 113 113 113 110 110 110 112 112 112 113 113 113 114 114 114 110 110 110 114 114 114 115 115 115 110 110 110 116 116 116 117 117 117 118 118 118 119 119 119 116 116 116 118 118 118 119 119 119 120 120 120 116 116 116 120 120 120 121 121 121 116 116 116 1 1 1 122 122 122 2 2 2 123 123 123 124 124 124 125 125 125 126 126 126 123 123 123 125 125 125 123 123 123 126 126 126 127 127 127 128 128 128 123 123 123 127 127 127 129 129 129 130 130 130 131 131 131 132 132 132 129 129 129 131 131 131 129 129 129 132 132 132 133 133 133 134 134 134 129 129 129 133 133 133 135 135 135 136 136 136 137 137 137 138 138 138 135 135 135 137 137 137 135 135 135 138 138 138 139 139 139 140 140 140 135 135 135 139 139 139 141 141 141 142 142 142 143 143 143 144 144 144 141 141 141 143 143 143 141 141 141 144 144 144 145 145 145 146 146 146 141 141 141 145 145 145 147 147 147 148 148 148 149 149 149 150 150 150 147 147 147 149 149 149 147 147 147 150 150 150 151 151 151 152 152 152 147 147 147 151 151 151 153 153 153 154 154 154 155 155 155 156 156 156 153 153 153 155 155 155 156 156 156 157 157 157 153 153 153 157 157 157 158 158 158 153 153 153 159 159 159 160 160 160 161 161 161 162 162 162 159 159 159 161 161 161 162 162 162 163 163 163 159 159 159 163 163 163 164 164 164 159 159 159 165 165 165 166 166 166 167 167 167 168 168 168 165 165 165 167 167 167 168 168 168 169 169 169 165 165 165 169 169 169 170 170 170 165 165 165 32 32 32 171 171 171 33 33 33 172 172 172 173 173 173 174 174 174 175 175 175 172 172 172 174 174 174 175 175 175 174 174 174 176 176 176 174 174 174 177 177 177 176 176 176 178 178 178 179 179 179 180 180 180 181 181 181 178 178 178 180 180 180 181 181 181 180 180 180 182 182 182 180 180 180 183 183 183 182 182 182 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="polySurface4177__TowerLightMain02-mesh" name="polySurface4177__TowerLightMain02">
+      <mesh>
+        <source id="polySurface4177__TowerLightMain02-position">
+          <float_array id="polySurface4177__TowerLightMain02-position-array" count="108">-1562.077 5391.939 1816.384 -1903.312 5241.668 1816.384 -1660.512 2990.423 1816.384 -1562.077 2897.532 1816.384 -1463.643 2990.423 1816.384 -1220.843 5241.668 1816.384 -643.8699 5391.939 1816.384 -985.1046 5241.668 1816.384 -742.3043 2990.423 1816.384 -643.8699 2897.532 1816.384 -545.4354 2990.423 1816.384 -302.6351 5241.668 1816.384 -258.5637 5391.939 1816.384 -599.7984 5241.668 1816.384 -356.9981 2990.423 1816.384 -258.5637 2897.532 1816.384 -160.1292 2990.423 1816.384 82.67111 5241.668 1816.384 1660.512 2990.423 1816.384 1903.312 5241.668 1816.384 1562.077 5391.939 1816.384 1562.077 2897.532 1816.384 1463.643 2990.423 1816.384 1220.843 5241.668 1816.384 742.3046 2990.423 1816.384 985.1049 5241.668 1816.384 643.8699 5391.939 1816.384 643.8699 2897.532 1816.384 545.4353 2990.423 1816.384 302.635 5241.668 1816.384 356.9983 2990.423 1816.384 599.7986 5241.668 1816.384 258.5637 5391.939 1816.384 258.5637 2897.532 1816.384 160.1291 2990.423 1816.384 -82.6712 5241.668 1816.384</float_array>
+          <technique_common>
+            <accessor source="#polySurface4177__TowerLightMain02-position-array" count="36" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4177__TowerLightMain02-normal">
+          <float_array id="polySurface4177__TowerLightMain02-normal-array" count="108">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface4177__TowerLightMain02-normal-array" count="36" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4177__TowerLightMain02-texcoord">
+          <float_array id="polySurface4177__TowerLightMain02-texcoord-array" count="72">0.2509804 0.1647059 0.4352941 0.2117647 0.3019608 0.8784314 0.2509804 0.9058824 0.1960784 0.8784314 0.06666667 0.2117647 0.2509804 0.1647059 0.4352941 0.2117647 0.3019608 0.8784314 0.2509804 0.9058824 0.1960784 0.8784314 0.06666667 0.2117647 0.2509804 0.1647059 0.4352941 0.2117647 0.3019608 0.8784314 0.2509804 0.9058824 0.1960784 0.8784314 0.06666667 0.2117647 0.3019608 0.8784314 0.4352941 0.2117647 0.2509804 0.1647059 0.2509804 0.9058824 0.1960784 0.8784314 0.06666667 0.2117647 0.3019608 0.8784314 0.4352941 0.2117647 0.2509804 0.1647059 0.2509804 0.9058824 0.1960784 0.8784314 0.06666667 0.2117647 0.3019608 0.8784314 0.4352941 0.2117647 0.2509804 0.1647059 0.2509804 0.9058824 0.1960784 0.8784314 0.06666667 0.2117647</float_array>
+          <technique_common>
+            <accessor source="#polySurface4177__TowerLightMain02-texcoord-array" count="36" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface4177__TowerLightMain02-vertex">
+          <input semantic="POSITION" source="#polySurface4177__TowerLightMain02-position" />
+        </vertices>
+        <triangles material="TowerLightMain02" count="24">
+          <input semantic="VERTEX" source="#polySurface4177__TowerLightMain02-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface4177__TowerLightMain02-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface4177__TowerLightMain02-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 3 3 3 0 0 0 2 2 2 0 0 0 3 3 3 4 4 4 5 5 5 0 0 0 4 4 4 6 6 6 7 7 7 8 8 8 9 9 9 6 6 6 8 8 8 6 6 6 9 9 9 10 10 10 11 11 11 6 6 6 10 10 10 12 12 12 13 13 13 14 14 14 15 15 15 12 12 12 14 14 14 12 12 12 15 15 15 16 16 16 17 17 17 12 12 12 16 16 16 18 18 18 19 19 19 20 20 20 21 21 21 18 18 18 20 20 20 21 21 21 20 20 20 22 22 22 20 20 20 23 23 23 22 22 22 24 24 24 25 25 25 26 26 26 27 27 27 24 24 24 26 26 26 27 27 27 26 26 26 28 28 28 26 26 26 29 29 29 28 28 28 30 30 30 31 31 31 32 32 32 33 33 33 30 30 30 32 32 32 33 33 33 32 32 32 34 34 34 32 32 32 35 35 35 34 34 34 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="polySurface4212__TowerLightMain03-mesh" name="polySurface4212__TowerLightMain03">
+      <mesh>
+        <source id="polySurface4212__TowerLightMain03-position">
+          <float_array id="polySurface4212__TowerLightMain03-position-array" count="45">-696.2589 7869.65 1597.975 -1086.496 6614.477 1597.975 -780.7975 6537.511 1597.975 -0.0002288818 7896.748 1597.975 0.0005340576 7265.624 1597.975 -1324.359 8738.092 1597.975 748.5647 6573.184 1597.975 -0.0001525879 7896.749 1597.975 648.1904 7869.65 1597.975 1086.497 6614.476 1597.975 -0.0002288818 8738.094 1597.975 1324.359 8738.094 1597.975 -1324.361 9269.778 1597.975 1324.359 9269.779 1597.975 -0.0009155273 9967.514 1597.975</float_array>
+          <technique_common>
+            <accessor source="#polySurface4212__TowerLightMain03-position-array" count="15" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4212__TowerLightMain03-normal">
+          <float_array id="polySurface4212__TowerLightMain03-normal-array" count="45">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface4212__TowerLightMain03-normal-array" count="15" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4212__TowerLightMain03-texcoord">
+          <float_array id="polySurface4212__TowerLightMain03-texcoord-array" count="30">0.3568628 0.4666666 0.2784314 0.1686274 0.3411765 0.1490196 0.5019608 0.4705882 0.5019608 0.3215686 0.227451 0.6705883 0.654902 0.1568627 0.5019608 0.4705882 0.6313726 0.4666666 0.7215686 0.1686274 0.5019608 0.6705883 0.772549 0.6705883 0.227451 0.8 0.772549 0.8 0.4980392 0.9647059</float_array>
+          <technique_common>
+            <accessor source="#polySurface4212__TowerLightMain03-texcoord-array" count="15" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface4212__TowerLightMain03-vertex">
+          <input semantic="POSITION" source="#polySurface4212__TowerLightMain03-position" />
+        </vertices>
+        <triangles material="TowerLightMain03" count="16">
+          <input semantic="VERTEX" source="#polySurface4212__TowerLightMain03-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface4212__TowerLightMain03-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface4212__TowerLightMain03-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 0 0 0 2 2 2 3 3 3 2 2 2 4 4 4 3 3 3 5 5 5 0 0 0 3 3 3 3 3 3 4 4 4 6 6 6 7 7 7 5 5 5 3 3 3 3 3 3 6 6 6 8 8 8 8 8 8 6 6 6 9 9 9 7 7 7 10 10 10 5 5 5 10 10 10 8 8 8 11 11 11 5 5 5 10 10 10 12 12 12 13 13 13 10 10 10 11 11 11 12 12 12 10 10 10 14 14 14 14 14 14 10 10 10 13 13 13 7 7 7 3 3 3 10 10 10 10 10 10 3 3 3 8 8 8 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_polySurface4135__TowerLightMain01-mesh">
+      <skin source="#polySurface4135__TowerLightMain01-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface4135__TowerLightMain01-mesh-joint">
+          <Name_array id="polySurface4135__TowerLightMain01-mesh-joint-array" count="1">CityWorldHomeLight000</Name_array>
+          <technique_common>
+            <accessor source="#polySurface4135__TowerLightMain01-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4135__TowerLightMain01-mesh-inv_bind_matrix">
+          <float_array id="polySurface4135__TowerLightMain01-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface4135__TowerLightMain01-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4135__TowerLightMain01-mesh-weight">
+          <float_array id="polySurface4135__TowerLightMain01-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface4135__TowerLightMain01-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface4135__TowerLightMain01-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface4135__TowerLightMain01-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="184">
+          <input semantic="JOINT" source="#polySurface4135__TowerLightMain01-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface4135__TowerLightMain01-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_polySurface4177__TowerLightMain02-mesh">
+      <skin source="#polySurface4177__TowerLightMain02-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface4177__TowerLightMain02-mesh-joint">
+          <Name_array id="polySurface4177__TowerLightMain02-mesh-joint-array" count="1">CityWorldHomeLight000</Name_array>
+          <technique_common>
+            <accessor source="#polySurface4177__TowerLightMain02-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4177__TowerLightMain02-mesh-inv_bind_matrix">
+          <float_array id="polySurface4177__TowerLightMain02-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface4177__TowerLightMain02-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4177__TowerLightMain02-mesh-weight">
+          <float_array id="polySurface4177__TowerLightMain02-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface4177__TowerLightMain02-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface4177__TowerLightMain02-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface4177__TowerLightMain02-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="36">
+          <input semantic="JOINT" source="#polySurface4177__TowerLightMain02-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface4177__TowerLightMain02-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_polySurface4212__TowerLightMain03-mesh">
+      <skin source="#polySurface4212__TowerLightMain03-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface4212__TowerLightMain03-mesh-joint">
+          <Name_array id="polySurface4212__TowerLightMain03-mesh-joint-array" count="1">CityWorldHomeLight000</Name_array>
+          <technique_common>
+            <accessor source="#polySurface4212__TowerLightMain03-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4212__TowerLightMain03-mesh-inv_bind_matrix">
+          <float_array id="polySurface4212__TowerLightMain03-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface4212__TowerLightMain03-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface4212__TowerLightMain03-mesh-weight">
+          <float_array id="polySurface4212__TowerLightMain03-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface4212__TowerLightMain03-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface4212__TowerLightMain03-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface4212__TowerLightMain03-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="15">
+          <input semantic="JOINT" source="#polySurface4212__TowerLightMain03-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface4212__TowerLightMain03-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="Armature_CityWorldHomeLight000" name="CityWorldHomeLight000" sid="CityWorldHomeLight000" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+      </node>
+      <node id="polySurface4135__TowerLightMain01" name="polySurface4135__TowerLightMain01" type="NODE">
+        <instance_controller url="#Armature_polySurface4135__TowerLightMain01-mesh">
+          <skeleton>#Armature_CityWorldHomeLight000</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="TowerLightMain01" target="#TowerLightMain01" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="polySurface4177__TowerLightMain02" name="polySurface4177__TowerLightMain02" type="NODE">
+        <instance_controller url="#Armature_polySurface4177__TowerLightMain02-mesh">
+          <skeleton>#Armature_CityWorldHomeLight000</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="TowerLightMain02" target="#TowerLightMain02" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="polySurface4212__TowerLightMain03" name="polySurface4212__TowerLightMain03" type="NODE">
+        <instance_controller url="#Armature_polySurface4212__TowerLightMain03-mesh">
+          <skeleton>#Armature_CityWorldHomeLight000</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="TowerLightMain03" target="#TowerLightMain03" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

@@ -494,9 +494,6 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
 
-	inMesh->SetVertexCount(static_cast<UINT>(vertexes.size()));
-	inMesh->SetIndexCount(static_cast<UINT>(indexes.size()));
-
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 	inMesh->SetName(wName);
 	GETSINGLE(ResourceMgr)->Insert<Mesh>(wName, inMesh);

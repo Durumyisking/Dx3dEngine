@@ -27,6 +27,7 @@ HRESULT Mesh::LoadFullpath(const std::wstring& path)
 }
 bool Mesh::CreateVertexBuffer(void* data, UINT count)
 {
+	mVertexCount = count;
 	mVBDesc.ByteWidth = sizeof(Vertex) * count;
 	mVBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
 	mVBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;

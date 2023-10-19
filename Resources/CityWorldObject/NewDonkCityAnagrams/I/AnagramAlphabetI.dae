@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset />
+  <library_images>
+    <image id="AnagramAlphabetFrame_alb">
+      <init_from>AnagramAlphabetFrame_alb.png</init_from>
+    </image>
+    <image id="AnagramAlphabetFrame_nrm">
+      <init_from>AnagramAlphabetFrame_nrm.png</init_from>
+    </image>
+    <image id="AnagramAlphabetFrame_rgh">
+      <init_from>AnagramAlphabetFrame_rgh.png</init_from>
+    </image>
+    <image id="AnagramAlphabetMI_alb">
+      <init_from>AnagramAlphabetMI_alb.png</init_from>
+    </image>
+    <image id="AnagramAlphabetMI_nrm">
+      <init_from>AnagramAlphabetMI_nrm.png</init_from>
+    </image>
+    <image id="AnagramAlphabetMI_rgh">
+      <init_from>AnagramAlphabetMI_rgh.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="AnagramAlphabetFrame">
+      <instance_effect url="#Effect_AnagramAlphabetFrame" />
+    </material>
+    <material id="AnagramAlphabetMI">
+      <instance_effect url="#Effect_AnagramAlphabetMI" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect_AnagramAlphabetFrame">
+      <profile_COMMON>
+        <newparam sid="surface_AnagramAlphabetFrame-diffuse">
+          <surface type="2D">
+            <init_from>AnagramAlphabetFrame_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_AnagramAlphabetFrame-diffuse">
+          <sampler2D>
+            <source>surface_AnagramAlphabetFrame-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <newparam sid="surface_AnagramAlphabetFrame-bump">
+          <surface type="2D">
+            <init_from>AnagramAlphabetFrame_nrm</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_AnagramAlphabetFrame-bump">
+          <sampler2D>
+            <source>surface_AnagramAlphabetFrame-bump</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_AnagramAlphabetFrame-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <bump>
+              <texture texture="sampler_AnagramAlphabetFrame-bump" texcoord="CHANNEL0" />
+            </bump>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Effect_AnagramAlphabetMI">
+      <profile_COMMON>
+        <newparam sid="surface_AnagramAlphabetMI-diffuse">
+          <surface type="2D">
+            <init_from>AnagramAlphabetMI_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_AnagramAlphabetMI-diffuse">
+          <sampler2D>
+            <source>surface_AnagramAlphabetMI-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <newparam sid="surface_AnagramAlphabetMI-bump">
+          <surface type="2D">
+            <init_from>AnagramAlphabetMI_nrm</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_AnagramAlphabetMI-bump">
+          <sampler2D>
+            <source>surface_AnagramAlphabetMI-bump</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_AnagramAlphabetMI-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <bump>
+              <texture texture="sampler_AnagramAlphabetMI-bump" texcoord="CHANNEL0" />
+            </bump>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="AnagramAlphabetI__AnagramAlphabetFrame-mesh" name="AnagramAlphabetI__AnagramAlphabetFrame">
+      <mesh>
+        <source id="AnagramAlphabetI__AnagramAlphabetFrame-position">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetFrame-position-array" count="504">101.9641 263.8232 -78.50113 100.8902 264.4841 -80.00098 100.6975 265.7174 -78.50113 -41.75394 296.0154 -78.50113 -42.29239 294.9813 -80.00098 -43.39161 294.7585 -78.50113 55.76633 21.92089 -78.50113 56.23707 23.25762 -80.00098 57.63969 23.60981 -78.50113 -57.97264 14.49773 -78.50113 -56.82514 14.17278 -80.00098 -56.47038 13.03549 -78.50113 100.6975 265.7174 78.49915 100.8902 264.4841 79.99901 101.9641 263.8232 78.49915 -43.39161 294.7585 78.49915 -42.29239 294.9813 79.99901 -41.75394 296.0154 78.49915 57.63969 23.60981 78.49915 56.23707 23.25762 79.99901 55.76633 21.92089 78.49915 -56.47038 13.03549 78.49915 -56.82514 14.17278 79.99901 -57.97264 14.49773 78.49915 -29.35972 42.36684 -78.50114 -30.66872 41.02312 -80.00099 -18.19202 262.6243 -78.50114 -19.25823 264.0558 -80.00099 -18.19202 262.6243 -78.50114 -19.25823 264.0558 -80.00099 70.31979 244.2315 -78.50114 71.72874 245.1649 -80.00099 70.31979 244.2315 -78.50114 71.72874 245.1649 -80.00099 34.3161 47.08893 -78.50114 35.46986 45.83466 -80.00099 -30.66872 41.02312 -80.00099 -29.35972 42.36684 -78.50114 35.46986 45.83466 -80.00099 34.3161 47.08893 -78.50114 -30.66872 41.02312 79.99901 -29.35972 42.36684 78.49915 -19.25823 264.0558 79.99901 -18.19202 262.6243 78.49915 -19.25823 264.0558 79.99901 -18.19202 262.6243 78.49915 71.72874 245.1649 79.99901 70.31979 244.2315 78.49915 -29.35972 42.36684 78.49915 -30.66872 41.02312 79.99901 34.3161 47.08893 78.49915 35.46986 45.83466 79.99901 71.72874 245.1649 79.99901 70.31979 244.2315 78.49915 35.46986 45.83466 79.99901 34.3161 47.08893 78.49915 100.6975 265.7174 -78.50113 100.8902 264.4841 -80.00098 -41.75394 296.0154 -78.50113 -42.29239 294.9813 -80.00098 100.8902 264.4841 -80.00098 101.9641 263.8232 -78.50113 56.23707 23.25762 -80.00098 57.63969 23.60981 -78.50113 -43.39161 294.7585 -78.50113 -42.29239 294.9813 -80.00098 -57.97264 14.49773 -78.50113 -56.82514 14.17278 -80.00098 56.23707 23.25762 -80.00098 55.76633 21.92089 -78.50113 -56.82514 14.17278 -80.00098 -56.47038 13.03549 -78.50113 101.9641 263.8232 -78.50113 100.6975 265.7174 -78.50113 101.9641 263.8232 78.49915 100.6975 265.7174 78.49915 -41.75394 296.0154 -78.50113 -43.39161 294.7585 -78.50113 -41.75394 296.0154 78.49915 -43.39161 294.7585 78.49915 100.8902 264.4841 79.99901 100.6975 265.7174 78.49915 -42.29239 294.9813 79.99901 -41.75394 296.0154 78.49915 101.9641 263.8232 78.49915 100.8902 264.4841 79.99901 57.63969 23.60981 78.49915 56.23707 23.25762 79.99901 55.76633 21.92089 -78.50113 57.63969 23.60981 -78.50113 55.76633 21.92089 78.49915 57.63969 23.60981 78.49915 55.76633 21.92089 78.49915 56.23707 23.25762 79.99901 -56.47038 13.03549 78.49915 -56.82514 14.17278 79.99901 -57.97264 14.49773 -78.50113 -56.47038 13.03549 -78.50113 -57.97264 14.49773 78.49915 -56.47038 13.03549 78.49915 -42.29239 294.9813 79.99901 -43.39161 294.7585 78.49915 -56.82514 14.17278 79.99901 -57.97264 14.49773 78.49915 -41.75394 296.0154 -78.50113 -41.75394 296.0154 78.49915 100.6975 265.7174 -78.50113 100.6975 265.7174 78.49915 101.9641 263.8232 78.49915 57.63969 23.60981 78.49915 101.9641 263.8232 -78.50113 57.63969 23.60981 -78.50113 55.76633 21.92089 78.49915 -56.47038 13.03549 78.49915 55.76633 21.92089 -78.50113 -56.47038 13.03549 -78.50113 -57.97264 14.49773 -78.50113 -57.97264 14.49773 78.49915 -43.39161 294.7585 -78.50113 -43.39161 294.7585 78.49915 70.31979 244.2315 -72.00099 -18.19202 262.6243 -72.00099 70.31979 244.2315 -78.50114 -18.19202 262.6243 -78.50114 -18.19202 262.6243 -72.00099 -29.35972 42.36684 -72.00099 -18.19202 262.6243 -78.50114 -29.35972 42.36684 -78.50114 -29.35972 42.36684 -72.00099 34.3161 47.08893 -72.00099 -29.35972 42.36684 -78.50114 34.3161 47.08893 -78.50114 34.3161 47.08893 -72.00099 70.31979 244.2315 -72.00099 34.3161 47.08893 -78.50114 70.31979 244.2315 -78.50114 70.31979 244.2315 71.99901 34.3161 47.08893 71.99901 70.31979 244.2315 78.49915 34.3161 47.08893 78.49915 34.3161 47.08893 71.99901 -29.35972 42.36684 71.99901 34.3161 47.08893 78.49915 -29.35972 42.36684 78.49915 -29.35972 42.36684 71.99901 -18.19202 262.6243 71.99901 -29.35972 42.36684 78.49915 -18.19202 262.6243 78.49915 -18.19202 262.6243 71.99901 70.31979 244.2315 71.99901 -18.19202 262.6243 78.49915 70.31979 244.2315 78.49915 -19.25823 264.0558 -80.00099 -42.29239 294.9813 -80.00098 100.8902 264.4841 -80.00098 -56.82514 14.17278 -80.00098 71.72874 245.1649 -80.00099 -30.66872 41.02312 -80.00099 56.23707 23.25762 -80.00098 35.46986 45.83466 -80.00099 -19.25823 264.0558 79.99901 -42.29239 294.9813 79.99901 -56.82514 14.17278 79.99901 100.8902 264.4841 79.99901 -30.66872 41.02312 79.99901 71.72874 245.1649 79.99901 56.23707 23.25762 79.99901 35.46986 45.83466 79.99901</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetFrame-position-array" count="168" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AnagramAlphabetI__AnagramAlphabetFrame-normal">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetFrame-normal-array" count="504">0.7847358 0.5244619 -0.3307241 0.7847358 0.5244619 -0.3307241 0.7847358 0.5244619 -0.3307241 -0.5792564 0.7534246 -0.3111546 -0.5792564 0.7534246 -0.3111546 -0.5792564 0.7534246 -0.3111546 0.6105675 -0.6771037 -0.4109589 0.6105675 -0.6771037 -0.4109589 0.6105675 -0.6771037 -0.4109589 -0.6516634 -0.6692759 -0.3542074 -0.6516634 -0.6692759 -0.3542074 -0.6516634 -0.6692759 -0.3542074 0.7847358 0.5244619 0.3307241 0.7847358 0.5244619 0.3307241 0.7847358 0.5244619 0.3307241 -0.5792564 0.7534246 0.3111546 -0.5792564 0.7534246 0.3111546 -0.5792564 0.7534246 0.3111546 0.6105675 -0.6771037 0.4109589 0.6105675 -0.6771037 0.4109589 0.6105675 -0.6771037 0.4109589 -0.6516634 -0.6692759 0.3542074 -0.6516634 -0.6692759 0.3542074 -0.6516634 -0.6692759 0.3542074 0.7827789 -0.03913894 -0.6203523 0.7827789 -0.03913894 -0.6203523 0.7827789 -0.03913894 -0.6203523 0.7827789 -0.03913894 -0.6203523 -0.1585127 -0.7671233 -0.6223092 -0.1585127 -0.7671233 -0.6223092 -0.1585127 -0.7671233 -0.6223092 -0.1585127 -0.7671233 -0.6223092 -0.7455969 0.1350294 -0.6516634 -0.7455969 0.1350294 -0.6516634 -0.7455969 0.1350294 -0.6516634 -0.7455969 0.1350294 -0.6516634 -0.05479452 0.7553816 -0.6516634 -0.05479452 0.7553816 -0.6516634 -0.05479452 0.7553816 -0.6516634 -0.05479452 0.7553816 -0.6516634 0.7827789 -0.03913894 0.6203523 0.7827789 -0.03913894 0.6203523 0.7827789 -0.03913894 0.6203523 0.7827789 -0.03913894 0.6203523 -0.1585127 -0.7671233 0.6223092 -0.1585127 -0.7671233 0.6223092 -0.1585127 -0.7671233 0.6223092 -0.1585127 -0.7671233 0.6223092 -0.05479452 0.7553816 0.6516634 -0.05479452 0.7553816 0.6516634 -0.05479452 0.7553816 0.6516634 -0.05479452 0.7553816 0.6516634 -0.7455969 0.1350294 0.6516634 -0.7455969 0.1350294 0.6516634 -0.7455969 0.1350294 0.6516634 -0.7455969 0.1350294 0.6516634 0.1663405 0.776908 -0.6066536 0.1663405 0.776908 -0.6066536 0.1663405 0.776908 -0.6066536 0.1663405 0.776908 -0.6066536 0.7573385 -0.1389433 -0.6379648 0.7573385 -0.1389433 -0.6379648 0.7573385 -0.1389433 -0.6379648 0.7573385 -0.1389433 -0.6379648 -0.7984344 0.04109589 -0.6007828 -0.7984344 0.04109589 -0.6007828 -0.7984344 0.04109589 -0.6007828 -0.7984344 0.04109589 -0.6007828 0.06066536 -0.7710372 -0.6340509 0.06066536 -0.7710372 -0.6340509 0.06066536 -0.7710372 -0.6340509 0.06066536 -0.7710372 -0.6340509 0.8317025 0.555773 0 0.8317025 0.555773 0 0.8317025 0.555773 0 0.8317025 0.555773 0 -0.6086106 0.7925636 0 -0.6086106 0.7925636 0 -0.6086106 0.7925636 0 -0.6086106 0.7925636 0 0.1663405 0.776908 0.6066536 0.1663405 0.776908 0.6066536 0.1663405 0.776908 0.6066536 0.1663405 0.776908 0.6066536 0.7573385 -0.1389433 0.6379648 0.7573385 -0.1389433 0.6379648 0.7573385 -0.1389433 0.6379648 0.7573385 -0.1389433 0.6379648 0.6692759 -0.7436399 0 0.6692759 -0.7436399 0 0.6692759 -0.7436399 0 0.6692759 -0.7436399 0 0.06066536 -0.7710372 0.6340509 0.06066536 -0.7710372 0.6340509 0.06066536 -0.7710372 0.6340509 0.06066536 -0.7710372 0.6340509 -0.6966732 -0.7162427 0 -0.6966732 -0.7162427 0 -0.6966732 -0.7162427 0 -0.6966732 -0.7162427 0 -0.7984344 0.04109589 0.6007828 -0.7984344 0.04109589 0.6007828 -0.7984344 0.04109589 0.6007828 -0.7984344 0.04109589 0.6007828 0.2074364 0.9784736 0 0.2074364 0.9784736 0 0.2074364 0.9784736 0 0.2074364 0.9784736 0 0.9843444 -0.1819961 0 0.9843444 -0.1819961 0 0.9843444 -0.1819961 0 0.9843444 -0.1819961 0 0.07827789 -0.9960861 0 0.07827789 -0.9960861 0 0.07827789 -0.9960861 0 0.07827789 -0.9960861 0 -0.9980431 0.05283757 0 -0.9980431 0.05283757 0 -0.9980431 0.05283757 0 -0.9980431 0.05283757 0 -0.2035225 -0.9784736 0 -0.2035225 -0.9784736 0 -0.2035225 -0.9784736 0 -0.2035225 -0.9784736 0 0.9980431 -0.05088063 0 0.9980431 -0.05088063 0 0.9980431 -0.05088063 0 0.9980431 -0.05088063 0 -0.07436399 0.9980431 0 -0.07436399 0.9980431 0 -0.07436399 0.9980431 0 -0.07436399 0.9980431 0 -0.9843444 0.1800391 0 -0.9843444 0.1800391 0 -0.9843444 0.1800391 0 -0.9843444 0.1800391 0 -0.9843444 0.1800391 0 -0.9843444 0.1800391 0 -0.9843444 0.1800391 0 -0.9843444 0.1800391 0 -0.07436399 0.9980431 0 -0.07436399 0.9980431 0 -0.07436399 0.9980431 0 -0.07436399 0.9980431 0 0.9980431 -0.05088063 0 0.9980431 -0.05088063 0 0.9980431 -0.05088063 0 0.9980431 -0.05088063 0 -0.2035225 -0.9784736 0 -0.2035225 -0.9784736 0 -0.2035225 -0.9784736 0 -0.2035225 -0.9784736 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetFrame-normal-array" count="168" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AnagramAlphabetI__AnagramAlphabetFrame-texcoord">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetFrame-texcoord-array" count="336">0.8774414 -1.238281 0.8798828 -1.236328 0.8803711 -1.234375 1.225586 -1.160156 1.226563 -1.162109 1.229492 -1.164063 0.9892578 -1.824219 0.987793 -1.820313 0.984375 -1.820313 1.264648 -1.841797 1.261719 -1.84375 1.260742 -1.845703 2.84375 -0.203125 2.84375 -0.2060547 2.847656 -0.2070313 2.494141 -0.1328125 2.498047 -0.1318359 2.498047 -0.1289063 2.740234 -0.7890625 2.736328 -0.7900391 2.734375 -0.7929688 2.462891 -0.8144531 2.462891 -0.8125 2.458984 -0.8115234 1.195313 -1.775391 1.198242 -1.777344 1.167969 -1.240234 1.170898 -1.238281 1.167969 -1.240234 1.170898 -1.238281 0.9541016 -1.285156 0.9506836 -1.283203 0.9541016 -1.285156 0.9506836 -1.283203 1.041016 -1.763672 1.038086 -1.765625 1.198242 -1.777344 1.195313 -1.775391 1.038086 -1.765625 1.041016 -1.763672 2.525391 -0.7470703 2.529297 -0.7441406 2.552734 -0.2070313 2.556641 -0.2099609 2.552734 -0.2070313 2.556641 -0.2099609 2.773438 -0.2529297 2.769531 -0.2548828 2.529297 -0.7441406 2.525391 -0.7470703 2.683594 -0.7324219 2.685547 -0.7353516 2.773438 -0.2529297 2.769531 -0.2548828 2.685547 -0.7353516 2.683594 -0.7324219 0.8803711 -1.234375 0.8798828 -1.236328 1.225586 -1.160156 1.226563 -1.162109 0.8798828 -1.236328 0.8774414 -1.238281 0.987793 -1.820313 0.984375 -1.820313 1.229492 -1.164063 1.226563 -1.162109 1.264648 -1.841797 1.261719 -1.84375 0.987793 -1.820313 0.9892578 -1.824219 1.261719 -1.84375 1.260742 -1.845703 -3.009766 0.3774414 -3.013672 0.3774414 -3.009766 -0.0546875 -3.013672 -0.0546875 -3.357422 0.3774414 -3.363281 0.3774414 -3.357422 -0.0546875 -3.363281 -0.0546875 2.84375 -0.2060547 2.84375 -0.203125 2.498047 -0.1318359 2.498047 -0.1289063 2.847656 -0.2070313 2.84375 -0.2060547 2.740234 -0.7890625 2.736328 -0.7900391 -2.427734 0.3774414 -2.433594 0.3774414 -2.427734 -0.0546875 -2.433594 -0.0546875 2.734375 -0.7929688 2.736328 -0.7900391 2.462891 -0.8144531 2.462891 -0.8125 -4.023438 0.3774414 -4.027344 0.3774414 -4.023438 -0.0546875 -4.027344 -0.0546875 2.498047 -0.1318359 2.494141 -0.1328125 2.462891 -0.8125 2.458984 -0.8115234 -3.357422 0.3774414 -3.357422 -0.0546875 -3.013672 0.3774414 -3.013672 -0.0546875 -3.009766 -0.0546875 -2.433594 -0.0546875 -3.009766 0.3774414 -2.433594 0.3774414 -4.292969 -0.0546875 -4.027344 -0.0546875 -4.292969 0.3774414 -4.027344 0.3774414 -4.023438 0.3774414 -4.023438 -0.0546875 -3.363281 0.3774414 -3.363281 -0.0546875 -3.148438 -0.1806641 -2.935547 -0.1806641 -3.148438 -0.1640625 -2.935547 -0.1640625 -4.292969 -0.1806641 -3.773438 -0.1806641 -4.292969 -0.1640625 -3.773438 -0.1640625 -3.773438 -0.1806641 -3.623047 -0.1806641 -3.773438 -0.1640625 -3.623047 -0.1640625 -3.623047 -0.1806641 -3.148438 -0.1806641 -3.623047 -0.1640625 -3.148438 -0.1640625 -3.150391 -0.2695313 -3.623047 -0.2695313 -3.150391 -0.2851563 -3.623047 -0.2851563 -3.623047 -0.2695313 -3.773438 -0.2695313 -3.623047 -0.2851563 -3.773438 -0.2851563 -3.773438 -0.2695313 -4.292969 -0.2695313 -3.773438 -0.2851563 -4.292969 -0.2851563 -2.935547 -0.2695313 -3.150391 -0.2695313 -2.935547 -0.2851563 -3.150391 -0.2851563 1.170898 -1.238281 1.226563 -1.162109 0.8798828 -1.236328 1.261719 -1.84375 0.9506836 -1.283203 1.198242 -1.777344 0.987793 -1.820313 1.038086 -1.765625 2.552734 -0.2070313 2.498047 -0.1318359 2.462891 -0.8125 2.84375 -0.2060547 2.525391 -0.7470703 2.773438 -0.2529297 2.736328 -0.7900391 2.685547 -0.7353516</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetFrame-texcoord-array" count="168" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="AnagramAlphabetI__AnagramAlphabetFrame-vertex">
+          <input semantic="POSITION" source="#AnagramAlphabetI__AnagramAlphabetFrame-position" />
+        </vertices>
+        <triangles material="AnagramAlphabetFrame" count="88">
+          <input semantic="VERTEX" source="#AnagramAlphabetI__AnagramAlphabetFrame-vertex" offset="0" />
+          <input semantic="NORMAL" source="#AnagramAlphabetI__AnagramAlphabetFrame-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#AnagramAlphabetI__AnagramAlphabetFrame-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 11 11 11 12 12 12 13 13 13 14 14 14 15 15 15 16 16 16 17 17 17 18 18 18 19 19 19 20 20 20 21 21 21 22 22 22 23 23 23 24 24 24 25 25 25 26 26 26 25 25 25 27 27 27 26 26 26 28 28 28 29 29 29 30 30 30 29 29 29 31 31 31 30 30 30 32 32 32 33 33 33 34 34 34 33 33 33 35 35 35 34 34 34 36 36 36 37 37 37 38 38 38 37 37 37 39 39 39 38 38 38 40 40 40 41 41 41 42 42 42 41 41 41 43 43 43 42 42 42 44 44 44 45 45 45 46 46 46 45 45 45 47 47 47 46 46 46 48 48 48 49 49 49 50 50 50 49 49 49 51 51 51 50 50 50 52 52 52 53 53 53 54 54 54 53 53 53 55 55 55 54 54 54 56 56 56 57 57 57 58 58 58 57 57 57 59 59 59 58 58 58 60 60 60 61 61 61 62 62 62 61 61 61 63 63 63 62 62 62 64 64 64 65 65 65 66 66 66 65 65 65 67 67 67 66 66 66 68 68 68 69 69 69 70 70 70 69 69 69 71 71 71 70 70 70 72 72 72 73 73 73 74 74 74 73 73 73 75 75 75 74 74 74 76 76 76 77 77 77 78 78 78 77 77 77 79 79 79 78 78 78 80 80 80 81 81 81 82 82 82 81 81 81 83 83 83 82 82 82 84 84 84 85 85 85 86 86 86 85 85 85 87 87 87 86 86 86 88 88 88 89 89 89 90 90 90 89 89 89 91 91 91 90 90 90 92 92 92 93 93 93 94 94 94 93 93 93 95 95 95 94 94 94 96 96 96 97 97 97 98 98 98 97 97 97 99 99 99 98 98 98 100 100 100 101 101 101 102 102 102 101 101 101 103 103 103 102 102 102 104 104 104 105 105 105 106 106 106 105 105 105 107 107 107 106 106 106 108 108 108 109 109 109 110 110 110 109 109 109 111 111 111 110 110 110 112 112 112 113 113 113 114 114 114 113 113 113 115 115 115 114 114 114 116 116 116 117 117 117 118 118 118 117 117 117 119 119 119 118 118 118 120 120 120 121 121 121 122 122 122 121 121 121 123 123 123 122 122 122 124 124 124 125 125 125 126 126 126 125 125 125 127 127 127 126 126 126 128 128 128 129 129 129 130 130 130 129 129 129 131 131 131 130 130 130 132 132 132 133 133 133 134 134 134 133 133 133 135 135 135 134 134 134 136 136 136 137 137 137 138 138 138 137 137 137 139 139 139 138 138 138 140 140 140 141 141 141 142 142 142 141 141 141 143 143 143 142 142 142 144 144 144 145 145 145 146 146 146 145 145 145 147 147 147 146 146 146 148 148 148 149 149 149 150 150 150 149 149 149 151 151 151 150 150 150 152 152 152 153 153 153 154 154 154 152 152 152 155 155 155 153 153 153 156 156 156 152 152 152 154 154 154 152 152 152 157 157 157 155 155 155 156 156 156 154 154 154 158 158 158 158 158 158 155 155 155 157 157 157 156 156 156 158 158 158 159 159 159 158 158 158 157 157 157 159 159 159 160 160 160 161 161 161 162 162 162 163 163 163 161 161 161 160 160 160 160 160 160 162 162 162 164 164 164 165 165 165 163 163 163 160 160 160 166 166 166 164 164 164 162 162 162 165 165 165 166 166 166 163 163 163 167 167 167 164 164 164 166 166 166 165 165 165 167 167 167 166 166 166 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="AnagramAlphabetI__AnagramAlphabetMI-mesh" name="AnagramAlphabetI__AnagramAlphabetMI">
+      <mesh>
+        <source id="AnagramAlphabetI__AnagramAlphabetMI-position">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetMI-position-array" count="156">72.16274 245.4725 71.99901 -19.68597 264.5587 71.99901 35.65941 45.59418 71.99901 -31.03893 40.64792 71.99901 72.16274 245.4725 -72.00099 35.65941 45.59418 -72.00099 -19.68597 264.5587 -72.00099 -31.03893 40.64792 -72.00099 -38.50016 0 -60 -38.50015 23.61002 -60 38.50015 0 -60 38.50014 23.61 -60 -38.50014 23.61002 60 -38.50014 0 60 38.50016 23.61 60 38.50015 0 60 -39.99999 0 58.50015 -40 23.61002 58.50015 -40.00001 0 -58.50015 -40 23.61002 -58.50015 40.00001 23.61 58.50015 40 0 58.50015 39.99999 23.61 -58.50015 40 0 -58.50015 -38.50014 0 60 -38.50016 0 -60 38.50015 0 60 38.50015 0 -60 -38.50014 23.61002 60 -40 23.61002 58.50015 -38.50014 0 60 -39.99999 0 58.50015 38.50015 0 60 40 0 58.50015 38.50016 23.61 60 40.00001 23.61 58.50015 -38.50016 0 -60 -40.00001 0 -58.50015 -38.50015 23.61002 -60 -40 23.61002 -58.50015 40 0 -58.50015 38.50015 0 -60 39.99999 23.61 -58.50015 38.50014 23.61 -60 38.50015 0 60 38.50015 0 -60 40 0 58.50015 40 0 -58.50015 -38.50014 0 60 -39.99999 0 58.50015 -38.50016 0 -60 -40.00001 0 -58.50015</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetMI-position-array" count="52" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AnagramAlphabetI__AnagramAlphabetMI-normal">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetMI-normal-array" count="156">0 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 -0.7064579 0 0.7064579 -0.7064579 0 0.7064579 -0.7064579 0 0.7064579 -0.7064579 0 0.7064579 0.7064579 0 0.7064579 0.7064579 0 0.7064579 0.7064579 0 0.7064579 0.7064579 0 0.7064579 -0.7064579 0 -0.7064579 -0.7064579 0 -0.7064579 -0.7064579 0 -0.7064579 -0.7064579 0 -0.7064579 0.7064579 0 -0.7064579 0.7064579 0 -0.7064579 0.7064579 0 -0.7064579 0.7064579 0 -0.7064579 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetMI-normal-array" count="52" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AnagramAlphabetI__AnagramAlphabetMI-color">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetMI-color-array" count="208">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1 0.5019608 0.5019608 0.5019608 1</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetMI-color-array" count="52" stride="4">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+              <param name="A" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AnagramAlphabetI__AnagramAlphabetMI-texcoord">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetMI-texcoord-array" count="104">0.8988327 0.9410697 0.722652 0.977676 0.8271611 0.5486839 0.7004349 0.5392843 0.08685435 0.4289159 0.158526 0.03653008 0.263035 0.4655222 0.2852522 0.02713054 0.9725338 0.3866484 0.9725185 0.4471656 0.9621729 0.3866484 0.9621729 0.4471656 0.9281605 0.4471656 0.9282216 0.3866484 0.9379416 0.4471656 0.9379416 0.3866484 0.9890135 0.3866484 0.9890135 0.4471656 0.977966 0.3866484 0.977966 0.4471656 0.9433738 0.4471656 0.9433738 0.3866484 0.9567254 0.4471656 0.9567254 0.3866484 0.9328451 0.4423438 0.9328451 0.3911192 0.9801022 0.4423438 0.9801022 0.3911192 0.9281605 0.4471656 0.922713 0.4471656 0.9282216 0.3866484 0.9227893 0.3866484 0.9379416 0.3866484 0.9433738 0.3866484 0.9379416 0.4471656 0.9433738 0.4471656 0.9725338 0.3866484 0.977966 0.3866484 0.9725185 0.4471656 0.977966 0.4471656 0.9567254 0.3866484 0.9621729 0.3866484 0.9567254 0.4471656 0.9621729 0.4471656 0.9801022 0.4423438 0.9801022 0.3911192 0.9820859 0.4403601 0.9820859 0.3930877 0.9328451 0.4423438 0.9308614 0.4403601 0.9328451 0.3911192 0.9308614 0.3930877</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetMI-texcoord-array" count="52" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="AnagramAlphabetI__AnagramAlphabetMI-vertex">
+          <input semantic="POSITION" source="#AnagramAlphabetI__AnagramAlphabetMI-position" />
+        </vertices>
+        <triangles material="AnagramAlphabetMI" count="26">
+          <input semantic="VERTEX" source="#AnagramAlphabetI__AnagramAlphabetMI-vertex" offset="0" />
+          <input semantic="NORMAL" source="#AnagramAlphabetI__AnagramAlphabetMI-normal" offset="1" />
+          <input semantic="COLOR" source="#AnagramAlphabetI__AnagramAlphabetMI-color" offset="2" set="0" />
+          <input semantic="TEXCOORD" source="#AnagramAlphabetI__AnagramAlphabetMI-texcoord" offset="3" set="0" />
+          <p>0 0 0 0 1 1 1 1 2 2 2 2 1 1 1 1 3 3 3 3 2 2 2 2 4 4 4 4 5 5 5 5 6 6 6 6 5 5 5 5 7 7 7 7 6 6 6 6 8 8 8 8 9 9 9 9 10 10 10 10 9 9 9 9 11 11 11 11 10 10 10 10 12 12 12 12 13 13 13 13 14 14 14 14 13 13 13 13 15 15 15 15 14 14 14 14 16 16 16 16 17 17 17 17 18 18 18 18 17 17 17 17 19 19 19 19 18 18 18 18 20 20 20 20 21 21 21 21 22 22 22 22 21 21 21 21 23 23 23 23 22 22 22 22 24 24 24 24 25 25 25 25 26 26 26 26 25 25 25 25 27 27 27 27 26 26 26 26 28 28 28 28 29 29 29 29 30 30 30 30 29 29 29 29 31 31 31 31 30 30 30 30 32 32 32 32 33 33 33 33 34 34 34 34 33 33 33 33 35 35 35 35 34 34 34 34 36 36 36 36 37 37 37 37 38 38 38 38 37 37 37 37 39 39 39 39 38 38 38 38 40 40 40 40 41 41 41 41 42 42 42 42 41 41 41 41 43 43 43 43 42 42 42 42 44 44 44 44 45 45 45 45 46 46 46 46 45 45 45 45 47 47 47 47 46 46 46 46 48 48 48 48 49 49 49 49 50 50 50 50 49 49 49 49 51 51 51 51 50 50 50 50 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_AnagramAlphabetI__AnagramAlphabetFrame-mesh">
+      <skin source="#AnagramAlphabetI__AnagramAlphabetFrame-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="AnagramAlphabetI__AnagramAlphabetFrame-mesh-joint">
+          <Name_array id="AnagramAlphabetI__AnagramAlphabetFrame-mesh-joint-array" count="1">AnagramAlphabetI</Name_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetFrame-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AnagramAlphabetI__AnagramAlphabetFrame-mesh-inv_bind_matrix">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetFrame-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetFrame-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AnagramAlphabetI__AnagramAlphabetFrame-mesh-weight">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetFrame-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetFrame-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#AnagramAlphabetI__AnagramAlphabetFrame-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#AnagramAlphabetI__AnagramAlphabetFrame-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="168">
+          <input semantic="JOINT" source="#AnagramAlphabetI__AnagramAlphabetFrame-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#AnagramAlphabetI__AnagramAlphabetFrame-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_AnagramAlphabetI__AnagramAlphabetMI-mesh">
+      <skin source="#AnagramAlphabetI__AnagramAlphabetMI-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="AnagramAlphabetI__AnagramAlphabetMI-mesh-joint">
+          <Name_array id="AnagramAlphabetI__AnagramAlphabetMI-mesh-joint-array" count="1">AnagramAlphabetI</Name_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetMI-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AnagramAlphabetI__AnagramAlphabetMI-mesh-inv_bind_matrix">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetMI-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetMI-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="AnagramAlphabetI__AnagramAlphabetMI-mesh-weight">
+          <float_array id="AnagramAlphabetI__AnagramAlphabetMI-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#AnagramAlphabetI__AnagramAlphabetMI-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#AnagramAlphabetI__AnagramAlphabetMI-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#AnagramAlphabetI__AnagramAlphabetMI-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="52">
+          <input semantic="JOINT" source="#AnagramAlphabetI__AnagramAlphabetMI-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#AnagramAlphabetI__AnagramAlphabetMI-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="Armature_AllRoot" name="AllRoot" sid="AllRoot" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <node id="Armature_AnagramAlphabetI" name="AnagramAlphabetI" sid="AnagramAlphabetI" type="JOINT">
+            <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+            <node id="Armature_CapPos" name="CapPos" sid="CapPos" type="JOINT">
+              <matrix sid="transform">0.9811917 0.1930358 0 31.10508 -0.1930358 0.9811917 0 280.5039 0 0 1 -0.1624894 0 0 0 1</matrix>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node id="AnagramAlphabetI__AnagramAlphabetFrame" name="AnagramAlphabetI__AnagramAlphabetFrame" type="NODE">
+        <instance_controller url="#Armature_AnagramAlphabetI__AnagramAlphabetFrame-mesh">
+          <skeleton>#Armature_AllRoot</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="AnagramAlphabetFrame" target="#AnagramAlphabetFrame" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="AnagramAlphabetI__AnagramAlphabetMI" name="AnagramAlphabetI__AnagramAlphabetMI" type="NODE">
+        <instance_controller url="#Armature_AnagramAlphabetI__AnagramAlphabetMI-mesh">
+          <skeleton>#Armature_AllRoot</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="AnagramAlphabetMI" target="#AnagramAlphabetMI" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

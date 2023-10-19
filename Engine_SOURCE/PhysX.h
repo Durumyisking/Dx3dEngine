@@ -18,9 +18,6 @@ public:
 	PxTriangleMesh* CreateTriangleMesh(const PxVec3* verts, const PxU32 numVerts
 		, const PxU32* indexes, const PxU32 numIndexes, PxPhysics* physics, PxCooking* cooking);
 
-	PxTriangleMesh* CreateTriangleMeshOffline(const PxVec3* verts, const PxU32 numVerts
-		, const PxU32* indexs, const PxU32 numIndexes, PxPhysics* physics, PxCooking* cooking);
-
 	PxCooking*				GetCooking() const { return mInitialization->GetCooking(); }
 	PxFoundation*			GetFoundation() const { return mInitialization->GetFoundation(); }
 	PxPhysics*				GetPhysics() const { return mInitialization->GetPhysics(); }

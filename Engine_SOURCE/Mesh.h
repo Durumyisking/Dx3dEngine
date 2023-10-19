@@ -31,11 +31,6 @@ public:
 	bool IsRender() { return mbRender; }
 	void SetRender(bool render) { mbRender = render; }
 
-	//GETSET(UINT, mVertexCount, VertexCount);
-	//GETSET(UINT, mIndexCount, IndexCount);
-
-	void SetVertexCount(UINT count) { mVertexCount = count; }
-	void SetIndexCount(UINT count) { mIndexCount = count; }
 	UINT GetVertexCount() { return mVertexCount; }
 	UINT GetIndexCount() { return mIndexCount; }
 
