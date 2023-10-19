@@ -24,11 +24,12 @@ public:
     void OnCollisionExit(PhysXCollider* otherCollider);
 
     void OnTriggerEnter(PhysXCollider* otherCollider);
-    void OnTriggerStay(PhysXCollider* otherCollider);
+    void OnTriggerPersist(PhysXCollider* otherCollider);
     void OnTriggerExit(PhysXCollider* otherCollider);
 
     bool Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance);
     Vector3 ComputePenetration(GameObj* gameObject);
+    Vector3 ComputePenetration_Direction(GameObj* gameObject);
 
 
     PxFilterData& GetFilterData()  { return mFilterData; }

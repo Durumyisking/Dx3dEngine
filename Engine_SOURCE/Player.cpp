@@ -23,6 +23,8 @@ Player::Player()
 	, mMeshRenderer(nullptr)
 	, mScript(nullptr)
 	, mRigidBody(nullptr)
+	, mParts{}
+	, mMarioCap(nullptr)
 {
 	SetLayerType(eLayerType::Player);
 	SetName(L"Player");
@@ -34,6 +36,12 @@ Player::Player()
 
 Player::Player(const Player& Obj)
 	: DynamicObject(Obj)
+	, mPlayerState(ePlayerState::Idle)
+	, mMeshRenderer(nullptr)
+	, mScript(nullptr)
+	, mRigidBody(nullptr)
+	, mParts{}
+	, mMarioCap(nullptr)
 {
 	SetLayerType(eLayerType::Player);
 }
@@ -83,7 +91,7 @@ void Player::Initialize()
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	mRigidBody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-	AddComponent<PhysXCollider>(eComponentType::Collider);
+	AddComponent<PhysXCollider>(eComponentType::Collider)->SetSwitchState(false);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
 	AddComponent<GenericAnimator>(eComponentType::GenericAnimator);
 
@@ -95,8 +103,8 @@ void Player::Initialize()
 	mMeshRenderer->SetMaterialByKey(L"marioBodyMaterial", 0);
 
 
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.75f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	mRigidBody->SetFriction(Vector3(40.f, 0.f, 40.f));
 
@@ -247,36 +255,83 @@ void Player::OnCollisionEnter(GameObj* gameObject)
 
 void Player::OnTriggerEnter(GameObj* gameObject)
 {
-	if (eLayerType::Platforms == gameObject->GetLayerType())
+	// todo : 캡처 들어가거나 나가는중일때 어떠한 충돌 처리를 수행하면 안됨)
+	if (L"Bind" != GetBoneAnimator()->PlayAnimationName())
 	{
-		if (mRigidBody->IsOnAir())
+		if (eLayerType::Platforms == gameObject->GetLayerType())
 		{
-			mRigidBody->SetAirOff();
-			SetPlayerState(Player::ePlayerState::Idle);
+			if (mRigidBody->IsOnAir())
+			{
+				mRigidBody->SetAirOff();
+				SetPlayerState(Player::ePlayerState::Idle);
+			}
 		}
-	}
 
-	if (eLayerType::Monster == gameObject->GetLayerType())
-	{
-		Vector3 monToPlayer = GetWorldPos() - gameObject->GetWorldPos();
-		monToPlayer.Normalize();
-		Vector3 monUpVector = gameObject->GetTransform()->WorldUp();
-
-		float cosTheta = monToPlayer.Dot(monUpVector);
-
-		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.95f)
+		if (eLayerType::Objects == gameObject->GetLayerType())
 		{
-			mScript->ResetJumpCount();
-			mRigidBody->SetAirOff();
-			mRigidBody->SetVelocity(AXIS::Y, 0.f);
-			SetPlayerState(Player::ePlayerState::Jump);
+			Vector3 pent = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
+			if ( pent.y > 0.f  && pent.x == 0.f && pent.z== 0.f)
+			{
+				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+				{
+					//GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent);
+					if (mRigidBody->IsOnAir())
+					{
+						GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+						mRigidBody->SetAirOff();
+						mRigidBody->RemoveGravity();
+						SetPlayerState(Player::ePlayerState::Idle);
+					}
+				}
+			}
+			
+			if (pent.y == 0.f)
+			{
+				Vector3 pent2 = GetPhysXCollider()->ComputePenetration(gameObject);
+				pent2.y = 0.f;
+				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+				{
+					GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
+					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent2);
+				}
+			}
+
+		}
+
+		if (eLayerType::Monster == gameObject->GetLayerType())
+		{
+			if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.95f)
+			{
+				mScript->ResetJumpCount();
+				mRigidBody->SetAirOff();
+				mRigidBody->SetVelocity(AXIS::Y, 0.f);
+				SetPlayerState(Player::ePlayerState::Jump);
+				GetBoneAnimator()->ResetAnimator();
+			}
 		}
 	}
 
 }
 
+void Player::OnTriggerPersist(GameObj* gameObject)
+{
+
+}
+
 void Player::OnTriggerExit(GameObj* gameObject)
 {
+	if (eLayerType::Objects == gameObject->GetLayerType())
+	{
+		//if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
+		//{
+		//	if (!mRigidBody->IsOnAir())
+		//	{
+		//		mRigidBody->SetAirOn();
+		//		mRigidBody->ApplyGravity();
+		//		SetPlayerState(Player::ePlayerState::Fall);
+		//	}
+		//}
+	}
 }
 
 void Player::KeyCheck()
@@ -414,7 +469,7 @@ void Player::stateInfoInitalize()
 	//ThrowCap
 	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Idle));
 	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Move));
-	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Jump));
+	//InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Jump));
 	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Squat));
 	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::SquatMove));
 	InsertLockState(static_cast<UINT>(ePlayerState::Capture), static_cast<UINT>(ePlayerState::Air));
@@ -508,7 +563,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 
 				mMarioCap->Active();
 
-				mMarioCap->GetComponent<Transform>()->SetPhysicalPosition(position+Vector3(0.f,0.6f,0.f));
+				mMarioCap->GetComponent<Transform>()->SetPhysicalPosition(position);
 				mMarioCap->GetComponent<Transform>()->SetPhysicalRotation(rotation);
 
 				mMarioCap->GetComponent<BoneAnimator>()->Play(L"ThrowCap",false);
@@ -612,8 +667,7 @@ void Player::boneAnimatorInit(BoneAnimator* animator)
 		if (cilp)
 			cilp->SetEndEvent([this]()
 		{
-			Pause();
-			//GetPhysical()->RemoveActorToPxScene();
+			int i = 0;
 		});
 	}
 }
@@ -622,5 +676,20 @@ void Player::SetMarioCap(MarioCap* cap)
 {
 	mMarioCap = cap;
 	cap->SetOwner(this);
+}
+
+void Player::CapturingProcess()
+{
+	GetPhysical()->KinematicActorSleep();
+	mRigidBody->SetVelocity(Vector3::Zero);
+	mRigidBody->RemoveGravity();
+
+}
+
+void Player::UnCapturingProcess()
+{
+	GetPhysical()->KinematicActorWakeup();
+	//mRigidBody->SetVelocity(Vector3::Zero);
+	mRigidBody->ApplyGravity();
 }
 

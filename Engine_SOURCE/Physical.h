@@ -103,6 +103,7 @@ public:
 public:
     virtual void Initialize();
     virtual void InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, MassProperties massProperties = MassProperties());
+    virtual void InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, Vector3 localPos, MassProperties massProperties = MassProperties());
     virtual void InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, Model* model = nullptr, MassProperties massProperties = MassProperties());
     virtual void InitialTriangleMeshProperties(Vector3 geometrySize, Model* model = nullptr, MassProperties massProperties = MassProperties());
     PxConvexMesh* MakeConvexMesh(Model* model);
@@ -129,6 +130,11 @@ public:
 
     void AddActorToPxScene();
     void RemoveActorToPxScene();
+    void DynamicActorSleep();
+    void DynamicActorWakeup();
+    void KinematicActorSleep();
+    void KinematicActorWakeup();
+    bool IsKinematicActorSleep();
     void ShapesPause();
 
     void SetGeometrySize(const Vector3& newSize);

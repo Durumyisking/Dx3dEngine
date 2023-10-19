@@ -165,7 +165,7 @@ namespace server
 		player->SetPos(Vector3(5.f, 5.f, 5.f));
 		player->SetScale({ 5.f, 5.f, 5.f });
 		player->SetName(L"Player");
-		//GUIMaterial* mat = GETSINGLE(ResourceMgr)->CreateMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
+		//GUIMaterial* mat = GETSINGLE(ResourceMgr)->createMaterial(L"dirt_color", L"dirt_normal", L"PhongShader", L"mat_dirt");
 		//player->GetComponent<GUIMeshRenderer>()->SetMaterial(mat);
 		player->GetComponent<MeshRenderer>()->SetMaterialByKey(L"PhongMaterial");
 		player->GetComponent<MeshRenderer>()->SetMeshByKey(L"Spheremesh");

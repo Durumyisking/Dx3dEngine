@@ -23,7 +23,7 @@ VSOut main(VSIn vsIn)
 {
     VSOut output = (VSOut) 0.0f;
     float4 weights = vsIn.BlendWeight;
-    weights.w = 1.f - (weights.x + weights.y + weights.z);
+    weights.w = 1.f - (weights.x + weights.y + weights.z); 
   
     float4 pos = mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.x].bMatrix) * vsIn.BlendWeight.x;
     pos += mul(vsIn.Position, BonArray[(uint) vsIn.BlendID.y].bMatrix) * vsIn.BlendWeight.y;

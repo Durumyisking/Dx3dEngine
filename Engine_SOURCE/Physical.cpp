@@ -58,6 +58,30 @@ void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geom
 //		createUniversalShape();
 }
 
+void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, Vector3 localPos, MassProperties massProperties)
+{
+	if (geometryType == eGeometryType::ConvexMesh)
+	{
+		InitialConvexMeshProperties(actorType, geometrySize);
+	}
+	if (geometryType == eGeometryType::TriangleMesh)
+	{
+		InitialTriangleMeshProperties(geometrySize);
+	}
+
+	mActorType = actorType;
+	mGeometryType = geometryType;
+	mSize = geometrySize;
+
+	createPhysicsProperties(massProperties);
+	mMainGeometry = std::make_shared<Geometry>(createGeometry(mGeometryType, mSize));
+	createActor();
+	CreateMainShape(localPos);
+	AddActorToPxScene();
+
+	mbSceneIncludActor = true;
+}
+
 void Physical::InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, Model* model, MassProperties massProperties)
 {
 	if (model == nullptr)
@@ -204,6 +228,33 @@ void Physical::RemoveActorToPxScene()
 {
 	GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysicsScene()->RemoveActor(mActor);
 	mbSceneIncludActor = false;
+}
+
+void Physical::DynamicActorSleep()
+{
+	// 한 simulate sleep 합니다.
+	mActor->is<PxRigidDynamic>()->putToSleep();
+}
+
+void Physical::DynamicActorWakeup()
+{
+	// 다음 simulate때 wakeup 합니다.
+	mActor->is<PxRigidDynamic>()->wakeUp();
+}
+
+void Physical::KinematicActorSleep()
+{
+	mActor->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, true);
+}
+
+void Physical::KinematicActorWakeup()
+{
+	mActor->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, false);
+}
+
+bool Physical::IsKinematicActorSleep()
+{
+	return mActor->getActorFlags() & PxActorFlag::eDISABLE_SIMULATION;
 }
 
 void Physical::ShapesPause()

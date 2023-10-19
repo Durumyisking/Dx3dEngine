@@ -5,7 +5,6 @@ class AsyncLoad
 {
 	SINGLE(AsyncLoad)
 
-
 public:
 	void Update();
 
@@ -16,11 +15,35 @@ public:
 
 	bool IsLoadFinish() const { return mbLoadFinish; }
 
+	enum class TextureState
+	{
+		Al,
+		Em,
+		Nr,
+		AlNr,
+		AlRg,
+		AlEm,
+		AlMsNr,
+		AlNrRg,
+		AlMtNrRg,
+		AlEmNrRg,
+		AlEmMtNrRg,
+		AlEmMsNrRg,
+		AlEmMsMtNr,
+		AlMtMsNrRg,
+	};
 
 private:
 	void loadGoomba(std::wstring shaderName);
 	void loadMario(std::wstring shaderName);
+	//void loadBuildings(std::wstring shaderName);
 
+	void loadCityObjectMaterial();
+	void loadCityTexture();
+
+
+	void createMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state);
+	void textureLoad(std::wstring fileName,std::wstring _PathAndUntilfileName,TextureState state);
 private:
 	bool mbLoadFinish;
 
@@ -29,6 +52,7 @@ private:
 	bool mbMarioLoadFinish;
 	bool mbMonsterLoadFinish;
 	bool mbMapLoadFinish;
+	bool mbSoundLoad;
 
 };
 

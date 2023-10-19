@@ -15,7 +15,7 @@ enum class eKeyCode
 	SPACE, LEFT, RIGHT, UP, DOWN,
 
 	// mouse
-	LBTN, RBTN,
+	LBTN, RBTN, WHEELUP, WHEELDOWN,
 
 	//Num Pad
 	NUM_0, NUM_1, NUM_2,

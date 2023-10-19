@@ -61,7 +61,7 @@ HRESULT Model::Load(const std::wstring& path)
 		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
 	}
 
-	mVariableMaterials.resize(mMaterials.size());
+	mVariableMaterials.resize(12);
 	mAssimpImporter.FreeScene();
 
 	return S_OK;
@@ -157,30 +157,32 @@ void Model::Bind_Render(bool bindMaterial)
 		if (mMeshes[i] == nullptr)
 			continue;
 
-		if (mMaterials[i] == nullptr)
-			continue;
+		//if (mMaterials[i] == nullptr)
+		//	continue;
 
 		if (mMeshes[i]->IsRender() == false)
 			continue;
 
 		if (bindMaterial)
 		{
-			std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
-			for (int slot = 0; slot < Textures.size(); ++slot)
-			{
-				if (Textures[slot] == nullptr)
-					continue;
+			//std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
+			//for (int slot = 0; slot < Textures.size(); ++slot)
+			//{
+			//	if (Textures[slot] == nullptr)
+			//		continue;
 
-				mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
-			}
+			//	mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+			//}
 
-			mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
+			if (!(mVariableMaterials.empty() && mMaterials.empty()))
+				mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
 
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
-		mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+		if(!(mVariableMaterials.empty() && mMaterials.empty()))
+			mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
 	}
 
 	mFrameAnimationVector = nullptr;
@@ -389,40 +391,40 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		}
 	}
 
-	if (mesh->mMaterialIndex >= 0)
-	{
-		// TextureLoad
-		aiMaterial* aiMater = scene->mMaterials[mesh->mMaterialIndex];
-		std::vector<Model::TextureInfo> textureBuff = {};
-		for (int type = static_cast<int>(aiTextureType_NONE); type < static_cast<int>(aiTextureType_UNKNOWN); ++type)
-		{
-			std::vector<Model::TextureInfo> texInfo = processMaterial(aiMater, static_cast<aiTextureType>(type));
-			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
-		}
+	//if (mesh->mMaterialIndex >= 0)
+	//{
+	//	// textureLoad
+	//	aiMaterial* aiMater = scene->mMaterials[mesh->mMaterialIndex];
+	//	std::vector<Model::TextureInfo> textureBuff = {};
+	//	for (int type = static_cast<int>(aiTextureType_NONE); type < static_cast<int>(aiTextureType_UNKNOWN); ++type)
+	//	{
+	//		std::vector<Model::TextureInfo> texInfo = processMaterial(aiMater, static_cast<aiTextureType>(type));
+	//		textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
+	//	}
 
-		if (textureBuff.size() > 0)
-		{
-			mTextures.emplace_back(textureBuff);
+	//	if (textureBuff.size() > 0)
+	//	{
+	//		mTextures.emplace_back(textureBuff);
 
-			std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
-			for (auto& tex : texInfo)
-			{
-				if (tex.texPath == L"")
-					continue;
+	//		std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
+	//		for (auto& tex : texInfo)
+	//		{
+	//			if (tex.texPath == L"")
+	//				continue;
 
-				tex.pTex = new Texture();
-				tex.pTex->Load(tex.texPath, tex);
-			}
-		}
+	//			tex.pTex = new Texture();
+	//			tex.pTex->Load(tex.texPath, tex);
+	//		}
+	//	}
 
-		//Material
-		Material* inMaterial = new Material();
-		inMaterial->SetRenderingMode(eRenderingMode::DeferredMask);
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		inMaterial->SetShader(shader);
+	//	//Material
+	//	Material* inMaterial = new Material();
+	//	inMaterial->SetRenderingMode(eRenderingMode::DeferredMask);
+	//	Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+	//	inMaterial->SetShader(shader);
 
-		mMaterials.emplace_back(inMaterial);
-	}
+	//	mMaterials.emplace_back(inMaterial);
+	//}
 
 	Mesh* inMesh = new Mesh();
 	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
@@ -654,16 +656,16 @@ Material* Model::GetVariableMaterials(UINT index)
 
 void Model::SetVariableMaterials(UINT index, Material* mater)
 {
-	if (index >= mVariableMaterials.size())
-		return;
+	//if (index >= mVariableMaterials.size())
+	//	return;
 
 	mVariableMaterials[index] = mater;
 }
 
 void Model::SetVariableMaterialsByKey(UINT index, const std::wstring& key)
 {
-	if (index >= mVariableMaterials.size())
-		return;
+	//if (index >= mVariableMaterials.size())
+	//	return;
 
 	Material* mater = GETSINGLE(ResourceMgr)->Find<Material>(key);
 

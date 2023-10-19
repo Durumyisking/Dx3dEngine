@@ -17,11 +17,10 @@ public:
 	virtual void FixedUpdate() final;
 
 	virtual void CaptureEvent() final;
-	virtual void CaptureEnter(MarioCap* cap) final {};
-
+	
 	virtual void OnCollisionEnter(GameObj* gameObject) final;
 	virtual void OnTriggerEnter(GameObj* gameObject) final;
-	virtual void OnTriggerStay(GameObj* gameObject) final;
+	virtual void OnTriggerPersist(GameObj* gameObject) final;
 	virtual void OnTriggerExit(GameObj* gameObject) final;
 
 public:

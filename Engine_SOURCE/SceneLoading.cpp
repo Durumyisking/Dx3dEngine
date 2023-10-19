@@ -36,7 +36,7 @@ void SceneLoading::Initialize()
 	});
 	std::thread thread3([]()
 	{
-			GETSINGLE(AsyncLoad)->LoadSounds();
+		GETSINGLE(AsyncLoad)->LoadSounds();
 	});
 		
 	thread1.detach();

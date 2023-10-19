@@ -1,0 +1,28 @@
+version 1
+nodes
+0 "BlockBrick" -1
+end
+skeleton
+time 0
+0 0 90.00092 0 0 0 0
+time 1
+0 0 120 0 0 0 0
+time 2
+0 0 114.6879 0 0 0 0
+time 3
+0 0 97.70235 0 0 0 0
+time 4
+0 0 71.10384 0 0 0 0
+time 5
+0 0 37.84906 0 0 0 0
+time 6
+0 0 0 0 0 0 0
+time 7
+0 0 0 0 0 0 0
+time 8
+0 0 0 0 0 0 0
+time 9
+0 0 0 0 0 0 0
+time 10
+0 0 90.00092 0 0 0 0
+end

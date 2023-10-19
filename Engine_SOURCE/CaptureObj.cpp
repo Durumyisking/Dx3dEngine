@@ -42,7 +42,8 @@ void CaptureObj::Divide()
 
 	mPlayer->SetMarioCap(mCap);
 	mPlayer->Active();
-	mCap->Pause();
+	mPlayer->UnCapturingProcess();
+	
 
 	// 마리오의 모자를 씌워줌
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
@@ -59,10 +60,12 @@ void CaptureObj::Divide()
 	Transform* tr = mCap->GetTransform();
 	Transform* playertr = mPlayer->GetTransform();
 
-	playertr->SetPhysicalPosition(monsterTr->GetPhysicalPosition());
-	playertr->SetPhysicalRotation(Vector3(0.f, 0.0f, 0.f));
+	Vector3 CapturedObjectPosition = monsterTr->GetPhysicalPosition();
+	CapturedObjectPosition.y += (monster->GetPhysical()->GetGeometrySize().y * 4.f);
 
-	mPlayer->SetPlayerState(Player::ePlayerState::Idle);
+	playertr->SetPhysicalPosition(CapturedObjectPosition); // 캡처에서 빠져나오면서 충돌을 피하기 위해 캡처대상의 머리 위에서 나가게 처리한다.
+	playertr->SetPhysicalRotation(monsterTr->GetPhysicalRotation());
+
 	mPlayer->GetScript<PlayerStateScript>()->SetHavingCap(true);
 
 	BoneAnimator* animator = mPlayer->GetBoneAnimator();
@@ -70,13 +73,17 @@ void CaptureObj::Divide()
 
 	animator->Play(L"Jump", false);
 	
-	rigidbody->SetMaxVelocity_Y(10.f);
+	rigidbody->SetMaxVelocity_Y(17.f);
 	rigidbody->ApplyGravity();
 	rigidbody->SetAirOn();
-	rigidbody->AddForce(math::Vector3(10000.f, 10000.f, 0.0f));
-
+	Vector3 forwardUp = -monsterTr->Forward();
+	forwardUp.y = 1.f;
+	rigidbody->AddForce(forwardUp * 100000.f);
 
 	mPlayer->SetPlayerState(Player::ePlayerState::Jump);
+
+	renderer::mainCamera->SetTarget(mPlayer);
+
 }
 
 void CaptureObj::CopyCaptureData(CaptureObj* other)

@@ -3,9 +3,6 @@
   <ItemGroup>
     <ClCompile Include="CameraScript.cpp" />
     <ClCompile Include="FMod.cpp" />
-    <ClCompile Include="PackunPostionBall.cpp" />
-    <ClCompile Include="ProjectileObj.cpp" />
-    <ClCompile Include="StructedBuffer.cpp" />
     <ClCompile Include="Animation.cpp">
       <Filter>Common\Component\Animator</Filter>
     </ClCompile>
@@ -309,7 +306,6 @@
     <ClCompile Include="TimerMgr.cpp">
       <Filter>Timer</Filter>
     </ClCompile>
-    <ClCompile Include="GenericAnimator.cpp" />
     <ClCompile Include="PlayerStateScript.cpp">
       <Filter>Common\GameObj\Player</Filter>
     </ClCompile>
@@ -340,12 +336,6 @@
     <ClCompile Include="UIScript.cpp">
       <Filter>UI\Script\Base</Filter>
     </ClCompile>
-    <ClCompile Include="LifeUI.cpp">
-      <Filter>UI\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageUI.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
     <ClCompile Include="WorldMapScript.cpp">
       <Filter>UI\Script</Filter>
     </ClCompile>
@@ -354,24 +344,6 @@
     </ClCompile>
     <ClCompile Include="CapMoveScript.cpp">
       <Filter>UI\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="CapUI.cpp">
-      <Filter>UI\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="CapEyeUI.cpp">
-      <Filter>UI\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="UIFactory.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Panal.cpp">
-      <Filter>UI\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>UI\Base</Filter>
     </ClCompile>
     <ClCompile Include="CapEyeScript.cpp">
       <Filter>UI\Script</Filter>
@@ -384,12 +356,6 @@
     </ClCompile>
     <ClCompile Include="PowerMoonScript.cpp">
       <Filter>UI\Script</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="MarioParts.cpp">
-      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
     </ClCompile>
     <ClCompile Include="ParticleFormat.cpp">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
@@ -410,17 +376,128 @@
     <ClCompile Include="PathMgr.cpp">
       <Filter>Path</Filter>
     </ClCompile>
-    <ClCompile Include="FootSmokeParticle.cpp">
-      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    <ClCompile Include="TitleBGMScript.cpp" />
+    <ClCompile Include="FootSmokeParticle.cpp" />
+    <ClCompile Include="TitleBGMScript.cpp" />
+    <ClCompile Include="LifeUI.cpp">
+      <Filter>UI\UIObjects</Filter>
     </ClCompile>
+    <ClCompile Include="DieCircleUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="DieUIEffectScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="HelpUIScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="DieCircleUIScript.cpp" />
     <ClCompile Include="DieUIEffectScript.cpp" />
     <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
-    <ClCompile Include="MarioBlock.cpp" />
+    <ClCompile Include="UIManager.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="UIFactory.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
     <ClCompile Include="UIBase.cpp">
       <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUI.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Panal.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CapEyeUI.cpp">
+      <Filter>UI\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="CapUI.cpp">
+      <Filter>UI\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioParts.cpp">
+      <Filter>Common\GameObj\DynamicObject\MarioParts</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericAnimator.cpp">
+      <Filter>Common\Component\GenericAnimator</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockBrick.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckpointFlag.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CityWorldBush.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CityWorldBushA.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CityWorldChairA.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CityWorldChairB.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CityWorldFlag.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinObject.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CityMapNaviObject.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="BenchA.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="PackunPostionBall.cpp">
+      <Filter>Common\GameObj\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileObj.cpp">
+      <Filter>Common\GameObj\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>Common\GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="FootSmokeParticle.cpp">
+      <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CityGround.cpp">
+      <Filter>Common\GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="MilestoneScript.cpp">
+      <Filter>UI\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="StructedBuffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuildingFour.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuildingFive.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuildingSeven.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuildingEight.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateObject.cpp">
+      <Filter>Common\GameObj\Objects</Filter>
     </ClCompile>
     <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
@@ -446,9 +523,6 @@
   <ItemGroup>
     <ClInclude Include="FMod.h" />
     <ClInclude Include="Macro.h" />
-    <ClInclude Include="PackunPostionBall.h" />
-    <ClInclude Include="ProjectileObj.h" />
-    <ClInclude Include="StructedBuffer.h" />
     <ClInclude Include="Animation.h">
       <Filter>Common\Component\Animator</Filter>
     </ClInclude>
@@ -803,7 +877,6 @@
     <ClInclude Include="UIBase.h">
       <Filter>UI\Base</Filter>
     </ClInclude>
-    <ClInclude Include="GenericAnimator.h" />
     <ClInclude Include="PlayerStateScript.h">
       <Filter>Common\GameObj\Player</Filter>
     </ClInclude>
@@ -837,15 +910,6 @@
     </ClInclude>
     <ClInclude Include="UIScript.h">
       <Filter>UI\Script\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="CapEyeUI.h">
-      <Filter>UI\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="CapUI.h">
-      <Filter>UI\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="LifeUI.h">
-      <Filter>UI\UIObject</Filter>
     </ClInclude>
     <ClInclude Include="WorldMapScript.h">
       <Filter>UI\Script</Filter>
@@ -884,8 +948,98 @@
     <ClInclude Include="PathMgr.h">
       <Filter>Path</Filter>
     </ClInclude>
+    <ClInclude Include="TitleBGMScript.h" />
+    <ClInclude Include="FootSmokeParticle.h" />
+    <ClInclude Include="TitleBGMScript.h" />
+    <ClInclude Include="LifeUI.h">
+      <Filter>UI\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="DieCircleUIScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="DieUIEffectScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CapEyeUI.h">
+      <Filter>UI\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CapUI.h">
+      <Filter>UI\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericAnimator.h">
+      <Filter>Common\Component\GenericAnimator</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockBrick.h">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckpointFlag.h">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CityWorldBush.h">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CityWorldBushA.h">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CityWorldChairA.h">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CityWorldChairB.h">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CityWorldFlag.h">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinObject.h">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CityMapNaviObject.h">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="BenchA.h">
+      <Filter>Common\GameObj\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PackunPostionBall.h">
+      <Filter>Common\GameObj\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileObj.h">
+      <Filter>Common\GameObj\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>Common\GameObj</Filter>
+    </ClInclude>
     <ClInclude Include="FootSmokeParticle.h">
       <Filter>Common\Component\Renderer\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CityGround.h">
+      <Filter>Common\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="MilestoneScript.h">
+      <Filter>UI\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="StructedBuffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingFour.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingFive.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingSeven.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingEight.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateObject.h">
+      <Filter>Common\GameObj\Objects</Filter>
     </ClInclude>
     <ClInclude Include="DieCircleUIScript.h" />
     <ClInclude Include="DieUIEffectScript.h" />
@@ -1492,8 +1646,20 @@
     <Filter Include="UI\Script\Base">
       <UniqueIdentifier>{a1205e1e-51cd-4b0d-b34e-2c8637c850fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\UIObject">
-      <UniqueIdentifier>{9ce3c0ca-6cf4-4526-a443-57ba40870484}</UniqueIdentifier>
+    <Filter Include="UI\UIObjects">
+      <UniqueIdentifier>{d076f29a-9928-44a7-a654-c110e5330fa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Buildings">
+      <UniqueIdentifier>{6456ee2a-b264-454b-a381-cf551de53e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Component\GenericAnimator">
+      <UniqueIdentifier>{46739860-659a-4255-9fbb-88b80464904d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Objects">
+      <UniqueIdentifier>{5f3af7f4-d929-4220-a9d1-062912becb2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Projectiles">
+      <UniqueIdentifier>{0d0c5272-49a8-4d21-8620-e090726a1794}</UniqueIdentifier>
     </Filter>
     <Filter Include="Navigation">
       <UniqueIdentifier>{c9afd7c8-42af-4f1e-9186-771c0333a93f}</UniqueIdentifier>

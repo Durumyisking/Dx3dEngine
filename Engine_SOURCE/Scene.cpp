@@ -1,4 +1,4 @@
-#include "Scene.h"
+﻿#include "Scene.h"
 #include "InputMgr.h"
 #include "Layer.h"
 #include "Renderer.h"
@@ -17,7 +17,6 @@ Scene::Scene()
 	, mUICamera(nullptr)
 	, mCamera(nullptr)
 	, mbInitialized(false)
-
 {
 	mLayers.resize(static_cast<UINT>(eLayerType::End));
 }

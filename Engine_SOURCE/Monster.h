@@ -41,7 +41,7 @@ public:
 	virtual void CaptureEnter(class MarioCap* cap) override ;
 
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
-	virtual void OnTriggerStay(GameObj* gameObject)  override;
+	virtual void OnTriggerPersist(GameObj* gameObject)  override;
 	virtual void OnTriggerExit(GameObj* gameObject)  override;
 
 protected:

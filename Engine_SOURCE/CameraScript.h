@@ -47,6 +47,10 @@ private:
     float	mSpeed;
     float	mCamStep;
 
+    float   mTargetOffsetScalar;
+    Vector3 mTargetOffsetDir;
+    bool    mbTargetMoveInstant;
+
     bool mbShaking;
     ShakeParams mShakeParams;
     float mShakeTimer;

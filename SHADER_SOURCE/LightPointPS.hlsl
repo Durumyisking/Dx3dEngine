@@ -14,13 +14,13 @@ struct VSOut
 struct PS_OUT
 {
     float4 vDiffuse : SV_Target;
-    float4 vSpecular : SV_Target1;
+    //float4 vSpecular : SV_Target1;
 };
 
 PS_OUT main(VSOut vsin)
 {
     PS_OUT output = (PS_OUT) 0.f;
-    output.vSpecular = (float4) 0.f;
+    //output.vSpecular = (float4) 0.f;
     
     float3 directLighting = (float3) 0.f;
     float3 ambientLighting = (float3) 0.f;

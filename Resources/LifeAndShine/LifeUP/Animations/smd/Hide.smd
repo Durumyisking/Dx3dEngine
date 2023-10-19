@@ -1,0 +1,16 @@
+version 1
+nodes
+0 "AllRoot" -1
+1 "Center" 0
+2 "LifeUpItem" 1
+end
+skeleton
+time 0
+0 0 0 0 0 0 0
+1 0 51.84094 0 0 0 0
+2 0 -51.84094 0 0 0 0
+time 1
+0 0 0 0 0 0 0
+1 0 51.84094 0 0 0 0
+2 0 -51.84094 0 0 0 0
+end

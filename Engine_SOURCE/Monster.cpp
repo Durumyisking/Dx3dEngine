@@ -7,6 +7,7 @@
 #include "MarioCap.h"
 #include "TimeMgr.h"
 #include "Player.h"
+#include "Physical.h"
 
 Monster::Monster()
 	: DynamicObject()
@@ -89,7 +90,7 @@ void Monster::OnTriggerEnter(GameObj* gameObject)
 	}
 }
 
-void Monster::OnTriggerStay(GameObj* gameObject)
+void Monster::OnTriggerPersist(GameObj* gameObject)
 {
 }
 
@@ -180,7 +181,12 @@ void Monster::CaptureEnter(MarioCap* cap)
 
 		// 마리오 본체 pause
 		cap->GetOwner()->Pause();
-		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
+		cap->GetPhysical()->KinematicActorSleep();
+		cap->Pause();
+		Player* player = dynamic_cast<Player*>(cap->GetOwner());
+		SetPlayer(player);
+		player->CapturingProcess();
+
 
 		// 캡의 오너변경
 		cap->SetOwner(this);

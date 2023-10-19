@@ -1,4 +1,4 @@
-#include "GameObj.h"
+﻿#include "GameObj.h"
 #include "TimeMgr.h"
 #include "SceneMgr.h"
 #include "Scene.h"
@@ -23,6 +23,7 @@
 
 std::map<std::string, GameObj*> GameObj::mObjectCDO;
 	
+
 GameObj::GameObj()
 	:mState(eState::Active)
 	, mType(eLayerType::None)
@@ -540,21 +541,13 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 				vResult.y = 0.f;
 				vResult.z = 0.f;
 				GetPhysXRigidBody()->SetVelocity(AXIS::X, Vector3(0.f, 0.f, 0.f));
-
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::Y:
 				vResult.x = 0.f;
 				vResult.z = 0.f;
-				if (vResult.y < 0.f)
-				{
-					GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-					vResult *= -1.f;
-					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
-				}
-				else
-				{
-					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
-				}
+				GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::Z:
 				vResult.x = 0.f;
@@ -568,13 +561,17 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 			case enums::AXIS::XZ:
 				vResult.y = 0.f;
 				GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::YZ:
 				vResult.x = 0.f;
 				GetPhysXRigidBody()->SetVelocity(AXIS::YZ, Vector3(0.f, 0.f, 0.f));
 				break;
 			case enums::AXIS::XYZ:
-				GetPhysXRigidBody()->SetVelocity(AXIS::XYZ, Vector3(0.f, 0.f, 0.f));
+				vResult.x = 0.f;
+				vResult.z = 0.f;
+				GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::END:
 				break;
