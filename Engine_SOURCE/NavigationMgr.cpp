@@ -3,7 +3,11 @@
 #include "Graphics.h"
 #include "Model.h"
 
+#include "SceneMgr.h"
+#include "Scene.h"
 #include "InputGeom.h"
+#include "SoloMeshPathTool.h"
+#include "GameObj.h"
 
 NavigationMgr::NavigationMgr()
 {
@@ -28,12 +32,22 @@ NavigationMgr::~NavigationMgr()
 	mContext = nullptr;
 }
 
-void NavigationMgr::Update()
+SoloNaviMesh* NavigationMgr::CreateNavigationMesh()
 {
-}
+	Scene* active = GETSINGLE(SceneMgr)->GetActiveScene();
 
-void NavigationMgr::FixedUpdate()
-{
+	if (active == nullptr)
+		return nullptr;
+
+	SoloNaviMesh* soloMesh = new SoloNaviMesh();
+
+	if (soloMesh == nullptr)
+		return nullptr;
+
+	mNavMeshes.insert(std::make_pair(active->GetName(), soloMesh));
+	soloMesh->SetContext(mContext);
+
+	return soloMesh;
 }
 
 SoloNaviMesh* NavigationMgr::CreateNavigationMesh(const std::wstring& name)
@@ -63,6 +77,44 @@ bool NavigationMgr::SettingMesh(SoloNaviMesh* soloMesh, std::wstring path)
 	geom = nullptr;
 
 	return false;
+}
+
+bool NavigationMgr::FindPath(GameObj* obj, math::Vector3 end)
+{
+	if (obj == nullptr)
+		return false;
+
+	Scene* active = GETSINGLE(SceneMgr)->GetActiveScene();
+
+	if (active == nullptr)
+		return false;
+
+	SoloNaviMesh* soloMesh = GetNaviMesh<SoloNaviMesh>(active->GetName());
+
+	if (soloMesh == nullptr)
+		return false;
+
+	SoloMeshPathTool* tool = soloMesh->GetTool();
+
+	tool->SetPosition(obj->GetWorldPos(), end);
+	tool->SetPath(obj);
+	
+	return true;
+}
+
+bool NavigationMgr::FindPath(GameObj* obj, math::Vector3 end, const std::wstring& name)
+{
+	SoloNaviMesh* soloMesh = GetNaviMesh<SoloNaviMesh>(name);
+
+	if (soloMesh == nullptr)
+		return false;
+
+	SoloMeshPathTool* tool = soloMesh->GetTool();
+
+	tool->SetPosition(obj->GetWorldPos(), end);
+	tool->SetPath(obj);
+
+	return true;
 }
 
 //수동으로 Recast NaviMesh 정보를 넣을경우의 예시

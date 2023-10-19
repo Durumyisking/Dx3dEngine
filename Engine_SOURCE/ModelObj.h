@@ -20,10 +20,10 @@ public:
 	virtual void Render() override;
 
 	void SetModel(std::wstring ModelName) { mModelName = ModelName; }
-	void SetPhysical(bool Physical, eGeometryType GeomType, math::Vector3 PhysicalScale
+	void SetPhysical(eGeometryType GeomType, math::Vector3 PhysicalScale
 		, eActorType ActorType = eActorType::Static)
 	{
-		mbPhysical = Physical;
+		mbPhysical = true;
 		mGeomType = GeomType;
 		mActorType = ActorType;
 		mPhysicalScale = PhysicalScale;

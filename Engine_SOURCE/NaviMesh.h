@@ -7,21 +7,7 @@ class InputGeom;
 class dtNavMesh;
 class dtNavMeshQuery;
 class dtCrowd;
-
-/// Tool types.
-enum NaviMeshToolType
-{
-	TOOL_NONE = 0,
-	TOOL_TILE_EDIT,
-	TOOL_TILE_HIGHLIGHT,
-	TOOL_TEMP_OBSTACLE,
-	TOOL_NAVMESH_TESTER,
-	TOOL_NAVMESH_PRUNE,
-	TOOL_OFFMESH_CONNECTION,
-	TOOL_CONVEX_VOLUME,
-	TOOL_CROWD,
-	MAX_TOOLS
-};
+class SoloMeshPathTool;
 
 /// These are just sample areas to use consistent values across the samples.
 /// The use should specify these base on his needs.
@@ -51,30 +37,6 @@ enum PartitionType
 	PARTITION_LAYERS
 };
 
-struct NaviMeshTool
-{
-	virtual ~NaviMeshTool();
-	virtual int type() = 0;
-	virtual void init(class NaviMesh* sample) = 0;
-	virtual void reset() = 0;
-	virtual void handleMenu() = 0;
-	virtual void handleClick(const float* s, const float* p, bool shift) = 0;
-	virtual void handleRender() = 0;
-	virtual void handleRenderOverlay(double* proj, double* model, int* view) = 0;
-	virtual void handleToggle() = 0;
-	virtual void handleStep() = 0;
-	virtual void handleUpdate(const float dt) = 0;
-};
-
-struct NaviMeshToolState {
-	virtual ~NaviMeshToolState();
-	virtual void init(class NaviMesh* sample) = 0;
-	virtual void reset() = 0;
-	virtual void handleRender() = 0;
-	virtual void handleRenderOverlay(double* proj, double* model, int* view) = 0;
-	virtual void handleUpdate(const float dt) = 0;
-};
-
 class NaviMesh :
     public Entity
 {
@@ -93,13 +55,10 @@ public:
 	virtual float GetAgentHeight() { return mAgentHeight; }
 	virtual float GetAgentClimb() { return mAgentMaxClimb; }
 
+	virtual SoloMeshPathTool* GetTool() { return mTool; }
 	virtual dtNavMesh* GetNavMesh() { return mNavMesh; }
 	virtual dtNavMeshQuery* GetNavMeshQuery() { return mNavQuery; }
 	virtual dtCrowd* GetCrowd() { return mCrowd; }
-
-	void UpdateToolStates(const float dt);
-	void InitToolStates(NaviMesh* sample);
-	void ResetToolStates();
 
 	void ResetCommonSettings();
 	void HandleCommonSettings();
@@ -135,7 +94,6 @@ protected:
 	bool mFilterLedgeSpans;
 	bool mFilterWalkableLowHeightSpans;
 
-	NaviMeshTool* mTool;
-	NaviMeshToolState* mToolStates[MAX_TOOLS];
+	SoloMeshPathTool* mTool;
 };
 

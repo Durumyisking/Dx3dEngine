@@ -7,6 +7,7 @@
 #include "../External/Detour/include/DetourTileCacheBuilder.h"
 
 #include "InputGeom.h"
+#include "SoloMeshPathTool.h"
 
 NaviMesh::NaviMesh()
 	: mGeom(nullptr)
@@ -21,10 +22,7 @@ NaviMesh::NaviMesh()
 	mNavQuery = dtAllocNavMeshQuery();
 	mCrowd = dtAllocCrowd();
 
-	for (int i = 0; i < MAX_TOOLS; i++)
-	{
-		mToolStates[i] = 0;
-	}
+	mTool = new SoloMeshPathTool();
 }
 
 NaviMesh::~NaviMesh()
@@ -36,13 +34,17 @@ NaviMesh::~NaviMesh()
 	dtFreeNavMesh(mNavMesh);
 	dtFreeCrowd(mCrowd);
 	delete mTool;
-	for (int i = 0; i < MAX_TOOLS; i++)
-		delete mToolStates[i];
 }
 
 void NaviMesh::HandleMeshChanged(InputGeom* geom)
 {
 	mGeom = geom;
+
+	if (mTool)
+	{
+		mTool->Reset();
+		mTool->Initialize(this);
+	}
 
 	const BuildSettings* buildSettings = geom->getBuildSettings();
 	if (buildSettings)
@@ -61,34 +63,6 @@ void NaviMesh::HandleMeshChanged(InputGeom* geom)
 		mDetailSampleDist = buildSettings->detailSampleDist;
 		mDetailSampleMaxError = buildSettings->detailSampleMaxError;
 		mPartitionType = buildSettings->partitionType;
-	}
-}
-
-
-void NaviMesh::UpdateToolStates(const float dt)
-{
-	for (int i = 0; i < MAX_TOOLS; i++)
-	{
-		if (mToolStates[i])
-			mToolStates[i]->handleUpdate(dt);
-	}
-}
-
-void NaviMesh::InitToolStates(NaviMesh* sample)
-{
-	for (int i = 0; i < MAX_TOOLS; i++)
-	{
-		if (mToolStates[i])
-			mToolStates[i]->init(sample);
-	}
-}
-
-void NaviMesh::ResetToolStates()
-{
-	for (int i = 0; i < MAX_TOOLS; i++)
-	{
-		if (mToolStates[i])
-			mToolStates[i]->reset();
 	}
 }
 
@@ -169,14 +143,6 @@ void NaviMesh::HandleCommonSettings()
 	imguiSlider("Max Sample Error", &m_detailSampleMaxError, 0.0f, 16.0f, 1.0f);
 
 	imguiSeparator();*/
-}
-
-NaviMeshTool::~NaviMeshTool()
-{
-}
-
-NaviMeshToolState::~NaviMeshToolState()
-{
 }
 
 static const int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';

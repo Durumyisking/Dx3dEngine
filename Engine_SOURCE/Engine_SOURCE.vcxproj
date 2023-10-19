@@ -305,6 +305,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="NavigationMgr.h" />
     <ClInclude Include="NaviMesh.h" />
+    <ClInclude Include="SoloMeshPathTool.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Packun.h" />
     <ClInclude Include="PackunPostionBall.h" />
@@ -463,6 +464,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="NavigationMgr.cpp" />
     <ClCompile Include="NaviMesh.cpp" />
+    <ClCompile Include="SoloMeshPathTool.cpp" />
     <ClCompile Include="Packun.cpp" />
     <ClCompile Include="PackunPostionBall.cpp" />
     <ClCompile Include="PackunStateScript.cpp" />

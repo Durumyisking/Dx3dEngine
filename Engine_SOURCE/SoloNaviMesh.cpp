@@ -1,6 +1,4 @@
 #include "SoloNaviMesh.h"
-#include "Model.h"
-#include "Mesh.h"
 #include "../External/Detour/include/DetourNavMesh.h"
 #include "../External/Detour/include/DetourCrowd.h"
 #include "../External/Detour/include/DetourCommon.h"
@@ -9,6 +7,7 @@
 #include "../External/Detour/include/DetourTileCacheBuilder.h"
 
 #include "InputGeom.h"
+#include "SoloMeshPathTool.h"
 
 SoloNaviMesh::SoloNaviMesh()
 	: NaviMesh()
@@ -19,6 +18,7 @@ SoloNaviMesh::SoloNaviMesh()
 	, mPolyMesh(nullptr)
 	, mDetailMesh(nullptr)
 	, mKeepInterResults(false)
+	, mConfig()
 {
 }
 
@@ -272,11 +272,10 @@ bool SoloNaviMesh::Build()
 
 
 	// Show performance stats.
-	std::cout << ">> Polymesh: "<< mPolyMesh->nverts << "  bvertices" << mPolyMesh->npolys << "  polygons" << std::endl;
+	std::cout << ">> Polymesh: "<< mPolyMesh->nverts << "  vertices" << mPolyMesh->npolys << "  polygons" << std::endl;
 
 	if (mTool)
-		mTool->init(this);
-	InitToolStates(this);
+		mTool->Initialize(this);
 
 	return true;
 }

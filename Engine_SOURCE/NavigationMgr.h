@@ -3,18 +3,20 @@
 #include "SimpleMath.h"
 #include "SoloNaviMesh.h"
 
-class Model;
+class GameObj;
+
 class NavigationMgr
 {
 	SINGLE(NavigationMgr)
 
 public:
-	void Update();
-	void FixedUpdate();
-
+	SoloNaviMesh* CreateNavigationMesh();
 	SoloNaviMesh* CreateNavigationMesh(const std::wstring& name);
 
 	bool SettingMesh(SoloNaviMesh* soloMesh, std::wstring path);
+
+	bool FindPath(GameObj* obj, math::Vector3 end);
+	bool FindPath(GameObj* obj, math::Vector3 end, const std::wstring& name);
 
 	void EnableLog(bool tf) { mContext->enableLog(tf); }
 	void EnableTimer(bool tf) { mContext->enableTimer(tf); }

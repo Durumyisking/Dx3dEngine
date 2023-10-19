@@ -81,6 +81,8 @@
 #include "NavigationMgr.h"
 #include "PathMgr.h"
 
+#include "ModelObj.h"
+
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
 	, mCityCoinPanal(nullptr)
@@ -90,6 +92,7 @@ ScenePlay::ScenePlay()
 	, mDieUIPanal(nullptr)
 	, mPlayer(nullptr)
 {
+	SetName(L"ScenePlay");
 }
 
 ScenePlay::~ScenePlay()
@@ -131,46 +134,50 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
 	//Convex and Triangle Mesh TEST
 	
-		////TriangleMesh Test
-		//{
-		//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		//	obj->SetPos(Vector3(0.f, -10.f, 300.f));
-		//	obj->SetScale(Vector3(0.04f, 0.04f, 0.04f));
-		//	obj->SetName(L"CityWorldHomeGroundCollider");
+	//TriangleMesh Test
+	{
+		ModelObj* obj = object::Instantiate<ModelObj>(eLayerType::Platforms, this);
+		obj->SetPos(Vector3(0.f, 5.f, 0.f));
+		obj->SetScale(Vector3(0.01f, 0.01f, 0.01f));
+		obj->SetName(L"CityWorldHomeGroundCollider");
 
-		//	// SetModel
-		//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_CityWorldHomeGround000");
-		//	obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetModel(model, model->GetMaterial(0));
-		//
-		//}
+		// SetModel
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_RoadCollider");
+		if (model)
+		{
+			obj->SetModel(model->GetName());
+			obj->SetPhysical(eGeometryType::TriangleMesh, Vector3(1.f, 1.f, 1.f));
+		}
+	}
 
 	{
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 		mPlayer->SetMarioCap(mariocap);
+
 		//dynamic_cast<Camera*>(mCamera)->SetTarget(mPlayer);
 		
 		//mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
 	}
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(5.f, 10.f, 0.f));
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
 
-	//}	
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	//}
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
-	//}
+	}	
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	}
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
+	}
 
 
-	//{
-	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-	//	mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
-	//}
+	{
+		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+		mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
+	}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -208,11 +215,17 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh(L"TestNaviMesh");
+		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
 
-		if (GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"Test.Obj"))
+		//현재 .obj 파일만 로딩 가능 블랜더에서 .obj 로 내보내기 해서 사용하면 됩니다
+		if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
 			int debug = 0;
+
 		if (!naviMesh->Build())
+			int debug = 0;
+
+		//오브젝트에 std::<Vector3>mPath 추가 path에 이동경로가 추가되니 vector내의 위치를 사용해서 이동하면 됩니다
+		if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 20.f, 30.f)))
 			int debug = 0;
 	}
 
