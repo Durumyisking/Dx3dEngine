@@ -118,7 +118,7 @@ void GoombaStateScript::Move()
 		}
 	}
 
-	if (KEY_DOWN(UP) || KEY_DOWN(DOWN) || KEY_DOWN(LEFT) || KEY_DOWN(RIGHT))
+	if (KEY_DOWN(W) || KEY_DOWN(S) || KEY_DOWN(A) || KEY_DOWN(D))
 	{
 		MoveForward(GOOMBA_SPPED);
 	}
