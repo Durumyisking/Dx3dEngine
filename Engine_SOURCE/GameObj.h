@@ -228,9 +228,20 @@ public:
 
 	const std::string& GetObjectTypeName()	const { return mObjectTypeName; }
 
+	void UpdatePath(float* array, int numSmooth) 
+	{
+		mPath.resize(numSmooth);  
+		
+		for (int i = 0, j = 0; i < numSmooth * 3; i += 3, ++j) 
+		{
+			mPath[j] = Vector3(array[i], array[i + 1], array[i + 2]);
+		}
+	}
+
 protected:
 	std::vector<Component*> mComponents;
 	std::string				mObjectTypeName;
+	std::vector<Vector3>	mPath;
 
 private:
 	eLayerType mType;
