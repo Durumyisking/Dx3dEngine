@@ -429,9 +429,6 @@
     <ClCompile Include="GenericAnimator.cpp">
       <Filter>Common\Component\GenericAnimator</Filter>
     </ClCompile>
-    <ClCompile Include="BlockBrick.cpp">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CheckpointFlag.cpp">
       <Filter>Common\GameObj\Objects</Filter>
     </ClCompile>
@@ -498,8 +495,14 @@
     <ClCompile Include="InstancedMeshRenderer.cpp">
       <Filter>Common\Component\Renderer\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="BlockBrickContainer.cpp">
+    <ClCompile Include="InstancingContainer.cpp">
       <Filter>Common\GameObj\Objects\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockBrick.cpp">
+      <Filter>Common\GameObj\Objects\InstantiativeObject</Filter>
+    </ClCompile>
+    <ClCompile Include="InstantiativeObject.cpp">
+      <Filter>Common\GameObj\Objects\InstantiativeObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -957,9 +960,6 @@
     <ClInclude Include="GenericAnimator.h">
       <Filter>Common\Component\GenericAnimator</Filter>
     </ClInclude>
-    <ClInclude Include="BlockBrick.h">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="CheckpointFlag.h">
       <Filter>Common\GameObj\Objects</Filter>
     </ClInclude>
@@ -1026,8 +1026,14 @@
     <ClInclude Include="InstancedMeshRenderer.h">
       <Filter>Common\Component\Renderer\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="BlockBrickContainer.h">
+    <ClInclude Include="InstancingContainer.h">
       <Filter>Common\GameObj\Objects\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockBrick.h">
+      <Filter>Common\GameObj\Objects\InstantiativeObject</Filter>
+    </ClInclude>
+    <ClInclude Include="InstantiativeObject.h">
+      <Filter>Common\GameObj\Objects\InstantiativeObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1625,6 +1631,9 @@
     </Filter>
     <Filter Include="Common\GameObj\Objects\Container">
       <UniqueIdentifier>{49b9b0d5-4764-413c-9526-d2fb9e55e31c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Objects\InstantiativeObject">
+      <UniqueIdentifier>{67fa33cf-6a75-4df8-9511-511b8902929f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

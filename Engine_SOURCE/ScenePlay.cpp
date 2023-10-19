@@ -98,7 +98,7 @@
 
 #include "PostProcess.h"
 
-#include "BlockBrickContainer.h"
+#include "InstancingContainer.h"
 
 
 
@@ -280,7 +280,7 @@ void ScenePlay::Initialize()
 		//object->SetPos(Vector3(40.f, -10.f, 0.f));
 
 	}
-	BlockBrickContainer* blockContainer = object::Instantiate<BlockBrickContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
+	InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
 	for (size_t i = 0; i < 10; i++)
 	{
 		for (size_t j = 0; j < 10; j++)
@@ -292,10 +292,11 @@ void ScenePlay::Initialize()
 
 				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
 				block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
-				blockContainer->PushBlock(block);
+				blockContainer->PushObject(block);
 			}
 		}
 	}
+	blockContainer->ResizeObjectWorldMatrix();
 
 
 	CreatePlayerUI();

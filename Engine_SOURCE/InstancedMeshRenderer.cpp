@@ -4,13 +4,14 @@
 #include "Model.h"
 #include "Mesh.h"
 #include "BoneAnimator.h"
-
-
+#include "InstancingContainer.h"
+#include "InstantiativeObject.h"
 
 InstancedMeshRenderer::InstancedMeshRenderer()
 	: BaseRenderer(eComponentType::MeshRenderer)
 	, mBoneAnimator(nullptr)
 	, mInstanceCount(0)
+	, mContainer{}
 {
 }
 
@@ -26,6 +27,10 @@ void InstancedMeshRenderer::Initialize()
 	{
 		mBoneAnimator = animator;
 	}
+	if (eLayerType::ObjectsContainer == GetOwner()->GetLayerType())
+	{
+		mContainer = GetOwner_Template<InstancingContainer>();
+	}
 }
 
 void InstancedMeshRenderer::Update()
@@ -35,6 +40,18 @@ void InstancedMeshRenderer::Update()
 
 void InstancedMeshRenderer::FixedUpdate()
 {
+	// model내 메쉬들의 instancebuffer를 업데이트 시켜야 한다.
+
+	if (GetModel() != nullptr)
+	{
+		std::vector<Mesh*> meshes = GetModel()->GetMeshes();
+
+		for (size_t i = 0; i < meshes.size(); i++)
+		{
+			meshes[i]->UpdateInstanceBuffer(mContainer->GetObjectsWorldMatrix());
+		}
+	}
+
 	BaseRenderer::FixedUpdate();
 }
 
@@ -63,6 +80,7 @@ void InstancedMeshRenderer::Render()
 
 	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
+	// 여기의 모델은 이 렌더러 컴포넌트의 오너(container)가 담고있는 0번지 objects의 meshrenderer에 들어있는 model이다.
 	if (GetModel() != nullptr)
 	{
 		if (mBoneAnimator)

@@ -363,10 +363,10 @@ void Player::KeyCheck()
 	// 대기
  
 	// 이동
-	stateEvent(eKeyState::DOWN, eKeyCode::UP, ePlayerState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, ePlayerState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, ePlayerState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::RIGHT, ePlayerState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::W, ePlayerState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::S, ePlayerState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::A, ePlayerState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::D, ePlayerState::Move);
 
 	// 모자 던지기
 	able = false;

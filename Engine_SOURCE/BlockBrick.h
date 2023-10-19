@@ -1,8 +1,8 @@
 #pragma once
-#include "DynamicObject.h"
+#include "InstantiativeObject.h"
 
-class BlockBrickContainer;
-class BlockBrick : public DynamicObject
+class InstancingContainer;
+class BlockBrick : public InstantiativeObject
 {
 
 public:
@@ -26,9 +26,5 @@ public:
 	virtual void OnTriggerPersist(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
 
-	void SetContainer(BlockBrickContainer* container) { mContainer = container; }
-
-private:
-	BlockBrickContainer* mContainer;
 };
 

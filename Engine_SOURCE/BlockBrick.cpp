@@ -4,10 +4,9 @@
 #include "MeshRenderer.h"
 #include "PhysXRigidBody.h"
 #include "PhysXCollider.h"
-#include "BlockBrickContainer.h"
+#include "InstancingContainer.h"
 
 BlockBrick::BlockBrick()
-	:mContainer{}
 {
 }
 
@@ -53,27 +52,27 @@ void BlockBrick::Initialize()
 	rigid->RemoveGravity();
 
 	AddComponent<PhysXCollider>(eComponentType::Collider);
-	GameObj::Initialize();
+	InstantiativeObject::Initialize();
 }
 
 void BlockBrick::Update()
 {
-	DynamicObject::Update();
+	InstantiativeObject::Update();
 }
 
 void BlockBrick::FixedUpdate()
 {
-	DynamicObject::FixedUpdate();
+	InstantiativeObject::FixedUpdate();
 }
 
 void BlockBrick::Render()
 {
-	//DynamicObject::Render();
+	InstantiativeObject::Render();
 }
 
 void BlockBrick::PrevRender()
 {
-	//DynamicObject::PrevRender();
+	InstantiativeObject::PrevRender();
 }
 
 void BlockBrick::FontRender()

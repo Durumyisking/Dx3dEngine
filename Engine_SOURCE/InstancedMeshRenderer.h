@@ -5,6 +5,7 @@
 
 
 class BoneAnimator;
+class InstancingContainer;
 class InstancedMeshRenderer : public BaseRenderer
 {
 public:
@@ -23,5 +24,6 @@ public:
 
 private:
 	BoneAnimator* mBoneAnimator;
+	InstancingContainer* mContainer;
 	UINT mInstanceCount;
 };

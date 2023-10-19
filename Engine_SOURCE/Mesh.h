@@ -13,7 +13,7 @@ public:
 	virtual HRESULT LoadFullpath(const std::wstring& path) override;
 
 	bool CreateVertexBuffer(void* data, UINT count);
-	bool CreateInstanceBuffer(void* data);
+	bool CreateInstanceBuffer(void* data, UINT count);
 	bool CreateIndexBuffer(void* data, UINT count);
 
 	void BindBuffer(bool drawInstance = false);
@@ -23,8 +23,9 @@ public:
 	void RenderInstanced(UINT count);
 
 	bool GetVerticesFromBuffer(std::vector<Vertex>* vertexVec);
-	//bool GetInstanceDataFromBuffer();
 	bool GetIndexesFromBuffer(std::vector<UINT>* indexVec);
+
+	void UpdateInstanceBuffer(std::vector<math::Matrix> matrices);
 
 public:
 	bool IsRender() { return mbRender; }

@@ -91,10 +91,10 @@ void PlayerStateScript::Move()
 	if (mAnimator->PlayAnimationName() == L"Brake")
 		return;
 
-	if (GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::UP)
-		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::DOWN)
-		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::LEFT)
-		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::RIGHT))
+	if (GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::W)
+		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::S)
+		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::A)
+		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::D))
 	{
 		mAnimator->Play(L"Brake");
 		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
@@ -124,16 +124,16 @@ void PlayerStateScript::Move()
 	};
 
 
-	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::D, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::A, math::Vector3(0.0f, -225, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::W, math::Vector3(0.0f, -180.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::D, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::A, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::S, math::Vector3(0.0f, 0.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
-	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
+	Input_DownFunC(eKeyCode::A, eKeyCode::A, math::Vector3(0.0f, 90.f, 0.0f));
+	Input_DownFunC(eKeyCode::D, eKeyCode::D, math::Vector3(0.0f, -90.f, 0.0f));
 
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
@@ -273,10 +273,10 @@ void PlayerStateScript::Squat()
 		return;
 	}
 
-	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
-		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN)
-		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT)
-		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::W)
+		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::S)
+		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::A)
+		|| GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::D))
 	{
 		mPlayer->SetPlayerState(Player::ePlayerState::SquatMove);
 		return;
@@ -304,16 +304,16 @@ void PlayerStateScript::SquatMove()
 		return;
 	}
 
-	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT)
-		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT)
+	if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::W)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::S)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::A)
+		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::D)
 		|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LSHIFT))
 	{
-		if (!GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::UP)
-			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::DOWN)
-			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LEFT)
-			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::RIGHT))
+		if (!GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::W)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::S)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::A)
+			&& !GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::D))
 		{
 			mPlayer->SetPlayerState(Player::ePlayerState::Squat);
 			return;
@@ -342,16 +342,16 @@ void PlayerStateScript::SquatMove()
 		}
 	};
 
-	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, -135.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, -225, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, -180.f, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::D, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::A, math::Vector3(0.0f, -225, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::W, math::Vector3(0.0f, -180.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::D, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::A, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::S, math::Vector3(0.0f, 0.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
-	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
+	Input_DownFunC(eKeyCode::A, eKeyCode::A, math::Vector3(0.0f, 90.f, 0.0f));
+	Input_DownFunC(eKeyCode::D, eKeyCode::D, math::Vector3(0.0f, -90.f, 0.0f));
 
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);

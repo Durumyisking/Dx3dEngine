@@ -16,7 +16,7 @@
 
 #include "PhysXRayCast.h"
 
-#include "BlockBrickContainer.h"
+#include "InstancingContainer.h"
 
 extern Application application;
 
@@ -429,7 +429,7 @@ void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 	}
 	if (eLayerType::ObjectsContainer == obj->GetLayerType())
 	{
-		mode = dynamic_cast<BlockBrickContainer*>(obj)->GetRenderingMode();
+		mode = dynamic_cast<InstancingContainer*>(obj)->GetRenderingMode();
 	}
 	else
 	{

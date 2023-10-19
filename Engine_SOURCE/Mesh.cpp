@@ -41,10 +41,11 @@ bool Mesh::CreateVertexBuffer(void* data, UINT count)
 	return true;
 }
 
-bool Mesh::CreateInstanceBuffer(void* data)
+bool Mesh::CreateInstanceBuffer(void* data, UINT count)
 {
+	ZeroMemory(&mISTBDesc, sizeof(mISTBDesc));
 	mISTBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-	mISTBDesc.ByteWidth = sizeof(Matrix);
+	mISTBDesc.ByteWidth = 32 + sizeof(Matrix) * count;
 	mISTBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
 	mISTBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	//mISTBDesc.MiscFlags = 0;
@@ -81,7 +82,7 @@ void Mesh::BindBuffer(bool drawInstance)
 {
 	if (drawInstance)
 	{
-		UINT stride[2] = {sizeof(Vertex), sizeof(Matrix) };
+		UINT stride[2] = {sizeof(Vertex), sizeof(Matrix)};
 		UINT offset[2] = { 0, 0 };
 		ID3D11Buffer* vbs[2] = { mVertexBuffer.Get(), mInstancedBuffer.Get()};
 		GetDevice()->BindVertexBuffer(0, 2, vbs, stride, offset);
@@ -149,6 +150,7 @@ bool Mesh::GetVerticesFromBuffer(std::vector<Vertex>* vertexVec)
 	return true;
 }
 
+
 bool Mesh::GetIndexesFromBuffer(std::vector<UINT>* indexVec)
 {
 	D3D11_BUFFER_DESC desc = {};
@@ -183,4 +185,10 @@ bool Mesh::GetIndexesFromBuffer(std::vector<UINT>* indexVec)
 	GetDevice()->GetDeviceContext()->Unmap(stagingBuffer.Get(), 0);
 
 	return true;
+}
+
+void Mesh::UpdateInstanceBuffer(std::vector<math::Matrix> matrices)
+{	
+	UINT size = sizeof(matrices) + (matrices.capacity() * sizeof(math::Matrix));
+	GetDevice()->BindBuffer(mInstancedBuffer.Get(), &matrices, size);
 }

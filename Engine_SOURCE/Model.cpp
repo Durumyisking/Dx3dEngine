@@ -226,15 +226,6 @@ void Model::Bind_RenderInstance(UINT instanceCount, bool bindMaterial)
 
 		if (bindMaterial)
 		{
-			//std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
-			//for (int slot = 0; slot < Textures.size(); ++slot)
-			//{
-			//	if (Textures[slot] == nullptr)
-			//		continue;
-
-			//	mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
-			//}
-
 			if (!(mVariableMaterials.empty() && mMaterials.empty()))
 				mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
@@ -492,22 +483,12 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	if (mbUseInstance)
 	{
 		std::vector<Matrix> mats = {};
-		mats.resize(vertexes.size());
+		mats.resize(1000);
 		for (int i = 0; i < mats.size(); i++)
 		{
-			float x = (float)i;
-			Matrix mat =
-			{
-			0.01f, 0.f, 0.f, 0.f,
-			0.f, 0.01f, 0.f, 0.f,
-			0.f, 0.f, 0.01f, 0.f,
-			x, 1.f, 0.f, 1.f,
-			};
-
-			//mats[i] = Matrix::Identity;
-			mats[i] = mat;			
+			mats[i] = Matrix::Identity;		
 		}
-		inMesh->CreateInstanceBuffer(mats.data());
+		inMesh->CreateInstanceBuffer(mats.data(), static_cast<UINT>(mats.size()));
 	}
 
 	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
