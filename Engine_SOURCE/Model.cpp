@@ -482,11 +482,12 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
 	if (mbUseInstance)
 	{
-		std::vector<Matrix> mats = {};
+		std::vector<InstancingData> mats = {};
 		mats.resize(1000);
 		for (int i = 0; i < mats.size(); i++)
 		{
-			mats[i] = Matrix::Identity;		
+			mats[i].world = Matrix::Identity;		
+			mats[i].worldIT = Matrix::Identity;
 		}
 		inMesh->CreateInstanceBuffer(mats.data(), static_cast<UINT>(mats.size()));
 	}

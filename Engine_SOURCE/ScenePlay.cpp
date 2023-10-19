@@ -304,7 +304,7 @@ void ScenePlay::Initialize()
 			}
 		}
 	}
-	blockContainer->ResizeObjectWorldMatrix();
+	blockContainer->ResizeObjectInstancingData();
 
 	{
 		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();

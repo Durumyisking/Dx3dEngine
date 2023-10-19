@@ -5,7 +5,7 @@
 
 InstancingContainer::InstancingContainer()
 	:mObjects{}
-	, mObjectsWorldMatrix{}
+	, mObjectsInstancingData{}
 	, mRenderingMode(eRenderingMode::DeferredOpaque)
 {
 }

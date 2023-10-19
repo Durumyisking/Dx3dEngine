@@ -25,7 +25,7 @@ public:
 	bool GetVerticesFromBuffer(std::vector<Vertex>* vertexVec);
 	bool GetIndexesFromBuffer(std::vector<UINT>* indexVec);
 
-	void UpdateInstanceBuffer(std::vector<math::Matrix> matrices);
+	void UpdateInstanceBuffer(std::vector<InstancingData> matrices);
 
 public:
 	bool IsRender() { return mbRender; }

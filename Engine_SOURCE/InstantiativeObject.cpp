@@ -45,7 +45,15 @@ void InstantiativeObject::Update()
 void InstantiativeObject::FixedUpdate()
 {
 	DynamicObject::FixedUpdate();
-	mContainer->SetObjectWorldMatrix(mInstanceID, GetTransform()->GetWorldMatrix());
+
+
+	InstancingData data
+	{
+		GetTransform()->GetWorldMatrix(),
+		GetTransform()->GetWorldMatrix().Invert().Transpose()
+	};
+
+	mContainer->SetObjectInstancingData(mInstanceID, data);
 }
 
 void InstantiativeObject::Render()

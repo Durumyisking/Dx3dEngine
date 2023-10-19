@@ -11,6 +11,7 @@ struct VSIn
     float4 BlendWeight : BLENDWEIGHT;
     
     row_major matrix World : WORLD;
+    row_major matrix WorldIT : WORLDIT;
 };
 
 struct VSOut
@@ -46,7 +47,7 @@ VSOut main(VSIn vsIn)
     vsOut.UV = vsIn.UV;
 
     float4 Normal = float4(vsIn.Normal, 0.f);
-    Normal = mul(Normal, vsIn.World);
+    Normal = mul(Normal, vsIn.WorldIT);
     Normal = normalize(Normal);
     
     float4 Tangent = float4(vsIn.Tangent, 0.f);

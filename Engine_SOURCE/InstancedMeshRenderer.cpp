@@ -48,7 +48,7 @@ void InstancedMeshRenderer::FixedUpdate()
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
-			meshes[i]->UpdateInstanceBuffer(mContainer->GetObjectsWorldMatrix());
+			meshes[i]->UpdateInstanceBuffer(mContainer->GetObjectsInstancingData());
 		}
 	}
 

@@ -54,7 +54,7 @@ namespace renderer
 	{
 
 #pragma region InputLayout
-		D3D11_INPUT_ELEMENT_DESC arrLayout[10] = {};
+		D3D11_INPUT_ELEMENT_DESC arrLayout[15] = {};
 
 		UINT offset = 0;
 		arrLayout[0].AlignedByteOffset = offset;
@@ -143,6 +143,43 @@ namespace renderer
 		arrLayout[9].InstanceDataStepRate = 1;
 		arrLayout[9].SemanticName = "WORLD";
 		arrLayout[9].SemanticIndex = 3;
+		offset += sizeof(float) * 4;
+
+		// normal mapping À§ÇÑ world it
+		arrLayout[10].AlignedByteOffset = offset;
+		arrLayout[10].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[10].InputSlot = 1;
+		arrLayout[10].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA; 
+		arrLayout[10].InstanceDataStepRate = 1;
+		arrLayout[10].SemanticName = "WORLDIT";
+		arrLayout[10].SemanticIndex = 0;
+		offset += sizeof(float) * 4;
+
+		arrLayout[11].AlignedByteOffset = offset;
+		arrLayout[11].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[11].InputSlot = 1;
+		arrLayout[11].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		arrLayout[11].InstanceDataStepRate = 1;
+		arrLayout[11].SemanticName = "WORLDIT";
+		arrLayout[11].SemanticIndex = 1;
+		offset += sizeof(float) * 4;
+
+		arrLayout[12].AlignedByteOffset = offset;
+		arrLayout[12].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[12].InputSlot = 1;
+		arrLayout[12].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		arrLayout[12].InstanceDataStepRate = 1;
+		arrLayout[12].SemanticName = "WORLDIT";
+		arrLayout[12].SemanticIndex = 2;
+		offset += sizeof(float) * 4;
+
+		arrLayout[13].AlignedByteOffset = offset;
+		arrLayout[13].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[13].InputSlot = 1;
+		arrLayout[13].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		arrLayout[13].InstanceDataStepRate = 1;
+		arrLayout[13].SemanticName = "WORLDIT";
+		arrLayout[13].SemanticIndex = 3;
 
 
 		{
@@ -238,7 +275,7 @@ namespace renderer
 		}
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredInstancedShader");
-			GetDevice()->CreateInputLayout(arrLayout, 10
+			GetDevice()->CreateInputLayout(arrLayout, 14
 				, shader->GetVSBlobBufferPointer()
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());

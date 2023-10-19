@@ -21,19 +21,19 @@ public:
 
 	GETSET(eRenderingMode, mRenderingMode, RenderingMode);
 	GETSET(std::vector<InstantiativeObject*>, mObjects, GameObjects);
-	GETSET(std::vector<math::Matrix>, mObjectsWorldMatrix, ObjectsWorldMatrix);
+	GETSET(std::vector<InstancingData>, mObjectsInstancingData, ObjectsInstancingData);
 
-	void SetObjectWorldMatrix(UINT instanceID, math::Matrix worldMatrix)
+	void SetObjectInstancingData(UINT instanceID, const InstancingData& data)
 	{
-		mObjectsWorldMatrix[instanceID] = worldMatrix;
+		mObjectsInstancingData[instanceID] = data;
 	}
-	void ResizeObjectWorldMatrix() { mObjectsWorldMatrix.resize(mObjects.size()); }
+	void ResizeObjectInstancingData() { mObjectsInstancingData.resize(mObjects.size()); }
 
 	UINT GetContainerSize() const { return static_cast<UINT>(mObjects.size()); }
 
 private:
 	std::vector<InstantiativeObject*> mObjects;
-	std::vector<math::Matrix> mObjectsWorldMatrix;
+	std::vector<InstancingData> mObjectsInstancingData;
 
 	eRenderingMode mRenderingMode;
 };
