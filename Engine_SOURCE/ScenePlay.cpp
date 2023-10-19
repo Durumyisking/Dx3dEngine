@@ -281,11 +281,11 @@ void ScenePlay::Initialize()
 
 	}
 	InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
-	for (size_t i = 0; i < 10; i++)
+	for (size_t i = 0; i < 20; i++)
 	{
 		for (size_t j = 0; j < 10; j++)
 		{
-			for (size_t k = 1; k < 6; k++)
+			for (size_t k = 1; k < 10; k++)
 			{
 				if (j > 4 && k > 1)
 					continue;
