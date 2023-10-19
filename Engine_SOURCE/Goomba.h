@@ -16,6 +16,9 @@ public:
 	virtual void Update() final;
 	virtual void FixedUpdate() final;
 
+	virtual void PrevRender() final;
+	virtual void Render() final;
+
 	virtual void CaptureEvent() final;
 	
 	virtual void OnCollisionEnter(GameObj* gameObject) final;
@@ -33,8 +36,30 @@ protected:
 	virtual void captureEnterModelOperation() final;
 
 private:
+	void setHalfCloseEyeModel();
+	void setOpenEyeModel();
+	void setPressedModel();
+
+private:
 	UINT				mGoombaLayerIdx;
 	std::vector<Goomba*> mLowerLayerGoombas;
+	Model* mModel;
+	/*
+	Body__BodyMT
+	EyeBrow__BodyMT
+	EyeBrowCap__BodyMT
+	EyeClose__BodyMT
+	EyeHalfClose__BodyMT
+	EyeHalfClose__EyeLMT
+	EyeHalfClose__EyeRMT
+	EyeOpen__BodyMT
+	EyeOpen__EyeLMT
+	EyeOpen__EyeRMT
+	Mustache__HairMT
+	PressModel__BodyMT
+	
+	*/
+
 
 };
 

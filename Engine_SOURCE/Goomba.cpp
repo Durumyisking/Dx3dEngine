@@ -14,6 +14,7 @@ Goomba::Goomba()
 	: Monster()
 	, mGoombaLayerIdx(0)
 	, mLowerLayerGoombas{}
+	, mModel(nullptr)
 {
 	SetName(L"Goomba");
 	mObjectTypeName = "Goomba";
@@ -54,17 +55,17 @@ void Goomba::Initialize()
 	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
 	// SetModel
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
-	assert(model);
+	mModel = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
+	assert(mModel);
 
 	MeshRenderer* mr =  GetComponent<MeshRenderer>();
-	mr->SetModel(model);
-	model->MeshRenderSwtich(L"EyeClose__BodyMT-mesh", false);
-	model->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
-	model->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", false);
-	model->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", false);
-	model->MeshRenderSwtich(L"Mustache__HairMT-mesh", false);
-	model->MeshRenderSwtich(L"PressModel__BodyMT-mesh", false);
+	mr->SetModel(mModel);
+	mModel->MeshRenderSwtich(L"EyeClose__BodyMT-mesh", false);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", false);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", false);
+	mModel->MeshRenderSwtich(L"Mustache__HairMT-mesh", false);
+	mModel->MeshRenderSwtich(L"PressModel__BodyMT-mesh", false);
 
 	// body
 	mr->SetMaterialByKey(L"goombaBodyMaterial", 0);
@@ -160,6 +161,64 @@ void Goomba::Update()
 void Goomba::FixedUpdate()
 {
 	Monster::FixedUpdate();
+}
+
+void Goomba::PrevRender()
+{
+	switch (mMonsterState)
+	{
+	case Monster::eMonsterState::Idle:
+	case Monster::eMonsterState::Move:
+	case Monster::eMonsterState::Jump:
+	case Monster::eMonsterState::Fall:
+	case Monster::eMonsterState::Land:
+	case Monster::eMonsterState::Turn:
+		setOpenEyeModel();
+		break;
+	case Monster::eMonsterState::Chase:
+	case Monster::eMonsterState::Attack:
+		setHalfCloseEyeModel();
+		break;
+	case Monster::eMonsterState::Die:
+		setPressedModel();
+		break;
+	case Monster::eMonsterState::SpecialSituation:
+	case Monster::eMonsterState::Hit:
+	case Monster::eMonsterState::Groggy:
+	default:
+		break;
+	}
+
+	Monster::PrevRender();
+}
+
+void Goomba::Render()
+{
+	switch (mMonsterState)
+	{
+	case Monster::eMonsterState::Idle:
+	case Monster::eMonsterState::Move:
+	case Monster::eMonsterState::Jump:
+	case Monster::eMonsterState::Fall:
+	case Monster::eMonsterState::Land:
+	case Monster::eMonsterState::Turn:
+		setOpenEyeModel();
+		break;
+	case Monster::eMonsterState::Chase:
+	case Monster::eMonsterState::Attack:
+		setHalfCloseEyeModel();
+		break;
+	case Monster::eMonsterState::Die:
+		setPressedModel();
+		break;
+	case Monster::eMonsterState::SpecialSituation:
+	case Monster::eMonsterState::Hit:
+	case Monster::eMonsterState::Groggy:
+	default:
+		break;
+	}
+
+	Monster::Render();
 }
 
 void Goomba::CaptureEvent()
@@ -358,4 +417,36 @@ void Goomba::captureEnterModelOperation()
 {
 	// todo : ±À¹Ù Ä¸Ã³ÇßÀ»¶§ ¸ðµ¨ Ã³¸®ÇÏ´Â ÇÔ¼ö
 
+}
+
+void Goomba::setHalfCloseEyeModel()
+{
+	assert(mModel);
+
+	mModel->AllMeshRenderSwtichOff();
+	mModel->MeshRenderSwtich(L"Body__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeBrow__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", true);
+}
+
+void Goomba::setOpenEyeModel()
+{
+	assert(mModel);
+
+	mModel->AllMeshRenderSwtichOff();
+	mModel->MeshRenderSwtich(L"Body__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeBrow__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeOpen__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeOpen__EyeLMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeOpen__EyeRMT-mesh", true);
+}
+
+void Goomba::setPressedModel()
+{
+	assert(mModel);
+
+	mModel->AllMeshRenderSwtichOff();
+	mModel->MeshRenderSwtich(L"PressModel__BodyMT-mesh", true);
 }
