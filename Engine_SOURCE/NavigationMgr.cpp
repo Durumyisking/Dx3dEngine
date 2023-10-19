@@ -97,7 +97,10 @@ bool NavigationMgr::FindPath(GameObj* obj, math::Vector3 end)
 	SoloMeshPathTool* tool = soloMesh->GetTool();
 
 	tool->SetPosition(obj->GetWorldPos(), end);
-	tool->SetPath(obj);
+
+	//위치가 내비메쉬 밖이면 계산이 안됩니다
+	if (!tool->SetPath(obj))
+		return false;
 	
 	return true;
 }
@@ -112,7 +115,9 @@ bool NavigationMgr::FindPath(GameObj* obj, math::Vector3 end, const std::wstring
 	SoloMeshPathTool* tool = soloMesh->GetTool();
 
 	tool->SetPosition(obj->GetWorldPos(), end);
-	tool->SetPath(obj);
+
+	if (!tool->SetPath(obj))
+		return false;
 
 	return true;
 }

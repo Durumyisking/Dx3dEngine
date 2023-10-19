@@ -225,7 +225,8 @@ void ScenePlay::Initialize()
 			int debug = 0;
 
 		//오브젝트에 std::<Vector3>mPath 추가 path에 이동경로가 추가되니 vector내의 위치를 사용해서 이동하면 됩니다
-		if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 20.f, 30.f)))
+		//위치가 내비메쉬 밖이면 계산이 안됩니다
+		if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
 			int debug = 0;
 	}
 

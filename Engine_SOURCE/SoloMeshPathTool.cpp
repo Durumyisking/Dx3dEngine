@@ -171,10 +171,11 @@ SoloMeshPathTool::~SoloMeshPathTool()
 
 void SoloMeshPathTool::Initialize(NaviMesh* sample)
 {
+	Reset();
+
 	mNaviMesh = sample;
 	mDetourMesh = sample->GetNavMesh();
 	mDetourMeshQuery = sample->GetNavMeshQuery();
-	recalc();
 
 	if (mDetourMeshQuery)
 	{
@@ -216,13 +217,16 @@ void SoloMeshPathTool::SetPosition(const math::Vector3 start, const math::Vector
 	mEndPos[1] = end.y;
 	mEndPos[2] = end.z;
 	mbEnd = true;
-
-	recalc();
 }
 
-void SoloMeshPathTool::SetPath(GameObj* obj)
+bool SoloMeshPathTool::SetPath(GameObj* obj)
 {
+	if (!recalc())
+		return false;
+	
 	obj->UpdatePath(mSmoothPath, mNumSmoothPath);
+
+	return true;
 }
 
 void SoloMeshPathTool::Reset()
@@ -244,16 +248,16 @@ void SoloMeshPathTool::Reset()
 }
 
 
-void SoloMeshPathTool::recalc()
+bool SoloMeshPathTool::recalc()
 {
 	if (!mDetourMesh)
-		return;
+		return false;
 	
 	if (mbStart)
 		mDetourMeshQuery->findNearestPoly(mStartPos, mPolyExt, &mFilter, &mStartRef, 0);
 	else
 		mStartRef = 0;
-	
+
 	if (mbEnd)
 		mDetourMeshQuery->findNearestPoly(mEndPos, mPolyExt, &mFilter, &mEndRef, 0);
 	else
@@ -395,15 +399,17 @@ void SoloMeshPathTool::recalc()
 					mNumSmoothPath++;
 				}
 			}
-
-			
 		}
 
+
+		return true;
 	}
 	else
 	{
 		mNumPolys = 0;
 		mNumSmoothPath = 0;
+
+		return false;
 	}
 }
 

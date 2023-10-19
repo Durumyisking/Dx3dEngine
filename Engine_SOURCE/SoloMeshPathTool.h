@@ -15,9 +15,9 @@ public:
 	void HandleMenu();
 	void SetPosition(const math::Vector3 start, const math::Vector3 end);
 
-	void SetPath(GameObj* obj);
+	bool SetPath(GameObj* obj);
 
-	void recalc();
+	bool recalc();
 
 private:
 	NaviMesh* mNaviMesh;

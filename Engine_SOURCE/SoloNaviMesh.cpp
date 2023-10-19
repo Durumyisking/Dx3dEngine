@@ -263,13 +263,97 @@ bool SoloNaviMesh::Build()
 		mContourSet = 0;
 	}
 
-	// At this point the navigation mesh data is ready, you can access it from m_pmesh.
-	// See duDebugDrawPolyMesh or dtCreateNavMeshData as examples how to access the data.
+	// The GUI may allow more max points per polygon than Detour can handle.
+	// Only build the detour navmesh if we do not exceed the limit.
+	if (mConfig.maxVertsPerPoly <= DT_VERTS_PER_POLYGON)
+	{
+		unsigned char* navData = 0;
+		int navDataSize = 0;
 
-	//
-	// (Optional) Create Detour data from Recast poly mesh.
-	//
+		// Update poly flags from areas.
+		for (int i = 0; i < mPolyMesh->npolys; ++i)
+		{
+			if (mPolyMesh->areas[i] == RC_WALKABLE_AREA)
+				mPolyMesh->areas[i] = POLYAREA_GROUND;
 
+			if (mPolyMesh->areas[i] == POLYAREA_GROUND ||
+				mPolyMesh->areas[i] == POLYAREA_GRASS ||
+				mPolyMesh->areas[i] == POLYAREA_ROAD)
+			{
+				mPolyMesh->flags[i] = POLYFLAGS_WALK;
+			}
+			else if (mPolyMesh->areas[i] == POLYAREA_WATER)
+			{
+				mPolyMesh->flags[i] = POLYFLAGS_SWIM;
+			}
+			else if (mPolyMesh->areas[i] == POLYAREA_DOOR)
+			{
+				mPolyMesh->flags[i] = POLYFLAGS_WALK | POLYFLAGS_DOOR;
+			}
+		}
+
+
+		dtNavMeshCreateParams params;
+		memset(&params, 0, sizeof(params));
+		params.verts = mPolyMesh->verts;
+		params.vertCount = mPolyMesh->nverts;
+		params.polys = mPolyMesh->polys;
+		params.polyAreas = mPolyMesh->areas;
+		params.polyFlags = mPolyMesh->flags;
+		params.polyCount = mPolyMesh->npolys;
+		params.nvp = mPolyMesh->nvp;
+		params.detailMeshes = mDetailMesh->meshes;
+		params.detailVerts = mDetailMesh->verts;
+		params.detailVertsCount = mDetailMesh->nverts;
+		params.detailTris = mDetailMesh->tris;
+		params.detailTriCount = mDetailMesh->ntris;
+		params.offMeshConVerts = mGeom->getOffMeshConnectionVerts();
+		params.offMeshConRad = mGeom->getOffMeshConnectionRads();
+		params.offMeshConDir = mGeom->getOffMeshConnectionDirs();
+		params.offMeshConAreas = mGeom->getOffMeshConnectionAreas();
+		params.offMeshConFlags = mGeom->getOffMeshConnectionFlags();
+		params.offMeshConUserID = mGeom->getOffMeshConnectionId();
+		params.offMeshConCount = mGeom->getOffMeshConnectionCount();
+		params.walkableHeight = mAgentHeight;
+		params.walkableRadius = mAgentRadius;
+		params.walkableClimb = mAgentMaxClimb;
+		rcVcopy(params.bmin, mPolyMesh->bmin);
+		rcVcopy(params.bmax, mPolyMesh->bmax);
+		params.cs = mConfig.cs;
+		params.ch = mConfig.ch;
+		params.buildBvTree = true;
+
+		if (!dtCreateNavMeshData(&params, &navData, &navDataSize))
+		{
+			m_ctx->log(RC_LOG_ERROR, "Could not build Detour navmesh.");
+			return false;
+		}
+
+		mNavMesh = dtAllocNavMesh();
+		if (!mNavMesh)
+		{
+			dtFree(navData);
+			m_ctx->log(RC_LOG_ERROR, "Could not create Detour navmesh");
+			return false;
+		}
+
+		dtStatus status;
+
+		status = mNavMesh->init(navData, navDataSize, DT_TILE_FREE_DATA);
+		if (dtStatusFailed(status))
+		{
+			dtFree(navData);
+			m_ctx->log(RC_LOG_ERROR, "Could not init Detour navmesh");
+			return false;
+		}
+
+		status = mNavQuery->init(mNavMesh, 2048);
+		if (dtStatusFailed(status))
+		{
+			m_ctx->log(RC_LOG_ERROR, "Could not init Detour navmesh query");
+			return false;
+		}
+	}
 
 	// Show performance stats.
 	std::cout << ">> Polymesh: "<< mPolyMesh->nverts << "  vertices" << mPolyMesh->npolys << "  polygons" << std::endl;
