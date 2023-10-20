@@ -39,6 +39,9 @@ private:
 	void setHalfCloseEyeModel();
 	void setOpenEyeModel();
 	void setPressedModel();
+	void setCapturedModel();
+
+	void modelSetting();
 
 private:
 	UINT				mGoombaLayerIdx;
@@ -46,18 +49,23 @@ private:
 	Model* mModel;
 	/*
 	Body__BodyMT
+
 	EyeBrow__BodyMT
 	EyeBrowCap__BodyMT
+
 	EyeClose__BodyMT
+
 	EyeHalfClose__BodyMT
 	EyeHalfClose__EyeLMT
 	EyeHalfClose__EyeRMT
+
 	EyeOpen__BodyMT
 	EyeOpen__EyeLMT
 	EyeOpen__EyeRMT
+
 	Mustache__HairMT
-	PressModel__BodyMT
-	
+
+	PressModel__BodyMT	
 	*/
 
 

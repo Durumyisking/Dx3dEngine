@@ -355,7 +355,7 @@ void Player::KeyCheck()
 	};
 
 	// 웅크리기
-	stateEvent(eKeyState::TAP, eKeyCode::Z, ePlayerState::Squat);
+	stateEvent(eKeyState::TAP, eKeyCode::LCTRL, ePlayerState::Squat);
 
 	// 점프
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, ePlayerState::Jump);
@@ -370,7 +370,8 @@ void Player::KeyCheck()
 
 	// 모자 던지기
 	able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::LCTRL, ePlayerState::ThrowCap);
+	//stateEvent(eKeyState::TAP, eKeyCode::LCTRL, ePlayerState::ThrowCap);
+	stateEvent(eKeyState::TAP, eKeyCode::LBTN, ePlayerState::ThrowCap);
 
 	// 특수
 	able = false;

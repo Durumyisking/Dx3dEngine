@@ -88,6 +88,7 @@ void Goomba::Initialize()
 	mr->SetMaterialByKey(L"goombaEye0Material", 9);
 
 	// mustatch
+	mr->SetMaterialByKey(L"MarioMustacheMaterial", 10);
 
 	// press
 	mr->SetMaterialByKey(L"goombaBodyMaterial", 11);
@@ -165,58 +166,14 @@ void Goomba::FixedUpdate()
 
 void Goomba::PrevRender()
 {
-	switch (mMonsterState)
-	{
-	case Monster::eMonsterState::Idle:
-	case Monster::eMonsterState::Move:
-	case Monster::eMonsterState::Jump:
-	case Monster::eMonsterState::Fall:
-	case Monster::eMonsterState::Land:
-	case Monster::eMonsterState::Turn:
-		setOpenEyeModel();
-		break;
-	case Monster::eMonsterState::Chase:
-	case Monster::eMonsterState::Attack:
-		setHalfCloseEyeModel();
-		break;
-	case Monster::eMonsterState::Die:
-		setPressedModel();
-		break;
-	case Monster::eMonsterState::SpecialSituation:
-	case Monster::eMonsterState::Hit:
-	case Monster::eMonsterState::Groggy:
-	default:
-		break;
-	}
+	modelSetting();
 
 	Monster::PrevRender();
 }
 
 void Goomba::Render()
 {
-	switch (mMonsterState)
-	{
-	case Monster::eMonsterState::Idle:
-	case Monster::eMonsterState::Move:
-	case Monster::eMonsterState::Jump:
-	case Monster::eMonsterState::Fall:
-	case Monster::eMonsterState::Land:
-	case Monster::eMonsterState::Turn:
-		setOpenEyeModel();
-		break;
-	case Monster::eMonsterState::Chase:
-	case Monster::eMonsterState::Attack:
-		setHalfCloseEyeModel();
-		break;
-	case Monster::eMonsterState::Die:
-		setPressedModel();
-		break;
-	case Monster::eMonsterState::SpecialSituation:
-	case Monster::eMonsterState::Hit:
-	case Monster::eMonsterState::Groggy:
-	default:
-		break;
-	}
+	modelSetting();
 
 	Monster::Render();
 }
@@ -291,6 +248,10 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 			GetBoneAnimator()->Play(L"PressDown");
 			SetMonsterState(Monster::eMonsterState::Die);
 		}
+	}
+
+	if (eLayerType::Cap == gameObject->GetLayerType())
+	{
 	}
 
 	if (eLayerType::Monster == gameObject->GetLayerType())
@@ -449,4 +410,48 @@ void Goomba::setPressedModel()
 
 	mModel->AllMeshRenderSwtichOff();
 	mModel->MeshRenderSwtich(L"PressModel__BodyMT-mesh", true);
+}
+
+void Goomba::setCapturedModel()
+{
+	if (GetCap())
+	{
+		mModel->AllMeshRenderSwtichOff();
+		mModel->MeshRenderSwtich(L"Body__BodyMT-mesh", true);
+		mModel->MeshRenderSwtich(L"EyeBrowCap__BodyMT-mesh", true);
+		mModel->MeshRenderSwtich(L"EyeOpen__BodyMT-mesh", true);
+		mModel->MeshRenderSwtich(L"EyeOpen__EyeLMT-mesh", true);
+		mModel->MeshRenderSwtich(L"EyeOpen__EyeRMT-mesh", true);
+		mModel->MeshRenderSwtich(L"Mustache__HairMT-mesh", true);
+	}
+
+}
+
+void Goomba::modelSetting()
+{
+	switch (mMonsterState)
+	{
+	case Monster::eMonsterState::Idle:
+	case Monster::eMonsterState::Move:
+	case Monster::eMonsterState::Jump:
+	case Monster::eMonsterState::Fall:
+	case Monster::eMonsterState::Land:
+	case Monster::eMonsterState::Turn:
+		setOpenEyeModel();
+		break;
+	case Monster::eMonsterState::Chase:
+	case Monster::eMonsterState::Attack:
+		setHalfCloseEyeModel();
+		break;
+	case Monster::eMonsterState::Die:
+		setPressedModel();
+		break;
+	case Monster::eMonsterState::SpecialSituation:
+	case Monster::eMonsterState::Hit:
+	case Monster::eMonsterState::Groggy:
+	default:
+		break;
+	}
+	
+	setCapturedModel();
 }

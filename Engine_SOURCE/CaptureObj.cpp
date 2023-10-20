@@ -43,7 +43,6 @@ void CaptureObj::Divide()
 	mPlayer->SetMarioCap(mCap);
 	mPlayer->Active();
 	mPlayer->UnCapturingProcess();
-	
 
 	// ¸¶¸®¿ÀÀÇ ¸ðÀÚ¸¦ ¾º¿öÁÜ
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
@@ -83,6 +82,8 @@ void CaptureObj::Divide()
 	mPlayer->SetPlayerState(Player::ePlayerState::Jump);
 
 	renderer::mainCamera->SetTarget(mPlayer);
+
+	mCap = nullptr;
 
 }
 
