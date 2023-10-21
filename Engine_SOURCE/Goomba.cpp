@@ -10,11 +10,15 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
+#include "MarioCap.h"
+#include "Player.h"
+
 Goomba::Goomba()
 	: Monster()
 	, mGoombaLayerIdx(0)
 	, mLowerLayerGoombas{}
 	, mModel(nullptr)
+	, mTopGoomba(this)
 {
 	SetName(L"Goomba");
 	mObjectTypeName = "Goomba";
@@ -22,6 +26,10 @@ Goomba::Goomba()
 
 Goomba::Goomba(const Goomba& Obj)
 	: Monster(Obj)
+	, mGoombaLayerIdx(0)
+	, mLowerLayerGoombas{}
+	, mModel(nullptr)
+	, mTopGoomba(this)
 {
 	OnCapture();
 	SetName(L"Goomba");
@@ -250,26 +258,37 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		}
 	}
 
-	if (eLayerType::Cap == gameObject->GetLayerType())
-	{
-	}
-
 	if (eLayerType::Monster == gameObject->GetLayerType())
 	{
 		if (L"Goomba" == gameObject->GetName())
 		{
 			Goomba* goomba = dynamic_cast<Goomba*>(gameObject);
 
+			// 굼바끼리 충돌시 밀어내는 로직
 			Vector3 pent = GetPhysXCollider()->ComputePenetration(gameObject);
-			if (pent.y == 0.f && GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+			if (pent.y == 0.f)
 			{
 				GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
 				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent);
 			}
 
-			// if 걸리면 윗굼바 (굼바 타워일때는 맨 밑 굼바만 계산하자)
+	
+			// 층을 쌓는다. ( 우선 캡처중일때만 고려하자 )
+			// 나 1층 - 대상 1층
+			// 조작권(캡처)는 아랫굼바에, cap은 윗 굼바에 주자
+			// 나 2층 - 대상 1층
+			// 조작권은 아랫굼바로 이동시키고 cap은 그대로
+			// 이후 반복
+
+			// 나 2층 - 대상 2층
+			// 대상의 맨 밑 굼바를 찾아서 조작권을 준다.
+
+			// dvide는 cap owner로 부터 이루어져야 한다.
+			
+			// 내가 1층 굼바면
 			if (mLowerLayerGoombas.empty())
 			{
+				// if 걸리면 내가 윗굼바
 				if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.9f)
 				{
 					// 아랫굼바 벡터 복사
@@ -287,10 +306,14 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 					GetScript<GoombaStateScript>()->SetSwitchState(false);
 					SetMonsterState(eMonsterState::Idle);
 
-					OffCapture();
+					goomba->SetTopGoomba(this->GetTopGoomba());
 
-					mLowerLayerGoombas[0]->OnCapture();
-					mLowerLayerGoombas[0]->CopyCaptureData(dynamic_cast<CaptureObj*>(this));
+					if (IsCapture())
+					{
+						OffCapture();
+						mLowerLayerGoombas[0]->OnCapture();
+						mLowerLayerGoombas[0]->CopyCaptureData(dynamic_cast<CaptureObj*>(this), false);
+					}
 				}
 			}
 
@@ -302,8 +325,25 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		}
 	}
 
-
-	Monster::OnTriggerEnter(gameObject);
+	if (eLayerType::Cap == gameObject->GetLayerType())
+	{
+		MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
+		// top goomba로 캡처 enter
+		if (mTopGoomba)
+		{
+			mTopGoomba->CaptureEnter(cap);
+			mTopGoomba->OffCapture();
+		}
+		else
+		{
+			CaptureEnter(cap);
+		}
+		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
+		if (mLowerLayerGoombas.size())
+			mLowerLayerGoombas[0]->OnCapture();
+		// capture권은 bottom 굼바에게 줘야함
+	}
+	//Monster::OnTriggerEnter(gameObject);
 }
 
 void Goomba::OnTriggerPersist(GameObj* gameObject)

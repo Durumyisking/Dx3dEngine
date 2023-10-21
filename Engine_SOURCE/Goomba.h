@@ -43,10 +43,15 @@ private:
 
 	void modelSetting();
 
+	GETSET(Goomba*, mTopGoomba, TopGoomba)
+
 private:
 	UINT				mGoombaLayerIdx;
 	std::vector<Goomba*> mLowerLayerGoombas;
 	Model* mModel;
+
+	Goomba* mTopGoomba;
+
 	/*
 	Body__BodyMT
 
