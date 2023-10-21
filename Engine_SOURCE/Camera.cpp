@@ -45,6 +45,7 @@ Camera::Camera()
 	, mRaycastHit{}
 	, mRayMaxDist(5.f)
 	, mRayMaxHit(1)
+	, mFrustum{}
 {
 	EnableLayerMasks();
 }
@@ -189,6 +190,7 @@ void Camera::CreateProjectionMatrix()
 		mProjection = Matrix::CreateOrthographic(width, height, mNear, mFar);
 	}
 
+	mFrustum = BoundingFrustum(mProjection);
 }
 
 Matrix Camera::CreateProjectionMatrix(eProjectionType type, float width, float height, float Near, float Far)

@@ -119,4 +119,6 @@ private:
 	float		mCamSpeed;
 	float		mTime;
 	bool		mSmooth;
+
+	BoundingFrustum mFrustum;
 };

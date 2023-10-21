@@ -3,7 +3,6 @@
 #include "GraphicDevice.h"
 
 
-
 Mesh::Mesh()
 	: Resource(eResourceType::Mesh)
 	, mVBDesc{}
@@ -12,6 +11,9 @@ Mesh::Mesh()
 	, mVertexCount(0)
 	, mIndexCount(0)
 	, mbRender(true)
+	, mBoundingBox{}
+	, mMinVertex{ INFINITY }
+	, mMaxVertex{ INFINITY }
 {
 }
 Mesh::~Mesh()
@@ -39,6 +41,9 @@ bool Mesh::CreateVertexBuffer(void* data, UINT count)
 	if (!GetDevice()->CreateBuffer(&mVBDesc, &subData, mVertexBuffer.GetAddressOf()))
 		return false;
 		
+	mBoundingBox.Center = (mMinVertex + mMaxVertex) * 0.5f;
+	mBoundingBox.Extents = (mMaxVertex - mMinVertex) * 0.5f;
+
 	return true;
 }
 
@@ -103,7 +108,7 @@ void Mesh::Render()
 {
 	if (!IsRender())
 		return;
-
+	
 	GetDevice()->DrawIndexed(mIndexCount, 0, 0);
 }
 
@@ -192,4 +197,14 @@ void Mesh::UpdateInstanceBuffer(std::vector<InstancingData> matrices)
 {	
 	UINT size = static_cast<UINT>((matrices.capacity() * sizeof(InstancingData)));
 	GetDevice()->BindBuffer(mInstancedBuffer.Get(), matrices.data(), size);
+}
+
+void Mesh::SetMinVertex(const math::Vector3& vertex)
+{
+	mMinVertex = DirectX::XMVectorMin(mMinVertex, vertex);
+}
+
+void Mesh::SetMaxVertex(const math::Vector3& vertex)
+{
+	mMaxVertex = DirectX::XMVectorMax(mMaxVertex, vertex);
 }
