@@ -262,7 +262,6 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
-
 	vertexes.reserve(mesh->mNumVertices);
 
 	for (UINT i = 0; i < mesh->mNumVertices; ++i)
@@ -270,19 +269,16 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		Vertex vertex = {};
 		math::Vector3 pos = {};
 
-
 		pos.x = mesh->mVertices[i].x;
 		pos.y = mesh->mVertices[i].y;
 		pos.z = mesh->mVertices[i].z;
 		vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
-
 
 		math::Vector3 normal = {};
 		normal.x = mesh->mNormals[i].x;
 		normal.y = mesh->mNormals[i].y;
 		normal.z = mesh->mNormals[i].z;
 		vertex.normal = normal;
-
 
 		math::Vector3 tangent = {};
 		tangent.x = mesh->mTangents[i].x;
@@ -307,26 +303,10 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		vertexes.emplace_back(vertex);
 	}
 
-	//indexes.reserve(mesh->mNumFaces);
-	//for (UINT i = 0; i < mesh->mNumFaces; ++i)
-	//{
-	//	aiFace face = mesh->mFaces[i];
-	//	if (mesh->mFaces[i].mNumIndices != 3) {
-	//		int a = 0;
-	//	}
-	//	for (UINT j = 0; j < face.mNumIndices; ++j)
-	//	{
-	//		indexes.emplace_back(face.mIndices[j]);
-	//	}
-	//}
-
 	indexes.reserve(mesh->mNumFaces);
 	for (UINT i = 0; i < mesh->mNumFaces; ++i)
 	{
 		aiFace face = mesh->mFaces[i];
-		if (mesh->mFaces[i].mNumIndices != 3) {
-			int a = 0;
-		}
 		for (UINT j = 0; j < face.mNumIndices; ++j)
 		{
 			indexes.emplace_back(face.mIndices[j]);

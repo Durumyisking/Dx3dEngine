@@ -342,6 +342,26 @@ namespace math
 
         Vector4(Vector4&&) = default;
         Vector4& operator=(Vector4&&) = default;
+        Vector4 operator*(const XMFLOAT4X4& m)
+        {
+            Vector4 result(0.f);
+            result.x = (this->x * m._11) + (this->y * m._21) + (this->z * m._31) + (this->w * m._41);
+            result.y = (this->x * m._12) + (this->y * m._22) + (this->z * m._32) + (this->w * m._42);
+            result.z = (this->x * m._13) + (this->y * m._23) + (this->z * m._33) + (this->w * m._43);
+            result.w = (this->x * m._14) + (this->y * m._24) + (this->z * m._34) + (this->w * m._44);
+
+            return result;
+        }
+
+        void operator*=(const XMFLOAT4X4& m)
+        {
+            Vector4 result(0.f);
+            result.x = (this->x * m._11) + (this->y * m._21) + (this->z * m._31) + (this->w * m._41);
+            result.y = (this->x * m._12) + (this->y * m._22) + (this->z * m._32) + (this->w * m._42);
+            result.z = (this->x * m._13) + (this->y * m._23) + (this->z * m._33) + (this->w * m._43);
+            result.w = (this->x * m._14) + (this->y * m._24) + (this->z * m._34) + (this->w * m._44);
+            this->x = result.x; this->y = result.y; this->z = result.z; this->w = result.w;
+        }
 
         operator XMVECTOR() const  noexcept { return XMLoadFloat4(this); }
 
@@ -351,6 +371,7 @@ namespace math
 
         // Assignment operators
         Vector4& operator= (const XMVECTORF32& F) noexcept { x = F.f[0]; y = F.f[1]; z = F.f[2]; w = F.f[3]; return *this; }
+        Vector4& operator= (const float value) noexcept { x = value; y = value; z = value; w = 1.f;}
         Vector4& operator+= (const Vector4& V) noexcept;
         Vector4& operator-= (const Vector4& V) noexcept;
         Vector4& operator*= (const Vector4& V) noexcept;

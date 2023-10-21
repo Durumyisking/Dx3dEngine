@@ -5,7 +5,6 @@
 
 #include "TimeMgr.h"
 
-
 Transform::Transform()
 	: Component(eComponentType::Transform)
 	, mParent(nullptr)
@@ -193,6 +192,17 @@ void Transform::SetConstantBuffer()
 	cb->Bind(eShaderStage::GS);
 	cb->Bind(eShaderStage::PS);
 	cb->Bind(eShaderStage::CS);
+
+	if (GetOwner()->GetLayerType() == eLayerType::FX)
+	{
+		Vector4 test(0.f);
+		test.w = 1.f;
+
+		test = Vector4::Transform(test, trCb.world);
+		test = Vector4::Transform(test, trCb.view);
+		test = Vector4::Transform(test, trCb.projection);
+
+	}
 }
 
 void Transform::SetParent(GameObj* parent)

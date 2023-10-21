@@ -145,7 +145,6 @@ void Camera::CreateViewMatrix()
 	viewRotate._31 = right.z; 		viewRotate._32 = up.z;		 viewRotate._33 = foward.z;
 
 	mView *= viewRotate;
-
 }
 
 Matrix Camera::CreateViewMatrix(Transform* tr)
