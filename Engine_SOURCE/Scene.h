@@ -41,6 +41,7 @@ public:
 	const std::vector<GameObj*>& GetGameObjects(eLayerType eLayer);
 
 	GameObj* GetPlayer();
+	GameObj* FindSceneGameObject(const std::wstring& name);
 
 protected:
 	void CreateCameras();

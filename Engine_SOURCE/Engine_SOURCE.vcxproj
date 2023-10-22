@@ -223,6 +223,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="BaseRenderer.h" />
     <ClInclude Include="BlockBrick.h" />
     <ClInclude Include="BenchA.h" />
+    <ClInclude Include="InstancingContainer.h" />
     <ClInclude Include="Bone.h" />
     <ClInclude Include="BoneAnimator.h" />
     <ClInclude Include="Box.h" />
@@ -245,6 +246,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="CityWorldChairA.h" />
     <ClInclude Include="CityWorldChairB.h" />
     <ClInclude Include="CityWorldFlag.h" />
+    <ClInclude Include="ChunkyTriMesh.h" />
     <ClInclude Include="ClientToServer.h" />
     <ClInclude Include="CoinObject.h" />
     <ClInclude Include="CoinUIScript.h" />
@@ -296,7 +298,10 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="HomeBuildingSeven.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="ImageUI.h" />
+    <ClInclude Include="InputGeom.h" />
     <ClInclude Include="InputMgr.h" />
+    <ClInclude Include="InstancedMeshRenderer.h" />
+    <ClInclude Include="InstantiativeObject.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LifeUI.h" />
     <ClInclude Include="LifeUIScript.h" />
@@ -308,6 +313,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MarioParts.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshLoaderObj.h" />
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="MilestoneScript.h" />
     <ClInclude Include="Model.h" />
@@ -318,6 +324,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MonsterStateScript.h" />
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="NavigationMgr.h" />
+    <ClInclude Include="NaviMesh.h" />
+    <ClInclude Include="SoloMeshPathTool.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Packun.h" />
     <ClInclude Include="PackunPostionBall.h" />
@@ -369,6 +377,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="SkySphere.h" />
     <ClInclude Include="SkySphereRenderer.h" />
+    <ClInclude Include="SoloNaviMesh.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="StringFunctions.h" />
@@ -400,6 +409,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="BaseRenderer.cpp" />
     <ClCompile Include="BlockBrick.cpp" />
     <ClCompile Include="BenchA.cpp" />
+    <ClCompile Include="InstancingContainer.cpp" />
     <ClCompile Include="Bone.cpp" />
     <ClCompile Include="BoneAnimator.cpp" />
     <ClCompile Include="Box.cpp" />
@@ -423,6 +433,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="CityWorldChairB.cpp" />
     <ClCompile Include="CityWorldFlag.cpp" />
     <ClCompile Include="CoinObject.cpp" />
+    <ClCompile Include="ChunkyTriMesh.cpp" />
     <ClCompile Include="CoinUIScript.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="Collider3D.cpp" />
@@ -467,7 +478,10 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="HomeBuildingSeven.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="ImageUI.cpp" />
+    <ClCompile Include="InputGeom.cpp" />
     <ClCompile Include="InputMgr.cpp" />
+    <ClCompile Include="InstancedMeshRenderer.cpp" />
+    <ClCompile Include="InstantiativeObject.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LifeUI.cpp" />
     <ClCompile Include="LifeUIScript.cpp" />
@@ -478,6 +492,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MarioParts.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshLoaderObj.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -488,6 +503,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="MonsterStateScript.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="NavigationMgr.cpp" />
+    <ClCompile Include="NaviMesh.cpp" />
+    <ClCompile Include="SoloMeshPathTool.cpp" />
     <ClCompile Include="Packun.cpp" />
     <ClCompile Include="PackunPostionBall.cpp" />
     <ClCompile Include="PackunStateScript.cpp" />
@@ -536,6 +553,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="SimpleMath.cpp" />
     <ClCompile Include="SkySphere.cpp" />
     <ClCompile Include="SkySphereRenderer.cpp" />
+    <ClCompile Include="SoloNaviMesh.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="StringFunctions.cpp" />

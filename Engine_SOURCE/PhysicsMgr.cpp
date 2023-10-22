@@ -33,7 +33,7 @@ void PhysicsMgr::Initialize()
 	sceneDesc.cpuDispatcher = mDispatcher->GetCpuDispatcher();
 	sceneDesc.filterShader = PlayerFilter;
 	sceneDesc.simulationEventCallback = mDispatcher->GetSimulationCallback();
-	//sceneDesc.kineKineFilteringMode = PxPairFilteringMode::Enum::eDEFAULT;
+	//sceneDesc.kineKineFilteringMode = PxPairFilteringMode::Enum::eKEEP;
 	//sceneDesc.staticKineFilteringMode = PxPairFilteringMode::Enum::eDEFAULT;
 
 	mPhysX->CreatePhysicsScene(sceneDesc);
@@ -44,7 +44,9 @@ void PhysicsMgr::Initialize()
 
 void PhysicsMgr::Update()
 {
-	GetScene()->simulate(GETSINGLE(TimeMgr)->GetMaxFrameRate());
+	// 현재 작동중인 씬의
+
+	GetScene()->simulate(DT);
 	GetScene()->fetchResults(true);
 }
 

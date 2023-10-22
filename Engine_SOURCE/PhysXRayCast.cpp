@@ -22,7 +22,7 @@ PhysXRayCast::PhysXRayCast()
 	CollisionLayerCheck(eLayerType::Player);
 	CollisionLayerCheck(eLayerType::Boss);
 	CollisionLayerCheck(eLayerType::Objects);
-	CollisionLayerCheck(eLayerType::PhysicalObject);
+	CollisionLayerCheck(eLayerType::None);
 	CollisionLayerCheck(eLayerType::Monster);
 }
 

@@ -8,6 +8,7 @@ Mesh::Mesh()
 	: Resource(eResourceType::Mesh)
 	, mVBDesc{}
 	, mIBDesc{}
+	, mISTBDesc{}
 	, mVertexCount(0)
 	, mIndexCount(0)
 	, mbRender(true)
@@ -26,6 +27,7 @@ HRESULT Mesh::LoadFullpath(const std::wstring& path)
 }
 bool Mesh::CreateVertexBuffer(void* data, UINT count)
 {
+	mVertexCount = count;
 	mVBDesc.ByteWidth = sizeof(Vertex) * count;
 	mVBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
 	mVBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
@@ -37,6 +39,25 @@ bool Mesh::CreateVertexBuffer(void* data, UINT count)
 	if (!GetDevice()->CreateBuffer(&mVBDesc, &subData, mVertexBuffer.GetAddressOf()))
 		return false;
 		
+	return true;
+}
+
+bool Mesh::CreateInstanceBuffer(void* data, UINT count)
+{
+	ZeroMemory(&mISTBDesc, sizeof(mISTBDesc));
+	mISTBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
+	mISTBDesc.ByteWidth = sizeof(InstancingData) * count;
+	mISTBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
+	mISTBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	//mISTBDesc.MiscFlags = 0;
+	//mISTBDesc.StructureByteStride = 0;
+
+	D3D11_SUBRESOURCE_DATA subData = {};
+	subData.pSysMem = data;
+
+	if (!GetDevice()->CreateBuffer(&mISTBDesc, &subData, mInstancedBuffer.GetAddressOf()))
+		return false;
+
 	return true;
 }
 
@@ -58,13 +79,23 @@ bool Mesh::CreateIndexBuffer(void* data, UINT count)
 }
 
 
-void Mesh::BindBuffer()
+void Mesh::BindBuffer(bool drawInstance)
 {
-	UINT stride = sizeof(Vertex);
-	UINT offset = 0;
-
-	GetDevice()->BindVertexBuffer(0, 1, mVertexBuffer.GetAddressOf(), &stride, &offset);
-	GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	if (drawInstance)
+	{
+		UINT stride[2] = {sizeof(Vertex), sizeof(InstancingData)};
+		UINT offset[2] = { 0, 0 };
+		ID3D11Buffer* vbs[2] = { mVertexBuffer.Get(), mInstancedBuffer.Get()};
+		GetDevice()->BindVertexBuffer(0, 2, vbs, stride, offset);
+		GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	}
+	else
+	{
+		UINT stride = sizeof(Vertex);
+		UINT offset = 0;
+		GetDevice()->BindVertexBuffer(0, 1, mVertexBuffer.GetAddressOf(), &stride, &offset);
+		GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	}
 }
 
 
@@ -120,6 +151,7 @@ bool Mesh::GetVerticesFromBuffer(std::vector<Vertex>* vertexVec)
 	return true;
 }
 
+
 bool Mesh::GetIndexesFromBuffer(std::vector<UINT>* indexVec)
 {
 	D3D11_BUFFER_DESC desc = {};
@@ -154,4 +186,10 @@ bool Mesh::GetIndexesFromBuffer(std::vector<UINT>* indexVec)
 	GetDevice()->GetDeviceContext()->Unmap(stagingBuffer.Get(), 0);
 
 	return true;
+}
+
+void Mesh::UpdateInstanceBuffer(std::vector<InstancingData> matrices)
+{	
+	UINT size = static_cast<UINT>((matrices.capacity() * sizeof(InstancingData)));
+	GetDevice()->BindBuffer(mInstancedBuffer.Get(), matrices.data(), size);
 }

@@ -39,6 +39,7 @@
 #pragma comment(lib, "../External/Detour/lib/debug/Detour-d.lib")
 #pragma comment(lib, "../External/Detour/lib/debug/DetourCrowd-d.lib")
 #pragma comment(lib, "../External/Detour/lib/debug/DetourTileCache-d.lib")
+#pragma comment(lib, "../External/Detour/lib/debug/DebugUtils-d.lib")
 
 #else
 
@@ -56,6 +57,7 @@
 #pragma comment(lib, "../External/Detour/lib/release/Detour.lib")
 #pragma comment(lib, "../External/Detour/lib/release/DetourCrowd.lib")
 #pragma comment(lib, "../External/Detour/lib/release/DetourTileCache.lib")
+#pragma comment(lib, "../External/Detour/lib/release/DebugUtils.lib")
 #endif
 
 using namespace physx;

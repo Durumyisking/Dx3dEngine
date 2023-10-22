@@ -7,6 +7,7 @@
 
 SceneLoading::SceneLoading()
 {
+	SetName(L"SceneLoading");
 }
 
 SceneLoading::~SceneLoading()

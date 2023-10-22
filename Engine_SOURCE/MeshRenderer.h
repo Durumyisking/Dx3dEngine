@@ -11,7 +11,7 @@ public:
 	MeshRenderer();
 	virtual ~MeshRenderer();
 
-	virtual void Initialize() final ;
+	virtual void Initialize() final;
 	virtual void Update() final;
 	virtual void FixedUpdate() final;
 	virtual void PrevRender() final;

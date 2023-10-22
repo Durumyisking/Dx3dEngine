@@ -100,7 +100,7 @@ void FileMgr::FileLoad(const std::wstring& path)
 	file.close();
 }
 
-bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
+Model* FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName, bool useInstance)
 {
 	std::wstring fullPath = L"..//" + path;
 	fs::path folderPath = std::string(fullPath.begin(), fullPath.end());
@@ -124,19 +124,22 @@ bool FileMgr::ModelLoad(const std::wstring& path, const std::wstring& modelName)
 			}
 			else
 			{
-				return false;
+				return nullptr;
 			}
 
 			if (L".DAE" == extension || L".Dae" == extension || L".dae" == extension)
 			{
 				model->SetCurDirectoryPath(fullPath);
+				model->SetUseInstance(useInstance);
 				model->Load(entry.path());
 			}
+
+			return model;
 		}
 	}
 
 
-	return true;
+	return nullptr;
 }
 
 bool FileMgr::StageFolderLoad(const std::wstring& path, const std::wstring& stageName)
@@ -170,6 +173,10 @@ bool FileMgr::StageFolderLoad(const std::wstring& path, const std::wstring& stag
 				}
 				model->SetCurDirectoryPath(fullPath);
 				model->Load(entry.path());
+			}
+			else if (L".OBJ" == extension || L".Obj" == extension || L".obj" == extension)
+			{
+
 			}
 		}
 	}

@@ -261,7 +261,7 @@ void ParticleFormat::SetParticleData(const std::vector<Particle>& particleDatas)
 		mParticleData[i] = particleDatas[i];
 	}
 
-	mParitlceMaxCount = particleDatas.size();
+	mParitlceMaxCount = static_cast<UINT>(particleDatas.size());
 
 	mBuffer->SetData(mParticleData.data(), mParitlceMaxCount);
 }

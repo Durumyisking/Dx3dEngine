@@ -37,7 +37,7 @@ public:
 	void FileLoad(const std::wstring& path);
 
 	// 폴더명을 입력해주세요
-	bool ModelLoad(const std::wstring& path, const std::wstring& stageName);
+	Model* ModelLoad(const std::wstring& path, const std::wstring& stageName, bool useInstance = false);
 
 	/// 같은 스테이지의 같은 텍스처를 공유하는 모델들 동시에 로드하는 함수, 모델 이름 : stage + _ + file
 	bool StageFolderLoad(const std::wstring& path, const std::wstring& stageName);

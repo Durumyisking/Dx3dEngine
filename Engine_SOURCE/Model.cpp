@@ -27,6 +27,7 @@ Model::Model()
 	, mParentTargetBone(L"")
 	, mTargetBone(L"")
 	, mOffsetRotation(math::Vector3(0.0f, 0.0f, 0.0f))
+	, mbUseInstance(false)
 {
 
 }
@@ -182,6 +183,57 @@ void Model::Bind_Render(bool bindMaterial)
 		mMeshes[i]->Render();
 
 		if(!(mVariableMaterials.empty() && mMaterials.empty()))
+			mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+	}
+
+	mFrameAnimationVector = nullptr;
+	mStructure->Clear();
+	boneMat.clear();
+}
+
+void Model::Bind_RenderInstance(UINT instanceCount, bool bindMaterial)
+{
+	if (mStructure == nullptr)
+		return;
+
+	BoneMat boneInfo = {};
+	std::vector<BoneMat> boneMat = {};
+
+	BindBoneMatrix();
+
+	boneMat.reserve(mBones.size());
+
+	for (Bone* bone : mBones)
+	{
+		aiMatrix4x4 finalMat = bone->mFinalMatrix;
+		boneInfo.FinalTransformation = ConvertMatrix(finalMat);
+		boneMat.emplace_back(boneInfo);
+	}
+
+	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
+	mStructure->BindSRV(eShaderStage::VS, 30);
+
+	for (size_t i = 0; i < mMeshes.size(); ++i)
+	{
+		if (mMeshes[i] == nullptr)
+			continue;
+
+		//if (mMaterials[i] == nullptr)
+		//	continue;
+
+		if (mMeshes[i]->IsRender() == false)
+			continue;
+
+		if (bindMaterial)
+		{
+			if (!(mVariableMaterials.empty() && mMaterials.empty()))
+				mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
+		}
+
+		mMeshes[i]->BindBuffer(true);
+		mMeshes[i]->RenderInstanced(instanceCount);
+
+		if (!(mVariableMaterials.empty() && mMaterials.empty()))
 			mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
 	}
 
@@ -428,11 +480,20 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 	Mesh* inMesh = new Mesh();
 	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
+	if (mbUseInstance)
+	{
+		std::vector<InstancingData> mats = {};
+		mats.resize(1000);
+		for (int i = 0; i < mats.size(); i++)
+		{
+			mats[i].world = Matrix::Identity;		
+			mats[i].worldIT = Matrix::Identity;
+		}
+		inMesh->CreateInstanceBuffer(mats.data(), static_cast<UINT>(mats.size()));
+	}
+
 	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
-
-	inMesh->SetVertexCount(static_cast<UINT>(vertexes.size()));
-	inMesh->SetIndexCount(static_cast<UINT>(indexes.size()));
 
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 	inMesh->SetName(wName);

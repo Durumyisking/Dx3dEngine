@@ -16,6 +16,7 @@
 #include "UIFactory.h"
 #include "PathMgr.h"
 #include "AsyncLoad.h"
+#include "NavigationMgr.h"
 
 Application::Application()
 	: mbInitalized(false)
@@ -148,6 +149,7 @@ void Application::DestroySingle()
 	GETSINGLE(PhysicsMgr)->DestroyInstance();
 	GETSINGLE(TimerMgr)->DestroyInstance();
 	GETSINGLE(PathMgr)->DestroyInstance();
+	GETSINGLE(NavigationMgr)->DestroyInstance();
 }
 
 void Application::SetWindow(HWND hwnd, UINT width, UINT height)

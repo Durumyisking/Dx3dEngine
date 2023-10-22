@@ -278,20 +278,27 @@ void GoombaStateScript::rotateByKey()
 		{
 			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
 			{
-				mTransform->SetPhysicalRotation(rotation);
-				able = true;
+				if (GETSINGLE(InputMgr)->GetKeyDown(key) || GETSINGLE(InputMgr)->GetKeyTap(key))
+				{
+					if (GETSINGLE(InputMgr)->GetKeyDown(mult_key) || GETSINGLE(InputMgr)->GetKeyTap(mult_key))
+					{
+						rotation.y += renderer::mainCamera->GetTransform()->GetRotationY();
+						mTransform->SetPhysicalRotation(rotation);
+						able = true;
+					}
+				}
 			}
 		}
 	};
 
-	Input_DownFunC(eKeyCode::UP, eKeyCode::RIGHT, math::Vector3(0.0f, 225.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::LEFT, math::Vector3(0.0f, 135.f, 0.0f));
-	Input_DownFunC(eKeyCode::UP, eKeyCode::UP, math::Vector3(0.0f, 180.f, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::D, math::Vector3(0.0f, 225.f, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::A, math::Vector3(0.0f, 135.f, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::W, math::Vector3(0.0f, 180.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::RIGHT, math::Vector3(0.0f, -45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::LEFT, math::Vector3(0.0f, 45.f, 0.0f));
-	Input_DownFunC(eKeyCode::DOWN, eKeyCode::DOWN, math::Vector3(0.0f, 0.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::D, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::A, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::S, math::Vector3(0.0f, 0.f, 0.0f));
 
-	Input_DownFunC(eKeyCode::LEFT, eKeyCode::LEFT, math::Vector3(0.0f, 90.f, 0.0f));
-	Input_DownFunC(eKeyCode::RIGHT, eKeyCode::RIGHT, math::Vector3(0.0f, -90.f, 0.0f));
+	Input_DownFunC(eKeyCode::A, eKeyCode::A, math::Vector3(0.0f, 90.f, 0.0f));
+	Input_DownFunC(eKeyCode::D, eKeyCode::D, math::Vector3(0.0f, -90.f, 0.0f));
 }

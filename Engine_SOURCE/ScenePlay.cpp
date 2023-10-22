@@ -1,4 +1,4 @@
-ï»¿#include "ScenePlay.h"
+#include "ScenePlay.h"
 //#include "TimeMgr.h"
 //#include "InputMgr.h"
 //
@@ -98,6 +98,11 @@
 
 #include "PostProcess.h"
 
+#include "InstancingContainer.h"
+#include "NavigationMgr.h"
+#include "PathMgr.h"
+
+#include "ModelObj.h"
 
 
 ScenePlay::ScenePlay()
@@ -109,6 +114,7 @@ ScenePlay::ScenePlay()
 	, mDieUIPanal(nullptr)
 	, mPlayer(nullptr)
 {
+	SetName(L"ScenePlay");
 }
 
 ScenePlay::~ScenePlay()
@@ -127,7 +133,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ë¡œë“œ í…ŒìŠ¤íŠ¸ ë¡œë“œì‹œì— ë°˜ë³µí•´ì„œ ëª¬ìŠ¤í„° ì •ì˜ ë°©ì§€
+	//TestScene ·Îµå Å×½ºÆ® ·Îµå½Ã¿¡ ¹Ýº¹ÇØ¼­ ¸ó½ºÅÍ Á¤ÀÇ ¹æÁö
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		{
@@ -151,18 +157,21 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
 	//Convex and Triangle Mesh TEST
 	
-		////TriangleMesh Test
-		//{
-		//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		//	obj->SetPos(Vector3(0.f, -10.f, 300.f));
-		//	obj->SetScale(Vector3(0.04f, 0.04f, 0.04f));
-		//	obj->SetName(L"CityWorldHomeGroundCollider");
+	////TriangleMesh Test
+	//{
+	//	ModelObj* obj = object::Instantiate<ModelObj>(eLayerType::Platforms, this);
+	//	obj->SetPos(Vector3(0.f, 5.f, 0.f));
+	//	obj->SetScale(Vector3(0.01f, 0.01f, 0.01f));
+	//	obj->SetName(L"CityWorldHomeGroundCollider");
 
-		//	// SetModel
-		//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_CityWorldHomeGround000");
-		//	obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetModel(model, model->GetMaterial(0));
-		//
-		//}
+	//	// SetModel
+	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_RoadCollider");
+	//	if (model)
+	//	{
+	//		obj->SetModel(model->GetName());
+	//		obj->SetPhysical(eGeometryType::TriangleMesh, Vector3(1.f, 1.f, 1.f));
+	//	}
+	//}
 
 	{
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
@@ -171,18 +180,18 @@ void ScenePlay::Initialize()
 		
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-	}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
-	}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(35.f, 10.f, 30.f));
+	//}	
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	//}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
+	//}
 
 
 	{
@@ -216,6 +225,7 @@ void ScenePlay::Initialize()
 		rigid->RemoveGravity();
 
 		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+
 	}
 
 
@@ -278,13 +288,38 @@ void ScenePlay::Initialize()
 		//object->SetPos(Vector3(40.f, -10.f, 0.f));
 
 	}
+	InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
+	for (size_t i = 0; i < 20; i++)
 	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(0.f, 0.5f, 0.f));
+		for (size_t j = 0; j < 10; j++)
+		{
+			for (size_t k = 1; k < 10; k++)
+			{
+				if (j > 4 && k > 1)
+					continue;
+
+				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+				block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
+				blockContainer->PushObject(block);
+			}
+		}
 	}
+	blockContainer->ResizeObjectInstancingData();
+
 	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(1.f, 0.5f, 0.f));
+		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
+
+		//ÇöÀç .obj ÆÄÀÏ¸¸ ·Îµù °¡´É ºí·£´õ¿¡¼­ .obj ·Î ³»º¸³»±â ÇØ¼­ »ç¿ëÇÏ¸é µË´Ï´Ù
+		if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
+			int debug = 0;
+
+		if (!naviMesh->Build())
+			int debug = 0;
+
+		//¿ÀºêÁ§Æ®¿¡ std::<Vector3>mPath Ãß°¡ path¿¡ ÀÌµ¿°æ·Î°¡ Ãß°¡µÇ´Ï vector³»ÀÇ À§Ä¡¸¦ »ç¿ëÇØ¼­ ÀÌµ¿ÇÏ¸é µË´Ï´Ù
+		//À§Ä¡°¡ ³»ºñ¸Þ½¬ ¹ÛÀÌ¸é °è»êÀÌ ¾ÈµË´Ï´Ù
+		if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
+			int debug = 0;
 	}
 
 
@@ -314,7 +349,6 @@ void ScenePlay::update()
 		mCoinPanal->GetScript<CoinUIScript>()->Reset();
 	}
 
-
 	Scene::update();
 }
 
@@ -322,6 +356,7 @@ void ScenePlay::fixedUpdate()
 {
 
 	Scene::fixedUpdate();
+
 }
 
 void ScenePlay::render()

@@ -134,6 +134,9 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)Particle3DPS.hlsl">
       <Filter>Particle</Filter>
     </FxCompile>
+    <FxCompile Include="$(MSBuildThisFileDirectory)DeferredInstancedVS.hlsl">
+      <Filter>Deferred</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Blur.hlsli">
