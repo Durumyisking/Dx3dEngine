@@ -231,7 +231,7 @@ void ScenePlay::Initialize()
 
 	{
 		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
-		//block->SetPos(Vector3(40.f, -0.5f, 0.f));
+		//block->SetPos(Vector3(0.f, 0.f, 0.f));
 
 		//CityGround* ground = object::Instantiate<CityGround>(eLayerType::Objects, this, L"CityGround");
 		//ground->SetPos(Vector3(100.f, -10.f, 0.f));
@@ -267,16 +267,16 @@ void ScenePlay::Initialize()
 		//checkPointFlag->SetPos(Vector3(0.f, 1.f, 0.f));
 
 		//HomeBuildingFour* homeBuildingFour = object::Instantiate<HomeBuildingFour>(eLayerType::Objects, this, L"homeBuildingFour");
-		//homeBuildingFour->SetPos(Vector3(0.f, 1.f, 0.f));
+		//homeBuildingFour->SetPos(Vector3(20.f, 1.f, 0.f));
 
 		//HomeBuildingFive* homeBuildingFive = object::Instantiate<HomeBuildingFive>(eLayerType::Objects, this, L"homeBuildingFive");
-		//homeBuildingFive->SetPos(Vector3(0.f, 1.f, 0.f));
+		//homeBuildingFive->SetPos(Vector3(40.f, 1.f, 0.f));
 
 		//HomeBuildingSeven* homeBuildingSeven = object::Instantiate<HomeBuildingSeven>(eLayerType::Objects, this, L"homeBuildingSeven");
-		//homeBuildingSeven->SetPos(Vector3(0.f, 1.f, 0.f));
+		//homeBuildingSeven->SetPos(Vector3(60.f, 1.f, 0.f));
 
 		//HomeBuildingEight* homeBuildingEight = object::Instantiate<HomeBuildingEight>(eLayerType::Objects, this, L"homeBuildingEight");
-		//homeBuildingEight->SetPos(Vector3(0.f, 1.f, 0.f));
+		//homeBuildingEight->SetPos(Vector3(80.f, 1.f, 0.f));
 
 		//std::vector<std::wstring> array = { L"GlassBuildingWallMaterial" ,L"RoofConcrete00Material" ,L"RoofConcrete01Material" ,L"WallGlassPaintedSteelMaterial" };
 		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building", L"CityWorldHomeBuilding002",array);
@@ -321,6 +321,8 @@ void ScenePlay::Initialize()
 	//	if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
 	//		int debug = 0;
 	//}
+
+
 
 
 	CreatePlayerUI();

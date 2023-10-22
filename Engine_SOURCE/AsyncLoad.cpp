@@ -237,33 +237,33 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"WindowGlassEmn00", L"DeferredShader", L"HomeBuilding000_19Material", TextureState::AlEmMsNrRg);
 		createMaterial(L"WindowGlassEmn01", L"DeferredShader", L"HomeBuilding000_20Material", TextureState::Em);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding000");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding000");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding000_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding000_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding000_2Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding000_3Material");
-			model->SetVariableMaterialsByKey(4, L"HomeBuilding000_4Material");
-			model->SetVariableMaterialsByKey(5, L"HomeBuilding000_5Material");
-			model->SetVariableMaterialsByKey(6, L"HomeBuilding000_6Material");
-			model->SetVariableMaterialsByKey(7, L"HomeBuilding000_7Material");
-			model->SetVariableMaterialsByKey(8, L"HomeBuilding000_8Material");
-			model->SetVariableMaterialsByKey(9, L"HomeBuilding000_9Material");
-			model->SetVariableMaterialsByKey(10, L"HomeBuilding000_10Material");
-			model->SetVariableMaterialsByKey(11, L"HomeBuilding000_11Material");
-			model->SetVariableMaterialsByKey(12, L"HomeBuilding000_12Material");
-			model->SetVariableMaterialsByKey(13, L"HomeBuilding000_13Material");
-			model->SetVariableMaterialsByKey(14, L"HomeBuilding000_14Material");
-			model->SetVariableMaterialsByKey(15, L"HomeBuilding000_15Material");
-			model->SetVariableMaterialsByKey(16, L"HomeBuilding000_16Material");
-			model->SetVariableMaterialsByKey(17, L"HomeBuilding000_17Material");
-			model->SetVariableMaterialsByKey(18, L"HomeBuilding000_13Material");
-			model->SetVariableMaterialsByKey(19, L"HomeBuilding000_18Material");
-			model->SetVariableMaterialsByKey(20, L"HomeBuilding000_19Material");
-			model->SetVariableMaterialsByKey(21, L"HomeBuilding000_20Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding000_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding000_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding000_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding000_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding000_4Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding000_5Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding000_6Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding000_7Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding000_8Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding000_9Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding000_10Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding000_11Material");
+		//	model->SetVariableMaterialsByKey(12, L"HomeBuilding000_12Material");
+		//	model->SetVariableMaterialsByKey(13, L"HomeBuilding000_13Material");
+		//	model->SetVariableMaterialsByKey(14, L"HomeBuilding000_14Material");
+		//	model->SetVariableMaterialsByKey(15, L"HomeBuilding000_15Material");
+		//	model->SetVariableMaterialsByKey(16, L"HomeBuilding000_16Material");
+		//	model->SetVariableMaterialsByKey(17, L"HomeBuilding000_17Material");
+		//	model->SetVariableMaterialsByKey(18, L"HomeBuilding000_13Material");
+		//	model->SetVariableMaterialsByKey(19, L"HomeBuilding000_18Material");
+		//	model->SetVariableMaterialsByKey(20, L"HomeBuilding000_19Material");
+		//	model->SetVariableMaterialsByKey(21, L"HomeBuilding000_20Material");
+		//}
 	}
 #pragma endregion
 
@@ -274,15 +274,15 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding001_2Material", TextureState::AlNrRg);
 		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding001_3Material", TextureState::AlNr);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding001");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding001");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding001_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding001_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding001_2Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding001_3Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding001_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding001_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding001_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding001_3Material");
+		//}
 	}
 #pragma endregion
 
@@ -293,15 +293,15 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding002_2Material", TextureState::AlNrRg);
 		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding002_3Material", TextureState::AlNr);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding002");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding002");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding002_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding002_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding002_2Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding002_3Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding002_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding002_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding002_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding002_3Material");
+		//}
 	}
 #pragma endregion
 
@@ -310,13 +310,13 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"GroundLawn00", L"DeferredShader", L"HomeBuilding003_0Material", TextureState::AlNrRg);
 		createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding003_1Material", TextureState::AlMtNrRg);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding003");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding003");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding003_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding003_1Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding003_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding003_1Material");
+		//}
 	}
 
 #pragma endregion
@@ -339,26 +339,26 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"WallConcreteTopflloor02", L"DeferredShader", L"HomeBuilding004_12Material", TextureState::AlNrRg);
 		createMaterial(L"WallConcreteTopVer00", L"DeferredShader", L"HomeBuilding004_13Material", TextureState::AlNr);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding004");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding004");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding004_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding004_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding004_2Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding004_10Material");
-			model->SetVariableMaterialsByKey(4, L"HomeBuilding004_3Material");
-			model->SetVariableMaterialsByKey(5, L"HomeBuilding004_4Material");
-			model->SetVariableMaterialsByKey(6, L"HomeBuilding004_5Material");
-			model->SetVariableMaterialsByKey(7, L"HomeBuilding004_6Material");
-			model->SetVariableMaterialsByKey(8, L"HomeBuilding004_7Material");
-			model->SetVariableMaterialsByKey(9, L"HomeBuilding004_8Material");
-			model->SetVariableMaterialsByKey(10, L"HomeBuilding004_9Material");
-			model->SetVariableMaterialsByKey(11, L"HomeBuilding004_10Material");
-			model->SetVariableMaterialsByKey(12, L"HomeBuilding004_11Material");
-			model->SetVariableMaterialsByKey(13, L"HomeBuilding004_13Material");
-			model->SetVariableMaterialsByKey(14, L"HomeBuilding004_12Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding004_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding004_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding004_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding004_10Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding004_3Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding004_4Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding004_5Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding004_6Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding004_7Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding004_8Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding004_9Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding004_10Material");
+		//	model->SetVariableMaterialsByKey(12, L"HomeBuilding004_11Material");
+		//	model->SetVariableMaterialsByKey(13, L"HomeBuilding004_13Material");
+		//	model->SetVariableMaterialsByKey(14, L"HomeBuilding004_12Material");
+		//}
 	}
 
 #pragma endregion
@@ -380,26 +380,26 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"WallConcreteTopflloor02", L"DeferredShader", L"HomeBuilding005_12Material", TextureState::AlNrRg);
 		createMaterial(L"WallConcreteTopVer00", L"DeferredShader", L"HomeBuilding005_13Material", TextureState::AlNr);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding005");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding005");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding005_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding005_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding005_2Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding005_10Material");
-			model->SetVariableMaterialsByKey(4, L"HomeBuilding005_3Material");
-			model->SetVariableMaterialsByKey(5, L"HomeBuilding005_4Material");
-			model->SetVariableMaterialsByKey(6, L"HomeBuilding005_5Material");
-			model->SetVariableMaterialsByKey(7, L"HomeBuilding005_6Material");
-			model->SetVariableMaterialsByKey(8, L"HomeBuilding005_7Material");
-			model->SetVariableMaterialsByKey(9, L"HomeBuilding005_8Material");
-			model->SetVariableMaterialsByKey(10, L"HomeBuilding005_9Material");
-			model->SetVariableMaterialsByKey(11, L"HomeBuilding005_10Material");
-			model->SetVariableMaterialsByKey(12, L"HomeBuilding005_11Material");
-			model->SetVariableMaterialsByKey(13, L"HomeBuilding005_13Material");
-			model->SetVariableMaterialsByKey(14, L"HomeBuilding005_12Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding005_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding005_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding005_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding005_10Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding005_3Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding005_4Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding005_5Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding005_6Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding005_7Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding005_8Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding005_9Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding005_10Material");
+		//	model->SetVariableMaterialsByKey(12, L"HomeBuilding005_11Material");
+		//	model->SetVariableMaterialsByKey(13, L"HomeBuilding005_13Material");
+		//	model->SetVariableMaterialsByKey(14, L"HomeBuilding005_12Material");
+		//}
 	}
 
 #pragma endregion
@@ -413,18 +413,18 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding007_4Material", TextureState::AlNr);
 
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding007");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding007");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding007_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding007_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding007_0Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding007_1Material");
-			model->SetVariableMaterialsByKey(4, L"HomeBuilding007_2Material");
-			model->SetVariableMaterialsByKey(5, L"HomeBuilding007_3Material");
-			model->SetVariableMaterialsByKey(6, L"HomeBuilding007_4Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding007_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding007_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding007_0Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding007_1Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding007_2Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding007_3Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding007_4Material");
+		//}
 	}
 
 #pragma endregion
@@ -439,20 +439,20 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding008_5Material", TextureState::AlNrRg);
 		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding008_6Material", TextureState::AlNr);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding008");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding008");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding008_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding008_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding008_2Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding008_3Material");
-			model->SetVariableMaterialsByKey(4, L"HomeBuilding008_2Material");
-			model->SetVariableMaterialsByKey(5, L"HomeBuilding008_3Material");
-			model->SetVariableMaterialsByKey(6, L"HomeBuilding008_4Material");
-			model->SetVariableMaterialsByKey(7, L"HomeBuilding008_5Material");
-			model->SetVariableMaterialsByKey(8, L"HomeBuilding008_6Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding008_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding008_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding008_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding008_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding008_2Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding008_3Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding008_4Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding008_5Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding008_6Material");
+		//}
 	}
 
 
@@ -468,20 +468,20 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding009_5Material", TextureState::AlNrRg);
 		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding009_6Material", TextureState::AlNr);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding009");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding009");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding009_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding009_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding009_2Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding009_1Material");
-			model->SetVariableMaterialsByKey(4, L"HomeBuilding009_2Material");
-			model->SetVariableMaterialsByKey(5, L"HomeBuilding009_3Material");
-			model->SetVariableMaterialsByKey(6, L"HomeBuilding009_4Material");
-			model->SetVariableMaterialsByKey(7, L"HomeBuilding009_5Material");
-			model->SetVariableMaterialsByKey(8, L"HomeBuilding009_6Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding009_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding009_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding009_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding009_1Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding009_2Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding009_3Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding009_4Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding009_5Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding009_6Material");
+		//}
 	}
 
 #pragma endregion
@@ -500,23 +500,23 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0010_9Material", TextureState::AlNrRg);
 		createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0010_10Material", TextureState::AlNr);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding010");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding010");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding0010_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding0010_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding0010_3Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding0010_3Material");
-			model->SetVariableMaterialsByKey(4, L"HomeBuilding0010_4Material");
-			model->SetVariableMaterialsByKey(5, L"HomeBuilding0010_5Material");
-			model->SetVariableMaterialsByKey(6, L"HomeBuilding0010_6Material");
-			model->SetVariableMaterialsByKey(7, L"HomeBuilding0010_7Material");
-			model->SetVariableMaterialsByKey(8, L"HomeBuilding0010_8Material");
-			model->SetVariableMaterialsByKey(9, L"HomeBuilding0010_9Material");
-			model->SetVariableMaterialsByKey(10, L"HomeBuilding0010_9Material");
-			model->SetVariableMaterialsByKey(11, L"HomeBuilding0010_10Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding0010_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding0010_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding0010_3Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding0010_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding0010_4Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding0010_5Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding0010_6Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding0010_7Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding0010_8Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding0010_9Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding0010_9Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding0010_10Material");
+		//}
 	}
 
 #pragma endregion
@@ -535,23 +535,23 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0011_9Material", TextureState::AlNrRg);
 		createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0011_10Material", TextureState::AlNr);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding011");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding011");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding0011_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding0011_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding0010_3Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding0011_3Material");
-			model->SetVariableMaterialsByKey(4, L"HomeBuilding0011_4Material");
-			model->SetVariableMaterialsByKey(5, L"HomeBuilding0011_5Material");
-			model->SetVariableMaterialsByKey(6, L"HomeBuilding0011_6Material");
-			model->SetVariableMaterialsByKey(7, L"HomeBuilding0011_7Material");
-			model->SetVariableMaterialsByKey(8, L"HomeBuilding0011_8Material");
-			model->SetVariableMaterialsByKey(9, L"HomeBuilding0011_9Material");
-			model->SetVariableMaterialsByKey(10, L"HomeBuilding0011_9Material");
-			model->SetVariableMaterialsByKey(11, L"HomeBuilding0011_10Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding0011_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding0011_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding0010_3Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding0011_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding0011_4Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding0011_5Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding0011_6Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding0011_7Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding0011_8Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding0011_9Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding0011_9Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding0011_10Material");
+		//}
 	}
 
 #pragma endregion
@@ -570,23 +570,23 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0012_9Material", TextureState::AlNrRg);
 		createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0012_10Material", TextureState::AlNr);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding012");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding012");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding0012_0Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding0012_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding0012_3Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding0012_3Material");
-			model->SetVariableMaterialsByKey(4, L"HomeBuilding0012_4Material");
-			model->SetVariableMaterialsByKey(5, L"HomeBuilding0012_5Material");
-			model->SetVariableMaterialsByKey(6, L"HomeBuilding0012_6Material");
-			model->SetVariableMaterialsByKey(7, L"HomeBuilding0012_7Material");
-			model->SetVariableMaterialsByKey(8, L"HomeBuilding0012_8Material");
-			model->SetVariableMaterialsByKey(9, L"HomeBuilding0012_9Material");
-			model->SetVariableMaterialsByKey(10, L"HomeBuilding0012_9Material");
-			model->SetVariableMaterialsByKey(11, L"HomeBuilding0012_10Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding0012_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding0012_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding0012_3Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding0012_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding0012_4Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding0012_5Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding0012_6Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding0012_7Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding0012_8Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding0012_9Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding0012_9Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding0012_10Material");
+		//}
 	}
 
 #pragma endregion
@@ -603,41 +603,64 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0013_7Material", TextureState::AlNrRg);
 		createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0013_8Material", TextureState::AlNr);
 
-		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding013");
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding013");
 
-		if (model)
-		{
-			model->SetVariableMaterialsByKey(0, L"HomeBuilding0013_1Material");
-			model->SetVariableMaterialsByKey(1, L"HomeBuilding0013_1Material");
-			model->SetVariableMaterialsByKey(2, L"HomeBuilding0013_2Material");
-			model->SetVariableMaterialsByKey(3, L"HomeBuilding0013_3Material");
-			model->SetVariableMaterialsByKey(4, L"HomeBuilding0013_4Material");
-			model->SetVariableMaterialsByKey(5, L"HomeBuilding0013_5Material");
-			model->SetVariableMaterialsByKey(6, L"HomeBuilding0013_6Material");
-			model->SetVariableMaterialsByKey(7, L"HomeBuilding0013_7Material");
-			model->SetVariableMaterialsByKey(8, L"HomeBuilding0013_7Material");
-			model->SetVariableMaterialsByKey(9, L"HomeBuilding0013_8Material");
-		}
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding0013_1Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding0013_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding0013_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding0013_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding0013_4Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding0013_5Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding0013_6Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding0013_7Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding0013_7Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding0013_8Material");
+		//}
 	}
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding0014 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0014_0Material", TextureState::Al);
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0014_1Material", TextureState::Em);
-	createMaterial(L"EntranceStreetLight00", L"DeferredShader", L"HomeBuilding0014_2Material", TextureState::AlNrRg);
-	//createMaterial(L"EntranceStreetLight01", L"DeferredShader", L"HomeBuilding0014_3Material", TextureState::AlNrRg); //없거나 찾아봐야함
-	//createMaterial(L"EntranceStreetLight02", L"DeferredShader", L"HomeBuilding0014_4Material", TextureState::AlNrRg); //없거나 찾아봐야함
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0014_3Material", TextureState::Em);
-	createMaterial(L"WallConcreteClaf00", L"DeferredShader", L"HomeBuilding0014_4Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteClaf01", L"DeferredShader", L"HomeBuilding0014_5Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteClaf02", L"DeferredShader", L"HomeBuilding0014_6Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteClaf03", L"DeferredShader", L"HomeBuilding0014_7Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteClaf04", L"DeferredShader", L"HomeBuilding0014_8Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteClaf05", L"DeferredShader", L"HomeBuilding0014_9Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteTopflloor07", L"DeferredShader", L"HomeBuilding0014_10Material", TextureState::AlNrRg);
-	createMaterial(L"WindowlGlassClaf01", L"DeferredShader", L"HomeBuilding0014_11Material", TextureState::AlMtMsNrRg);
-	createMaterial(L"WindowlGlassClaf02", L"DeferredShader", L"HomeBuilding0014_12Material", TextureState::AlEmNrRg);
+	//createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0014_0Material", TextureState::AlEm);
+	//createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0014_1Material", TextureState::Em);
+	//createMaterial(L"EntranceStreetLight00", L"DeferredShader", L"HomeBuilding0014_2Material", TextureState::AlNrRg);
+	////createMaterial(L"EntranceStreetLight01", L"DeferredShader", L"HomeBuilding0014_3Material", TextureState::AlNrRg); //없거나 찾아봐야함
+	////createMaterial(L"EntranceStreetLight02", L"DeferredShader", L"HomeBuilding0014_4Material", TextureState::AlNrRg); //없거나 찾아봐야함
+	//createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0014_3Material", TextureState::Em);
+	//createMaterial(L"WallConcreteClaf00", L"DeferredShader", L"HomeBuilding0014_4Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteClaf01", L"DeferredShader", L"HomeBuilding0014_5Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteClaf02", L"DeferredShader", L"HomeBuilding0014_6Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteClaf03", L"DeferredShader", L"HomeBuilding0014_7Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteClaf04", L"DeferredShader", L"HomeBuilding0014_8Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteClaf05", L"DeferredShader", L"HomeBuilding0014_9Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteTopflloor07", L"DeferredShader", L"HomeBuilding0014_10Material", TextureState::AlNrRg);
+	//createMaterial(L"WindowlGlassClaf01", L"DeferredShader", L"HomeBuilding0014_11Material", TextureState::AlMtMsNrRg);
+	//createMaterial(L"WindowlGlassClaf02", L"DeferredShader", L"HomeBuilding0014_12Material", TextureState::AlEmNrRg);
+
+
+	//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding014");
+
+	//if (model)
+	//{
+	//	model->SetVariableMaterialsByKey(0, L"HomeBuilding0014_0Material");
+	//	model->SetVariableMaterialsByKey(1, L"HomeBuilding0014_1Material");
+	//	model->SetVariableMaterialsByKey(2, L"HomeBuilding0014_2Material");
+	//	model->SetVariableMaterialsByKey(3, L"HomeBuilding0014_2Material");
+	//	model->SetVariableMaterialsByKey(4, L"HomeBuilding0014_2Material");
+	//	model->SetVariableMaterialsByKey(5, L"HomeBuilding0014_5Material");
+	//	model->SetVariableMaterialsByKey(6, L"HomeBuilding0014_4Material");
+	//	model->SetVariableMaterialsByKey(7, L"HomeBuilding0014_5Material");
+	//	model->SetVariableMaterialsByKey(8, L"HomeBuilding0014_6Material");
+	//	model->SetVariableMaterialsByKey(9, L"HomeBuilding0014_7Material");
+	//	model->SetVariableMaterialsByKey(10, L"HomeBuilding0014_8Material");
+	//	model->SetVariableMaterialsByKey(11, L"HomeBuilding0014_9Material");
+	//	model->SetVariableMaterialsByKey(12, L"HomeBuilding0014_10Material");
+	//	model->SetVariableMaterialsByKey(13, L"HomeBuilding0014_11Material");
+	//	model->SetVariableMaterialsByKey(14, L"HomeBuilding0014_12Material");
+	//	model->SetVariableMaterialsByKey(15, L"HomeBuilding0014_12Material");
+	//}
 
 #pragma endregion
 

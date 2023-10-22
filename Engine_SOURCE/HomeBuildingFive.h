@@ -6,8 +6,11 @@ class HomeBuildingFive : public GameObj
 {
 public:
 	HomeBuildingFive();
+	HomeBuildingFive(const HomeBuildingFive& Obj);
 	virtual ~HomeBuildingFive();
 
+
+	virtual HomeBuildingFive* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;

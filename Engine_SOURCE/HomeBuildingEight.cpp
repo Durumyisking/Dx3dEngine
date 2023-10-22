@@ -7,13 +7,26 @@
 
 
 HomeBuildingEight::HomeBuildingEight()
+	: GameObj()
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "HomeBuildingEight";
+}
 
+HomeBuildingEight::HomeBuildingEight(const HomeBuildingEight& Obj)
+	:GameObj(Obj)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }
 
 HomeBuildingEight::~HomeBuildingEight()
 {
 
+}
+
+HomeBuildingEight* HomeBuildingEight::Clone() const
+{
+	return new HomeBuildingEight(*this);
 }
 
 void HomeBuildingEight::Initialize()
@@ -30,16 +43,17 @@ void HomeBuildingEight::Initialize()
 	mr->SetMaterialByKey(L"HomeBuilding008_1Material", 1);
 	mr->SetMaterialByKey(L"HomeBuilding008_2Material", 2);  //수정 필요 GlassBuilding1F01
 	mr->SetMaterialByKey(L"HomeBuilding008_3Material", 3);
-	mr->SetMaterialByKey(L"HomeBuilding008_3Material", 4);
-	mr->SetMaterialByKey(L"HomeBuilding008_4Material", 5);
-	mr->SetMaterialByKey(L"HomeBuilding008_5Material", 6);
-	mr->SetMaterialByKey(L"HomeBuilding008_6Material", 7);
-	mr->SetMaterialByKey(L"HomeBuilding008_7Material", 8);
+	mr->SetMaterialByKey(L"HomeBuilding008_2Material", 4);
+	mr->SetMaterialByKey(L"HomeBuilding008_3Material", 5);
+	mr->SetMaterialByKey(L"HomeBuilding008_4Material", 6);
+	mr->SetMaterialByKey(L"HomeBuilding008_5Material", 7);
+	mr->SetMaterialByKey(L"HomeBuilding008_6Material", 8);
+
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 10.f, 50.f, 10.f });
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 10.f, 50.f, 10.f });
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();
@@ -73,9 +87,4 @@ void HomeBuildingEight::OnTriggerPersist(GameObj* gameObject)
 
 void HomeBuildingEight::OnTriggerExit(GameObj* gameObject)
 {
-}
-
-void HomeBuildingEight::CreateBuilding(const std::wstring& modelKey, int count, const std::wstring& ...)
-{
-
 }

@@ -6,8 +6,10 @@ class HomeBuildingEight : public GameObj
 {
 public:
 	HomeBuildingEight();
+	HomeBuildingEight(const HomeBuildingEight& Obj);
 	virtual ~HomeBuildingEight();
 
+	virtual HomeBuildingEight* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
@@ -17,8 +19,6 @@ public:
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerPersist(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
-
-	void CreateBuilding(const std::wstring& modelKey, int count, const std::wstring& ...);
 
 private:
 
