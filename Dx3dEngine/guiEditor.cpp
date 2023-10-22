@@ -41,7 +41,7 @@ extern Application application;
 namespace gui
 {
 	Editor::Editor()
-		: mEnable(true)
+		: mEnable(false)
 	{
 	}
 	Editor::~Editor()
@@ -50,7 +50,7 @@ namespace gui
 
 	void Editor::Initialize()
 	{
-		mEnable = false;
+		//mEnable = false;
 
 		if (mEnable == false)
 			return;

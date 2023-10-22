@@ -220,7 +220,7 @@ void ScenePlay::Initialize()
 
 
 	{
-		///Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
 		//block->SetPos(Vector3(40.f, -0.5f, 0.f));
 
 		//CityGround* ground = object::Instantiate<CityGround>(eLayerType::Objects, this, L"CityGround");

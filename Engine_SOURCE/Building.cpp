@@ -6,7 +6,15 @@
 #include "PhysXCollider.h"
 
 Building::Building()
+	: GameObj()
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "Building";
+}
+Building::Building(const Building& Obj)
+	:GameObj(Obj)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
 }
 Building::~Building()
@@ -14,9 +22,14 @@ Building::~Building()
 
 }
 
+Building* Building::Clone() const
+{
+	return new Building(*this);
+}
+
 void Building::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	//assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding002");
 	assert(model);
@@ -26,7 +39,7 @@ void Building::Initialize()
 
 	mr->SetMaterialByKey(L"HomeBuilding002_0Material", 0);
 	mr->SetMaterialByKey(L"HomeBuilding002_1Material", 1);
-	mr->SetMaterialByKey(L"HomeBuilding002_2Material", 2);
+	mr->SetMaterialByKey(L"HomeBuilding002_0Material", 2);
 	mr->SetMaterialByKey(L"HomeBuilding002_3Material", 3);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);

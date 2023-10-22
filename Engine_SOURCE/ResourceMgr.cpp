@@ -105,6 +105,7 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Coin", L"Coin");
 
 
+
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/HomeStageGroundCollider", L"HomeStageGroundCollider");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/NaviCollider", L"NaviCollider");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/TaxiCar/Car", L"Car");
@@ -119,12 +120,14 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/MotorcycleParkingLot", L"MotorcycleParkingLot");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/SouvenirCity1", L"SouvenirCity1");
 
+
+#pragma region Building
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding001", L"CityWorldHomeBuilding000");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding001", L"CityWorldHomeBuilding001");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding001", L"CityWorldHomeBuilding002");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding001", L"CityWorldHomeBuilding002");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding000", L"CityWorldHomeBuilding000");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding001", L"CityWorldHomeBuilding001");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding002", L"CityWorldHomeBuilding003");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding004", L"CityWorldHomeBuilding004");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding005", L"CityWorldHomeBuilding005");
