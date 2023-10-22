@@ -37,6 +37,8 @@ public:
 	void SetMinVertex(const math::Vector3 & vertex);
 	void SetMaxVertex(const math::Vector3 & vertex);
 
+	void SetWorldMatrix(const math::Matrix& worldMatrix) { mOwnerWorldMatrix = worldMatrix; }
+
 private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> mVertexBuffer;
 	D3D11_BUFFER_DESC mVBDesc;
@@ -48,9 +50,12 @@ private:
 	UINT			mVertexCount;
 	UINT			mIndexCount;
 	bool			mbRender;
+	bool			mbFrustumCulled;
 
 	// aabb
 	BoundingBox mBoundingBox; // 오류가 생기면 CreateFromPoints이걸로 만들어보자
 	math::Vector3 mMinVertex;
 	math::Vector3 mMaxVertex;
+
+	math::Matrix mOwnerWorldMatrix;
 };

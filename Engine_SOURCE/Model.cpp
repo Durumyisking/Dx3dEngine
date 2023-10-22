@@ -178,7 +178,8 @@ void Model::Bind_Render(bool bindMaterial)
 			if (!(mVariableMaterials.empty() && mMaterials.empty()))
 				mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
-
+		Matrix m = mOwnerWorldMatrix;
+		mMeshes[i]->SetWorldMatrix(mOwnerWorldMatrix);
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
@@ -329,7 +330,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		pos.y = mesh->mVertices[i].y;
 		pos.z = mesh->mVertices[i].z;
 		vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
-
+		//pos *= 0.01f;
 		inMesh->SetMinVertex(pos);
 		inMesh->SetMaxVertex(pos);
 

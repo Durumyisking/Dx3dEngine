@@ -46,10 +46,12 @@ void MeshRenderer::PrevRender()
 
 	if (GetModel() != nullptr)
 	{
+		GetModel()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
 		GetModel()->Bind_Render(false);
 	}
 	else
 	{
+		GetMesh()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
 		GetMesh()->BindBuffer();
 		GetMesh()->Render();
 	}

@@ -13,7 +13,9 @@ Mesh::Mesh()
 	, mbRender(true)
 	, mBoundingBox{}
 	, mMinVertex{ INFINITY }
-	, mMaxVertex{ INFINITY }
+	, mMaxVertex{ -INFINITY }
+	, mbFrustumCulled(false)
+	, mOwnerWorldMatrix{}
 {
 }
 Mesh::~Mesh()
@@ -86,6 +88,29 @@ bool Mesh::CreateIndexBuffer(void* data, UINT count)
 
 void Mesh::BindBuffer(bool drawInstance)
 {
+	// ui는 컬링하면 안돼
+	if (GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh") != this)
+	{
+		BoundingFrustum frustum = renderer::mainCamera->GetFrustum();
+		// todo bounding box에 월드행렬을 곱해서 구현해보자
+		mBoundingBox.Center = Vector3::Transform(mBoundingBox.Center, mOwnerWorldMatrix);
+
+		// extense에는 scale만 계산해주면 될 것 같다.
+		Vector3 extractedScale = {};
+		mOwnerWorldMatrix.CreateScale(extractedScale);
+		mBoundingBox.Extents = mBoundingBox.Extents * extractedScale;
+		mbFrustumCulled = !frustum.Intersects(mBoundingBox);
+
+		//if (DirectX::ContainmentType::DISJOINT != frustum.Contains(mBoundingBox))
+		//{
+		//	mbFrustumCulled = false;
+		//}
+		//else
+		//{
+		//	mbFrustumCulled = true;
+		//}
+	}				
+
 	if (drawInstance)
 	{
 		UINT stride[2] = {sizeof(Vertex), sizeof(InstancingData)};
@@ -106,9 +131,10 @@ void Mesh::BindBuffer(bool drawInstance)
 
 void Mesh::Render()
 {
-	if (!IsRender())
+	if (!mbRender || mbFrustumCulled)
 		return;
-	
+
+
 	GetDevice()->DrawIndexed(mIndexCount, 0, 0);
 }
 

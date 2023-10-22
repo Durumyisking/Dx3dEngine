@@ -32,7 +32,7 @@ Camera::Camera()
 	, mType(eProjectionType::Perspective)
 	, mAspectRatio(1.f)
 	, mNear(1.f)
-	, mFar(1000.f)
+	, mFar(100.f)
 	, mScale(1.f)
 	, mView(Matrix::Identity)
 	, mProjection(Matrix::Identity)
@@ -90,6 +90,8 @@ void Camera::Render()
 	View = mView;
 	InverseView = View.Invert();
 	Projection = mProjection;
+
+	mFrustum.Transform(mFrustum, GetTransform()->GetWorldMatrix());
 
 	sortGameObjects();
 
