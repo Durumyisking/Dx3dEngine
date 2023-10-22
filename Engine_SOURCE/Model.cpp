@@ -28,6 +28,7 @@ Model::Model()
 	, mTargetBone(L"")
 	, mOffsetRotation(math::Vector3(0.0f, 0.0f, 0.0f))
 	, mbUseInstance(false)
+	, mVariableMaterials(22)
 {
 
 }
