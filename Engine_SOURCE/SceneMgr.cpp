@@ -23,6 +23,8 @@
 #include "SkySphere.h"
 
 #include "Building.h"
+#include "CreateObject.h"
+
 
 SceneMgr::SceneMgr()
 	: mScenes{}
@@ -222,6 +224,30 @@ void SceneMgr::CreateCDO()
 
 	Building* buildingCDO = new Building();
 	GameObj::AddObjectCDO("Building", buildingCDO);
+
+	//CreateObject* building000CDO = new CreateObject(L"CityWorldHomeBuilding000", L"HomeBuilding000_0Material", Vector3::One);
+	//GameObj::AddObjectCDO("CityWorldHomeBuilding000", building000CDO);
+
+	//CreateObject* building001CDO = new CreateObject(L"CityWorldHomeBuilding001", L"HomeBuilding001_0Material", Vector3::One);
+	//GameObj::AddObjectCDO("CityWorldHomeBuilding001", building001CDO);
+
+	//CreateObject* building002CDO = new CreateObject(L"CityWorldHomeBuilding002", L"HomeBuilding002_0Material", Vector3::One);
+	//GameObj::AddObjectCDO("CityWorldHomeBuilding002", building002CDO);
+
+	//CreateObject* building003CDO = new CreateObject(L"CityWorldHomeBuilding003", L"HomeBuilding003_0Material", Vector3::One);
+	//GameObj::AddObjectCDO("CityWorldHomeBuilding003", building003CDO);
+
+	//CreateObject* building004CDO = new CreateObject(L"CityWorldHomeBuilding004", L"HomeBuilding004_0Material", Vector3::One);
+	//GameObj::AddObjectCDO("CityWorldHomeBuilding004", building004CDO);
+
+	//CreateObject* building005CDO = new CreateObject(L"CityWorldHomeBuilding005", L"HomeBuilding005_0Material", Vector3::One);
+	//GameObj::AddObjectCDO("CityWorldHomeBuilding005", building005CDO);
+
+	//CreateObject* building007CDO = new CreateObject(L"CityWorldHomeBuilding007", L"HomeBuilding007_0Material", Vector3::One);
+	//GameObj::AddObjectCDO("CityWorldHomeBuilding007", building007CDO);
+
+	CreateObject* building008CDO = new CreateObject(L"CityWorldHomeBuilding008", L"HomeBuilding008_0Material", Vector3::One);
+	GameObj::AddObjectCDO("CityWorldHomeBuilding008", building008CDO);
 
 
 	//SkySphere* SkySphere = new SkySphere();

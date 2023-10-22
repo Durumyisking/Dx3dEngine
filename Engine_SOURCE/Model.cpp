@@ -62,7 +62,7 @@ HRESULT Model::Load(const std::wstring& path)
 		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
 	}
 
-	mVariableMaterials.resize(12);
+	mVariableMaterials.resize(22);
 	mAssimpImporter.FreeScene();
 
 	return S_OK;
@@ -737,5 +737,4 @@ void Model::SetVariableMaterialsByKey(UINT index, const std::wstring& key)
 	{
 		mVariableMaterials[index] = mater;
 	}
-
 }
