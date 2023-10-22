@@ -288,39 +288,39 @@ void ScenePlay::Initialize()
 		//object->SetPos(Vector3(40.f, -10.f, 0.f));
 
 	}
-	InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
-	for (size_t i = 0; i < 20; i++)
-	{
-		for (size_t j = 0; j < 10; j++)
-		{
-			for (size_t k = 1; k < 10; k++)
-			{
-				if (j > 4 && k > 1)
-					continue;
+	//InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
+	//for (size_t i = 0; i < 20; i++)
+	//{
+	//	for (size_t j = 0; j < 10; j++)
+	//	{
+	//		for (size_t k = 1; k < 10; k++)
+	//		{
+	//			if (j > 4 && k > 1)
+	//				continue;
 
-				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-				block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
-				blockContainer->PushObject(block);
-			}
-		}
-	}
-	blockContainer->ResizeObjectInstancingData();
+	//			BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+	//			block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
+	//			blockContainer->PushObject(block);
+	//		}
+	//	}
+	//}
+	//blockContainer->ResizeObjectInstancingData();
 
-	{
-		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
+	//{
+	//	SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
 
-		//현재 .obj 파일만 로딩 가능 블랜더에서 .obj 로 내보내기 해서 사용하면 됩니다
-		if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
-			int debug = 0;
+	//	//현재 .obj 파일만 로딩 가능 블랜더에서 .obj 로 내보내기 해서 사용하면 됩니다
+	//	if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
+	//		int debug = 0;
 
-		if (!naviMesh->Build())
-			int debug = 0;
+	//	if (!naviMesh->Build())
+	//		int debug = 0;
 
-		//오브젝트에 std::<Vector3>mPath 추가 path에 이동경로가 추가되니 vector내의 위치를 사용해서 이동하면 됩니다
-		//위치가 내비메쉬 밖이면 계산이 안됩니다
-		if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
-			int debug = 0;
-	}
+	//	//오브젝트에 std::<Vector3>mPath 추가 path에 이동경로가 추가되니 vector내의 위치를 사용해서 이동하면 됩니다
+	//	//위치가 내비메쉬 밖이면 계산이 안됩니다
+	//	if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
+	//		int debug = 0;
+	//}
 
 
 	CreatePlayerUI();

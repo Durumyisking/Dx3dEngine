@@ -29,8 +29,6 @@ Building* Building::Clone() const
 
 void Building::Initialize()
 {
-	//assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding002");
 	assert(model);
 
@@ -45,7 +43,7 @@ void Building::Initialize()
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, {10.f, 50.f, 10.f});
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, {10.f, 50.f, 10.f});
 	
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();
