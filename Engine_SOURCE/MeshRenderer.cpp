@@ -70,11 +70,13 @@ void MeshRenderer::Render()
 		{
 			GetModel()->SetFrameAnimationVector(&(mBoneAnimator->GetFrameAnimationData()));
 		}
+		GetModel()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
 		GetModel()->Bind_Render();
 	}
 	else
 	{
 		GetMaterial()->Bind();
+		GetMesh()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
 		GetMesh()->BindBuffer();
 		GetMesh()->Render();
 		GetMaterial()->Clear();

@@ -16,6 +16,7 @@ Mesh::Mesh()
 	, mMaxVertex{ -INFINITY }
 	, mbFrustumCulled(false)
 	, mOwnerWorldMatrix{}
+	, mInitialExtent{}
 {
 }
 Mesh::~Mesh()
@@ -45,7 +46,7 @@ bool Mesh::CreateVertexBuffer(void* data, UINT count)
 		
 	mBoundingBox.Center = (mMinVertex + mMaxVertex) * 0.5f;
 	mBoundingBox.Extents = (mMaxVertex - mMinVertex) * 0.5f;
-
+	mInitialExtent = mBoundingBox.Extents;
 	return true;
 }
 
@@ -96,9 +97,8 @@ void Mesh::BindBuffer(bool drawInstance)
 		mBoundingBox.Center = Vector3::Transform(mBoundingBox.Center, mOwnerWorldMatrix);
 
 		// extense에는 scale만 계산해주면 될 것 같다.
-		Vector3 extractedScale = {};
-		mOwnerWorldMatrix.CreateScale(extractedScale);
-		mBoundingBox.Extents = mBoundingBox.Extents * extractedScale;
+		Vector3 extractedScale = { mOwnerWorldMatrix._11, mOwnerWorldMatrix._22, mOwnerWorldMatrix._33 };
+		mBoundingBox.Extents = mInitialExtent * extractedScale; // 계속 곱하니까 점이 되어버림(offset 0.00~~씩 해주니까) 초기 extent를 유지해야함
 		mbFrustumCulled = !frustum.Intersects(mBoundingBox);
 
 		//if (DirectX::ContainmentType::DISJOINT != frustum.Contains(mBoundingBox))

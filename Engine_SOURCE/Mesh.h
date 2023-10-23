@@ -57,5 +57,7 @@ private:
 	math::Vector3 mMinVertex;
 	math::Vector3 mMaxVertex;
 
+	math::Vector3 mInitialExtent;
+
 	math::Matrix mOwnerWorldMatrix;
 };
