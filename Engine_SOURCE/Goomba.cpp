@@ -10,10 +10,15 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
+#include "MarioCap.h"
+#include "Player.h"
+
 Goomba::Goomba()
 	: Monster()
 	, mGoombaLayerIdx(0)
 	, mLowerLayerGoombas{}
+	, mModel(nullptr)
+	, mTopGoomba(this)
 {
 	SetName(L"Goomba");
 	mObjectTypeName = "Goomba";
@@ -21,6 +26,10 @@ Goomba::Goomba()
 
 Goomba::Goomba(const Goomba& Obj)
 	: Monster(Obj)
+	, mGoombaLayerIdx(0)
+	, mLowerLayerGoombas{}
+	, mModel(nullptr)
+	, mTopGoomba(this)
 {
 	OnCapture();
 	SetName(L"Goomba");
@@ -54,17 +63,17 @@ void Goomba::Initialize()
 	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
 	// SetModel
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
-	assert(model);
+	mModel = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
+	assert(mModel);
 
 	MeshRenderer* mr =  GetComponent<MeshRenderer>();
-	mr->SetModel(model);
-	model->MeshRenderSwtich(L"EyeClose__BodyMT-mesh", false);
-	model->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
-	model->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", false);
-	model->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", false);
-	model->MeshRenderSwtich(L"Mustache__HairMT-mesh", false);
-	model->MeshRenderSwtich(L"PressModel__BodyMT-mesh", false);
+	mr->SetModel(mModel);
+	mModel->MeshRenderSwtich(L"EyeClose__BodyMT-mesh", false);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", false);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", false);
+	mModel->MeshRenderSwtich(L"Mustache__HairMT-mesh", false);
+	mModel->MeshRenderSwtich(L"PressModel__BodyMT-mesh", false);
 
 	// body
 	mr->SetMaterialByKey(L"goombaBodyMaterial", 0);
@@ -87,6 +96,7 @@ void Goomba::Initialize()
 	mr->SetMaterialByKey(L"goombaEye0Material", 9);
 
 	// mustatch
+	mr->SetMaterialByKey(L"MarioMustacheMaterial", 10);
 
 	// press
 	mr->SetMaterialByKey(L"goombaBodyMaterial", 11);
@@ -160,6 +170,20 @@ void Goomba::Update()
 void Goomba::FixedUpdate()
 {
 	Monster::FixedUpdate();
+}
+
+void Goomba::PrevRender()
+{
+	modelSetting();
+
+	Monster::PrevRender();
+}
+
+void Goomba::Render()
+{
+	modelSetting();
+
+	Monster::Render();
 }
 
 void Goomba::CaptureEvent()
@@ -240,16 +264,31 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		{
 			Goomba* goomba = dynamic_cast<Goomba*>(gameObject);
 
+			// 굼바끼리 충돌시 밀어내는 로직
 			Vector3 pent = GetPhysXCollider()->ComputePenetration(gameObject);
-			if (pent.y == 0.f && GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+			if (pent.y == 0.f)
 			{
 				GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
 				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent);
 			}
 
-			// if 걸리면 윗굼바 (굼바 타워일때는 맨 밑 굼바만 계산하자)
+	
+			// 층을 쌓는다. ( 우선 캡처중일때만 고려하자 )
+			// 나 1층 - 대상 1층
+			// 조작권(캡처)는 아랫굼바에, cap은 윗 굼바에 주자
+			// 나 2층 - 대상 1층
+			// 조작권은 아랫굼바로 이동시키고 cap은 그대로
+			// 이후 반복
+
+			// 나 2층 - 대상 2층
+			// 대상의 맨 밑 굼바를 찾아서 조작권을 준다.
+
+			// dvide는 cap owner로 부터 이루어져야 한다.
+			
+			// 내가 1층 굼바면
 			if (mLowerLayerGoombas.empty())
 			{
+				// if 걸리면 내가 윗굼바
 				if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.9f)
 				{
 					// 아랫굼바 벡터 복사
@@ -267,10 +306,14 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 					GetScript<GoombaStateScript>()->SetSwitchState(false);
 					SetMonsterState(eMonsterState::Idle);
 
-					OffCapture();
+					goomba->SetTopGoomba(this->GetTopGoomba());
 
-					mLowerLayerGoombas[0]->OnCapture();
-					mLowerLayerGoombas[0]->CopyCaptureData(dynamic_cast<CaptureObj*>(this));
+					if (IsCapture())
+					{
+						OffCapture();
+						mLowerLayerGoombas[0]->OnCapture();
+						mLowerLayerGoombas[0]->CopyCaptureData(dynamic_cast<CaptureObj*>(this), false);
+					}
 				}
 			}
 
@@ -282,8 +325,25 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		}
 	}
 
-
-	Monster::OnTriggerEnter(gameObject);
+	if (eLayerType::Cap == gameObject->GetLayerType())
+	{
+		MarioCap* cap = dynamic_cast<MarioCap*>(gameObject);
+		// top goomba로 캡처 enter
+		if (mTopGoomba)
+		{
+			mTopGoomba->CaptureEnter(cap);
+			mTopGoomba->OffCapture();
+		}
+		else
+		{
+			CaptureEnter(cap);
+		}
+		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
+		if (mLowerLayerGoombas.size())
+			mLowerLayerGoombas[0]->OnCapture();
+		// capture권은 bottom 굼바에게 줘야함
+	}
+	//Monster::OnTriggerEnter(gameObject);
 }
 
 void Goomba::OnTriggerPersist(GameObj* gameObject)
@@ -358,4 +418,80 @@ void Goomba::captureEnterModelOperation()
 {
 	// todo : 굼바 캡처했을때 모델 처리하는 함수
 
+}
+
+void Goomba::setHalfCloseEyeModel()
+{
+	assert(mModel);
+
+	mModel->AllMeshRenderSwtichOff();
+	mModel->MeshRenderSwtich(L"Body__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeBrow__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", true);
+}
+
+void Goomba::setOpenEyeModel()
+{
+	assert(mModel);
+
+	mModel->AllMeshRenderSwtichOff();
+	mModel->MeshRenderSwtich(L"Body__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeBrow__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeOpen__BodyMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeOpen__EyeLMT-mesh", true);
+	mModel->MeshRenderSwtich(L"EyeOpen__EyeRMT-mesh", true);
+}
+
+void Goomba::setPressedModel()
+{
+	assert(mModel);
+
+	mModel->AllMeshRenderSwtichOff();
+	mModel->MeshRenderSwtich(L"PressModel__BodyMT-mesh", true);
+}
+
+void Goomba::setCapturedModel()
+{
+	if (GetCap())
+	{
+		mModel->AllMeshRenderSwtichOff();
+		mModel->MeshRenderSwtich(L"Body__BodyMT-mesh", true);
+		mModel->MeshRenderSwtich(L"EyeBrowCap__BodyMT-mesh", true);
+		mModel->MeshRenderSwtich(L"EyeOpen__BodyMT-mesh", true);
+		mModel->MeshRenderSwtich(L"EyeOpen__EyeLMT-mesh", true);
+		mModel->MeshRenderSwtich(L"EyeOpen__EyeRMT-mesh", true);
+		mModel->MeshRenderSwtich(L"Mustache__HairMT-mesh", true);
+	}
+
+}
+
+void Goomba::modelSetting()
+{
+	switch (mMonsterState)
+	{
+	case Monster::eMonsterState::Idle:
+	case Monster::eMonsterState::Move:
+	case Monster::eMonsterState::Jump:
+	case Monster::eMonsterState::Fall:
+	case Monster::eMonsterState::Land:
+	case Monster::eMonsterState::Turn:
+		setOpenEyeModel();
+		break;
+	case Monster::eMonsterState::Chase:
+	case Monster::eMonsterState::Attack:
+		setHalfCloseEyeModel();
+		break;
+	case Monster::eMonsterState::Die:
+		setPressedModel();
+		break;
+	case Monster::eMonsterState::SpecialSituation:
+	case Monster::eMonsterState::Hit:
+	case Monster::eMonsterState::Groggy:
+	default:
+		break;
+	}
+	
+	setCapturedModel();
 }

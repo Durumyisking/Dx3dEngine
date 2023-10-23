@@ -8434,7 +8434,7 @@ const char* ImGui::GetKeyName(ImGuiKey key)
     }
 #endif
     if (key == ImGuiKey_None)
-        return "None";
+        return "Default";
     if (key & ImGuiMod_Mask_)
         key = ConvertSingleModFlagToKey(&g, key);
     if (!IsNamedKey(key))
@@ -9302,7 +9302,7 @@ void ImGui::SetNextFrameWantCaptureMouse(bool want_capture_mouse)
 #ifndef IMGUI_DISABLE_DEBUG_TOOLS
 static const char* GetInputSourceName(ImGuiInputSource source)
 {
-    const char* input_source_names[] = { "None", "Mouse", "Keyboard", "Gamepad", "Clipboard" };
+    const char* input_source_names[] = { "Default", "Mouse", "Keyboard", "Gamepad", "Clipboard" };
     IM_ASSERT(IM_ARRAYSIZE(input_source_names) == ImGuiInputSource_COUNT && source >= 0 && source < ImGuiInputSource_COUNT);
     return input_source_names[source];
 }

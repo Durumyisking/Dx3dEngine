@@ -50,7 +50,6 @@ void GoombaStateScript::Initialize()
 	{
 		mRigidbody->SetMaxVelocity_XZ(GOOMBA_RUN_VELOCITY);
 		mAnimator->Play(L"Dash");
-		//setHalfCloseEyeModel();
 	}
 	);
 
@@ -119,7 +118,7 @@ void GoombaStateScript::Move()
 		}
 	}
 
-	if (KEY_DOWN(UP) || KEY_DOWN(DOWN) || KEY_DOWN(LEFT) || KEY_DOWN(RIGHT))
+	if (KEY_DOWN(W) || KEY_DOWN(S) || KEY_DOWN(A) || KEY_DOWN(D))
 	{
 		MoveForward(GOOMBA_SPPED);
 	}
@@ -230,38 +229,12 @@ void GoombaStateScript::Die()
 	}
 }
 
-void GoombaStateScript::setHalfCloseEyeModel()
-{
-	assert(mModel);
-
-	mModel->MeshRenderSwtich(L"EyeOpen__BodyMT-mesh", false);
-	mModel->MeshRenderSwtich(L"EyeOpen__EyeLMT-mesh", false);
-	mModel->MeshRenderSwtich(L"EyeOpen__EyeRMT-mesh", false);
-
-	mModel->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", true);
-	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", true);
-	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", true);
-}
-
-void GoombaStateScript::setOpenEyeModel()
-{
-	assert(mModel);
-
-	mModel->MeshRenderSwtich(L"EyeOpen__BodyMT-mesh", true);
-	mModel->MeshRenderSwtich(L"EyeOpen__EyeLMT-mesh", true);
-	mModel->MeshRenderSwtich(L"EyeOpen__EyeRMT-mesh", true);
-
-	mModel->MeshRenderSwtich(L"EyeHalfClose__BodyMT-mesh", false);
-	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeLMT-mesh", false);
-	mModel->MeshRenderSwtich(L"EyeHalfClose__EyeRMT-mesh", false);
-}
-
 void GoombaStateScript::rotateByKey()
 {
 	if (!mRigidbody->IsOnAir())
 	{
-		if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::UP) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::DOWN)
-			|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::LEFT) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::RIGHT))
+		if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::W) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::S)
+			|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::A) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::D))
 		{
 			mMonster->SetMonsterState(Monster::eMonsterState::Idle);
 			return;

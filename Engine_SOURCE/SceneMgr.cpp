@@ -105,6 +105,11 @@ void SceneMgr::Release()
 
 void SceneMgr::LoadScene(eSceneType type)
 {
+	if (mActiveScene->GetType() == type)
+	{
+		//로딩 씬으로 넘어가서 작업하기
+	}
+
 	if (mActiveScene)
 		mActiveScene->Exit();
 
@@ -120,6 +125,35 @@ void SceneMgr::LoadScene(eSceneType type)
 	if (mActiveScene)
 		mActiveScene->Enter();
 }
+
+void SceneMgr::ChangeScene(eSceneType type)
+{
+	if (mActiveScene->GetType() == type)
+	{
+		//로딩 씬으로 넘어가서 작업하기
+	}
+
+	if (mActiveScene)
+		mActiveScene->Exit();
+
+	std::vector<GameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
+
+	for (GameObj* obj : gameObjs)
+	{
+		obj->DeleteComponents();
+
+		delete obj;
+		obj = nullptr;
+	}
+
+	gameObjs.clear();
+
+	mActiveScene = mScenes[static_cast<UINT>(type)];
+
+	if (mActiveScene)
+		mActiveScene->Enter();
+}
+
 
 void SceneMgr::LateEvent()
 {
@@ -152,6 +186,7 @@ bool SceneMgr::SaveSceneFile(eSceneType type, const std::wstring& filePath)
 	return true;
 }
 
+//다른 쓰레드를 써서 백그라운드 로딩 하는법 찾기
 bool SceneMgr::LoadSceneFile(const std::wstring& filePath)
 {
 	FILE* File = nullptr;
@@ -169,9 +204,9 @@ bool SceneMgr::LoadSceneFile(const std::wstring& filePath)
 
 	fclose(File);
 
-	mScenes[static_cast<UINT>(SceneType)]->Initialize();
+	ChangeScene(SceneType);
 
-	LoadScene(SceneType);
+	//mScenes[static_cast<UINT>(SceneType)]->Initialize(); 
 
 	return true;
 }

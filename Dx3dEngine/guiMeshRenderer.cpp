@@ -78,7 +78,7 @@ namespace gui
 		ImGui::InputText("##MeshName", (char*)meshName.data()
 			, meshName.length(), ImGuiInputTextFlags_ReadOnly);
 		ImGui::SameLine();
-		if (ImGui::Button("##MeshBtn", ImVec2(15.0f, 15.0f)))
+		if (ImGui::Button("##MeshBtn", ImVec2(45.0f, 30.0f)))
 		{
 			ListWidget* listUI = GETSINGLE(WidgetMgr)->GetWidget<ListWidget>("ListWidget");
 			listUI->SetState(eState::Active);
@@ -106,7 +106,7 @@ namespace gui
 			, materialName.length() + 20, ImGuiInputTextFlags_ReadOnly);
 		
 		ImGui::SameLine();
-		if (ImGui::Button("##MaterialBtn", ImVec2(15.0f, 15.0f)))
+		if (ImGui::Button("##MaterialBtn", ImVec2(45.0f, 30.0f)))
 		{
 			ListWidget* listUI = GETSINGLE(WidgetMgr)->GetWidget<ListWidget>("ListWidget");
 			listUI->SetState(eState::Active);
@@ -130,7 +130,7 @@ namespace gui
 			, modelName.length() + 20, ImGuiInputTextFlags_ReadOnly);
 		
 		ImGui::SameLine();
-		if (ImGui::Button("##ModelBtn", ImVec2(15.0f, 15.0f)))
+		if (ImGui::Button("##ModelBtn", ImVec2(45.0f, 30.0f)))
 		{
 			ListWidget* listUI = GETSINGLE(WidgetMgr)->GetWidget<ListWidget>("ListWidget");
 			listUI->SetState(eState::Active);

@@ -43,6 +43,7 @@ namespace gui
 	Editor::Editor()
 		: mEnable(false)
 	{
+		mEnable = true;
 	}
 	Editor::~Editor()
 	{
@@ -50,8 +51,6 @@ namespace gui
 
 	void Editor::Initialize()
 	{
-		//mEnable = false;
-
 		if (mEnable == false)
 			return;
 

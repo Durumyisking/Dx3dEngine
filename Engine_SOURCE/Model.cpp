@@ -179,7 +179,8 @@ void Model::Bind_Render(bool bindMaterial)
 			if (!(mVariableMaterials.empty() && mMaterials.empty()))
 				mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
-
+		Matrix m = mOwnerWorldMatrix;
+		mMeshes[i]->SetWorldMatrix(mOwnerWorldMatrix);
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
@@ -317,6 +318,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
+	Mesh* inMesh = new Mesh();
 
 	vertexes.reserve(mesh->mNumVertices);
 
@@ -325,11 +327,13 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		Vertex vertex = {};
 		math::Vector3 pos = {};
 
-
 		pos.x = mesh->mVertices[i].x;
 		pos.y = mesh->mVertices[i].y;
 		pos.z = mesh->mVertices[i].z;
 		vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
+		//pos *= 0.01f;
+		inMesh->SetMinVertex(pos);
+		inMesh->SetMaxVertex(pos);
 
 
 		math::Vector3 normal = {};
@@ -479,7 +483,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	//	mMaterials.emplace_back(inMaterial);
 	//}
 
-	Mesh* inMesh = new Mesh();
+	//Mesh* inMesh = new Mesh();
 	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
 	if (mbUseInstance)
 	{
