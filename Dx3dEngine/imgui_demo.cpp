@@ -1947,7 +1947,7 @@ static void ShowDemoWindowWidgets()
                 ImGui::ColorEdit4("##RefColor", &ref_color_v.x, ImGuiColorEditFlags_NoInputs | misc_flags);
             }
         }
-        ImGui::Combo("Display Mode", &display_mode, "Auto/Current\0None\0RGB Only\0HSV Only\0Hex Only\0");
+        ImGui::Combo("Display Mode", &display_mode, "Auto/Current\0Default\0RGB Only\0HSV Only\0Hex Only\0");
         ImGui::SameLine(); HelpMarker(
             "ColorEdit defaults to displaying RGB inputs if you don't specify a display mode, "
             "but the user can change it with a right-click on those inputs.\n\nColorPicker defaults to displaying RGB+HSV+Hex "
@@ -2473,7 +2473,7 @@ static void ShowDemoWindowWidgets()
             ImGui::GetItemRectSize().x, ImGui::GetItemRectSize().y
         );
         ImGui::BulletText(
-            "w/ Hovering Delay: None = %d, Fast %d, Normal = %d", hovered_delay_none, hovered_delay_short, hovered_delay_normal);
+            "w/ Hovering Delay: Default = %d, Fast %d, Normal = %d", hovered_delay_none, hovered_delay_short, hovered_delay_normal);
 
         if (item_disabled)
             ImGui::EndDisabled();
@@ -3439,7 +3439,7 @@ static void ShowDemoWindowPopups()
         if (ImGui::Button("Select.."))
             ImGui::OpenPopup("my_select_popup");
         ImGui::SameLine();
-        ImGui::TextUnformatted(selected_fish == -1 ? "<None>" : names[selected_fish]);
+        ImGui::TextUnformatted(selected_fish == -1 ? "<Default>" : names[selected_fish]);
         if (ImGui::BeginPopup("my_select_popup"))
         {
             ImGui::SeparatorText("Aquarium");
@@ -4820,9 +4820,9 @@ static void ShowDemoWindowTables()
         ImGui::CheckboxFlags("ImGuiTableFlags_Borders", &flags, ImGuiTableFlags_Borders);
         ImGui::CheckboxFlags("ImGuiTableFlags_RowBg", &flags, ImGuiTableFlags_RowBg);
         ImGui::SameLine(); HelpMarker("ImGuiTableFlags_RowBg automatically sets RowBg0 to alternative colors pulled from the Style.");
-        ImGui::Combo("row bg type", (int*)&row_bg_type, "None\0Red\0Gradient\0");
+        ImGui::Combo("row bg type", (int*)&row_bg_type, "Default\0Red\0Gradient\0");
         ImGui::Combo("row bg target", (int*)&row_bg_target, "RowBg0\0RowBg1\0"); ImGui::SameLine(); HelpMarker("Target RowBg0 to override the alternating odd/even colors,\nTarget RowBg1 to blend with them.");
-        ImGui::Combo("cell bg type", (int*)&cell_bg_type, "None\0Blue\0"); ImGui::SameLine(); HelpMarker("We are colorizing cells to B1->C2 here.");
+        ImGui::Combo("cell bg type", (int*)&cell_bg_type, "Default\0Blue\0"); ImGui::SameLine(); HelpMarker("We are colorizing cells to B1->C2 here.");
         IM_ASSERT(row_bg_type >= 0 && row_bg_type <= 2);
         IM_ASSERT(row_bg_target >= 0 && row_bg_target <= 1);
         IM_ASSERT(cell_bg_type >= 0 && cell_bg_type <= 1);
@@ -5252,7 +5252,7 @@ static void ShowDemoWindowTables()
                     ImGui::TableNextColumn();
                     ImGui::TextUnformatted(item->Name);
                     ImGui::TableNextColumn();
-                    ImGui::SmallButton("None");
+                    ImGui::SmallButton("Default");
                     ImGui::TableNextColumn();
                     ImGui::Text("%d", item->Quantity);
                     ImGui::PopID();
@@ -5855,7 +5855,7 @@ static void ShowDemoWindowInputs()
                     "Notice how normally (when set to none), the value of io.WantCaptureKeyboard would be false when hovering and true when clicking.");
                 static int capture_override_mouse = -1;
                 static int capture_override_keyboard = -1;
-                const char* capture_override_desc[] = { "None", "Set to false", "Set to true" };
+                const char* capture_override_desc[] = { "Default", "Set to false", "Set to true" };
                 ImGui::SetNextItemWidth(ImGui::GetFontSize() * 15);
                 ImGui::SliderInt("SetNextFrameWantCaptureMouse() on hover", &capture_override_mouse, -1, +1, capture_override_desc[capture_override_mouse + 1], ImGuiSliderFlags_AlwaysClamp);
                 ImGui::SetNextItemWidth(ImGui::GetFontSize() * 15);
@@ -6293,7 +6293,7 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
             ImGui::SeparatorText("Widgets");
             ImGui::SliderFloat2("WindowTitleAlign", (float*)&style.WindowTitleAlign, 0.0f, 1.0f, "%.2f");
             int window_menu_button_position = style.WindowMenuButtonPosition + 1;
-            if (ImGui::Combo("WindowMenuButtonPosition", (int*)&window_menu_button_position, "None\0Left\0Right\0"))
+            if (ImGui::Combo("WindowMenuButtonPosition", (int*)&window_menu_button_position, "Default\0Left\0Right\0"))
                 style.WindowMenuButtonPosition = window_menu_button_position - 1;
             ImGui::Combo("ColorButtonPosition", (int*)&style.ColorButtonPosition, "Left\0Right\0");
             ImGui::SliderFloat2("ButtonTextAlign", (float*)&style.ButtonTextAlign, 0.0f, 1.0f, "%.2f");
@@ -8133,7 +8133,7 @@ void ShowExampleAppDocuments(bool* p_open)
         ImGui::PopID();
     }
     ImGui::PushItemWidth(ImGui::GetFontSize() * 12);
-    ImGui::Combo("Output", (int*)&opt_target, "None\0TabBar+Tabs\0DockSpace+Window\0");
+    ImGui::Combo("Output", (int*)&opt_target, "Default\0TabBar+Tabs\0DockSpace+Window\0");
     ImGui::PopItemWidth();
     bool redock_all = false;
     if (opt_target == Target_Tab)                { ImGui::SameLine(); ImGui::Checkbox("Reorderable Tabs", &opt_reorderable); }

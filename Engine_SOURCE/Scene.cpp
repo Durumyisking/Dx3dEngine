@@ -1,4 +1,4 @@
-癤�#include "Scene.h"
+#include "Scene.h"
 #include "InputMgr.h"
 #include "Layer.h"
 #include "Renderer.h"
@@ -26,27 +26,23 @@ Scene::~Scene()
 
 void Scene::Save(FILE* File)
 {
-	//레이어 순회하면서 오브젝트 저장
 	for (UINT i = 0; i < static_cast<UINT>(eLayerType::End); i++)
 	{
-		//레이어 타입
 		eLayerType layerType = static_cast<eLayerType>(i);
 		fwrite(&layerType, sizeof(eLayerType), 1, File);
 
-		if (layerType == eLayerType::None || layerType == eLayerType::Camera || layerType == eLayerType::Grid
-			|| layerType == eLayerType::SkySphere || layerType == eLayerType::UI)
+		if (layerType == eLayerType::Default || layerType == eLayerType::Camera || layerType == eLayerType::Grid
+			|| layerType == eLayerType::SkySphere || layerType == eLayerType::UI )
 		{
 			int	ObjCount = 0;
 			fwrite(&ObjCount, sizeof(int), 1, File);
 			continue;
 }
 
-		//레이어 내의 오브젝트 수
 		std::vector<GameObj*> gameObjs = mLayers[i].GetGameObjects();
 		int	ObjCount = static_cast<int>(gameObjs.size());
 		fwrite(&ObjCount, sizeof(int), 1, File);
 
-		//각 오브젝트
 		for (GameObj* obj : gameObjs)
 		{
 			std::string	ClassTypeName = obj->GetObjectTypeName();
@@ -61,35 +57,8 @@ void Scene::Save(FILE* File)
 	}
 }
 
-//// Loading 시 Thread 사용시 사용한다는데 일단 모아놓았습니다
-//{
-//	fseek(File, 0, SEEK_END);
-//	int	FileSize = (int)ftell(File);
-//	fseek(File, 0, SEEK_SET);
-//	int	LoadSize = 0; // Loading Thread 용, Thread 버퍼 할당 크기 책정시 사용
-//
-//	int	CurPos = (int)ftell(File);
-//	//Load(File);  // Thread에 위임할 로드 부분
-//	int	NextPos = (int)ftell(File);
-//
-//	int	CurLoadSize = NextPos - CurPos;
-//
-//	if (CurLoadSize > 0)
-//	{
-//		LoadSize += CurLoadSize;
-//
-//		int bufferSize = LoadSize / (float)FileSize;
-//
-//		// Thread의 버퍼에 크기 할당해주는 부분
-//		// bufferSize 만큼 Thread 크기 할당하면 된다
-//	}
-//
-//	CurPos = NextPos;
-//}
-
 void Scene::Load(FILE* File)
 {
-	// 씬 로드
 	for (UINT i = 0; i < static_cast<UINT>(eLayerType::End); i++)
 	{
 		eLayerType layerType;
@@ -98,7 +67,7 @@ void Scene::Load(FILE* File)
 		int	ObjCount = 0;
 		fread(&ObjCount, sizeof(int), 1, File);
 
-		for (int i = 0; i < ObjCount; ++i)
+		for (int j = 0; j < ObjCount; ++j)
 		{
 			int Length = 0;
 			char	ObjClassTypeName[256] = {};
@@ -179,7 +148,7 @@ void Scene::Enter()
 	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
 	mUICamera->SetRotation(Vector3::Zero);
 	{
-		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::None, this, L"DirectionalLight");
+		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
 		directionalLight->SetPos({ 0.f, 25.f, 0.f });
 		directionalLight->SetRotation(Vector3(90.f, 0.f, 0.f));
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);

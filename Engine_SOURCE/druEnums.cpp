@@ -24,7 +24,7 @@ namespace enums
 
 	const char* charComponentType[(int)eComponentType::End] =
 	{
-		"None",
+		"Default",
 		"Camera",
 		"RigidBody",
 		"Movement",
@@ -47,7 +47,7 @@ namespace enums
 
 	const wchar_t* wcharComponentType[(int)eComponentType::End] =
 	{
-		L"None",
+		L"Default",
 		L"Camera",
 		L"RigidBody",
 		L"Movement",
@@ -98,7 +98,7 @@ namespace enums
 
 	const char* charLayerType[(int)eLayerType::End] =
 	{
-		"None",
+		"Default",
 		"Camera",
 		"Grid",
 		"Objects",
@@ -118,7 +118,7 @@ namespace enums
 
 	const wchar_t* wcharLayerType[(int)eLayerType::End] =
 	{
-		L"None",
+		L"Default",
 		L"Camera",
 		L"Grid",
 		L"Objects",

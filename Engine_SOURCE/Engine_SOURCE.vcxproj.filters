@@ -519,6 +519,7 @@
     <ClCompile Include="SoloNaviMesh.cpp">
       <Filter>Navigation</Filter>
     </ClCompile>
+    <ClCompile Include="TestCDO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -1046,7 +1047,6 @@
     <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="MilestoneScript.h" />
     <ClInclude Include="TitleBGMScript.h" />
-    <ClInclude Include="MarioBlock.h" />
     <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="TitleBGMScript.h" />
     <ClInclude Include="InputGeom.h">
@@ -1067,6 +1067,7 @@
     <ClInclude Include="NaviMesh.h">
       <Filter>Navigation</Filter>
     </ClInclude>
+    <ClInclude Include="TestCDO.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

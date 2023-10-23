@@ -26,7 +26,7 @@ std::map<std::string, GameObj*> GameObj::mObjectCDO;
 
 GameObj::GameObj()
 	:mState(eState::Active)
-	, mType(eLayerType::None)
+	, mType(eLayerType::Default)
 	, mScripts{}
 	, mbDestroy(true)
 	, mbBlockRendering(false)

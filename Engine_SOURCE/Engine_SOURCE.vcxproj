@@ -380,6 +380,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="StringFunctions.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="StructedBuffer.h" />
+    <ClInclude Include="TestCDO.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="TimerMgr.h" />
@@ -552,6 +553,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="StringFunctions.cpp" />
     <ClCompile Include="StructedBuffer.cpp" />
+    <ClCompile Include="TestCDO.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="TimerMgr.cpp" />

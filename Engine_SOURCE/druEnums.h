@@ -5,7 +5,7 @@ namespace enums
 
 	enum class eLayerType
 	{
-		None = 0,
+		Default = 0,
 		Camera,
 		Grid,
 		Objects,
