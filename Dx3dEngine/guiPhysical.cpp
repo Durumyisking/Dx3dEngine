@@ -82,7 +82,7 @@ namespace gui
             actorName = "Monster";
             break;
         default:
-            actorName = "None";
+            actorName = "Default";
             break;
         }
 
@@ -141,7 +141,7 @@ namespace gui
             geomName = "TriangleMesh";
             break;
         default:
-            geomName = "None";
+            geomName = "Default";
             break;
         }
 

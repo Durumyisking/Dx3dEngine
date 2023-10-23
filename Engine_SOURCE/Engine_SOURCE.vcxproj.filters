@@ -1052,7 +1052,6 @@
     <ClInclude Include="HelpUIScript.h" />
     <ClInclude Include="MilestoneScript.h" />
     <ClInclude Include="TitleBGMScript.h" />
-    <ClInclude Include="MarioBlock.h" />
     <ClInclude Include="FootSmokeParticle.h" />
     <ClInclude Include="TitleBGMScript.h" />
     <ClInclude Include="InputGeom.h">

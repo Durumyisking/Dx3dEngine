@@ -13,7 +13,7 @@ namespace gui
 		: Widget()
 		, mCDOName()
 		, mInputText()
-		, mInputLayer(eLayerType::Objects)
+		, mInputLayer(eLayerType::Default)
 	{
 		SetName("ObjectWindow");
 		SetSize(ImVec2(300.f, 300.f));

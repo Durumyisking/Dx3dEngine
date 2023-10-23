@@ -35,6 +35,7 @@ public:
 	void Destory();
 	void Release();
 	void LoadScene(eSceneType type);
+	void ChangeScene(eSceneType type);
 	void LateEvent(); // 렌더링까지 종료후 오브젝트 추가하는 함수
 
 	void DontDestroyOnLoad(GameObj* gameObj);

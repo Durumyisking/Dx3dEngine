@@ -156,6 +156,15 @@ public:
 		comp = nullptr;
 	}
 
+	void DeleteComponents()
+	{
+		for (Component* comp : mComponents)
+		{
+			delete comp;
+			comp = nullptr;
+		}
+	}
+
 	bool IsRenderingBlock() const { return mbBlockRendering; }
 	void RenderingBlockOn() { mbBlockRendering = true; }
 	void RenderingBlockOff() { mbBlockRendering = false; }

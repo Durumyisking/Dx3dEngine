@@ -162,6 +162,11 @@ namespace gui
 	{
 		std::string name(gameObject->GetName().begin(), gameObject->GetName().end());
 
+		if (name.empty())
+		{
+			name = "no name";
+		}
+
 		TreeWidget::Node* node = mTreeWidget->AddNode(parent, name, gameObject);
 	}
 
