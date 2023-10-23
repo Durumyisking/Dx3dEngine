@@ -16,6 +16,8 @@
 
 #include "PhysXRayCast.h"
 
+#include "InstancingContainer.h"
+
 extern Application application;
 
 
@@ -420,21 +422,27 @@ void Camera::renderPostProcess()
 void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 {
 	BaseRenderer* renderer = obj->GetComponent<BaseRenderer>();
-
+	eRenderingMode mode;
 	if ( eLayerType::CubeMap == obj->GetLayerType())
 	{
 		obj->Render();
 	}
+	if (eLayerType::ObjectsContainer == obj->GetLayerType())
+	{
+		mode = dynamic_cast<InstancingContainer*>(obj)->GetRenderingMode();
+	}
+	else
+	{
+		if (nullptr == renderer)
+			return;
 
-	if (nullptr == renderer)
-		return;
+		Material* material = renderer->GetMaterial();
 
-	Material* material = renderer->GetMaterial();
+		if (material == nullptr)
+			return;
 
-	if (material == nullptr)
-		return;	
-
-	eRenderingMode mode = material->GetRenderingMode();
+		mode = material->GetRenderingMode();
+	}
 
 	switch (mode)
 	{

@@ -317,3 +317,9 @@ struct Vertex
 	math::Vector4 BlendID;
 	math::Vector4 BlendWeight;
 };
+
+struct InstancingData
+{
+	math::Matrix world;
+	math::Matrix worldIT;
+};

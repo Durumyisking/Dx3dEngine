@@ -192,10 +192,10 @@ void Goomba::CaptureEvent()
 
 
 	// 이동
-	stateEvent(eKeyState::DOWN, eKeyCode::UP, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::DOWN, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::LEFT, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN,eKeyCode::RIGHT, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::W, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::S, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::A, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN,eKeyCode::D, eMonsterState::Move);
 
 	//// 점프
 	//able = false;

@@ -223,6 +223,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="BaseRenderer.h" />
     <ClInclude Include="BlockBrick.h" />
     <ClInclude Include="BenchA.h" />
+    <ClInclude Include="InstancingContainer.h" />
     <ClInclude Include="Bone.h" />
     <ClInclude Include="BoneAnimator.h" />
     <ClInclude Include="Box.h" />
@@ -299,6 +300,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="ImageUI.h" />
     <ClInclude Include="InputGeom.h" />
     <ClInclude Include="InputMgr.h" />
+    <ClInclude Include="InstancedMeshRenderer.h" />
+    <ClInclude Include="InstantiativeObject.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LifeUI.h" />
     <ClInclude Include="LifeUIScript.h" />
@@ -380,7 +383,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="StringFunctions.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="StructedBuffer.h" />
-    <ClInclude Include="TestCDO.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="TimerMgr.h" />
@@ -407,6 +409,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="BaseRenderer.cpp" />
     <ClCompile Include="BlockBrick.cpp" />
     <ClCompile Include="BenchA.cpp" />
+    <ClCompile Include="InstancingContainer.cpp" />
     <ClCompile Include="Bone.cpp" />
     <ClCompile Include="BoneAnimator.cpp" />
     <ClCompile Include="Box.cpp" />
@@ -477,6 +480,8 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="ImageUI.cpp" />
     <ClCompile Include="InputGeom.cpp" />
     <ClCompile Include="InputMgr.cpp" />
+    <ClCompile Include="InstancedMeshRenderer.cpp" />
+    <ClCompile Include="InstantiativeObject.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LifeUI.cpp" />
     <ClCompile Include="LifeUIScript.cpp" />
@@ -553,7 +558,6 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="StringFunctions.cpp" />
     <ClCompile Include="StructedBuffer.cpp" />
-    <ClCompile Include="TestCDO.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="TimerMgr.cpp" />

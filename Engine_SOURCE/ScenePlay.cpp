@@ -1,4 +1,4 @@
-ï»¿#include "ScenePlay.h"
+#include "ScenePlay.h"
 //#include "TimeMgr.h"
 //#include "InputMgr.h"
 //
@@ -98,10 +98,12 @@
 
 #include "PostProcess.h"
 
+#include "InstancingContainer.h"
 #include "NavigationMgr.h"
 #include "PathMgr.h"
 
 #include "ModelObj.h"
+
 
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
@@ -133,7 +135,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ë¡œë“œ í…ŒìŠ¤íŠ¸ ë¡œë“œì‹œì— ë°˜ë³µí•´ì„œ ëª¬ìŠ¤í„° ì •ì˜ ë°©ì§€
+	//TestScene ·Îµå Å×½ºÆ® ·Îµå½Ã¿¡ ¹İº¹ÇØ¼­ ¸ó½ºÅÍ Á¤ÀÇ ¹æÁö
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		{
@@ -197,18 +199,18 @@ void ScenePlay::Initialize()
 		
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-	}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
-	}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(35.f, 10.f, 30.f));
+	//}	
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	//}
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
+	//}
 
 
 	{
@@ -305,27 +307,36 @@ void ScenePlay::Initialize()
 		//object->SetPos(Vector3(40.f, -10.f, 0.f));
 
 	}
+	InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
+	for (size_t i = 0; i < 20; i++)
 	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(0.f, 0.5f, 0.f));
+		for (size_t j = 0; j < 10; j++)
+		{
+			for (size_t k = 1; k < 10; k++)
+			{
+				if (j > 4 && k > 1)
+					continue;
+
+				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+				block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
+				blockContainer->PushObject(block);
+			}
+		}
 	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(1.f, 0.5f, 0.f));
-	}
+	blockContainer->ResizeObjectInstancingData();
 
 	{
 		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
 
-		//í˜„ì¬ .obj íŒŒì¼ë§Œ ë¡œë”© ê°€ëŠ¥ ë¸”ëœë”ì—ì„œ .obj ë¡œ ë‚´ë³´ë‚´ê¸° í•´ì„œ ì‚¬ìš©í•˜ë©´ ë©ë‹ˆë‹¤
+		//ÇöÀç .obj ÆÄÀÏ¸¸ ·Îµù °¡´É ºí·£´õ¿¡¼­ .obj ·Î ³»º¸³»±â ÇØ¼­ »ç¿ëÇÏ¸é µË´Ï´Ù
 		if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
 			int debug = 0;
 
 		if (!naviMesh->Build())
 			int debug = 0;
 
-		//ì˜¤ë¸Œì íŠ¸ì— std::<Vector3>mPath ì¶”ê°€ pathì— ì´ë™ê²½ë¡œê°€ ì¶”ê°€ë˜ë‹ˆ vectorë‚´ì˜ ìœ„ì¹˜ë¥¼ ì‚¬ìš©í•´ì„œ ì´ë™í•˜ë©´ ë©ë‹ˆë‹¤
-		//ìœ„ì¹˜ê°€ ë‚´ë¹„ë©”ì‰¬ ë°–ì´ë©´ ê³„ì‚°ì´ ì•ˆë©ë‹ˆë‹¤
+		//¿ÀºêÁ§Æ®¿¡ std::<Vector3>mPath Ãß°¡ path¿¡ ÀÌµ¿°æ·Î°¡ Ãß°¡µÇ´Ï vector³»ÀÇ À§Ä¡¸¦ »ç¿ëÇØ¼­ ÀÌµ¿ÇÏ¸é µË´Ï´Ù
+		//À§Ä¡°¡ ³»ºñ¸Ş½¬ ¹ÛÀÌ¸é °è»êÀÌ ¾ÈµË´Ï´Ù
 		if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
 			int debug = 0;
 	}

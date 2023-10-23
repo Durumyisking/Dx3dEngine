@@ -64,7 +64,7 @@ namespace server
 
 				if (false == GameNetObject::IsNetObject(packet->GetObjectID()))
 				{
-					Box* otherObj = object::Instantiate<Box>(eLayerType::PhysicalObject);
+					Box* otherObj = object::Instantiate<Box>(eLayerType::Default);
 					otherObj->SetPos(Vector3(-5.f, 20.f, 5.f));
 					otherObj->SetScale({ 2.5f, 2.5f, 2.5f });
 					otherObj->SetName(L"Sphere");
@@ -117,7 +117,7 @@ namespace server
 			{
 				if (false == GameNetObject::IsNetObject(packet->GetObjectID()))
 				{
-					Box* otherObj = object::Instantiate<Box>(eLayerType::PhysicalObject);
+					Box* otherObj = object::Instantiate<Box>(eLayerType::Default);
 					otherObj->SetPos(Vector3(-5.f, 20.f, 5.f));
 					otherObj->SetScale({ 2.5f, 2.5f, 2.5f });
 					otherObj->SetName(L"Box");
@@ -138,7 +138,7 @@ namespace server
 		mServer.OpenHost(30000, 
 			[this](SOCKET socket)
 			{
-				Box* otherObj = object::Instantiate<Box>(eLayerType::PhysicalObject);
+				Box* otherObj = object::Instantiate<Box>(eLayerType::Default);
 				otherObj->SetPos(Vector3(-5.f, 20.f, 5.f));
 				otherObj->SetScale({ 2.5f, 2.5f, 2.5f });
 				otherObj->SetName(L"Box");

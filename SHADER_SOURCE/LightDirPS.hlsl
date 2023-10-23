@@ -59,7 +59,9 @@ PS_OUT main(VSOut vsin)
     float3 lightVec = -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz;
     directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness);
 
-    output.vDiffuse.xyz = clamp(ambientLighting + (directLighting * radiance) + emissive.xyz, 0.f, 1.f);
+    //output.vDiffuse.xyz = clamp(ambientLighting + (directLighting * radiance) + emissive.xyz, 0.f, 1.f);
+    output.vDiffuse.xyz = clamp(ambientLighting + (directLighting * radiance), 0.f, 1.f);
+
     
     //output.vSpecular.a = 1.f;
     //output.vSpecular.a = 1.f;

@@ -28,7 +28,7 @@ void PhysicalMovement::FixedUpdate()
 	{
 	}
 	GetOwner()->ReorganizePosition(AXIS::Y, eLayerType::Platforms);
-	//GetOwner()->ReorganizePosition(AXIS::XZ, eLayerType::Objects);
+	GetOwner()->ReorganizePosition(AXIS::XZ, eLayerType::Objects);
 
 	Move(velocity);
 }
