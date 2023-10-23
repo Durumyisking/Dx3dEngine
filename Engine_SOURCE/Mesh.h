@@ -60,4 +60,9 @@ private:
 	math::Vector3 mInitialExtent;
 
 	math::Matrix mOwnerWorldMatrix;
+
+//public:
+//	// debug¿ë
+//	static UINT sMeshCount;
+//	bool r;
 };
