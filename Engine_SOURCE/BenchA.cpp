@@ -7,8 +7,16 @@
 
 
 BenchA::BenchA()
+	: GameObj()
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "BenchA";
+}
 
+BenchA::BenchA(const BenchA& Obj)
+	:GameObj(Obj)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }
 
 BenchA::~BenchA()
@@ -16,10 +24,13 @@ BenchA::~BenchA()
 
 }
 
+BenchA* BenchA::Clone() const
+{
+	return new BenchA(*this);
+}
+
 void BenchA::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBench000");
 	assert(model);
 

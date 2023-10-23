@@ -30,8 +30,6 @@ HomeBuildingFour* HomeBuildingFour::Clone() const
 
 void HomeBuildingFour::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding004");
 	assert(model);
 

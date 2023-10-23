@@ -6,17 +6,30 @@
 #include "PhysXCollider.h"
 
 CityWorldChairA::CityWorldChairA()
+	: GameObj()
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "CityWorldChairA";
+
+}
+
+CityWorldChairA::CityWorldChairA(const CityWorldChairA& Obj)
+	:GameObj(Obj)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }
 
 CityWorldChairA::~CityWorldChairA()
 {
 }
 
+CityWorldChairA* CityWorldChairA::Clone() const
+{
+	return new CityWorldChairA(*this);
+}
+
 void CityWorldChairA::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldChairA");
 	assert(model);
 

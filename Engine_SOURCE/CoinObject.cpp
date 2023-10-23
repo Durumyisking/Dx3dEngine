@@ -6,8 +6,16 @@
 #include "PhysXCollider.h"
 
 CoinObject::CoinObject()
+	:GameObj()
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "CoinObject";
+}
 
+CoinObject::CoinObject(const CoinObject& Obj)
+	:GameObj(Obj)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }
 
 CoinObject::~CoinObject()
@@ -15,10 +23,13 @@ CoinObject::~CoinObject()
 
 }
 
+CoinObject* CoinObject::Clone() const
+{
+	return new CoinObject(*this);
+}
+
 void CoinObject::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Coin");
 	assert(model);
 
@@ -30,7 +41,7 @@ void CoinObject::Initialize()
 	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 1.f, 1.f, 1.f });
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 1.f, 1.f, 1.f });
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();

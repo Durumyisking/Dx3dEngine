@@ -31,13 +31,12 @@ HomeBuildingEight* HomeBuildingEight::Clone() const
 
 void HomeBuildingEight::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding008");
 	assert(model);
 
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
 	mr->SetModel(model);
+
 
 	mr->SetMaterialByKey(L"HomeBuilding008_0Material", 0);
 	mr->SetMaterialByKey(L"HomeBuilding008_1Material", 1);

@@ -22,14 +22,7 @@
 #include "ModelObj.h"
 #include "SkySphere.h"
 
-#include "Building.h"
-#include "HomeBuildingFour.h"
-#include "HomeBuildingFive.h"
-#include "HomeBuildingSeven.h"
-#include "HomeBuildingEight.h"
-
-
-#include "CreateObject.h"
+#include "CityObjects.h"
 
 
 
@@ -230,11 +223,11 @@ void SceneMgr::CreateCDO()
 	ModelObj* ModelObjCDO = new ModelObj();
 	GameObj::AddObjectCDO("ModelObj", ModelObjCDO);
 
-	//HomeBuildingEight* buildingEightCDO = new HomeBuildingEight();
-	//GameObj::AddObjectCDO("Building", buildingEightCDO);
+	HomeBuildingEight* buildingEightCDO = new HomeBuildingEight();
+	GameObj::AddObjectCDO("HomeBuildingEight", buildingEightCDO);
 
-	Building* buildingCDO = new Building();
-	GameObj::AddObjectCDO("Building", buildingCDO);
+	//Building* buildingCDO = new Building();
+	//GameObj::AddObjectCDO("Building", buildingCDO);
 
 	//HomeBuildingFour* buildingFourCDO = new HomeBuildingFour();
 	//GameObj::AddObjectCDO("HomeBuildingFour", buildingFourCDO);
@@ -245,50 +238,41 @@ void SceneMgr::CreateCDO()
 	//HomeBuildingSeven* buildingSevenCDO = new HomeBuildingSeven();
 	//GameObj::AddObjectCDO("HomeBuildingSeven", buildingSevenCDO);
 
+	//Car* carCDO = new Car();
+	//GameObj::AddObjectCDO("Car", carCDO); //out of range
 
-	//CreateObject* building014CDO = new CreateObject(L"CityWorldHomeBuilding014", L"HomeBuilding0014_12Material", Vector3::One);
-    //GameObj::AddObjectCDO("CityWorldHomeBuilding014", building014CDO); -- 현재 오류 있음
+	//CoinObject* coinCDO = new CoinObject();
+	//GameObj::AddObjectCDO("CoinObject", coinCDO);
 
+	//CityWorldBush* bushCDO = new CityWorldBush();
+	//GameObj::AddObjectCDO("CityWorldBush", bushCDO);
 
-	//CreateObject* building000CDO = new CreateObject(L"CityWorldHomeBuilding000", L"HomeBuilding000_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding000", building000CDO);
+	//CityWorldBushA* bushACDO = new CityWorldBushA();
+	//GameObj::AddObjectCDO("CityWorldBushA", bushACDO);
 
-	//CreateObject* building001CDO = new CreateObject(L"CityWorldHomeBuilding001", L"HomeBuilding001_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding001", building001CDO);
+	//CityWorldChairA* chairACDO = new CityWorldChairA();
+	//GameObj::AddObjectCDO("CityWorldChairA", chairACDO);
 
-	//CreateObject* building002CDO = new CreateObject(L"CityWorldHomeBuilding002", L"HomeBuilding002_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding002", building002CDO);
+	//CityWorldChairB* chairBCDO = new CityWorldChairB();
+	//GameObj::AddObjectCDO("CityWorldChairB", chairBCDO);
 
-	//CreateObject* building003CDO = new CreateObject(L"CityWorldHomeBuilding003", L"HomeBuilding003_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding003", building003CDO);
+	//BenchA* benchACDO = new BenchA();
+	//GameObj::AddObjectCDO("BenchA", benchACDO);
 
-	//CreateObject* building004CDO = new CreateObject(L"CityWorldHomeBuilding004", L"HomeBuilding004_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding004", building004CDO);
+	//HomeBuilding_09* building_9CDO = new HomeBuilding_09();
+	//GameObj::AddObjectCDO("HomeBuilding_09", building_9CDO);
 
-	//CreateObject* building005CDO = new CreateObject(L"CityWorldHomeBuilding005", L"HomeBuilding005_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding005", building005CDO);
+	//HomeBuilding_10* building_10CDO = new HomeBuilding_10();
+	//GameObj::AddObjectCDO("HomeBuilding_10", building_10CDO);
 
-	//CreateObject* building007CDO = new CreateObject(L"CityWorldHomeBuilding007", L"HomeBuilding007_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding007", building007CDO);
+	//HomeBuilding_11* building_11CDO = new HomeBuilding_11();
+	//GameObj::AddObjectCDO("HomeBuilding_11", building_11CDO);
 
-	//CreateObject* building008CDO = new CreateObject(L"CityWorldHomeBuilding008", L"HomeBuilding008_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding008", building008CDO);
+	//HomeBuilding_12* building_12CDO = new HomeBuilding_12();
+	//GameObj::AddObjectCDO("HomeBuilding_12", building_12CDO);
 
-	//CreateObject* building009CDO = new CreateObject(L"CityWorldHomeBuilding009", L"HomeBuilding009_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding009", building009CDO);
-
-	//CreateObject* building010CDO = new CreateObject(L"CityWorldHomeBuilding010", L"HomeBuilding0010_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding010", building010CDO);
-
-	//CreateObject* building011CDO = new CreateObject(L"CityWorldHomeBuilding011", L"HomeBuilding0011_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding011", building011CDO);
-
-	//CreateObject* building012CDO = new CreateObject(L"CityWorldHomeBuilding012", L"HomeBuilding0012_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding012", building012CDO);
-
-	//CreateObject* building013CDO = new CreateObject(L"CityWorldHomeBuilding013", L"HomeBuilding0013_0Material", Vector3::One);
-	//GameObj::AddObjectCDO("CityWorldHomeBuilding013", building013CDO);
-
+	//HomeBuilding_13* building_13CDO = new HomeBuilding_13();
+	//GameObj::AddObjectCDO("HomeBuilding_13", building_13CDO);
 
 	//SkySphere* SkySphere = new SkySphere();
 	//GameObj::AddObjectCDO("SkySphere", SkySphere);

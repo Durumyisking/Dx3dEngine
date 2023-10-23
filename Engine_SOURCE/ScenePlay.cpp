@@ -71,27 +71,10 @@
 #include "DieCircleUIScript.h"
 #include "AudioListener.h"
 #include "AudioSource.h"
-#include "Building.h"
 
 #include "BlockBrick.h"
 
-#include "CityGround.h"
-#include "CoinObject.h"
-#include "Car.h"
-#include "CityMapNaviObject.h"
-#include "CityWorldBush.h"
-#include "CityWorldBushA.h"
-#include "CityWorldChairA.h"
-#include "CityWorldChairB.h"
-#include "CityWorldFlag.h"
-#include "BenchA.h"
-#include "CheckpointFlag.h"
-#include "HomeBuildingFour.h"
-#include "HomeBuildingFive.h"
-#include "HomeBuildingSeven.h"
-#include "HomeBuildingEight.h"
-
-#include "CreateObject.h"
+#include "CityObjects.h"
 
 #include "Goomba.h"
 #include "Packun.h"
@@ -275,7 +258,7 @@ void ScenePlay::Initialize()
 		//HomeBuildingSeven* homeBuildingSeven = object::Instantiate<HomeBuildingSeven>(eLayerType::Objects, this, L"homeBuildingSeven");
 		//homeBuildingSeven->SetPos(Vector3(60.f, 1.f, 0.f));
 
-		//HomeBuildingEight* homeBuildingEight = object::Instantiate<HomeBuildingEight>(eLayerType::Objects, this, L"homeBuildingEight");
+		//HomeBuildingEight* homeBuildingEight = object::Instantiate<HomeBuildingEight>(eLayerType::Objects, this, L"CityWorldHomeBuilding003");
 		//homeBuildingEight->SetPos(Vector3(80.f, 1.f, 0.f));
 
 		//std::vector<std::wstring> array = { L"GlassBuildingWallMaterial" ,L"RoofConcrete00Material" ,L"RoofConcrete01Material" ,L"WallGlassPaintedSteelMaterial" };

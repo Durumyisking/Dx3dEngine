@@ -29,8 +29,6 @@ HomeBuildingSeven* HomeBuildingSeven::Clone() const
 
 void HomeBuildingSeven::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding007");
 	assert(model);
 

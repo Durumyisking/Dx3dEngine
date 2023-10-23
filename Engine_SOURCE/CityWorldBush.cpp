@@ -6,17 +6,29 @@
 #include "PhysXCollider.h"
 
 CityWorldBush::CityWorldBush()
+	: GameObj()
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "CityWorldBush";
+}
+
+CityWorldBush::CityWorldBush(const CityWorldBush& Obj)
+	:GameObj(Obj)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }
 
 CityWorldBush::~CityWorldBush()
 {
 }
 
+CityWorldBush* CityWorldBush::Clone() const
+{
+	return new CityWorldBush(*this);
+}
+
 void CityWorldBush::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldBush");
 	assert(model);
 
@@ -29,7 +41,7 @@ void CityWorldBush::Initialize()
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 1.f, 1.f, 1.f });
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 1.f, 1.f, 1.f });
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();

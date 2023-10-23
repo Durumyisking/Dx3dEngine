@@ -223,6 +223,12 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="BaseRenderer.h" />
     <ClInclude Include="BlockBrick.h" />
     <ClInclude Include="BenchA.h" />
+    <ClInclude Include="CityObjects.h" />
+    <ClInclude Include="HomeBuilding_09.h" />
+    <ClInclude Include="HomeBuilding_10.h" />
+    <ClInclude Include="HomeBuilding_11.h" />
+    <ClInclude Include="HomeBuilding_12.h" />
+    <ClInclude Include="HomeBuilding_13.h" />
     <ClInclude Include="InstancingContainer.h" />
     <ClInclude Include="Bone.h" />
     <ClInclude Include="BoneAnimator.h" />
@@ -325,6 +331,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="NavigationMgr.h" />
     <ClInclude Include="NaviMesh.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SoloMeshPathTool.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Packun.h" />
@@ -409,6 +416,11 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="BaseRenderer.cpp" />
     <ClCompile Include="BlockBrick.cpp" />
     <ClCompile Include="BenchA.cpp" />
+    <ClCompile Include="HomeBuilding_09.cpp" />
+    <ClCompile Include="HomeBuilding_10.cpp" />
+    <ClCompile Include="HomeBuilding_11.cpp" />
+    <ClCompile Include="HomeBuilding_12.cpp" />
+    <ClCompile Include="HomeBuilding_13.cpp" />
     <ClCompile Include="InstancingContainer.cpp" />
     <ClCompile Include="Bone.cpp" />
     <ClCompile Include="BoneAnimator.cpp" />
@@ -572,6 +584,9 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
   </ItemGroup>
   <ItemGroup>
     <None Include="druMath.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine_SOURCE.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -29,8 +29,6 @@ HomeBuildingFive* HomeBuildingFive::Clone() const
 
 void HomeBuildingFive::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding005");
 	assert(model);
 

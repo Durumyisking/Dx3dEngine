@@ -433,31 +433,7 @@
     <ClCompile Include="GenericAnimator.cpp">
       <Filter>Common\Component\GenericAnimator</Filter>
     </ClCompile>
-    <ClCompile Include="CheckpointFlag.cpp">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CityWorldBush.cpp">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CityWorldBushA.cpp">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CityWorldChairA.cpp">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CityWorldChairB.cpp">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CityWorldFlag.cpp">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CoinObject.cpp">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CityMapNaviObject.cpp">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="BenchA.cpp">
       <Filter>Common\GameObj\Objects</Filter>
     </ClCompile>
     <ClCompile Include="PackunPostionBall.cpp">
@@ -527,6 +503,45 @@
     </ClCompile>
     <ClCompile Include="InstantiativeObject.cpp">
       <Filter>Common\GameObj\Objects\InstantiativeObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CityWorldBush.cpp">
+      <Filter>Common\GameObj\Bush</Filter>
+    </ClCompile>
+    <ClCompile Include="CityWorldBushA.cpp">
+      <Filter>Common\GameObj\Bush</Filter>
+    </ClCompile>
+    <ClCompile Include="CityWorldChairB.cpp">
+      <Filter>Common\GameObj\Chair</Filter>
+    </ClCompile>
+    <ClCompile Include="CityWorldChairA.cpp">
+      <Filter>Common\GameObj\Chair</Filter>
+    </ClCompile>
+    <ClCompile Include="BenchA.cpp">
+      <Filter>Common\GameObj\Bench</Filter>
+    </ClCompile>
+    <ClCompile Include="CityWorldFlag.cpp">
+      <Filter>Common\GameObj\Flag</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckpointFlag.cpp">
+      <Filter>Common\GameObj\Flag</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinObject.cpp">
+      <Filter>Common\GameObj\Coin</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_09.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_10.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_11.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_12.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_13.cpp">
+      <Filter>Common\GameObj\Buildings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -984,31 +999,7 @@
     <ClInclude Include="GenericAnimator.h">
       <Filter>Common\Component\GenericAnimator</Filter>
     </ClInclude>
-    <ClInclude Include="CheckpointFlag.h">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="CityWorldBush.h">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="CityWorldBushA.h">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="CityWorldChairA.h">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="CityWorldChairB.h">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="CityWorldFlag.h">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="CoinObject.h">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="CityMapNaviObject.h">
-      <Filter>Common\GameObj\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="BenchA.h">
       <Filter>Common\GameObj\Objects</Filter>
     </ClInclude>
     <ClInclude Include="PackunPostionBall.h">
@@ -1083,6 +1074,47 @@
     </ClInclude>
     <ClInclude Include="InstantiativeObject.h">
       <Filter>Common\GameObj\Objects\InstantiativeObject</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="CityObjects.h" />
+    <ClInclude Include="CityWorldBush.h">
+      <Filter>Common\GameObj\Bush</Filter>
+    </ClInclude>
+    <ClInclude Include="CityWorldBushA.h">
+      <Filter>Common\GameObj\Bush</Filter>
+    </ClInclude>
+    <ClInclude Include="CityWorldChairA.h">
+      <Filter>Common\GameObj\Chair</Filter>
+    </ClInclude>
+    <ClInclude Include="CityWorldChairB.h">
+      <Filter>Common\GameObj\Chair</Filter>
+    </ClInclude>
+    <ClInclude Include="BenchA.h">
+      <Filter>Common\GameObj\Bench</Filter>
+    </ClInclude>
+    <ClInclude Include="CityWorldFlag.h">
+      <Filter>Common\GameObj\Flag</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckpointFlag.h">
+      <Filter>Common\GameObj\Flag</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinObject.h">
+      <Filter>Common\GameObj\Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_09.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_10.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_11.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_12.h">
+      <Filter>Common\GameObj\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_13.h">
+      <Filter>Common\GameObj\Buildings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1693,6 +1725,21 @@
     <Filter Include="Common\GameObj\Objects\InstantiativeObject">
       <UniqueIdentifier>{67fa33cf-6a75-4df8-9511-511b8902929f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\GameObj\Bush">
+      <UniqueIdentifier>{020d23d0-7abf-451d-b2fb-2a6a2280c51b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Chair">
+      <UniqueIdentifier>{24ac6ef1-c06d-4a7b-9ead-bb85de1174d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Bench">
+      <UniqueIdentifier>{ca82cb68-4eca-4e0c-b1bb-0e865af60c62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Flag">
+      <UniqueIdentifier>{adca139d-5528-4987-9cd7-4023a9c30f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Coin">
+      <UniqueIdentifier>{ab0858a2-70c5-4358-95ad-e63e6761b164}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common\GameObj\ModelObj">
@@ -1701,5 +1748,8 @@
     <Filter Include="Path">
       <UniqueIdentifier>{96fc8e58-9452-47fd-8ead-6e2570360962}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine_SOURCE.rc" />
   </ItemGroup>
 </Project>

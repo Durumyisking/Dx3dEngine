@@ -1,14 +1,16 @@
 #pragma once
 #include "GameObj.h"
 
-class CityWorldBush : public GameObj
+class MeshRenderer;
+class HomeBuilding_15 : public GameObj
 {
 public:
-	CityWorldBush();
-	CityWorldBush(const CityWorldBush& Obj);
-	virtual ~CityWorldBush();
+	HomeBuilding_15();
+	HomeBuilding_15(const HomeBuilding_15& Obj);
+	virtual ~HomeBuilding_15();
 
-	virtual CityWorldBush* Clone() const;
+
+	virtual HomeBuilding_15* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
@@ -18,4 +20,6 @@ public:
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerPersist(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
+
+private:
 };
