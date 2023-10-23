@@ -391,9 +391,6 @@
     <ClCompile Include="HelpUIScript.cpp">
       <Filter>UI\Script</Filter>
     </ClCompile>
-    <ClCompile Include="Building.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
-    </ClCompile>
     <ClCompile Include="FootSmokeParticle.cpp" />
     <ClCompile Include="DieCircleUIScript.cpp" />
     <ClCompile Include="DieUIEffectScript.cpp" />
@@ -457,18 +454,6 @@
     <ClCompile Include="StructedBuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="HomeBuildingFour.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="HomeBuildingFive.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="HomeBuildingSeven.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="HomeBuildingEight.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
-    </ClCompile>
     <ClCompile Include="CreateObject.cpp">
       <Filter>Common\GameObj\Objects</Filter>
     </ClCompile>
@@ -528,23 +513,71 @@
     <ClCompile Include="CoinObject.cpp">
       <Filter>Common\GameObj\Coin</Filter>
     </ClCompile>
+    <ClCompile Include="HomeBuildingFive.cpp">
+      <Filter>Common\GameObj\Buildings\0_5</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuildingFour.cpp">
+      <Filter>Common\GameObj\Buildings\0_5</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Common\GameObj\Buildings\0_5</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuildingEight.cpp">
+      <Filter>Common\GameObj\Buildings\6_10</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuildingSeven.cpp">
+      <Filter>Common\GameObj\Buildings\6_10</Filter>
+    </ClCompile>
     <ClCompile Include="HomeBuilding_09.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\6_10</Filter>
     </ClCompile>
     <ClCompile Include="HomeBuilding_10.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\6_10</Filter>
     </ClCompile>
     <ClCompile Include="HomeBuilding_11.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\11_15</Filter>
     </ClCompile>
     <ClCompile Include="HomeBuilding_12.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\11_15</Filter>
     </ClCompile>
     <ClCompile Include="HomeBuilding_13.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\11_15</Filter>
     </ClCompile>
     <ClCompile Include="HomeBuilding_15.cpp">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\11_15</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_16.cpp">
+      <Filter>Common\GameObj\Buildings\16~20</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_17.cpp">
+      <Filter>Common\GameObj\Buildings\16~20</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_18.cpp">
+      <Filter>Common\GameObj\Buildings\16~20</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_19.cpp">
+      <Filter>Common\GameObj\Buildings\16~20</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_20.cpp">
+      <Filter>Common\GameObj\Buildings\16~20</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_21.cpp">
+      <Filter>Common\GameObj\Buildings\21_26</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_22.cpp">
+      <Filter>Common\GameObj\Buildings\21_26</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_23.cpp">
+      <Filter>Common\GameObj\Buildings\21_26</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_24.cpp">
+      <Filter>Common\GameObj\Buildings\21_26</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeFence_0.cpp">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeBuilding_26.cpp">
+      <Filter>Common\GameObj\Buildings\21_26</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -996,9 +1029,6 @@
     <ClInclude Include="CapUI.h">
       <Filter>UI\UIObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Building.h">
-      <Filter>Common\GameObj\Buildings</Filter>
-    </ClInclude>
     <ClInclude Include="GenericAnimator.h">
       <Filter>Common\Component\GenericAnimator</Filter>
     </ClInclude>
@@ -1025,18 +1055,6 @@
     </ClInclude>
     <ClInclude Include="StructedBuffer.h">
       <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="HomeBuildingFour.h">
-      <Filter>Common\GameObj\Buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="HomeBuildingFive.h">
-      <Filter>Common\GameObj\Buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="HomeBuildingSeven.h">
-      <Filter>Common\GameObj\Buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="HomeBuildingEight.h">
-      <Filter>Common\GameObj\Buildings</Filter>
     </ClInclude>
     <ClInclude Include="CreateObject.h">
       <Filter>Common\GameObj\Objects</Filter>
@@ -1104,23 +1122,71 @@
     <ClInclude Include="CoinObject.h">
       <Filter>Common\GameObj\Coin</Filter>
     </ClInclude>
+    <ClInclude Include="HomeBuildingFive.h">
+      <Filter>Common\GameObj\Buildings\0_5</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingFour.h">
+      <Filter>Common\GameObj\Buildings\0_5</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Common\GameObj\Buildings\0_5</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingEight.h">
+      <Filter>Common\GameObj\Buildings\6_10</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuildingSeven.h">
+      <Filter>Common\GameObj\Buildings\6_10</Filter>
+    </ClInclude>
     <ClInclude Include="HomeBuilding_09.h">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\6_10</Filter>
     </ClInclude>
     <ClInclude Include="HomeBuilding_10.h">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\6_10</Filter>
     </ClInclude>
     <ClInclude Include="HomeBuilding_11.h">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\11_15</Filter>
     </ClInclude>
     <ClInclude Include="HomeBuilding_12.h">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\11_15</Filter>
     </ClInclude>
     <ClInclude Include="HomeBuilding_13.h">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\11_15</Filter>
     </ClInclude>
     <ClInclude Include="HomeBuilding_15.h">
-      <Filter>Common\GameObj\Buildings</Filter>
+      <Filter>Common\GameObj\Buildings\11_15</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_16.h">
+      <Filter>Common\GameObj\Buildings\16~20</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_17.h">
+      <Filter>Common\GameObj\Buildings\16~20</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_18.h">
+      <Filter>Common\GameObj\Buildings\16~20</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_19.h">
+      <Filter>Common\GameObj\Buildings\16~20</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_20.h">
+      <Filter>Common\GameObj\Buildings\16~20</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_21.h">
+      <Filter>Common\GameObj\Buildings\21_26</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_22.h">
+      <Filter>Common\GameObj\Buildings\21_26</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_23.h">
+      <Filter>Common\GameObj\Buildings\21_26</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_24.h">
+      <Filter>Common\GameObj\Buildings\21_26</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeFence_0.h">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeBuilding_26.h">
+      <Filter>Common\GameObj\Buildings\21_26</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1745,6 +1811,24 @@
     </Filter>
     <Filter Include="Common\GameObj\Coin">
       <UniqueIdentifier>{ab0858a2-70c5-4358-95ad-e63e6761b164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Buildings\6_10">
+      <UniqueIdentifier>{04a6c005-e227-4bce-b933-2b4c9d2603c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Buildings\0_5">
+      <UniqueIdentifier>{ac2f2bcd-d770-4983-8a81-cc94675e85e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Buildings\11_15">
+      <UniqueIdentifier>{48c2ea71-99a2-4a3d-b7fb-34f383f4c572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Buildings\16~20">
+      <UniqueIdentifier>{9c2e8e5e-7409-4b19-8d19-505a340498e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Buildings\21_26">
+      <UniqueIdentifier>{c8b3376e-c13d-4148-b619-a52d8860a299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Fence">
+      <UniqueIdentifier>{c4bd5a45-d909-4cd5-b8c8-9a29aa99a435}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
