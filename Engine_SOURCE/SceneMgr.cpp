@@ -260,7 +260,7 @@ void SceneMgr::CreateCDO()
 
 	HomeBuildingEight* buildingEightCDO = new HomeBuildingEight();
 	GameObj::AddObjectCDO("HomeBuildingEight", buildingEightCDO);
-
+	
 	//Building* buildingCDO = new Building();
 	//GameObj::AddObjectCDO("Building", buildingCDO);
 
@@ -308,6 +308,9 @@ void SceneMgr::CreateCDO()
 
 	//HomeBuilding_13* building_13CDO = new HomeBuilding_13();
 	//GameObj::AddObjectCDO("HomeBuilding_13", building_13CDO);
+
+	//HomeBuilding_15* building_15CDO = new HomeBuilding_15();
+	//GameObj::AddObjectCDO("HomeBuilding_15", building_15CDO);
 
 	//SkySphere* SkySphere = new SkySphere();
 	//GameObj::AddObjectCDO("SkySphere", SkySphere);

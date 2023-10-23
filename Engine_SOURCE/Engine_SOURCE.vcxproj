@@ -229,6 +229,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="HomeBuilding_11.h" />
     <ClInclude Include="HomeBuilding_12.h" />
     <ClInclude Include="HomeBuilding_13.h" />
+    <ClInclude Include="HomeBuilding_15.h" />
     <ClInclude Include="InstancingContainer.h" />
     <ClInclude Include="Bone.h" />
     <ClInclude Include="BoneAnimator.h" />
@@ -421,6 +422,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="HomeBuilding_11.cpp" />
     <ClCompile Include="HomeBuilding_12.cpp" />
     <ClCompile Include="HomeBuilding_13.cpp" />
+    <ClCompile Include="HomeBuilding_15.cpp" />
     <ClCompile Include="InstancingContainer.cpp" />
     <ClCompile Include="Bone.cpp" />
     <ClCompile Include="BoneAnimator.cpp" />

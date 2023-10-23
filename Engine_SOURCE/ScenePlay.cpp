@@ -145,19 +145,19 @@ void ScenePlay::Initialize()
 		}
 
 		{
-			GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-			plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-			plane->SetScale({ 1000.f, 0.5f, 1000.f });
-			plane->SetName(L"Plane");
-			plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-			plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.99f);
-			plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
-			plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+			//GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+			//plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+			//plane->SetScale({ 1000.f, 0.5f, 1000.f });
+			//plane->SetName(L"Plane");
+			//plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
+			//plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.99f);
+			//plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
+			//plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
-			PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			rigid->RemoveGravity();
+			//PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+			//rigid->RemoveGravity();
 
-			plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+			//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 
 		}
 
@@ -231,26 +231,27 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		plane->SetScale({ 1000.f, 0.5f, 1000.f });
-		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-		plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.99f);
-		plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
-		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+		//GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+		//plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+		//plane->SetScale({ 1000.f, 0.5f, 1000.f });
+		//plane->SetName(L"Plane");
+		//plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
+		//plane->GetMeshRenerer()->GetMaterial()->SetMetallic(0.99f);
+		//plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
+		//plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
-		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		rigid->RemoveGravity();
+		//PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		//rigid->RemoveGravity();
 
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 
+		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
 	}
 
 
 	{
-		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
-		block->SetPos(Vector3(40.f, -0.5f, 0.f));
+		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+		//block->SetPos(Vector3(40.f, -0.5f, 0.f));
 	}
 	//InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
 	//for (size_t i = 0; i < 20; i++)

@@ -119,6 +119,7 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/Motorcycle", L"Motorcycle");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/MotorcycleParkingLot", L"MotorcycleParkingLot");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/SouvenirCity1", L"SouvenirCity1");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityGround", L"CityWorldHomeGround000");
 
 
 #pragma region Building
@@ -199,8 +200,6 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 void ResourceMgr::LoadModel_CityWorld(bool* bfinish)
 {
 	//GETSINGLE(FileMgr)->StageFolderLoad(L"..//Resources/CityWorld/HomeStage", L"CityWorld");
-	
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityGround", L"CityGround");
 
 
 	*bfinish = true;
