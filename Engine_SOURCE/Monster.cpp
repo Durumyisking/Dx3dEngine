@@ -166,7 +166,7 @@ void Monster::CaptureEnter(MarioCap* cap)
 				(playerpos.x + (Initvelocity.x * inCurValue * DT)),
 				(playerpos.y + (Initvelocity.y * inCurValue * DT) - (0.5f * 9.8f * inCurValue * DT * inCurValue * DT)),
 				(playerpos.z + (Initvelocity.z * inCurValue * DT))
-			));
+			));	
 
 		
 		tr->SetPhysicalRotation(right * inCurValue);
@@ -182,7 +182,7 @@ void Monster::CaptureEnter(MarioCap* cap)
 		// 마리오 본체 pause
 		cap->GetOwner()->Pause();
 		cap->GetPhysical()->KinematicActorSleep();
-		cap->Pause();
+		//cap->Pause();
 		Player* player = dynamic_cast<Player*>(cap->GetOwner());
 		SetPlayer(player);
 		player->CapturingProcess();
