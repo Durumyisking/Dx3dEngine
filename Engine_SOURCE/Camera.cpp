@@ -122,6 +122,8 @@ void Camera::Render()
 	}
 
 	renderPostProcess();
+
+	//std::wcout << Mesh::sMeshCount << std::endl;
 }
 
 void Camera::CreateViewMatrix()

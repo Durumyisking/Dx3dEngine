@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include "GraphicDevice.h"
 
+//UINT Mesh::sMeshCount = 0;
 
 Mesh::Mesh()
 	: Resource(eResourceType::Mesh)
@@ -17,6 +18,7 @@ Mesh::Mesh()
 	, mbFrustumCulled(false)
 	, mOwnerWorldMatrix{}
 	, mInitialExtent{}
+	//, r (true)
 {
 }
 Mesh::~Mesh()
@@ -32,6 +34,7 @@ HRESULT Mesh::LoadFullpath(const std::wstring& path)
 }
 bool Mesh::CreateVertexBuffer(void* data, UINT count)
 {
+	//++sMeshCount;
 	mVertexCount = count;
 	mVBDesc.ByteWidth = sizeof(Vertex) * count;
 	mVBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
@@ -100,15 +103,26 @@ void Mesh::BindBuffer(bool drawInstance)
 		Vector3 extractedScale = { mOwnerWorldMatrix._11, mOwnerWorldMatrix._22, mOwnerWorldMatrix._33 };
 		mBoundingBox.Extents = mInitialExtent * extractedScale; // 계속 곱하니까 점이 되어버림(offset 0.00~~씩 해주니까) 초기 extent를 유지해야함
 		mbFrustumCulled = !frustum.Intersects(mBoundingBox);
-
-		//if (DirectX::ContainmentType::DISJOINT != frustum.Contains(mBoundingBox))
-		//{
-		//	mbFrustumCulled = false;
-		//}
-		//else
-		//{
-		//	mbFrustumCulled = true;
-		//}
+		
+	/*	if(mbFrustumCulled)
+		{
+			if (sMeshCount != 0)
+			{
+				if (r)
+				{
+					--sMeshCount;
+					r = false;
+				}
+			}
+		}
+		else
+		{
+			if (!r)
+			{
+				++sMeshCount;
+				r = true;
+			}
+		}*/
 	}				
 
 	if (drawInstance)
