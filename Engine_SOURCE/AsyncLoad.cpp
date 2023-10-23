@@ -704,7 +704,7 @@ void AsyncLoad::loadCityObjectMaterial()
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding0018 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0018_0Material", TextureState::Al);
+	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0018_0Material", TextureState::AlEm);
 	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0018_1Material", TextureState::Em);
 	createMaterial(L"EntranceLightSeal00", L"DeferredShader", L"HomeBuilding0018_2Material", TextureState::Em);
 	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0018_3Material", TextureState::Em);
@@ -739,6 +739,7 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"WallTentDepart00", L"DeferredShader", L"HomeBuilding0020_6Material", TextureState::AlNrRg);
 	createMaterial(L"WindowGlassConcrete00", L"DeferredShader", L"HomeBuilding0020_7Material", TextureState::AlMtMsNrRg);
 	createMaterial(L"WindowGlassConcrete01", L"DeferredShader", L"HomeBuilding0020_8Material", TextureState::AlEmNrRg);
+	createMaterial(L"WindowGlassConcrete02", L"DeferredShader", L"HomeBuilding0020_9Material", TextureState::AlNrRg);
 
 #pragma endregion
 
@@ -752,6 +753,7 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"WallTentDepart00", L"DeferredShader", L"HomeBuilding0021_6Material", TextureState::AlNrRg);
 	createMaterial(L"WindowGlassConcrete00", L"DeferredShader", L"HomeBuilding0021_7Material", TextureState::AlMtMsNrRg);
 	createMaterial(L"WindowGlassConcrete03", L"DeferredShader", L"HomeBuilding0021_8Material", TextureState::AlEmMtNrRg);
+	createMaterial(L"WindowGlassConcrete02", L"DeferredShader", L"HomeBuilding0021_9Material", TextureState::AlNrRg);
 
 
 #pragma endregion
@@ -766,6 +768,7 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"WallTentDepart00", L"DeferredShader", L"HomeBuilding0022_6Material", TextureState::AlNrRg);
 	createMaterial(L"WindowGlassConcrete00", L"DeferredShader", L"HomeBuilding0022_7Material", TextureState::AlMtMsNrRg);
 	createMaterial(L"WindowGlassConcrete01", L"DeferredShader", L"HomeBuilding0022_8Material", TextureState::AlEmNrRg);
+	createMaterial(L"WindowGlassConcrete02", L"DeferredShader", L"HomeBuilding0022_9Material", TextureState::AlNrRg);
 
 
 #pragma endregion
@@ -799,6 +802,7 @@ void AsyncLoad::loadCityObjectMaterial()
 
 #pragma region CityWorldHomeBuilding0026 Material
 	//DoorConcreteWallMain01 0
+	createMaterial(L"ConcreteWallMain01", L"DeferredShader", L"HomeBuilding0026_0Material", TextureState::AlEmNrRg);
 	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0026_1Material", TextureState::Em);
 	createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"HomeBuilding0026_2Material", TextureState::AlEmMsMtNr);
 	createMaterial(L"HouseAttachmentSet03", L"DeferredShader", L"HomeBuilding0026_3Material", TextureState::Al);
@@ -1263,8 +1267,10 @@ void AsyncLoad::loadCityTexture()
 	textureLoad(L"DoorWoodBill00", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNr);
 	textureLoad(L"WallConcreteFlat01", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNr);
 	textureLoad(L"WallConcreteFlat02", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNr);
+	textureLoad(L"WindowGlassConcrete02", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNrRg);
 
 	textureLoad(L"WallConcreteTopflloor06", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNrRg);
+
 
 
 

@@ -159,6 +159,8 @@ void ScenePlay::Initialize()
 
 			//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 
+			CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+
 		}
 
 		CreatePlayerUI();

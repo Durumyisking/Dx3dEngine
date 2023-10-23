@@ -101,7 +101,7 @@ void CityGround::Initialize()
 	mr->SetMaterialByKey(L"SideWalk02Material", 27); //
 	mr->SetMaterialByKey(L"ConcreteWall00Material", 28); //
 	mr->SetMaterialByKey(L"GroundLawn00Material", 29); //?
-	mr->SetMaterialByKey(L"GrassFlowerSet00Material", 30);  
+	mr->SetMaterialByKey(L"GrassFlowerSet00Material", 30);  //
 
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
