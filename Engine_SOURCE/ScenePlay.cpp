@@ -304,6 +304,7 @@ void ScenePlay::update()
 		mCoinPanal->GetScript<CoinUIScript>()->Reset();
 	}
 
+
 	Scene::update();
 }
 

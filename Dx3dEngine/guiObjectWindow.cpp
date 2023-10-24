@@ -151,6 +151,7 @@ namespace gui
 
 		hierarchy->GetTargetObject()->Die();
 		hierarchy->SetTargetObject(nullptr);
+		hierarchy->InitializeOutline(nullptr);
 		hierarchy->ForceReset();
 	}
 

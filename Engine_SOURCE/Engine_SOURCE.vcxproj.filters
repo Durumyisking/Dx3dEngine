@@ -579,6 +579,39 @@
     <ClCompile Include="HomeBuilding_26.cpp">
       <Filter>Common\GameObj\Buildings\21_26</Filter>
     </ClCompile>
+    <ClCompile Include="FenceA.cpp">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClCompile>
+    <ClCompile Include="FenceB.cpp">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeFence_1.cpp">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeFence_2.cpp">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeFence_3.cpp">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeFence_5.cpp">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeFence_6.cpp">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeManhole_0.cpp">
+      <Filter>Common\GameObj\Manhole</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeManhole_1.cpp">
+      <Filter>Common\GameObj\Manhole</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeManhole_2.cpp">
+      <Filter>Common\GameObj\Manhole</Filter>
+    </ClCompile>
+    <ClCompile Include="HomeManhole_3.cpp">
+      <Filter>Common\GameObj\Manhole</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -1187,6 +1220,37 @@
     </ClInclude>
     <ClInclude Include="HomeBuilding_26.h">
       <Filter>Common\GameObj\Buildings\21_26</Filter>
+    </ClInclude>
+    <ClInclude Include="FenceA.h">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClInclude>
+    <ClInclude Include="FenceB.h" />
+    <ClInclude Include="HomeFence_6.h">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeFence_1.h">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeFence_2.h">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeFence_3.h">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeFence_5.h">
+      <Filter>Common\GameObj\Fence</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeManhole_3.h">
+      <Filter>Common\GameObj\Manhole</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeManhole_0.h">
+      <Filter>Common\GameObj\Manhole</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeManhole_1.h">
+      <Filter>Common\GameObj\Manhole</Filter>
+    </ClInclude>
+    <ClInclude Include="HomeManhole_2.h">
+      <Filter>Common\GameObj\Manhole</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1829,6 +1893,9 @@
     </Filter>
     <Filter Include="Common\GameObj\Fence">
       <UniqueIdentifier>{c4bd5a45-d909-4cd5-b8c8-9a29aa99a435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\GameObj\Manhole">
+      <UniqueIdentifier>{159191f4-2258-4518-9172-e91e43171b65}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
