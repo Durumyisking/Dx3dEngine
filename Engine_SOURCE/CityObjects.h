@@ -33,5 +33,6 @@
 #include "HomeBuilding_24.h"
 #include "HomeBuilding_26.h"
 #include "FenceA.h"
+#include "FenceB.h"
 
 #include "CreateObject.h"

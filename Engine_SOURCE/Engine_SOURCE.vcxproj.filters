@@ -1224,7 +1224,6 @@
     <ClInclude Include="FenceA.h">
       <Filter>Common\GameObj\Fence</Filter>
     </ClInclude>
-    <ClInclude Include="FenceB.h" />
     <ClInclude Include="HomeFence_6.h">
       <Filter>Common\GameObj\Fence</Filter>
     </ClInclude>
@@ -1251,6 +1250,9 @@
     </ClInclude>
     <ClInclude Include="HomeManhole_2.h">
       <Filter>Common\GameObj\Manhole</Filter>
+    </ClInclude>
+    <ClInclude Include="FenceB.h">
+      <Filter>Common\GameObj\Fence</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
