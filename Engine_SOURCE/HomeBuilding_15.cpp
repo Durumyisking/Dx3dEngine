@@ -47,7 +47,7 @@ void HomeBuilding_15::Initialize()
 	mr->SetMaterialByKey(L"HomeBuilding0015_8Material", 8);
 	mr->SetMaterialByKey(L"HomeBuilding0015_9Material", 9);
 
-	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
+	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 10.f, 50.f, 10.f });

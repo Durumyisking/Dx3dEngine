@@ -121,46 +121,46 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldBushA", L"CityWorldBushA");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldChairA", L"CityWorldChairA");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldChairB", L"CityWorldChairB");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityGround", L"CityWorldHomeGround000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityGround", L"CityWorldHomeGround000");
 
 
 #pragma region Building
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding000", L"CityWorldHomeBuilding000");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding001", L"CityWorldHomeBuilding001");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding003", L"CityWorldHomeBuilding003");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding004", L"CityWorldHomeBuilding004");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding005", L"CityWorldHomeBuilding005");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding007", L"CityWorldHomeBuilding007");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding008", L"CityWorldHomeBuilding008");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding009", L"CityWorldHomeBuilding009");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding010", L"CityWorldHomeBuilding010");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding011", L"CityWorldHomeBuilding011");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding012", L"CityWorldHomeBuilding012");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding013", L"CityWorldHomeBuilding013");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding015", L"CityWorldHomeBuilding015");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding016", L"CityWorldHomeBuilding016");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding017", L"CityWorldHomeBuilding017");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding018", L"CityWorldHomeBuilding018");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding019", L"CityWorldHomeBuilding019");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding020", L"CityWorldHomeBuilding020");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding021", L"CityWorldHomeBuilding021");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding022", L"CityWorldHomeBuilding022");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding023", L"CityWorldHomeBuilding023");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding024", L"CityWorldHomeBuilding024");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding026", L"CityWorldHomeBuilding026");
-	// 
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding004", L"CityWorldHomeBuilding004");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding005", L"CityWorldHomeBuilding005");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding007", L"CityWorldHomeBuilding007");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding008", L"CityWorldHomeBuilding008");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding009", L"CityWorldHomeBuilding009");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding010", L"CityWorldHomeBuilding010");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding011", L"CityWorldHomeBuilding011");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding012", L"CityWorldHomeBuilding012");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding013", L"CityWorldHomeBuilding013");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding015", L"CityWorldHomeBuilding015");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding016", L"CityWorldHomeBuilding016");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding017", L"CityWorldHomeBuilding017");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding018", L"CityWorldHomeBuilding018");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding019", L"CityWorldHomeBuilding019");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding020", L"CityWorldHomeBuilding020");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding021", L"CityWorldHomeBuilding021");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding022", L"CityWorldHomeBuilding022");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding023", L"CityWorldHomeBuilding023");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding024", L"CityWorldHomeBuilding024");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding026", L"CityWorldHomeBuilding026");
+	 
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding014", L"CityWorldHomeBuilding014");  // --- 14¹ø Building Ãâ·Â¾ÈµÊ
 
 #pragma endregion
 
 #pragma region Fence
-//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence000", L"CityWorldHomeFence000");
-//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence001", L"CityWorldHomeFence001");
-//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence002", L"CityWorldHomeFence002");
-//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence003", L"CityWorldHomeFence003");
-//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence005", L"CityWorldHomeFence005");
-//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence006", L"CityWorldHomeFence006");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence000", L"CityWorldHomeFence000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence001", L"CityWorldHomeFence001");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence002", L"CityWorldHomeFence002");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence003", L"CityWorldHomeFence003");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence005", L"CityWorldHomeFence005");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence006", L"CityWorldHomeFence006");
 
 #pragma endregion
 
