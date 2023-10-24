@@ -135,7 +135,8 @@ namespace gui
 		if (AddObjectToScene(NewObj, mInputLayer))
 		{
 			Hierarchy* hierarchy = GETSINGLE(WidgetMgr)->GetWidget<Hierarchy>("Hierarchy");
-			hierarchy->ForceReset();
+
+			GETSINGLE(WidgetMgr)->ForceReset();
 		}
 	}
 
@@ -150,9 +151,8 @@ namespace gui
 			return;
 
 		hierarchy->GetTargetObject()->Die();
-		hierarchy->SetTargetObject(nullptr);
-		hierarchy->InitializeOutline(nullptr);
-		hierarchy->ForceReset();
+
+		GETSINGLE(WidgetMgr)->ForceReset();
 	}
 
 	void ObjectWindow::SetObjectLayerType(UINT num)

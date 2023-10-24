@@ -22,6 +22,8 @@ namespace gui
 		void ImGui_Run();
 		void ImGui_Release();
 
+		void ForceReset() { mbForceReset = true; }
+
 		class VisualEditor* GetVisualEditor() { return mVisualEditor; }
 		
 		template<typename T>
@@ -46,6 +48,8 @@ namespace gui
 		std::map<std::string, Widget*> mWidgets;
 
 		class VisualEditor* mVisualEditor;
+
+		bool mbForceReset;
 	};
 
 }

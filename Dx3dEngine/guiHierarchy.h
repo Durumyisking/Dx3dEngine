@@ -19,13 +19,12 @@ namespace gui
 		void InitializeOutline(void* data);
 		void InitializeScene();
 		void AddGameObject(TreeWidget::Node* parent, GameObj* gameObject);
+		void DeleteGameObject();
 
 		GameObj* GetTargetObject() { return mTargetObject; }
 		void SetTargetObject(GameObj* obj) { mTargetObject = obj; }
-		void ForceReset() { mbForceReset = true; }
 
 	private:
-		bool mbForceReset;
 		Scene* mCurrentScene;
 		TreeWidget* mTreeWidget;
 		GameObj* mTargetObject;

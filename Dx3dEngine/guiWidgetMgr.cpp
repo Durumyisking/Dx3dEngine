@@ -38,6 +38,7 @@ namespace gui
 	WidgetMgr::WidgetMgr()
 		: mWidgets{}
 		, mVisualEditor(nullptr)
+		, mbForceReset(false)
 	{
 
 	}
@@ -122,10 +123,11 @@ namespace gui
 		ImGui::NewFrame();
 		ImGuizmo::BeginFrame();
 
-		//for (Widget* widget : mWidgets) 
-		//{
-		//	widget->Update();
-		//}
+		if (mbForceReset)
+		{
+			GetWidget<Hierarchy>("Hierarchy")->InitializeScene();
+			mbForceReset = false;
+		}
 
 		mVisualEditor->Render();
 		for (auto iter : mWidgets)
@@ -135,6 +137,7 @@ namespace gui
 		}
 
 		ImGui_Run();
+
 	}
 
 	void WidgetMgr::ImGui_Initialize()

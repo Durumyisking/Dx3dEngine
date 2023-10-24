@@ -79,7 +79,13 @@ namespace gui
 		mTreeWidget->Clear();
 
 		if (mTargetGameObject == nullptr)
+		{
+			Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
+			inspector->SetTargetGameObject(mTargetGameObject);
+			inspector->InitializeTargetGameObject();
+
 			return;
+		}
 
 		//std::string objName(mTargetGameObject->GetName().begin(), mTargetGameObject->GetName().end());
 
