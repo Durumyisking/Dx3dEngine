@@ -51,7 +51,8 @@ void HomeBuilding_26::Initialize()
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 10.f, 50.f, 10.f });
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 3.f,1.f,3.f });
+	//physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 3.f,1.f,3.f }, { 0.f, 1000.f, 0.f }, MassProperties()); ::  Àû¿ë¾ÈµÊ
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();

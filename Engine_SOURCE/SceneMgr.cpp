@@ -261,8 +261,11 @@ void SceneMgr::CreateCDO()
 	CityGround* cityGroundCDO = new CityGround();
 	GameObj::AddObjectCDO("CityGround", cityGroundCDO);
 
-	//FenceA* fenceACDO = new FenceA();
-	//GameObj::AddObjectCDO("FenceA", fenceACDO);
+	FenceA* fenceACDO = new FenceA();
+	GameObj::AddObjectCDO("FenceA", fenceACDO);
+
+	FenceB* fenceBCDO = new FenceB();
+	GameObj::AddObjectCDO("FenceB", fenceBCDO);
 
 	//Car* carCDO = new Car();
     //GameObj::AddObjectCDO("Car", carCDO); //out of range
