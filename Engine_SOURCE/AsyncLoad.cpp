@@ -1204,6 +1204,16 @@ void AsyncLoad::loadCityObjectMaterial()
 	//createMaterial(L"MetalSignBoradSmallB00", L"DeferredShader", L"Sign027_1Material", TextureState::AlEmMtNrRg);
 
 #pragma endregion
+
+#pragma region CityWorldFenceA Material
+	createMaterial(L"BarricadePlasticWhite00", L"DeferredShader", L"FenceA_0Material", TextureState::AlNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldFenceA Material
+	createMaterial(L"BarricadePlasticWhite00", L"DeferredShader", L"FenceB_0Material", TextureState::AlNrRg);
+
+#pragma endregion
 }
 
 void AsyncLoad::loadCityTexture()
@@ -1594,6 +1604,11 @@ void AsyncLoad::loadCityTexture()
 
 #pragma region CityWorldHomeSign027
 		textureLoad(L"MetalSignBoradSmallB00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign027/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldFenceA And CityWorldFenceB
+		textureLoad(L"BarricadePlasticWhite00", L"CityWorldObject/CityWorldFence/CityWorldFenceA/Image", TextureState::AlNrRg);
 
 #pragma endregion
 }
