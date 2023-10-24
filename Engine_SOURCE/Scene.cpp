@@ -79,7 +79,6 @@ void Scene::Load(FILE* File)
 			GameObj* NewObj = ObjCDO->Clone();
 			NewObj->Load(File);
 
-			mLayers[i].AddGameObject(NewObj, layerType);
 			mLayers[i].PushAddedObject(NewObj);
 		}
 	}

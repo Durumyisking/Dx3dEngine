@@ -81,13 +81,14 @@ namespace gui
 		if (mTargetGameObject == nullptr)
 			return;
 
-		std::string objName(mTargetGameObject->GetName().begin(), mTargetGameObject->GetName().end());
-
-		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, objName, 0, true);
+		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, "Object", 0, true);
 
 		root->ChildsResize(static_cast<UINT>(enums::eComponentType::End));
 
 		mComponents = mTargetGameObject->GetComponentsVec();
+
+		if (mComponents.empty())
+			return;
 
 		for (size_t i = 0; i < static_cast<UINT>(enums::eComponentType::End); i++)
 		{

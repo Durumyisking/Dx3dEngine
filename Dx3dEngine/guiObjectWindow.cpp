@@ -151,6 +151,7 @@ namespace gui
 
 		hierarchy->GetTargetObject()->Die();
 		hierarchy->SetTargetObject(nullptr);
+		hierarchy->InitializeOutline(nullptr);
 		hierarchy->ForceReset();
 	}
 
@@ -167,7 +168,6 @@ namespace gui
 			return false;
 
 		Layer& layer = scene->GetLayer(type);
-		layer.AddGameObject(obj, type);
 		layer.PushAddedObject(obj);
 
 		return true;
