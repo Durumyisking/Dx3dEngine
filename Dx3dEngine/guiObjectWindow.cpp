@@ -167,7 +167,8 @@ namespace gui
 			return false;
 
 		Layer& layer = scene->GetLayer(type);
-		layer.AddGameObject(obj, type);
+		obj->SetLayerType(type);
+		//layer.AddGameObject(obj, type);
 		layer.PushAddedObject(obj);
 
 		return true;
