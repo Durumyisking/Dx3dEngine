@@ -64,6 +64,7 @@ namespace gui
 		//ImGui::SetNextWindowFocus();  // 윈도우에 포커스 설정
 		//ImGui::SetNextWindowContentSize(ImVec2(10, 10));  // 컨텐츠 크기 초기화
 
+
 		Scene* mActiveScene = GETSINGLE(SceneMgr)->GetActiveScene();
 		if (mCurrentScene != mActiveScene || mbForceReset)
 		{
@@ -78,28 +79,10 @@ namespace gui
 			}
 		}
 
-
-		if (KEY_UP(LSHIFT))
-			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
-
-		if (!KEY_DOWN(LSHIFT))
-			return;
-
-		if (KEY_TAP(LBTN))
+		if (renderer::outlineTargetObject != mTargetObject)
 		{
-			mTargetObject = GETSINGLE(PhysXRayCast)->Raycast();
-
+			mTargetObject = renderer::outlineTargetObject;
 			InitializeOutline(mTargetObject);
-		}
-
-		if (KEY_DOWN(LBTN))
-		{
-			GETSINGLE(PhysXRayCast)->MoveObject();
-		}
-
-		if (KEY_UP(LBTN))
-		{
-			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
 		}
 	}
 
@@ -140,13 +123,13 @@ namespace gui
 		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, sceneName, 0, true);
 
 
-		for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
+		for (int i = 0; i < static_cast<int>(enums::eLayerType::End); i++)
 		{
 			Layer& layer = mCurrentScene->GetLayer((enums::eLayerType)i);
 			const std::vector<GameObj*>& gameObjs = layer.GetGameObjects();
 
 			std::string name = "eLayerType::";
-			std::string layerTypeName = enums::charLayerType[static_cast<UINT>(i)];
+			std::string layerTypeName = enums::charLayerType[i];
 
 			TreeWidget::Node* rootChild = mTreeWidget->AddNode(root, name + layerTypeName, 0, false);
 

@@ -65,9 +65,9 @@ namespace gui
 
 			TreeWidget::Node* root = tree->AddNode(nullptr, "SelectObjectLayerType", 0, true);
 
-			for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
+			for (int i = 0; i < static_cast<int>(enums::eLayerType::End); i++)
 			{
-				std::string layerTypeName = enums::charLayerType[static_cast<UINT>(i)];
+				std::string layerTypeName = enums::charLayerType[i];
 
 				TreeWidget::Node* rootChild = tree->AddNode(root, layerTypeName, 0, false, i);
 			}

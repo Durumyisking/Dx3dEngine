@@ -105,6 +105,10 @@
 #include "ModelObj.h"
 
 
+#include "PhysXRayCast.h"
+#include "../Dx3dEngine/guiWidgetMgr.h"
+#include "../Dx3dEngine/guiHierarchy.h"
+
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
 	, mCityCoinPanal(nullptr)
@@ -138,12 +142,6 @@ void ScenePlay::Initialize()
 	//TestScene 로드 테스트 로드시에 반복해서 몬스터 정의 방지
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
-		{
-			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
-			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-			skySphere->SetName(L"SkySphere");
-		}
-
 		{
 			GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
 			plane->SetPos(Vector3(0.f, -0.251f, 0.f));
@@ -225,7 +223,7 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
 		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		skySphere->SetName(L"SkySphere");
 	}
@@ -247,6 +245,21 @@ void ScenePlay::Initialize()
 
 	}
 
+	{
+		GameObj* TestStatic = object::Instantiate<GameObj>(eLayerType::NonePhysical, this);
+		TestStatic->SetPos(Vector3(5.f, 5.f, 5.f));
+		TestStatic->SetScale({ 5.f, 5.f, 5.f });
+		TestStatic->SetName(L"TestStatic");
+		TestStatic->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
+		TestStatic->GetMeshRenderer()->GetMaterial()->SetMetallic(0.99f);
+		TestStatic->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
+		TestStatic->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(5.f, 5.f, 5.f));
+
+		PhysXRigidBody* rigid = TestStatic->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		rigid->RemoveGravity();
+
+		TestStatic->AddComponent<PhysXCollider>(eComponentType::Collider);
+	}
 
 	{
 		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
@@ -368,6 +381,25 @@ void ScenePlay::update()
 		mCoinPanal->GetScript<CoinUIScript>()->Reset();
 	}
 
+
+	if (KEY_UP(LSHIFT))
+		GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+	else
+	{
+		if (KEY_DOWN(LSHIFT) && KEY_TAP(LBTN))
+		{
+			GameObj* target = GETSINGLE(PhysXRayCast)->Raycast();
+
+			renderer::outlineTargetObject = target;
+		}
+
+		if (KEY_UP(LBTN))
+		{
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+		}
+	}
+
+
 	Scene::update();
 }
 
@@ -387,7 +419,7 @@ void ScenePlay::Enter()
 {
 	Scene::Enter();
 
-	mCamera->SetPos(Vector3(0.f, 25.f, -25.f));
+	mCamera->SetPos(Vector3(0.f, 75.f, -75.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }
