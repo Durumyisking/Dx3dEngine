@@ -77,6 +77,20 @@ void BaseRenderer::SetMaterialByKey(std::wstring key, UINT modelMeshSlot)
 	}
 }
 
+void BaseRenderer::SetMaterial(std::wstring key)
+{
+	if (mModel)
+	{
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+		mMaterialKey = key;
+	}
+	else
+	{
+		mMaterial = GETSINGLE(ResourceMgr)->Find<Material>(key);
+		mMaterialKey = key;
+	}
+}
+
 void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
 {
 	mMaterial = material;

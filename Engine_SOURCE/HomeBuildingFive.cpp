@@ -6,17 +6,29 @@
 #include "PhysXCollider.h"
 
 HomeBuildingFive::HomeBuildingFive()
+	: GameObj()
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "HomeBuildingFive";
+}
+
+HomeBuildingFive::HomeBuildingFive(const HomeBuildingFive& Obj)
+	:GameObj(Obj)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }
 
 HomeBuildingFive::~HomeBuildingFive()
 {
 }
 
+HomeBuildingFive* HomeBuildingFive::Clone() const
+{
+	return new HomeBuildingFive(*this);
+}
+
 void HomeBuildingFive::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding005");
 	assert(model);
 
@@ -42,7 +54,7 @@ void HomeBuildingFive::Initialize()
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 10.f, 50.f, 10.f });
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 10.f, 50.f, 10.f });
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();

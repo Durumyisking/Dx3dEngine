@@ -7,17 +7,29 @@
 
 
 HomeBuildingFour::HomeBuildingFour()
+	: GameObj()
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "HomeBuildingFour";
+}
+
+HomeBuildingFour::HomeBuildingFour(const HomeBuildingFour& Obj)
+	:GameObj(Obj)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }
 
 HomeBuildingFour::~HomeBuildingFour()
 {
 }
 
+HomeBuildingFour* HomeBuildingFour::Clone() const
+{
+	return new HomeBuildingFour(*this);
+}
+
 void HomeBuildingFour::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding004");
 	assert(model);
 
@@ -43,7 +55,7 @@ void HomeBuildingFour::Initialize()
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 10.f, 50.f, 10.f });
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 10.f, 50.f, 10.f });
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();

@@ -5,33 +5,48 @@
 #include "PhysXRigidBody.h"
 #include "PhysXCollider.h"
 
-CreateObject::CreateObject(const std::wstring& modelKey, std::vector<std::wstring> array)
-	:MaterialArray(array)
+CreateObject::CreateObject(const std::wstring& modelKey,const std::wstring& materialKey,Vector3 size)
+	:GameObj()
+	,mModelKey(modelKey)
+	,mMaterialKey(materialKey)
+	,mColliderSize(size)
 {
 	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = std::string().assign(modelKey.begin(),modelKey.end());
+}
 
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(modelKey);
-	assert(model);
-
-	MeshRenderer* mr = GetComponent<MeshRenderer>();
-	mr->SetModel(model);
-
-	for (size_t i = 0; i < MaterialArray.size(); i++)
-	{
-		mr->SetMaterialByKey(MaterialArray[i], static_cast<UINT>(i));
-	}
+CreateObject::CreateObject(const CreateObject& Obj)
+	:GameObj(Obj)
+	, mModelKey(Obj.mModelKey)
+	, mMaterialKey(Obj.mMaterialKey)
+	, mColliderSize(Obj.mColliderSize)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }
 
 CreateObject::~CreateObject()
 {
 }
 
+CreateObject* CreateObject::Clone() const
+{
+	return  new CreateObject(*this);
+}
+
 void CreateObject::Initialize()
 {
+	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(mModelKey);
+	assert(model);
+
+	MeshRenderer* mr = GetComponent<MeshRenderer>();
+	mr->SetModel(model);
+
+	mr->SetMaterial(mMaterialKey);
+
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 10.f, 50.f, 10.f });
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 10.f, 50.f, 10.f });
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();

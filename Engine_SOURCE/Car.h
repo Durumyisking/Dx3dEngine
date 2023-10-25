@@ -6,8 +6,10 @@ class Car : public GameObj
 {
 public:
 	Car();
+	Car(const Car& Obj);
 	virtual ~Car();
 
+	virtual Car* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;

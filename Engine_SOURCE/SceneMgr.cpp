@@ -22,7 +22,13 @@
 #include "ModelObj.h"
 #include "SkySphere.h"
 
+
+#include "CityObjects.h"
+
+
+
 #include "BlockBrick.h"
+
 
 
 SceneMgr::SceneMgr()
@@ -105,7 +111,7 @@ void SceneMgr::LoadScene(eSceneType type)
 {
 	if (mActiveScene->GetType() == type)
 	{
-		//∑Œµ˘ æ¿¿∏∑Œ ≥—æÓ∞°º≠ ¿€æ˜«œ±‚
+		//Î°úÎî© Ïî¨ÏúºÎ°ú ÎÑòÏñ¥Í∞ÄÏÑú ÏûëÏóÖÌïòÍ∏∞
 	}
 
 	if (mActiveScene)
@@ -128,7 +134,7 @@ void SceneMgr::ChangeScene(eSceneType type)
 {
 	if (mActiveScene->GetType() == type)
 	{
-		//∑Œµ˘ æ¿¿∏∑Œ ≥—æÓ∞°º≠ ¿€æ˜«œ±‚
+		//Î°úÎî© Ïî¨ÏúºÎ°ú ÎÑòÏñ¥Í∞ÄÏÑú ÏûëÏóÖÌïòÍ∏∞
 	}
 
 	if (mActiveScene)
@@ -184,7 +190,7 @@ bool SceneMgr::SaveSceneFile(eSceneType type, const std::wstring& filePath)
 	return true;
 }
 
-//¥Ÿ∏• æ≤∑πµÂ∏¶ Ω·º≠ πÈ±◊∂ÛøÓµÂ ∑Œµ˘ «œ¥¬π˝ √£±‚
+//Îã§Î•∏ Ïì∞Î†àÎìúÎ•º Ïç®ÏÑú Î∞±Í∑∏ÎùºÏö¥Îìú Î°úÎî© ÌïòÎäîÎ≤ï Ï∞æÍ∏∞
 bool SceneMgr::LoadSceneFile(const std::wstring& filePath)
 {
 	FILE* File = nullptr;
@@ -256,8 +262,103 @@ void SceneMgr::CreateCDO()
 	ModelObj* ModelObjCDO = new ModelObj();
 	GameObj::AddObjectCDO("ModelObj", ModelObjCDO);
 
+
+	CityGround* cityGroundCDO = new CityGround();
+	GameObj::AddObjectCDO("CityGround", cityGroundCDO);
+
+	FenceA* fenceACDO = new FenceA();
+	GameObj::AddObjectCDO("FenceA", fenceACDO);
+
+	FenceB* fenceBCDO = new FenceB();
+	GameObj::AddObjectCDO("FenceB", fenceBCDO);
+
+	//Car* carCDO = new Car();
+    //GameObj::AddObjectCDO("Car", carCDO); //out of range
+
+    //CoinObject* coinCDO = new CoinObject();
+    //GameObj::AddObjectCDO("CoinObject", coinCDO);
+
+    //CityWorldBush* bushCDO = new CityWorldBush();
+    //GameObj::AddObjectCDO("CityWorldBush", bushCDO);
+
+    //CityWorldBushA* bushACDO = new CityWorldBushA();
+    //GameObj::AddObjectCDO("CityWorldBushA", bushACDO);
+    
+    //CityWorldChairA* chairACDO = new CityWorldChairA();
+    //GameObj::AddObjectCDO("CityWorldChairA", chairACDO);
+    
+    //CityWorldChairB* chairBCDO = new CityWorldChairB();
+    //GameObj::AddObjectCDO("CityWorldChairB", chairBCDO);
+    
+    //BenchA* benchACDO = new BenchA();
+    //GameObj::AddObjectCDO("BenchA", benchACDO);
+
+	HomeBuildingEight* buildingEightCDO = new HomeBuildingEight();
+	GameObj::AddObjectCDO("HomeBuildingEight", buildingEightCDO);
+	
+	Building* buildingCDO = new Building();
+	GameObj::AddObjectCDO("Building", buildingCDO);
+
+	HomeBuildingFour* buildingFourCDO = new HomeBuildingFour();
+	GameObj::AddObjectCDO("HomeBuildingFour", buildingFourCDO);
+
+	HomeBuildingFive* buildingFiveCDO = new HomeBuildingFive();
+	GameObj::AddObjectCDO("HomeBuildingFive", buildingFiveCDO);
+	
+	HomeBuildingSeven* buildingSevenCDO = new HomeBuildingSeven();
+	GameObj::AddObjectCDO("HomeBuildingSeven", buildingSevenCDO);
+
+	HomeBuilding_09* building_9CDO = new HomeBuilding_09();
+	GameObj::AddObjectCDO("HomeBuilding_09", building_9CDO);
+
+	HomeBuilding_10* building_10CDO = new HomeBuilding_10();
+	GameObj::AddObjectCDO("HomeBuilding_10", building_10CDO);
+
+	HomeBuilding_11* building_11CDO = new HomeBuilding_11();
+	GameObj::AddObjectCDO("HomeBuilding_11", building_11CDO);
+
+	HomeBuilding_12* building_12CDO = new HomeBuilding_12();
+	GameObj::AddObjectCDO("HomeBuilding_12", building_12CDO);
+
+	HomeBuilding_13* building_13CDO = new HomeBuilding_13();
+	GameObj::AddObjectCDO("HomeBuilding_13", building_13CDO);
+
+	HomeBuilding_15* building_15CDO = new HomeBuilding_15();
+	GameObj::AddObjectCDO("HomeBuilding_15", building_15CDO);
+
+	HomeBuilding_16* building_16CDO = new HomeBuilding_16();
+	GameObj::AddObjectCDO("HomeBuilding_16", building_16CDO);
+
+	HomeBuilding_17* building_17CDO = new HomeBuilding_17();
+	GameObj::AddObjectCDO("HomeBuilding_17", building_17CDO);
+
+	HomeBuilding_18* building_18CDO = new HomeBuilding_18();
+	GameObj::AddObjectCDO("HomeBuilding_18", building_18CDO);
+
+	HomeBuilding_19* building_19CDO = new HomeBuilding_19();
+	GameObj::AddObjectCDO("HomeBuilding_19", building_19CDO);
+
+	HomeBuilding_20* building_20CDO = new HomeBuilding_20();
+	GameObj::AddObjectCDO("HomeBuilding_20", building_20CDO);
+
+	HomeBuilding_21* building_21CDO = new HomeBuilding_21();
+	GameObj::AddObjectCDO("HomeBuilding_21", building_21CDO);
+
+	HomeBuilding_22* building_22CDO = new HomeBuilding_22();
+	GameObj::AddObjectCDO("HomeBuilding_22", building_22CDO);
+
+	HomeBuilding_23* building_23CDO = new HomeBuilding_23();
+	GameObj::AddObjectCDO("HomeBuilding_23", building_23CDO);
+
+	HomeBuilding_24* building_24CDO = new HomeBuilding_24();
+	GameObj::AddObjectCDO("HomeBuilding_24", building_24CDO);
+
+	HomeBuilding_26* building_26CDO = new HomeBuilding_26();
+	GameObj::AddObjectCDO("HomeBuilding_26", building_26CDO);
+
 	BlockBrick* BlockBrickObjCDO = new BlockBrick();
 	GameObj::AddObjectCDO("BlockBrick", BlockBrickObjCDO);
+
 
 	//SkySphere* SkySphere = new SkySphere();
 	//GameObj::AddObjectCDO("SkySphere", SkySphere);

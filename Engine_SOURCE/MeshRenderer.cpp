@@ -75,6 +75,9 @@ void MeshRenderer::Render()
 	}
 	else
 	{
+		if (GetMaterial() == nullptr)
+			return;
+
 		GetMaterial()->Bind();
 		GetMesh()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
 		GetMesh()->BindBuffer();
@@ -82,3 +85,4 @@ void MeshRenderer::Render()
 		GetMaterial()->Clear();
 	}
 }
+

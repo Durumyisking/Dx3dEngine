@@ -7,8 +7,16 @@
 
 
 CityWorldChairB::CityWorldChairB()
+	: GameObj()
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "CityWorldChairB";
+}
 
+CityWorldChairB::CityWorldChairB(const CityWorldChairB& Obj)
+	:GameObj(Obj)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }
 
 CityWorldChairB::~CityWorldChairB()
@@ -16,10 +24,13 @@ CityWorldChairB::~CityWorldChairB()
 
 }
 
+CityWorldChairB* CityWorldChairB::Clone() const
+{
+	return new CityWorldChairB(*this);
+}
+
 void CityWorldChairB::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldChairB");
 	assert(model);
 

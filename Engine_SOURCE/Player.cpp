@@ -370,8 +370,8 @@ void Player::KeyCheck()
 
 	// 모자 던지기
 	able = false;
-	//stateEvent(eKeyState::TAP, eKeyCode::LCTRL, ePlayerState::ThrowCap);
-	stateEvent(eKeyState::TAP, eKeyCode::LBTN, ePlayerState::ThrowCap);
+	stateEvent(eKeyState::TAP, eKeyCode::LCTRL, ePlayerState::ThrowCap);
+	//stateEvent(eKeyState::TAP, eKeyCode::LBTN, ePlayerState::ThrowCap);
 
 	// 특수
 	able = false;

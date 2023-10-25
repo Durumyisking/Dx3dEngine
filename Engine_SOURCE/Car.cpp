@@ -6,17 +6,29 @@
 #include "PhysXCollider.h"
 
 Car::Car()
+	: GameObj()
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "Car";
+}
+
+Car::Car(const Car& Obj)
+	:GameObj(Obj)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }
 
 Car::~Car()
 {
 }
 
+Car* Car::Clone() const
+{
+	return new Car(*this);
+}
+
 void Car::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"Car");
 	assert(model);
 
@@ -26,24 +38,18 @@ void Car::Initialize()
 	mr->SetMaterialByKey(L"TaxiCar_0Material", 0);
 	mr->SetMaterialByKey(L"TaxiCar_0Material", 1);
 	mr->SetMaterialByKey(L"TaxiCar_0Material", 2);
-	mr->SetMaterialByKey(L"TaxiCar_1Material", 3);
+	mr->SetMaterialByKey(L"TaxiCar_0Material", 3);
 	mr->SetMaterialByKey(L"TaxiCar_1Material", 4);
-	mr->SetMaterialByKey(L"TaxiCar_1Material", 5);
-	//mr->SetMaterialByKey(L"RoofConcrete01Material", 6);
-	//mr->SetMaterialByKey(L"WallGlassPaintedSteelMaterial", 7);
+	mr->SetMaterialByKey(L"TaxiCar_0Material", 5);
+	mr->SetMaterialByKey(L"TaxiCar_0Material", 6);
+	mr->SetMaterialByKey(L"TaxiCar_0Material", 7);
 	mr->SetMaterialByKey(L"TaxiCar_0Material", 8);
-	mr->SetMaterialByKey(L"TaxiCar_1Material", 9);
-	mr->SetMaterialByKey(L"TaxiCar_1Material", 10);
-	mr->SetMaterialByKey(L"TaxiCar_1Material", 11);
 
-
-	//createMaterial(L"carbody", L"DeferredShader", L"TaxiCar_0Material", TextureState::AlEmMtNrRg);
-	//createMaterial(L"carwindow", L"DeferredShader", L"TaxiCar_1Material", TextureState::AlNrRg);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 10.f, 50.f, 10.f });
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 10.f, 50.f, 10.f });
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();
