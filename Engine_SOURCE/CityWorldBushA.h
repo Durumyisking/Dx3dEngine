@@ -5,8 +5,10 @@ class CityWorldBushA : public GameObj
 {
 public:
 	CityWorldBushA();
+	CityWorldBushA(const CityWorldBushA& Obj);
 	virtual ~CityWorldBushA();
 
+	virtual CityWorldBushA* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;

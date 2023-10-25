@@ -53,7 +53,7 @@ void BlockBrick::Initialize()
 	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 0.5f, 0.5f, 0.5f });
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 0.5f, 0.5f, 0.5f });
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();

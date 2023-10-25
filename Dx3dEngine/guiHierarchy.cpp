@@ -143,5 +143,4 @@ namespace gui
 
 		TreeWidget::Node* node = mTreeWidget->AddNode(parent, name, gameObject);
 	}
-
 }

@@ -7,8 +7,10 @@ class CityGround : public GameObj
 
 public:
 	CityGround();
+	CityGround(const CityGround& Obj);
 	virtual ~CityGround();
 
+	virtual CityGround* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;

@@ -38,6 +38,7 @@ namespace gui
 	WidgetMgr::WidgetMgr()
 		: mWidgets{}
 		, mVisualEditor(nullptr)
+		, mbForceReset(false)
 	{
 
 	}
@@ -137,6 +138,7 @@ namespace gui
 		}
 
 		ImGui_Run();
+
 	}
 
 	void WidgetMgr::ImGui_Initialize()

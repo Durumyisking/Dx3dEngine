@@ -23,6 +23,7 @@ public:
 		AlNr,
 		AlRg,
 		AlEm,
+		AlEmNr,
 		AlMsNr,
 		AlNrRg,
 		AlMtNrRg,
@@ -40,6 +41,7 @@ private:
 
 	void loadCityObjectMaterial();
 	void loadCityTexture();
+	void loadBuildingMaterials();
 
 
 	void createMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state);

@@ -24,7 +24,6 @@ namespace gui
 		void SetTargetObject(GameObj* obj) { mTargetObject = obj; }
 
 	private:
-		bool mbForceReset;
 		Scene* mCurrentScene;
 		TreeWidget* mTreeWidget;
 		GameObj* mTargetObject;

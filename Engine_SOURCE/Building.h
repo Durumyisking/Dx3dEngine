@@ -10,8 +10,8 @@ public:
 	Building(const Building& Obj);
 	virtual ~Building();
 
-	virtual Building* Clone() const;
 
+	virtual Building* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;

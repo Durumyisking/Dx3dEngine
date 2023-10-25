@@ -79,8 +79,17 @@ namespace gui
 		mTreeWidget->Clear();
 
 		if (mTargetGameObject == nullptr)
-			return;
+		{
+			Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
+			inspector->SetTargetGameObject(mTargetGameObject);
+			inspector->InitializeTargetGameObject();
 
+			return;
+		}
+
+		//std::string objName(mTargetGameObject->GetName().begin(), mTargetGameObject->GetName().end());
+
+		//TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, objName, 0, true);
 		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, "Object", 0, true);
 
 		root->ChildsResize(static_cast<UINT>(enums::eComponentType::End));

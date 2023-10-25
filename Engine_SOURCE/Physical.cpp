@@ -53,7 +53,7 @@ void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geom
 	createActor();
 	CreateMainShape();
 	AddActorToPxScene();
-
+	
 	mbSceneIncludActor = true;
 //		createUniversalShape();
 }
