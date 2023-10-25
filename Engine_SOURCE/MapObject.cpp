@@ -5,13 +5,14 @@
 #include "PhysXRigidBody.h"
 #include "PhysXCollider.h"
 
-MapObject::MapObject(std::wstring modelName, Vector3 physicalScale)
+MapObject::MapObject(std::wstring modelName, Vector3 physicalScale, Vector3 colliderOffectPos)
 	: GameObj()
 	, mModelName(modelName)
 	, mbPhysical(true)
 	, mPhysicalScale(physicalScale)
 	, mGeometryType(eGeometryType::Box)
 	, mActorType(eActorType::Static)
+	, mColliderOffsetPos(mColliderOffsetPos)
 {
 	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 	mObjectTypeName = "MapObject";
@@ -24,6 +25,7 @@ MapObject::MapObject(const MapObject& Obj)
 	, mPhysicalScale(Obj.mPhysicalScale)
 	, mGeometryType(Obj.mGeometryType)
 	, mActorType(Obj.mActorType)
+	, mColliderOffsetPos(Obj.mColliderOffsetPos)
 {
 	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 }

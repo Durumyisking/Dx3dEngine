@@ -5,7 +5,7 @@ class MeshRenderer;
 class MapObject : public GameObj
 {
 public:
-	MapObject(std::wstring mModelName, Vector3 mPhysicalScale;);
+	MapObject(std::wstring modelName, Vector3 physicalScale, Vector3 colliderOffectPos);
 	MapObject(const MapObject& Obj);
 	virtual ~MapObject();
 
@@ -28,4 +28,5 @@ private:
 	Vector3 mPhysicalScale;
 	eGeometryType mGeometryType;
 	eActorType mActorType;
+	Vector3 mColliderOffsetPos;
 };
