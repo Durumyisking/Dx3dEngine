@@ -242,22 +242,6 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		GameObj* TestStatic = object::Instantiate<GameObj>(eLayerType::NonePhysical, this);
-		TestStatic->SetPos(Vector3(5.f, 5.f, 5.f));
-		TestStatic->SetScale({ 5.f, 5.f, 5.f });
-		TestStatic->SetName(L"TestStatic");
-		TestStatic->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-		TestStatic->GetMeshRenderer()->GetMaterial()->SetMetallic(0.99f);
-		TestStatic->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
-		TestStatic->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(5.f, 5.f, 5.f));
-
-		PhysXRigidBody* rigid = TestStatic->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		rigid->RemoveGravity();
-
-		TestStatic->AddComponent<PhysXCollider>(eComponentType::Collider);
-	}
-
-	{
 		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
 		block->SetPos(Vector3(40.f, -0.5f, 0.f));
 	}
