@@ -53,6 +53,7 @@ namespace gui
 			CDOList->SetItemList(CDOTypeVec);
 			CDOList->SetEvent(this, std::bind(&ObjectWindow::GetObjectCDO, this, std::placeholders::_1));
 		}
+
 		{
 			TreeWidget* tree = mGroupWidget->CreateWidget<TreeWidget>(150.f, 200.f);
 			tree->SetName("SelectObjectLayerType");
@@ -103,9 +104,9 @@ namespace gui
 
 		ImGui::PushItemWidth(100.0f);
 		
-		// ì´ˆê¸°í™”: std::stringì˜ ê°’ì„ ë²„í¼ì— ë³µì‚¬
+		// ÃÊ±âÈ­: std::stringÀÇ °ªÀ» ¹öÆÛ¿¡ º¹»ç
 		strncpy_s(buf, mInputText.c_str(), sizeof(buf));
-		buf[sizeof(buf) - 1] = 0; // ë„ ì¢…ë£Œ ë¬¸ìë¥¼ ë³´ì¥
+		buf[sizeof(buf) - 1] = 0; // ³Î Á¾·á ¹®ÀÚ¸¦ º¸Àå
 
 		if (ImGui::InputText("ObjectName", buf, sizeof(buf)))
 			mInputText = buf;

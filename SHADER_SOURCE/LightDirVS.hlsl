@@ -9,7 +9,7 @@ struct VSIn
 struct VSOut
 {
     float4 Position : SV_Position; // uv구하기 위한 ..
-    float4 PlayerDepth : SV_Position1;
+    //float4 PlayerDepth : SV_Position1;
 };
 
 
@@ -20,7 +20,7 @@ VSOut main(VSIn In)
     Out.Position = float4(In.Position.xy * 2.0f, 0.0f, 1.0f);
     
     
-    Out.PlayerDepth = 
+    //Out.PlayerDepth = 
     
     return Out;
 }

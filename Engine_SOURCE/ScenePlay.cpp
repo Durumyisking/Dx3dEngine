@@ -42,6 +42,7 @@
 #include "PhysicsScene.h"
 #include "PhysX.h"
 
+
 #include "Sphere.h"
 #include "Box.h"
 
@@ -136,7 +137,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene 로드 테스트 로드시에 반복해서 몬스터 정의 방지
+	//TestScene �ε� �׽�Ʈ �ε�ÿ� �ݺ��ؼ� ���� ���� ����
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		{
@@ -253,15 +254,15 @@ void ScenePlay::Initialize()
 	//{
 	//	SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
 
-	//	//현재 .obj 파일만 로딩 가능 블랜더에서 .obj 로 내보내기 해서 사용하면 됩니다
+	//	//���� .obj ���ϸ� �ε� ���� ���������� .obj �� �������� �ؼ� ����ϸ� �˴ϴ�
 	//	if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
 	//		int debug = 0;
 
 	//	if (!naviMesh->Build())
 	//		int debug = 0;
 
-	//	//오브젝트에 std::<Vector3>mPath 추가 path에 이동경로가 추가되니 vector내의 위치를 사용해서 이동하면 됩니다
-	//	//위치가 내비메쉬 밖이면 계산이 안됩니다
+	//	//������Ʈ�� std::<Vector3>mPath �߰� path�� �̵���ΰ� �߰��Ǵ� vector���� ��ġ�� ����ؼ� �̵��ϸ� �˴ϴ�
+	//	//��ġ�� ����޽� ���̸� ����� �ȵ˴ϴ�
 	//	if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
 	//		int debug = 0;
 	//}
