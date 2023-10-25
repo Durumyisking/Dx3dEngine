@@ -134,8 +134,7 @@ namespace gui
 
 		if (AddObjectToScene(NewObj, mInputLayer))
 		{
-			Hierarchy* hierarchy = GETSINGLE(WidgetMgr)->GetWidget<Hierarchy>("Hierarchy");
-			hierarchy->ForceReset();
+			GETSINGLE(WidgetMgr)->ForceReset(NewObj);
 		}
 	}
 
@@ -168,7 +167,8 @@ namespace gui
 			return false;
 
 		Layer& layer = scene->GetLayer(type);
-		layer.PushAddedObject(obj);
+		obj->Initialize();
+		layer.AddGameObject(obj, type);
 
 		return true;
 	}

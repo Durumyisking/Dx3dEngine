@@ -247,6 +247,28 @@ void Model::SetFrameAnimationVector(const std::map<std::wstring, aiMatrix4x4>* a
 	mFrameAnimationVector = animationVector;
 }
 
+Material* Model::GetMaterial()
+{
+	Material* material = nullptr;
+
+	if (!mMaterials.empty())
+	{
+		material = mMaterials[mMaterials.size()];
+	}
+
+	if (!mVariableMaterials.empty())
+	{
+		for (Material* mt : mVariableMaterials)
+		{
+			if (mt == NULL)
+				continue;
+
+			material = mt;
+		}
+	}
+
+	return material;
+}
 
 void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
 {

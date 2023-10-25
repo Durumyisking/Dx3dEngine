@@ -96,6 +96,8 @@ void ResourceMgr::LoadModel_Mario(bool* bfinish)
 
 void ResourceMgr::LoadModel_Monster(bool* bfinish)
 {
+	Model* model = nullptr;
+
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/goomba", L"goomba");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Packun", L"Packun");
 
@@ -152,4 +154,14 @@ void ResourceMgr::LoadModel_CityWorld(bool* bfinish)
 
 
 	*bfinish = true;
+}
+
+void ResourceMgr::SettingModelMaterial()
+{
+	Model* model = nullptr;
+	model = Find<Model>(L"CityWorldHomeBuilding002");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding002_0Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding002_1Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding002_0Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding002_3Material");
 }

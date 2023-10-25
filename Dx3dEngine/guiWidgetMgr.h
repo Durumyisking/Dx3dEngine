@@ -6,6 +6,7 @@
 #include "guiWidget.h"
 
 class GameObj;
+
 namespace gui
 {
 	class WidgetMgr
@@ -21,6 +22,9 @@ namespace gui
 		void ImGui_Initialize();
 		void ImGui_Run();
 		void ImGui_Release();
+
+		void ForceReset() { mbForceReset = true; mTargetObj = nullptr; }
+		void ForceReset(GameObj* obj) { mbForceReset = true; mTargetObj = obj; }
 
 		class VisualEditor* GetVisualEditor() { return mVisualEditor; }
 		
@@ -46,6 +50,9 @@ namespace gui
 		std::map<std::string, Widget*> mWidgets;
 
 		class VisualEditor* mVisualEditor;
+
+		bool mbForceReset;
+		GameObj* mTargetObj;
 	};
 
 }

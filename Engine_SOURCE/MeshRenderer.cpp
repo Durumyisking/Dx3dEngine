@@ -72,9 +72,13 @@ void MeshRenderer::Render()
 	}
 	else
 	{
+		if (GetMaterial() == nullptr)
+			return;
+
 		GetMaterial()->Bind();
 		GetMesh()->BindBuffer();
 		GetMesh()->Render();
 		GetMaterial()->Clear();
 	}
 }
+

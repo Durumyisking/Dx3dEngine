@@ -6,38 +6,74 @@
 #include "PhysXCollider.h"
 
 Building::Building()
+	: GameObj()
+	, mModelName(L"CityWorldHomeBuilding002")
+	, mbPhysical(true)
+	, mPhysicalScale(10.f, 50.f, 10.f)
+	, mGeometryType(eGeometryType::Box)
+	, mActorType(eActorType::Static)
 {
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	mObjectTypeName = "Building";
+}
+
+Building::Building(const Building& Obj)
+	:GameObj(Obj)
+	, mModelName(Obj.mModelName)
+	, mbPhysical(Obj.mbPhysical)
+	, mPhysicalScale(Obj.mPhysicalScale)
+	, mGeometryType(Obj.mGeometryType)
+	, mActorType(Obj.mActorType)
+{
+	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
 
 }
+
 Building::~Building()
 {
 
 }
 
+Building* Building::Clone() const
+{
+	return new Building(*this);
+}
+
 void Building::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
-
-	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding002");
+	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(mModelName);
 	assert(model);
 
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
+	mr->SetMaterial(model->GetMaterial());
 	mr->SetModel(model);
-
-	mr->SetMaterialByKey(L"HomeBuilding002_0Material", 0);
-	mr->SetMaterialByKey(L"HomeBuilding002_1Material", 1);
-	mr->SetMaterialByKey(L"HomeBuilding002_2Material", 2);
-	mr->SetMaterialByKey(L"HomeBuilding002_3Material", 3);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
-	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, {10.f, 50.f, 10.f});
-	
-	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	rigid->RemoveGravity();
+	if (mbPhysical)
+	{
+		if (GetComponent<Physical>() != nullptr)
+		{
+			Physical* physical =  GetComponent<Physical>();
+			delete physical;
+			physical = nullptr;
 
-	AddComponent<PhysXCollider>(eComponentType::Collider);
+			PhysXRigidBody* rigid = GetComponent<PhysXRigidBody>();
+			delete rigid;
+			rigid = nullptr;
+
+			PhysXCollider* collider = GetComponent<PhysXCollider>();
+			delete collider;
+			collider = nullptr;
+		}
+		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(mActorType, mGeometryType, mPhysicalScale);
+
+		PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		rigid->RemoveGravity();
+
+		AddComponent<PhysXCollider>(eComponentType::Collider);
+	}
 
 	GameObj::Initialize();
 }
@@ -50,6 +86,11 @@ void Building::Update()
 void Building::FixedUpdate()
 {
 	GameObj::FixedUpdate();
+}
+
+void Building::Render()
+{
+	GameObj::Render();
 }
 
 void Building::OnCollisionEnter(GameObj* gameObject)

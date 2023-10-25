@@ -72,17 +72,12 @@ namespace gui
 			{
 				mCurrentScene = mActiveScene;
 
+				mTargetObject = nullptr;
 				InitializeScene();
 				mbForceReset = false;
 
 				InitializeOutline(mTargetObject);
 			}
-		}
-
-		if (renderer::outlineTargetObject != mTargetObject)
-		{
-			mTargetObject = renderer::outlineTargetObject;
-			InitializeOutline(mTargetObject);
 		}
 	}
 
@@ -98,9 +93,6 @@ namespace gui
 	void Hierarchy::InitializeOutline(void* data)
 	{
 		mTargetObject = static_cast<GameObj*>(data);
-
-		if (mTargetObject == nullptr)
-			return;
 
 		OutLiner* outline = GETSINGLE(WidgetMgr)->GetWidget<OutLiner>("OutLiner");
 
@@ -139,6 +131,7 @@ namespace gui
 			}
 		}
 
+		InitializeOutline(mTargetObject);
 	}
 
 	void Hierarchy::AddGameObject(TreeWidget::Node* parent, GameObj* gameObject)

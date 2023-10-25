@@ -122,10 +122,12 @@ namespace gui
 		ImGui::NewFrame();
 		ImGuizmo::BeginFrame();
 
-		//for (Widget* widget : mWidgets) 
-		//{
-		//	widget->Update();
-		//}
+		if (mbForceReset)
+		{
+			GetWidget<Hierarchy>("Hierarchy")->SetTargetObject(mTargetObj);
+			GetWidget<Hierarchy>("Hierarchy")->InitializeScene();
+			mbForceReset = false;
+		}
 
 		mVisualEditor->Render();
 		for (auto iter : mWidgets)
