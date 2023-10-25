@@ -6,8 +6,10 @@ class CoinObject : public GameObj
 {
 public:
 	CoinObject();
+	CoinObject(const CoinObject& Obj);
 	virtual ~CoinObject();
 
+	virtual CoinObject* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;

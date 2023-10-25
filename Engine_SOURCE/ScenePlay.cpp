@@ -104,6 +104,7 @@
 
 #include "ModelObj.h"
 
+#include "HomeFence_0.h"
 
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
@@ -135,7 +136,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ·Îµå Å×½ºÆ® ·Îµå½Ã¿¡ ¹İº¹ÇØ¼­ ¸ó½ºÅÍ Á¤ÀÇ ¹æÁö
+	//TestScene ë¡œë“œ í…ŒìŠ¤íŠ¸ ë¡œë“œì‹œì— ë°˜ë³µí•´ì„œ ëª¬ìŠ¤í„° ì •ì˜ ë°©ì§€
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		{
@@ -145,20 +146,7 @@ void ScenePlay::Initialize()
 		}
 
 		{
-			GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-			plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-			plane->SetScale({ 1000.f, 0.5f, 1000.f });
-			plane->SetName(L"Plane");
-			plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-			plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.99f);
-			plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
-			plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
-
-			PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-			rigid->RemoveGravity();
-
-			plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-
+			CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
 		}
 
 		CreatePlayerUI();
@@ -227,26 +215,22 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		plane->SetScale({ 1000.f, 0.5f, 1000.f });
-		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-		plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.f);
-		plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.f);
-		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
-		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		rigid->RemoveGravity();
 
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+		//PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		//rigid->RemoveGravity();
 
+		//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+
+		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+
+		//HomeFence_0* fence = object::Instantiate<HomeFence_0>(eLayerType::Monster, this);
 	}
 
 
 	{
-		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
-		block->SetPos(Vector3(40.f, -0.5f, 0.f));
+		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+		//block->SetPos(Vector3(40.f, -0.5f, 0.f));
 	}
 	//InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
 	for (size_t i = 0; i < 5; i++)
@@ -269,15 +253,15 @@ void ScenePlay::Initialize()
 	//{
 	//	SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
 
-	//	//ÇöÀç .obj ÆÄÀÏ¸¸ ·Îµù °¡´É ºí·£´õ¿¡¼­ .obj ·Î ³»º¸³»±â ÇØ¼­ »ç¿ëÇÏ¸é µË´Ï´Ù
+	//	//í˜„ì¬ .obj íŒŒì¼ë§Œ ë¡œë”© ê°€ëŠ¥ ë¸”ëœë”ì—ì„œ .obj ë¡œ ë‚´ë³´ë‚´ê¸° í•´ì„œ ì‚¬ìš©í•˜ë©´ ë©ë‹ˆë‹¤
 	//	if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
 	//		int debug = 0;
 
 	//	if (!naviMesh->Build())
 	//		int debug = 0;
 
-	//	//¿ÀºêÁ§Æ®¿¡ std::<Vector3>mPath Ãß°¡ path¿¡ ÀÌµ¿°æ·Î°¡ Ãß°¡µÇ´Ï vector³»ÀÇ À§Ä¡¸¦ »ç¿ëÇØ¼­ ÀÌµ¿ÇÏ¸é µË´Ï´Ù
-	//	//À§Ä¡°¡ ³»ºñ¸Ş½¬ ¹ÛÀÌ¸é °è»êÀÌ ¾ÈµË´Ï´Ù
+	//	//ì˜¤ë¸Œì íŠ¸ì— std::<Vector3>mPath ì¶”ê°€ pathì— ì´ë™ê²½ë¡œê°€ ì¶”ê°€ë˜ë‹ˆ vectorë‚´ì˜ ìœ„ì¹˜ë¥¼ ì‚¬ìš©í•´ì„œ ì´ë™í•˜ë©´ ë©ë‹ˆë‹¤
+	//	//ìœ„ì¹˜ê°€ ë‚´ë¹„ë©”ì‰¬ ë°–ì´ë©´ ê³„ì‚°ì´ ì•ˆë©ë‹ˆë‹¤
 	//	if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
 	//		int debug = 0;
 	//}
@@ -308,6 +292,7 @@ void ScenePlay::update()
 	{
 		mCoinPanal->GetScript<CoinUIScript>()->Reset();
 	}
+
 
 	Scene::update();
 }

@@ -103,9 +103,9 @@ namespace gui
 
 		ImGui::PushItemWidth(100.0f);
 		
-		// ÃÊ±âÈ­: std::stringÀÇ °ªÀ» ¹öÆÛ¿¡ º¹»ç
+		// ì´ˆê¸°í™”: std::stringì˜ ê°’ì„ ë²„í¼ì— ë³µì‚¬
 		strncpy_s(buf, mInputText.c_str(), sizeof(buf));
-		buf[sizeof(buf) - 1] = 0; // ³Î Á¾·á ¹®ÀÚ¸¦ º¸Àå
+		buf[sizeof(buf) - 1] = 0; // ë„ ì¢…ë£Œ ë¬¸ìžë¥¼ ë³´ìž¥
 
 		if (ImGui::InputText("ObjectName", buf, sizeof(buf)))
 			mInputText = buf;
@@ -134,8 +134,7 @@ namespace gui
 
 		if (AddObjectToScene(NewObj, mInputLayer))
 		{
-			Hierarchy* hierarchy = GETSINGLE(WidgetMgr)->GetWidget<Hierarchy>("Hierarchy");
-			hierarchy->ForceReset();
+			GETSINGLE(WidgetMgr)->ForceReset(NewObj);
 		}
 	}
 
@@ -150,8 +149,8 @@ namespace gui
 			return;
 
 		hierarchy->GetTargetObject()->Die();
-		hierarchy->SetTargetObject(nullptr);
-		hierarchy->ForceReset();
+
+		GETSINGLE(WidgetMgr)->ForceReset();
 	}
 
 	void ObjectWindow::SetObjectLayerType(UINT num)
@@ -167,9 +166,10 @@ namespace gui
 			return false;
 
 		Layer& layer = scene->GetLayer(type);
-		obj->SetLayerType(type);
-		//layer.AddGameObject(obj, type);
-		layer.PushAddedObject(obj);
+
+		obj->Initialize();
+		layer.AddGameObject(obj, type);
+
 
 		return true;
 	}

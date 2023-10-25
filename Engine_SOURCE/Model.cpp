@@ -28,6 +28,7 @@ Model::Model()
 	, mTargetBone(L"")
 	, mOffsetRotation(math::Vector3(0.0f, 0.0f, 0.0f))
 	, mbUseInstance(false)
+	//, mVariableMaterials(35)
 {
 
 }
@@ -62,7 +63,7 @@ HRESULT Model::Load(const std::wstring& path)
 		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
 	}
 
-	mVariableMaterials.resize(12);
+	mVariableMaterials.resize(35);
 	mAssimpImporter.FreeScene();
 
 	return S_OK;
@@ -248,6 +249,28 @@ void Model::SetFrameAnimationVector(const std::map<std::wstring, aiMatrix4x4>* a
 	mFrameAnimationVector = animationVector;
 }
 
+Material* Model::GetMaterial()
+{
+	Material* material = nullptr;
+
+	if (!mMaterials.empty())
+	{
+		material = mMaterials[mMaterials.size()];
+	}
+
+	if (!mVariableMaterials.empty())
+	{
+		for (Material* mt : mVariableMaterials)
+		{
+			if (mt == NULL)
+				continue;
+
+			material = mt;
+		}
+	}
+
+	return material;
+}
 
 void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
 {
@@ -741,5 +764,4 @@ void Model::SetVariableMaterialsByKey(UINT index, const std::wstring& key)
 	{
 		mVariableMaterials[index] = mater;
 	}
-
 }

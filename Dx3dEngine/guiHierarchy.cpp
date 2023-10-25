@@ -21,8 +21,7 @@ extern gui::Editor editor;
 namespace gui
 {
 	Hierarchy::Hierarchy()
-		: mbForceReset(false)
-		, mTreeWidget(nullptr)
+		: mTreeWidget(nullptr)
 		, mTargetObject(nullptr)
 		, mCurrentScene(nullptr)
 	{
@@ -65,16 +64,14 @@ namespace gui
 		//ImGui::SetNextWindowContentSize(ImVec2(10, 10));  // ÄÁÅÙÃ÷ Å©±â ÃÊ±âÈ­
 
 		Scene* mActiveScene = GETSINGLE(SceneMgr)->GetActiveScene();
-		if (mCurrentScene != mActiveScene || mbForceReset)
+		if (mCurrentScene != mActiveScene)
 		{
 			if (mActiveScene != nullptr)
 			{
 				mCurrentScene = mActiveScene;
 
+				mTargetObject = nullptr;
 				InitializeScene();
-				mbForceReset = false;
-
-				InitializeOutline(mTargetObject);
 			}
 		}
 
@@ -116,9 +113,6 @@ namespace gui
 	{
 		mTargetObject = static_cast<GameObj*>(data);
 
-		if (mTargetObject == nullptr)
-			return;
-
 		OutLiner* outline = GETSINGLE(WidgetMgr)->GetWidget<OutLiner>("OutLiner");
 
 		if (outline == nullptr)
@@ -156,6 +150,7 @@ namespace gui
 			}
 		}
 
+		InitializeOutline(mTargetObject);
 	}
 
 	void Hierarchy::AddGameObject(TreeWidget::Node* parent, GameObj* gameObject)
@@ -168,6 +163,11 @@ namespace gui
 		}
 
 		TreeWidget::Node* node = mTreeWidget->AddNode(parent, name, gameObject);
+	}
+
+	void Hierarchy::DeleteGameObject()
+	{
+		TreeWidget::Node* node = mTreeWidget->GetSelectedNode();
 	}
 
 }

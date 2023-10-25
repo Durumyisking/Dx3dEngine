@@ -59,10 +59,11 @@ public:
 	Mesh* GetMesh(UINT index) { return mMeshes[index]; }
 	Material* GetMaterial(UINT index) { return mMaterials[index]; }
 
+	Material* GetMaterial();
+
 	void AddMaterial(Material* mater) { mMaterials.emplace_back(mater); }
 	void MeshRenderSwtich(const std::wstring& name, bool renderSwitch = true);
 	void AllMeshRenderSwtichOff();
-
 
 private:
 	void recursiveProcessNode(aiNode* node, const aiScene* scene, ModelNode* rootNode);
@@ -95,6 +96,7 @@ public:
 	const std::vector<Mesh*>& GetMeshes() { return mMeshes; }
 	void SetWorldMatrix(const math::Matrix& worldMatrix) { mOwnerWorldMatrix = worldMatrix; }
 	void SetFrameAnimationVector(const std::map<std::wstring, aiMatrix4x4>* animationVector);
+
 private:
 	Assimp::Importer mAssimpImporter;
 

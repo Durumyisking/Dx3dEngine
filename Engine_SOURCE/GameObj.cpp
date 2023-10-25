@@ -98,10 +98,12 @@ void GameObj::Save(FILE* File)
 	math::Vector3 pos = tr->GetPosition();
 	math::Vector3 rotation = tr->GetRotation();
 	math::Vector3 scale = tr->GetScale();
+	float offscale = tr->GetOffsetScale();
 
 	fwrite(&pos, sizeof(math::Vector3), 1, File);
 	fwrite(&rotation, sizeof(math::Vector3), 1, File);
 	fwrite(&scale, sizeof(math::Vector3), 1, File);
+	fwrite(&offscale, sizeof(float), 1, File);
 }
 
 void GameObj::Load(FILE* File)
@@ -113,14 +115,17 @@ void GameObj::Load(FILE* File)
 	math::Vector3 pos;
 	math::Vector3 rotation;
 	math::Vector3 scale;
+	float offscale;
 
 	fread(&pos, sizeof(math::Vector3), 1, File);
 	fread(&rotation, sizeof(math::Vector3), 1, File);
 	fread(&scale, sizeof(math::Vector3), 1, File);
+	fread(&offscale, sizeof(float), 1, File);
 
 	tr->SetPosition(pos);
 	tr->SetRotation(rotation);
 	tr->SetScale(scale);
+	tr->SetOffsetScale(offscale);
 }
 
 void GameObj::Initialize()

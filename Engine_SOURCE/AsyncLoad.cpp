@@ -38,11 +38,13 @@ void AsyncLoad::LoadModels()
 	});
 	thread1.detach();
 	
-	std::thread thread2([this]()
-	{
-		GETSINGLE(ResourceMgr)->LoadModel_Monster(&mbMonsterLoadFinish);
-	});
-	thread2.detach();
+	//std::thread thread2([this]()
+	//{
+	//	GETSINGLE(ResourceMgr)->LoadModel_Monster(&mbMonsterLoadFinish);
+	//});
+	//thread2.detach();	
+
+	GETSINGLE(ResourceMgr)->LoadModel_Monster(&mbMonsterLoadFinish);
 
 	// 쓰레드를 너무 많이 돌리면 제대로 동작을 안하나봄? 똑같은 코드 LoadModel_Monster 여기서 돌리면 잘 됨
 	//std::thread thread3([this]()
@@ -50,7 +52,6 @@ void AsyncLoad::LoadModels()
 	//	GETSINGLE(ResourceMgr)->LoadModel_CityWorld(&mbMapLoadFinish);
 	//});
 	//thread3.detach();
-
 }
 
 void AsyncLoad::LoadTextures()
@@ -134,7 +135,7 @@ void AsyncLoad::LoadTextures()
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"night12", L"Cube/night/DarkNight_Scenario12.dds");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"night13", L"Cube/night/DarkNight_Scenario13.dds");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"night14", L"Cube/night/DarkNight_Scenario14.dds");
-
+	 
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly1", L"Cube/people/SkyOnly_.dds");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly2", L"Cube/people/SkyOnly_Scenario2.dds");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"skyonly3", L"Cube/people/SkyOnly_Scenario3.dds");
@@ -212,203 +213,454 @@ void AsyncLoad::LoadMaterials()
 void AsyncLoad::loadCityObjectMaterial()
 {
 #pragma region CityWorldHomeBuilding000 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding000_0Material", TextureState::Al);
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding000_1Material", TextureState::Em);
-	createMaterial(L"ConcreteWallMain00", L"DeferredShader", L"HomeBuilding000_2Material", TextureState::AlNrRg);
-	createMaterial(L"ConcreteWallMain01", L"DeferredShader", L"HomeBuilding000_3Material", TextureState::AlEmNrRg);
-	createMaterial(L"ConcreteWallMain02", L"DeferredShader", L"HomeBuilding000_4Material", TextureState::AlNrRg);
-	createMaterial(L"ConcreteWallMain03", L"DeferredShader", L"HomeBuilding000_5Material", TextureState::AlNrRg);
-	createMaterial(L"ConcreteWallMain04", L"DeferredShader", L"HomeBuilding000_6Material", TextureState::AlNrRg);
-	createMaterial(L"ConcreteWallMain05", L"DeferredShader", L"HomeBuilding000_7Material", TextureState::AlNrRg);
-	createMaterial(L"ConcreteWallMain06", L"DeferredShader", L"HomeBuilding000_8Material", TextureState::AlNrRg);
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding000_9Material", TextureState::Em);
-	createMaterial(L"GlassWindowMain00", L"DeferredShader", L"HomeBuilding000_10Material", TextureState::AlEmMsNrRg);
-	createMaterial(L"GroundSoil00", L"DeferredShader", L"HomeBuilding000_11Material", TextureState::AlNrRg);
-	//Light01
-	createMaterial(L"MainTowerFont00", L"DeferredShader", L"HomeBuilding000_12Material", TextureState::AlNrRg);
-	createMaterial(L"MetalfloorMain00", L"DeferredShader", L"HomeBuilding000_13Material", TextureState::AlNrRg);
-	createMaterial(L"MetalWallMain00", L"DeferredShader", L"HomeBuilding000_14Material", TextureState::AlNrRg);
-	createMaterial(L"MetalWallMain01", L"DeferredShader", L"HomeBuilding000_15Material", TextureState::AlEmNrRg);
-	createMaterial(L"MetalWallMain02", L"DeferredShader", L"HomeBuilding000_16Material", TextureState::AlNrRg);
-	createMaterial(L"MetalWallMain03", L"DeferredShader", L"HomeBuilding000_17Material", TextureState::AlMtNrRg);
-	createMaterial(L"TopFloorMain00", L"DeferredShader", L"HomeBuilding000_18Material", TextureState::AlNrRg);
-	createMaterial(L"WindowGlassEmn00", L"DeferredShader", L"HomeBuilding000_19Material", TextureState::AlEmMsNrRg);
-	createMaterial(L"WindowGlassEmn01", L"DeferredShader", L"HomeBuilding000_20Material", TextureState::Em);
+	{
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding000_0Material", TextureState::Al);
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding000_1Material", TextureState::Em);
+		createMaterial(L"ConcreteWallMain00", L"DeferredShader", L"HomeBuilding000_2Material", TextureState::AlNrRg);
+		createMaterial(L"ConcreteWallMain01", L"DeferredShader", L"HomeBuilding000_3Material", TextureState::AlEmNrRg);
+		createMaterial(L"ConcreteWallMain02", L"DeferredShader", L"HomeBuilding000_4Material", TextureState::AlNrRg);
+		createMaterial(L"ConcreteWallMain03", L"DeferredShader", L"HomeBuilding000_5Material", TextureState::AlNrRg);
+		createMaterial(L"ConcreteWallMain04", L"DeferredShader", L"HomeBuilding000_6Material", TextureState::AlNrRg);
+		createMaterial(L"ConcreteWallMain05", L"DeferredShader", L"HomeBuilding000_7Material", TextureState::AlNrRg);
+		createMaterial(L"ConcreteWallMain06", L"DeferredShader", L"HomeBuilding000_8Material", TextureState::AlNrRg);
+		createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding000_9Material", TextureState::Em);
+		createMaterial(L"GlassWindowMain00", L"DeferredShader", L"HomeBuilding000_10Material", TextureState::AlEmMsNrRg);
+		createMaterial(L"GroundSoil00", L"DeferredShader", L"HomeBuilding000_11Material", TextureState::AlNrRg);
+		//Light01
+		createMaterial(L"MainTowerFont00", L"DeferredShader", L"HomeBuilding000_12Material", TextureState::AlNrRg);
+		createMaterial(L"MetalfloorMain00", L"DeferredShader", L"HomeBuilding000_13Material", TextureState::AlNrRg);
+		createMaterial(L"MetalWallMain00", L"DeferredShader", L"HomeBuilding000_14Material", TextureState::AlNrRg);
+		createMaterial(L"MetalWallMain01", L"DeferredShader", L"HomeBuilding000_15Material", TextureState::AlEmNrRg);
+		createMaterial(L"MetalWallMain02", L"DeferredShader", L"HomeBuilding000_16Material", TextureState::AlNrRg);
+		createMaterial(L"MetalWallMain03", L"DeferredShader", L"HomeBuilding000_17Material", TextureState::AlMtNrRg);
+		createMaterial(L"TopFloorMain00", L"DeferredShader", L"HomeBuilding000_18Material", TextureState::AlNrRg);
+		createMaterial(L"WindowGlassEmn00", L"DeferredShader", L"HomeBuilding000_19Material", TextureState::AlEmMsNrRg);
+		createMaterial(L"WindowGlassEmn01", L"DeferredShader", L"HomeBuilding000_20Material", TextureState::Em);
 
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding000");
 
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding000_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding000_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding000_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding000_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding000_4Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding000_5Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding000_6Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding000_7Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding000_8Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding000_9Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding000_10Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding000_11Material");
+		//	model->SetVariableMaterialsByKey(12, L"HomeBuilding000_12Material");
+		//	model->SetVariableMaterialsByKey(13, L"HomeBuilding000_13Material");
+		//	model->SetVariableMaterialsByKey(14, L"HomeBuilding000_14Material");
+		//	model->SetVariableMaterialsByKey(15, L"HomeBuilding000_15Material");
+		//	model->SetVariableMaterialsByKey(16, L"HomeBuilding000_16Material");
+		//	model->SetVariableMaterialsByKey(17, L"HomeBuilding000_17Material");
+		//	model->SetVariableMaterialsByKey(18, L"HomeBuilding000_13Material");
+		//	model->SetVariableMaterialsByKey(19, L"HomeBuilding000_18Material");
+		//	model->SetVariableMaterialsByKey(20, L"HomeBuilding000_19Material");
+		//	model->SetVariableMaterialsByKey(21, L"HomeBuilding000_20Material");
+		//}
+	}
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding001 Material
-	createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"HomeBuilding001_0Material", TextureState::AlEmMtNrRg);
-	createMaterial(L"RoofConcrete00", L"DeferredShader", L"HomeBuilding001_1Material", TextureState::AlNrRg);
-	createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding001_2Material", TextureState::AlNrRg);
-	createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding001_3Material", TextureState::AlNr);
+	{
+		createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"HomeBuilding001_0Material", TextureState::AlEmMtNrRg);
+		createMaterial(L"RoofConcrete00", L"DeferredShader", L"HomeBuilding001_1Material", TextureState::AlNrRg);
+		createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding001_2Material", TextureState::AlNrRg);
+		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding001_3Material", TextureState::AlNr);
 
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding001");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding001_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding001_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding001_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding001_3Material");
+		//}
+	}
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding002 Material
-	createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"HomeBuilding002_0Material", TextureState::AlEmMtNrRg);
-	createMaterial(L"RoofConcrete00", L"DeferredShader", L"HomeBuilding002_1Material", TextureState::AlNrRg);
-	createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding002_2Material", TextureState::AlNrRg);
-	createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding002_3Material", TextureState::AlNr);
+	{
+		createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"HomeBuilding002_0Material", TextureState::AlEmMtNrRg);
+		createMaterial(L"RoofConcrete00", L"DeferredShader", L"HomeBuilding002_1Material", TextureState::AlNrRg);
+		createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding002_2Material", TextureState::AlNrRg);
+		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding002_3Material", TextureState::AlNr);
 
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding002");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding002_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding002_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding002_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding002_3Material");
+		//}
+	}
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding003 Material
-	createMaterial(L"GroundLawn00", L"DeferredShader", L"HomeBuilding003_0Material", TextureState::AlNrRg);
-	createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding003_1Material", TextureState::AlMtNrRg);
+	{
+		createMaterial(L"GroundLawn00", L"DeferredShader", L"HomeBuilding003_0Material", TextureState::AlNrRg);
+		createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding003_1Material", TextureState::AlMtNrRg);
+
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding003");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding003_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding003_1Material");
+		//}
+	}
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding004 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding004_0Material", TextureState::Al);
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding004_1Material", TextureState::Em);
-	createMaterial(L"BuildingBrickWall02_rep", L"DeferredShader", L"HomeBuilding004_2Material", TextureState::Al);
-	//createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding004_3Material", TextureState::Em);
-	createMaterial(L"BuildingStoneParts01", L"DeferredShader", L"HomeBuilding004_3Material", TextureState::Al);
-	createMaterial(L"BuildingStoneWall00_rep", L"DeferredShader", L"HomeBuilding004_4Material", TextureState::AlNrRg);
-	createMaterial(L"BuildingStoneWall02_rep", L"DeferredShader", L"HomeBuilding004_5Material", TextureState::Al);
-	createMaterial(L"BuildingWindowSet00", L"DeferredShader", L"HomeBuilding004_6Material", TextureState::AlEmNrRg);
-	createMaterial(L"BuildingWindowSet01", L"DeferredShader", L"HomeBuilding004_7Material", TextureState::AlEmMtNrRg);
-	createMaterial(L"DoorWoodBill00", L"DeferredShader", L"HomeBuilding004_8Material", TextureState::AlNr);
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding004_9Material", TextureState::Em);
-	createMaterial(L"WallConcreteFlat01", L"DeferredShader", L"HomeBuilding004_10Material", TextureState::AlNr);
-	createMaterial(L"WallConcreteFlat02", L"DeferredShader", L"HomeBuilding004_11Material", TextureState::AlNr);
-	createMaterial(L"WallConcreteTopflloor02", L"DeferredShader", L"HomeBuilding004_12Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteTopVer00", L"DeferredShader", L"HomeBuilding004_13Material", TextureState::AlNr);
+	{
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding004_0Material", TextureState::AlEm);
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding004_1Material", TextureState::Em);
+		createMaterial(L"BuildingBrickWall02_rep", L"DeferredShader", L"HomeBuilding004_2Material", TextureState::Al);
+		//createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding004_3Material", TextureState::Em);
+		createMaterial(L"BuildingStoneParts01", L"DeferredShader", L"HomeBuilding004_3Material", TextureState::Al);
+		createMaterial(L"BuildingStoneWall00_rep", L"DeferredShader", L"HomeBuilding004_4Material", TextureState::AlNrRg);
+		createMaterial(L"BuildingStoneWall02_rep", L"DeferredShader", L"HomeBuilding004_5Material", TextureState::Al);
+		createMaterial(L"BuildingWindowSet00", L"DeferredShader", L"HomeBuilding004_6Material", TextureState::AlEmNrRg);
+		createMaterial(L"BuildingWindowSet01", L"DeferredShader", L"HomeBuilding004_7Material", TextureState::AlEmMtNrRg);
+		createMaterial(L"DoorWoodBill00", L"DeferredShader", L"HomeBuilding004_8Material", TextureState::AlNr);
+		createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding004_9Material", TextureState::Em);
+		createMaterial(L"WallConcreteFlat01", L"DeferredShader", L"HomeBuilding004_10Material", TextureState::AlNr);
+		createMaterial(L"WallConcreteFlat02", L"DeferredShader", L"HomeBuilding004_11Material", TextureState::AlNr);
+		createMaterial(L"WallConcreteTopflloor02", L"DeferredShader", L"HomeBuilding004_12Material", TextureState::AlNrRg);
+		createMaterial(L"WallConcreteTopVer00", L"DeferredShader", L"HomeBuilding004_13Material", TextureState::AlNr);
 
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding004");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding004_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding004_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding004_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding004_10Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding004_3Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding004_4Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding004_5Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding004_6Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding004_7Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding004_8Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding004_9Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding004_10Material");
+		//	model->SetVariableMaterialsByKey(12, L"HomeBuilding004_11Material");
+		//	model->SetVariableMaterialsByKey(13, L"HomeBuilding004_13Material");
+		//	model->SetVariableMaterialsByKey(14, L"HomeBuilding004_12Material");
+		//}
+	}
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding005 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding005_0Material", TextureState::Al);
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding005_1Material", TextureState::Em);
-	createMaterial(L"BuildingBrickWall00_rep", L"DeferredShader", L"HomeBuilding005_2Material", TextureState::AlNrRg);
-	createMaterial(L"BuildingStoneParts00", L"DeferredShader", L"HomeBuilding005_3Material", TextureState::AlNrRg);
-	createMaterial(L"BuildingStoneWall00_rep", L"DeferredShader", L"HomeBuilding005_4Material", TextureState::AlNrRg);
-	createMaterial(L"BuildingStoneWall01_rep", L"DeferredShader", L"HomeBuilding005_5Material", TextureState::Al);
-	createMaterial(L"BuildingWindowSet00", L"DeferredShader", L"HomeBuilding005_6Material", TextureState::AlEmNrRg);
-	createMaterial(L"BuildingWindowSet02", L"DeferredShader", L"HomeBuilding005_7Material", TextureState::Al);
-	createMaterial(L"DoorWoodBill00", L"DeferredShader", L"HomeBuilding005_8Material", TextureState::AlNr);
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding005_9Material", TextureState::Em);
-	createMaterial(L"WallConcreteFlat01", L"DeferredShader", L"HomeBuilding005_10Material", TextureState::AlNr);
-	createMaterial(L"WallConcreteFlat02", L"DeferredShader", L"HomeBuilding005_11Material", TextureState::AlNr);
-	createMaterial(L"WallConcreteTopflloor02", L"DeferredShader", L"HomeBuilding005_12Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteTopVer00", L"DeferredShader", L"HomeBuilding005_13Material", TextureState::AlNr);
+	{
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding005_0Material", TextureState::Al);
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding005_1Material", TextureState::Em);
+		createMaterial(L"BuildingBrickWall00_rep", L"DeferredShader", L"HomeBuilding005_2Material", TextureState::AlNrRg);
+		createMaterial(L"BuildingStoneParts00", L"DeferredShader", L"HomeBuilding005_3Material", TextureState::AlNrRg);
+		createMaterial(L"BuildingStoneWall00_rep", L"DeferredShader", L"HomeBuilding005_4Material", TextureState::AlNrRg);
+		createMaterial(L"BuildingStoneWall01_rep", L"DeferredShader", L"HomeBuilding005_5Material", TextureState::Al);
+		createMaterial(L"BuildingWindowSet00", L"DeferredShader", L"HomeBuilding005_6Material", TextureState::AlEmNrRg);
+		createMaterial(L"BuildingWindowSet02", L"DeferredShader", L"HomeBuilding005_7Material", TextureState::Al);
+		createMaterial(L"DoorWoodBill00", L"DeferredShader", L"HomeBuilding005_8Material", TextureState::AlNr);
+		createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding005_9Material", TextureState::Em);
+		createMaterial(L"WallConcreteFlat01", L"DeferredShader", L"HomeBuilding005_10Material", TextureState::AlNr);
+		createMaterial(L"WallConcreteFlat02", L"DeferredShader", L"HomeBuilding005_11Material", TextureState::AlNr);
+		createMaterial(L"WallConcreteTopflloor02", L"DeferredShader", L"HomeBuilding005_12Material", TextureState::AlNrRg);
+		createMaterial(L"WallConcreteTopVer00", L"DeferredShader", L"HomeBuilding005_13Material", TextureState::AlNr);
+
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding005");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding005_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding005_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding005_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding005_10Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding005_3Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding005_4Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding005_5Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding005_6Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding005_7Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding005_8Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding005_9Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding005_10Material");
+		//	model->SetVariableMaterialsByKey(12, L"HomeBuilding005_11Material");
+		//	model->SetVariableMaterialsByKey(13, L"HomeBuilding005_13Material");
+		//	model->SetVariableMaterialsByKey(14, L"HomeBuilding005_12Material");
+		//}
+	}
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding007 Material
-	createMaterial(L"DoorGlassSteel00", L"DeferredShader", L"HomeBuilding007_0Material", TextureState::AlNr);
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding007_1Material", TextureState::Em);
-	createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"HomeBuilding007_2Material", TextureState::AlEmMtNrRg);
-	createMaterial(L"RoofConcrete00", L"DeferredShader", L"HomeBuilding007_3Material", TextureState::AlNrRg);
-	createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding007_4Material", TextureState::AlNrRg);
-	createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding007_5Material", TextureState::AlNr);
+	{
+		createMaterial(L"DoorGlassSteel00", L"DeferredShader", L"HomeBuilding007_0Material", TextureState::AlNr);
+		createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"HomeBuilding007_1Material", TextureState::AlEmMtNrRg);
+		createMaterial(L"RoofConcrete00", L"DeferredShader", L"HomeBuilding007_2Material", TextureState::AlNrRg);
+		createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding007_3Material", TextureState::AlNrRg);
+		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding007_4Material", TextureState::AlNr);
+
+
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding007");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding007_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding007_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding007_0Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding007_1Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding007_2Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding007_3Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding007_4Material");
+		//}
+	}
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding008 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding008_0Material", TextureState::Al);
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding008_1Material", TextureState::Em);
-	createMaterial(L"DoorGlassSteel00", L"DeferredShader", L"HomeBuilding008_2Material", TextureState::AlNr);
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding008_3Material", TextureState::Em);
-	createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"HomeBuilding008_4Material", TextureState::AlEmMtNrRg);
-	createMaterial(L"RoofConcrete00", L"DeferredShader", L"HomeBuilding008_5Material", TextureState::AlNrRg);
-	createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding008_6Material", TextureState::AlNrRg);
-	createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding008_7Material", TextureState::AlNr);
+	{
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding008_0Material", TextureState::AlEm);
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding008_1Material", TextureState::Em);
+		createMaterial(L"DoorGlassSteel00", L"DeferredShader", L"HomeBuilding008_2Material", TextureState::AlNr);
+		createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"HomeBuilding008_3Material", TextureState::AlEmMtNrRg);
+		createMaterial(L"RoofConcrete00", L"DeferredShader", L"HomeBuilding008_4Material", TextureState::AlNrRg);
+		createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding008_5Material", TextureState::AlNrRg);
+		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding008_6Material", TextureState::AlNr);
+
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding008");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding008_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding008_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding008_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding008_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding008_2Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding008_3Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding008_4Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding008_5Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding008_6Material");
+		//}
+	}
+
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding009 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding009_0Material", TextureState::Al);    //group614__DoorConcreteWallMain01 00
-	createMaterial(L"DoorGlassSteel00", L"DeferredShader", L"HomeBuilding009_1Material", TextureState::AlNr);
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding009_2Material", TextureState::Em);
-	createMaterial(L"GlassBuilding1F01", L"DeferredShader", L"HomeBuilding009_3Material", TextureState::Em);
-	createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"HomeBuilding009_4Material", TextureState::AlEmMtNrRg);
-	createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding009_5Material", TextureState::AlMtNrRg);
-	createMaterial(L"RoofConcrete00", L"DeferredShader", L"HomeBuilding009_6Material", TextureState::AlNrRg);
-	createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding009_7Material", TextureState::AlNrRg);
-	createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding009_8Material", TextureState::AlNr);
+	{
+		createMaterial(L"ConcreteWallMain01", L"DeferredShader", L"HomeBuilding009_0Material", TextureState::Al);
+		createMaterial(L"DoorGlassSteel00", L"DeferredShader", L"HomeBuilding009_1Material", TextureState::AlNr);
+		createMaterial(L"GlassBuildingWall00", L"DeferredShader", L"HomeBuilding009_2Material", TextureState::AlEmMtNrRg);
+		createMaterial(L"MetalFence00", L"DeferredShader", L"HomeBuilding009_3Material", TextureState::AlMtNrRg);
+		createMaterial(L"RoofConcrete00", L"DeferredShader", L"HomeBuilding009_4Material", TextureState::AlNrRg);
+		createMaterial(L"RoofConcrete01", L"DeferredShader", L"HomeBuilding009_5Material", TextureState::AlNrRg);
+		createMaterial(L"WallGlassPaintedSteel00", L"DeferredShader", L"HomeBuilding009_6Material", TextureState::AlNr);
+
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding009");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding009_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding009_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding009_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding009_1Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding009_2Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding009_3Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding009_4Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding009_5Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding009_6Material");
+		//}
+	}
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding0010 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0010_0Material", TextureState::Al);
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0010_1Material", TextureState::Em);
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0010_2Material", TextureState::Em);
-	createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"HomeBuilding0010_3Material", TextureState::AlEmMsMtNr);
-	createMaterial(L"HouseAttachmentSet03", L"DeferredShader", L"HomeBuilding0010_4Material", TextureState::Al);
-	createMaterial(L"HouseAttachmentTop00", L"DeferredShader", L"HomeBuilding0010_5Material", TextureState::AlNr);
-	createMaterial(L"HouseBrickWall00", L"DeferredShader", L"HomeBuilding0010_6Material", TextureState::AlNrRg);
-	createMaterial(L"HouseIronFence01", L"DeferredShader", L"HomeBuilding0010_7Material", TextureState::Al);
-	createMaterial(L"HousePaintedIron00", L"DeferredShader", L"HomeBuilding0010_8Material", TextureState::AlNr);
-	createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0010_9Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0010_10Material", TextureState::AlNr);
+	{
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0010_0Material", TextureState::AlEm);
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0010_1Material", TextureState::Em);
+		createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0010_2Material", TextureState::Em);
+		createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"HomeBuilding0010_3Material", TextureState::AlEmMsMtNr);
+		createMaterial(L"HouseAttachmentSet03", L"DeferredShader", L"HomeBuilding0010_4Material", TextureState::Al);
+		createMaterial(L"HouseAttachmentTop00", L"DeferredShader", L"HomeBuilding0010_5Material", TextureState::AlNr);
+		createMaterial(L"HouseBrickWall00", L"DeferredShader", L"HomeBuilding0010_6Material", TextureState::AlNrRg);
+		createMaterial(L"HouseIronFence01", L"DeferredShader", L"HomeBuilding0010_7Material", TextureState::Al);
+		createMaterial(L"HousePaintedIron00", L"DeferredShader", L"HomeBuilding0010_8Material", TextureState::AlNr);
+		createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0010_9Material", TextureState::AlNrRg);
+		createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0010_10Material", TextureState::AlNr);
+
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding010");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding0010_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding0010_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding0010_3Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding0010_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding0010_4Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding0010_5Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding0010_6Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding0010_7Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding0010_8Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding0010_9Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding0010_9Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding0010_10Material");
+		//}
+	}
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding0011 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0011_0Material", TextureState::Al);
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0011_1Material", TextureState::Em);
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0011_2Material", TextureState::Em);
-	createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"HomeBuilding0011_3Material", TextureState::AlEmMsMtNr);
-	createMaterial(L"HouseAttachmentSet03", L"DeferredShader", L"HomeBuilding0011_4Material", TextureState::Al);
-	createMaterial(L"HouseAttachmentTop00", L"DeferredShader", L"HomeBuilding0011_5Material", TextureState::AlNr);
-	createMaterial(L"HouseBrickWall02", L"DeferredShader", L"HomeBuilding0011_6Material", TextureState::Al);
-	createMaterial(L"HouseIronFence00", L"DeferredShader", L"HomeBuilding0011_7Material", TextureState::AlNrRg);
-	createMaterial(L"HousePaintedIron00", L"DeferredShader", L"HomeBuilding0011_8Material", TextureState::AlNr);
-	createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0011_9Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0011_10Material", TextureState::AlNr);
+	{
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0011_0Material", TextureState::AlEm);
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0011_1Material", TextureState::Em);
+		createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0011_2Material", TextureState::Em);
+		createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"HomeBuilding0011_3Material", TextureState::AlEmMsMtNr);
+		createMaterial(L"HouseAttachmentSet03", L"DeferredShader", L"HomeBuilding0011_4Material", TextureState::Al);
+		createMaterial(L"HouseAttachmentTop00", L"DeferredShader", L"HomeBuilding0011_5Material", TextureState::AlNr);
+		createMaterial(L"HouseBrickWall02", L"DeferredShader", L"HomeBuilding0011_6Material", TextureState::Al);
+		createMaterial(L"HouseIronFence00", L"DeferredShader", L"HomeBuilding0011_7Material", TextureState::AlNrRg);
+		createMaterial(L"HousePaintedIron00", L"DeferredShader", L"HomeBuilding0011_8Material", TextureState::AlNr);
+		createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0011_9Material", TextureState::AlNrRg);
+		createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0011_10Material", TextureState::AlNr);
 
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding011");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding0011_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding0011_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding0010_3Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding0011_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding0011_4Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding0011_5Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding0011_6Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding0011_7Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding0011_8Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding0011_9Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding0011_9Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding0011_10Material");
+		//}
+	}
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding0012 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0012_0Material", TextureState::Al);
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0012_1Material", TextureState::Em);
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0012_2Material", TextureState::Em);
-	createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"HomeBuilding0012_3Material", TextureState::AlEmMsMtNr);
-	createMaterial(L"HouseAttachmentSet03", L"DeferredShader", L"HomeBuilding0012_4Material", TextureState::Al);
-	createMaterial(L"HouseAttachmentTop00", L"DeferredShader", L"HomeBuilding0012_5Material", TextureState::AlNr);
-	createMaterial(L"HouseBrickWall01", L"DeferredShader", L"HomeBuilding0012_6Material", TextureState::Al);
-	createMaterial(L"HouseIronFence02", L"DeferredShader", L"HomeBuilding0012_7Material", TextureState::Al);
-	createMaterial(L"HousePaintedIron00", L"DeferredShader", L"HomeBuilding0012_8Material", TextureState::AlNr);
-	createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0012_9Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0012_10Material", TextureState::AlNr);
+	{
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0012_0Material", TextureState::AlEm);
+		createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0012_1Material", TextureState::Em);
+		createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0012_2Material", TextureState::Em);
+		createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"HomeBuilding0012_3Material", TextureState::AlEmMsMtNr);
+		createMaterial(L"HouseAttachmentSet03", L"DeferredShader", L"HomeBuilding0012_4Material", TextureState::Al);
+		createMaterial(L"HouseAttachmentTop00", L"DeferredShader", L"HomeBuilding0012_5Material", TextureState::AlNr);
+		createMaterial(L"HouseBrickWall01", L"DeferredShader", L"HomeBuilding0012_6Material", TextureState::Al);
+		createMaterial(L"HouseIronFence02", L"DeferredShader", L"HomeBuilding0012_7Material", TextureState::Al);
+		createMaterial(L"HousePaintedIron00", L"DeferredShader", L"HomeBuilding0012_8Material", TextureState::AlNr);
+		createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0012_9Material", TextureState::AlNrRg);
+		createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0012_10Material", TextureState::AlNr);
 
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding012");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding0012_0Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding0012_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding0012_3Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding0012_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding0012_4Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding0012_5Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding0012_6Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding0012_7Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding0012_8Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding0012_9Material");
+		//	model->SetVariableMaterialsByKey(10, L"HomeBuilding0012_9Material");
+		//	model->SetVariableMaterialsByKey(11, L"HomeBuilding0012_10Material");
+		//}
+	}
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding0013 Material
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0013_0Material", TextureState::Em);
-	createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"HomeBuilding0013_1Material", TextureState::AlEmMsMtNr);
-	createMaterial(L"HouseAttachmentSet03", L"DeferredShader", L"HomeBuilding0013_2Material", TextureState::Al);
-	createMaterial(L"HouseAttachmentTop01", L"DeferredShader", L"HomeBuilding0013_3Material", TextureState::Al);
-	createMaterial(L"HouseBrickWall00", L"DeferredShader", L"HomeBuilding0013_4Material", TextureState::AlNrRg);
-	createMaterial(L"HouseIronFence02", L"DeferredShader", L"HomeBuilding0013_5Material", TextureState::Al);
-	createMaterial(L"HousePaintedIron00", L"DeferredShader", L"HomeBuilding0013_6Material", TextureState::AlNr);
-	createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0013_7Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0013_8Material", TextureState::AlNr);
+	{
+		createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0013_0Material", TextureState::Em);
+		createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"HomeBuilding0013_1Material", TextureState::AlEmMsMtNr);
+		createMaterial(L"HouseAttachmentSet03", L"DeferredShader", L"HomeBuilding0013_2Material", TextureState::Al);
+		createMaterial(L"HouseAttachmentTop01", L"DeferredShader", L"HomeBuilding0013_3Material", TextureState::Al);
+		createMaterial(L"HouseBrickWall00", L"DeferredShader", L"HomeBuilding0013_4Material", TextureState::AlNrRg);
+		createMaterial(L"HouseIronFence02", L"DeferredShader", L"HomeBuilding0013_5Material", TextureState::Al);
+		createMaterial(L"HousePaintedIron00", L"DeferredShader", L"HomeBuilding0013_6Material", TextureState::AlNr);
+		createMaterial(L"WallConcreteTopflloor06", L"DeferredShader", L"HomeBuilding0013_7Material", TextureState::AlNrRg);
+		createMaterial(L"WallConcreteTopVer01", L"DeferredShader", L"HomeBuilding0013_8Material", TextureState::AlNr);
+
+		//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding013");
+
+		//if (model)
+		//{
+		//	model->SetVariableMaterialsByKey(0, L"HomeBuilding0013_1Material");
+		//	model->SetVariableMaterialsByKey(1, L"HomeBuilding0013_1Material");
+		//	model->SetVariableMaterialsByKey(2, L"HomeBuilding0013_2Material");
+		//	model->SetVariableMaterialsByKey(3, L"HomeBuilding0013_3Material");
+		//	model->SetVariableMaterialsByKey(4, L"HomeBuilding0013_4Material");
+		//	model->SetVariableMaterialsByKey(5, L"HomeBuilding0013_5Material");
+		//	model->SetVariableMaterialsByKey(6, L"HomeBuilding0013_6Material");
+		//	model->SetVariableMaterialsByKey(7, L"HomeBuilding0013_7Material");
+		//	model->SetVariableMaterialsByKey(8, L"HomeBuilding0013_7Material");
+		//	model->SetVariableMaterialsByKey(9, L"HomeBuilding0013_8Material");
+		//}
+	}
 
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding0014 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0014_0Material", TextureState::Al);
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0014_1Material", TextureState::Em);
-	createMaterial(L"EntranceStreetLight00", L"DeferredShader", L"HomeBuilding0014_2Material", TextureState::AlNrRg);
-	//createMaterial(L"EntranceStreetLight01", L"DeferredShader", L"HomeBuilding0014_3Material", TextureState::AlNrRg); //없거나 찾아봐야함
-	//createMaterial(L"EntranceStreetLight02", L"DeferredShader", L"HomeBuilding0014_4Material", TextureState::AlNrRg); //없거나 찾아봐야함
-	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0014_3Material", TextureState::Em);
-	createMaterial(L"WallConcreteClaf00", L"DeferredShader", L"HomeBuilding0014_4Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteClaf01", L"DeferredShader", L"HomeBuilding0014_5Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteClaf02", L"DeferredShader", L"HomeBuilding0014_6Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteClaf03", L"DeferredShader", L"HomeBuilding0014_7Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteClaf04", L"DeferredShader", L"HomeBuilding0014_8Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteClaf05", L"DeferredShader", L"HomeBuilding0014_9Material", TextureState::AlNrRg);
-	createMaterial(L"WallConcreteTopflloor07", L"DeferredShader", L"HomeBuilding0014_10Material", TextureState::AlNrRg);
-	createMaterial(L"WindowlGlassClaf01", L"DeferredShader", L"HomeBuilding0014_11Material", TextureState::AlMtMsNrRg);
-	createMaterial(L"WindowlGlassClaf02", L"DeferredShader", L"HomeBuilding0014_12Material", TextureState::AlEmNrRg);
+	//createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0014_0Material", TextureState::AlEm);
+	//createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0014_1Material", TextureState::Em);
+	//createMaterial(L"EntranceStreetLight00", L"DeferredShader", L"HomeBuilding0014_2Material", TextureState::AlNrRg);
+	////createMaterial(L"EntranceStreetLight01", L"DeferredShader", L"HomeBuilding0014_3Material", TextureState::AlNrRg); //없거나 찾아봐야함
+	////createMaterial(L"EntranceStreetLight02", L"DeferredShader", L"HomeBuilding0014_4Material", TextureState::AlNrRg); //없거나 찾아봐야함
+	//createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0014_3Material", TextureState::Em);
+	//createMaterial(L"WallConcreteClaf00", L"DeferredShader", L"HomeBuilding0014_4Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteClaf01", L"DeferredShader", L"HomeBuilding0014_5Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteClaf02", L"DeferredShader", L"HomeBuilding0014_6Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteClaf03", L"DeferredShader", L"HomeBuilding0014_7Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteClaf04", L"DeferredShader", L"HomeBuilding0014_8Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteClaf05", L"DeferredShader", L"HomeBuilding0014_9Material", TextureState::AlNrRg);
+	//createMaterial(L"WallConcreteTopflloor07", L"DeferredShader", L"HomeBuilding0014_10Material", TextureState::AlNrRg);
+	//createMaterial(L"WindowlGlassClaf01", L"DeferredShader", L"HomeBuilding0014_11Material", TextureState::AlMtMsNrRg);
+	//createMaterial(L"WindowlGlassClaf02", L"DeferredShader", L"HomeBuilding0014_12Material", TextureState::AlEmNrRg);
+
+
+	//Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeBuilding014");
+
+	//if (model)
+	//{
+	//	model->SetVariableMaterialsByKey(0, L"HomeBuilding0014_0Material");
+	//	model->SetVariableMaterialsByKey(1, L"HomeBuilding0014_1Material");
+	//	model->SetVariableMaterialsByKey(2, L"HomeBuilding0014_2Material");
+	//	model->SetVariableMaterialsByKey(3, L"HomeBuilding0014_2Material");
+	//	model->SetVariableMaterialsByKey(4, L"HomeBuilding0014_2Material");
+	//	model->SetVariableMaterialsByKey(5, L"HomeBuilding0014_5Material");
+	//	model->SetVariableMaterialsByKey(6, L"HomeBuilding0014_4Material");
+	//	model->SetVariableMaterialsByKey(7, L"HomeBuilding0014_5Material");
+	//	model->SetVariableMaterialsByKey(8, L"HomeBuilding0014_6Material");
+	//	model->SetVariableMaterialsByKey(9, L"HomeBuilding0014_7Material");
+	//	model->SetVariableMaterialsByKey(10, L"HomeBuilding0014_8Material");
+	//	model->SetVariableMaterialsByKey(11, L"HomeBuilding0014_9Material");
+	//	model->SetVariableMaterialsByKey(12, L"HomeBuilding0014_10Material");
+	//	model->SetVariableMaterialsByKey(13, L"HomeBuilding0014_11Material");
+	//	model->SetVariableMaterialsByKey(14, L"HomeBuilding0014_12Material");
+	//	model->SetVariableMaterialsByKey(15, L"HomeBuilding0014_12Material");
+	//}
 
 #pragma endregion
 
@@ -452,7 +704,7 @@ void AsyncLoad::loadCityObjectMaterial()
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding0018 Material
-	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0018_0Material", TextureState::Al);
+	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0018_0Material", TextureState::AlEm);
 	createMaterial(L"BillEntrance00", L"DeferredShader", L"HomeBuilding0018_1Material", TextureState::Em);
 	createMaterial(L"EntranceLightSeal00", L"DeferredShader", L"HomeBuilding0018_2Material", TextureState::Em);
 	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0018_3Material", TextureState::Em);
@@ -487,6 +739,7 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"WallTentDepart00", L"DeferredShader", L"HomeBuilding0020_6Material", TextureState::AlNrRg);
 	createMaterial(L"WindowGlassConcrete00", L"DeferredShader", L"HomeBuilding0020_7Material", TextureState::AlMtMsNrRg);
 	createMaterial(L"WindowGlassConcrete01", L"DeferredShader", L"HomeBuilding0020_8Material", TextureState::AlEmNrRg);
+	createMaterial(L"WindowGlassConcrete02", L"DeferredShader", L"HomeBuilding0020_9Material", TextureState::AlNrRg);
 
 #pragma endregion
 
@@ -500,6 +753,7 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"WallTentDepart00", L"DeferredShader", L"HomeBuilding0021_6Material", TextureState::AlNrRg);
 	createMaterial(L"WindowGlassConcrete00", L"DeferredShader", L"HomeBuilding0021_7Material", TextureState::AlMtMsNrRg);
 	createMaterial(L"WindowGlassConcrete03", L"DeferredShader", L"HomeBuilding0021_8Material", TextureState::AlEmMtNrRg);
+	createMaterial(L"WindowGlassConcrete02", L"DeferredShader", L"HomeBuilding0021_9Material", TextureState::AlNrRg);
 
 
 #pragma endregion
@@ -514,6 +768,7 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"WallTentDepart00", L"DeferredShader", L"HomeBuilding0022_6Material", TextureState::AlNrRg);
 	createMaterial(L"WindowGlassConcrete00", L"DeferredShader", L"HomeBuilding0022_7Material", TextureState::AlMtMsNrRg);
 	createMaterial(L"WindowGlassConcrete01", L"DeferredShader", L"HomeBuilding0022_8Material", TextureState::AlEmNrRg);
+	createMaterial(L"WindowGlassConcrete02", L"DeferredShader", L"HomeBuilding0022_9Material", TextureState::AlNrRg);
 
 
 #pragma endregion
@@ -547,6 +802,7 @@ void AsyncLoad::loadCityObjectMaterial()
 
 #pragma region CityWorldHomeBuilding0026 Material
 	//DoorConcreteWallMain01 0
+	createMaterial(L"ConcreteWallMain01", L"DeferredShader", L"HomeBuilding0026_0Material", TextureState::AlEmNrRg);
 	createMaterial(L"GlassBuilding1F00", L"DeferredShader", L"HomeBuilding0026_1Material", TextureState::Em);
 	createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"HomeBuilding0026_2Material", TextureState::AlEmMsMtNr);
 	createMaterial(L"HouseAttachmentSet03", L"DeferredShader", L"HomeBuilding0026_3Material", TextureState::Al);
@@ -612,6 +868,7 @@ void AsyncLoad::loadCityObjectMaterial()
 		createMaterial(L"BaseAsphaltRoad01", L"DeferredShader", L"BaseAsphaltRoad01Material", TextureState::AlNrRg);
 		createMaterial(L"BlueseatStepRepeat00", L"DeferredShader", L"BlueseatStepRepeat00Material", TextureState::AlNr);
 		createMaterial(L"CityLitter00", L"DeferredShader", L"CityLitter00Material", TextureState::AlNrRg);
+		createMaterial(L"GrassGround00", L"DeferredShader", L"GrassGround00Material", TextureState::Al);
 		createMaterial(L"CityLitter01", L"DeferredShader", L"CityLitter01Material", TextureState::AlNrRg);
 		createMaterial(L"ConcreteWall00", L"DeferredShader", L"ConcreteWall00Material", TextureState::AlNrRg);
 		createMaterial(L"DrainageCover00", L"DeferredShader", L"DrainageCover00Material", TextureState::AlNrRg);
@@ -737,6 +994,227 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"carbodyBreakable", L"DeferredShader", L"CarBreakableMaterial", TextureState::AlEmMtNrRg);
 
 #pragma endregion
+
+#pragma region CityWorldHomeFence000 Material
+	createMaterial(L"MetalFence01", L"DeferredShader", L"Fence000_0Material", TextureState::AlNrRg);
+	createMaterial(L"MetalFence00", L"DeferredShader", L"Fence000_1Material", TextureState::AlMtNrRg);
+	createMaterial(L"ParkSign00", L"DeferredShader", L"Fence000_2Material", TextureState::AlNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeFence001 Material
+	createMaterial(L"MetalFence02", L"DeferredShader", L"Fence001_0Material", TextureState::AlNrRg);
+	//createMaterial(L"MetalFence02", L"DeferredShader", L"Fence001_0Material", TextureState::AlNrRg); //같은 마테리얼 2개
+
+#pragma endregion
+
+#pragma region CityWorldHomeFence002 Material
+	createMaterial(L"MetalFence02", L"DeferredShader", L"Fence002_0Material", TextureState::AlNrRg);
+	//createMaterial(L"MetalFence02", L"DeferredShader", L"Fence001_0Material", TextureState::AlNrRg); //같은 마테리얼 2개
+	createMaterial(L"MetalFence03", L"DeferredShader", L"Fence002_1Material", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeFence003 Material
+	createMaterial(L"MetalFence00", L"DeferredShader", L"Fence003_0Material", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeFence005 Material
+	createMaterial(L"MetalFence00", L"DeferredShader", L"Fence005_0Material", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeFence006 Material
+	createMaterial(L"MetalFence00", L"DeferredShader", L"Fence006_0Material", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeManhole000 Material
+	createMaterial(L"MetalManhole01", L"DeferredShader", L"Manhole000_0Material", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeManhole001 Material
+	createMaterial(L"MetalManhole01", L"DeferredShader", L"Manhole001_0Material", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeManhole002 Material
+	createMaterial(L"MetalManhole02", L"DeferredShader", L"Manhole002_0Material", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeManhole003 Material
+	createMaterial(L"MetalManhole03", L"DeferredShader", L"Manhole003_0Material", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign000 Material
+	createMaterial(L"Font_RoadSign", L"DeferredShader", L"Sign000_0Material", TextureState::AlNrRg);
+	createMaterial(L"LightShadow01", L"DeferredShader", L"Sign000_1Material", TextureState::Al);
+
+#pragma endregion
+
+
+#pragma region CityWorldHomeSign001 Material
+	createMaterial(L"Font_RoadSign", L"DeferredShader", L"Sign001_0Material", TextureState::AlNrRg);
+	createMaterial(L"LightShadow01", L"DeferredShader", L"Sign001_1Material", TextureState::Al);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign002 Material
+	createMaterial(L"MetalSignLong00", L"DeferredShader", L"Sign002_0Material", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign003 Material
+	createMaterial(L"MetalSignLong00", L"DeferredShader", L"Sign003_0Material", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign004 Material
+	createMaterial(L"MetalSignBoradSmallC00", L"DeferredShader", L"Sign004_0Material", TextureState::AlEmMtNrRg); //2번
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign007 Material
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign007_0Material", TextureState::AlNrRg);
+	createMaterial(L"FrameLight00", L"DeferredShader", L"Sign007_1Material", TextureState::AlEmNr);
+	createMaterial(L"MetalFrameSignboard02", L"DeferredShader", L"Sign007_2Material", TextureState::AlNr);
+	createMaterial(L"SignBoardTopLight00", L"DeferredShader", L"Sign007_3Material", TextureState::Al);
+	//MetalFrameSignBoard00 4번째 슬롯
+	createMaterial(L"PosterWedding06", L"DeferredShader", L"Sign007_4Material", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign008 Material
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign008_0Material", TextureState::AlNrRg);
+	createMaterial(L"FrameLight00", L"DeferredShader", L"Sign008_1Material", TextureState::AlEmNr);
+	createMaterial(L"MetalFrameSignboard02", L"DeferredShader", L"Sign008_2Material", TextureState::AlNr);
+	createMaterial(L"SignBoardTopLight00", L"DeferredShader", L"Sign008_3Material", TextureState::Al);
+	//MetalFrameSignBoard00 4번째 슬롯
+	createMaterial(L"PosterWedding02", L"DeferredShader", L"Sign008_4Material", TextureState::Al);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign009 Material
+	createMaterial(L"MetalFrameSignboard02", L"DeferredShader", L"Sign009_0Material", TextureState::AlNr);
+	createMaterial(L"SignBoardTopLight00", L"DeferredShader", L"Sign009_1Material", TextureState::Al);
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign009_2Material", TextureState::AlNrRg);
+	createMaterial(L"FrameLight01", L"DeferredShader", L"Sign009_3Material", TextureState::AlEmNr); //.scr
+	createMaterial(L"PosterWedding02", L"DeferredShader", L"Sign009_4Material", TextureState::Al);
+	//MetalFrameSignBoard00 5번째 슬롯
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign0010 Material
+//없는 텍스쳐 파일?? 또는 중복되지만 이름이 다른 텍스쳐가 많으므로 확인 필요
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign0010_0Material", TextureState::AlNrRg);
+	createMaterial(L"FrameLightFront00", L"DeferredShader", L"Sign0010_1Material", TextureState::Em);
+	//FrameLightFront01
+	createMaterial(L"MetalFrameSignboard02", L"DeferredShader", L"Sign0010_2Material", TextureState::AlNr);
+	//createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign0010_3Material", TextureState::AlNrRg);
+	//createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign0010_4Material", TextureState::AlNrRg);
+	createMaterial(L"FrameLight01", L"DeferredShader", L"Sign0010_5Material", TextureState::AlEmNr); //.scr
+	createMaterial(L"MetalFrameSignboard02", L"DeferredShader", L"Sign0010_6Material", TextureState::AlNr);
+	createMaterial(L"PosterWedding01", L"DeferredShader", L"Sign0010_7Material", TextureState::AlNr);
+	createMaterial(L"PosterWedding02", L"DeferredShader", L"Sign0010_8Material", TextureState::Al);
+	createMaterial(L"MetalWallShop00", L"DeferredShader", L"Sign0010_9Material", TextureState::Al);
+	createMaterial(L"FrameLight00", L"DeferredShader", L"Sign0010_10Material", TextureState::AlEmNr);
+	//createMaterial(L"FrameLight01", L"DeferredShader", L"Sign0010_11Material", TextureState::AlEmNr); //FrameLight03 찾아야됨
+	//createMaterial(L"FrameLightFront00", L"DeferredShader", L"Sign0010_12Material", TextureState::Em); /FrameLightFront01
+	createMaterial(L"GlassWallShop00", L"DeferredShader", L"Sign0010_13Material", TextureState::AlEmNr);
+	//createMaterial(L"GlassWallShop00", L"DeferredShader", L"Sign0010_14Material", TextureState::AlEmNr); //GlassWallShop01
+	createMaterial(L"ShopEntrance00", L"DeferredShader", L"Sign0010_15Material", TextureState::Em);
+	createMaterial(L"SignBoardTopLight00", L"DeferredShader", L"Sign0010_16Material", TextureState::Al);
+	//createMaterial(L"FrameLight01", L"DeferredShader", L"Sign0010_17Material", TextureState::AlEmNr); //FrameLight08 찾아야됨
+	createMaterial(L"FrameLightLogo00", L"DeferredShader", L"Sign0010_18Material", TextureState::Al);
+	createMaterial(L"CityPosterLight00", L"DeferredShader", L"Sign0010_19Material", TextureState::Al); // FrameLight02??
+	createMaterial(L"FrameLight04", L"DeferredShader", L"Sign0010_20Material", TextureState::AlNr); // FrameLight02??
+	//createMaterial(L"FrameLight01", L"DeferredShader", L"Sign0010_21Material", TextureState::AlNr); // FrameLight05_scr
+	createMaterial(L"ShopSign00", L"DeferredShader", L"Sign0010_22Material", TextureState::Al);
+	createMaterial(L"CityShoprelf00", L"DeferredShader", L"Sign0010_22Material", TextureState::AlNrRg);
+	createMaterial(L"ShopMat00", L"DeferredShader", L"Sign0010_23Material", TextureState::AlNrRg);
+	//createMaterial(L"FrameLight04", L"DeferredShader", L"Sign0010_24Material", TextureState::AlNr); // FrameLight08 필요
+	createMaterial(L"MetalFrameSignBoard04", L"DeferredShader", L"Sign0010_25Material", TextureState::Al);
+	createMaterial(L"PosterWedding00", L"DeferredShader", L"Sign0010_26Material", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign012 Material
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign012_0Material", TextureState::AlNrRg);
+	createMaterial(L"SignBoardTopLight00", L"DeferredShader", L"Sign012_1Material", TextureState::Al);
+	createMaterial(L"MetalFrameSignboard02", L"DeferredShader", L"Sign012_2Material", TextureState::AlNr);
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign012_3Material", TextureState::AlNrRg);
+	//createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign012_4Material", TextureState::AlNrRg);
+	createMaterial(L"FrameLight00", L"DeferredShader", L"Sign012_5Material", TextureState::AlEmNr);
+	createMaterial(L"PosterWedding01", L"DeferredShader", L"Sign012_6Material", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign013 Material
+	//CityWorldHomeSign0010처럼 없는 텍스쳐 또는 중복되어 이름이 다른 텍스쳐가 많음
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign016 Material
+	createMaterial(L"FontSignBoadA00", L"DeferredShader", L"Sign016_0Material", TextureState::AlEmNrRg);
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign016_1Material", TextureState::AlNrRg);
+	//createMaterial(L"FontSignBoadA00", L"DeferredShader", L"Sign016_2Material", TextureState::AlEmNrRg);
+	createMaterial(L"FrameLight07", L"DeferredShader", L"Sign016_3Material", TextureState::Al);
+
+	// FrameLight00 -> 07작성되어있음 임시로 07로 변경
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign017 Material
+	createMaterial(L"SignBoardTopLight00", L"DeferredShader", L"Sign017_0Material", TextureState::Al);
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign017_1Material", TextureState::AlNrRg);
+	createMaterial(L"MetalFrameSignboard02", L"DeferredShader", L"Sign017_2Material", TextureState::AlNr);
+	//createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign017_3Material", TextureState::AlNrRg);
+	//createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign017_4Material", TextureState::AlNrRg);
+	createMaterial(L"FrameLight00", L"DeferredShader", L"Sign017_5Material", TextureState::AlEmNr);
+	createMaterial(L"PosterSign00", L"DeferredShader", L"Sign017_5Material", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign020 Material
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign020_0Material", TextureState::AlNrRg);
+	createMaterial(L"FrameLight00", L"DeferredShader", L"Sign020_1Material", TextureState::AlEmNr);
+	createMaterial(L"MetalFrameSignboard02", L"DeferredShader", L"Sign020_2Material", TextureState::AlNr);
+	createMaterial(L"SignBoardTopLight00", L"DeferredShader", L"Sign020_3Material", TextureState::Al);
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign020_4Material", TextureState::AlNrRg);
+	createMaterial(L"PosterSign00", L"DeferredShader", L"Sign020_5Material", TextureState::AlNr);
+	createMaterial(L"PosterSign02", L"DeferredShader", L"Sign020_6Material", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign022 Material
+	createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign022_0Material", TextureState::AlNrRg);
+	createMaterial(L"FrameLight00", L"DeferredShader", L"Sign022_1Material", TextureState::AlEmNr);
+	createMaterial(L"MetalFrameSignboard02", L"DeferredShader", L"Sign022_2Material", TextureState::AlNr);
+	createMaterial(L"SignBoardTopLight00", L"DeferredShader", L"Sign022_3Material", TextureState::Al);
+	//createMaterial(L"MetalFrameSignBoard00", L"DeferredShader", L"Sign020_4Material", TextureState::AlNrRg);
+	createMaterial(L"PosterSign02", L"DeferredShader", L"Sign022_4Material", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign027 Material
+	createMaterial(L"MetalSignBoradSmallB00", L"DeferredShader", L"Sign027_0Material", TextureState::AlEmMtNrRg);
+	//createMaterial(L"MetalSignBoradSmallB00", L"DeferredShader", L"Sign027_1Material", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldFenceA Material
+	createMaterial(L"BarricadePlasticWhite00", L"DeferredShader", L"FenceA_0Material", TextureState::AlNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldFenceA Material
+	createMaterial(L"BarricadePlasticWhite00", L"DeferredShader", L"FenceB_0Material", TextureState::AlNrRg);
+
+#pragma endregion
 }
 
 void AsyncLoad::loadCityTexture()
@@ -750,8 +1228,8 @@ void AsyncLoad::loadCityTexture()
 #pragma endregion
 
 #pragma region CityWorldHomeBuilding003
-	textureLoad(L"GroundLawn00", L"CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding003/Image", TextureState::AlNrRg);
-	textureLoad(L"MetalFence00", L"CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding003/Image", TextureState::AlMtNrRg);
+	textureLoad(L"GroundLawn00", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNrRg);
+	textureLoad(L"MetalFence00", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlMtNrRg);
 
 #pragma endregion
 
@@ -800,6 +1278,12 @@ void AsyncLoad::loadCityTexture()
 	textureLoad(L"DoorWoodBill00", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNr);
 	textureLoad(L"WallConcreteFlat01", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNr);
 	textureLoad(L"WallConcreteFlat02", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNr);
+	textureLoad(L"WindowGlassConcrete02", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNrRg);
+
+	textureLoad(L"WallConcreteTopflloor06", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNrRg);
+
+
+
 
 	textureLoad(L"BuildingBrickWall00_rep", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNrRg);
 	textureLoad(L"BuildingStoneParts00", L"CityWorldObject/CityWorldHomeBuilding/Image", TextureState::AlNrRg);
@@ -868,6 +1352,7 @@ void AsyncLoad::loadCityTexture()
 	textureLoad(L"BaseAsphaltRoad01", L"CityWorldObject/CityGround/Image", TextureState::AlNrRg);
 	textureLoad(L"BlueseatStepRepeat00", L"CityWorldObject/CityGround/Image", TextureState::AlNr);
 	textureLoad(L"CityLitter00", L"CityWorldObject/CityGround/Image", TextureState::AlMtNrRg);
+	textureLoad(L"GrassGround00", L"CityWorldObject/CityGround/Image", TextureState::Al);
 	textureLoad(L"CityLitter01", L"CityWorldObject/CityGround/Image", TextureState::AlNrRg);
 	textureLoad(L"ConcreteWall00", L"CityWorldObject/CityGround/Image", TextureState::AlNrRg);
 	textureLoad(L"DrainageCover00", L"CityWorldObject/CityGround/Image", TextureState::AlNrRg);
@@ -990,6 +1475,141 @@ void AsyncLoad::loadCityTexture()
 
 #pragma region CarBreakable
 		textureLoad(L"carbodyBreakable", L"CityWorldObject/TaxiCar/CarBreakable/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+
+#pragma region MotorcycleParkingLot
+		textureLoad(L"MetalScaffold00", L"CityWorldObject/MotorcycleParkingLot/Image", TextureState::AlNrRg);
+		textureLoad(L"MetalScaffoldRepeat00", L"CityWorldObject/MotorcycleParkingLot/Image", TextureState::AlNr);
+
+#pragma endregion
+
+		#pragma region SouvenirCity1
+		textureLoad(L"souvenircity1body", L"CityWorldObject/SouvenirCity1/Image", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+
+#pragma region CityWorldHomeFence
+		textureLoad(L"MetalFence01", L"CityWorldObject/CityWorldHomeFence/Image", TextureState::AlNrRg);
+		textureLoad(L"MetalFence00", L"CityWorldObject/CityWorldHomeFence/Image", TextureState::AlMtNrRg);
+		textureLoad(L"ParkSign00", L"CityWorldObject/CityWorldHomeFence/Image", TextureState::AlNrRg);
+
+		textureLoad(L"MetalFence02", L"CityWorldObject/CityWorldHomeFence/Image", TextureState::AlNrRg);
+
+		textureLoad(L"MetalFence03", L"CityWorldObject/CityWorldHomeFence/Image", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeManhole
+		textureLoad(L"MetalManhole01", L"CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole000/Image", TextureState::AlMtNrRg);
+
+		textureLoad(L"MetalManhole02", L"CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole002/Image", TextureState::AlMtNrRg);
+
+		textureLoad(L"MetalManhole03", L"CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole003/Image", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign000 And CityWorldHomeSign001
+		textureLoad(L"Font_RoadSign", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign000/Image", TextureState::AlNrRg);
+		textureLoad(L"LightShadow01", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign000/Image", TextureState::Al);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign002 And CityWorldHomeSign003
+		textureLoad(L"MetalSignLong00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign002/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign004
+		textureLoad(L"MetalSignBoradSmallC00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign004/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign006
+		textureLoad(L"MetalSignBoradSmallB00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign006/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign007
+		textureLoad(L"MetalFrameSignBoard00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign007/Image", TextureState::AlNrRg);
+		textureLoad(L"FrameLight00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign007/Image", TextureState::AlEmNr); //.scr도있지만 기능이 없음
+		textureLoad(L"MetalFrameSignboard02", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign007/Image", TextureState::AlNr);
+		textureLoad(L"SignBoardTopLight00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign007/Image", TextureState::Al);
+		textureLoad(L"PosterWedding06", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign007/Image", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign008
+		textureLoad(L"PosterWedding02", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign008/Image", TextureState::Al);
+		//이외 Sign007의 텍스쳐를 사용함
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign008
+		//textureLoad(L"PosterWedding02", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign007/Image", TextureState::Al);
+		//이외 Sign007의 텍스쳐를 사용함
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign009
+		textureLoad(L"FrameLight01", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign009/Image", TextureState::AlEmNr);
+		//이외 Sign007의 텍스쳐를 사용함
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign010
+		textureLoad(L"FrameLightFront00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::Em);
+		//SignboardFont00 찾아야됨
+		textureLoad(L"PosterWedding01", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::Al);
+		textureLoad(L"MetalWallShop00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::AlNrRg);
+		textureLoad(L"GlassWallShop00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::AlEmNr);
+		textureLoad(L"ShopEntrance00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::Em);
+		textureLoad(L"FrameLightLogo00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::Al);
+		textureLoad(L"CityPosterLight00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::Al);
+		textureLoad(L"FrameLight04", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::AlNr);
+		textureLoad(L"ShopSign00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::Al);
+		textureLoad(L"CityShoprelf00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::AlNrRg);
+		textureLoad(L"ShopMat00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::AlNrRg);
+		textureLoad(L"MetalFrameSignBoard04", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::Al);
+		textureLoad(L"PosterWedding00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign010/Image", TextureState::AlNr);
+
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign016
+		textureLoad(L"FontSignBoadA00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign016/Image", TextureState::AlEmNrRg);
+		textureLoad(L"FrameLight07", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign016/Image", TextureState::Al); // _color And _scr
+		//이외 Sign007의 텍스쳐를 사용함
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign017
+		textureLoad(L"PosterSign00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign017/Image", TextureState::AlNr);
+		//포스터3개중 하나만 선택함
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign020
+		textureLoad(L"PosterSign02", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign018/Image", TextureState::AlNr);
+		//포스터3개중 하나만 선택함
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign022
+		textureLoad(L"PosterSign02", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign018/Image", TextureState::AlNr);
+		//포스터3개중 하나만 선택함
+
+#pragma endregion
+
+#pragma region CityWorldHomeSign027
+		textureLoad(L"MetalSignBoradSmallB00", L"CityWorldObject/CityWorldHomeSign/CityWorldHomeSign027/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldFenceA And CityWorldFenceB
+		textureLoad(L"BarricadePlasticWhite00", L"CityWorldObject/CityWorldFence/CityWorldFenceA/Image", TextureState::AlNrRg);
 
 #pragma endregion
 }

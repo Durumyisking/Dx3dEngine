@@ -5,9 +5,11 @@ class MeshRenderer;
 class CreateObject : public GameObj
 {
 public:
-	CreateObject(const std::wstring& modelKey, std::vector<std::wstring> array);
+	CreateObject(const std::wstring& modelKey, const std::wstring& materialKey, Vector3 size);
+	CreateObject(const CreateObject& Obj);
 	virtual ~CreateObject();
 
+	virtual CreateObject* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
@@ -18,6 +20,10 @@ public:
 	virtual void OnTriggerPersist(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
 
+
 private:
-	std::vector<std::wstring> MaterialArray;
+	std::wstring mModelKey;
+	std::wstring mMaterialKey;
+	Vector3 mColliderSize;
+
 };

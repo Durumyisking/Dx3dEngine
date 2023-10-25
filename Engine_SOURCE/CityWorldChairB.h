@@ -5,8 +5,10 @@ class CityWorldChairB : public GameObj
 {
 public:
 	CityWorldChairB();
+	CityWorldChairB(const CityWorldChairB& Obj);
 	virtual ~CityWorldChairB();
 
+	virtual CityWorldChairB* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
