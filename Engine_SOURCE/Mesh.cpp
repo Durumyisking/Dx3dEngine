@@ -46,7 +46,7 @@ bool Mesh::CreateVertexBuffer(void* data, UINT count)
 
 	if (!GetDevice()->CreateBuffer(&mVBDesc, &subData, mVertexBuffer.GetAddressOf()))
 		return false;
-		
+
 	mBoundingBox.Center = (mMinVertex + mMaxVertex) * 0.5f;
 	mBoundingBox.Extents = (mMaxVertex - mMinVertex) * 0.5f;
 	mInitialExtent = mBoundingBox.Extents;
@@ -78,7 +78,7 @@ bool Mesh::CreateIndexBuffer(void* data, UINT count)
 	mIBDesc.ByteWidth = sizeof(UINT) * count;
 	mIBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_INDEX_BUFFER;
 	mIBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
-	mIBDesc.CPUAccessFlags = 0; 
+	mIBDesc.CPUAccessFlags = 0;
 
 	D3D11_SUBRESOURCE_DATA idxData = {};
 	idxData.pSysMem = data;
@@ -95,36 +95,36 @@ void Mesh::BindBuffer(bool drawInstance)
 	// ui는 컬링하면 안돼
 	if (GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh") != this)
 	{
-		CheckFrustumCull();
-		if (mbFrustumCulled)
-			return;
-		
-	/*	if(mbFrustumCulled)
-		{
-			if (sMeshCount != 0)
+		//CheckFrustumCull();
+		//if (mbFrustumCulled)
+		//	return;
+
+		/*	if(mbFrustumCulled)
 			{
-				if (r)
+				if (sMeshCount != 0)
 				{
-					--sMeshCount;
-					r = false;
+					if (r)
+					{
+						--sMeshCount;
+						r = false;
+					}
 				}
 			}
-		}
-		else
-		{
-			if (!r)
+			else
 			{
-				++sMeshCount;
-				r = true;
-			}
-		}*/
-	}				
+				if (!r)
+				{
+					++sMeshCount;
+					r = true;
+				}
+			}*/
+	}
 
 	if (drawInstance)
 	{
-		UINT stride[2] = {sizeof(Vertex), sizeof(InstancingData)};
+		UINT stride[2] = { sizeof(Vertex), sizeof(InstancingData) };
 		UINT offset[2] = { 0, 0 };
-		ID3D11Buffer* vbs[2] = { mVertexBuffer.Get(), mInstancedBuffer.Get()};
+		ID3D11Buffer* vbs[2] = { mVertexBuffer.Get(), mInstancedBuffer.Get() };
 		GetDevice()->BindVertexBuffer(0, 2, vbs, stride, offset);
 		GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	}
@@ -229,7 +229,7 @@ bool Mesh::GetIndexesFromBuffer(std::vector<UINT>* indexVec)
 }
 
 void Mesh::UpdateInstanceBuffer(std::vector<InstancingData> matrices)
-{	
+{
 	UINT size = static_cast<UINT>((matrices.capacity() * sizeof(InstancingData)));
 	GetDevice()->BindBuffer(mInstancedBuffer.Get(), matrices.data(), size);
 }

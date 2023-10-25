@@ -1,10 +1,5 @@
 #include "global.hlsli"
 
-struct VSIn
-{
-    float4 Position : POSITION;
-};
-
 struct VSOut
 {
     float4 Position : SV_Position;
@@ -69,3 +64,10 @@ PS_OUT main(VSOut vsin)
     return output;
 }
    
+/*
+TODO :
+플레이어의 깊이/위치값 항상 gpu에 전송
+
+이 깊이값이 deferred에서의 깊이값과 오차가 있다하면
+검은색으로 렌더링
+*/
