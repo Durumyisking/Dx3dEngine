@@ -144,7 +144,7 @@ void ScenePlay::Initialize()
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		{
-			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
 			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 			skySphere->SetName(L"SkySphere");
 		}
