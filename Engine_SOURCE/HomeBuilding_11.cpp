@@ -37,7 +37,7 @@ void HomeBuilding_11::Initialize()
 
 	mr->SetMaterialByKey(L"HomeBuilding0011_0Material", 0);
 	mr->SetMaterialByKey(L"HomeBuilding0011_1Material", 1);
-	mr->SetMaterialByKey(L"HomeBuilding0010_3Material", 2);
+	mr->SetMaterialByKey(L"HomeBuilding0011_3Material", 2);
 	mr->SetMaterialByKey(L"HomeBuilding0011_3Material", 3);
 	mr->SetMaterialByKey(L"HomeBuilding0011_4Material", 4);
 	mr->SetMaterialByKey(L"HomeBuilding0011_5Material", 5);
