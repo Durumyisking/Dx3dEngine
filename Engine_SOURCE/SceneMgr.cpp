@@ -22,8 +22,12 @@
 #include "ModelObj.h"
 #include "SkySphere.h"
 
+
 #include "CityObjects.h"
 
+
+
+#include "BlockBrick.h"
 
 
 
@@ -107,7 +111,7 @@ void SceneMgr::LoadScene(eSceneType type)
 {
 	if (mActiveScene->GetType() == type)
 	{
-		//·Îµù ¾ÀÀ¸·Î ³Ñ¾î°¡¼­ ÀÛ¾÷ÇÏ±â
+		//ë¡œë”© ì”¬ìœ¼ë¡œ ë„˜ì–´ê°€ì„œ ì‘ì—…í•˜ê¸°
 	}
 
 	if (mActiveScene)
@@ -130,7 +134,7 @@ void SceneMgr::ChangeScene(eSceneType type)
 {
 	if (mActiveScene->GetType() == type)
 	{
-		//·Îµù ¾ÀÀ¸·Î ³Ñ¾î°¡¼­ ÀÛ¾÷ÇÏ±â
+		//ë¡œë”© ì”¬ìœ¼ë¡œ ë„˜ì–´ê°€ì„œ ì‘ì—…í•˜ê¸°
 	}
 
 	if (mActiveScene)
@@ -186,7 +190,7 @@ bool SceneMgr::SaveSceneFile(eSceneType type, const std::wstring& filePath)
 	return true;
 }
 
-//´Ù¸¥ ¾²·¹µå¸¦ ½á¼­ ¹é±×¶ó¿îµå ·Îµù ÇÏ´Â¹ı Ã£±â
+//ë‹¤ë¥¸ ì“°ë ˆë“œë¥¼ ì¨ì„œ ë°±ê·¸ë¼ìš´ë“œ ë¡œë”© í•˜ëŠ”ë²• ì°¾ê¸°
 bool SceneMgr::LoadSceneFile(const std::wstring& filePath)
 {
 	FILE* File = nullptr;
@@ -257,6 +261,7 @@ void SceneMgr::CreateCDO()
 
 	ModelObj* ModelObjCDO = new ModelObj();
 	GameObj::AddObjectCDO("ModelObj", ModelObjCDO);
+
 
 	CityGround* cityGroundCDO = new CityGround();
 	GameObj::AddObjectCDO("CityGround", cityGroundCDO);
@@ -350,6 +355,10 @@ void SceneMgr::CreateCDO()
 
 	HomeBuilding_26* building_26CDO = new HomeBuilding_26();
 	GameObj::AddObjectCDO("HomeBuilding_26", building_26CDO);
+
+	BlockBrick* BlockBrickObjCDO = new BlockBrick();
+	GameObj::AddObjectCDO("BlockBrick", BlockBrickObjCDO);
+
 
 	//SkySphere* SkySphere = new SkySphere();
 	//GameObj::AddObjectCDO("SkySphere", SkySphere);

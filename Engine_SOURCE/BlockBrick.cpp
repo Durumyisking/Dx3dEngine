@@ -8,6 +8,13 @@
 
 BlockBrick::BlockBrick()
 {
+	SetName(L"BlockBrick");
+	mObjectTypeName = "BlockBrick";
+}
+
+BlockBrick::BlockBrick(const BlockBrick& Obj)
+	: InstantiativeObject(Obj)
+{
 }
 
 BlockBrick::~BlockBrick()

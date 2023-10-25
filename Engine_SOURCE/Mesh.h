@@ -27,6 +27,8 @@ public:
 
 	void UpdateInstanceBuffer(std::vector<InstancingData> matrices);
 
+	void CheckFrustumCull();
+
 public:
 	bool IsRender() { return mbRender; }
 	void SetRender(bool render) { mbRender = render; }
@@ -38,6 +40,8 @@ public:
 	void SetMaxVertex(const math::Vector3 & vertex);
 
 	void SetWorldMatrix(const math::Matrix& worldMatrix) { mOwnerWorldMatrix = worldMatrix; }
+
+	GETSET(bool, mbFrustumCulled, FrustumCull)
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> mVertexBuffer;
