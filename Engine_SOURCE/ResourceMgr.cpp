@@ -1,4 +1,4 @@
-#include "ResourceMgr.h"
+ï»¿#include "ResourceMgr.h"
 #include "Material.h"
 #include "FileMgr.h"
 #include "AudioClip.h"
@@ -155,7 +155,7 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding024", L"CityWorldHomeBuilding024");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding026", L"CityWorldHomeBuilding026");
 	 
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding014", L"CityWorldHomeBuilding014");  // --- 14¹ø Building Ãâ·Â¾ÈµÊ
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding014", L"CityWorldHomeBuilding014");  // --- 14ë²ˆ Building ì¶œë ¥ì•ˆë¨
 
 #pragma endregion
 
@@ -199,6 +199,19 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 
 #pragma endregion
 
+#pragma region Door
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor000", L"CityWorldHomeDoor000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor001", L"CityWorldHomeDoor001");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor002", L"CityWorldHomeDoor002");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor003", L"CityWorldHomeDoor003");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor004", L"CityWorldHomeDoor004");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor005", L"CityWorldHomeDoor005");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor006", L"CityWorldHomeDoor006");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor007", L"CityWorldHomeDoor007");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor008", L"CityWorldHomeDoor008");
+
+#pragma endregion
+
 
 	*bfinish = true;
 }
@@ -215,6 +228,7 @@ void ResourceMgr::LoadModel_CityWorld(bool* bfinish)
 void ResourceMgr::SettingModelMaterial()
 {
 	Model* model = nullptr;
+#pragma region Building
 	model = Find<Model>(L"CityWorldHomeBuilding002");
 	model->SetVariableMaterialsByKey(0, L"HomeBuilding002_0Material");
 	model->SetVariableMaterialsByKey(1, L"HomeBuilding002_1Material");
@@ -224,7 +238,7 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(0, L"HomeBuilding004_0Material");
 	model->SetVariableMaterialsByKey(1, L"HomeBuilding004_1Material");
 	model->SetVariableMaterialsByKey(2, L"HomeBuilding004_2Material");
-	model->SetVariableMaterialsByKey(3, L"HomeBuilding004_1Material"); //¼öÁ¤ ÇÊ¿ä BuildingEntrance02
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding004_1Material"); //ìˆ˜ì • í•„ìš” BuildingEntrance02
 	model->SetVariableMaterialsByKey(4, L"HomeBuilding004_3Material");
 	model->SetVariableMaterialsByKey(5, L"HomeBuilding004_4Material");
 	model->SetVariableMaterialsByKey(6, L"HomeBuilding004_5Material");
@@ -240,7 +254,7 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(0,L"HomeBuilding005_0Material");
 	model->SetVariableMaterialsByKey(1,L"HomeBuilding005_1Material");
 	model->SetVariableMaterialsByKey(2,L"HomeBuilding005_2Material");
-	model->SetVariableMaterialsByKey(3,L"HomeBuilding005_1Material"); //¼öÁ¤ ÇÊ¿ä BuildingEntrance02
+	model->SetVariableMaterialsByKey(3,L"HomeBuilding005_1Material"); //ìˆ˜ì • í•„ìš” BuildingEntrance02
 	model->SetVariableMaterialsByKey(4,L"HomeBuilding005_3Material");
 	model->SetVariableMaterialsByKey(5,L"HomeBuilding005_4Material");
 	model->SetVariableMaterialsByKey(6,L"HomeBuilding005_5Material");
@@ -360,12 +374,207 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(6, L"HomeBuilding0017_6Material");
 	model->SetVariableMaterialsByKey(7, L"HomeBuilding0017_7Material");
 	model = Find<Model>(L"CityWorldHomeBuilding018");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding0018_0Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding0018_0Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding0018_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding0018_10Material");
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding0018_4Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding0018_6Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding0018_7Material");
+	model->SetVariableMaterialsByKey(7, L"HomeBuilding0018_8Material");
+	model->SetVariableMaterialsByKey(8, L"HomeBuilding0018_9Material");
+	model->SetVariableMaterialsByKey(9, L"HomeBuilding0018_10Material");
+	model->SetVariableMaterialsByKey(10, L"HomeBuilding0018_5Material");
 	model = Find<Model>(L"CityWorldHomeBuilding019");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding0019_6Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding0019_1Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding0019_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding0019_3Material");
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding0019_4Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding0019_5Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding0019_6Material");
 	model = Find<Model>(L"CityWorldHomeBuilding020");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding0020_7Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding0020_9Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding0020_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding0020_3Material");
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding0020_4Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding0020_5Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding0020_6Material");
+	model->SetVariableMaterialsByKey(7, L"HomeBuilding0020_7Material");
+	model->SetVariableMaterialsByKey(8, L"HomeBuilding0020_8Material");
 	model = Find<Model>(L"CityWorldHomeBuilding021");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding0021_7Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding0021_9Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding0021_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding0021_3Material");
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding0021_4Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding0021_5Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding0021_6Material");
+	model->SetVariableMaterialsByKey(7, L"HomeBuilding0021_7Material");
+	model->SetVariableMaterialsByKey(8, L"HomeBuilding0021_8Material");
 	model = Find<Model>(L"CityWorldHomeBuilding022");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding0022_7Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding0022_9Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding0022_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding0022_3Material");
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding0022_4Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding0022_5Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding0022_6Material");
+	model->SetVariableMaterialsByKey(7, L"HomeBuilding0022_7Material");
+	model->SetVariableMaterialsByKey(8, L"HomeBuilding0022_8Material");
 	model = Find<Model>(L"CityWorldHomeBuilding023");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding0023_5Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding0023_1Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding0023_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding0023_3Material");
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding0023_4Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding0023_5Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding0023_6Material");
 	model = Find<Model>(L"CityWorldHomeBuilding024");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding0024_9Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding0024_1Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding0024_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding0024_3Material");
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding0024_4Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding0024_5Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding0024_6Material");
+	model->SetVariableMaterialsByKey(7, L"HomeBuilding0024_7Material");
+	model->SetVariableMaterialsByKey(8, L"HomeBuilding0024_8Material");
+	model->SetVariableMaterialsByKey(9, L"HomeBuilding0024_9Material");
+	model->SetVariableMaterialsByKey(10, L"HomeBuilding0024_10Material");
+	model->SetVariableMaterialsByKey(11, L"HomeBuilding0024_11Material");
 	model = Find<Model>(L"CityWorldHomeBuilding026");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding0026_0Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding0026_2Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding0026_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding0026_3Material");
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding0026_4Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding0026_5Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding0026_6Material");
+	model->SetVariableMaterialsByKey(7, L"HomeBuilding0026_7Material");
+	model->SetVariableMaterialsByKey(8, L"HomeBuilding0026_8Material");
+	model->SetVariableMaterialsByKey(9, L"HomeBuilding0026_9Material");
+	model->SetVariableMaterialsByKey(10, L"HomeBuilding0026_10Material");
+	model->SetVariableMaterialsByKey(11, L"HomeBuilding0026_11Material");
+#pragma endregion
 
+#pragma region Fence
+	model = Find<Model>(L"CityWorldFenceA");
+	model->SetVariableMaterialsByKey(0, L"FenceA_0Material");
+	model = Find<Model>(L"CityWorldFenceB");
+	model->SetVariableMaterialsByKey(0, L"FenceB_0Material");
+	model = Find<Model>(L"CityWorldHomeFence000");
+	model->SetVariableMaterialsByKey(0, L"Fence000_0Material");
+	model->SetVariableMaterialsByKey(1, L"Fence000_1Material");
+	model->SetVariableMaterialsByKey(2, L"Fence000_2Material");
+	model = Find<Model>(L"CityWorldHomeFence001");
+	model->SetVariableMaterialsByKey(0, L"Fence001_0Material");
+	model->SetVariableMaterialsByKey(1, L"Fence001_0Material");
+	model = Find<Model>(L"CityWorldHomeFence002");
+	model->SetVariableMaterialsByKey(0, L"Fence002_0Material");
+	model->SetVariableMaterialsByKey(1, L"Fence002_0Material");
+	model->SetVariableMaterialsByKey(2, L"Fence002_1Material");
+	model = Find<Model>(L"CityWorldHomeFence003");
+	model->SetVariableMaterialsByKey(0, L"Fence003_0Material");
+	model = Find<Model>(L"CityWorldHomeFence005");
+	model->SetVariableMaterialsByKey(0, L"Fence005_0Material");
+	model = Find<Model>(L"CityWorldHomeFence006");
+	model->SetVariableMaterialsByKey(0, L"Fence006_0Material");
+#pragma endregion
+
+#pragma region Bench
+	model = Find<Model>(L"CityWorldHomeBench000");
+	model->SetVariableMaterialsByKey(0, L"BenchiWood00Material");
+#pragma endregion
+
+#pragma region Bush
+	model = Find<Model>(L"CityWorldBush");
+	model->SetVariableMaterialsByKey(0, L"CityWorldBush_0Material");
+	model->SetVariableMaterialsByKey(1, L"CityWorldBush_1Material");
+	model = Find<Model>(L"CityWorldBushA");
+	model->SetVariableMaterialsByKey(0, L"CityWorldBushA_0Material");
+	model->SetVariableMaterialsByKey(1, L"CityWorldBushA_1Material");
+	model->SetVariableMaterialsByKey(2, L"CityWorldBushA_0Material");
+#pragma endregion
+
+#pragma region Manhole
+	model = Find<Model>(L"CityWorldHomeManhole000");
+	model->SetVariableMaterialsByKey(0, L"Manhole000_0Material");
+	model = Find<Model>(L"CityWorldHomeManhole001");
+	model->SetVariableMaterialsByKey(0, L"Manhole001_0Material");
+	model = Find<Model>(L"CityWorldHomeManhole002");
+	model->SetVariableMaterialsByKey(0, L"Manhole002_0Material");
+	model = Find<Model>(L"CityWorldHomeManhole003");
+	model->SetVariableMaterialsByKey(0, L"Manhole003_0Material");
+#pragma endregion
+
+#pragma region Door
+	model = Find<Model>(L"CityWorldHomeDoor000");
+	model->SetVariableMaterialsByKey(0, L"Door000_0Material");
+	model->SetVariableMaterialsByKey(1, L"Door000_0Material");
+	model->SetVariableMaterialsByKey(2, L"Door000_1Material");
+
+	model = Find<Model>(L"CityWorldHomeDoor001");
+	model->SetVariableMaterialsByKey(0, L"Door001_0Material");
+	model->SetVariableMaterialsByKey(1, L"Door001_0Material");
+	model->SetVariableMaterialsByKey(2, L"Door001_0Material");
+	model->SetVariableMaterialsByKey(3, L"Door001_0Material");
+
+	model = Find<Model>(L"CityWorldHomeDoor002");
+	model->SetVariableMaterialsByKey(0, L"Door002_0Material");
+	model->SetVariableMaterialsByKey(1, L"Door002_0Material");
+	model->SetVariableMaterialsByKey(2, L"Door002_0Material");
+	model->SetVariableMaterialsByKey(3, L"Door002_0Material");
+
+	model = Find<Model>(L"CityWorldHomeDoor003");
+	model->SetVariableMaterialsByKey(0, L"Door003_1Material");
+	model->SetVariableMaterialsByKey(1, L"Door003_0Material");
+	model->SetVariableMaterialsByKey(2, L"Door003_0Material");
+	model->SetVariableMaterialsByKey(3, L"Door003_0Material");
+	model->SetVariableMaterialsByKey(4, L"Door003_0Material");
+
+	model = Find<Model>(L"CityWorldHomeDoor004");
+	model->SetVariableMaterialsByKey(0, L"Door004_0Material");
+	model->SetVariableMaterialsByKey(1, L"Door004_1Material");
+	model->SetVariableMaterialsByKey(2, L"Door004_1Material");
+	model->SetVariableMaterialsByKey(3, L"Door004_1Material");
+	model->SetVariableMaterialsByKey(4, L"Door004_1Material");
+
+	model = Find<Model>(L"CityWorldHomeDoor005");
+	model->SetVariableMaterialsByKey(0, L"Door005_0Material");
+	model->SetVariableMaterialsByKey(1, L"Door005_0Material");
+	model->SetVariableMaterialsByKey(2, L"Door005_0Material");
+	model->SetVariableMaterialsByKey(3, L"Door005_0Material");
+
+	model = Find<Model>(L"CityWorldHomeDoor006");
+	model->SetVariableMaterialsByKey(0, L"Door006_0Material");
+	model->SetVariableMaterialsByKey(1, L"Door006_1Material");
+	model->SetVariableMaterialsByKey(2, L"Door006_1Material");
+	model->SetVariableMaterialsByKey(3, L"Door006_2Material");
+	model->SetVariableMaterialsByKey(4, L"Door006_2Material");
+
+	model = Find<Model>(L"CityWorldHomeDoor007");
+	model->SetVariableMaterialsByKey(0, L"Door007_0Material");
+	model->SetVariableMaterialsByKey(1, L"Door007_0Material");
+	model->SetVariableMaterialsByKey(2, L"Door007_0Material");
+	model->SetVariableMaterialsByKey(3, L"Door007_0Material");
+	model->SetVariableMaterialsByKey(4, L"Door007_1Material");
+	model->SetVariableMaterialsByKey(5, L"Door007_1Material");
+	model->SetVariableMaterialsByKey(6, L"Door007_1Material");
+	model->SetVariableMaterialsByKey(7, L"Door007_1Material");
+
+	model = Find<Model>(L"CityWorldHomeDoor008");
+	model->SetVariableMaterialsByKey(0, L"Door008_0Material");
+	model->SetVariableMaterialsByKey(1, L"Door008_0Material");
+	model->SetVariableMaterialsByKey(2, L"Door008_1Material");
+	model->SetVariableMaterialsByKey(3, L"Door008_1Material");
+	model->SetVariableMaterialsByKey(4, L"Door008_1Material");
+	model->SetVariableMaterialsByKey(5, L"Door008_1Material");
+	model->SetVariableMaterialsByKey(6, L"Door008_2Material");
+	model->SetVariableMaterialsByKey(7, L"Door008_2Material");
+	model->SetVariableMaterialsByKey(8, L"Door008_2Material");
+	model->SetVariableMaterialsByKey(9, L"Door008_2Material");
+
+#pragma endregion
 }

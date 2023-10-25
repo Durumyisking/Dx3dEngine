@@ -1215,6 +1215,60 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"BarricadePlasticWhite00", L"DeferredShader", L"FenceB_0Material", TextureState::AlNrRg);
 
 #pragma endregion
+
+
+#pragma region CityWorldHomeDoor000 Material
+	createMaterial(L"HouseAttachmentSet00", L"DeferredShader", L"Door000_0Material", TextureState::AlMtNrRg);
+	createMaterial(L"EntranceLightSeal00", L"DeferredShader", L"Door000_1Material", TextureState::Em);
+
+#pragma endregion
+
+#pragma region CityWorldHomeDoor001 Material
+	createMaterial(L"DoorGlassSteel00", L"DeferredShader", L"Door001_0Material", TextureState::AlEmNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeDoor002 Material
+	createMaterial(L"WindowlGlassFlat01", L"DeferredShader", L"Door002_0Material", TextureState::AlEmMsNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeDoor003 Material
+	createMaterial(L"DoorWoodBill00", L"DeferredShader", L"Door003_0Material", TextureState::AlNr);
+	createMaterial(L"EntranceLightSeal00", L"DeferredShader", L"Door003_1Material", TextureState::Em);
+
+#pragma endregion
+
+#pragma region CityWorldHomeDoor004 Material
+	createMaterial(L"EntranceLightSeal00", L"DeferredShader", L"Door004_0Material", TextureState::Em);
+	createMaterial(L"WindowlGlassClaf01", L"DeferredShader", L"Door004_1Material", TextureState::AlMtMsNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeDoor005 Material
+	createMaterial(L"DoorGlassSteel00", L"DeferredShader", L"Door005_0Material", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeDoor006 Material
+	createMaterial(L"EntranceLightSeal00", L"DeferredShader", L"Door006_0Material", TextureState::Em);
+	createMaterial(L"MetalWallMain00", L"DeferredShader", L"Door006_1Material", TextureState::AlNrRg);
+	createMaterial(L"GlassWindowMain00", L"DeferredShader", L"Door006_2Material", TextureState::AlEmMsNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeDoor007 Material
+	createMaterial(L"MetalWallShop00", L"DeferredShader", L"Door007_0Material", TextureState::AlNrRg);
+	createMaterial(L"GlassWallShop00", L"DeferredShader", L"Door007_1Material", TextureState::AlEmNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeDoor008 Material
+	createMaterial(L"EntranceLightSeal00", L"DeferredShader", L"Door008_0Material", TextureState::Em);
+	createMaterial(L"MetalWallMain00", L"DeferredShader", L"Door008_1Material", TextureState::AlNrRg);
+	createMaterial(L"GlassWindowMain00", L"DeferredShader", L"Door008_2Material", TextureState::AlEmMsNrRg);
+
+#pragma endregion
 }
 
 void AsyncLoad::loadCityTexture()
