@@ -37,8 +37,6 @@ public:
 
 
 private:
-	void setHalfCloseEyeModel();
-	void setOpenEyeModel();
 	void rotateByKey();
 
 private:

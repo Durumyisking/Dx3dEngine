@@ -135,6 +135,17 @@ void Scene::destroy()
 
 void Scene::Enter()
 {
+	{
+		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
+		directionalLight->SetPos({ 0.f, 25.f, 0.f });
+		directionalLight->SetRotation(Vector3(90.f, 0.f, 0.f));
+		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+		lightComp->SetType(eLightType::Directional);
+		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetRadius(0.02f);
+	}
+
 	if (!mbInitialized)
 	{
 		Initialize();
@@ -146,16 +157,6 @@ void Scene::Enter()
 	mCamera->SetRotation(Vector3::Zero);
 	mUICamera->SetPos(Vector3(0.f, 5.f, -20.f));
 	mUICamera->SetRotation(Vector3::Zero);
-	{
-		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-		directionalLight->SetPos({ 0.f, 25.f, 0.f });
-		directionalLight->SetRotation(Vector3(90.f, 0.f, 0.f));
-		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-		lightComp->SetType(eLightType::Directional);
-		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
-		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
-		lightComp->SetRadius(0.02f);
-	}
 }
 
 void Scene::Exit()

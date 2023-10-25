@@ -22,6 +22,7 @@
 #include "ModelObj.h"
 #include "SkySphere.h"
 
+#include "BlockBrick.h"
 #include "Building.h"
 
 
@@ -255,6 +256,9 @@ void SceneMgr::CreateCDO()
 
 	ModelObj* ModelObjCDO = new ModelObj();
 	GameObj::AddObjectCDO("ModelObj", ModelObjCDO);
+
+	BlockBrick* BlockBrickObjCDO = new BlockBrick();
+	GameObj::AddObjectCDO("BlockBrick", BlockBrickObjCDO);
 
 	//SkySphere* SkySphere = new SkySphere();
 	//GameObj::AddObjectCDO("SkySphere", SkySphere);

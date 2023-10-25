@@ -197,18 +197,14 @@ void ScenePlay::Initialize()
 		
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(35.f, 10.f, 30.f));
-	//}	
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	//}
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
-	//}
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(15.f, 10.f, 10.f));
+	}	
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	}
 
 
 	{
@@ -264,68 +260,13 @@ void ScenePlay::Initialize()
 	{
 		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
 		block->SetPos(Vector3(40.f, -0.5f, 0.f));
-
-		//CityGround* ground = object::Instantiate<CityGround>(eLayerType::Objects, this, L"CityGround");
-		//ground->SetPos(Vector3(100.f, -10.f, 0.f));
-
-		//CoinObject* coin = object::Instantiate<CoinObject>(eLayerType::Objects, this, L"CoinObject");
-		//coin->SetPos(Vector3(0.f, 1.f, 0.f));
-
-		//Car* car = object::Instantiate<Car>(eLayerType::Objects, this, L"car");
-		//car->SetPos(Vector3(40.f, 10.f, 0.f));
-
-		//CityMapNaviObject* nai = object::Instantiate<CityMapNaviObject>(eLayerType::Objects, this, L"navi");
-		//nai->SetPos(Vector3(0.f, 10.f, 0.f));
-
-		//CityWorldBush* bush = object::Instantiate<CityWorldBush>(eLayerType::Objects, this, L"bush");
-		//bush->SetPos(Vector3(0.f, 10.f, 0.f));
-
-		//CityWorldBushA* bush = object::Instantiate<CityWorldBushA>(eLayerType::Objects, this, L"bushA");
-		//bush->SetPos(Vector3(0.f, 10.f, 0.f));
-
-		//CityWorldChairA* chair = object::Instantiate<CityWorldChairA>(eLayerType::Objects, this, L"chairA");
-		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
-
-		//CityWorldChairB* chair = object::Instantiate<CityWorldChairB>(eLayerType::Objects, this, L"chairB");
-		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
-
-		//CityWorldFlag* chair = object::Instantiate<CityWorldFlag>(eLayerType::Objects, this, L"CityWorldFlag");
-		//chair->SetPos(Vector3(0.f, 1.f, 0.f));
-
-		//BenchA* bench = object::Instantiate<BenchA>(eLayerType::Objects, this, L"BenchA");
-		//bench->SetPos(Vector3(0.f, 1.f, 0.f));
-
-		//CheckpointFlag* checkPointFlag = object::Instantiate<CheckpointFlag>(eLayerType::Objects, this, L"CheckpointFlag");
-		//checkPointFlag->SetPos(Vector3(0.f, 1.f, 0.f));
-
-		//HomeBuildingFour* homeBuildingFour = object::Instantiate<HomeBuildingFour>(eLayerType::Objects, this, L"homeBuildingFour");
-		//homeBuildingFour->SetPos(Vector3(0.f, 1.f, 0.f));
-
-		//HomeBuildingFive* homeBuildingFive = object::Instantiate<HomeBuildingFive>(eLayerType::Objects, this, L"homeBuildingFive");
-		//homeBuildingFive->SetPos(Vector3(0.f, 1.f, 0.f));
-
-		//HomeBuildingSeven* homeBuildingSeven = object::Instantiate<HomeBuildingSeven>(eLayerType::Objects, this, L"homeBuildingSeven");
-		//homeBuildingSeven->SetPos(Vector3(0.f, 1.f, 0.f));
-
-		//HomeBuildingEight* homeBuildingEight = object::Instantiate<HomeBuildingEight>(eLayerType::Objects, this, L"homeBuildingEight");
-		//homeBuildingEight->SetPos(Vector3(0.f, 1.f, 0.f));
-
-		//std::vector<std::wstring> array = { L"GlassBuildingWallMaterial" ,L"RoofConcrete00Material" ,L"RoofConcrete01Material" ,L"WallGlassPaintedSteelMaterial" };
-		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building", L"CityWorldHomeBuilding002",array);
-		//block->SetPos(Vector3(40.f, -10.f, 0.f));
-
-		//std::vector<std::wstring> array = { L"HomeBuilding009_0Material" ,L"HomeBuilding009_1Material" ,L"HomeBuilding009_2Material" ,L"HomeBuilding009_2Material",L"HomeBuilding009_4Material"
-		//	,L"HomeBuilding009_5Material",  L"HomeBuilding009_6Material" ,L"HomeBuilding009_7Material" ,L"HomeBuilding009_8Material" };
-		//CreateObject* object = object::Instantiate<CreateObject>(eLayerType::Objects, this, L"Building", L"CityWorldHomeBuilding009", array);
-		//object->SetPos(Vector3(40.f, -10.f, 0.f));
-
 	}
 	InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
-	for (size_t i = 0; i < 20; i++)
+	for (size_t i = 0; i < 5; i++)
 	{
-		for (size_t j = 0; j < 10; j++)
+		for (size_t j = 0; j < 5; j++)
 		{
-			for (size_t k = 1; k < 10; k++)
+			for (size_t k = 1; k < 5; k++)
 			{
 				if (j > 4 && k > 1)
 					continue;
@@ -338,21 +279,21 @@ void ScenePlay::Initialize()
 	}
 	blockContainer->ResizeObjectInstancingData();
 
-	{
-		SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
+	//{
+	//	SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
 
-		//현재 .obj 파일만 로딩 가능 블랜더에서 .obj 로 내보내기 해서 사용하면 됩니다
-		if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
-			int debug = 0;
+	//	//현재 .obj 파일만 로딩 가능 블랜더에서 .obj 로 내보내기 해서 사용하면 됩니다
+	//	if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
+	//		int debug = 0;
 
-		if (!naviMesh->Build())
-			int debug = 0;
+	//	if (!naviMesh->Build())
+	//		int debug = 0;
 
-		//오브젝트에 std::<Vector3>mPath 추가 path에 이동경로가 추가되니 vector내의 위치를 사용해서 이동하면 됩니다
-		//위치가 내비메쉬 밖이면 계산이 안됩니다
-		if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
-			int debug = 0;
-	}
+	//	//오브젝트에 std::<Vector3>mPath 추가 path에 이동경로가 추가되니 vector내의 위치를 사용해서 이동하면 됩니다
+	//	//위치가 내비메쉬 밖이면 계산이 안됩니다
+	//	if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
+	//		int debug = 0;
+	//}
 
 
 	CreatePlayerUI();

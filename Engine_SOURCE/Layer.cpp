@@ -38,7 +38,6 @@ Layer::~Layer()
 		delete Obj;
 		Obj = nullptr;
 	}
-
 }
 
 void Layer::Initialize()
@@ -145,6 +144,7 @@ void Layer::destroy()
 
 	for (GameObj* Obj : mAddedObjects)
 	{
+		AddGameObject(Obj, Obj->GetLayerType());
 		Obj->Initialize();
 		AddGameObject(Obj, Obj->GetLayerType());
 	}

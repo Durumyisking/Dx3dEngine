@@ -94,7 +94,7 @@ public:
 	GETSET(math::Vector3, mOffsetRotation, OffsetRotation)
 	GETSET(bool, mbUseInstance, UseInstance)
 	const std::vector<Mesh*>& GetMeshes() { return mMeshes; }
-
+	void SetWorldMatrix(const math::Matrix& worldMatrix) { mOwnerWorldMatrix = worldMatrix; }
 	void SetFrameAnimationVector(const std::map<std::wstring, aiMatrix4x4>* animationVector);
 
 private:
@@ -124,5 +124,7 @@ private:
 	math::Vector3 mOffsetRotation;
 
 	bool mbUseInstance;
+
+	math::Matrix mOwnerWorldMatrix;
 
 };

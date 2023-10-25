@@ -2,7 +2,7 @@
 #include "Renderer.h"
 #include "GraphicDevice.h"
 
-
+//UINT Mesh::sMeshCount = 0;
 
 Mesh::Mesh()
 	: Resource(eResourceType::Mesh)
@@ -12,6 +12,13 @@ Mesh::Mesh()
 	, mVertexCount(0)
 	, mIndexCount(0)
 	, mbRender(true)
+	, mBoundingBox{}
+	, mMinVertex{ INFINITY }
+	, mMaxVertex{ -INFINITY }
+	, mbFrustumCulled(false)
+	, mOwnerWorldMatrix{}
+	, mInitialExtent{}
+	//, r (true)
 {
 }
 Mesh::~Mesh()
@@ -27,6 +34,7 @@ HRESULT Mesh::LoadFullpath(const std::wstring& path)
 }
 bool Mesh::CreateVertexBuffer(void* data, UINT count)
 {
+	//++sMeshCount;
 	mVertexCount = count;
 	mVBDesc.ByteWidth = sizeof(Vertex) * count;
 	mVBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
@@ -39,6 +47,9 @@ bool Mesh::CreateVertexBuffer(void* data, UINT count)
 	if (!GetDevice()->CreateBuffer(&mVBDesc, &subData, mVertexBuffer.GetAddressOf()))
 		return false;
 		
+	mBoundingBox.Center = (mMinVertex + mMaxVertex) * 0.5f;
+	mBoundingBox.Extents = (mMaxVertex - mMinVertex) * 0.5f;
+	mInitialExtent = mBoundingBox.Extents;
 	return true;
 }
 
@@ -81,6 +92,34 @@ bool Mesh::CreateIndexBuffer(void* data, UINT count)
 
 void Mesh::BindBuffer(bool drawInstance)
 {
+	// ui는 컬링하면 안돼
+	if (GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh") != this)
+	{
+		CheckFrustumCull();
+		if (mbFrustumCulled)
+			return;
+		
+	/*	if(mbFrustumCulled)
+		{
+			if (sMeshCount != 0)
+			{
+				if (r)
+				{
+					--sMeshCount;
+					r = false;
+				}
+			}
+		}
+		else
+		{
+			if (!r)
+			{
+				++sMeshCount;
+				r = true;
+			}
+		}*/
+	}				
+
 	if (drawInstance)
 	{
 		UINT stride[2] = {sizeof(Vertex), sizeof(InstancingData)};
@@ -101,8 +140,9 @@ void Mesh::BindBuffer(bool drawInstance)
 
 void Mesh::Render()
 {
-	if (!IsRender())
+	if (!mbRender || mbFrustumCulled)
 		return;
+
 
 	GetDevice()->DrawIndexed(mIndexCount, 0, 0);
 }
@@ -192,4 +232,26 @@ void Mesh::UpdateInstanceBuffer(std::vector<InstancingData> matrices)
 {	
 	UINT size = static_cast<UINT>((matrices.capacity() * sizeof(InstancingData)));
 	GetDevice()->BindBuffer(mInstancedBuffer.Get(), matrices.data(), size);
+}
+
+void Mesh::CheckFrustumCull()
+{
+	BoundingFrustum frustum = renderer::mainCamera->GetFrustum();
+	// todo bounding box에 월드행렬을 곱해서 구현해보자
+	mBoundingBox.Center = Vector3::Transform(mBoundingBox.Center, mOwnerWorldMatrix);
+
+	// extense에는 scale만 계산해주면 될 것 같다.
+	Vector3 extractedScale = { mOwnerWorldMatrix._11, mOwnerWorldMatrix._22, mOwnerWorldMatrix._33 };
+	mBoundingBox.Extents = mInitialExtent * extractedScale; // 계속 곱하니까 점이 되어버림(offset 0.00~~씩 해주니까) 초기 extent를 유지해야함
+	mbFrustumCulled = !frustum.Intersects(mBoundingBox);
+}
+
+void Mesh::SetMinVertex(const math::Vector3& vertex)
+{
+	mMinVertex = DirectX::XMVectorMin(mMinVertex, vertex);
+}
+
+void Mesh::SetMaxVertex(const math::Vector3& vertex)
+{
+	mMaxVertex = DirectX::XMVectorMax(mMaxVertex, vertex);
 }

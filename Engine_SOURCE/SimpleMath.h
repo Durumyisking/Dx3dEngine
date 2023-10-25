@@ -1,5 +1,6 @@
 #pragma once
 #include "druMath.h"
+#include "assimp\matrix4x4.h"
 
 #include "../External/PhysX/Include/PxPhysicsAPI.h"
 
@@ -144,6 +145,32 @@ namespace convert
 	static Quaternion PxQuatToQuaternion(const PxQuat& pxQuat)
 	{
 		return Quaternion(pxQuat.x, pxQuat.y, pxQuat.z, pxQuat.w);
+	}
+
+	static Matrix aiMat44ToMat44(aiMatrix4x4 aiMatrix)
+	{
+		Matrix mat = {};
+		mat._11 = aiMatrix.a1;
+		mat._12 = aiMatrix.a2;
+		mat._13 = aiMatrix.a3;
+		mat._14 = aiMatrix.a4;
+
+		mat._21 = aiMatrix.b1;
+		mat._22 = aiMatrix.b2;
+		mat._23 = aiMatrix.b3;
+		mat._24 = aiMatrix.b4;
+
+		mat._31 = aiMatrix.c1;
+		mat._32 = aiMatrix.c2;
+		mat._33 = aiMatrix.c3;
+		mat._34 = aiMatrix.c4;
+
+		mat._41 = aiMatrix.d1;
+		mat._42 = aiMatrix.d2;
+		mat._43 = aiMatrix.d3;
+		mat._44 = aiMatrix.d4;
+
+		return mat;
 	}
 
 	void SetRandIndex(std::wstring& string, UINT range);

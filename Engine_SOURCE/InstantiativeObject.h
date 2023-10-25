@@ -7,7 +7,7 @@ class InstantiativeObject :
 {
 public:
 	InstantiativeObject();
-	//InstantiativeObject(const InstantiativeObject& Obj);
+	InstantiativeObject(const InstantiativeObject& Obj);
 	virtual ~InstantiativeObject();
 
 	virtual InstantiativeObject* Clone() const;

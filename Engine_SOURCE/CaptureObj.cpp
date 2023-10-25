@@ -17,13 +17,16 @@ CaptureObj::~CaptureObj()
 
 void CaptureObj::Update()
 {
-	if (!mbCapture)
-		return;
-
-	if (KEY_DOWN(P))
+	if (mCap && KEY_DOWN(P))  // 굼바 탑 처리를 위한 코드입니다. 굼바 탑의 조작권은 1층 굼바가 가지고 있고, 모자,수염은 맨 윗굼바에 있기 때문에 unCapture하려면 당장은 이렇게 구현해야 했음
 		Divide();
 
-	CaptureEvent();
+	if (mbCapture)
+	{
+		CaptureEvent();
+
+		if(KEY_DOWN(P))
+			OffCapture();
+	}
 }
 
 void CaptureObj::Divide()
@@ -43,7 +46,6 @@ void CaptureObj::Divide()
 	mPlayer->SetMarioCap(mCap);
 	mPlayer->Active();
 	mPlayer->UnCapturingProcess();
-	
 
 	// 마리오의 모자를 씌워줌
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioHead");
@@ -84,22 +86,29 @@ void CaptureObj::Divide()
 
 	renderer::mainCamera->SetTarget(mPlayer);
 
+	mCap->Pause();
+
+	mCap = nullptr;
+	mPlayer = nullptr;
 }
 
-void CaptureObj::CopyCaptureData(CaptureObj* other)
+void CaptureObj::CopyCaptureData(CaptureObj* other, bool copyCap)
 {
 	mPlayer = other->GetPlayer();
-	mCap = other->GetCap();
-	other->ClearCaptureData();
-
-	// todo : 위험한 코드입니다 captureobj랑 gameobj는 별개의 오브젝트임 적절한 방법 찾아서 고쳐야함
-	mCap->SetOwner(dynamic_cast<GameObj*>(this));
+	if (copyCap)
+	{
+		mCap = other->GetCap();
+		other->ClearCaptureData(copyCap);
+		// todo : 위험한 코드입니다 captureobj랑 gameobj는 별개의 오브젝트임 적절한 방법 찾아서 고쳐야함
+		mCap->SetOwner(dynamic_cast<GameObj*>(this));
+	}
 }
 
-void CaptureObj::ClearCaptureData()
+void CaptureObj::ClearCaptureData(bool copyCap)
 {
 	mPlayer = nullptr;
-	mCap = nullptr;
+	if(!copyCap)
+		mCap = nullptr;
 }
 
 

@@ -7,6 +7,7 @@ class BlockBrick : public InstantiativeObject
 
 public:
 	BlockBrick();
+	BlockBrick(const BlockBrick& Obj);
 	virtual ~BlockBrick();
 
 	virtual BlockBrick* Clone() const;
