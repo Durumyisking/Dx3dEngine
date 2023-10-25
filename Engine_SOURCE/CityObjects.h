@@ -34,5 +34,6 @@
 #include "HomeBuilding_26.h"
 #include "FenceA.h"
 #include "FenceB.h"
+#include "MapObject.h"
 
 #include "CreateObject.h"

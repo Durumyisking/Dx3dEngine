@@ -612,6 +612,9 @@
     <ClCompile Include="HomeManhole_3.cpp">
       <Filter>Common\GameObj\Manhole</Filter>
     </ClCompile>
+    <ClCompile Include="MapObject.cpp">
+      <Filter>Common\GameObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -1253,6 +1256,9 @@
     </ClInclude>
     <ClInclude Include="FenceB.h">
       <Filter>Common\GameObj\Fence</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObject.h">
+      <Filter>Common\GameObj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

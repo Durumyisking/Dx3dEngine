@@ -116,13 +116,13 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/SouvenirCity1", L"SouvenirCity1");
 
 
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBench000", L"CityWorldHomeBench000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBench000", L"CityWorldHomeBench000");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CheckpointFlag", L"CheckpointFlag");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CItyWorldFlag", L"CityWorldFlag");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldBush", L"CityWorldBush");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldBushA", L"CityWorldBushA");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldChairA", L"CityWorldChairA");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldChairB", L"CityWorldChairB");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldBush", L"CityWorldBush");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldBushA", L"CityWorldBushA");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldChairA", L"CityWorldChairA");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldChairB", L"CityWorldChairB");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityGround", L"CityWorldHomeGround000");
 
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldFence/CityWorldFenceA", L"CityWorldFenceA");
@@ -160,20 +160,20 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 #pragma endregion
 
 #pragma region Fence
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence000", L"CityWorldHomeFence000");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence001", L"CityWorldHomeFence001");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence002", L"CityWorldHomeFence002");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence003", L"CityWorldHomeFence003");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence005", L"CityWorldHomeFence005");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence006", L"CityWorldHomeFence006");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence000", L"CityWorldHomeFence000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence001", L"CityWorldHomeFence001");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence002", L"CityWorldHomeFence002");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence003", L"CityWorldHomeFence003");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence005", L"CityWorldHomeFence005");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeFence/CityWorldHomeFence006", L"CityWorldHomeFence006");
 
 #pragma endregion
 
 #pragma region Manhole
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole000", L"CityWorldHomeManhole000");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole001", L"CityWorldHomeManhole001");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole002", L"CityWorldHomeManhole002");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole003", L"CityWorldHomeManhole003");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole000", L"CityWorldHomeManhole000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole001", L"CityWorldHomeManhole001");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole002", L"CityWorldHomeManhole002");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeManhole/CityWorldHomeManhole003", L"CityWorldHomeManhole003");
 
 #pragma endregion
 
@@ -200,15 +200,15 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 #pragma endregion
 
 #pragma region Door
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor000", L"CityWorldHomeDoor000");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor001", L"CityWorldHomeDoor001");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor002", L"CityWorldHomeDoor002");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor003", L"CityWorldHomeDoor003");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor004", L"CityWorldHomeDoor004");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor005", L"CityWorldHomeDoor005");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor006", L"CityWorldHomeDoor006");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor007", L"CityWorldHomeDoor007");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor008", L"CityWorldHomeDoor008");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor000", L"CityWorldHomeDoor000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor001", L"CityWorldHomeDoor001");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor002", L"CityWorldHomeDoor002");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor003", L"CityWorldHomeDoor003");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor004", L"CityWorldHomeDoor004");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor005", L"CityWorldHomeDoor005");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor006", L"CityWorldHomeDoor006");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor007", L"CityWorldHomeDoor007");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor008", L"CityWorldHomeDoor008");
 
 #pragma endregion
 
