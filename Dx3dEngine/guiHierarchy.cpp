@@ -21,8 +21,7 @@ extern gui::Editor editor;
 namespace gui
 {
 	Hierarchy::Hierarchy()
-		: mbForceReset(false)
-		, mTreeWidget(nullptr)
+		: mTreeWidget(nullptr)
 		, mTargetObject(nullptr)
 		, mCurrentScene(nullptr)
 	{
@@ -64,9 +63,8 @@ namespace gui
 		//ImGui::SetNextWindowFocus();  // 윈도우에 포커스 설정
 		//ImGui::SetNextWindowContentSize(ImVec2(10, 10));  // 컨텐츠 크기 초기화
 
-
 		Scene* mActiveScene = GETSINGLE(SceneMgr)->GetActiveScene();
-		if (mCurrentScene != mActiveScene || mbForceReset)
+		if (mCurrentScene != mActiveScene)
 		{
 			if (mActiveScene != nullptr)
 			{
@@ -74,9 +72,6 @@ namespace gui
 
 				mTargetObject = nullptr;
 				InitializeScene();
-				mbForceReset = false;
-
-				InitializeOutline(mTargetObject);
 			}
 		}
 	}
@@ -136,6 +131,9 @@ namespace gui
 
 	void Hierarchy::AddGameObject(TreeWidget::Node* parent, GameObj* gameObject)
 	{
+		if (gameObject == nullptr)
+			return;
+
 		std::string name(gameObject->GetName().begin(), gameObject->GetName().end());
 
 		if (name.empty())

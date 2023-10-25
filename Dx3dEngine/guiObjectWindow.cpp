@@ -102,7 +102,7 @@ namespace gui
 		char buf[BUF_SIZE];
 
 		ImGui::PushItemWidth(100.0f);
-		
+
 		// 초기화: std::string의 값을 버퍼에 복사
 		strncpy_s(buf, mInputText.c_str(), sizeof(buf));
 		buf[sizeof(buf) - 1] = 0; // 널 종료 문자를 보장
@@ -149,9 +149,8 @@ namespace gui
 			return;
 
 		hierarchy->GetTargetObject()->Die();
-		hierarchy->SetTargetObject(nullptr);
-		hierarchy->InitializeOutline(nullptr);
-		hierarchy->ForceReset();
+
+		GETSINGLE(WidgetMgr)->ForceReset();
 	}
 
 	void ObjectWindow::SetObjectLayerType(UINT num)
@@ -162,7 +161,7 @@ namespace gui
 	bool ObjectWindow::AddObjectToScene(GameObj* obj, eLayerType type)
 	{
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
-		
+
 		if (scene == nullptr)
 			return false;
 

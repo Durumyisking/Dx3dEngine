@@ -22,7 +22,6 @@ namespace gui
 
 		GameObj* GetTargetObject() { return mTargetObject; }
 		void SetTargetObject(GameObj* obj) { mTargetObject = obj; }
-		void ForceReset() { mbForceReset = true; }
 
 	private:
 		bool mbForceReset;

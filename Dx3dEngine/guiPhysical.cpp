@@ -10,6 +10,9 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
+#include "SceneMgr.h"
+#include "Scene.h"
+
 const char* charActorType[(int)eActorType::End] =
 {
     "Static", // 정적인 물체 (물리적으로 움직이지 않을 물체)
@@ -33,6 +36,7 @@ namespace gui
 {
     GUIPhysical::GUIPhysical()
         : GUIComponent(eComponentType::Physical)
+        , mbPhysical(false)
         , mActorType(eActorType::End)
         , mGeometryType(eGeometryType::End)
         , mScale(Vector3::Zero)
@@ -92,26 +96,32 @@ namespace gui
         ImGui::PopStyleColor(1);
         ImGui::PopID();
 
-
+        ImGuiTreeNodeFlags_ flag;
         if (mAddingPhysical)
         {
-            if (ImGui::TreeNodeEx("Select Actor :", ImGuiTreeNodeFlags_DefaultOpen)) // 메인 트리
+            flag = ImGuiTreeNodeFlags_DefaultOpen;
+        }
+        else
+        {
+            flag = ImGuiTreeNodeFlags_None;
+        }
+
+        if (ImGui::TreeNodeEx("Select Actor :", flag)) // 메인 트리
+        {
+            for (int i = 0; i < static_cast<int>(eActorType::End); i++)
             {
-                for (int i = 0; i < static_cast<int>(eActorType::End); i++)
+                if (ImGui::TreeNodeEx((void*)(intptr_t)i
+                    , (mActorType == static_cast<eActorType>(i) ? ImGuiTreeNodeFlags_Selected : 0)
+                    , charActorType[i]))
                 {
-                    if (ImGui::TreeNodeEx((void*)(intptr_t)i
-                        , (mActorType == static_cast<eActorType>(i) ? ImGuiTreeNodeFlags_Selected : 0)
-                        , charActorType[i]))
+                    if (ImGui::IsItemClicked())
                     {
-                        if (ImGui::IsItemClicked())
-                        {
-                            mActorType = static_cast<eActorType>(i);
-                        }
-                        ImGui::TreePop();
+                        mActorType = static_cast<eActorType>(i);
                     }
+                    ImGui::TreePop();
                 }
-                ImGui::TreePop();
             }
+            ImGui::TreePop();
         }
 
         //GeometryType Edit
@@ -152,26 +162,25 @@ namespace gui
         ImGui::PopID();
 
 
-        if (mAddingPhysical)
+        if (ImGui::TreeNodeEx("Select Geometry :", flag)) // 메인 트리
         {
-            if (ImGui::TreeNodeEx("Select Geometry :", ImGuiTreeNodeFlags_DefaultOpen)) // 메인 트리
+            for (int i = 0; i < static_cast<int>(eGeometryType::End); i++)
             {
-                for (int i = 0; i < static_cast<int>(eGeometryType::End); i++)
+                if (ImGui::TreeNodeEx((void*)(intptr_t)i
+                    , (mGeometryType == static_cast<eGeometryType>(i) ? ImGuiTreeNodeFlags_Selected : 0)
+                    , charGeometryType[i]))
                 {
-                    if (ImGui::TreeNodeEx((void*)(intptr_t)i
-                        , (mGeometryType == static_cast<eGeometryType>(i) ? ImGuiTreeNodeFlags_Selected : 0)
-                        , charGeometryType[i]))
+                    if (ImGui::IsItemClicked())
                     {
-                        if (ImGui::IsItemClicked())
-                        {
-                            mGeometryType = static_cast<eGeometryType>(i);
-                        }
-                        ImGui::TreePop();
+                        mGeometryType = static_cast<eGeometryType>(i);
                     }
+                    ImGui::TreePop();
                 }
-                ImGui::TreePop();
             }
+            ImGui::TreePop();
         }
+
+        //Scale Edit
 
         if (mAddingPhysical)
         {
@@ -181,6 +190,18 @@ namespace gui
             if(ImGui::Button("Create", ImVec2(120.f, 60.f)))
             {
                 AddPhysical();
+            }
+        }
+        else
+        {
+            ImGui::InputFloat3("#ColliderScale", (float*)&mScale);
+
+
+            if (ImGui::Button("ChangeCollider", ImVec2(120.f, 60.f)))
+            {
+                ChangePhysical();
+
+                GETSINGLE(WidgetMgr)->ForceReset(GetTarget());
             }
         }
     }
@@ -202,11 +223,14 @@ namespace gui
         {
             mActorType = eActorType::End;
             mGeometryType = eGeometryType::End;
+            mScale = Vector3(0.f, 0.f, 0.f);
         }
         else
         {
+            mbPhysical = true;
             mActorType = physical->GetActorType();
             mGeometryType = physical->GetGeometryType();
+            mScale = physical->GetGeometrySize();
         }
     }
 
@@ -240,13 +264,65 @@ namespace gui
 
         if (mAddingPhysical)
         {
-            mScale = Vector3::Zero;
+            Vector3 scale = GetTarget()->GetComponent<Transform>()->GetScale();
+            float offset = GetTarget()->GetComponent<Transform>()->GetOffsetScale();
+            mScale = scale * offset;
             SetSize(ImVec2(300.0f, 400.0f));
         }
         else
         {
             SetSize(ImVec2(300.0f, 200.0f));
         }
+    }
+
+    bool GUIPhysical::ChangePhysical()
+    {
+        GameObj* obj = GetTarget();
+
+        if (obj == nullptr)
+            return false;
+
+        Physical* physical = obj->GetComponent<Physical>();
+
+        if (physical == nullptr)
+            return false;
+
+        GameObj* deleteObj = new GameObj();
+
+        std::vector<Component*> components = deleteObj->GetComponentsVec();
+
+        deleteObj->SetPos(obj->GetPos());
+
+        components[static_cast<UINT>(eComponentType::Physical)] = physical;
+        //components[static_cast<UINT>(eComponentType::Physical)]->SetOwner(deleteObj);
+        
+        components[static_cast<UINT>(eComponentType::RigidBody)] = obj->GetComponent<PhysXRigidBody>();
+        //components[static_cast<UINT>(eComponentType::RigidBody)]->SetOwner(deleteObj);
+
+        components[static_cast<UINT>(eComponentType::Collider)] = obj->GetComponent<PhysXCollider>();
+        //components[static_cast<UINT>(eComponentType::Collider)]->SetOwner(deleteObj);
+
+
+        Scene* scene =  GETSINGLE(SceneMgr)->GetActiveScene();
+
+        Layer& layer = scene->GetLayer(eLayerType::NonePhysical);
+        deleteObj->Die();
+        layer.AddGameObject(deleteObj, eLayerType::NonePhysical);
+
+
+        Physical* objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
+        objPhysical->InitialDefaultProperties(mActorType, mGeometryType, mScale);
+
+        PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+        rigid->RemoveGravity();
+
+        PhysXCollider* collider = obj->AddComponent<PhysXCollider>(eComponentType::Collider);
+
+        rigid->Initialize();
+        objPhysical->Initialize();
+        collider->Initialize();
+
+        return true;
     }
 
     void GUIPhysical::EditTransform(float* cameraView, float* cameraProjection, float* matrix, bool editTransformDecomposition)
