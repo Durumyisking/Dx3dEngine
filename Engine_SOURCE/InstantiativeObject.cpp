@@ -7,11 +7,10 @@ InstantiativeObject::InstantiativeObject()
 {
 }
 
-//InstantiativeObject::InstantiativeObject(const InstantiativeObject& Obj)
-//	: DynamicObject(Obj)
-//	, mStateInfo(Obj.mStateInfo)
-//{
-//}
+InstantiativeObject::InstantiativeObject(const InstantiativeObject& Obj)
+	: DynamicObject(Obj)
+{
+}
 
 InstantiativeObject::~InstantiativeObject()
 {
@@ -47,16 +46,19 @@ void InstantiativeObject::FixedUpdate()
 	DynamicObject::FixedUpdate();
 
 
-	InstancingData data
+	if (mContainer)
 	{
-		GetTransform()->GetWorldMatrix(),
-		GetTransform()->GetWorldMatrix().Invert().Transpose()
-	};
+		InstancingData data
+		{
+			GetTransform()->GetWorldMatrix(),
+			GetTransform()->GetWorldMatrix().Invert().Transpose()
+		};
 
-	mContainer->SetObjectInstancingData(mInstanceID, data);
+		mContainer->SetObjectInstancingData(mInstanceID, data);
+	}
 }
 
-void InstantiativeObject::Render()
+void InstantiativeObject::Render()	
 {
 	if (!mContainer)
 	{

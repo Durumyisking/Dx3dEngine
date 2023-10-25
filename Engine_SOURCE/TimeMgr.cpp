@@ -58,13 +58,13 @@ void TimeMgr::Render(HDC hdc)
     ++iCount;
 
     // 1 초에 한번
-    mOneSecond += mDeltaTime;
+    mOneSecond += mDeltaTimeConstant;
     if (1.0f < mOneSecond)
     {
         HWND hWnd = application.GetHwnd();
 
         wchar_t szFloat[50] = {};
-        float FPS = 1.f / mDeltaTime;
+        float FPS = 1.f / mDeltaTimeConstant;
         swprintf_s(szFloat, 50, L"Fps : %d", iCount);
         int iLen = static_cast<int>(wcsnlen_s(szFloat, 50));
         //TextOut(_dc, 10, 10, szFloat, iLen);
@@ -96,6 +96,7 @@ void TimeMgr::frameRateLock()
         {
             // stack이 max프레임의 DT랑 같거나 넘으면 max프레임처럼 재생
             mDeltaTime = mMaxFrameRate;
+            mDeltaTimeConstant = mMaxFrameRate;
 
             mbUpdatePass = false;
             mFrameRateStack = 0.f;
@@ -115,8 +116,6 @@ void TimeMgr::frameRateLock_Debugging()
 #ifdef _DEBUG
         if (mDeltaTime > (1.f / 60.f))
             mDeltaTime = (1.f / 60.f);
-        if (mDeltaTimeConstant > (1.f / 60.f))
-            mDeltaTimeConstant = (1.f / 60.f);
 #endif
 }
 
