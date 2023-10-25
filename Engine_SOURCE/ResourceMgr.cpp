@@ -96,6 +96,8 @@ void ResourceMgr::LoadModel_Mario(bool* bfinish)
 
 void ResourceMgr::LoadModel_Monster(bool* bfinish)
 {
+	Model* model = nullptr;
+
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/goomba", L"goomba");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Packun", L"Packun");
 
@@ -208,4 +210,65 @@ void ResourceMgr::LoadModel_CityWorld(bool* bfinish)
 
 
 	*bfinish = true;
+}
+
+void ResourceMgr::SettingModelMaterial()
+{
+	Model* model = nullptr;
+	model = Find<Model>(L"CityWorldHomeBuilding002");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding002_0Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding002_1Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding002_0Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding002_3Material");
+	model = Find<Model>(L"CityWorldHomeBuilding004");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding004_0Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding004_1Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding004_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding004_1Material"); //수정 필요 BuildingEntrance02
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding004_3Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding004_4Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding004_5Material");
+	model->SetVariableMaterialsByKey(7, L"HomeBuilding004_6Material");
+	model->SetVariableMaterialsByKey(8, L"HomeBuilding004_7Material");
+	model->SetVariableMaterialsByKey(9, L"HomeBuilding004_8Material");
+	model->SetVariableMaterialsByKey(10, L"HomeBuilding004_9Material");
+	model->SetVariableMaterialsByKey(11 , L"HomeBuilding004_10Material");
+	model->SetVariableMaterialsByKey(12 , L"HomeBuilding004_11Material");
+	model->SetVariableMaterialsByKey(13 , L"HomeBuilding004_13Material");
+	model->SetVariableMaterialsByKey(14 , L"HomeBuilding004_12Material");
+	model = Find<Model>(L"CityWorldHomeBuilding005");
+	model->SetVariableMaterialsByKey(0,L"HomeBuilding005_0Material");
+	model->SetVariableMaterialsByKey(1,L"HomeBuilding005_1Material");
+	model->SetVariableMaterialsByKey(2,L"HomeBuilding005_2Material");
+	model->SetVariableMaterialsByKey(3,L"HomeBuilding005_1Material"); //수정 필요 BuildingEntrance02
+	model->SetVariableMaterialsByKey(4,L"HomeBuilding005_3Material");
+	model->SetVariableMaterialsByKey(5,L"HomeBuilding005_4Material");
+	model->SetVariableMaterialsByKey(6,L"HomeBuilding005_5Material");
+	model->SetVariableMaterialsByKey(7,L"HomeBuilding005_6Material");
+	model->SetVariableMaterialsByKey(8,L"HomeBuilding005_7Material");
+	model->SetVariableMaterialsByKey(9,L"HomeBuilding005_8Material");
+	model->SetVariableMaterialsByKey(10,L"HomeBuilding005_9Material");
+	model->SetVariableMaterialsByKey(11,L"HomeBuilding005_10Material");
+	model->SetVariableMaterialsByKey(12,L"HomeBuilding005_11Material");
+	model->SetVariableMaterialsByKey(13,L"HomeBuilding005_13Material");
+	model->SetVariableMaterialsByKey(14,L"HomeBuilding005_12Material");
+	model = Find<Model>(L"CityWorldHomeBuilding007");
+	model = Find<Model>(L"CityWorldHomeBuilding008");
+	model = Find<Model>(L"CityWorldHomeBuilding009");
+	model = Find<Model>(L"CityWorldHomeBuilding010");
+	model = Find<Model>(L"CityWorldHomeBuilding011");
+	model = Find<Model>(L"CityWorldHomeBuilding012");
+	model = Find<Model>(L"CityWorldHomeBuilding013");
+	model = Find<Model>(L"CityWorldHomeBuilding015");
+	model = Find<Model>(L"CityWorldHomeBuilding016");
+	model = Find<Model>(L"CityWorldHomeBuilding017");
+	model = Find<Model>(L"CityWorldHomeBuilding018");
+	model = Find<Model>(L"CityWorldHomeBuilding019");
+	model = Find<Model>(L"CityWorldHomeBuilding020");
+	model = Find<Model>(L"CityWorldHomeBuilding021");
+	model = Find<Model>(L"CityWorldHomeBuilding022");
+	model = Find<Model>(L"CityWorldHomeBuilding023");
+	model = Find<Model>(L"CityWorldHomeBuilding024");
+	model = Find<Model>(L"CityWorldHomeBuilding026");
+
 }

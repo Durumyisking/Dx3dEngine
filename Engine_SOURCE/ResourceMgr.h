@@ -129,6 +129,8 @@ public:
 	void LoadModel_Monster(bool* bfinish);
 	void LoadModel_CityWorld(bool* bfinish);
 
+	void SettingModelMaterial();
+
 private:
 	std::map<std::wstring, Resource* > mResources;
 };

@@ -125,6 +125,7 @@ namespace gui
 
 		if (mbForceReset)
 		{
+			GetWidget<Hierarchy>("Hierarchy")->SetTargetObject(mTargetObj);
 			GetWidget<Hierarchy>("Hierarchy")->InitializeScene();
 			mbForceReset = false;
 		}

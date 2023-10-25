@@ -70,6 +70,7 @@ namespace gui
 			{
 				mCurrentScene = mActiveScene;
 
+				mTargetObject = nullptr;
 				InitializeScene();
 			}
 		}
@@ -149,7 +150,6 @@ namespace gui
 			}
 		}
 
-		mTargetObject = nullptr;
 		InitializeOutline(mTargetObject);
 	}
 

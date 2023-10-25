@@ -93,29 +93,29 @@ namespace gui
 
 	void Project::LateUpdate()
 	{
-		if (mGroup)
+		if (mGroup == nullptr)
+			return;
+
+		if (!mbTargetChanged)
+			return;
+
+		mGroup->Clear();
+
+		Texture* folderImage = GETSINGLE(ResourceMgr)->Find<Texture>(L"FolderImage");
+
+		for (std::string folderName : mTargetFolders)
 		{
-			if (mbTargetChanged)
-			{
-				mGroup->Clear();
+			ButtonWidget* button = mGroup->CreateWidget<ButtonWidget>(50.f, 50.f);
 
-				Texture* folderImage = GETSINGLE(ResourceMgr)->Find<Texture>(L"FolderImage");
+			button->SetText(folderName);
+			button->SetTexture(folderImage);
 
-				for (std::string folderName : mTargetFolders)
-				{
-					ButtonWidget* button = mGroup->CreateWidget<ButtonWidget>(50.f, 50.f);
-
-					button->SetText(folderName);
-					button->SetTexture(folderImage);
-
-					button->SetClickCallback(&Project::FolderClickCallback, this, folderName);
-				}
-
-				toConsole();
-
-				mbTargetChanged = false;
-			}
+			button->SetClickCallback(&Project::FolderClickCallback, this, folderName);
 		}
+
+		toConsole();
+
+		mbTargetChanged = false;
 	}
 
 	void Project::FolderClickCallback(std::string path)
