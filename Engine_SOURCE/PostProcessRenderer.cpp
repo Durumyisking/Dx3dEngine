@@ -5,6 +5,7 @@
 
 PostProcessRenderer::PostProcessRenderer()
 	: BaseRenderer(eComponentType::Renderer)
+	, mPostProcess{}
 {
 }
 
