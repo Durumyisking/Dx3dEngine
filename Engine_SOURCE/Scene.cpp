@@ -31,8 +31,8 @@ void Scene::Save(FILE* File)
 		eLayerType layerType = static_cast<eLayerType>(i);
 		fwrite(&layerType, sizeof(eLayerType), 1, File);
 
-		if (layerType == eLayerType::Default || layerType == eLayerType::Camera || layerType == eLayerType::Grid
-			|| layerType == eLayerType::SkySphere || layerType == eLayerType::UI )
+		if (layerType == eLayerType::Default || layerType == eLayerType::Camera
+			 || layerType == eLayerType::UI )
 		{
 			int	ObjCount = 0;
 			fwrite(&ObjCount, sizeof(int), 1, File);
@@ -79,7 +79,6 @@ void Scene::Load(FILE* File)
 			GameObj* NewObj = ObjCDO->Clone();
 			NewObj->Load(File);
 
-			mLayers[i].AddGameObject(NewObj, layerType);
 			mLayers[i].PushAddedObject(NewObj);
 		}
 	}

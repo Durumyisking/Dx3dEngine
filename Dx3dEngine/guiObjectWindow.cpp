@@ -66,9 +66,9 @@ namespace gui
 
 			TreeWidget::Node* root = tree->AddNode(nullptr, "SelectObjectLayerType", 0, true);
 
-			for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
+			for (int i = 0; i < static_cast<int>(enums::eLayerType::End); i++)
 			{
-				std::string layerTypeName = enums::charLayerType[static_cast<UINT>(i)];
+				std::string layerTypeName = enums::charLayerType[i];
 
 				TreeWidget::Node* rootChild = tree->AddNode(root, layerTypeName, 0, false, i);
 			}
@@ -103,7 +103,7 @@ namespace gui
 		char buf[BUF_SIZE];
 
 		ImGui::PushItemWidth(100.0f);
-		
+
 		// 초기화: std::string의 값을 버퍼에 복사
 		strncpy_s(buf, mInputText.c_str(), sizeof(buf));
 		buf[sizeof(buf) - 1] = 0; // 널 종료 문자를 보장
@@ -162,15 +162,13 @@ namespace gui
 	bool ObjectWindow::AddObjectToScene(GameObj* obj, eLayerType type)
 	{
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
-		
+
 		if (scene == nullptr)
 			return false;
 
 		Layer& layer = scene->GetLayer(type);
-
 		obj->Initialize();
 		layer.AddGameObject(obj, type);
-
 
 		return true;
 	}
