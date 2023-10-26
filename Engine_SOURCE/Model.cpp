@@ -184,8 +184,11 @@ void Model::Bind_Render(bool bindMaterial)
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
-		if(!(mVariableMaterials.empty() && mMaterials.empty()))
-			mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+		if (bindMaterial)
+		{
+			if(!(mVariableMaterials.empty() && mMaterials.empty()))
+				mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+		}
 	}
 
 	mFrameAnimationVector = nullptr;

@@ -124,6 +124,8 @@ namespace gui
 			listUI->SetEvent(this, std::bind(&GUIMeshRenderer::SetMaterial
 				, this, std::placeholders::_1));
 		}
+		ImGui::SameLine();
+		ImGui::InputInt("MaterialIndex", &mModelMaterialNum);
 
 		ImGui::Text("Model"); //ImGui::SameLine();
 		ImGui::InputText("##Moel", (char*)modelName.data()
@@ -170,7 +172,18 @@ namespace gui
 		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(wKey);
 
 		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
-		inspector->GetTargetGameObject()->GetComponent<MeshRenderer>()->SetMaterial(material);
+
+		MeshRenderer* mr = inspector->GetTargetGameObject()->GetComponent<MeshRenderer>();
+
+		if (mr->GetModel())
+		{
+			mr->SetMaterialByKey(wKey, mModelMaterialNum);
+		}
+		else
+		{
+			mr->SetMaterialByKey(wKey);
+		}
+
 	}
 
 	void GUIMeshRenderer::SetModel(std::string key)
