@@ -186,11 +186,13 @@ void ScenePlay::Initialize()
 	//	}
 	//}
 
+	{
+		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+		mPlayer->SetPos(Vector3(0.f, 10.f, 0.f));
+		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+	}
+	
 
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
-	//}	
 	//{
 	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
