@@ -113,7 +113,7 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/TaxiCar/Car", L"Car");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/Motorcycle", L"Motorcycle");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/MotorcycleParkingLot", L"MotorcycleParkingLot");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/SouvenirCity1", L"SouvenirCity1");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/SouvenirCity1", L"SouvenirCity1");
 
 
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBench000", L"CityWorldHomeBench000");
@@ -209,6 +209,30 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor006", L"CityWorldHomeDoor006");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor007", L"CityWorldHomeDoor007");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeDoor/CityWorldHomeDoor008", L"CityWorldHomeDoor008");
+
+#pragma endregion
+
+#pragma region Signal
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal000", L"CityWorldHomeSignal000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal001", L"CityWorldHomeSignal001");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal002", L"CityWorldHomeSignal002");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal003", L"CityWorldHomeSignal003");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal004", L"CityWorldHomeSignal004");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal005", L"CityWorldHomeSignal005");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal006", L"CityWorldHomeSignal006");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal007", L"CityWorldHomeSignal007");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal008", L"CityWorldHomeSignal008");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal009", L"CityWorldHomeSignal009");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal010", L"CityWorldHomeSignal010");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal011", L"CityWorldHomeSignal011");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal012", L"CityWorldHomeSignal012");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal013", L"CityWorldHomeSignal013");
+
+#pragma endregion
+
+#pragma region Streetlight
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight000", L"CityWorldHomeStreetlight000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight001", L"CityWorldHomeStreetlight001");
 
 #pragma endregion
 
@@ -462,23 +486,30 @@ void ResourceMgr::SettingModelMaterial()
 #pragma region Fence
 	model = Find<Model>(L"CityWorldFenceA");
 	model->SetVariableMaterialsByKey(0, L"FenceA_0Material");
+
 	model = Find<Model>(L"CityWorldFenceB");
 	model->SetVariableMaterialsByKey(0, L"FenceB_0Material");
+
 	model = Find<Model>(L"CityWorldHomeFence000");
 	model->SetVariableMaterialsByKey(0, L"Fence000_0Material");
 	model->SetVariableMaterialsByKey(1, L"Fence000_1Material");
 	model->SetVariableMaterialsByKey(2, L"Fence000_2Material");
+
 	model = Find<Model>(L"CityWorldHomeFence001");
 	model->SetVariableMaterialsByKey(0, L"Fence001_0Material");
 	model->SetVariableMaterialsByKey(1, L"Fence001_0Material");
+
 	model = Find<Model>(L"CityWorldHomeFence002");
 	model->SetVariableMaterialsByKey(0, L"Fence002_0Material");
 	model->SetVariableMaterialsByKey(1, L"Fence002_0Material");
 	model->SetVariableMaterialsByKey(2, L"Fence002_1Material");
+
 	model = Find<Model>(L"CityWorldHomeFence003");
 	model->SetVariableMaterialsByKey(0, L"Fence003_0Material");
+
 	model = Find<Model>(L"CityWorldHomeFence005");
 	model->SetVariableMaterialsByKey(0, L"Fence005_0Material");
+
 	model = Find<Model>(L"CityWorldHomeFence006");
 	model->SetVariableMaterialsByKey(0, L"Fence006_0Material");
 #pragma endregion
@@ -492,6 +523,7 @@ void ResourceMgr::SettingModelMaterial()
 	model = Find<Model>(L"CityWorldBush");
 	model->SetVariableMaterialsByKey(0, L"CityWorldBush_0Material");
 	model->SetVariableMaterialsByKey(1, L"CityWorldBush_1Material");
+
 	model = Find<Model>(L"CityWorldBushA");
 	model->SetVariableMaterialsByKey(0, L"CityWorldBushA_0Material");
 	model->SetVariableMaterialsByKey(1, L"CityWorldBushA_1Material");
@@ -501,10 +533,13 @@ void ResourceMgr::SettingModelMaterial()
 #pragma region Manhole
 	model = Find<Model>(L"CityWorldHomeManhole000");
 	model->SetVariableMaterialsByKey(0, L"Manhole000_0Material");
+
 	model = Find<Model>(L"CityWorldHomeManhole001");
 	model->SetVariableMaterialsByKey(0, L"Manhole001_0Material");
+
 	model = Find<Model>(L"CityWorldHomeManhole002");
 	model->SetVariableMaterialsByKey(0, L"Manhole002_0Material");
+
 	model = Find<Model>(L"CityWorldHomeManhole003");
 	model->SetVariableMaterialsByKey(0, L"Manhole003_0Material");
 #pragma endregion
@@ -575,6 +610,31 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(7, L"Door008_2Material");
 	model->SetVariableMaterialsByKey(8, L"Door008_2Material");
 	model->SetVariableMaterialsByKey(9, L"Door008_2Material");
+
+#pragma endregion
+
+#pragma region Signal
+	model = Find<Model>(L"CityWorldHomeSignal000");
+	model->SetVariableMaterialsByKey(0, L"Manhole000_0Material");
+	model = Find<Model>(L"CityWorldHomeSignal001");
+	model = Find<Model>(L"CityWorldHomeSignal002");
+	model = Find<Model>(L"CityWorldHomeSignal003");
+	model = Find<Model>(L"CityWorldHomeSignal004");
+	model = Find<Model>(L"CityWorldHomeSignal005");
+	model = Find<Model>(L"CityWorldHomeSignal006");
+	model = Find<Model>(L"CityWorldHomeSignal007");
+	model = Find<Model>(L"CityWorldHomeSignal008");
+	model = Find<Model>(L"CityWorldHomeSignal009");
+	model = Find<Model>(L"CityWorldHomeSignal010");
+	model = Find<Model>(L"CityWorldHomeSignal011");
+	model = Find<Model>(L"CityWorldHomeSignal012");
+	model = Find<Model>(L"CityWorldHomeSignal013");
+
+#pragma endregion
+
+#pragma region Signal
+	model = Find<Model>(L"CityWorldHomeStreetlight000");
+	model = Find<Model>(L"CityWorldHomeStreetlight001");
 
 #pragma endregion
 }

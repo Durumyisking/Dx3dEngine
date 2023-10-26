@@ -1666,6 +1666,11 @@ void AsyncLoad::loadCityTexture()
 		textureLoad(L"BarricadePlasticWhite00", L"CityWorldObject/CityWorldFence/CityWorldFenceA/Image", TextureState::AlNrRg);
 
 #pragma endregion
+
+#pragma region CityWorldHomeSignal000 
+		textureLoad(L"CityWorldHomeSignal000", L"CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal000/Image", TextureState::AlMtNrRg);
+
+#pragma endregion
 }
 
 void AsyncLoad::LoadSounds()
