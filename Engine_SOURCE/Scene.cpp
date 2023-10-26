@@ -32,7 +32,8 @@ void Scene::Save(FILE* File)
 		fwrite(&layerType, sizeof(eLayerType), 1, File);
 
 		if (layerType == eLayerType::Default || layerType == eLayerType::Camera
-			 || layerType == eLayerType::UI || layerType == eLayerType::PostProcess )
+			 || layerType == eLayerType::UI 
+			 || layerType == eLayerType::PostProcess || layerType == eLayerType::Player )
 		{
 			int	ObjCount = 0;
 			fwrite(&ObjCount, sizeof(int), 1, File);
