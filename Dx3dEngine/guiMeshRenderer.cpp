@@ -181,7 +181,7 @@ namespace gui
 		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
 		GameObj* target = inspector->GetTargetGameObject();
 		MeshRenderer* mr = target->GetComponent<MeshRenderer>();
-		Material* mt = model->GetMaterial(0);
+		Material* mt = model->GetMaterial();
 
 		if (mt == nullptr)
 			mt = GETSINGLE(ResourceMgr)->Find<Material>(L"PhongMaterial");

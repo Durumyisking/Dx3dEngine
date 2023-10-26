@@ -397,18 +397,20 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(5, L"HomeBuilding0017_5Material");
 	model->SetVariableMaterialsByKey(6, L"HomeBuilding0017_6Material");
 	model->SetVariableMaterialsByKey(7, L"HomeBuilding0017_7Material");
+
 	model = Find<Model>(L"CityWorldHomeBuilding018");
 	model->SetVariableMaterialsByKey(0, L"HomeBuilding0018_0Material");
 	model->SetVariableMaterialsByKey(1, L"HomeBuilding0018_0Material");
-	model->SetVariableMaterialsByKey(2, L"HomeBuilding0018_2Material");
-	model->SetVariableMaterialsByKey(3, L"HomeBuilding0018_10Material");
-	model->SetVariableMaterialsByKey(4, L"HomeBuilding0018_4Material");
-	model->SetVariableMaterialsByKey(5, L"HomeBuilding0018_6Material");
-	model->SetVariableMaterialsByKey(6, L"HomeBuilding0018_7Material");
-	model->SetVariableMaterialsByKey(7, L"HomeBuilding0018_8Material");
-	model->SetVariableMaterialsByKey(8, L"HomeBuilding0018_9Material");
-	model->SetVariableMaterialsByKey(9, L"HomeBuilding0018_10Material");
-	model->SetVariableMaterialsByKey(10, L"HomeBuilding0018_5Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding0018_4Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding0018_10Material"); //
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding0018_4Material"); 
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding0018_5Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding0018_6Material");
+	model->SetVariableMaterialsByKey(7, L"HomeBuilding0018_7Material"); //
+	model->SetVariableMaterialsByKey(8, L"HomeBuilding0018_8Material");//
+	model->SetVariableMaterialsByKey(9, L"HomeBuilding0018_9Material");//
+	model->SetVariableMaterialsByKey(10, L"HomeBuilding0018_10Material"); //
+
 	model = Find<Model>(L"CityWorldHomeBuilding019");
 	model->SetVariableMaterialsByKey(0, L"HomeBuilding0019_6Material");
 	model->SetVariableMaterialsByKey(1, L"HomeBuilding0019_1Material");
