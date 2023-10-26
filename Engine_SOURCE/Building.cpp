@@ -13,7 +13,7 @@ Building::Building()
 	, mGeometryType(eGeometryType::Box)
 	, mActorType(eActorType::Static)
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mObjectTypeName = "Building";
 }
 Building::Building(const Building& Obj)
@@ -24,7 +24,7 @@ Building::Building(const Building& Obj)
 	, mGeometryType(Obj.mGeometryType)
 	, mActorType(Obj.mActorType)
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 }
 Building::~Building()

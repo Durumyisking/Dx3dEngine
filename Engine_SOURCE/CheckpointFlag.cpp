@@ -18,7 +18,7 @@ CheckpointFlag::~CheckpointFlag()
 
 void CheckpointFlag::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CheckpointFlag");
 	assert(model);

@@ -42,6 +42,7 @@
 #include "PhysicsScene.h"
 #include "PhysX.h"
 
+
 #include "Sphere.h"
 #include "Box.h"
 
@@ -162,6 +163,7 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Cap);
 	//Convex and Triangle Mesh TEST
 	
 	////TriangleMesh Test
@@ -180,21 +182,15 @@ void ScenePlay::Initialize()
 	//	}
 	//}
 
-	{
-		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
-		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
-		mPlayer->SetMarioCap(mariocap);
-		
-		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
-	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(15.f, 10.f, 10.f));
-	}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	}
+
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
+	//}	
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	//}
 
 
 	{
@@ -215,14 +211,7 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		//GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		//plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		//plane->SetScale({ 1000.f, 0.5f, 1000.f });
-		//plane->SetName(L"Plane");
-		//plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-		//plane->GetMeshRenerer()->GetMaterial()->SetMetallic(0.99f);
-		//plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
-		//plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+
 
 		//PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 		//rigid->RemoveGravity();
@@ -244,7 +233,7 @@ void ScenePlay::Initialize()
 	//{
 	//	for (size_t j = 0; j < 5; j++)
 	//	{
-	//		for (size_t k = 1; k < 5; k++)
+	//		for (size_t k = 1; k < 10; k++)
 	//		{
 	//			if (j > 4 && k > 1)
 	//				continue;

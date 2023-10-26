@@ -438,8 +438,6 @@ void Physical::CreateMainShape(Vector3 localPos)
 
 	if (physics)
 	{
-		PxTransform tr = {};
-		tr.p = convert::Vector3ToPxVec3(localPos);
 		switch (mGeometryType)
 		{
 		case eGeometryType::Box:
@@ -447,7 +445,7 @@ void Physical::CreateMainShape(Vector3 localPos)
 			break;
 		case eGeometryType::Capsule:
 		{
-			tr.q = (PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
+			//relativePose.q = (PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
 			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mMainGeometry->capsuleGeom, *mProperties->GetMaterial());
 		}
 		break;
@@ -464,7 +462,13 @@ void Physical::CreateMainShape(Vector3 localPos)
 			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mMainGeometry->triangleMeshGeom, *mProperties->GetMaterial());
 			break;
 		}
-		mMainShape->setLocalPose(tr);
+		PxTransform relativePose = mMainShape->getLocalPose();
+		relativePose.p = relativePose.p + convert::Vector3ToPxVec3(localPos);
+		if (mGeometryType == eGeometryType::Capsule)
+		{
+			relativePose.q = (PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
+		}
+		mMainShape->setLocalPose(relativePose);
 	}
 }
 

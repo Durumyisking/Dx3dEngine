@@ -8,14 +8,14 @@
 HomeBuilding_17::HomeBuilding_17()
 	: GameObj()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mObjectTypeName = "HomeBuilding_17";
 }
 
 HomeBuilding_17::HomeBuilding_17(const HomeBuilding_17& Obj)
 	:GameObj(Obj)
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 }
 
 HomeBuilding_17::~HomeBuilding_17()

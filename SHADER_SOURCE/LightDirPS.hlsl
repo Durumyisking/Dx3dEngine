@@ -66,7 +66,10 @@ PS_OUT main(VSOut vsin)
    
 /*
 TODO :
-플레이어의 깊이/위치값 항상 gpu에 전송
+// 플레이어 투시 만들기
+
+1. 플레이어를 렌더링 하고 나온 positionTarget을 가져온다.
+그 포지션 타겟을 merge에서 diffuseLightTarget과 비교한다.
 
 이 깊이값이 deferred에서의 깊이값과 오차가 있다하면
 검은색으로 렌더링
