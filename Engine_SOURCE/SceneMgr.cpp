@@ -359,6 +359,9 @@ void SceneMgr::CreateCDO()
 	BlockBrick* BlockBrickObjCDO = new BlockBrick();
 	GameObj::AddObjectCDO("BlockBrick", BlockBrickObjCDO);
 
+	MapObject* mapObjectCDO = new MapObject(L"CityWorldHomeBuilding002", Vector3::One, Vector3::One);
+	GameObj::AddObjectCDO("MapObject", mapObjectCDO);
+
 	//SkySphere* SkySphere = new SkySphere();
 	//GameObj::AddObjectCDO("SkySphere", SkySphere);
 }

@@ -50,20 +50,6 @@ void Building::Initialize()
 
 	if (mbPhysical)
 	{
-		if (GetComponent<Physical>() != nullptr)
-		{
-			Physical* physical =  GetComponent<Physical>();
-			delete physical;
-			physical = nullptr;
-
-			PhysXRigidBody* rigid = GetComponent<PhysXRigidBody>();
-			delete rigid;
-			rigid = nullptr;
-
-			PhysXCollider* collider = GetComponent<PhysXCollider>();
-			delete collider;
-			collider = nullptr;
-		}
 		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(mActorType, mGeometryType, mPhysicalScale);
 

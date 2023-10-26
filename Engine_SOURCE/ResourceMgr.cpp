@@ -213,26 +213,26 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 #pragma endregion
 
 #pragma region Signal
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal000", L"CityWorldHomeSignal000");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal001", L"CityWorldHomeSignal001");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal002", L"CityWorldHomeSignal002");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal003", L"CityWorldHomeSignal003");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal004", L"CityWorldHomeSignal004");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal005", L"CityWorldHomeSignal005");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal006", L"CityWorldHomeSignal006");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal007", L"CityWorldHomeSignal007");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal008", L"CityWorldHomeSignal008");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal009", L"CityWorldHomeSignal009");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal010", L"CityWorldHomeSignal010");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal011", L"CityWorldHomeSignal011");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal012", L"CityWorldHomeSignal012");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal013", L"CityWorldHomeSignal013");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal000", L"CityWorldHomeSignal000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal001", L"CityWorldHomeSignal001");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal002", L"CityWorldHomeSignal002");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal003", L"CityWorldHomeSignal003");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal004", L"CityWorldHomeSignal004");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal005", L"CityWorldHomeSignal005");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal006", L"CityWorldHomeSignal006");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal007", L"CityWorldHomeSignal007");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal008", L"CityWorldHomeSignal008");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal009", L"CityWorldHomeSignal009");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal010", L"CityWorldHomeSignal010");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal011", L"CityWorldHomeSignal011");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal012", L"CityWorldHomeSignal012");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal013", L"CityWorldHomeSignal013");
 
 #pragma endregion
 
 #pragma region Streetlight
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight000", L"CityWorldHomeStreetlight000");
-	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight001", L"CityWorldHomeStreetlight001");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight000", L"CityWorldHomeStreetlight000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight001", L"CityWorldHomeStreetlight001");
 
 #pragma endregion
 
@@ -614,27 +614,27 @@ void ResourceMgr::SettingModelMaterial()
 #pragma endregion
 
 #pragma region Signal
-	model = Find<Model>(L"CityWorldHomeSignal000");
-	model->SetVariableMaterialsByKey(0, L"Manhole000_0Material");
-	model = Find<Model>(L"CityWorldHomeSignal001");
-	model = Find<Model>(L"CityWorldHomeSignal002");
-	model = Find<Model>(L"CityWorldHomeSignal003");
-	model = Find<Model>(L"CityWorldHomeSignal004");
-	model = Find<Model>(L"CityWorldHomeSignal005");
-	model = Find<Model>(L"CityWorldHomeSignal006");
-	model = Find<Model>(L"CityWorldHomeSignal007");
-	model = Find<Model>(L"CityWorldHomeSignal008");
-	model = Find<Model>(L"CityWorldHomeSignal009");
-	model = Find<Model>(L"CityWorldHomeSignal010");
-	model = Find<Model>(L"CityWorldHomeSignal011");
-	model = Find<Model>(L"CityWorldHomeSignal012");
-	model = Find<Model>(L"CityWorldHomeSignal013");
+	//model = Find<Model>(L"CityWorldHomeSignal000");
+	//model->SetVariableMaterialsByKey(0, L"Manhole000_0Material");
+	//model = Find<Model>(L"CityWorldHomeSignal001");
+	//model = Find<Model>(L"CityWorldHomeSignal002");
+	//model = Find<Model>(L"CityWorldHomeSignal003");
+	//model = Find<Model>(L"CityWorldHomeSignal004");
+	//model = Find<Model>(L"CityWorldHomeSignal005");
+	//model = Find<Model>(L"CityWorldHomeSignal006");
+	//model = Find<Model>(L"CityWorldHomeSignal007");
+	//model = Find<Model>(L"CityWorldHomeSignal008");
+	//model = Find<Model>(L"CityWorldHomeSignal009");
+	//model = Find<Model>(L"CityWorldHomeSignal010");
+	//model = Find<Model>(L"CityWorldHomeSignal011");
+	//model = Find<Model>(L"CityWorldHomeSignal012");
+	//model = Find<Model>(L"CityWorldHomeSignal013");
 
 #pragma endregion
 
 #pragma region Signal
-	model = Find<Model>(L"CityWorldHomeStreetlight000");
-	model = Find<Model>(L"CityWorldHomeStreetlight001");
+	//model = Find<Model>(L"CityWorldHomeStreetlight000");
+	//model = Find<Model>(L"CityWorldHomeStreetlight001");
 
 #pragma endregion
 }
