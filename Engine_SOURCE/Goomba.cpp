@@ -60,7 +60,7 @@ void Goomba::Initialize()
 
 
 	// Add MeshRenderer
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 	// SetModel
 	mModel = GETSINGLE(ResourceMgr)->Find<Model>(L"goomba");
