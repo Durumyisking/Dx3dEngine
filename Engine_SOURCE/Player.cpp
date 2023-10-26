@@ -180,6 +180,8 @@ void Player::Initialize()
 	{
 		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap);
 		SetMarioCap(mariocap);
+
+		renderer::mainCamera->SetTarget(this);
 	}
 }
 
