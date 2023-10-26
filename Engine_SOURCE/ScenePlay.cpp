@@ -42,6 +42,7 @@
 #include "PhysicsScene.h"
 #include "PhysX.h"
 
+
 #include "Sphere.h"
 #include "Box.h"
 
@@ -219,14 +220,7 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		//GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		//plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		//plane->SetScale({ 1000.f, 0.5f, 1000.f });
-		//plane->SetName(L"Plane");
-		//plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-		//plane->GetMeshRenerer()->GetMaterial()->SetMetallic(0.99f);
-		//plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
-		//plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+
 
 		//PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 		//rigid->RemoveGravity();
@@ -242,23 +236,23 @@ void ScenePlay::Initialize()
 		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
 		block->SetPos(Vector3(40.f, -0.5f, 0.f));
 	}
-	InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
+	//InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
 	for (size_t i = 0; i < 5; i++)
 	{
 		for (size_t j = 0; j < 5; j++)
 		{
-			for (size_t k = 1; k < 5; k++)
+			for (size_t k = 1; k < 10; k++)
 			{
 				if (j > 4 && k > 1)
 					continue;
 
 				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
 				block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
-				blockContainer->PushObject(block);
+				//blockContainer->PushObject(block);
 			}
 		}
 	}
-	blockContainer->ResizeObjectInstancingData();
+	//blockContainer->ResizeObjectInstancingData();
 
 	//{
 	//	SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();

@@ -43,8 +43,8 @@ PSOut main(VSOut vsIn) : SV_TARGET
 
     albedo = cbbAlbedo ? TextureMapping_albedo(vsIn.UV, pixelToCam) : albedo;
     normal = cbbNormal ? TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, pixelToCam) : normal;
-    metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV, pixelToCam) : cbbMetallic;
-    roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV, pixelToCam) : cbbRoughness;
+    metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV, pixelToCam) : cbMetallic;
+    roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV, pixelToCam) : cbRoughness;
     emissive = cbbEmissive ? TextureMapping_emissive(vsIn.UV, pixelToCam) : cbbEmissive;
 
     

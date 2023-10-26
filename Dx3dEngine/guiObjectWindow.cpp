@@ -53,6 +53,7 @@ namespace gui
 			CDOList->SetItemList(CDOTypeVec);
 			CDOList->SetEvent(this, std::bind(&ObjectWindow::GetObjectCDO, this, std::placeholders::_1));
 		}
+
 		{
 			TreeWidget* tree = mGroupWidget->CreateWidget<TreeWidget>(150.f, 200.f);
 			tree->SetName("SelectObjectLayerType");
