@@ -113,9 +113,9 @@ namespace renderer
 		arrLayout[6].AlignedByteOffset = offset;
 		arrLayout[6].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
 		arrLayout[6].InputSlot = 1;
-		arrLayout[6].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA; // ìž…ë ¥  ì›ì†Œë¥¼ vertexìžë£Œë¡œ ë„˜ê¸¸ì§€ ì¸ìŠ¤í„´ìŠ¤ë³„ìžë£Œë¡œ ë„˜ê¸¸ì§€ ê²°ì •
-		arrLayout[6].InstanceDataStepRate = 1;						// ì¸ìŠ¤í„´ìŠ¤ë³„ ìžë£Œ ì›ì†Œë‹¹ ê·¸ë¦´ ì¸ìŠ¤í„´ìŠ¤ ê°œìˆ˜ (1:n ë§¤ì¹­ì´ë©´ n vertexë©´ 0)	 
-																	// ì˜ˆë¥¼ë“¤ì–´ í•œë²ˆ ì¸ìŠ¤í„´ì‹±ìœ¼ë¡œ ë¹¨ê°„ë‚˜ë¬´ 2ê°œ íŒŒëž€ë‚˜ë¬´ 2ê°œì”© ê·¸ë¦´êº¼ë©´ 2ë¡œí•˜ê³  1ê°œì”©ê·¸ë¦´êº¼ë©´ 1
+		arrLayout[6].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA; // ÀÔ·Â  ¿ø¼Ò¸¦ vertexÀÚ·á·Î ³Ñ±æÁö ÀÎ½ºÅÏ½ºº°ÀÚ·á·Î ³Ñ±æÁö °áÁ¤
+		arrLayout[6].InstanceDataStepRate = 1;						// ÀÎ½ºÅÏ½ºº° ÀÚ·á ¿ø¼Ò´ç ±×¸± ÀÎ½ºÅÏ½º °³¼ö (1:n ¸ÅÄªÀÌ¸é n vertex¸é 0)	 
+																	// ¿¹¸¦µé¾î ÇÑ¹ø ÀÎ½ºÅÏ½ÌÀ¸·Î »¡°£³ª¹« 2°³ ÆÄ¶õ³ª¹« 2°³¾¿ ±×¸±²¨¸é 2·ÎÇÏ°í 1°³¾¿±×¸±²¨¸é 1
 		arrLayout[6].SemanticName = "WORLD";
 		arrLayout[6].SemanticIndex = 0;
 		offset += sizeof(float) * 4;
@@ -147,7 +147,7 @@ namespace renderer
 		arrLayout[9].SemanticIndex = 3;
 		offset += sizeof(float) * 4;
 
-		// normal mapping ìœ„í•œ world it
+		// normal mapping À§ÇÑ world it
 		arrLayout[10].AlignedByteOffset = offset;
 		arrLayout[10].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 		arrLayout[10].InputSlot = 1;
@@ -401,10 +401,10 @@ namespace renderer
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::ShadowPoint)].GetAddressOf());
 
-		samplerDesc.BorderColor[0] = 100.0f; // í° Zê°’
+		samplerDesc.BorderColor[0] = 100.0f; // Å« Z°ª
 		samplerDesc.Filter =
-			D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT; // ì¶•ì†Œ ë° í™•ëŒ€ì— ì„ í˜• ë³´ê°„ë²•ì„ ì‚¬ìš©í•©ë‹ˆë‹¤. ë°‰ ìˆ˜ì¤€ ìƒ˜í”Œë§ì—ëŠ” í¬ì¸íŠ¸ ìƒ˜í”Œë§ì„ ì‚¬ìš©í•©ë‹ˆë‹¤. ê²°ê³¼ë¥¼ ë¹„êµê°’ê³¼ ë¹„êµí•©ë‹ˆë‹¤.
-		samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL; // ì†ŒìŠ¤ ë°ì´í„°ê°€ ëŒ€ìƒ ë°ì´í„°ë³´ë‹¤ ìž‘ê±°ë‚˜ ê°™ìœ¼ë©´ ë¹„êµê°€ í†µê³¼ë©ë‹ˆë‹¤.
+			D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT; // Ãà¼Ò ¹× È®´ë¿¡ ¼±Çü º¸°£¹ýÀ» »ç¿ëÇÕ´Ï´Ù. ¹Ó ¼öÁØ »ùÇÃ¸µ¿¡´Â Æ÷ÀÎÆ® »ùÇÃ¸µÀ» »ç¿ëÇÕ´Ï´Ù. °á°ú¸¦ ºñ±³°ª°ú ºñ±³ÇÕ´Ï´Ù.
+		samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL; // ¼Ò½º µ¥ÀÌÅÍ°¡ ´ë»ó µ¥ÀÌÅÍº¸´Ù ÀÛ°Å³ª °°À¸¸é ºñ±³°¡ Åë°úµË´Ï´Ù.
 		GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::ShadowCompare)].GetAddressOf());
 
 
@@ -451,14 +451,14 @@ namespace renderer
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::UI)].GetAddressOf());
 
-		dsDesc.DepthEnable = true; // ê¹Šì´ê°’ ì‚¬ìš©í• ì§€ ë§ì§€
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth ê°’ì´ ìž‘ê±°ë‚˜ ê°™ì„ë•Œ ê·¸ë¦¼
-		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer ê»ë‹¤ì¼°ë‹¤í• ë•Œ ì‚¬ìš©
+		dsDesc.DepthEnable = true; // ±íÀÌ°ª »ç¿ëÇÒÁö ¸»Áö
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL; // depth °ªÀÌ ÀÛ°Å³ª °°À»¶§ ±×¸²
+		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL; // depth buffer ²¯´ÙÄ×´ÙÇÒ¶§ »ç¿ë
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Less)].GetAddressOf());
 
 		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth ê°’ì´ í¬ê±°ë‚˜ ê°™ì„ë•Œ ê·¸ë¦¼
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER; // depth °ªÀÌ Å©°Å³ª °°À»¶§ ±×¸²
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&dsDesc, depthStencilState[static_cast<UINT>(eDepthStencilType::Greater)].GetAddressOf());
@@ -545,7 +545,7 @@ namespace renderer
 		
 
 		lightBuffer = new StructedBuffer();
-		lightBuffer->Create(sizeof(LightAttribute), 1, eSRVType::SRV, nullptr, true); // 128ì—ì„œ 1ë¡œ ë³€ê²½í–ˆìŠµë‹ˆë‹¤. (light bindingì‹œ ìƒê¸°ëŠ” ì˜¤ë¥˜ ì—†ì• ëŠ” ì‹œë„)
+		lightBuffer->Create(sizeof(LightAttribute), 1, eSRVType::SRV, nullptr, true); // 128¿¡¼­ 1·Î º¯°æÇß½À´Ï´Ù. (light binding½Ã »ý±â´Â ¿À·ù ¾ø¾Ö´Â ½Ãµµ)
 	}
 
 	void LoadShader()
@@ -1040,7 +1040,7 @@ namespace renderer
 
 #pragma region MergeMRT_Material
 		{
-			// RenderTarget Merge ì‹œì— ì‚¬ìš©í•  ë¨¸í…Œë¦¬ì–¼
+			// RenderTarget Merge ½Ã¿¡ »ç¿ëÇÒ ¸ÓÅ×¸®¾ó
 			Shader* mergeShader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
 			Material* mergeMaterial = new Material();
 			mergeMaterial->SetRenderingMode(eRenderingMode::None);
@@ -1411,7 +1411,7 @@ namespace renderer
 	{
 		Vertex arrCube[24] = {};
 
-		// ìœ—ë©´
+		// À­¸é
 		arrCube[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[0].uv = Vector2(0.f, 0.f);
 		arrCube[0].tangent = Vector3(1.0f, 0.0f, 0.0f);
@@ -1433,7 +1433,7 @@ namespace renderer
 		arrCube[3].tangent = Vector3(1.0f, 0.0f, 0.0f);
 
 
-		// ì•„ëž« ë©´	
+		// ¾Æ·§ ¸é	
 		arrCube[4].pos = Vector4(-0.5f, -0.5f, -0.5f, 1.0f);
 		arrCube[4].uv = Vector2(0.f, 0.f);
 		arrCube[4].normal = Vector3(0.f, -1.f, 0.f);
@@ -1454,7 +1454,7 @@ namespace renderer
 		arrCube[7].normal = Vector3(0.f, -1.f, 0.f);
 		arrCube[7].tangent = Vector3(-1.0f, 0.0f, 0.0f);
 
-		// ì™¼ìª½ ë©´
+		// ¿ÞÂÊ ¸é
 		arrCube[8].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[8].uv = Vector2(0.f, 0.f);
 		arrCube[8].normal = Vector3(-1.f, 0.f, 0.f);
@@ -1475,7 +1475,7 @@ namespace renderer
 		arrCube[11].normal = Vector3(-1.f, 0.f, 0.f);
 		arrCube[11].tangent = Vector3(0.0f, 1.0f, 0.0f);
 
-		// ì˜¤ë¥¸ìª½ ë©´
+		// ¿À¸¥ÂÊ ¸é
 		arrCube[12].pos = Vector4(0.5f, 0.5f, -0.5f, 1.0f);
 		arrCube[12].uv = Vector2(0.f, 0.f);
 		arrCube[12].normal = Vector3(1.f, 0.f, 0.f);
@@ -1496,7 +1496,7 @@ namespace renderer
 		arrCube[15].normal = Vector3(1.f, 0.f, 0.f);
 		arrCube[15].tangent = Vector3(0.0f, -1.0f, 0.0f);
 
-		// ë’· ë©´
+		// µÞ ¸é
 		arrCube[16].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 		arrCube[16].uv = Vector2(0.f, 0.f);
 		arrCube[16].normal = Vector3(0.f, 0.f, 1.f);
@@ -1517,7 +1517,7 @@ namespace renderer
 		arrCube[19].normal = Vector3(0.f, 0.f, 1.f);
 		arrCube[19].tangent = Vector3(1.0f, 0.0f, 0.0f);
 
-		// ì•ž ë©´
+		// ¾Õ ¸é
 		arrCube[20].pos = Vector4(-0.5f, 0.5f, -0.5f, 1.0f);;
 		arrCube[20].uv = Vector2(0.f, 0.f);
 		arrCube[20].normal = Vector3(0.f, 0.f, -1.f);
