@@ -17,7 +17,7 @@ CityWorldFlag::~CityWorldFlag()
 
 void CityWorldFlag::Initialize()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldFlag");
 	assert(model);

@@ -17,6 +17,7 @@
 #include "ParticleSystem.h"
 
 #include "FootSmokeParticle.h"
+#include "Object.h"
 
 Player::Player()
 	: mPlayerState(ePlayerState::Idle)
@@ -175,6 +176,13 @@ void Player::Initialize()
 	mRigidBody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
 
 	mMeshRenderer->SetBoneAnimator(nullptr);
+
+	{
+		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap);
+		SetMarioCap(mariocap);
+
+		renderer::mainCamera->SetTarget(this);
+	}
 }
 
 void Player::Update()
@@ -355,7 +363,7 @@ void Player::KeyCheck()
 	};
 
 	// 웅크리기
-	stateEvent(eKeyState::TAP, eKeyCode::LCTRL, ePlayerState::Squat);
+	//stateEvent(eKeyState::TAP, eKeyCode::LCTRL, ePlayerState::Squat);
 
 	// 점프
 	stateEvent(eKeyState::TAP, eKeyCode::SPACE, ePlayerState::Jump);
@@ -370,7 +378,7 @@ void Player::KeyCheck()
 
 	// 모자 던지기
 	able = false;
-	stateEvent(eKeyState::TAP, eKeyCode::LBTN, ePlayerState::ThrowCap);
+	//stateEvent(eKeyState::TAP, eKeyCode::LBTN, ePlayerState::ThrowCap);
 
 	// 특수
 	able = false;

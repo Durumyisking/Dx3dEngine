@@ -43,7 +43,7 @@ namespace gui
 	Editor::Editor()
 		: mEnable(false)
 	{
-		//mEnable = true;
+		mEnable = true;
 	}
 	Editor::~Editor()
 	{

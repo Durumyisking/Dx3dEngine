@@ -8,7 +8,7 @@
 CityWorldChairA::CityWorldChairA()
 	: GameObj()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mObjectTypeName = "CityWorldChairA";
 
 }
@@ -16,7 +16,7 @@ CityWorldChairA::CityWorldChairA()
 CityWorldChairA::CityWorldChairA(const CityWorldChairA& Obj)
 	:GameObj(Obj)
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 }
 
 CityWorldChairA::~CityWorldChairA()

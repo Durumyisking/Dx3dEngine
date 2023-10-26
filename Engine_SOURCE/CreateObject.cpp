@@ -11,7 +11,7 @@ CreateObject::CreateObject(const std::wstring& modelKey,const std::wstring& mate
 	,mMaterialKey(materialKey)
 	,mColliderSize(size)
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mObjectTypeName = std::string().assign(modelKey.begin(),modelKey.end());
 }
 
@@ -21,7 +21,7 @@ CreateObject::CreateObject(const CreateObject& Obj)
 	, mMaterialKey(Obj.mMaterialKey)
 	, mColliderSize(Obj.mColliderSize)
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 }
 
 CreateObject::~CreateObject()
