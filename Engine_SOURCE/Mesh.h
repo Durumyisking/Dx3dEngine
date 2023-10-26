@@ -57,7 +57,7 @@ private:
 	bool			mbFrustumCulled;
 
 	// aabb
-	BoundingBox mBoundingBox; // ¿À·ù°¡ »ı±â¸é CreateFromPointsÀÌ°É·Î ¸¸µé¾îº¸ÀÚ
+	BoundingBox mBoundingBox; // ì˜¤ë¥˜ê°€ ìƒê¸°ë©´ CreateFromPointsì´ê±¸ë¡œ ë§Œë“¤ì–´ë³´ì
 	math::Vector3 mMinVertex;
 	math::Vector3 mMaxVertex;
 
@@ -66,7 +66,7 @@ private:
 	math::Matrix mOwnerWorldMatrix;
 
 	//public:
-	//	// debug¿ë
+	//	// debugìš©
 	//	static UINT sMeshCount;
 	//	bool r;
 };

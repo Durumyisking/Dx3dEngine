@@ -39,7 +39,7 @@ bool Mesh::CreateVertexBuffer(void* data, UINT count)
 	mVBDesc.ByteWidth = sizeof(Vertex) * count;
 	mVBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
 	mVBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
-	mVBDesc.CPUAccessFlags = 0; // »ó¼ö¹öÆÛ ÅëÇØ¼­ °ª º¯°æÇÒ²¨ÀÓ
+	mVBDesc.CPUAccessFlags = 0; // ìƒìˆ˜ë²„í¼ í†µí•´ì„œ ê°’ ë³€ê²½í• êº¼ì„
 
 	D3D11_SUBRESOURCE_DATA subData = {};
 	subData.pSysMem = data;
@@ -92,7 +92,7 @@ bool Mesh::CreateIndexBuffer(void* data, UINT count)
 
 void Mesh::BindBuffer(bool drawInstance)
 {
-	// ui´Â ÄÃ¸µÇÏ¸é ¾ÈµÅ
+	// uiëŠ” ì»¬ë§í•˜ë©´ ì•ˆë¼
 	if (GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh") != this)
 	{
 		//CheckFrustumCull();
@@ -237,12 +237,12 @@ void Mesh::UpdateInstanceBuffer(std::vector<InstancingData> matrices)
 void Mesh::CheckFrustumCull()
 {
 	BoundingFrustum frustum = renderer::mainCamera->GetFrustum();
-	// todo bounding box¿¡ ¿ùµåÇà·ÄÀ» °öÇØ¼­ ±¸ÇöÇØº¸ÀÚ
+	// todo bounding boxì— ì›”ë“œí–‰ë ¬ì„ ê³±í•´ì„œ êµ¬í˜„í•´ë³´ì
 	mBoundingBox.Center = Vector3::Transform(mBoundingBox.Center, mOwnerWorldMatrix);
 
-	// extense¿¡´Â scale¸¸ °è»êÇØÁÖ¸é µÉ °Í °°´Ù.
+	// extenseì—ëŠ” scaleë§Œ ê³„ì‚°í•´ì£¼ë©´ ë  ê²ƒ ê°™ë‹¤.
 	Vector3 extractedScale = { mOwnerWorldMatrix._11, mOwnerWorldMatrix._22, mOwnerWorldMatrix._33 };
-	mBoundingBox.Extents = mInitialExtent * extractedScale; // °è¼Ó °öÇÏ´Ï±î Á¡ÀÌ µÇ¾î¹ö¸²(offset 0.00~~¾¿ ÇØÁÖ´Ï±î) ÃÊ±â extent¸¦ À¯ÁöÇØ¾ßÇÔ
+	mBoundingBox.Extents = mInitialExtent * extractedScale; // ê³„ì† ê³±í•˜ë‹ˆê¹Œ ì ì´ ë˜ì–´ë²„ë¦¼(offset 0.00~~ì”© í•´ì£¼ë‹ˆê¹Œ) ì´ˆê¸° extentë¥¼ ìœ ì§€í•´ì•¼í•¨
 	mbFrustumCulled = !frustum.Intersects(mBoundingBox);
 }
 

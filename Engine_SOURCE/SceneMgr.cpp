@@ -112,7 +112,7 @@ void SceneMgr::LoadScene(eSceneType type)
 {
 	if (mActiveScene->GetType() == type)
 	{
-		//·Îµù ¾ÀÀ¸·Î ³Ñ¾î°¡¼­ ÀÛ¾÷ÇÏ±â
+		//ë¡œë”© ì”¬ìœ¼ë¡œ ë„˜ì–´ê°€ì„œ ì‘ì—…í•˜ê¸°
 	}
 
 	if (mActiveScene)
@@ -135,7 +135,7 @@ void SceneMgr::ChangeScene(eSceneType type)
 {
 	if (mActiveScene->GetType() == type)
 	{
-		//·Îµù ¾ÀÀ¸·Î ³Ñ¾î°¡¼­ ÀÛ¾÷ÇÏ±â
+		//ë¡œë”© ì”¬ìœ¼ë¡œ ë„˜ì–´ê°€ì„œ ì‘ì—…í•˜ê¸°
 	}
 
 	if (mActiveScene)
@@ -191,7 +191,7 @@ bool SceneMgr::SaveSceneFile(eSceneType type, const std::wstring& filePath)
 	return true;
 }
 
-//´Ù¸¥ ¾²·¹µå¸¦ ½á¼­ ¹é±×¶ó¿îµå ·Îµù ÇÏ´Â¹ı Ã£±â
+//ë‹¤ë¥¸ ì“°ë ˆë“œë¥¼ ì¨ì„œ ë°±ê·¸ë¼ìš´ë“œ ë¡œë”© í•˜ëŠ”ë²• ì°¾ê¸°
 bool SceneMgr::LoadSceneFile(const std::wstring& filePath)
 {
 	FILE* File = nullptr;
