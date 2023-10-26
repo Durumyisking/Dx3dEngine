@@ -122,12 +122,12 @@ void GameObj::Load(FILE* File)
 	fread(&pos, sizeof(math::Vector3), 1, File);
 	fread(&rotation, sizeof(math::Vector3), 1, File);
 	fread(&scale, sizeof(math::Vector3), 1, File);
-	fread(&offscale, sizeof(float), 1, File);
+	//fread(&offscale, sizeof(float), 1, File);
 
 	tr->SetPosition(pos);
 	tr->SetRotation(rotation);
 	tr->SetScale(scale);
-	tr->SetOffsetScale(offscale);
+	//tr->SetOffsetScale(offscale);
 }
 
 void GameObj::Initialize()

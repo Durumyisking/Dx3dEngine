@@ -186,6 +186,15 @@ void ScenePlay::Initialize()
 	//	}
 	//}
 
+	{
+		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+		mPlayer->SetPos(Vector3(0.f, 10.f, 0.f));
+		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+	}
+	{
+		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
+	}
 
 	//{
 	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
@@ -197,12 +206,6 @@ void ScenePlay::Initialize()
 	//}
 
 
-	// SetDestroyOff로 다음 씬 넘겨주거나 매번 씬 이니셜라이즈때 해주기
-	{
-		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
-		mPostProcess_Replay->SetDestroyOff();
-	}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -217,22 +220,13 @@ void ScenePlay::Initialize()
 	}
 
 	{
-
-
-		//PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		//rigid->RemoveGravity();
-
-		//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-
 		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-
-		//HomeFence_0* fence = object::Instantiate<HomeFence_0>(eLayerType::Monster, this);
 	}
 
-	{
-		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
-		block->SetPos(Vector3(40.f, -0.5f, 0.f));
-	}
+	//{
+	//	Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+	//	block->SetPos(Vector3(40.f, -0.5f, 0.f));
+	//}
 	//InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
 	//for (size_t i = 0; i < 5; i++)
 	//{
