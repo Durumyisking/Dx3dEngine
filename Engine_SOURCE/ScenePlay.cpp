@@ -107,6 +107,10 @@
 
 #include "HomeFence_0.h"
 
+#include "PhysXRayCast.h"
+#include "../Dx3dEngine/guiWidgetMgr.h"
+#include "../Dx3dEngine/guiHierarchy.h"
+
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
 	, mCityCoinPanal(nullptr)
@@ -141,7 +145,7 @@ void ScenePlay::Initialize()
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		{
-			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
 			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 			skySphere->SetName(L"SkySphere");
 		}
@@ -205,7 +209,7 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
 		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		skySphere->SetName(L"SkySphere");
 	}
@@ -223,10 +227,9 @@ void ScenePlay::Initialize()
 		//HomeFence_0* fence = object::Instantiate<HomeFence_0>(eLayerType::Monster, this);
 	}
 
-
 	{
-		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
-		//block->SetPos(Vector3(40.f, -0.5f, 0.f));
+		Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+		block->SetPos(Vector3(40.f, -0.5f, 0.f));
 	}
 	//InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
 	//for (size_t i = 0; i < 5; i++)
@@ -290,6 +293,24 @@ void ScenePlay::update()
 	}
 
 
+	if (KEY_UP(LSHIFT))
+		GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+	else
+	{
+		if (KEY_DOWN(LSHIFT) && KEY_TAP(LBTN))
+		{
+			GameObj* target = GETSINGLE(PhysXRayCast)->Raycast();
+
+			renderer::outlineTargetObject = target;
+		}
+
+		if (KEY_UP(LBTN))
+		{
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+		}
+	}
+
+
 	Scene::update();
 }
 
@@ -309,7 +330,7 @@ void ScenePlay::Enter()
 {
 	Scene::Enter();
 
-	mCamera->SetPos(Vector3(0.f, 25.f, -25.f));
+	mCamera->SetPos(Vector3(0.f, 75.f, -75.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }
