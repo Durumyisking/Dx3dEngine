@@ -10,9 +10,6 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
-#include "SceneMgr.h"
-#include "Scene.h"
-
 const char* charActorType[(int)eActorType::End] =
 {
     "Static", // 정적인 물체 (물리적으로 움직이지 않을 물체)
@@ -282,32 +279,12 @@ namespace gui
         if (obj == nullptr)
             return false;
 
-        Physical* physical = obj->GetComponent<Physical>();
-
-        if (physical == nullptr)
+        if (obj->GetComponent<Physical>() == nullptr)
             return false;
 
-        GameObj* deleteObj = new GameObj();
-
-        std::vector<Component*> components = deleteObj->GetComponentsVec();
-
-        deleteObj->SetPos(obj->GetPos());
-
-        components[static_cast<UINT>(eComponentType::Physical)] = physical;
-        //components[static_cast<UINT>(eComponentType::Physical)]->SetOwner(deleteObj);
-        
-        components[static_cast<UINT>(eComponentType::RigidBody)] = obj->GetComponent<PhysXRigidBody>();
-        //components[static_cast<UINT>(eComponentType::RigidBody)]->SetOwner(deleteObj);
-
-        components[static_cast<UINT>(eComponentType::Collider)] = obj->GetComponent<PhysXCollider>();
-        //components[static_cast<UINT>(eComponentType::Collider)]->SetOwner(deleteObj);
-
-
-        Scene* scene =  GETSINGLE(SceneMgr)->GetActiveScene();
-
-        Layer& layer = scene->GetLayer(eLayerType::NonePhysical);
-        deleteObj->Die();
-        layer.AddGameObject(deleteObj, eLayerType::NonePhysical);
+        delete obj->GetComponent<PhysXCollider>();
+        delete obj->GetComponent<Physical>();
+        delete obj->GetComponent<PhysXRigidBody>();
 
 
         Physical* objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);

@@ -45,7 +45,7 @@ void Building::Initialize()
 	assert(model);
 
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
-	mr->SetMaterial(model->GetMaterial());
+	mr->ForceSetMaterial(model->GetLastMaterial());
 	mr->SetModel(model);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);

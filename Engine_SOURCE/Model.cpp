@@ -249,7 +249,7 @@ void Model::SetFrameAnimationVector(const std::map<std::wstring, aiMatrix4x4>* a
 	mFrameAnimationVector = animationVector;
 }
 
-Material* Model::GetMaterial()
+Material* Model::GetLastMaterial()
 {
 	Material* material = nullptr;
 
