@@ -10,7 +10,7 @@ public:
 	ModelObj(const ModelObj& Obj);
 	virtual ~ModelObj();
 
-	virtual ModelObj* Clone() const;
+	virtual ModelObj* Clone() const override;
 	virtual void Save(FILE* File) override;
 	virtual void Load(FILE* File) override;
 

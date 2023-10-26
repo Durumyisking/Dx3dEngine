@@ -38,7 +38,7 @@ void HomeBuildingFive::Initialize()
 	mr->SetMaterialByKey(L"HomeBuilding005_0Material", 0);
 	mr->SetMaterialByKey(L"HomeBuilding005_1Material", 1);
 	mr->SetMaterialByKey(L"HomeBuilding005_2Material", 2);
-	mr->SetMaterialByKey(L"HomeBuilding005_1Material", 3); //수정 필요 BuildingEntrance02
+	mr->SetMaterialByKey(L"HomeBuilding005_1Material", 3);			//수정 필요 BuildingEntrance02
 	mr->SetMaterialByKey(L"HomeBuilding005_3Material", 4);
 	mr->SetMaterialByKey(L"HomeBuilding005_4Material", 5);
 	mr->SetMaterialByKey(L"HomeBuilding005_5Material", 6);

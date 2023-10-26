@@ -31,6 +31,16 @@ CityGround* CityGround::Clone() const
 	return new CityGround(*this);
 }
 
+void CityGround::Save(FILE* File)
+{
+	GameObj::Save(File);
+}
+
+void CityGround::Load(FILE* File)
+{
+	GameObj::Load(File);
+}
+
 void CityGround::Initialize()
 {
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorldHomeGround000");

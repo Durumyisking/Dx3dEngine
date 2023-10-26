@@ -28,6 +28,8 @@ public:
 	virtual void Enter();
 	virtual void Exit();
 
+	void SaveLayerObjects(FILE* File, eLayerType type);
+	void LoadLayerObjects(FILE* File, eLayerType type);
 
 	void AddGameObject(GameObj* gameObj, const eLayerType eLayer);
 

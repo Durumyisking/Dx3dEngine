@@ -40,6 +40,8 @@ GameObj::GameObj()
 
 GameObj::GameObj(const GameObj& Obj)
 	: Entity(Obj)
+	, mbDestroy(Obj.mbDestroy)
+	, mbBlockRendering(Obj.mbBlockRendering)
 {
 	mComponents.resize(static_cast<UINT>(eComponentType::End));
 	this->AddComponent<Transform>(eComponentType::Transform);

@@ -1,6 +1,5 @@
 #pragma once
 #include "guiWidget.h"
-#include "guiTreeWidget.h"
 #include "ResourceMgr.h"
 
 class Scene;
@@ -16,6 +15,9 @@ namespace gui
 		bool SaveScene();
 		bool LoadScene();
 
+		bool SaveLayerObjects();
+		bool LoadLayerObjects();
+
 		void Initialize();
 
 		virtual void FixedUpdate() override;
@@ -23,6 +25,7 @@ namespace gui
 		virtual void LateUpdate() override;
 
 		void SetSceneType(UINT data);
+		void SetLayerType(UINT data);
 
 	private:
 		std::wstring mSceneSaveName;
@@ -31,6 +34,10 @@ namespace gui
 		UINT mSceneSaveType;
 		Scene* mScene;
 
-		TreeWidget* mTreeWidget;
+		UINT mLayerSaveType;
+
+		class GroupWidget* mGroupWidget;
+		class TreeWidget* mSceneTree;
+		class TreeWidget* mLayerTree;
     };
 }
