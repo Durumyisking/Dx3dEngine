@@ -26,8 +26,6 @@ public:
 	void SetMaterialByKey(std::wstring key, UINT modelMeshSlot = 0);
 	void SetMaterial(std::wstring key);
 
-	void ForceSetMaterial(Material* material);
-	void ForceSetMaterialByKey(std::wstring key);
 
 	void SetAnimMaterial(Material* material, Vector2 spriteSize);
 

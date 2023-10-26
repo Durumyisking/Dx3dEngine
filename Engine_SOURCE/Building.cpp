@@ -16,7 +16,6 @@ Building::Building()
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mObjectTypeName = "Building";
 }
-
 Building::Building(const Building& Obj)
 	:GameObj(Obj)
 	, mModelName(Obj.mModelName)
@@ -28,7 +27,6 @@ Building::Building(const Building& Obj)
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 }
-
 Building::~Building()
 {
 
@@ -45,7 +43,7 @@ void Building::Initialize()
 	assert(model);
 
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
-	mr->ForceSetMaterial(model->GetLastMaterial());
+	mr->SetMaterial(model->GetMaterial());
 	mr->SetModel(model);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);

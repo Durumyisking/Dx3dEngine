@@ -91,26 +91,6 @@ void BaseRenderer::SetMaterial(std::wstring key)
 	}
 }
 
-void BaseRenderer::ForceSetMaterial(Material* material)
-{
-	if (material == nullptr)
-		return;
-
-	mMaterial = material;
-	mMaterialKey = material->GetName();
-}
-
-void BaseRenderer::ForceSetMaterialByKey(std::wstring key)
-{
-	Material* mt = GETSINGLE(ResourceMgr)->Find<Material>(key);
-
-	if (mt == nullptr)
-		return;
-
-	mMaterial = mt;
-	mMaterialKey = key;
-}
-
 void BaseRenderer::SetAnimMaterial(Material* material, Vector2 spriteSize)
 {
 	mMaterial = material;

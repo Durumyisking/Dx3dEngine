@@ -33,7 +33,6 @@ namespace gui
 {
     GUIPhysical::GUIPhysical()
         : GUIComponent(eComponentType::Physical)
-        , mbPhysical(false)
         , mActorType(eActorType::End)
         , mGeometryType(eGeometryType::End)
         , mScale(Vector3::Zero)
@@ -93,32 +92,26 @@ namespace gui
         ImGui::PopStyleColor(1);
         ImGui::PopID();
 
-        ImGuiTreeNodeFlags_ flag;
+
         if (mAddingPhysical)
         {
-            flag = ImGuiTreeNodeFlags_DefaultOpen;
-        }
-        else
-        {
-            flag = ImGuiTreeNodeFlags_None;
-        }
-
-        if (ImGui::TreeNodeEx("Select Actor :", flag)) // 메인 트리
-        {
-            for (int i = 0; i < static_cast<int>(eActorType::End); i++)
+            if (ImGui::TreeNodeEx("Select Actor :", ImGuiTreeNodeFlags_DefaultOpen)) // 메인 트리
             {
-                if (ImGui::TreeNodeEx((void*)(intptr_t)i
-                    , (mActorType == static_cast<eActorType>(i) ? ImGuiTreeNodeFlags_Selected : 0)
-                    , charActorType[i]))
+                for (int i = 0; i < static_cast<int>(eActorType::End); i++)
                 {
-                    if (ImGui::IsItemClicked())
+                    if (ImGui::TreeNodeEx((void*)(intptr_t)i
+                        , (mActorType == static_cast<eActorType>(i) ? ImGuiTreeNodeFlags_Selected : 0)
+                        , charActorType[i]))
                     {
-                        mActorType = static_cast<eActorType>(i);
+                        if (ImGui::IsItemClicked())
+                        {
+                            mActorType = static_cast<eActorType>(i);
+                        }
+                        ImGui::TreePop();
                     }
-                    ImGui::TreePop();
                 }
+                ImGui::TreePop();
             }
-            ImGui::TreePop();
         }
 
         //GeometryType Edit
@@ -159,25 +152,26 @@ namespace gui
         ImGui::PopID();
 
 
-        if (ImGui::TreeNodeEx("Select Geometry :", flag)) // 메인 트리
+        if (mAddingPhysical)
         {
-            for (int i = 0; i < static_cast<int>(eGeometryType::End); i++)
+            if (ImGui::TreeNodeEx("Select Geometry :", ImGuiTreeNodeFlags_DefaultOpen)) // 메인 트리
             {
-                if (ImGui::TreeNodeEx((void*)(intptr_t)i
-                    , (mGeometryType == static_cast<eGeometryType>(i) ? ImGuiTreeNodeFlags_Selected : 0)
-                    , charGeometryType[i]))
+                for (int i = 0; i < static_cast<int>(eGeometryType::End); i++)
                 {
-                    if (ImGui::IsItemClicked())
+                    if (ImGui::TreeNodeEx((void*)(intptr_t)i
+                        , (mGeometryType == static_cast<eGeometryType>(i) ? ImGuiTreeNodeFlags_Selected : 0)
+                        , charGeometryType[i]))
                     {
-                        mGeometryType = static_cast<eGeometryType>(i);
+                        if (ImGui::IsItemClicked())
+                        {
+                            mGeometryType = static_cast<eGeometryType>(i);
+                        }
+                        ImGui::TreePop();
                     }
-                    ImGui::TreePop();
                 }
+                ImGui::TreePop();
             }
-            ImGui::TreePop();
         }
-
-        //Scale Edit
 
         if (mAddingPhysical)
         {
@@ -187,18 +181,6 @@ namespace gui
             if(ImGui::Button("Create", ImVec2(120.f, 60.f)))
             {
                 AddPhysical();
-            }
-        }
-        else
-        {
-            ImGui::InputFloat3("#ColliderScale", (float*)&mScale);
-
-
-            if (ImGui::Button("ChangeCollider", ImVec2(120.f, 60.f)))
-            {
-                ChangePhysical();
-
-                GETSINGLE(WidgetMgr)->ForceReset(GetTarget());
             }
         }
     }
@@ -220,14 +202,11 @@ namespace gui
         {
             mActorType = eActorType::End;
             mGeometryType = eGeometryType::End;
-            mScale = Vector3(0.f, 0.f, 0.f);
         }
         else
         {
-            mbPhysical = true;
             mActorType = physical->GetActorType();
             mGeometryType = physical->GetGeometryType();
-            mScale = physical->GetGeometrySize();
         }
     }
 
@@ -261,45 +240,13 @@ namespace gui
 
         if (mAddingPhysical)
         {
-            Vector3 scale = GetTarget()->GetComponent<Transform>()->GetScale();
-            float offset = GetTarget()->GetComponent<Transform>()->GetOffsetScale();
-            mScale = scale * offset;
+            mScale = Vector3::Zero;
             SetSize(ImVec2(300.0f, 400.0f));
         }
         else
         {
             SetSize(ImVec2(300.0f, 200.0f));
         }
-    }
-
-    bool GUIPhysical::ChangePhysical()
-    {
-        GameObj* obj = GetTarget();
-
-        if (obj == nullptr)
-            return false;
-
-        if (obj->GetComponent<Physical>() == nullptr)
-            return false;
-
-        delete obj->GetComponent<PhysXCollider>();
-        delete obj->GetComponent<Physical>();
-        delete obj->GetComponent<PhysXRigidBody>();
-
-
-        Physical* objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
-        objPhysical->InitialDefaultProperties(mActorType, mGeometryType, mScale);
-
-        PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-        rigid->RemoveGravity();
-
-        PhysXCollider* collider = obj->AddComponent<PhysXCollider>(eComponentType::Collider);
-
-        rigid->Initialize();
-        objPhysical->Initialize();
-        collider->Initialize();
-
-        return true;
     }
 
     void GUIPhysical::EditTransform(float* cameraView, float* cameraProjection, float* matrix, bool editTransformDecomposition)

@@ -73,12 +73,16 @@ namespace gui
         math::Vector3 objPos;
         bool isPhysical = false;
 
-        objPos = mTargetGameObject->GetComponent<Transform>()->GetPosition();
-
         if (mTargetGameObject->GetComponent<Physical>() != nullptr)
+        {
+            objPos = mTargetGameObject->GetComponent<Transform>()->GetPhysicalPosition();
             isPhysical = true;
+        }
         else
+        {
+            objPos = mTargetGameObject->GetComponent<Transform>()->GetPosition();
             isPhysical = false;
+        }
 
 
 
@@ -117,13 +121,7 @@ namespace gui
             if (mGizmoOperation == ImGuizmo::TRANSLATE)
             {
                 if(isPhysical)
-                {
-                    if (position != objPos)
-                        int debug = 0;
-
                     tr->SetPhysicalPosition(position);
-                    tr->SetPosition(position);
-                }
                 else
                     tr->SetPosition(position);
             }

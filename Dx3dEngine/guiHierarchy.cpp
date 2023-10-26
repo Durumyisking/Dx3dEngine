@@ -74,6 +74,30 @@ namespace gui
 				InitializeScene();
 			}
 		}
+
+
+		if (KEY_UP(LSHIFT))
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+
+		if (!KEY_DOWN(LSHIFT))
+			return;
+
+		if (KEY_TAP(LBTN))
+		{
+			mTargetObject = GETSINGLE(PhysXRayCast)->Raycast();
+
+			InitializeOutline(mTargetObject);
+		}
+
+		if (KEY_DOWN(LBTN))
+		{
+			GETSINGLE(PhysXRayCast)->MoveObject();
+		}
+
+		if (KEY_UP(LBTN))
+		{
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+		}
 	}
 
 	void Hierarchy::Update()
@@ -110,13 +134,13 @@ namespace gui
 		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, sceneName, 0, true);
 
 
-		for (int i = 0; i < static_cast<int>(enums::eLayerType::End); i++)
+		for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
 		{
 			Layer& layer = mCurrentScene->GetLayer((enums::eLayerType)i);
 			const std::vector<GameObj*>& gameObjs = layer.GetGameObjects();
 
 			std::string name = "eLayerType::";
-			std::string layerTypeName = enums::charLayerType[i];
+			std::string layerTypeName = enums::charLayerType[static_cast<UINT>(i)];
 
 			TreeWidget::Node* rootChild = mTreeWidget->AddNode(root, name + layerTypeName, 0, false);
 
@@ -131,9 +155,6 @@ namespace gui
 
 	void Hierarchy::AddGameObject(TreeWidget::Node* parent, GameObj* gameObject)
 	{
-		if (gameObject == nullptr)
-			return;
-
 		std::string name(gameObject->GetName().begin(), gameObject->GetName().end());
 
 		if (name.empty())
@@ -143,4 +164,10 @@ namespace gui
 
 		TreeWidget::Node* node = mTreeWidget->AddNode(parent, name, gameObject);
 	}
+
+	void Hierarchy::DeleteGameObject()
+	{
+		TreeWidget::Node* node = mTreeWidget->GetSelectedNode();
+	}
+
 }

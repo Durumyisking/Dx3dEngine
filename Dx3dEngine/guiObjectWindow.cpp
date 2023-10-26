@@ -66,9 +66,9 @@ namespace gui
 
 			TreeWidget::Node* root = tree->AddNode(nullptr, "SelectObjectLayerType", 0, true);
 
-			for (int i = 0; i < static_cast<int>(enums::eLayerType::End); i++)
+			for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
 			{
-				std::string layerTypeName = enums::charLayerType[i];
+				std::string layerTypeName = enums::charLayerType[static_cast<UINT>(i)];
 
 				TreeWidget::Node* rootChild = tree->AddNode(root, layerTypeName, 0, false, i);
 			}
@@ -103,10 +103,10 @@ namespace gui
 		char buf[BUF_SIZE];
 
 		ImGui::PushItemWidth(100.0f);
-
-		// ÃÊ±âÈ­: std::stringÀÇ °ªÀ» ¹öÆÛ¿¡ º¹»ç
+		
+		// ì´ˆê¸°í™”: std::stringì˜ ê°’ì„ ë²„í¼ì— ë³µì‚¬
 		strncpy_s(buf, mInputText.c_str(), sizeof(buf));
-		buf[sizeof(buf) - 1] = 0; // ³Î Á¾·á ¹®ÀÚ¸¦ º¸Àå
+		buf[sizeof(buf) - 1] = 0; // ë„ ì¢…ë£Œ ë¬¸ìžë¥¼ ë³´ìž¥
 
 		if (ImGui::InputText("ObjectName", buf, sizeof(buf)))
 			mInputText = buf;
@@ -162,13 +162,15 @@ namespace gui
 	bool ObjectWindow::AddObjectToScene(GameObj* obj, eLayerType type)
 	{
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
-
+		
 		if (scene == nullptr)
 			return false;
 
 		Layer& layer = scene->GetLayer(type);
+
 		obj->Initialize();
 		layer.AddGameObject(obj, type);
+
 
 		return true;
 	}

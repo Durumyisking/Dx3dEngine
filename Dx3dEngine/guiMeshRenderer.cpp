@@ -124,8 +124,6 @@ namespace gui
 			listUI->SetEvent(this, std::bind(&GUIMeshRenderer::SetMaterial
 				, this, std::placeholders::_1));
 		}
-		ImGui::SameLine();
-		ImGui::InputInt("MaterialIndex", &mModelMaterialNum);
 
 		ImGui::Text("Model"); //ImGui::SameLine();
 		ImGui::InputText("##Moel", (char*)modelName.data()
@@ -172,18 +170,7 @@ namespace gui
 		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(wKey);
 
 		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
-
-		MeshRenderer* mr = inspector->GetTargetGameObject()->GetComponent<MeshRenderer>();
-
-		if (mr->GetModel())
-		{
-			mr->SetMaterialByKey(wKey, mModelMaterialNum);
-		}
-		else
-		{
-			mr->SetMaterialByKey(wKey);
-		}
-
+		inspector->GetTargetGameObject()->GetComponent<MeshRenderer>()->SetMaterial(material);
 	}
 
 	void GUIMeshRenderer::SetModel(std::string key)
@@ -194,12 +181,12 @@ namespace gui
 		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
 		GameObj* target = inspector->GetTargetGameObject();
 		MeshRenderer* mr = target->GetComponent<MeshRenderer>();
-		Material* mt = model->GetLastMaterial();
+		Material* mt = model->GetMaterial();
 
 		if (mt == nullptr)
 			mt = GETSINGLE(ResourceMgr)->Find<Material>(L"PhongMaterial");
 
-		mr->ForceSetMaterial(mt);
-		mr->SetModel(model);
+		mr->SetMaterial(mt);
+		mr->SetModel(model, mt);
 	}
 }

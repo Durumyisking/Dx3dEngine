@@ -184,11 +184,8 @@ void Model::Bind_Render(bool bindMaterial)
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
-		if (bindMaterial)
-		{
-			if(!(mVariableMaterials.empty() && mMaterials.empty()))
-				mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
-		}
+		if(!(mVariableMaterials.empty() && mMaterials.empty()))
+			mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
 	}
 
 	mFrameAnimationVector = nullptr;
@@ -252,7 +249,7 @@ void Model::SetFrameAnimationVector(const std::map<std::wstring, aiMatrix4x4>* a
 	mFrameAnimationVector = animationVector;
 }
 
-Material* Model::GetLastMaterial()
+Material* Model::GetMaterial()
 {
 	Material* material = nullptr;
 
