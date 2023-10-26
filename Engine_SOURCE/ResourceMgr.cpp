@@ -130,10 +130,10 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 
 
 #pragma region Building
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding000", L"CityWorldHomeBuilding000");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding001", L"CityWorldHomeBuilding001");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding000", L"CityWorldHomeBuilding000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding001", L"CityWorldHomeBuilding001");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding002", L"CityWorldHomeBuilding002");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding003", L"CityWorldHomeBuilding003");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding003", L"CityWorldHomeBuilding003");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding004", L"CityWorldHomeBuilding004");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding005", L"CityWorldHomeBuilding005");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding007", L"CityWorldHomeBuilding007");
@@ -223,8 +223,7 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 #pragma endregion
 
 #pragma region Streetlight
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight000", L"CityWorldHomeStreetlight000");
-	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight001", L"CityWorldHomeStreetlight001");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight000", L"CityWorldHomeStreetlight000");
 
 #pragma endregion
 
@@ -245,6 +244,9 @@ void ResourceMgr::SettingModelMaterial()
 {
 	Model* model = nullptr;
 #pragma region Building
+	model = Find<Model>(L"CityWorldHomeBuilding000");
+	//model->SetVariableMaterialsByKey(0, L"HomeBuilding002_0Material");
+
 	model = Find<Model>(L"CityWorldHomeBuilding002");
 	model->SetVariableMaterialsByKey(0, L"HomeBuilding002_0Material");
 	model->SetVariableMaterialsByKey(1, L"HomeBuilding002_1Material");
@@ -635,15 +637,16 @@ void ResourceMgr::SettingModelMaterial()
 #pragma endregion
 
 #pragma region Streetlight
-	//model = Find<Model>(L"CityWorldHomeStreetlight000");
-	//model->SetVariableMaterialsByKey(0, L"Streetlight000_0Material");
-	//model->SetVariableMaterialsByKey(1, L"Streetlight000_1Material");
+	model = Find<Model>(L"CityWorldHomeStreetlight000");
+	model->SetVariableMaterialsByKey(0, L"Streetlight000_0Material");
+	model->SetVariableMaterialsByKey(1, L"Streetlight000_1Material");
 
-	//model = Find<Model>(L"CityWorldHomeStreetlight001");
-	//model->SetVariableMaterialsByKey(0, L"Streetlight000_0Material");
-	//model->SetVariableMaterialsByKey(1, L"Streetlight000_0Material");
-	//model->SetVariableMaterialsByKey(2, L"Streetlight000_1Material");
-	//model->SetVariableMaterialsByKey(3, L"Streetlight000_0Material");
+#pragma endregion
+
+#pragma region Streetlight
+	model = Find<Model>(L"CityWorldHomeStreetlight000");
+	model->SetVariableMaterialsByKey(0, L"Streetlight000_0Material");
+	model->SetVariableMaterialsByKey(1, L"Streetlight000_1Material");
 
 #pragma endregion
 }
