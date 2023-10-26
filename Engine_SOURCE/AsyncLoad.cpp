@@ -1286,6 +1286,37 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"MetalSignal01", L"DeferredShader", L"Signal002_0Material", TextureState::AlMtNrRg);
 
 #pragma endregion
+
+#pragma region CityWorldHomeSignal003 Material
+	createMaterial(L"MetalSignal01", L"DeferredShader", L"Signal003_0Material", TextureState::AlMtNrRg);
+	createMaterial(L"MetalSignal00", L"DeferredShader", L"Signal003_1Material", TextureState::AlEmNr);
+	createMaterial(L"MetalSignal01", L"DeferredShader", L"Signal003_2Material", TextureState::AlMtNrRg);
+	createMaterial(L"LightShadow00", L"DeferredShader", L"Signal003_3Material", TextureState::Al);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSignal004 Material
+	createMaterial(L"MetalSignal01", L"DeferredShader", L"Signal004_0Material", TextureState::AlMtNrRg);
+	createMaterial(L"SignalRight00_SS", L"DeferredShader", L"Signal004_1Material", TextureState::AlNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeSignal006 Material
+	createMaterial(L"MetalSignal00", L"DeferredShader", L"Signal006_0Material", TextureState::AlEmNr);
+
+#pragma endregion
+
+#pragma region CityWorldHomeStreetlight000 Material
+	createMaterial(L"LightShadow00", L"DeferredShader", L"Streetlight000_0Material", TextureState::Al);
+	createMaterial(L"MetalStreetlight00", L"DeferredShader", L"Streetlight000_1Material", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeStreetlight001 Material
+	createMaterial(L"LightShadow01", L"DeferredShader", L"Streetlight001_0Material", TextureState::Al);
+	createMaterial(L"StreetLight01", L"DeferredShader", L"Streetlight000_1Material", TextureState::AlMtNrRg);
+
+#pragma endregion
 }
 
 void AsyncLoad::loadCityTexture()
@@ -1698,6 +1729,16 @@ void AsyncLoad::loadCityTexture()
 
 #pragma region CityWorldHomeSignal002
 		textureLoad(L"MetalSignal01", L"CityWorldObject/CityWorldHomeSignal/CityWorldHomeSignal002/Image", TextureState::AlMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeStreetlight000
+		textureLoad(L"MetalStreetlight00", L"CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight000/Image", TextureState::AlEmMtNrRg);
+
+#pragma endregion
+
+#pragma region CityWorldHomeStreetlight001
+		textureLoad(L"StreetLight01", L"CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight001/Image", TextureState::AlMtNrRg);
 
 #pragma endregion
 }

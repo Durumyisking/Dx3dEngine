@@ -36,21 +36,7 @@ void HomeBuildingFour::Initialize()
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
 	mr->SetModel(model);
 
-	mr->SetMaterialByKey(L"HomeBuilding004_0Material", 0);
-	mr->SetMaterialByKey(L"HomeBuilding004_1Material", 1);
-	mr->SetMaterialByKey(L"HomeBuilding004_2Material", 2);
-	mr->SetMaterialByKey(L"HomeBuilding004_1Material", 3); //수정 필요 BuildingEntrance02
-	mr->SetMaterialByKey(L"HomeBuilding004_3Material", 4);
-	mr->SetMaterialByKey(L"HomeBuilding004_4Material", 5);
-	mr->SetMaterialByKey(L"HomeBuilding004_5Material", 6);
-	mr->SetMaterialByKey(L"HomeBuilding004_6Material", 7);
-	mr->SetMaterialByKey(L"HomeBuilding004_7Material", 8);
-	mr->SetMaterialByKey(L"HomeBuilding004_8Material", 9);
-	mr->SetMaterialByKey(L"HomeBuilding004_9Material", 10);
-	mr->SetMaterialByKey(L"HomeBuilding004_10Material", 11);
-	mr->SetMaterialByKey(L"HomeBuilding004_11Material", 12);
-	mr->SetMaterialByKey(L"HomeBuilding004_13Material", 13);
-	mr->SetMaterialByKey(L"HomeBuilding004_12Material", 14);
+	mr->ForceSetMaterial(model->GetLastMaterial());
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
