@@ -28,8 +28,8 @@ float4 main(VSOut vsIn) : SV_Target
 
     albedo = cbbAlbedo ? TextureMapping_albedo(vsIn.UV, pixelToCam) : albedo;
     normal = cbbNormal ? TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, pixelToCam) : normal;
-    metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV, pixelToCam) : cbbMetallic;
-    roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV, pixelToCam) : cbbRoughness;
+    metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV, pixelToCam) : cbMetallic;
+    roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV, pixelToCam) : cbRoughness;
     emission = cbbEmissive ? TextureMapping_emissive(vsIn.UV, pixelToCam) : emission;
     
     float3 pixelToEye = normalize(cameraWorldPos.xyz - vsIn.WorldPos);

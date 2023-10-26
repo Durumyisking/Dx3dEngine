@@ -220,6 +220,11 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		// 카메라의 주인을 캡처 대상으로 바꿔준다.
 		renderer::mainCamera->SetTarget(gameObject);
 	}
+
+	if (gameObject->GetLayerType() == eLayerType::Objects)
+	{
+		FlyEnd();
+	}
 }
 
 void MarioCap::OnTriggerExit(GameObj* gameObject)
