@@ -364,7 +364,4 @@ void SceneMgr::CreateCDO()
 
 	//SkySphere* SkySphere = new SkySphere();
 	//GameObj::AddObjectCDO("SkySphere", SkySphere);
-
-	Building* BuildingCDO = new Building();
-	GameObj::AddObjectCDO("Building", BuildingCDO);
 }
