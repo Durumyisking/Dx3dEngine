@@ -104,9 +104,9 @@ namespace gui
 
 		ImGui::PushItemWidth(100.0f);
 
-		// ÃÊ±âÈ­: std::stringÀÇ °ªÀ» ¹öÆÛ¿¡ º¹»ç
+		// ì´ˆê¸°í™”: std::stringì˜ ê°’ì„ ë²„í¼ì— ë³µì‚¬
 		strncpy_s(buf, mInputText.c_str(), sizeof(buf));
-		buf[sizeof(buf) - 1] = 0; // ³Î Á¾·á ¹®ÀÚ¸¦ º¸Àå
+		buf[sizeof(buf) - 1] = 0; // ë„ ì¢…ë£Œ ë¬¸ìë¥¼ ë³´ì¥
 
 		if (ImGui::InputText("ObjectName", buf, sizeof(buf)))
 			mInputText = buf;

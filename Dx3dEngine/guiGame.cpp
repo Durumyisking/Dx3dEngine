@@ -27,7 +27,7 @@ namespace gui
 		//Texture* gameTex = new Texture();
 		//gameTex->Create(1600, 900, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 
-		//61 ¹ø ¼ÎÀÌ´õ ¸®¼Ò½º ºä nullÃÊ±âÈ­
+		//61 ë²ˆ ì…°ì´ë” ë¦¬ì†ŒìŠ¤ ë·° nullì´ˆê¸°í™”
 		ID3D11ShaderResourceView* gameSRV = nullptr;
 		GetDevice()->BindShaderResource(eShaderStage::PS, 61, &gameSRV);
 		GetDevice()->CopyResource(mTexture->GetTexture().Get()
