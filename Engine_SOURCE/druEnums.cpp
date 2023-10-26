@@ -100,9 +100,10 @@ namespace enums
 	{
 		"Default",
 		"Camera",
-		"Grid",
+		//"Grid",
 		"Objects",
-		"Default",
+		"ObjectsContainer",
+		"NonePhysical",
 		"Monster",
 		"Boss",
 		"Player",
@@ -110,19 +111,21 @@ namespace enums
 		"Platforms",
 		"Particle",
 		"FX",
-		"SkySphere",
+		//"SkySphere",
 		"CubeMap",
 		"PostProcess",
 		"UI",
+		"End"
 	};
 
 	const wchar_t* wcharLayerType[(int)eLayerType::End] =
 	{
 		L"Default",
 		L"Camera",
-		L"Grid",
+		//L"Grid",
 		L"Objects",
-		L"Default",
+		L"ObjectsContainer",
+		L"NonePhysical",
 		L"Monster",
 		L"Boss",
 		L"Player",
@@ -130,9 +133,10 @@ namespace enums
 		L"Platforms",
 		L"Particle",
 		L"FX",
-		L"SkySphere",
+		//L"SkySphere",
 		L"CubeMap",
 		L"PostProcess",
 		L"UI",
+		L"End"
 	};
 }

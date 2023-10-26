@@ -26,5 +26,7 @@ namespace gui
 		Material*	mMaterial;
 		Mesh*		mMesh;
 		Model*		mModel;
+
+		int			mModelMaterialNum;
 	};
 }

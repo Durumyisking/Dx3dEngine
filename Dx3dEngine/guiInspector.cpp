@@ -210,6 +210,7 @@ namespace gui
 				mComponents[static_cast<UINT>(eComponentType::Physical)]->SetState(eState::Active);
 				mComponents[static_cast<UINT>(eComponentType::Physical)]->SetTarget(mTargetGameObject);
 				mPhysical->AddingPhysical(false);
+				mPhysical->Initialize();
 			}
 			else if (i == static_cast<UINT>(eComponentType::MeshRenderer))
 			{

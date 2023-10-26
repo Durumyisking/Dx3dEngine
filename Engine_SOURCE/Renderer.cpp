@@ -34,6 +34,8 @@ namespace renderer
 
 	std::vector<std::function<void()>> ParticleFunCArr = {};
 
+	GameObj* outlineTargetObject = nullptr;
+
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
 
 	void LoadMesh()

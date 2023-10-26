@@ -71,7 +71,12 @@ void MeshRenderer::Render()
 			GetModel()->SetFrameAnimationVector(&(mBoneAnimator->GetFrameAnimationData()));
 		}
 		GetModel()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
-		GetModel()->Bind_Render();
+		
+		bool PreventBurstingWhenNoMaterialOnModel = true;
+		if (GetModel()->GetLastMaterial() == nullptr)
+			PreventBurstingWhenNoMaterialOnModel = false;
+
+		GetModel()->Bind_Render(PreventBurstingWhenNoMaterialOnModel);
 	}
 	else
 	{
