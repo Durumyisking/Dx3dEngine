@@ -25,24 +25,31 @@ public:
 public:
 
 	Monster();
+	Monster(const Monster& Obj);
 	virtual ~Monster();
+
+	virtual Monster* Clone() const;
+	virtual void Save(FILE* File) override;
+	virtual void Load(FILE* File) override;
 
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;
 
+
 	virtual void CaptureEvent() override {};
 	virtual void CaptureEnter(class MarioCap* cap) override ;
 
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
-	virtual void OnTriggerStay(GameObj* gameObject)  override;
+	virtual void OnTriggerPersist(GameObj* gameObject)  override;
 	virtual void OnTriggerExit(GameObj* gameObject)  override;
 
 protected:
 	virtual void boneAnimatorInit(BoneAnimator* animator) {};
-	virtual void stateInfoInitalize() = 0;
 
-	virtual void captureEnterModelOperation() = 0;
+	virtual void stateInfoInitalize() {};
+
+	virtual void captureEnterModelOperation() {};
 
 public:
 	eMonsterState GetMonsterState() { return mMonsterState; }
@@ -51,9 +58,10 @@ public:
 	GETSET(const float, mRecognizeRadius, GetRecognizeRadius)
 	GETSET(const bool, mFoundPlayer, IsFoundPlayer)
 
+protected:
+	eMonsterState mMonsterState;
 
 private:
-	eMonsterState mMonsterState;
 
 	float mRecognizeRadius;
 	bool mFoundPlayer;

@@ -39,7 +39,12 @@ public:
 
 public:
 	GameObj();
+	GameObj(const GameObj& Obj);
 	virtual ~GameObj();
+
+	virtual GameObj* Clone() const;
+	virtual void Save(FILE* File) override;
+	virtual void Load(FILE* File) override;
 
 	virtual void Initialize();
 	virtual void Update();
@@ -51,7 +56,7 @@ public:
 public:
 	virtual void OnCollisionEnter(GameObj* gameObject) {};
 	virtual void OnTriggerEnter(GameObj* gameObject) {};
-	virtual void OnTriggerStay(GameObj* gameObject) {};
+	virtual void OnTriggerPersist(GameObj* gameObject) {};
 	virtual void OnTriggerExit(GameObj* gameObject) {};
 
 	template <typename T>
@@ -98,7 +103,7 @@ public:
 	template <typename T>
 	T* GetComponent()
 	{
-		T* component;
+		T* component;		
 		for (auto c : mComponents)
 		{
 			component = dynamic_cast<T*>(c);
@@ -141,6 +146,25 @@ public:
 		return nullptr;
 	}
 
+	void DeleteComponent(eComponentType type)
+	{
+		Component* comp = mComponents[static_cast<UINT>(type)];
+		
+		mComponents[static_cast<UINT>(type)] = nullptr;
+
+		delete comp;
+		comp = nullptr;
+	}
+
+	void DeleteComponents()
+	{
+		for (Component* comp : mComponents)
+		{
+			delete comp;
+			comp = nullptr;
+		}
+	}
+
 	bool IsRenderingBlock() const { return mbBlockRendering; }
 	void RenderingBlockOn() { mbBlockRendering = true; }
 	void RenderingBlockOff() { mbBlockRendering = false; }
@@ -169,9 +193,64 @@ public:
 	Light* GetLight();
 
 
+private:
+	static std::map<std::string, GameObj*> mObjectCDO;
+
+public:
+	static void AddObjectCDO(const std::string& Name, GameObj* CDO)
+	{
+		mObjectCDO.insert(std::make_pair(Name, CDO));
+	}
+
+	static GameObj* FindObjectCDO(const std::string& Name)
+	{
+		auto	iter = mObjectCDO.find(Name);
+
+		if (iter == mObjectCDO.end())
+			return nullptr;
+
+		return iter->second;
+	}
+
+	static void ClearObjectCDO()
+	{
+		for (auto& iter : mObjectCDO)
+		{
+			if (iter.second == nullptr)
+				continue;
+
+			delete iter.second;
+			iter.second = nullptr;
+		}
+
+		mObjectCDO.clear();
+	}
+
+	static void GetAllCDOType(std::vector<std::string>* objectTypeVec)
+	{
+		for (const auto& pair : mObjectCDO) 
+		{
+			objectTypeVec->push_back(pair.first);
+		}
+	}
+
+
+	const std::string& GetObjectTypeName()	const { return mObjectTypeName; }
+
+	void UpdatePath(float* array, int numSmooth) 
+	{
+		mPath.resize(numSmooth);  
+		
+		for (int i = 0, j = 0; i < numSmooth * 3; i += 3, ++j) 
+		{
+			mPath[j] = Vector3(array[i], array[i + 1], array[i + 2]);
+		}
+	}
+
 protected:
 	std::vector<Component*> mComponents;
-
+	std::string				mObjectTypeName;
+	std::vector<Vector3>	mPath;
 
 private:
 	eLayerType mType;

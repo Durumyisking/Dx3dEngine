@@ -42,6 +42,7 @@
 #include "PhysicsScene.h"
 #include "PhysX.h"
 
+
 #include "Sphere.h"
 #include "Box.h"
 
@@ -71,13 +72,44 @@
 #include "DieCircleUIScript.h"
 #include "AudioListener.h"
 #include "AudioSource.h"
+#include "Building.h"
 
+#include "BlockBrick.h"
+
+#include "CityGround.h"
+#include "CoinObject.h"
+#include "Car.h"
+#include "CityMapNaviObject.h"
+#include "CityWorldBush.h"
+#include "CityWorldBushA.h"
+#include "CityWorldChairA.h"
+#include "CityWorldChairB.h"
+#include "CityWorldFlag.h"
+#include "BenchA.h"
+#include "CheckpointFlag.h"
+#include "HomeBuildingFour.h"
+#include "HomeBuildingFive.h"
+#include "HomeBuildingSeven.h"
+#include "HomeBuildingEight.h"
+
+#include "CreateObject.h"
 
 #include "Goomba.h"
 #include "Packun.h"
 
 #include "PostProcess.h"
 
+#include "InstancingContainer.h"
+#include "NavigationMgr.h"
+#include "PathMgr.h"
+
+#include "ModelObj.h"
+
+#include "HomeFence_0.h"
+
+#include "PhysXRayCast.h"
+#include "../Dx3dEngine/guiWidgetMgr.h"
+#include "../Dx3dEngine/guiHierarchy.h"
 
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
@@ -88,63 +120,92 @@ ScenePlay::ScenePlay()
 	, mDieUIPanal(nullptr)
 	, mPlayer(nullptr)
 {
+	SetName(L"ScenePlay");
 }
 
 ScenePlay::~ScenePlay()
 {
 }
 
+void ScenePlay::Save(FILE* File)
+{
+	Scene::Save(File);
+}
+
+void ScenePlay::Load(FILE* File)
+{
+	Scene::Load(File);
+}
+
 void ScenePlay::Initialize()
 {
 	CreateCameras();
 
+	//TestScene 로드 테스트 로드시에 반복해서 몬스터 정의 방지
+	if (GetType() == SceneMgr::eSceneType::Test)
+	{
+		{
+			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
+			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+			skySphere->SetName(L"SkySphere");
+		}
+
+		{
+			CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+		}
+
+		CreatePlayerUI();
+		Scene::Initialize();
+
+		return;
+	}
+
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Player);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Platforms, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Objects);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Cap);
 	//Convex and Triangle Mesh TEST
 	
-		////TriangleMesh Test
-		//{
-		//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		//	obj->SetPos(Vector3(0.f, -10.f, 300.f));
-		//	obj->SetScale(Vector3(0.04f, 0.04f, 0.04f));
-		//	obj->SetName(L"CityWorldHomeGroundCollider");
+	////TriangleMesh Test
+	//{
+	//	ModelObj* obj = object::Instantiate<ModelObj>(eLayerType::Platforms, this);
+	//	obj->SetPos(Vector3(0.f, 5.f, 0.f));
+	//	obj->SetScale(Vector3(0.01f, 0.01f, 0.01f));
+	//	obj->SetName(L"CityWorldHomeGroundCollider");
 
-		//	// SetModel
-		//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_CityWorldHomeGround000");
-		//	obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetModel(model, model->GetMaterial(0));
-		//
-		//}
+	//	// SetModel
+	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_RoadCollider");
+	//	if (model)
+	//	{
+	//		obj->SetModel(model->GetName());
+	//		obj->SetPhysical(eGeometryType::TriangleMesh, Vector3(1.f, 1.f, 1.f));
+	//	}
+	//}
 
 	{
-		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
-		mPlayer->SetMarioCap(mariocap);
-		//dynamic_cast<Camera*>(mCamera)->SetTarget(mPlayer);
-		
-		//mCamera->GetScript<CameraScript>()->SetTargetObject(mPlayer);
+		mPlayer->SetPos(Vector3(0.f, 10.f, 0.f));
+		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
 	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(5.f, 10.f, 0.f));
-
-	}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
 	}
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(-25.f, 10.f, -10.f));
-	}
-
 
 	//{
-	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-	//	mPostProcess_Replay->SetMaterial(L"LensFlareMaterial");
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
+	//}	
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
 	//}
+
+
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -153,26 +214,53 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
 		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		skySphere->SetName(L"SkySphere");
 	}
 
 	{
-		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		plane->SetScale({ 1000.f, 0.5f, 1000.f });
-		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-		plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.99f);
-		plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.01f);
-		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
-
-		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		rigid->RemoveGravity();
-
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
 	}
+
+	//{
+	//	Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+	//	block->SetPos(Vector3(40.f, -0.5f, 0.f));
+	//}
+	//InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
+	//for (size_t i = 0; i < 5; i++)
+	//{
+	//	for (size_t j = 0; j < 5; j++)
+	//	{
+	//		for (size_t k = 1; k < 10; k++)
+	//		{
+	//			if (j > 4 && k > 1)
+	//				continue;
+
+	//			BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+	//			block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
+	//			blockContainer->PushObject(block);
+	//		}
+	//	}
+	//}
+	//blockContainer->ResizeObjectInstancingData();
+
+	//{
+	//	SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
+
+	//	//현재 .obj 파일만 로딩 가능 블랜더에서 .obj 로 내보내기 해서 사용하면 됩니다
+	//	if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
+	//		int debug = 0;
+
+	//	if (!naviMesh->Build())
+	//		int debug = 0;
+
+	//	//오브젝트에 std::<Vector3>mPath 추가 path에 이동경로가 추가되니 vector내의 위치를 사용해서 이동하면 됩니다
+	//	//위치가 내비메쉬 밖이면 계산이 안됩니다
+	//	if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
+	//		int debug = 0;
+	//}
+
 
 	CreatePlayerUI();
 
@@ -182,7 +270,7 @@ void ScenePlay::Initialize()
 
 void ScenePlay::update()
 {
-	if (KEY_TAP(N_9))
+	if (KEY_TAP(F_9))
 	{
 		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
@@ -190,14 +278,32 @@ void ScenePlay::update()
 		//mCoinPanal->GetScript<CoinUIScript>()->ActionToPlayerDied();
 	}
 
-	if (KEY_TAP(N_2))
+	if (KEY_TAP(F_2))
 	{
 		mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 	}
 
-	if (KEY_TAP(N_3))
+	if (KEY_TAP(F_3))
 	{
 		mCoinPanal->GetScript<CoinUIScript>()->Reset();
+	}
+
+
+	if (KEY_UP(LSHIFT))
+		GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+	else
+	{
+		if (KEY_DOWN(LSHIFT) && KEY_TAP(LBTN))
+		{
+			GameObj* target = GETSINGLE(PhysXRayCast)->Raycast();
+
+			renderer::outlineTargetObject = target;
+		}
+
+		if (KEY_UP(LBTN))
+		{
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+		}
 	}
 
 
@@ -208,6 +314,7 @@ void ScenePlay::fixedUpdate()
 {
 
 	Scene::fixedUpdate();
+
 }
 
 void ScenePlay::render()
@@ -218,7 +325,8 @@ void ScenePlay::render()
 void ScenePlay::Enter()
 {
 	Scene::Enter();
-	mCamera->SetPos(Vector3(0.f, 15.f, -15.f));
+
+	mCamera->SetPos(Vector3(0.f, 75.f, -75.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }

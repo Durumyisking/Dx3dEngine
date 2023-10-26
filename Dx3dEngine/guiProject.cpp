@@ -6,6 +6,7 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include "ResourceMgr.h"
+#include "PathMgr.h"
 
 #include "guiInspector.h"
 #include "guiResource.h"
@@ -92,29 +93,29 @@ namespace gui
 
 	void Project::LateUpdate()
 	{
-		if (mGroup)
+		if (mGroup == nullptr)
+			return;
+
+		if (!mbTargetChanged)
+			return;
+
+		mGroup->Clear();
+
+		Texture* folderImage = GETSINGLE(ResourceMgr)->Find<Texture>(L"FolderImage");
+
+		for (std::string folderName : mTargetFolders)
 		{
-			if (mbTargetChanged)
-			{
-				mGroup->Clear();
+			ButtonWidget* button = mGroup->CreateWidget<ButtonWidget>(50.f, 50.f);
 
-				Texture* folderImage = GETSINGLE(ResourceMgr)->Find<Texture>(L"FolderImage");
+			button->SetText(folderName);
+			button->SetTexture(folderImage);
 
-				for (std::string folderName : mTargetFolders)
-				{
-					ButtonWidget* button = mGroup->CreateWidget<ButtonWidget>(50.f, 50.f);
-
-					button->SetText(folderName);
-					button->SetTexture(folderImage);
-
-					button->SetClickCallback(&Project::FolderClickCallback, this, folderName);
-				}
-
-				toConsole();
-
-				mbTargetChanged = false;
-			}
+			button->SetClickCallback(&Project::FolderClickCallback, this, folderName);
 		}
+
+		toConsole();
+
+		mbTargetChanged = false;
 	}
 
 	void Project::FolderClickCallback(std::string path)
@@ -163,8 +164,6 @@ namespace gui
 
 			char	FilePathMultiByte[MAX_PATH] = {};
 
-	// #ifdef 뒤에 있는 내용이 #define으로 정의되어 있는지를 판단하는 if문
-	// 컴파일 단계에서 뒤에 있는 내용이 #define으로 정의되어 있는지 판단
 #ifdef UNICODE
 	// 유니코드로 되어있는 문자열을 멀티바이트로 바꾸기 위한 수를
 	// 얻어온다.
@@ -192,7 +191,7 @@ namespace gui
 				{
 					memcpy(FolderName, &FilePathMultiByte[i], 12);
 
-					//Resources폴더 위치를 받아오기위해 상위폴더인 프로젝트 폴더로 설정이 되어 있는데 변경될수도 있으니 Resources폴더 안에 폴더를 하나 더 만드는게 좋아보임
+					//Resources폴더 위치를 받아오기위해 상위폴더인 프로젝트 폴더로 설정
 					if (strcmp(FolderName, "\\Dx3dEngine\\") == 0)
 					{
 						strcpy_s(Directory, &FilePathMultiByte[i + 12]);
@@ -257,6 +256,8 @@ namespace gui
 				}
 			}
 		}
+
+		GETSINGLE(PathMgr)->ResetPath();
 	}
 
 	void Project::toConsole()

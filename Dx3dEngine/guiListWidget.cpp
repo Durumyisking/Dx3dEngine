@@ -6,10 +6,11 @@ namespace gui
 	ListWidget::ListWidget()
 		: Widget()
 		, mListIndex(-1)
+		, mbAllwaysOpen(false)
 	{
 		SetName("ListWidget");
 		SetState(eState::Paused);
-		SetSize(ImVec2(200.0f, 200.0f));
+		SetSize(ImVec2(400.0f, 800.0f));
 
 	}
 
@@ -42,7 +43,10 @@ namespace gui
 					{
 						mEvent(mResourceList[i].c_str());
 					}
-					Close();
+					if (!mbAllwaysOpen)
+					{
+						Close();
+					}
 				}
 
 			}

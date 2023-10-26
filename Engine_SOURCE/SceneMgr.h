@@ -14,9 +14,11 @@ public:
 public:
 	enum class eSceneType
 	{
+		None = -1,
 		Loading,
 		Title,
 		Play,
+		Test,
 		//Ending,
 		//Temp,
 		//Loading,
@@ -33,9 +35,15 @@ public:
 	void Destory();
 	void Release();
 	void LoadScene(eSceneType type);
+	void ChangeScene(eSceneType type);
 	void LateEvent(); // 렌더링까지 종료후 오브젝트 추가하는 함수
 
 	void DontDestroyOnLoad(GameObj* gameObj);
+
+	bool SaveSceneFile(eSceneType type, const std::wstring& filePath);
+	bool LoadSceneFile(const std::wstring& filePath);
+
+	void CreateCDO();
 
 	void AddEvent(GameObj* obj) { mLateEvent.emplace_back(obj); }
 
@@ -44,7 +52,6 @@ public:
 	{
 		return dynamic_cast<T*>(mScenes[(static_cast<UINT>(type))]);
 	}
-
 
 	GETSET(Scene*, mActiveScene, ActiveScene)
 private:

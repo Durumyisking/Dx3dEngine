@@ -21,7 +21,7 @@ namespace gui
 		: GUIComponent(eComponentType::MeshRenderer)
 	{
 		SetName("MeshRenderer");
-		SetSize(ImVec2(200.0f, 120.0f));
+		SetSize(ImVec2(250.0f, 400.0f));
 	}
 
 	GUIMeshRenderer::~GUIMeshRenderer()
@@ -47,9 +47,15 @@ namespace gui
 			//if (spriteRenderer == nullptr)
 			//	return;
 
+			if (meshRenderer->GetModel())
+				true;
+			else
+				false;
+
 
 			mMaterial = meshRenderer->GetMaterial();
 			mMesh = meshRenderer->GetMesh();
+			mModel = meshRenderer->GetModel();
 		}
 	}
 
@@ -57,20 +63,22 @@ namespace gui
 	{
 		GUIComponent::Update();
 
-		if (mMesh == nullptr
-			|| mMaterial == nullptr)
-			return;
+		std::string meshName = "NoMeshes";
+		std::string materialName = "NoMaterial";
+		std::string modelName = "NoModel";
 
-		std::string meshName
-			= std::string(mMesh->GetName().begin(), mMesh->GetName().end());
-		std::string materialName
-			= std::string(mMaterial->GetName().begin(), mMaterial->GetName().end());
+		if (mMesh)
+			meshName = std::string(mMesh->GetName().begin(), mMesh->GetName().end());
+		if (mMaterial)
+			materialName = std::string(mMaterial->GetName().begin(), mMaterial->GetName().end());
+		if (mModel)
+			modelName = std::string(mModel->GetName().begin(), mModel->GetName().end());
 
 		ImGui::Text("Mesh"); 
 		ImGui::InputText("##MeshName", (char*)meshName.data()
 			, meshName.length(), ImGuiInputTextFlags_ReadOnly);
 		ImGui::SameLine();
-		if (ImGui::Button("##MeshBtn", ImVec2(15.0f, 15.0f)))
+		if (ImGui::Button("##MeshBtn", ImVec2(45.0f, 30.0f)))
 		{
 			ListWidget* listUI = GETSINGLE(WidgetMgr)->GetWidget<ListWidget>("ListWidget");
 			listUI->SetState(eState::Active);
@@ -98,7 +106,7 @@ namespace gui
 			, materialName.length() + 20, ImGuiInputTextFlags_ReadOnly);
 		
 		ImGui::SameLine();
-		if (ImGui::Button("##MaterialBtn", ImVec2(15.0f, 15.0f)))
+		if (ImGui::Button("##MaterialBtn", ImVec2(45.0f, 30.0f)))
 		{
 			ListWidget* listUI = GETSINGLE(WidgetMgr)->GetWidget<ListWidget>("ListWidget");
 			listUI->SetState(eState::Active);
@@ -114,6 +122,32 @@ namespace gui
 
 			listUI->SetItemList(wName);
 			listUI->SetEvent(this, std::bind(&GUIMeshRenderer::SetMaterial
+				, this, std::placeholders::_1));
+		}
+		ImGui::SameLine();
+		ImGui::InputInt("MaterialIndex", &mModelMaterialNum);
+
+		ImGui::Text("Model"); //ImGui::SameLine();
+		ImGui::InputText("##Moel", (char*)modelName.data()
+			, modelName.length() + 20, ImGuiInputTextFlags_ReadOnly);
+		
+		ImGui::SameLine();
+		if (ImGui::Button("##ModelBtn", ImVec2(45.0f, 30.0f)))
+		{
+			ListWidget* listUI = GETSINGLE(WidgetMgr)->GetWidget<ListWidget>("ListWidget");
+			listUI->SetState(eState::Active);
+			//모든 메쉬의 리소스를 가져와야한다.
+			std::vector<Model*> models
+				= GETSINGLE(ResourceMgr)->Finds<Model>();
+
+			std::vector<std::wstring> wName;
+			for (auto model : models)
+			{
+				wName.push_back(model->GetName());
+			}
+
+			listUI->SetItemList(wName);
+			listUI->SetEvent(this, std::bind(&GUIMeshRenderer::SetModel
 				, this, std::placeholders::_1));
 		}
 	}
@@ -138,6 +172,34 @@ namespace gui
 		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(wKey);
 
 		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
-		inspector->GetTargetGameObject()->GetComponent<MeshRenderer>()->SetMaterial(material);
+
+		MeshRenderer* mr = inspector->GetTargetGameObject()->GetComponent<MeshRenderer>();
+
+		if (mr->GetModel())
+		{
+			mr->SetMaterialByKey(wKey, mModelMaterialNum);
+		}
+		else
+		{
+			mr->SetMaterialByKey(wKey);
+		}
+
+	}
+
+	void GUIMeshRenderer::SetModel(std::string key)
+	{
+		std::wstring wKey(key.begin(), key.end());
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(wKey);
+
+		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
+		GameObj* target = inspector->GetTargetGameObject();
+		MeshRenderer* mr = target->GetComponent<MeshRenderer>();
+		Material* mt = model->GetLastMaterial();
+
+		if (mt == nullptr)
+			mt = GETSINGLE(ResourceMgr)->Find<Material>(L"PhongMaterial");
+
+		mr->ForceSetMaterial(mt);
+		mr->SetModel(model);
 	}
 }

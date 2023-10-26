@@ -27,8 +27,8 @@ public:
 
 	bool IsCapture() { return mbCapture; }
 
-	void CopyCaptureData(CaptureObj* other);
-	void ClearCaptureData();
+	void CopyCaptureData(CaptureObj* other, bool copyCap = true);
+	void ClearCaptureData(bool copyCap);
 
 private:
 	MarioCap* mCap    = nullptr;

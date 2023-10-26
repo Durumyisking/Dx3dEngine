@@ -34,18 +34,22 @@ void Light::Update()
 void Light::FixedUpdate()
 {
 	Transform* tr = GetOwner()->GetComponent<Transform>();
+	Vector3 position = tr->GetPosition();
 	if (eLightType::Point == mAttribute.type)
 	{
 		tr->SetScale(Vector3(mAttribute.radius * 5.f, mAttribute.radius * 5.f, mAttribute.radius * 5.f));
 	}
-
-	Vector3 position = tr->GetPosition();
-
-	GameObj* p = GETSINGLE(SceneMgr)->GetActiveScene()->GetPlayer();
-	if (nullptr != p)
+	else
 	{
-		position= p->GetWorldPos();
-		position.y += 25.f;
+		// 카메라의 타겟을 얻는다
+		// 그 타겟의 포지션으로 고정한다.
+
+		GameObj* p = renderer::mainCamera->GetOwner();
+		if (nullptr != p)
+		{
+			position = p->GetWorldPos();
+			position.y += 25.f;
+		}
 	}
 
 	mAttribute.position = Vector4(position.x, position.y, position.z, 1.0f);

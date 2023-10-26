@@ -24,7 +24,10 @@ public:
 	void SetMeshByKey(std::wstring key);
 	void SetMaterial(Material* material, UINT modelMeshSlot = 0);
 	void SetMaterialByKey(std::wstring key, UINT modelMeshSlot = 0);
+	void SetMaterial(std::wstring key);
 
+	void ForceSetMaterial(Material* material);
+	void ForceSetMaterialByKey(std::wstring key);
 
 	void SetAnimMaterial(Material* material, Vector2 spriteSize);
 
@@ -37,6 +40,10 @@ public:
 
 	Mesh* GetMesh() const { return mMesh; }
 	Material* GetMaterial() const { return mMaterial; }
+	const std::wstring& GetMeshKey() { return mMeshKey; }
+	const std::wstring& GetMaterialKey() { return mMaterialKey; }
+	void SetMeshKey(const std::wstring& key) { mMeshKey = key; }
+	void SetMaterialKey(const std::wstring& key) { mMaterialKey = key; }
 
 	void ChangeColor(Vector4 color);
 	void MulColor(Vector4 color);
@@ -48,7 +55,9 @@ public:
 
 private:
 	Mesh* mMesh;
+	std::wstring mMeshKey;
 	Material* mMaterial;
+	std::wstring mMaterialKey;
 	Model* mModel;
 
 	bool mbIsAnim;

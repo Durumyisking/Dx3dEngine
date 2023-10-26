@@ -6,6 +6,7 @@
 #include "guiWidget.h"
 
 class GameObj;
+
 namespace gui
 {
 	class WidgetMgr
@@ -22,7 +23,9 @@ namespace gui
 		void ImGui_Run();
 		void ImGui_Release();
 
-		class Hierarchy* GetHierachy() { return mHierarchy; }
+		void ForceReset() { mbForceReset = true; mTargetObj = nullptr; }
+		void ForceReset(GameObj* obj) { mbForceReset = true; mTargetObj = obj; }
+
 		class VisualEditor* GetVisualEditor() { return mVisualEditor; }
 		
 		template<typename T>
@@ -46,8 +49,10 @@ namespace gui
 	private:
 		std::map<std::string, Widget*> mWidgets;
 
-		class Hierarchy* mHierarchy;
 		class VisualEditor* mVisualEditor;
+
+		bool mbForceReset;
+		GameObj* mTargetObj;
 	};
 
 }

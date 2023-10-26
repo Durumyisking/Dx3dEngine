@@ -26,9 +26,10 @@
 #include "guiVisualEditor.h"
 #include "guiGizmo.h"
 #include "guiOutLiner.h"
+#include "guiSceneSaveWindow.h"
+#include "guiObjectWindow.h"
 
 #include "InputMgr.h"
-
 
 extern Application application;
 
@@ -37,7 +38,7 @@ namespace gui
 	WidgetMgr::WidgetMgr()
 		: mWidgets{}
 		, mVisualEditor(nullptr)
-		, mHierarchy(nullptr)
+		, mbForceReset(false)
 	{
 
 	}
@@ -56,18 +57,16 @@ namespace gui
 		//Game* game = new Game();
 		//mWidgets.insert(std::make_pair("Game", game));
 
-		mHierarchy = new Hierarchy();
+		Hierarchy* mHierarchy = new Hierarchy();
 		mWidgets.insert(std::make_pair("Hierarchy", mHierarchy));
 
 		Gizmo* gizmo = new Gizmo();
 		mWidgets.insert(std::make_pair("Gizmo", gizmo));
 
 		OutLiner* outLiner = new OutLiner();
-		//Insert<Inspector>("Inspector", inspector);
 		mWidgets.insert(std::make_pair("OutLiner", outLiner));
 
 		Inspector* inspector = new Inspector();
-		//Insert<Inspector>("Inspector", inspector);
 		mWidgets.insert(std::make_pair("Inspector", inspector));
 
 		Project* project = new Project();
@@ -76,10 +75,31 @@ namespace gui
 		Console* console = new Console();
 		mWidgets.insert(std::make_pair("Console", console));
 		console->Initialize();
+
+		ListWidget* list = new ListWidget();
+		mWidgets.insert(std::make_pair("ListWidget", list));
+
+		SceneSaveWindow* saveWindow = new SceneSaveWindow();
+		mWidgets.insert(std::make_pair("SceneSaveWindow", saveWindow));
+		saveWindow->Initialize();
+
+		ObjectWindow* objectWindow = new ObjectWindow();
+		mWidgets.insert(std::make_pair("ObjectWindow", objectWindow));
+		objectWindow->Initialize();
+
+
+		//설정 로드 (기본 imgui.ini Null 로 변경함)
+		ImGui::LoadIniSettingsFromDisk("../../Custom_ini.ini");
 	}
 
 	void WidgetMgr::Release()
 	{
+
+		//// ImGui 설정 저장하고 싶으면 사용
+		//ImGuiIO& io = ImGui::GetIO();
+		//io.IniFilename = "../../Custom_ini.ini";
+		//ImGui::SaveIniSettingsToDisk(io.IniFilename);
+
 		ImGui_Release();
 		
 		for (auto iter : mWidgets)
@@ -88,9 +108,11 @@ namespace gui
 			iter.second = nullptr;
 		}
 
+		mWidgets.clear();
+
 		delete mVisualEditor;
 		mVisualEditor = nullptr;
-		mHierarchy = nullptr;
+
 	}
 
 	void WidgetMgr::Run()
@@ -101,22 +123,22 @@ namespace gui
 		ImGui::NewFrame();
 		ImGuizmo::BeginFrame();
 
-		//for (Widget* widget : mWidgets) 
-		//{
-		//	widget->Update();
-		//}
+		if (mbForceReset)
+		{
+			GetWidget<Hierarchy>("Hierarchy")->SetTargetObject(mTargetObj);
+			GetWidget<Hierarchy>("Hierarchy")->InitializeScene();
+			mbForceReset = false;
+		}
 
 		mVisualEditor->Render();
-		UINT count = 0;
 		for (auto iter : mWidgets)
 		{
-			count++;
-			std::string debugName = iter.second->GetName();
-
+			//std::string debugName = iter.second->GetName();
 			iter.second->Render();
 		}
 
 		ImGui_Run();
+
 	}
 
 	void WidgetMgr::ImGui_Initialize()

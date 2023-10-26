@@ -198,10 +198,10 @@ CBUFFER(TransformCB, CBSLOT_TRANSFORM) // 구조체 만드는거임
 
 	extern StructedBuffer* lightBuffer;
 
-	extern GameObj* outlineGameObject;
-
 	extern MultiRenderTarget* renderTargets[]; //MultiRenderTargets
 	extern std::vector<std::function<void()>> ParticleFunCArr;
+
+	extern GameObj* outlineTargetObject;
 
 	void Initialize();
 	void release(); // 그리는 방식이 여러개일때 여러개를 할당하는게 아니라

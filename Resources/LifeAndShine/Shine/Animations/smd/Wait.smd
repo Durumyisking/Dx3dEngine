@@ -1,0 +1,11 @@
+version 1
+nodes
+0 "AllRoot" -1
+1 "Shine" 0
+end
+skeleton
+time 0
+1 0 0 0 0 0 0
+time 1
+1 0 0 0 0 0 0
+end

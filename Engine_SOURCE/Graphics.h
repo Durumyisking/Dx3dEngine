@@ -299,6 +299,8 @@ struct Particle
 
 	UINT texture_x_index;
 	UINT texture_y_index;
+
+	float wakeUpTime;
 };
 struct ParticleShared
 {
@@ -314,4 +316,10 @@ struct Vertex
 
 	math::Vector4 BlendID;
 	math::Vector4 BlendWeight;
+};
+
+struct InstancingData
+{
+	math::Matrix world;
+	math::Matrix worldIT;
 };

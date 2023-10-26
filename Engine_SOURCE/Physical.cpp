@@ -35,8 +35,14 @@ void Physical::Initialize()
 
 void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, math::Vector3 geometrySize, MassProperties massProperties)
 {
-	if (geometryType == eGeometryType::ConvexMesh || geometryType == eGeometryType::TriangleMesh)
-		assert(false);
+	if (geometryType == eGeometryType::ConvexMesh)
+	{
+		InitialConvexMeshProperties(actorType, geometrySize);
+	}
+	if (geometryType == eGeometryType::TriangleMesh)
+	{
+		InitialTriangleMeshProperties(geometrySize);
+	}
 
 	mActorType = actorType;
 	mGeometryType = geometryType;
@@ -47,9 +53,33 @@ void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geom
 	createActor();
 	CreateMainShape();
 	AddActorToPxScene();
-
+	
 	mbSceneIncludActor = true;
 //		createUniversalShape();
+}
+
+void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, Vector3 localPos, MassProperties massProperties)
+{
+	if (geometryType == eGeometryType::ConvexMesh)
+	{
+		InitialConvexMeshProperties(actorType, geometrySize);
+	}
+	if (geometryType == eGeometryType::TriangleMesh)
+	{
+		InitialTriangleMeshProperties(geometrySize);
+	}
+
+	mActorType = actorType;
+	mGeometryType = geometryType;
+	mSize = geometrySize;
+
+	createPhysicsProperties(massProperties);
+	mMainGeometry = std::make_shared<Geometry>(createGeometry(mGeometryType, mSize));
+	createActor();
+	CreateMainShape(localPos);
+	AddActorToPxScene();
+
+	mbSceneIncludActor = true;
 }
 
 void Physical::InitialConvexMeshProperties(eActorType actorType, Vector3 geometrySize, Model* model, MassProperties massProperties)
@@ -152,11 +182,6 @@ PxTriangleMesh* Physical::MakeTriangleMesh(Model* model)
 		allVertexCount += vertexCount;
 		allIndexCount += indexCount;
 
-		if (vertexCount * 3 != indexCount) 
-		{
-			int problemMesh = 0;
-		}
-
 		// Copy from cvector array to PxVec3 array
 		for (UINT i = 0; i < vertexCount; i++)
 		{
@@ -171,9 +196,6 @@ PxTriangleMesh* Physical::MakeTriangleMesh(Model* model)
 		currentIndexOffset += vertexCount;
 	}
 	
-	if (allVertexCount * 3 == allIndexCount)
-		int a = 0;
-
 	PxVec3* v = vertices.data(); // use for Debug can be delete
 	PxU32* v1 = indexes.data(); // use for Debug can be delete
 
@@ -206,6 +228,33 @@ void Physical::RemoveActorToPxScene()
 {
 	GETSINGLE(PhysicsMgr)->GetInstance()->GetEnvironment()->GetPhysicsScene()->RemoveActor(mActor);
 	mbSceneIncludActor = false;
+}
+
+void Physical::DynamicActorSleep()
+{
+	// 한 simulate sleep 합니다.
+	mActor->is<PxRigidDynamic>()->putToSleep();
+}
+
+void Physical::DynamicActorWakeup()
+{
+	// 다음 simulate때 wakeup 합니다.
+	mActor->is<PxRigidDynamic>()->wakeUp();
+}
+
+void Physical::KinematicActorSleep()
+{
+	mActor->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, true);
+}
+
+void Physical::KinematicActorWakeup()
+{
+	mActor->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, false);
+}
+
+bool Physical::IsKinematicActorSleep()
+{
+	return mActor->getActorFlags() & PxActorFlag::eDISABLE_SIMULATION;
 }
 
 void Physical::ShapesPause()
@@ -389,8 +438,6 @@ void Physical::CreateMainShape(Vector3 localPos)
 
 	if (physics)
 	{
-		PxTransform tr = {};
-		tr.p = convert::Vector3ToPxVec3(localPos);
 		switch (mGeometryType)
 		{
 		case eGeometryType::Box:
@@ -398,7 +445,7 @@ void Physical::CreateMainShape(Vector3 localPos)
 			break;
 		case eGeometryType::Capsule:
 		{
-			tr.q = (PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
+			//relativePose.q = (PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
 			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mMainGeometry->capsuleGeom, *mProperties->GetMaterial());
 		}
 		break;
@@ -415,7 +462,13 @@ void Physical::CreateMainShape(Vector3 localPos)
 			mMainShape = PxRigidActorExt::createExclusiveShape(*mActor->is<PxRigidActor>(), mMainGeometry->triangleMeshGeom, *mProperties->GetMaterial());
 			break;
 		}
-		mMainShape->setLocalPose(tr);
+		PxTransform relativePose = mMainShape->getLocalPose();
+		relativePose.p = relativePose.p + convert::Vector3ToPxVec3(localPos);
+		if (mGeometryType == eGeometryType::Capsule)
+		{
+			relativePose.q = (PxQuat(PxHalfPi, PxVec3(0.f, 0.f, 1.f)));
+		}
+		mMainShape->setLocalPose(relativePose);
 	}
 }
 

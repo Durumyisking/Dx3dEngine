@@ -46,17 +46,14 @@ namespace gui
 
 	void Console::FixedUpdate()
 	{
-		Widget::FixedUpdate();
 	}
 
 	void Console::Update()
 	{
-		Widget::Update();
 	}
 
 	void Console::LateUpdate()
 	{
-		Widget::LateUpdate();
 	}
 
 	void Console::Render()

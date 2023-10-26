@@ -33,6 +33,14 @@
 #pragma comment(lib, "../External/PhysX/lib/debug/PhysXPvdSDK_static_64.lib")
 #pragma comment(lib, "../External/PhysX/lib/debug/PhysXCharacterKinematic_static_64.lib")
 #pragma comment(lib, "../External/PhysX/lib/debug/PhysXCooking_64.lib")
+
+//Recast && Detour
+#pragma comment(lib, "../External/Recast/lib/debug/Recast-d.lib")
+#pragma comment(lib, "../External/Detour/lib/debug/Detour-d.lib")
+#pragma comment(lib, "../External/Detour/lib/debug/DetourCrowd-d.lib")
+#pragma comment(lib, "../External/Detour/lib/debug/DetourTileCache-d.lib")
+#pragma comment(lib, "../External/Detour/lib/debug/DebugUtils-d.lib")
+
 #else
 
 
@@ -43,6 +51,13 @@
 #pragma comment(lib, "../External/PhysX/lib/release/PhysXPvdSDK_static_64.lib")
 #pragma comment(lib, "../External/PhysX/lib/release/PhysXCharacterKinematic_static_64.lib")
 #pragma comment(lib, "../External/PhysX/lib/release/PhysXCooking_64.lib")
+
+//Recast && Detour
+#pragma comment(lib, "../External/Recast/lib/release/Recast.lib")
+#pragma comment(lib, "../External/Detour/lib/release/Detour.lib")
+#pragma comment(lib, "../External/Detour/lib/release/DetourCrowd.lib")
+#pragma comment(lib, "../External/Detour/lib/release/DetourTileCache.lib")
+#pragma comment(lib, "../External/Detour/lib/release/DebugUtils.lib")
 #endif
 
 using namespace physx;

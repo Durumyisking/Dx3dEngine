@@ -27,6 +27,8 @@ Model::Model()
 	, mParentTargetBone(L"")
 	, mTargetBone(L"")
 	, mOffsetRotation(math::Vector3(0.0f, 0.0f, 0.0f))
+	, mbUseInstance(false)
+	//, mVariableMaterials(35)
 {
 
 }
@@ -61,7 +63,7 @@ HRESULT Model::Load(const std::wstring& path)
 		mStructure->Create(static_cast<UINT>(sizeof(BoneMat)), static_cast<UINT>(mBones.size()), eSRVType::SRV, nullptr, true);
 	}
 
-	mVariableMaterials.resize(mMaterials.size());
+	mVariableMaterials.resize(35);
 	mAssimpImporter.FreeScene();
 
 	return S_OK;
@@ -157,30 +159,87 @@ void Model::Bind_Render(bool bindMaterial)
 		if (mMeshes[i] == nullptr)
 			continue;
 
-		if (mMaterials[i] == nullptr)
-			continue;
+		//if (mMaterials[i] == nullptr)
+		//	continue;
 
 		if (mMeshes[i]->IsRender() == false)
 			continue;
 
 		if (bindMaterial)
 		{
-			std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
-			for (int slot = 0; slot < Textures.size(); ++slot)
-			{
-				if (Textures[slot] == nullptr)
-					continue;
+			//std::vector<Texture*> Textures = GetTexture(static_cast<int>(i));
+			//for (int slot = 0; slot < Textures.size(); ++slot)
+			//{
+			//	if (Textures[slot] == nullptr)
+			//		continue;
 
-				mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
-			}
+			//	mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
+			//}
 
-			mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
+			if (!(mVariableMaterials.empty() && mMaterials.empty()))
+				mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
 		}
-
+		Matrix m = mOwnerWorldMatrix;
+		mMeshes[i]->SetWorldMatrix(mOwnerWorldMatrix);
 		mMeshes[i]->BindBuffer();
 		mMeshes[i]->Render();
 
-		mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+		if (bindMaterial)
+		{
+			if(!(mVariableMaterials.empty() && mMaterials.empty()))
+				mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+		}
+	}
+
+	mFrameAnimationVector = nullptr;
+	mStructure->Clear();
+	boneMat.clear();
+}
+
+void Model::Bind_RenderInstance(UINT instanceCount, bool bindMaterial)
+{
+	if (mStructure == nullptr)
+		return;
+
+	BoneMat boneInfo = {};
+	std::vector<BoneMat> boneMat = {};
+
+	BindBoneMatrix();
+
+	boneMat.reserve(mBones.size());
+
+	for (Bone* bone : mBones)
+	{
+		aiMatrix4x4 finalMat = bone->mFinalMatrix;
+		boneInfo.FinalTransformation = ConvertMatrix(finalMat);
+		boneMat.emplace_back(boneInfo);
+	}
+
+	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
+	mStructure->BindSRV(eShaderStage::VS, 30);
+
+	for (size_t i = 0; i < mMeshes.size(); ++i)
+	{
+		if (mMeshes[i] == nullptr)
+			continue;
+
+		//if (mMaterials[i] == nullptr)
+		//	continue;
+
+		if (mMeshes[i]->IsRender() == false)
+			continue;
+
+		if (bindMaterial)
+		{
+			if (!(mVariableMaterials.empty() && mMaterials.empty()))
+				mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
+		}
+
+		mMeshes[i]->BindBuffer(true);
+		mMeshes[i]->RenderInstanced(instanceCount);
+
+		if (!(mVariableMaterials.empty() && mMaterials.empty()))
+			mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
 	}
 
 	mFrameAnimationVector = nullptr;
@@ -193,6 +252,28 @@ void Model::SetFrameAnimationVector(const std::map<std::wstring, aiMatrix4x4>* a
 	mFrameAnimationVector = animationVector;
 }
 
+Material* Model::GetLastMaterial()
+{
+	Material* material = nullptr;
+
+	if (!mMaterials.empty())
+	{
+		material = mMaterials[mMaterials.size()];
+	}
+
+	if (!mVariableMaterials.empty())
+	{
+		for (Material* mt : mVariableMaterials)
+		{
+			if (mt == NULL)
+				continue;
+
+			material = mt;
+		}
+	}
+
+	return material;
+}
 
 void Model::MeshRenderSwtich(const std::wstring& name, bool renderSwitch)
 {
@@ -262,6 +343,7 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 	std::vector<UINT> indexes;
 	std::vector<Texture> textures;
 
+	Mesh* inMesh = new Mesh();
 
 	vertexes.reserve(mesh->mNumVertices);
 
@@ -270,11 +352,13 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		Vertex vertex = {};
 		math::Vector3 pos = {};
 
-
 		pos.x = mesh->mVertices[i].x;
 		pos.y = mesh->mVertices[i].y;
 		pos.z = mesh->mVertices[i].z;
 		vertex.pos = math::Vector4(pos.x, pos.y, pos.z, 1.0f);
+		//pos *= 0.01f;
+		inMesh->SetMinVertex(pos);
+		inMesh->SetMaxVertex(pos);
 
 
 		math::Vector3 normal = {};
@@ -389,48 +473,57 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 		}
 	}
 
-	if (mesh->mMaterialIndex >= 0)
+	//if (mesh->mMaterialIndex >= 0)
+	//{
+	//	// textureLoad
+	//	aiMaterial* aiMater = scene->mMaterials[mesh->mMaterialIndex];
+	//	std::vector<Model::TextureInfo> textureBuff = {};
+	//	for (int type = static_cast<int>(aiTextureType_NONE); type < static_cast<int>(aiTextureType_UNKNOWN); ++type)
+	//	{
+	//		std::vector<Model::TextureInfo> texInfo = processMaterial(aiMater, static_cast<aiTextureType>(type));
+	//		textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
+	//	}
+
+	//	if (textureBuff.size() > 0)
+	//	{
+	//		mTextures.emplace_back(textureBuff);
+
+	//		std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
+	//		for (auto& tex : texInfo)
+	//		{
+	//			if (tex.texPath == L"")
+	//				continue;
+
+	//			tex.pTex = new Texture();
+	//			tex.pTex->Load(tex.texPath, tex);
+	//		}
+	//	}
+
+	//	//Material
+	//	Material* inMaterial = new Material();
+	//	inMaterial->SetRenderingMode(eRenderingMode::DeferredMask);
+	//	Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+	//	inMaterial->SetShader(shader);
+
+	//	mMaterials.emplace_back(inMaterial);
+	//}
+
+	//Mesh* inMesh = new Mesh();
+	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
+	if (mbUseInstance)
 	{
-		// TextureLoad
-		aiMaterial* aiMater = scene->mMaterials[mesh->mMaterialIndex];
-		std::vector<Model::TextureInfo> textureBuff = {};
-		for (int type = static_cast<int>(aiTextureType_NONE); type < static_cast<int>(aiTextureType_UNKNOWN); ++type)
+		std::vector<InstancingData> mats = {};
+		mats.resize(1000);
+		for (int i = 0; i < mats.size(); i++)
 		{
-			std::vector<Model::TextureInfo> texInfo = processMaterial(aiMater, static_cast<aiTextureType>(type));
-			textureBuff.insert(textureBuff.end(), texInfo.begin(), texInfo.end());
+			mats[i].world = Matrix::Identity;		
+			mats[i].worldIT = Matrix::Identity;
 		}
-
-		if (textureBuff.size() > 0)
-		{
-			mTextures.emplace_back(textureBuff);
-
-			std::vector<TextureInfo>& texInfo = mTextures[mTextures.size() - 1];
-			for (auto& tex : texInfo)
-			{
-				if (tex.texPath == L"")
-					continue;
-
-				tex.pTex = new Texture();
-				tex.pTex->Load(tex.texPath, tex);
-			}
-		}
-
-		//Material
-		Material* inMaterial = new Material();
-		inMaterial->SetRenderingMode(eRenderingMode::DeferredMask);
-		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
-		inMaterial->SetShader(shader);
-
-		mMaterials.emplace_back(inMaterial);
+		inMesh->CreateInstanceBuffer(mats.data(), static_cast<UINT>(mats.size()));
 	}
 
-	Mesh* inMesh = new Mesh();
-	inMesh->CreateVertexBuffer(vertexes.data(), static_cast<UINT>(vertexes.size()));
 	inMesh->CreateIndexBuffer(indexes.data(), static_cast<UINT>(indexes.size()));
 	mMeshes.emplace_back(inMesh);
-
-	inMesh->SetVertexCount(static_cast<UINT>(vertexes.size()));
-	inMesh->SetIndexCount(static_cast<UINT>(indexes.size()));
 
 	std::wstring wName = ConvertToW_String(mesh->mName.C_Str());
 	inMesh->SetName(wName);
@@ -657,16 +750,16 @@ Material* Model::GetVariableMaterials(UINT index)
 
 void Model::SetVariableMaterials(UINT index, Material* mater)
 {
-	if (index >= mVariableMaterials.size())
-		return;
+	//if (index >= mVariableMaterials.size())
+	//	return;
 
 	mVariableMaterials[index] = mater;
 }
 
 void Model::SetVariableMaterialsByKey(UINT index, const std::wstring& key)
 {
-	if (index >= mVariableMaterials.size())
-		return;
+	//if (index >= mVariableMaterials.size())
+	//	return;
 
 	Material* mater = GETSINGLE(ResourceMgr)->Find<Material>(key);
 
@@ -674,5 +767,4 @@ void Model::SetVariableMaterialsByKey(UINT index, const std::wstring& key)
 	{
 		mVariableMaterials[index] = mater;
 	}
-
 }

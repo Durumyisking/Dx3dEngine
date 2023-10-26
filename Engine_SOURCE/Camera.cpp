@@ -16,6 +16,8 @@
 
 #include "PhysXRayCast.h"
 
+#include "InstancingContainer.h"
+
 extern Application application;
 
 
@@ -30,7 +32,7 @@ Camera::Camera()
 	, mType(eProjectionType::Perspective)
 	, mAspectRatio(1.f)
 	, mNear(1.f)
-	, mFar(1000.f)
+	, mFar(100.f)
 	, mScale(1.f)
 	, mView(Matrix::Identity)
 	, mProjection(Matrix::Identity)
@@ -43,6 +45,7 @@ Camera::Camera()
 	, mRaycastHit{}
 	, mRayMaxDist(5.f)
 	, mRayMaxHit(1)
+	, mFrustum{}
 {
 	EnableLayerMasks();
 }
@@ -58,11 +61,10 @@ void Camera::Update()
 {
 	if (mTargetObj) // Å¸°Ù ¿ÀºêÁ§Æ®¸¦ ÂÑ¾Æ°¨
 	{
+		Vector3 start = GetOwner()->GetPos();
+		Vector3 dest =  mTargetObj->GetPos();
 
-		Vector2 v2Start = Vector2(GetOwner()->GetPos().x, GetOwner()->GetPos().y);
-		Vector2 v2Dest = Vector2(mTargetObj->GetPos().x, mTargetObj->GetPos().y);
-
-		mFarDist = (v2Start - v2Dest).Length();
+		mFarDist = (start - dest).Length();
 
 		if (mSmooth)
 			mCamSpeed = mFarDist / mTime;
@@ -70,9 +72,8 @@ void Camera::Update()
 		if (mFarDist < 0.001f)
 			mCamSpeed = 1.f;
 
-		Vector3 Dir = mTargetObj->GetPos() - GetOwner()->GetPos();
-		Dir.z = GetOwner()->GetPos().z;
-		(Dir).Normalize(mCamDir);
+		mCamDir = dest - start;
+		mCamDir.Normalize();
 	}
 }
 
@@ -89,6 +90,8 @@ void Camera::Render()
 	View = mView;
 	InverseView = View.Invert();
 	Projection = mProjection;
+
+	mFrustum.Transform(mFrustum, GetTransform()->GetWorldMatrix());
 
 	sortGameObjects();
 
@@ -119,6 +122,7 @@ void Camera::Render()
 	}
 
 	renderPostProcess();
+	//std::wcout << L"Rending Mesh Count\n" << Mesh::sMeshCount << std::endl;
 }
 
 void Camera::CreateViewMatrix()
@@ -189,6 +193,7 @@ void Camera::CreateProjectionMatrix()
 		mProjection = Matrix::CreateOrthographic(width, height, mNear, mFar);
 	}
 
+	mFrustum = BoundingFrustum(mProjection);
 }
 
 Matrix Camera::CreateProjectionMatrix(eProjectionType type, float width, float height, float Near, float Far)
@@ -422,17 +427,27 @@ void Camera::renderPostProcess()
 void Camera::pushGameObjectToRenderingModes(GameObj* obj)
 {
 	BaseRenderer* renderer = obj->GetComponent<BaseRenderer>();
-
+	eRenderingMode mode;
 	if ( eLayerType::CubeMap == obj->GetLayerType())
 	{
 		obj->Render();
 	}
+	if (eLayerType::ObjectsContainer == obj->GetLayerType())
+	{
+		mode = dynamic_cast<InstancingContainer*>(obj)->GetRenderingMode();
+	}
+	else
+	{
+		if (nullptr == renderer)
+			return;
 
-	if (nullptr == renderer)
-		return;
+		Material* material = renderer->GetMaterial();
 
-	Material* material = renderer->GetMaterial();
-	eRenderingMode mode = material->GetRenderingMode();
+		if (material == nullptr)
+			return;
+
+		mode = material->GetRenderingMode();
+	}
 
 	switch (mode)
 	{

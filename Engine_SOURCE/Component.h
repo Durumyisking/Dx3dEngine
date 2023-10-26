@@ -40,7 +40,7 @@ public:
 	void SetSwitchState(bool flag) { mbSwitch = flag; }
 
 	template <typename T>
-	T* GetOwnerType()
+	T* GetOwner_Template()
 	{
 		GameObj* owner = GetOwner();
 		return dynamic_cast<T*>(owner);

@@ -11,7 +11,12 @@ public:
 
 public:
 	DynamicObject();
+	DynamicObject(const DynamicObject& Obj);
 	virtual ~DynamicObject();
+
+	virtual DynamicObject* Clone() const;
+	virtual void Save(FILE* File) override;
+	virtual void Load(FILE* File) override;
 
 	virtual void Initialize() override;
 	virtual void Update() override;
@@ -23,7 +28,7 @@ public:
 public:
 	virtual void OnCollisionEnter(GameObj* gameObject) override{};
 	virtual void OnTriggerEnter(GameObj* gameObject) override{};
-	virtual void OnTriggerStay(GameObj* gameObject) override {};
+	virtual void OnTriggerPersist(GameObj* gameObject) override {};
 	virtual void OnTriggerExit(GameObj* gameObject) override{};
 
 
@@ -32,7 +37,7 @@ public:
 	void InsertLockState(UINT curState, UINT lockState);
 
 protected:
-	virtual void stateInfoInitalize() = 0;
+	virtual void stateInfoInitalize() {};
 
 protected:
 	std::vector<StateInfo> mStateInfo;

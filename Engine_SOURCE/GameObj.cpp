@@ -1,4 +1,4 @@
-#include "GameObj.h"
+﻿#include "GameObj.h"
 #include "TimeMgr.h"
 #include "SceneMgr.h"
 #include "Scene.h"
@@ -21,16 +21,30 @@
 #include "ParticleSystem.h"
 #include "Light.h"
 
+std::map<std::string, GameObj*> GameObj::mObjectCDO;
 	
+
 GameObj::GameObj()
 	:mState(eState::Active)
-	, mType(eLayerType::None)
+	, mType(eLayerType::Default)
 	, mScripts{}
 	, mbDestroy(true)
 	, mbBlockRendering(false)
+	, mPath{}
 {
 	mComponents.resize(static_cast<UINT>(eComponentType::End));
 	this->AddComponent<Transform>(eComponentType::Transform);
+
+	mObjectTypeName = "GameObj";
+}
+
+GameObj::GameObj(const GameObj& Obj)
+	: Entity(Obj)
+{
+	mComponents.resize(static_cast<UINT>(eComponentType::End));
+	this->AddComponent<Transform>(eComponentType::Transform);
+
+	mObjectTypeName = Obj.mObjectTypeName;
 }
 
 GameObj::~GameObj()
@@ -53,6 +67,65 @@ GameObj::~GameObj()
 		script = nullptr;
 	}
 
+}
+
+
+GameObj* GameObj::Clone() const
+{
+	return new GameObj(*this);
+}
+
+void GameObj::Save(FILE* File)
+{
+	DruEntity::Save(File);	
+
+	////컴포넌트 따로 저장할거면 사용(미완)
+	//{
+	//	auto	iter = mComponents.begin();
+	//	auto	iterEnd = mComponents.end();
+	//
+	//	for (; iter != iterEnd; ++iter)
+	//	{
+	//		eComponentType compType = (*iter)->GetOrder();
+	//		fwrite(&compType, sizeof(eComponentType), 1, File);
+	//
+	//		(*iter)->Save(File);
+	//	}
+	//}
+
+	Transform* tr = GetComponent<Transform>();
+
+	math::Vector3 pos = tr->GetPosition();
+	math::Vector3 rotation = tr->GetRotation();
+	math::Vector3 scale = tr->GetScale();
+	float offscale = tr->GetOffsetScale();
+
+	fwrite(&pos, sizeof(math::Vector3), 1, File);
+	fwrite(&rotation, sizeof(math::Vector3), 1, File);
+	fwrite(&scale, sizeof(math::Vector3), 1, File);
+	fwrite(&offscale, sizeof(float), 1, File);
+}
+
+void GameObj::Load(FILE* File)
+{
+	DruEntity::Load(File);	
+	
+	Transform* tr = GetComponent<Transform>();
+
+	math::Vector3 pos;
+	math::Vector3 rotation;
+	math::Vector3 scale;
+	float offscale;
+
+	fread(&pos, sizeof(math::Vector3), 1, File);
+	fread(&rotation, sizeof(math::Vector3), 1, File);
+	fread(&scale, sizeof(math::Vector3), 1, File);
+	//fread(&offscale, sizeof(float), 1, File);
+
+	tr->SetPosition(pos);
+	tr->SetRotation(rotation);
+	tr->SetScale(scale);
+	//tr->SetOffsetScale(offscale);
 }
 
 void GameObj::Initialize()
@@ -473,21 +546,13 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 				vResult.y = 0.f;
 				vResult.z = 0.f;
 				GetPhysXRigidBody()->SetVelocity(AXIS::X, Vector3(0.f, 0.f, 0.f));
-
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::Y:
 				vResult.x = 0.f;
 				vResult.z = 0.f;
-				if (vResult.y < 0.f)
-				{
-					GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-					vResult *= -1.f;
-					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
-				}
-				else
-				{
-					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
-				}
+				GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::Z:
 				vResult.x = 0.f;
@@ -501,13 +566,17 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 			case enums::AXIS::XZ:
 				vResult.y = 0.f;
 				GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::YZ:
 				vResult.x = 0.f;
 				GetPhysXRigidBody()->SetVelocity(AXIS::YZ, Vector3(0.f, 0.f, 0.f));
 				break;
 			case enums::AXIS::XYZ:
-				GetPhysXRigidBody()->SetVelocity(AXIS::XYZ, Vector3(0.f, 0.f, 0.f));
+				vResult.x = 0.f;
+				vResult.z = 0.f;
+				GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::END:
 				break;

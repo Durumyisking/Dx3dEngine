@@ -7,9 +7,18 @@
 
 SceneLoading::SceneLoading()
 {
+	SetName(L"SceneLoading");
 }
 
 SceneLoading::~SceneLoading()
+{
+}
+
+void SceneLoading::Save(FILE* File)
+{
+}
+
+void SceneLoading::Load(FILE* File)
 {
 }
 
@@ -27,7 +36,7 @@ void SceneLoading::Initialize()
 	});
 	std::thread thread3([]()
 	{
-			GETSINGLE(AsyncLoad)->LoadSounds();
+		GETSINGLE(AsyncLoad)->LoadSounds();
 	});
 		
 	thread1.detach();
@@ -45,7 +54,8 @@ void SceneLoading::update()
 {
 	if (GETSINGLE(AsyncLoad)->IsLoadFinish())
 	{
-		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Title);
+		GETSINGLE(ResourceMgr)->SettingModelMaterial();
+		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
 		return;
 	}
 

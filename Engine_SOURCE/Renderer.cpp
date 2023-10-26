@@ -31,9 +31,10 @@ namespace renderer
 
 	Texture* postProcessTexture = nullptr;
 	Texture* dsTexture = nullptr;
-	GameObj* outlineGameObject = nullptr;
 
 	std::vector<std::function<void()>> ParticleFunCArr = {};
+
+	GameObj* outlineTargetObject = nullptr;
 
 	MultiRenderTarget* renderTargets[static_cast<UINT>(eRenderTargetType::End)] = {};
 
@@ -55,7 +56,7 @@ namespace renderer
 	{
 
 #pragma region InputLayout
-		D3D11_INPUT_ELEMENT_DESC arrLayout[8] = {};
+		D3D11_INPUT_ELEMENT_DESC arrLayout[15] = {};
 
 		UINT offset = 0;
 		arrLayout[0].AlignedByteOffset = offset;
@@ -104,6 +105,84 @@ namespace renderer
 		arrLayout[5].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayout[5].SemanticName = "BLENDWEIGHT";
 		arrLayout[5].SemanticIndex = 0;
+		offset += sizeof(float) * 4;
+
+		////////////////////////////////////////
+		// instancing
+		offset = 0;
+		arrLayout[6].AlignedByteOffset = offset;
+		arrLayout[6].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; 
+		arrLayout[6].InputSlot = 1;
+		arrLayout[6].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA; // 입력  원소를 vertex자료로 넘길지 인스턴스별자료로 넘길지 결정
+		arrLayout[6].InstanceDataStepRate = 1;						// 인스턴스별 자료 원소당 그릴 인스턴스 개수 (1:n 매칭이면 n vertex면 0)	 
+																	// 예를들어 한번 인스턴싱으로 빨간나무 2개 파란나무 2개씩 그릴꺼면 2로하고 1개씩그릴꺼면 1
+		arrLayout[6].SemanticName = "WORLD";
+		arrLayout[6].SemanticIndex = 0;
+		offset += sizeof(float) * 4;
+
+		arrLayout[7].AlignedByteOffset = offset;
+		arrLayout[7].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[7].InputSlot = 1;
+		arrLayout[7].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA; 
+		arrLayout[7].InstanceDataStepRate = 1;
+		arrLayout[7].SemanticName = "WORLD";
+		arrLayout[7].SemanticIndex = 1;
+		offset += sizeof(float) * 4;
+
+		arrLayout[8].AlignedByteOffset = offset;
+		arrLayout[8].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[8].InputSlot = 1;
+		arrLayout[8].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		arrLayout[8].InstanceDataStepRate = 1;
+		arrLayout[8].SemanticName = "WORLD";
+		arrLayout[8].SemanticIndex = 2;
+		offset += sizeof(float) * 4;
+
+		arrLayout[9].AlignedByteOffset = offset;
+		arrLayout[9].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[9].InputSlot = 1;
+		arrLayout[9].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		arrLayout[9].InstanceDataStepRate = 1;
+		arrLayout[9].SemanticName = "WORLD";
+		arrLayout[9].SemanticIndex = 3;
+		offset += sizeof(float) * 4;
+
+		// normal mapping 위한 world it
+		arrLayout[10].AlignedByteOffset = offset;
+		arrLayout[10].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[10].InputSlot = 1;
+		arrLayout[10].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA; 
+		arrLayout[10].InstanceDataStepRate = 1;
+		arrLayout[10].SemanticName = "WORLDIT";
+		arrLayout[10].SemanticIndex = 0;
+		offset += sizeof(float) * 4;
+
+		arrLayout[11].AlignedByteOffset = offset;
+		arrLayout[11].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[11].InputSlot = 1;
+		arrLayout[11].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		arrLayout[11].InstanceDataStepRate = 1;
+		arrLayout[11].SemanticName = "WORLDIT";
+		arrLayout[11].SemanticIndex = 1;
+		offset += sizeof(float) * 4;
+
+		arrLayout[12].AlignedByteOffset = offset;
+		arrLayout[12].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[12].InputSlot = 1;
+		arrLayout[12].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		arrLayout[12].InstanceDataStepRate = 1;
+		arrLayout[12].SemanticName = "WORLDIT";
+		arrLayout[12].SemanticIndex = 2;
+		offset += sizeof(float) * 4;
+
+		arrLayout[13].AlignedByteOffset = offset;
+		arrLayout[13].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		arrLayout[13].InputSlot = 1;
+		arrLayout[13].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+		arrLayout[13].InstanceDataStepRate = 1;
+		arrLayout[13].SemanticName = "WORLDIT";
+		arrLayout[13].SemanticIndex = 3;
+
 
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"SpriteShader");
@@ -196,6 +275,14 @@ namespace renderer
 				, shader->GetVSBlobBufferSize()
 				, shader->GetInputLayoutAddr());
 		}
+		{
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredInstancedShader");
+			GetDevice()->CreateInputLayout(arrLayout, 14
+				, shader->GetVSBlobBufferPointer()
+				, shader->GetVSBlobBufferSize()
+				, shader->GetInputLayoutAddr());
+		}
+
 		{
 			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"MergeShader");
 			GetDevice()->CreateInputLayout(arrLayout, 1
@@ -592,6 +679,15 @@ namespace renderer
 		}
 #pragma endregion
 
+#pragma region DeferredInstancedShader
+		{
+			Shader* shader = new Shader();
+			shader->Create(eShaderStage::VS, L"DeferredInstancedVS.hlsl", "main");
+			shader->Create(eShaderStage::PS, L"DeferredPS.hlsl", "main");
+			GETSINGLE(ResourceMgr)->Insert<Shader>(L"DeferredInstancedShader", shader);
+		}
+#pragma endregion
+
 #pragma region MergeShader
 		{
 			Shader* shader = new Shader();
@@ -909,6 +1005,8 @@ namespace renderer
 			lightDirMaterial->SetTexture(eTextureSlot::NormalTarget, lightDirTex);
 			lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
 			lightDirMaterial->SetTexture(eTextureSlot::MRDTarget, lightDirTex);
+			lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"EmissiveTargetTexture");
+			lightDirMaterial->SetTexture(eTextureSlot::EmissiveTarget, lightDirTex);
 			lightDirTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"ShadowMapTexture");
 			lightDirMaterial->SetTexture(eTextureSlot::ShadowMap, lightDirTex);
 
@@ -931,6 +1029,11 @@ namespace renderer
 			lightPointMaterial->SetTexture(eTextureSlot::NormalTarget, lightPointTex);
 			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"MRDTargetTexture");
 			lightPointMaterial->SetTexture(eTextureSlot::MRDTarget, lightPointTex);
+			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"EmissiveTargetTexture");
+			lightPointMaterial->SetTexture(eTextureSlot::EmissiveTarget, lightPointTex);
+			lightPointTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"ShadowMapTexture");
+			lightPointMaterial->SetTexture(eTextureSlot::ShadowMap, lightPointTex);
+
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"LightPointMaterial", lightPointMaterial);
 		}
 #pragma endregion
@@ -945,12 +1048,12 @@ namespace renderer
 
 			Texture* mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"PositionTargetTexture");
 			mergeMaterial->SetTexture(eTextureSlot::PositionTarget, mergeTex);
-			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
-			mergeMaterial->SetTexture(eTextureSlot::AlbedoTarget, mergeTex);
+			//mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"AlbedoTargetTexture");
+			//mergeMaterial->SetTexture(eTextureSlot::AlbedoTarget, mergeTex);
 			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"DiffuseLightTargetTexture");
 			mergeMaterial->SetTexture(eTextureSlot::DiffuseLightTarget, mergeTex);
-			mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularLightTargetTexture");
-			mergeMaterial->SetTexture(eTextureSlot::SpecularLightTarget, mergeTex);
+			//mergeTex = GETSINGLE(ResourceMgr)->Find<Texture>(L"SpecularLightTargetTexture");
+			//mergeMaterial->SetTexture(eTextureSlot::SpecularLightTarget, mergeTex);
 
 			GETSINGLE(ResourceMgr)->Insert<Material>(L"MergeMRT_Material", mergeMaterial);
 		}
@@ -1001,16 +1104,19 @@ namespace renderer
 			Texture* albedo = new Texture();
 			Texture* normal = new Texture();
 			Texture* mrd = new Texture();
+			Texture* emissive = new Texture();
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"PositionTargetTexture", pos);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"AlbedoTargetTexture", albedo);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"NormalTargetTexture", normal);
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"MRDTargetTexture", mrd);
+			GETSINGLE(ResourceMgr)->Insert<Texture>(L"EmissiveTargetTexture", emissive);
 			vecRTTex.emplace_back(pos);
 			vecRTTex.emplace_back(albedo);
 			vecRTTex.emplace_back(normal);
 			vecRTTex.emplace_back(mrd);
-		
+			vecRTTex.emplace_back(emissive);
+
 			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 			vecRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
@@ -1018,6 +1124,8 @@ namespace renderer
 			vecRTTex[2]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 			vecRTTex[3]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			vecRTTex[4]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			Texture* dsTex = nullptr;
@@ -1030,18 +1138,18 @@ namespace renderer
 		// Light MultiRenderTargets
 		{
 			Texture* diffuse = new Texture();
-			Texture* specular = new Texture();
+			//Texture* specular = new Texture();
 
 			GETSINGLE(ResourceMgr)->Insert<Texture>(L"DiffuseLightTargetTexture", diffuse);
-			GETSINGLE(ResourceMgr)->Insert<Texture>(L"SpecularLightTargetTexture", specular);
+			//GETSINGLE(ResourceMgr)->Insert<Texture>(L"SpecularLightTargetTexture", specular);
 
 			vecRTTex.emplace_back(diffuse);
-			vecRTTex.emplace_back(specular);
+			//vecRTTex.emplace_back(specular);
 
 			vecRTTex[0]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
 				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-			vecRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
-				, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
+			//vecRTTex[1]->Create(width, height, DXGI_FORMAT_R32G32B32A32_FLOAT
+			//	, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
 
 			renderTargets[static_cast<UINT>(eRenderTargetType::Light)] = new MultiRenderTarget();
 			renderTargets[static_cast<UINT>(eRenderTargetType::Light)]->Create(vecRTTex, nullptr);
@@ -1697,7 +1805,7 @@ namespace renderer
 #pragma endregion
 
 #pragma region CoinMaterial
-		Texture* coinTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"Coin");
+		Texture* coinTexture = GETSINGLE(ResourceMgr)->Find<Texture>(L"CoinTexture");
 		Material* coinMaterial = new Material();
 		coinMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		coinMaterial->SetShader(uiSpriteShader);
@@ -1839,7 +1947,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Gauge_3", L"Textures/UI/Life/Gauge_3.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Lifeheart", L"Textures/UI/Life/heart.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"Coin", L"Textures/UI/CoinUI/Coin.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"CoinTexture", L"Textures/UI/CoinUI/Coin.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"CityCoin", L"Textures/UI/CoinUI/CityCoin.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"Bar", L"Textures/UI/CoinUI/bar.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"DottedLine", L"Textures/UI/Luna/DottedLine.png");

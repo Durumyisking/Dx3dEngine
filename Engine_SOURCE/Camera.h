@@ -68,6 +68,7 @@ public:
 
 	bool Raycast(const Vector3& origin, const Vector3& dir, GameObj* gameObject, float maxDistance = 100.f);
 
+	GETSET(BoundingFrustum, mFrustum, Frustum)
 
 private:
 	void sortGameObjects();
@@ -83,6 +84,7 @@ private:
 
 	void deferredRenderingOperate();
 	void renderMergedOutput();
+
 
 private:
 	static Matrix View;
@@ -119,4 +121,6 @@ private:
 	float		mCamSpeed;
 	float		mTime;
 	bool		mSmooth;
+
+	BoundingFrustum mFrustum;
 };

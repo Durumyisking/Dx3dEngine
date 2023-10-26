@@ -18,7 +18,7 @@ int ASCII[static_cast<UINT>(eKeyCode::END)] =
 	//Special Key
 	VK_RETURN, VK_ESCAPE, VK_LSHIFT, VK_LMENU, VK_LCONTROL,
 	VK_SPACE, VK_LEFT, VK_RIGHT, VK_UP, VK_DOWN,
-	VK_LBUTTON, VK_RBUTTON,
+	VK_LBUTTON, VK_RBUTTON, WM_MOUSEWHEEL, WM_MOUSEHWHEEL,
 
 	//Num Pad
 	VK_NUMPAD0, VK_NUMPAD1, VK_NUMPAD2,
@@ -29,6 +29,13 @@ int ASCII[static_cast<UINT>(eKeyCode::END)] =
 	//Num Line
 	'0', '1', '2', '3', '4', '5',
 	'6', '7', '8', '9',
+
+	//Function Key
+	VK_F1, VK_F2, VK_F3, 
+	VK_F4, VK_F5, VK_F6,
+	VK_F7, VK_F8, VK_F9, 
+	VK_F10, VK_F11, VK_F12,
+
 };
 
 InputMgr::InputMgr()

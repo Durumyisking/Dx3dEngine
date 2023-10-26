@@ -232,7 +232,7 @@ void Transform::SetPhysicalPosition(const Vector3& position)
 {
 	assert(GetPhysical());
 	mPxTransform.p = convert::Vector3ToPxVec3(position);
-	//GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
 
 }
 

@@ -46,10 +46,12 @@ void MeshRenderer::PrevRender()
 
 	if (GetModel() != nullptr)
 	{
+		GetModel()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
 		GetModel()->Bind_Render(false);
 	}
 	else
 	{
+		GetMesh()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
 		GetMesh()->BindBuffer();
 		GetMesh()->Render();
 	}
@@ -68,13 +70,24 @@ void MeshRenderer::Render()
 		{
 			GetModel()->SetFrameAnimationVector(&(mBoneAnimator->GetFrameAnimationData()));
 		}
-		GetModel()->Bind_Render();
+		GetModel()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
+		
+		bool PreventBurstingWhenNoMaterialOnModel = true;
+		if (GetModel()->GetLastMaterial() == nullptr)
+			PreventBurstingWhenNoMaterialOnModel = false;
+
+		GetModel()->Bind_Render(PreventBurstingWhenNoMaterialOnModel);
 	}
 	else
 	{
+		if (GetMaterial() == nullptr)
+			return;
+
 		GetMaterial()->Bind();
+		GetMesh()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
 		GetMesh()->BindBuffer();
 		GetMesh()->Render();
 		GetMaterial()->Clear();
 	}
 }
+

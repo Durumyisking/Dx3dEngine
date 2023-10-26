@@ -5,6 +5,8 @@
 #include "GameObj.h"
 #include "PhysicalGameObj.h"
 
+#include <cstdarg>
+
 namespace object
 {
 	template <typename T>
@@ -24,7 +26,7 @@ namespace object
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
+		 
 
 		return gameObj;
 	}
@@ -35,7 +37,7 @@ namespace object
 		T* gameObj = new T();
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
+		 
 
 		return gameObj;
 	}
@@ -46,7 +48,7 @@ namespace object
 		T* gameObj = new T(key, type);
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
+		 
 
 		return gameObj;
 	}
@@ -57,7 +59,7 @@ namespace object
 		T* gameObj = new T(uiType);
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
+		 
 
 		return gameObj;
 	}
@@ -68,7 +70,20 @@ namespace object
 		T* gameObj = new T();
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
+		 
+
+		gameObj->SetName(name);
+
+		return gameObj;
+	}
+
+	template <typename T>
+	static T* Instantiate(enums::eLayerType layerType, Scene* scene, std::wstring name , std::wstring materialKey, std::vector<std::wstring> array)
+	{
+		T* gameObj = new T(materialKey, array);
+		Layer& layer = scene->GetLayer(layerType);
+		layer.AddGameObject(gameObj, layerType);
+		 
 
 		gameObj->SetName(name);
 
@@ -83,7 +98,7 @@ namespace object
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
+		 
 
 		gameObj->SetName(name);
 
@@ -107,7 +122,7 @@ namespace object
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
+		 
 		gameObj->SetName(name);
 		Transform* tr = gameObj->GetComponent<Transform>();
 		tr->SetParent(parent);
@@ -122,7 +137,7 @@ namespace object
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer();
 		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
+		 
 
 		gameObj->SetName(name);
 		Transform* tr = gameObj->GetComponent<Transform>();
@@ -140,7 +155,7 @@ namespace object
 		Scene* scene = GETSINGLE(SceneMgr)->GetActiveScene();
 		Layer& layer = scene->GetLayer();
 		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
+		 
 		gameObj->SetName(name);
 		Transform* tr = gameObj->GetComponent<Transform>();
 		tr->SetPosition(pos);
@@ -158,7 +173,7 @@ namespace object
 	{
 		Layer& layer = scene->GetLayer(layerType);
 		layer.AddGameObject(gameObj, layerType);
-		layer.PushAddedObject(gameObj);
+		 
 
 		return gameObj;
 	}

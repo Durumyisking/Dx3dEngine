@@ -70,32 +70,9 @@ namespace gui
 			{
 				mCurrentScene = mActiveScene;
 
+				mTargetObject = nullptr;
 				InitializeScene();
 			}
-		}
-
-
-		if (KEY_UP(LSHIFT))
-			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
-
-		if (!KEY_DOWN(LSHIFT))
-			return;
-
-		if (KEY_TAP(LBTN))
-		{
-			mTargetObject = GETSINGLE(PhysXRayCast)->Raycast();
-
-			InitializeOutline(mTargetObject);
-		}
-
-		if (KEY_DOWN(LBTN))
-		{
-			GETSINGLE(PhysXRayCast)->MoveObject();
-		}
-
-		if (KEY_UP(LBTN))
-		{
-			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
 		}
 	}
 
@@ -112,69 +89,16 @@ namespace gui
 	{
 		mTargetObject = static_cast<GameObj*>(data);
 
-		renderer::outlineGameObject
-			= static_cast<GameObj*>(data);
-
 		OutLiner* outline = GETSINGLE(WidgetMgr)->GetWidget<OutLiner>("OutLiner");
+
 		if (outline == nullptr)
 			return;
+
 		outline->ClearTarget();
-		outline->SetTargetGameObject(renderer::outlineGameObject);
+		outline->SetTargetGameObject(mTargetObject);
 		outline->InitializeTargetGameObject();
-
-		Inspector* inspector = GETSINGLE(WidgetMgr)->GetWidget<Inspector>("Inspector");
-		inspector->SetTargetGameObject(renderer::outlineGameObject);
-		inspector->InitializeTargetGameObject();
 	}
 
-	void SetLayerTypeName(enums::eLayerType type, std::string& name)
-	{
-		switch (type)
-		{
-		case enums::eLayerType::None:
-			name = "eLayerType::None";
-			break;
-		case enums::eLayerType::Camera:
-			name = "eLayerType::Camera";
-			break;
-		case enums::eLayerType::Grid:
-			name = "eLayerType::Grid";
-			break;
-		case enums::eLayerType::Objects:
-			name = "eLayerType::Objects";
-			break;
-		case enums::eLayerType::PhysicalObject:
-			name = "eLayerType::PhysicalObject";
-			break;
-		case enums::eLayerType::Monster:
-			name = "eLayerType::Monster";
-			break;
-		case enums::eLayerType::Boss:
-			name = "eLayerType::Boss";
-			break;
-		case enums::eLayerType::Player:
-			name = "eLayerType::Player";
-			break;
-		case enums::eLayerType::Cap:
-			name = "eLayerType::Cap";
-			break;
-		case enums::eLayerType::Platforms:
-			name = "eLayerType::Platforms";
-			break;
-		case enums::eLayerType::Particle:
-			name = "eLayerType::Particle";
-			break;
-		case enums::eLayerType::FX:
-			name = "eLayerType::FX";
-			break;
-		case enums::eLayerType::UI:
-			name = "eLayerType::UI";
-			break;
-		case enums::eLayerType::PostProcess:
-			name = "eLayerType::PostProcess";
-			break;
-		}
-	}
 
 	void Hierarchy::InitializeScene()
 	{
@@ -186,16 +110,15 @@ namespace gui
 		TreeWidget::Node* root = mTreeWidget->AddNode(nullptr, sceneName, 0, true);
 
 
-		for (size_t i = 0; i < static_cast<UINT>(enums::eLayerType::End); i++)
+		for (int i = 0; i < static_cast<int>(enums::eLayerType::End); i++)
 		{
 			Layer& layer = mCurrentScene->GetLayer((enums::eLayerType)i);
 			const std::vector<GameObj*>& gameObjs = layer.GetGameObjects();
 
-			std::string layerName = {};
+			std::string name = "eLayerType::";
+			std::string layerTypeName = enums::charLayerType[i];
 
-			SetLayerTypeName(static_cast<enums::eLayerType>(i), layerName);
-
-			TreeWidget::Node* rootChild = mTreeWidget->AddNode(root, layerName, 0, false);
+			TreeWidget::Node* rootChild = mTreeWidget->AddNode(root, name + layerTypeName, 0, false);
 
 			for (GameObj* obj : gameObjs)
 			{
@@ -203,13 +126,21 @@ namespace gui
 			}
 		}
 
+		InitializeOutline(mTargetObject);
 	}
 
 	void Hierarchy::AddGameObject(TreeWidget::Node* parent, GameObj* gameObject)
 	{
+		if (gameObject == nullptr)
+			return;
+
 		std::string name(gameObject->GetName().begin(), gameObject->GetName().end());
+
+		if (name.empty())
+		{
+			name = "no name";
+		}
 
 		TreeWidget::Node* node = mTreeWidget->AddNode(parent, name, gameObject);
 	}
-
 }

@@ -28,6 +28,7 @@ void PhysicalMovement::FixedUpdate()
 	{
 	}
 	GetOwner()->ReorganizePosition(AXIS::Y, eLayerType::Platforms);
+	GetOwner()->ReorganizePosition(AXIS::XZ, eLayerType::Objects);
 
 	Move(velocity);
 }
@@ -45,7 +46,8 @@ void PhysicalMovement::Move(const Vector3& velocity)
 
 	if (eActorType::Kinematic == physical->GetActorType())
 	{
-		physical->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
+		if(!physical->IsKinematicActorSleep())
+			physical->GetActor<PxRigidDynamic>()->setKinematicTarget(transform);
 	}
 	else
 	{

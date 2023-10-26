@@ -35,7 +35,12 @@ public:
 
 public:
 	Player();
+	Player(const Player& Obj);
 	virtual ~Player();
+
+	virtual Player* Clone() const;
+	virtual void Save(FILE* File) override;
+	virtual void Load(FILE* File) override;
 
 	virtual void Initialize() override;
 	virtual void Update() override;
@@ -47,6 +52,7 @@ public:
 public:
 	virtual void OnCollisionEnter(GameObj* gameObject) override;
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
+	virtual void OnTriggerPersist(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
 	void KeyCheck();
 	virtual void BoneInitialize();
@@ -57,7 +63,8 @@ public:
 	void SetMarioCap(MarioCap* cap);
 	MarioCap* GetMarioCap() const { return mMarioCap; }
 
-
+	void CapturingProcess();
+	void UnCapturingProcess();
 
 private:
 	std::vector<MarioParts*> mParts;
@@ -71,11 +78,9 @@ public:
 	void SetPlayerState(ePlayerState playerState);
 	//void PlayerAnimation(std::wstring name);
 
-	bool IsCaptureing();
-
 private:
-	ePlayerState mPlayerState;
-	MeshRenderer* mMeshRenderer;
+	ePlayerState	mPlayerState;
+	MeshRenderer*	mMeshRenderer;
 	PlayerStateScript* mScript;
 	PhysXRigidBody* mRigidBody;
 };

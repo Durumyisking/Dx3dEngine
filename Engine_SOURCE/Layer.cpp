@@ -38,7 +38,6 @@ Layer::~Layer()
 		delete Obj;
 		Obj = nullptr;
 	}
-
 }
 
 void Layer::Initialize()
@@ -59,6 +58,10 @@ void Layer::update()
 		if (nullptr == Obj)
 			continue;
 
+		//std::wstring DebugName = Obj->GetName();
+		//eLayerType LayerType = Obj->GetLayerType();
+		//std::string ObjectTypeName = Obj->GetObjectTypeName();
+
 		if(GameObj::eState::Active == Obj->GetState())
 			Obj->Update();
 	}
@@ -70,6 +73,10 @@ void Layer::fixedUpdate()
 	{
 		if (nullptr == Obj)
 			continue;
+
+		//std::wstring DebugName = Obj->GetName();
+		//eLayerType LayerType = Obj->GetLayerType();
+		//std::string ObjectTypeName = Obj->GetObjectTypeName();
 
 		if (GameObj::eState::Active == Obj->GetState())
 			Obj->FixedUpdate();
@@ -137,7 +144,9 @@ void Layer::destroy()
 
 	for (GameObj* Obj : mAddedObjects)
 	{
+		AddGameObject(Obj, Obj->GetLayerType());
 		Obj->Initialize();
+		AddGameObject(Obj, Obj->GetLayerType());
 	}
 
 	if (!mAddedObjects.empty())

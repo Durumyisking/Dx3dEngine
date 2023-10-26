@@ -20,8 +20,13 @@ namespace gui
 		void SetMesh(std::string key);
 		void SetMaterial(std::string key);
 
+		void SetModel(std::string key);
+
 	private:
 		Material*	mMaterial;
 		Mesh*		mMesh;
+		Model*		mModel;
+
+		int			mModelMaterialNum;
 	};
 }

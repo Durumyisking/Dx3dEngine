@@ -19,11 +19,37 @@ MarioCap::MarioCap()
 	, mCapState(eCapState::Idle)
 	, mOwner(nullptr)
 {
+	SetLayerType(eLayerType::Player);
+
+	mObjectTypeName = "MarioCap";
 	SetLayerType(eLayerType::Cap);
+}
+
+MarioCap::MarioCap(const MarioCap& Obj)
+	: DynamicObject(Obj)
+	, mCapState(Obj.mCapState)
+	, mOwner(Obj.mOwner)
+{
+	SetLayerType(eLayerType::Player);
 }
 
 MarioCap::~MarioCap()
 {
+}
+
+MarioCap* MarioCap::Clone() const
+{
+	return new MarioCap(*this);
+}
+
+void MarioCap::Save(FILE* File)
+{
+	DynamicObject::Save(File);
+}
+
+void MarioCap::Load(FILE* File)
+{
+	DynamicObject::Load(File);
 }
 
 void MarioCap::Initialize()
@@ -36,8 +62,7 @@ void MarioCap::Initialize()
 
 	//model initialize
 	SetPos(Vector3(0.f, 20.f, 0.f));
-
-
+	
 	SetScale(Vector3(0.01f, 0.01f, 0.01f));
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"MarioCap");
@@ -54,7 +79,7 @@ void MarioCap::Initialize()
 	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.25f, 0.125f, 0.5f));
 	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.25f, 0.125f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
-	physical->RemoveActorToPxScene();
+	physical->KinematicActorSleep();
 
 	// Rigidbody
 	PhysXRigidBody* rigidbody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
@@ -84,6 +109,35 @@ void MarioCap::Initialize()
 
 void MarioCap::Update()
 {
+	// owner가 플레이어가 아니라면 모자위치를 몬스터 위로 바꿔준다.
+
+	if (eLayerType::Player != mOwner->GetLayerType())
+	{
+		//Matrix capWorldMatrix = {};
+		//Matrix ownerWorldMatrix = mOwner->GetTransform()->GetWorldMatrix();
+
+		//
+		//Bone* bone = mOwner->GetMeshRenderer()->GetModel()->FindBone(L"Armature_Head");	
+		//ModelNode* node = mOwner->GetMeshRenderer()->GetModel()->FindNode(L"Armature_Cap");
+		//
+		//Matrix boneMat = convert::aiMat44ToMat44(bone->mFinalMatrix);
+		//Matrix nodeMat = convert::aiMat44ToMat44(node->mTransformation);
+		//mOwner->GetTransform()->SetParent(nodeMat);
+		//Vector3 offset = {0.f, 1.25f, 0.f};
+		//capWorldMatrix = ownerWorldMatrix;
+		//capWorldMatrix._41 = (ownerWorldMatrix._41 + offset.x);
+		//capWorldMatrix._42 = (ownerWorldMatrix._42 + offset.y);
+		//capWorldMatrix._43 = (ownerWorldMatrix._43 + offset.z);
+		//GetTransform()->SetWorldMatrix(nodeMat);
+
+		Transform* tr = GetTransform();
+		Transform* OwnerTr = mOwner->GetTransform();
+		Vector3 pxPos = OwnerTr->GetPhysicalPosition();
+		pxPos.y += 1.5f;
+		tr->SetPhysicalPosition(pxPos);
+		tr->SetPhysicalRotation(OwnerTr->GetPhysicalRotation());
+	}
+
 	DynamicObject::Update();
 }
 
@@ -95,10 +149,10 @@ void MarioCap::FixedUpdate()
 	if (GetCapState() == eCapState::Idle)
 	{
 		Transform* tr = GetTransform();
-		Transform* playerTr = mOwner->GetTransform();
+		Transform* OwnerTr = mOwner->GetTransform();
 
-		tr->SetPhysicalPosition(playerTr->GetPhysicalPosition());
-		tr->SetPhysicalRotation(playerTr->GetPhysicalRotation());
+		tr->SetPhysicalPosition(OwnerTr->GetPhysicalPosition());
+		tr->SetPhysicalRotation(OwnerTr->GetPhysicalRotation());
 	}
 
 	DynamicObject::FixedUpdate();
@@ -158,9 +212,18 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 
 		SetCapState(MarioCap::eCapState::Capture);
 
-		//dynamic_cast<Player*>(GetOwner())->SetPlayerState(Player::ePlayerState::Capture);
-		//GetOwner()->Pause();
+		dynamic_cast<Player*>(GetOwner())->SetPlayerState(Player::ePlayerState::Capture);
+		GetComponent<GenericAnimator>()->Stop();
+		//Pause();
 		//GetOwner()->GetPhysical()->RemoveActorToPxScene();
+
+		// 카메라의 주인을 캡처 대상으로 바꿔준다.
+		renderer::mainCamera->SetTarget(gameObject);
+	}
+
+	if (gameObject->GetLayerType() == eLayerType::Objects)
+	{
+		FlyEnd();
 	}
 }
 
@@ -242,10 +305,9 @@ void MarioCap::FlyStart()
 	if (animator->IsRunning())
 		animator->Stop();
 
-	
 	// 플레이어의 현재 포지션과 Player forWard 를 가져옴
 	Transform* tr = GetTransform();
-	Vector3 pos = tr->GetPhysicalPosition();
+	Vector3 pos = mOwner->GetTransform()->GetPhysicalPosition();
 	Vector3 playerforward = mOwner->GetTransform()->WorldForward();
 
 	AnimatorParam param;
@@ -257,7 +319,7 @@ void MarioCap::FlyStart()
 	param.EndValue= 15.f;
 
 	// 진행시간
-	param.DurationTime = 0.5;
+	param.DurationTime = 0.5f;
 
 	// 진행 함수 std::function<void(float)>
 	param.DurationFunc = [this, tr, pos, playerforward](float inCurValue)
@@ -334,7 +396,7 @@ void MarioCap::FlyEnd()
 		}
 
 		SetCapState(eCapState::Return);
-		GetPhysical()->RemoveActorToPxScene();
+		GetPhysical()->KinematicActorSleep();
 		Pause();
 	};
 

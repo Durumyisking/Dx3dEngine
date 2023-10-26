@@ -25,6 +25,7 @@ struct PSOut
     float4 Albedo : SV_Target1;
     float4 Normal : SV_Target2;
     float4 MRD    : SV_Target3;
+    float4 Emissive    : SV_Target4;
 };
 
 
@@ -36,13 +37,15 @@ PSOut main(VSOut vsIn) : SV_TARGET
     float3 normal = vsIn.WorldNormal;
     float metallic = cbMetallic;
     float roughness = cbRoughness;
+    float emissive = cbbEmissive;
     
     float pixelToCam = distance(cameraWorldPos.xyz, vsIn.WorldPos);
 
     albedo = cbbAlbedo ? TextureMapping_albedo(vsIn.UV, pixelToCam) : albedo;
     normal = cbbNormal ? TextureMapping_normal(vsIn.UV, vsIn.WorldTangent, vsIn.WorldNormal, pixelToCam) : normal;
-    metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV, pixelToCam) : cbbMetallic;
-    roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV, pixelToCam) : cbbRoughness;
+    metallic = cbbMetallic ? TextureMapping_metallic(vsIn.UV, pixelToCam) : cbMetallic;
+    roughness = cbbRoughness ? TextureMapping_roughness(vsIn.UV, pixelToCam) : cbRoughness;
+    emissive = cbbEmissive ? TextureMapping_emissive(vsIn.UV, pixelToCam) : cbbEmissive;
 
     
     vsOutColor.Position = float4(vsIn.WorldPos, 1.0f);
@@ -53,6 +56,7 @@ PSOut main(VSOut vsIn) : SV_TARGET
     vsOutColor.MRD.g = roughness;
     vsOutColor.MRD.b = 0.f;
     vsOutColor.MRD.w = 1.f;//vsIn.UV.y;
+    vsOutColor.Emissive = emissive;
     
     return vsOutColor;
 }
