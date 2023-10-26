@@ -146,7 +146,6 @@ void Layer::destroy()
 	{
 		AddGameObject(Obj, Obj->GetLayerType());
 		Obj->Initialize();
-		AddGameObject(Obj, Obj->GetLayerType());
 	}
 
 	if (!mAddedObjects.empty())

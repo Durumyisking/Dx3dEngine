@@ -643,10 +643,4 @@ void ResourceMgr::SettingModelMaterial()
 
 #pragma endregion
 
-#pragma region Streetlight
-	model = Find<Model>(L"CityWorldHomeStreetlight000");
-	model->SetVariableMaterialsByKey(0, L"Streetlight000_0Material");
-	model->SetVariableMaterialsByKey(1, L"Streetlight000_1Material");
-
-#pragma endregion
 }
