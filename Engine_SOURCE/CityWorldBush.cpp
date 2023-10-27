@@ -8,14 +8,14 @@
 CityWorldBush::CityWorldBush()
 	: GameObj()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mObjectTypeName = "CityWorldBush";
 }
 
 CityWorldBush::CityWorldBush(const CityWorldBush& Obj)
 	:GameObj(Obj)
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 }
 
 CityWorldBush::~CityWorldBush()

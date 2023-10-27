@@ -8,14 +8,14 @@
 HomeFence_0::HomeFence_0()
 	: GameObj()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mObjectTypeName = "HomeFence_0";
 }
 
 HomeFence_0::HomeFence_0(const HomeFence_0& Obj)
 	:GameObj(Obj)
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 }
 
 HomeFence_0::~HomeFence_0()

@@ -40,7 +40,7 @@ void BlockBrick::Initialize()
 {
 	SetScale(Vector3(1.f, 1.f, 1.f));
 
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"BlockBrick");
 	assert(model);

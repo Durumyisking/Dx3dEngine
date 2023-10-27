@@ -8,14 +8,14 @@
 CoinObject::CoinObject()
 	:GameObj()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mObjectTypeName = "CoinObject";
 }
 
 CoinObject::CoinObject(const CoinObject& Obj)
 	:GameObj(Obj)
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 }
 
 CoinObject::~CoinObject()

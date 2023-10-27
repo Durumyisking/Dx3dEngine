@@ -183,10 +183,7 @@ void ScenePlay::Initialize()
 	//}
 
 	{
-		MarioCap* mariocap = object::Instantiate<MarioCap>(eLayerType::Cap, this);
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
-		mPlayer->SetMarioCap(mariocap);
-		
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
 	//{
@@ -225,7 +222,7 @@ void ScenePlay::Initialize()
 		//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 
 		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-
+		ground->SetPos(Vector3::Zero);
 		//HomeFence_0* fence = object::Instantiate<HomeFence_0>(eLayerType::Monster, this);
 	}
 

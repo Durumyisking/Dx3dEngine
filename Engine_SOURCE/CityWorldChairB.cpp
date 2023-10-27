@@ -9,14 +9,14 @@
 CityWorldChairB::CityWorldChairB()
 	: GameObj()
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mObjectTypeName = "CityWorldChairB";
 }
 
 CityWorldChairB::CityWorldChairB(const CityWorldChairB& Obj)
 	:GameObj(Obj)
 {
-	assert(AddComponent<MeshRenderer>(eComponentType::MeshRenderer));
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 }
 
 CityWorldChairB::~CityWorldChairB()
