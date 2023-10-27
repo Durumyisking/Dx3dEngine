@@ -196,7 +196,21 @@ void Player::Update()
 	{
 		i->Update();
 	}
-	//mMarioCap->Update();
+
+	if (KEY_TAP(R))
+	{
+		mPlayerState = ePlayerState::Idle;
+		mRigidBody->SetVelocity(Vector3::Zero);
+		mRigidBody->ApplyGravity();
+		mRigidBody->SetAirOn();
+	}
+	if (KEY_TAP(F))
+	{
+		SetPos({0.f, 15.f, 0.f});
+		mPlayerState = ePlayerState::Fall;
+		mRigidBody->ApplyGravity();
+		mRigidBody->SetAirOn();
+	}
 }
 
 void Player::FixedUpdate()
