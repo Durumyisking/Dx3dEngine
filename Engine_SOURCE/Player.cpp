@@ -13,6 +13,7 @@
 
 #include "PlayerStateScript.h"
 #include "GenericAnimator.h"
+#include "AudioSource.h"
 
 #include "ParticleSystem.h"
 
@@ -91,6 +92,10 @@ void Player::Initialize()
 	mScript = AddComponent<PlayerStateScript>(eComponentType::Script);
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	mRigidBody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+
+	//È¿°úÀ½
+	AudioSource* mAudioSource = AddComponent<AudioSource>(eComponentType::AudioSource);
+	mAudioSource->AddClipByKey(L"FootNote");
 
 	AddComponent<PhysXCollider>(eComponentType::Collider)->SetSwitchState(false);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);

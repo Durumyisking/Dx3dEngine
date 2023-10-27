@@ -6,6 +6,7 @@
 
 #include "InputMgr.h"
 #include "TimeMgr.h"
+#include "AudioSource.h"
 
 PlayerStateScript::PlayerStateScript()
 	: Script()
@@ -86,10 +87,12 @@ void PlayerStateScript::Move()
 
 	Physical* physical = GetOwner()->GetComponent<Physical>();
 	assert(physical);
-		
+
+
 
 	if (mAnimator->PlayAnimationName() == L"Brake")
 		return;
+
 
 	if (GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::W)
 		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::S)
@@ -97,6 +100,7 @@ void PlayerStateScript::Move()
 		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::D))
 	{
 		mAnimator->Play(L"Brake");
+		GetOwner()->GetComponent<AudioSource>()->Stop(L"FootNote");
 		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
 
 		return;
@@ -139,6 +143,7 @@ void PlayerStateScript::Move()
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
 
 
+	//if(GetOwner()->GetComponent<AudioSource>()->)
 
 	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&& mAnimator->PlayAnimationName() != L"Run"
@@ -164,6 +169,8 @@ void PlayerStateScript::Move()
 	}
 	else if(mAnimator->PlayAnimationName() != L"Walk")
 	{
+		GetOwner()->GetComponent<AudioSource>()->Stop(L"FootNote");
+		GetOwner()->GetComponent<AudioSource>()->Play(L"FootNote", true);
 		mAnimator->Play(L"Walk");
 		mInitialForce = 7000.f;
 		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
