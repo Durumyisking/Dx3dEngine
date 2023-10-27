@@ -10,7 +10,7 @@ CityGround::CityGround()
 	: GameObj()
 {
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	//AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+
 	mObjectTypeName = "CityGround";
 }
 
@@ -18,7 +18,7 @@ CityGround::CityGround(const CityGround& Obj)
 	:GameObj(Obj)
 {
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	//AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+
 }
 
 CityGround::~CityGround()
