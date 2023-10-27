@@ -16,6 +16,7 @@ Building::Building()
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 	mObjectTypeName = "Building";
 }
+
 Building::Building(const Building& Obj)
 	:GameObj(Obj)
 	, mModelName(Obj.mModelName)
@@ -27,6 +28,7 @@ Building::Building(const Building& Obj)
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 
 }
+
 Building::~Building()
 {
 
@@ -37,33 +39,76 @@ Building* Building::Clone() const
 	return new Building(*this);
 }
 
+void Building::Save(FILE* File)
+{
+	GameObj::Save(File);
+
+	MeshRenderer* mrd = GetComponent<MeshRenderer>();
+
+	if (mModelName.empty())
+	{
+		if (mrd->GetModel() != nullptr)
+		{
+			mModelName = mrd->GetModel()->GetName();
+		}
+	}
+
+	if (!mbPhysical)
+	{
+		if (GetComponent<Physical>() != nullptr)
+		{
+			mbPhysical = true;
+			Physical* physical = GetComponent<Physical>();
+			mGeometryType = physical->GetGeometryType();
+			mActorType = physical->GetActorType();
+			mPhysicalScale = GetComponent<Transform>()->GetScale();
+		}
+	}
+
+	// 이름 저장
+	int numWChars = (int)mModelName.length();
+
+	fwrite(&numWChars, sizeof(int), 1, File);
+	fwrite(mModelName.c_str(), sizeof(wchar_t), numWChars, File);
+
+	fwrite(&mbPhysical, sizeof(bool), 1, File);
+	fwrite(&mGeometryType, sizeof(eGeometryType), 1, File);
+	fwrite(&mActorType, sizeof(eActorType), 1, File);
+	fwrite(&mPhysicalScale, sizeof(math::Vector3), 1, File);
+}
+
+void Building::Load(FILE* File)
+{
+	GameObj::Load(File);
+
+	int numWChars = 0;
+
+	fread(&numWChars, sizeof(int), 1, File);
+
+	mModelName.resize(numWChars);
+	fread(&mModelName[0], sizeof(wchar_t), numWChars, File);
+
+	fread(&mbPhysical, sizeof(bool), 1, File);
+	fread(&mGeometryType, sizeof(eGeometryType), 1, File);
+	fread(&mActorType, sizeof(eActorType), 1, File);
+	fread(&mPhysicalScale, sizeof(math::Vector3), 1, File);
+}
+
 void Building::Initialize()
 {
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(mModelName);
-	assert(model);
+
+	if (model == nullptr)
+		return;
 
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
-	mr->SetMaterial(model->GetMaterial());
+	mr->ForceSetMaterial(model->GetLastMaterial());
 	mr->SetModel(model);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 
 	if (mbPhysical)
 	{
-		if (GetComponent<Physical>() != nullptr)
-		{
-			Physical* physical =  GetComponent<Physical>();
-			delete physical;
-			physical = nullptr;
-
-			PhysXRigidBody* rigid = GetComponent<PhysXRigidBody>();
-			delete rigid;
-			rigid = nullptr;
-
-			PhysXCollider* collider = GetComponent<PhysXCollider>();
-			delete collider;
-			collider = nullptr;
-		}
 		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(mActorType, mGeometryType, mPhysicalScale);
 

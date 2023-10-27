@@ -53,6 +53,7 @@ bool PathMgr::Initialize()
     AddPath(SCENE_SAVE_PATH, L"Scene\\", SAVE_PATH);
     AddPath(MESH_SAVE_PATH, L"Mesh\\", SAVE_PATH);
     AddPath(OBJ_SAVE_PATH, L"Obj\\", SAVE_PATH);
+    AddPath(LAYER_SAVE_PATH, L"Layer\\", SAVE_PATH);
     //AddPath(SOUND_PATH, L"Sound\\");
     //AddPath(FONT_PATH, L"Font\\");
 

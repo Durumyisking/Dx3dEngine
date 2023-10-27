@@ -58,9 +58,9 @@ void Layer::update()
 		if (nullptr == Obj)
 			continue;
 
-		std::wstring DebugName = Obj->GetName();
-		eLayerType LayerType = Obj->GetLayerType();
-		std::string ObjectTypeName = Obj->GetObjectTypeName();
+		//std::wstring DebugName = Obj->GetName();
+		//eLayerType LayerType = Obj->GetLayerType();
+		//std::string ObjectTypeName = Obj->GetObjectTypeName();
 
 		if(GameObj::eState::Active == Obj->GetState())
 			Obj->Update();
@@ -73,6 +73,10 @@ void Layer::fixedUpdate()
 	{
 		if (nullptr == Obj)
 			continue;
+
+		//std::wstring DebugName = Obj->GetName();
+		//eLayerType LayerType = Obj->GetLayerType();
+		//std::string ObjectTypeName = Obj->GetObjectTypeName();
 
 		if (GameObj::eState::Active == Obj->GetState())
 			Obj->FixedUpdate();
@@ -140,7 +144,6 @@ void Layer::destroy()
 
 	for (GameObj* Obj : mAddedObjects)
 	{
-		AddGameObject(Obj, Obj->GetLayerType());
 		Obj->Initialize();
 		AddGameObject(Obj, Obj->GetLayerType());
 	}
@@ -192,8 +195,9 @@ std::vector<GameObj*> Layer::GetDontDestroyObjects()
 	return donts;
 }
 
-void Layer::PushAddedObject(GameObj* gameObj)
+void Layer::PushAddedObject(GameObj* gameObj, eLayerType type)
 {
+	gameObj->SetLayerType(type);
 	mAddedObjects.push_back(gameObj);
 }
 

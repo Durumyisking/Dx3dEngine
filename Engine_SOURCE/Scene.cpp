@@ -31,13 +31,14 @@ void Scene::Save(FILE* File)
 		eLayerType layerType = static_cast<eLayerType>(i);
 		fwrite(&layerType, sizeof(eLayerType), 1, File);
 
-		if (layerType == eLayerType::Default || layerType == eLayerType::Camera || layerType == eLayerType::Grid
-			|| layerType == eLayerType::SkySphere || layerType == eLayerType::UI )
+		if (layerType == eLayerType::Default || layerType == eLayerType::Camera
+			 || layerType == eLayerType::UI 
+			 || layerType == eLayerType::PostProcess || layerType == eLayerType::Player )
 		{
 			int	ObjCount = 0;
 			fwrite(&ObjCount, sizeof(int), 1, File);
 			continue;
-}
+		}
 
 		std::vector<GameObj*> gameObjs = mLayers[i].GetGameObjects();
 		int	ObjCount = static_cast<int>(gameObjs.size());
@@ -80,7 +81,6 @@ void Scene::Load(FILE* File)
 			NewObj->Load(File);
 
 			mLayers[i].AddGameObject(NewObj, layerType);
-			mLayers[i].PushAddedObject(NewObj);
 		}
 	}
 }
@@ -180,6 +180,49 @@ void Scene::Exit()
 	GETSINGLE(TimerMgr)->GetInstance()->ChangeScene();
 
 	renderer::lights.clear();
+}
+
+void Scene::SaveLayerObjects(FILE* File, eLayerType type)
+{
+	std::vector<GameObj*> gameObjectVec = mLayers[static_cast<UINT>(type)].GetGameObjects();
+
+	int	ObjCount = static_cast<int>(gameObjectVec.size());
+	fwrite(&ObjCount, sizeof(int), 1, File);
+
+	for (GameObj* obj : gameObjectVec)
+	{
+		std::string	ClassTypeName = obj->GetObjectTypeName();
+
+		int Length = static_cast<int>(ClassTypeName.length());
+
+		fwrite(&Length, sizeof(int), 1, File);
+		fwrite(ClassTypeName.c_str(), 1, Length, File);
+
+		obj->Save(File);
+	}
+}
+
+void Scene::LoadLayerObjects(FILE* File, eLayerType type)
+{
+	std::vector<GameObj*> gameObjectVec = mLayers[static_cast<UINT>(type)].GetGameObjects();
+
+	int	ObjCount = 0;
+	fread(&ObjCount, sizeof(int), 1, File);
+
+	for (int j = 0; j < ObjCount; ++j)
+	{
+		int Length = 0;
+		char	ObjClassTypeName[256] = {};
+
+		fread(&Length, sizeof(int), 1, File);
+		fread(ObjClassTypeName, 1, Length, File);
+
+		GameObj* ObjCDO = GameObj::FindObjectCDO(ObjClassTypeName);
+		GameObj* NewObj = ObjCDO->Clone();
+		NewObj->Load(File);
+
+		mLayers[static_cast<UINT>(type)].PushAddedObject(NewObj, type);
+	}
 }
 
 void Scene::AddGameObject(GameObj* gameObj, eLayerType eLayer)

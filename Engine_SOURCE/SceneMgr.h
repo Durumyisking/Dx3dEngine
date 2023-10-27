@@ -43,6 +43,9 @@ public:
 	bool SaveSceneFile(eSceneType type, const std::wstring& filePath);
 	bool LoadSceneFile(const std::wstring& filePath);
 
+	bool SaveLayerObjects(eLayerType type, const std::wstring& filePath);
+	bool LoadLayerObjects(eLayerType type, const std::wstring& filePath);
+
 	void CreateCDO();
 
 	void AddEvent(GameObj* obj) { mLateEvent.emplace_back(obj); }

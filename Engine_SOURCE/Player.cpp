@@ -17,6 +17,7 @@
 #include "ParticleSystem.h"
 
 #include "FootSmokeParticle.h"
+#include "Object.h"
 
 Player::Player()
 	: mPlayerState(ePlayerState::Idle)

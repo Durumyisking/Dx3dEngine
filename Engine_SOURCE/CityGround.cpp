@@ -10,6 +10,7 @@ CityGround::CityGround()
 	: GameObj()
 {
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+
 	mObjectTypeName = "CityGround";
 }
 
@@ -17,6 +18,7 @@ CityGround::CityGround(const CityGround& Obj)
 	:GameObj(Obj)
 {
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+
 }
 
 CityGround::~CityGround()
@@ -27,6 +29,16 @@ CityGround::~CityGround()
 CityGround* CityGround::Clone() const
 {
 	return new CityGround(*this);
+}
+
+void CityGround::Save(FILE* File)
+{
+	GameObj::Save(File);
+}
+
+void CityGround::Load(FILE* File)
+{
+	GameObj::Load(File);
 }
 
 void CityGround::Initialize()

@@ -107,6 +107,10 @@
 
 #include "HomeFence_0.h"
 
+#include "PhysXRayCast.h"
+#include "../Dx3dEngine/guiWidgetMgr.h"
+#include "../Dx3dEngine/guiHierarchy.h"
+
 ScenePlay::ScenePlay()
 	: mCoinPanal(nullptr)
 	, mCityCoinPanal(nullptr)
@@ -137,18 +141,18 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ·Îµå Å×½ºÆ® ·Îµå½Ã¿¡ ¹İº¹ÇØ¼­ ¸ó½ºÅÍ Á¤ÀÇ ¹æÁö
+	//TestScene ë¡œë“œ í…ŒìŠ¤íŠ¸ ë¡œë“œì‹œì— ë°˜ë³µí•´ì„œ ëª¬ìŠ¤í„° ì •ì˜ ë°©ì§€
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
-		{
-			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+		/*{
+			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
 			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 			skySphere->SetName(L"SkySphere");
-		}
+		}*/
 
-		{
-			CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-		}
+		//{
+		//	CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+		//}
 
 		CreatePlayerUI();
 		Scene::Initialize();
@@ -184,8 +188,15 @@ void ScenePlay::Initialize()
 
 	{
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+
+		mPlayer->SetPos(Vector3(0.f, 10.f, 0.f));
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
+	{
+		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
+	}
+
 	//{
 	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
@@ -196,10 +207,6 @@ void ScenePlay::Initialize()
 	//}
 
 
-	{
-		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
-	}
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -208,59 +215,53 @@ void ScenePlay::Initialize()
 	}
 
 	{
-		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::SkySphere, this);
+		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
 		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		skySphere->SetName(L"SkySphere");
 	}
 
 	{
-
-
-		//PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		//rigid->RemoveGravity();
-
-		//plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-
 		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+
 		ground->SetPos(Vector3::Zero);
 		//HomeFence_0* fence = object::Instantiate<HomeFence_0>(eLayerType::Monster, this);
+
 	}
 
+	//{
+	//	Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
+	//	block->SetPos(Vector3(40.f, -0.5f, 0.f));
+	//}
+	//InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
+	//for (size_t i = 0; i < 5; i++)
+	//{
+	//	for (size_t j = 0; j < 5; j++)
+	//	{
+	//		for (size_t k = 1; k < 10; k++)
+	//		{
+	//			if (j > 4 && k > 1)
+	//				continue;
 
-	{
-		//Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
-		//block->SetPos(Vector3(40.f, -0.5f, 0.f));
-	}
-	InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
-	for (size_t i = 0; i < 5; i++)
-	{
-		for (size_t j = 0; j < 5; j++)
-		{
-			for (size_t k = 1; k < 10; k++)
-			{
-				if (j > 4 && k > 1)
-					continue;
-
-				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-				block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
-				blockContainer->PushObject(block);
-			}
-		}
-	}
-	blockContainer->ResizeObjectInstancingData();
+	//			BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+	//			block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
+	//			blockContainer->PushObject(block);
+	//		}
+	//	}
+	//}
+	//blockContainer->ResizeObjectInstancingData();
 
 	//{
 	//	SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
 
-	//	//ÇöÀç .obj ÆÄÀÏ¸¸ ·Îµù °¡´É ºí·£´õ¿¡¼­ .obj ·Î ³»º¸³»±â ÇØ¼­ »ç¿ëÇÏ¸é µË´Ï´Ù
+	//	//í˜„ì¬ .obj íŒŒì¼ë§Œ ë¡œë”© ê°€ëŠ¥ ë¸”ëœë”ì—ì„œ .obj ë¡œ ë‚´ë³´ë‚´ê¸° í•´ì„œ ì‚¬ìš©í•˜ë©´ ë©ë‹ˆë‹¤
 	//	if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
 	//		int debug = 0;
 
 	//	if (!naviMesh->Build())
 	//		int debug = 0;
 
-	//	//¿ÀºêÁ§Æ®¿¡ std::<Vector3>mPath Ãß°¡ path¿¡ ÀÌµ¿°æ·Î°¡ Ãß°¡µÇ´Ï vector³»ÀÇ À§Ä¡¸¦ »ç¿ëÇØ¼­ ÀÌµ¿ÇÏ¸é µË´Ï´Ù
-	//	//À§Ä¡°¡ ³»ºñ¸Ş½¬ ¹ÛÀÌ¸é °è»êÀÌ ¾ÈµË´Ï´Ù
+	//	//ì˜¤ë¸Œì íŠ¸ì— std::<Vector3>mPath ì¶”ê°€ pathì— ì´ë™ê²½ë¡œê°€ ì¶”ê°€ë˜ë‹ˆ vectorë‚´ì˜ ìœ„ì¹˜ë¥¼ ì‚¬ìš©í•´ì„œ ì´ë™í•˜ë©´ ë©ë‹ˆë‹¤
+	//	//ìœ„ì¹˜ê°€ ë‚´ë¹„ë©”ì‰¬ ë°–ì´ë©´ ê³„ì‚°ì´ ì•ˆë©ë‹ˆë‹¤
 	//	if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
 	//		int debug = 0;
 	//}
@@ -293,6 +294,24 @@ void ScenePlay::update()
 	}
 
 
+	if (KEY_UP(LSHIFT))
+		GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+	else
+	{
+		if (KEY_DOWN(LSHIFT) && KEY_TAP(LBTN))
+		{
+			GameObj* target = GETSINGLE(PhysXRayCast)->Raycast();
+
+			renderer::outlineTargetObject = target;
+		}
+
+		if (KEY_UP(LBTN))
+		{
+			GETSINGLE(PhysXRayCast)->ReleaseRaycast();
+		}
+	}
+
+
 	Scene::update();
 }
 
@@ -312,7 +331,7 @@ void ScenePlay::Enter()
 {
 	Scene::Enter();
 
-	mCamera->SetPos(Vector3(0.f, 25.f, -25.f));
+	mCamera->SetPos(Vector3(0.f, 75.f, -75.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }

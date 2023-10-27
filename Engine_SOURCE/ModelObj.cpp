@@ -40,7 +40,6 @@ void ModelObj::Save(FILE* File)
 {
 	GameObj::Save(File);
 
-
 	MeshRenderer* mrd = GetComponent<MeshRenderer>();
 
 	if (mModelName.empty())
@@ -50,7 +49,7 @@ void ModelObj::Save(FILE* File)
 			mModelName = mrd->GetModel()->GetName();
 		}
 	}
-		
+	
 	if (!mbPhysical)
 	{
 		if (GetComponent<Physical>() != nullptr)
@@ -62,7 +61,7 @@ void ModelObj::Save(FILE* File)
 			mPhysicalScale = GetComponent<Transform>()->GetScale();
 		}
 	}
-
+	
 	// 이름 저장
 	int numWChars = (int)mModelName.length();
 
