@@ -1,4 +1,4 @@
-#include "guiGizmo.h"
+    #include "guiGizmo.h"
 #include "Camera.h"
 #include "Renderer.h"
 #include "Object.h"
@@ -42,7 +42,7 @@ namespace gui
         }
         if (KEY_TAP(X))
         {
-            //mGizmoOperation = ImGuizmo::ROTATE;
+            mGizmoOperation = ImGuizmo::ROTATE;
         }
         if (KEY_TAP(C))
         {

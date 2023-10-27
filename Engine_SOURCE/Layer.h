@@ -24,7 +24,7 @@ public:
 	std::vector<GameObj*>& GetAddedGameObjects() { return mAddedObjects; }
 	std::vector<GameObj*> GetDontDestroyObjects();
 
-	void PushAddedObject(GameObj* gameObj);
+	void PushAddedObject(GameObj* gameObj, eLayerType type);
 
 
 
