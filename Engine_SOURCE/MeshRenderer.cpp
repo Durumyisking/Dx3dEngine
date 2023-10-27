@@ -72,11 +72,7 @@ void MeshRenderer::Render()
 		}
 		GetModel()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
 		
-		bool PreventBurstingWhenNoMaterialOnModel = true;
-		if (GetModel()->GetLastMaterial() == nullptr)
-			PreventBurstingWhenNoMaterialOnModel = false;
-
-		GetModel()->Bind_Render(PreventBurstingWhenNoMaterialOnModel);
+		GetModel()->Bind_Render();
 	}
 	else
 	{

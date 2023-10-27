@@ -42,24 +42,18 @@ void ModelObj::Save(FILE* File)
 
 	MeshRenderer* mrd = GetComponent<MeshRenderer>();
 
-	if (mModelName.empty())
+	if (mrd->GetModel() != nullptr)
 	{
-		if (mrd->GetModel() != nullptr)
-		{
-			mModelName = mrd->GetModel()->GetName();
-		}
+		mModelName = mrd->GetModel()->GetName();
 	}
 	
-	if (!mbPhysical)
+	if (GetComponent<Physical>() != nullptr)
 	{
-		if (GetComponent<Physical>() != nullptr)
-		{
-			mbPhysical = true;
-			Physical* physical = GetComponent<Physical>();
-			mGeomType = physical->GetGeometryType();
-			mActorType = physical->GetActorType();
-			mPhysicalScale = GetComponent<Transform>()->GetScale();
-		}
+		mbPhysical = true;
+		Physical* physical = GetComponent<Physical>();
+		mGeomType = physical->GetGeometryType();
+		mActorType = physical->GetActorType();
+		mPhysicalScale = GetComponent<Transform>()->GetScale();
 	}
 	
 	// 이름 저장
