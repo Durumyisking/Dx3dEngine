@@ -10,8 +10,10 @@ public:
 	Building(const Building& Obj);
 	virtual ~Building();
 
+	virtual Building* Clone() const override;
+	virtual void Save(FILE* File) override;
+	virtual void Load(FILE* File) override;
 
-	virtual Building* Clone() const;
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;

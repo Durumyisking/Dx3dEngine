@@ -113,7 +113,7 @@ void SceneMgr::LoadScene(eSceneType type)
 {
 	if (mActiveScene->GetType() == type)
 	{
-		//Î°úÎî© Ïî¨ÏúºÎ°ú ÎÑòÏñ¥Í∞ÄÏÑú ÏûëÏóÖÌïòÍ∏∞
+		//∑Œµ˘ æ¿¿∏∑Œ ≥—æÓ∞°º≠ ¿€æ˜«œ±‚
 	}
 
 	if (mActiveScene)
@@ -134,30 +134,15 @@ void SceneMgr::LoadScene(eSceneType type)
 
 void SceneMgr::ChangeScene(eSceneType type)
 {
-	if (mActiveScene->GetType() == type)
-	{
-		//Î°úÎî© Ïî¨ÏúºÎ°ú ÎÑòÏñ¥Í∞ÄÏÑú ÏûëÏóÖÌïòÍ∏∞
-	}
 
-	if (mActiveScene)
-		mActiveScene->Exit();
+	//std::vector<GameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
+	//for (GameObj* obj : gameObjs)
+	//{
+	//	delete obj;
+	//	obj = nullptr;
+	//}
+	//gameObjs.clear();
 
-	std::vector<GameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
-
-	for (GameObj* obj : gameObjs)
-	{
-		obj->DeleteComponents();
-
-		delete obj;
-		obj = nullptr;
-	}
-
-	gameObjs.clear();
-
-	mActiveScene = mScenes[static_cast<UINT>(type)];
-
-	if (mActiveScene)
-		mActiveScene->Enter();
 }
 
 
@@ -192,7 +177,7 @@ bool SceneMgr::SaveSceneFile(eSceneType type, const std::wstring& filePath)
 	return true;
 }
 
-//Îã§Î•∏ Ïì∞Î†àÎìúÎ•º Ïç®ÏÑú Î∞±Í∑∏ÎùºÏö¥Îìú Î°úÎî© ÌïòÎäîÎ≤ï Ï∞æÍ∏∞
+//¥Ÿ∏• æ≤∑πµÂ∏¶ Ω·º≠ πÈ±◊∂ÛøÓµÂ ∑Œµ˘ «œ¥¬π˝ √£±‚
 bool SceneMgr::LoadSceneFile(const std::wstring& filePath)
 {
 	FILE* File = nullptr;
@@ -207,12 +192,67 @@ bool SceneMgr::LoadSceneFile(const std::wstring& filePath)
 	fread(&SceneType, sizeof(eSceneType), 1, File);
 
 	mScenes[static_cast<UINT>(SceneType)]->Load(File);
+	fclose(File);
+
+	//ChangeScene(SceneType);
+	{
+		if (mActiveScene->GetType() == SceneType)
+		{
+			//∞∞¿∫ æ¿ø° æ¿¿ª ≥÷æÓ¡Ÿ∂ß ∑Œµ˘ æ¿¿∏∑Œ ≥—æÓ∞°º≠ ¿€æ˜«œ±‚
+		}
+
+		if (mActiveScene)
+			mActiveScene->Exit();
+
+		mActiveScene = mScenes[static_cast<UINT>(SceneType)];
+
+		if (mActiveScene)
+			mActiveScene->Enter();
+	}
+
+	{
+		std::vector<GameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
+
+
+		for (GameObj* obj : gameObjs)
+		{
+			mActiveScene->AddGameObject(obj, obj->GetLayerType());
+		}
+	}
+
+	//mScenes[static_cast<UINT>(SceneType)]->Initialize(); 
+
+	return true;
+}
+
+bool SceneMgr::SaveLayerObjects(eLayerType type, const std::wstring& filePath)
+{
+	FILE* File = nullptr;
+
+	_wfopen_s(&File, filePath.c_str(), L"wb");
+
+	if (!File)
+		return false;
+
+	mActiveScene->SaveLayerObjects(File, type);
 
 	fclose(File);
 
-	ChangeScene(SceneType);
+	return true;
+}
 
-	//mScenes[static_cast<UINT>(SceneType)]->Initialize(); 
+bool SceneMgr::LoadLayerObjects(eLayerType type, const std::wstring& filePath)
+{
+	FILE* File = nullptr;
+
+	_wfopen_s(&File, filePath.c_str(), L"rb");
+
+	if (!File)
+		return false;
+
+	mActiveScene->LoadLayerObjects(File, type);
+
+	fclose(File);
 
 	return true;
 }
@@ -361,9 +401,7 @@ void SceneMgr::CreateCDO()
 	BlockBrick* BlockBrickObjCDO = new BlockBrick();
 	GameObj::AddObjectCDO("BlockBrick", BlockBrickObjCDO);
 
-	MapObject* mapObjectCDO = new MapObject(L"CityWorldHomeBuilding002", Vector3::One, Vector3::One);
-	GameObj::AddObjectCDO("MapObject", mapObjectCDO);
 
-	//SkySphere* SkySphere = new SkySphere();
-	//GameObj::AddObjectCDO("SkySphere", SkySphere);
+	SkySphere* SkySphereCDO = new SkySphere();
+	GameObj::AddObjectCDO("SkySphere", SkySphereCDO);
 }

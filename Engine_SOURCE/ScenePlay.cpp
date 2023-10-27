@@ -144,15 +144,15 @@ void ScenePlay::Initialize()
 	//TestScene 로드 테스트 로드시에 반복해서 몬스터 정의 방지
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
-		{
+		/*{
 			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
 			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 			skySphere->SetName(L"SkySphere");
-		}
+		}*/
 
-		{
-			CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-		}
+		//{
+		//	CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+		//}
 
 		CreatePlayerUI();
 		Scene::Initialize();

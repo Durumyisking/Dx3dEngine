@@ -144,7 +144,6 @@ void Layer::destroy()
 
 	for (GameObj* Obj : mAddedObjects)
 	{
-		AddGameObject(Obj, Obj->GetLayerType());
 		Obj->Initialize();
 	}
 
@@ -195,8 +194,9 @@ std::vector<GameObj*> Layer::GetDontDestroyObjects()
 	return donts;
 }
 
-void Layer::PushAddedObject(GameObj* gameObj)
+void Layer::PushAddedObject(GameObj* gameObj, eLayerType type)
 {
+	gameObj->SetLayerType(type);
 	mAddedObjects.push_back(gameObj);
 }
 

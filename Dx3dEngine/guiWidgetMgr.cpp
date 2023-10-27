@@ -95,10 +95,10 @@ namespace gui
 	void WidgetMgr::Release()
 	{
 
-		//// ImGui 설정 저장하고 싶으면 사용
-		//ImGuiIO& io = ImGui::GetIO();
-		//io.IniFilename = "../../Custom_ini.ini";
-		//ImGui::SaveIniSettingsToDisk(io.IniFilename);
+		// ImGui 설정 저장하고 싶으면 사용
+		ImGuiIO& io = ImGui::GetIO();
+		io.IniFilename = "../../Custom_ini.ini";
+		ImGui::SaveIniSettingsToDisk(io.IniFilename);
 
 		ImGui_Release();
 		
