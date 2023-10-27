@@ -31,7 +31,7 @@ Goomba::Goomba(const Goomba& Obj)
 	, mModel(nullptr)
 	, mTopGoomba(this)
 {
-	OnCapture();
+	//OnCapture();
 	SetName(L"Goomba");
 }
 
