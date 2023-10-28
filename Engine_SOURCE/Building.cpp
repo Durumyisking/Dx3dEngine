@@ -45,18 +45,24 @@ void Building::Save(FILE* File)
 
 	MeshRenderer* mrd = GetComponent<MeshRenderer>();
 
-	if (mrd->GetModel() != nullptr)
+	if (mModelName.empty())
 	{
-		mModelName = mrd->GetModel()->GetName();
+		if (mrd->GetModel() != nullptr)
+		{
+			mModelName = mrd->GetModel()->GetName();
+		}
 	}
 
-	if (GetComponent<Physical>() != nullptr)
+	if (!mbPhysical)
 	{
-		mbPhysical = true;
-		Physical* physical = GetComponent<Physical>();
-		mGeometryType = physical->GetGeometryType();
-		mActorType = physical->GetActorType();
-		mPhysicalScale = GetComponent<Transform>()->GetScale();
+		if (GetComponent<Physical>() != nullptr)
+		{
+			mbPhysical = true;
+			Physical* physical = GetComponent<Physical>();
+			mGeometryType = physical->GetGeometryType();
+			mActorType = physical->GetActorType();
+			mPhysicalScale = GetComponent<Transform>()->GetScale();
+		}
 	}
 
 	// 이름 저장

@@ -6,10 +6,6 @@
 #include "guiListWidget.h"
 #include "guiWidgetMgr.h"
 #include "guiHierarchy.h"
-#include "InputMgr.h"
-#include "Physical.h"
-
-#include "MeshRenderer.h"
 
 namespace gui
 {
@@ -18,11 +14,9 @@ namespace gui
 		, mCDOName()
 		, mInputText()
 		, mInputLayer(eLayerType::Default)
-		, mCopyObj(nullptr)
 	{
 		SetName("ObjectWindow");
 		SetSize(ImVec2(300.f, 300.f));
-		
 	}
 
 	ObjectWindow::~ObjectWindow()
@@ -37,12 +31,6 @@ namespace gui
 		}
 
 		mChilds.clear();
-
-		if (mCopyObj != nullptr)
-		{
-			delete mCopyObj;
-			mCopyObj = nullptr;
-		}
 	}
 
 	void ObjectWindow::Initialize()
@@ -95,17 +83,12 @@ namespace gui
 			button1->SetName("DeleteObject");
 			button1->SetClickCallback(&ObjectWindow::DeleteObject, this);
 		}
-		{
-			ButtonWidget* button2 = mGroupWidget->CreateWidget<ButtonWidget>(130.f, 75.f);
-			button2->SetName("CopyObject");
-			button2->SetClickCallback(&ObjectWindow::CreateCopyObject, this);
-		}
 
+		//
 	}
 
 	void ObjectWindow::FixedUpdate()
 	{
-
 	}
 
 	void ObjectWindow::Update()
@@ -129,15 +112,10 @@ namespace gui
 			mInputText = buf;
 
 		ImGui::PopItemWidth();
-
 	}
 
 	void ObjectWindow::LateUpdate()
 	{
-		if (GETSINGLE(InputMgr)->GetKeyState(eKeyCode::Y) == eKeyState::TAP)
-		{
-			CreateCopyObject();
-		}
 	}
 
 	void ObjectWindow::CreateObject()
@@ -174,78 +152,6 @@ namespace gui
 		hierarchy->GetTargetObject()->Die();
 
 		GETSINGLE(WidgetMgr)->ForceReset();
-	}
-
-	void ObjectWindow::CreateCopyObject()
-	{
-		if (mCopyObj == nullptr)
-			return;
-
-		GameObj* NewObj = mCopyObj->Clone();
-
-		if (NewObj == nullptr)
-			return;
-
-		if (AddObjectToScene(NewObj, mInputLayer))
-		{
-			GameObj* target = GETSINGLE(WidgetMgr)->GetWidget<Hierarchy>("Hierarchy")->GetTargetObject();
-
-			Vector3 pos = target->GetPos();
-
-			if (NewObj->GetComponent<Physical>() != nullptr)
-				NewObj->GetComponent<Transform>()->SetPhysicalPosition(pos);
-
-			NewObj->SetPos(pos);
-
-			GETSINGLE(WidgetMgr)->ForceReset(NewObj);
-
-
-			MeshRenderer* mr = NewObj->GetComponent<MeshRenderer>();
-			if (mr == nullptr)
-				return;
-
-			if (target->GetComponent<MeshRenderer>() == nullptr)
-				return;
-
-			Model* model = target->GetComponent<MeshRenderer>()->GetModel();
-			if (model == nullptr)
-				return;
-
-			std::wstring name = model->GetName();
-
-			Material* mt = model->GetLastMaterial();
-			if (mt == nullptr)
-				mt = GETSINGLE(ResourceMgr)->Find<Material>(L"PhongMaterial");
-
-			mr->ForceSetMaterial(mt);
-			mr->SetModel(model);
-		}
-	}
-
-	void ObjectWindow::CopyTargetObjectInfo(GameObj* obj)
-	{
-		if (obj == nullptr)
-		{
-			delete mCopyObj;
-			mCopyObj = nullptr;
-			return;
-		}
-
-		if (GameObj::FindObjectCDO(obj->GetObjectTypeName()) == nullptr)
-		{
-			delete mCopyObj;
-			mCopyObj = nullptr;
-			return;
-		}
-
-
-		if (mCopyObj != nullptr)
-		{
-			delete mCopyObj;
-			mCopyObj = nullptr;
-		}
-
-		mCopyObj = obj->Clone();
 	}
 
 	void ObjectWindow::SetObjectLayerType(UINT num)

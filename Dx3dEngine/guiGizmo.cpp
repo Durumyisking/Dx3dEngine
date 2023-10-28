@@ -36,18 +36,18 @@ namespace gui
             | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoCollapse 
             | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoSavedSettings;
 
-        //if (KEY_TAP(Z))
-        //{
+        if (KEY_TAP(Z))
+        {
             mGizmoOperation = ImGuizmo::TRANSLATE;
-        //}
-        //if (KEY_TAP(X))
-        //{
-        //    mGizmoOperation = ImGuizmo::ROTATE;
-        //}
-        //if (KEY_TAP(C))
-        //{
-        //    mGizmoOperation = ImGuizmo::SCALE;
-        //}
+        }
+        if (KEY_TAP(X))
+        {
+            mGizmoOperation = ImGuizmo::ROTATE;
+        }
+        if (KEY_TAP(C))
+        {
+            mGizmoOperation = ImGuizmo::SCALE;
+        }
 
     }
 
@@ -154,17 +154,7 @@ namespace gui
                 }
 
                 Vector3 axisRotation(x, y, z);
-
-                if (isPhysical)
-                {
-                    tr->SetPhysicalRotation(axisRotation);
-                    tr->SetRotation(axisRotation);
-                }
-                else
-                {
-
-                    tr->SetRotation(axisRotation);
-                }
+                tr->SetRotation(axisRotation);
             }
             else if (mGizmoOperation == ImGuizmo::SCALE)
             {

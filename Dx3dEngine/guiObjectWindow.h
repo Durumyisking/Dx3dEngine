@@ -21,8 +21,6 @@ namespace gui
 
 		void CreateObject();
 		void DeleteObject();
-		void CreateCopyObject();
-		void CopyTargetObjectInfo(GameObj* obj);
 		void SetObjectLayerType(UINT num);
 		bool AddObjectToScene(GameObj* obj, eLayerType type);
 
@@ -34,7 +32,5 @@ namespace gui
 		eLayerType mInputLayer;
 
 		GroupWidget* mGroupWidget;
-		GameObj* mCopyObj;
-		std::wstring mModelName;
     };
 }
