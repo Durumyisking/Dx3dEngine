@@ -2018,6 +2018,13 @@ namespace renderer
 		delete lightBuffer;
 		lightBuffer = nullptr;
 
+		for (size_t i = 0; i < lights.size(); i++)
+		{
+			delete lights[i];
+			lights[i] = nullptr;
+		}
+		lights.clear();
+
 
 		for (size_t i = 0; i < static_cast<UINT>(eRenderTargetType::End); i++)
 		{

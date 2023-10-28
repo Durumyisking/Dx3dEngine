@@ -117,5 +117,11 @@ void TimeMgr::frameRateLock_Debugging()
         if (mDeltaTime > (1.f / 60.f))
             mDeltaTime = (1.f / 60.f);
 #endif
+
+#ifdef _RELEASE
+        if (mDeltaTime > (1.f / 60.f))
+            mDeltaTime = (1.f / 60.f);
+#endif
+
 }
 
