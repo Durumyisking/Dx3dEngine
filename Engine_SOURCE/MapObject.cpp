@@ -98,7 +98,7 @@ void MapObject::Initialize()
 	assert(model);
 
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
-	mr->ForceSetMaterial(model->GetLastMaterial());
+	mr->SetMaterial(model->GetMaterial(0));
 	mr->SetModel(model);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.005f);
