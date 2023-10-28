@@ -245,7 +245,28 @@ void ResourceMgr::SettingModelMaterial()
 	Model* model = nullptr;
 #pragma region Building
 	model = Find<Model>(L"CityWorldHomeBuilding000");
-	//model->SetVariableMaterialsByKey(0, L"HomeBuilding002_0Material");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding000_0Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding000_1Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding000_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding000_3Material");
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding000_4Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding000_5Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding000_6Material");
+	model->SetVariableMaterialsByKey(7, L"HomeBuilding000_7Material");
+	model->SetVariableMaterialsByKey(8, L"HomeBuilding000_8Material");
+	model->SetVariableMaterialsByKey(9, L"HomeBuilding000_9Material");
+	model->SetVariableMaterialsByKey(10, L"HomeBuilding000_10Material");
+	model->SetVariableMaterialsByKey(11, L"HomeBuilding000_11Material");
+	model->SetVariableMaterialsByKey(12, L"HomeBuilding000_12Material");
+	model->SetVariableMaterialsByKey(13, L"HomeBuilding000_13Material");
+	model->SetVariableMaterialsByKey(14, L"HomeBuilding000_14Material");
+	model->SetVariableMaterialsByKey(15, L"HomeBuilding000_15Material");
+	model->SetVariableMaterialsByKey(16, L"HomeBuilding000_16Material");
+	model->SetVariableMaterialsByKey(17, L"HomeBuilding000_17Material");
+	model->SetVariableMaterialsByKey(18, L"HomeBuilding000_13Material");
+	model->SetVariableMaterialsByKey(19, L"HomeBuilding000_18Material");
+	model->SetVariableMaterialsByKey(20, L"HomeBuilding000_19Material");
+	model->SetVariableMaterialsByKey(21, L"HomeBuilding000_20Material");
 
 	model = Find<Model>(L"CityWorldHomeBuilding002");
 	model->SetVariableMaterialsByKey(0, L"HomeBuilding002_0Material");
