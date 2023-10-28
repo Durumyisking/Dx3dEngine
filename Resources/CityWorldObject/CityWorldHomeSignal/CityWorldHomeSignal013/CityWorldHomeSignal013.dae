@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset />
+  <library_images>
+    <image id="MetalSignal00_rgh">
+      <init_from>MetalSignal00_rgh.png</init_from>
+    </image>
+    <image id="MetalSignal00_mtl">
+      <init_from>MetalSignal00_mtl.png</init_from>
+    </image>
+    <image id="MetalSignal00_alb">
+      <init_from>MetalSignal00_alb.png</init_from>
+    </image>
+    <image id="MetalSignal00_nrm">
+      <init_from>MetalSignal00_nrm.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="Signal00_SS">
+      <instance_effect url="#Effect_Signal00_SS" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect_Signal00_SS">
+      <profile_COMMON>
+        <newparam sid="surface_Signal00_SS-diffuse">
+          <surface type="2D">
+            <init_from>MetalSignal00_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_Signal00_SS-diffuse">
+          <sampler2D>
+            <source>surface_Signal00_SS-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <newparam sid="surface_Signal00_SS-bump">
+          <surface type="2D">
+            <init_from>MetalSignal00_nrm</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_Signal00_SS-bump">
+          <sampler2D>
+            <source>surface_Signal00_SS-bump</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_Signal00_SS-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <bump>
+              <texture texture="sampler_Signal00_SS-bump" texcoord="CHANNEL0" />
+            </bump>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="pCylinder113__Signal00_SS-mesh" name="pCylinder113__Signal00_SS">
+      <mesh>
+        <source id="pCylinder113__Signal00_SS-position">
+          <float_array id="pCylinder113__Signal00_SS-position-array" count="150">9.305277 362.8636 10.3828 -0.816803 362.8636 13.83513 13.86017 362.8636 0.8303161 10.32634 362.8636 -9.145108 -9.201571 362.8636 -10.16618 0.7738566 362.8636 -13.7 -13.75646 362.8636 -0.6136885 -10.36929 362.8636 9.280236 -10.36929 368.6022 9.280236 -0.816803 368.6022 13.83513 0.7738566 368.6022 -13.7 10.32634 368.6022 -9.145108 10.32634 368.6022 -9.145108 -0.816803 368.6022 13.83513 13.86017 368.6022 0.8303161 9.305277 368.6022 10.3828 -10.36929 368.6022 9.280236 0.7738566 368.6022 -13.7 -13.75646 368.6022 -0.6136885 -9.201571 368.6022 -10.16618 10.32634 362.8636 -9.145108 -0.816803 362.8636 13.83513 0.7738566 362.8636 -13.7 -10.36929 362.8636 9.280236 -60.87824 345.0234 17.21826 49.67073 345.0234 16.46577 -60.87824 388.9793 17.21826 49.67073 388.9793 16.46577 49.61888 345.0234 13.80255 -60.93168 345.0234 14.33259 49.61888 388.9793 13.80255 -60.93168 388.9793 14.33259 -10.36929 362.8636 9.280236 -10.36929 368.6022 9.280236 -13.75646 368.6022 -0.6136885 -13.75646 362.8636 -0.6136885 -9.201571 368.6022 -10.16618 -9.201571 362.8636 -10.16618 0.7738566 368.6022 -13.7 0.7738566 362.8636 -13.7 10.32634 368.6022 -9.145108 10.32634 362.8636 -9.145108 13.86017 368.6022 0.8303161 13.86017 362.8636 0.8303161 9.305277 368.6022 10.3828 9.305277 362.8636 10.3828 -0.816803 368.6022 13.83513 -0.816803 362.8636 13.83513 -10.36929 368.6022 9.280236 -10.36929 362.8636 9.280236</float_array>
+          <technique_common>
+            <accessor source="#pCylinder113__Signal00_SS-position-array" count="50" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCylinder113__Signal00_SS-normal">
+          <float_array id="pCylinder113__Signal00_SS-normal-array" count="150">0 -0.9090909 0 0 -0.9090909 0 0 -0.9090909 0 0 -0.9090909 0 0 -0.9090909 0 0 -0.9090909 0 0 -0.9090909 0 0 -0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 0.9090909 0 0 -0.9090909 0 0 -0.9090909 0 0 -0.9090909 0 0 -0.9090909 0 0.005880326 0 0.9087533 0.005880326 0 0.9087533 0.005880326 0 0.9087533 0.005880326 0 0.9087533 -0.004258603 0 -0.9094847 -0.004258603 0 -0.9094847 -0.004258603 0 -0.9094847 -0.004258603 0 -0.9094847 -0.6771414 0 0.6059529 -0.6771414 0 0.6059529 -0.9071017 0 -0.05536467 -0.9071017 0 -0.05536467 -0.6091963 0 -0.6756785 -0.6091963 0 -0.6756785 0.04741493 0 -0.9074194 0.04741493 0 -0.9074194 0.6756785 0 -0.6091963 0.6756785 0 -0.6091963 0.9074194 0 0.04741493 0.9074194 0 0.04741493 0.6034409 0 0.680226 0.6034409 0 0.680226 -0.05138981 0 0.9072605 -0.05138981 0 0.9072605 -0.6771414 0 0.6059529 -0.6771414 0 0.6059529</float_array>
+          <technique_common>
+            <accessor source="#pCylinder113__Signal00_SS-normal-array" count="50" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCylinder113__Signal00_SS-texcoord">
+          <float_array id="pCylinder113__Signal00_SS-texcoord-array" count="100">0.8164312 0.2842799 0.8311411 0.2806787 0.8100223 0.2998444 0.8164922 0.3153782 0.8475906 0.3154088 0.8320261 0.3218177 0.854091 0.2998444 0.8467056 0.2871181 0.8472854 0.4110233 0.8317209 0.4174322 0.832606 0.3762932 0.817072 0.3827326 0.817072 0.3827326 0.8317209 0.4174322 0.8106326 0.3982666 0.817011 0.413831 0.8472854 0.4110233 0.832606 0.3762932 0.8546709 0.3982971 0.8481704 0.3827326 0.8164922 0.3153782 0.8311411 0.2806787 0.8320261 0.3218177 0.8467056 0.2871181 0.5137486 0.9474776 0.6454359 0.9474776 0.5137486 0.9998474 0.6454359 0.9998474 0.3760186 0.948088 0.5076754 0.948088 0.3760186 1.000458 0.5076754 1.000458 0.3144627 0.33961 0.3053072 0.3395489 0.3053377 0.3258156 0.3144627 0.3258767 0.3053682 0.3090914 0.3144322 0.3091525 0.3053682 0.2924589 0.3144322 0.2924589 0.3053377 0.2757347 0.3144932 0.2756737 0.3052767 0.2587664 0.3144932 0.2586749 0.3052767 0.2417676 0.3144627 0.2417371 0.3053072 0.2245552 0.3144627 0.2246162 0.3053377 0.203711 0.3144932 0.2037721</float_array>
+          <technique_common>
+            <accessor source="#pCylinder113__Signal00_SS-texcoord-array" count="50" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="pCylinder113__Signal00_SS-vertex">
+          <input semantic="POSITION" source="#pCylinder113__Signal00_SS-position" />
+        </vertices>
+        <triangles material="Signal00_SS" count="32">
+          <input semantic="VERTEX" source="#pCylinder113__Signal00_SS-vertex" offset="0" />
+          <input semantic="NORMAL" source="#pCylinder113__Signal00_SS-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#pCylinder113__Signal00_SS-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 1 1 1 3 3 3 2 2 2 4 4 4 5 5 5 6 6 6 5 5 5 7 7 7 6 6 6 8 8 8 9 9 9 10 10 10 9 9 9 11 11 11 10 10 10 12 12 12 13 13 13 14 14 14 13 13 13 15 15 15 14 14 14 16 16 16 17 17 17 18 18 18 17 17 17 19 19 19 18 18 18 20 20 20 21 21 21 22 22 22 21 21 21 23 23 23 22 22 22 24 24 24 25 25 25 26 26 26 25 25 25 27 27 27 26 26 26 28 28 28 29 29 29 30 30 30 29 29 29 31 31 31 30 30 30 32 32 32 33 33 33 34 34 34 35 35 35 32 32 32 34 34 34 35 35 35 34 34 34 36 36 36 37 37 37 35 35 35 36 36 36 37 37 37 36 36 36 38 38 38 39 39 39 37 37 37 38 38 38 39 39 39 38 38 38 40 40 40 41 41 41 39 39 39 40 40 40 41 41 41 40 40 40 42 42 42 43 43 43 41 41 41 42 42 42 43 43 43 42 42 42 44 44 44 45 45 45 43 43 43 44 44 44 45 45 45 44 44 44 46 46 46 47 47 47 45 45 45 46 46 46 47 47 47 46 46 46 48 48 48 49 49 49 47 47 47 48 48 48 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_pCylinder113__Signal00_SS-mesh">
+      <skin source="#pCylinder113__Signal00_SS-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="pCylinder113__Signal00_SS-mesh-joint">
+          <Name_array id="pCylinder113__Signal00_SS-mesh-joint-array" count="1">CityWorldHomeSignal013</Name_array>
+          <technique_common>
+            <accessor source="#pCylinder113__Signal00_SS-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCylinder113__Signal00_SS-mesh-inv_bind_matrix">
+          <float_array id="pCylinder113__Signal00_SS-mesh-inv_bind_matrix-array" count="16">-0.8287032 0 0.3737611 0 0 0.9090909 0 0 -0.3737611 0 -0.8287032 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#pCylinder113__Signal00_SS-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCylinder113__Signal00_SS-mesh-weight">
+          <float_array id="pCylinder113__Signal00_SS-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#pCylinder113__Signal00_SS-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#pCylinder113__Signal00_SS-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#pCylinder113__Signal00_SS-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="50">
+          <input semantic="JOINT" source="#pCylinder113__Signal00_SS-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#pCylinder113__Signal00_SS-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="Armature_CityWorldHomeSignal013" name="CityWorldHomeSignal013" sid="CityWorldHomeSignal013" type="JOINT">
+          <matrix sid="transform">-1.002731 0 -0.4522509 0 0 1.1 0 0 0.4522509 0 -1.002731 0 0 0 0 1</matrix>
+        </node>
+      </node>
+      <node id="pCylinder113__Signal00_SS" name="pCylinder113__Signal00_SS" type="NODE">
+        <instance_controller url="#Armature_pCylinder113__Signal00_SS-mesh">
+          <skeleton>#Armature_CityWorldHomeSignal013</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Signal00_SS" target="#Signal00_SS" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>
