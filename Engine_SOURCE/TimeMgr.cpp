@@ -48,8 +48,10 @@ void TimeMgr::Update()
         
     mPrevFrequency.QuadPart = mCurFrequency.QuadPart;
 
+#ifdef _DEBUG
     frameRateLock();
     frameRateLock_Debugging();
+#endif
 }
 
 void TimeMgr::Render(HDC hdc)
@@ -112,16 +114,7 @@ void TimeMgr::frameRateLock()
 
 void TimeMgr::frameRateLock_Debugging()
 {
-
-#ifdef _DEBUG
         if (mDeltaTime > (1.f / 60.f))
             mDeltaTime = (1.f / 60.f);
-#endif
-
-#ifdef _RELEASE
-        if (mDeltaTime > (1.f / 60.f))
-            mDeltaTime = (1.f / 60.f);
-#endif
-
 }
 

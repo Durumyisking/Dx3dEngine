@@ -146,32 +146,32 @@ void PlayerStateScript::Move()
 	{
 		mInitialForce += mForceIncrement;
 		mAnimator->Play(L"RunStart");
-		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_RUN_VELOCITY);
 	}
 	else if (
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&&(mAnimator->PlayAnimationName() == L"RunStart"))
 	{
 		mInitialForce += mForceIncrement;
-		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_RUN_VELOCITY);
 	}
 	else if (
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&& (mAnimator->PlayAnimationName() == L"Run"))
 	{
 		mInitialForce = 10000.f;
-		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_RUN_VELOCITY);
 	}
 	else if(mAnimator->PlayAnimationName() != L"Walk")
 	{
 		mAnimator->Play(L"Walk");
 		mInitialForce = 7000.f;
-		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_WALK_VELOCITY);
 	}
 	else
 	{
 		mInitialForce = 7000.f;
-		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_WALK_VELOCITY);
 	}
 	rigidbody->AddForce(-tr->Forward() * mInitialForce * DT);
 
@@ -356,7 +356,7 @@ void PlayerStateScript::SquatMove()
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
 
-	rigidbody->SetMaxVelocity(PLAYER_SQUATWALK_VELOCITY);
+	rigidbody->SetMaxVelocity_XZ(PLAYER_SQUATWALK_VELOCITY);
 
 
 	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
@@ -365,32 +365,32 @@ void PlayerStateScript::SquatMove()
 	{
 		mInitialForce += mForceIncrement;
 		mAnimator->Play(L"RollingStart");
-		rigidbody->SetMaxVelocity(PLAYER_ROLLING_VELOCITY);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_ROLLING_VELOCITY);
 	}
 	else if (
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&& (mAnimator->PlayAnimationName() == L"RollingStart"))
 	{
 		mInitialForce += mForceIncrement;
-		rigidbody->SetMaxVelocity(PLAYER_ROLLING_VELOCITY);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_ROLLING_VELOCITY);
 	}
 	else if (
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&& (mAnimator->PlayAnimationName() == L"Rolling"))
 	{
 		mInitialForce = 10000.f;
-		rigidbody->SetMaxVelocity(PLAYER_ROLLING_VELOCITY);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_ROLLING_VELOCITY);
 	}
 	else if (mAnimator->PlayAnimationName() != L"SquatWalk")
 	{
 		mAnimator->Play(L"SquatWalk");
 		mInitialForce = 7000.f;
-		rigidbody->SetMaxVelocity(PLAYER_SQUATWALK_VELOCITY);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_SQUATWALK_VELOCITY);
 	}
 	else
 	{
 		mInitialForce = 7000.f;
-		rigidbody->SetMaxVelocity(PLAYER_SQUATWALK_VELOCITY);
+		rigidbody->SetMaxVelocity_XZ(PLAYER_SQUATWALK_VELOCITY);
 	}
 
 	rigidbody->AddForce(-tr->Forward() * mInitialForce * DT);
@@ -402,7 +402,7 @@ void PlayerStateScript::Air()
 
 void PlayerStateScript::Fall()
 {
-	GetPhysXRigidBody()->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY);
+	GetPhysXRigidBody()->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 5.f);
 
 }
 
