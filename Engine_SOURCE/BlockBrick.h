@@ -5,6 +5,13 @@ class InstancingContainer;
 class BlockBrick : public InstantiativeObject
 {
 
+	enum class eBlockState
+	{
+		Idle,
+		Hit,
+		Distroy,
+	};
+
 public:
 	BlockBrick();
 	BlockBrick(const BlockBrick& Obj);

@@ -6,6 +6,9 @@
 #include "PhysXCollider.h"
 #include "InstancingContainer.h"
 
+#include "TimeMgr.h"
+#include "BoneAnimator.h"
+
 BlockBrick::BlockBrick()
 {
 	SetName(L"BlockBrick");
@@ -88,6 +91,15 @@ void BlockBrick::FontRender()
 
 void BlockBrick::OnCollisionEnter(GameObj* gameObject)
 {
+	if (eLayerType::Objects == gameObject->GetLayerType())
+	{
+		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < 0.95f)
+		{
+			//mRigidBody->SetAirOff();
+			//mRigidBody->SetVelocity(AXIS::Y, 0.f);
+			GetBoneAnimator()->ResetAnimator();
+		}
+	}
 }
 
 void BlockBrick::OnTriggerEnter(GameObj* gameObject)
