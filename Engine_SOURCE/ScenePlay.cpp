@@ -222,11 +222,10 @@ void ScenePlay::Initialize()
 
 	{
 		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-
 		ground->SetPos(Vector3::Zero);
 	}
 
-	{
+{
 	GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
 	directionalLight->SetPos({ 5.f, 5.f, 0.f });
 	Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
@@ -285,8 +284,8 @@ void ScenePlay::Initialize()
 	//			if (j > 4 && k > 1)
 	//				continue;
 
-	//			BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-	//			block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
+				//BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+				//block->SetPos(Vector3(0.f, 0.f, 0.f));
 	//			blockContainer->PushObject(block);
 	//		}
 	//	}

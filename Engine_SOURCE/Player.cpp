@@ -104,8 +104,8 @@ void Player::Initialize()
 	mMeshRenderer->SetMaterialByKey(L"marioBodyMaterial", 0);
 
 
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.25f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.25f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	mRigidBody->SetFriction(Vector3(40.f, 0.f, 40.f));
 
@@ -200,7 +200,7 @@ void Player::Update()
 		mPlayerState = ePlayerState::Idle;
 		mRigidBody->SetVelocity(Vector3::Zero);
 		mRigidBody->ApplyGravity();
-		mRigidBody->SetAirOn();
+		mRigidBody->SetAirOff();
 	}
 	if (KEY_TAP(F))
 	{
@@ -335,7 +335,7 @@ void Player::OnTriggerExit(GameObj* gameObject)
 {
 	if (eLayerType::Objects == gameObject->GetLayerType())
 	{
-		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
+		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.7f)
 		{
 			if (!mRigidBody->IsOnAir())
 			{

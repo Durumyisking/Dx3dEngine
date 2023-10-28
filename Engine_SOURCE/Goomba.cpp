@@ -104,8 +104,8 @@ void Goomba::Initialize()
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.25f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.25f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
@@ -201,25 +201,25 @@ void Goomba::CaptureEvent()
 	keyEvent[static_cast<UINT>(eKeyState::NONE)] = std::bind(&InputMgr::GetKeyNone, GETSINGLE(InputMgr), std::placeholders::_1);
 
 	// 키 입력 이벤트 처리하는 람다식
-	std::function<void(eKeyState, eKeyCode, eMonsterState)> stateEvent = 
+	std::function<void(eKeyState, eKeyCode, eMonsterState)> stateEvent =
 		[&]
-		(eKeyState keyState,eKeyCode curPress, eMonsterState nextState) ->void
+	(eKeyState keyState, eKeyCode curPress, eMonsterState nextState) ->void
+	{
+		if (able)
+			return;
+		if (keyEvent[static_cast<UINT>(keyState)](curPress))
 		{
-			if (able)
-				return;
-			if(keyEvent[static_cast<UINT>(keyState)](curPress))
-			{
-				SetMonsterState(nextState);
-				able = true;
-			}
-		};
+			SetMonsterState(nextState);
+			able = true;
+		}
+	};
 
 
 	// 이동
 	stateEvent(eKeyState::DOWN, eKeyCode::W, eMonsterState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::S, eMonsterState::Move);
 	stateEvent(eKeyState::DOWN, eKeyCode::A, eMonsterState::Move);
-	stateEvent(eKeyState::DOWN,eKeyCode::D, eMonsterState::Move);
+	stateEvent(eKeyState::DOWN, eKeyCode::D, eMonsterState::Move);
 
 	//// 점프
 	//able = false;
@@ -248,13 +248,38 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 
 	if (eLayerType::Player == gameObject->GetLayerType())
 	{
-		if (Calculate_RelativeDirection_ByCosTheta(gameObject) > 0.95f)
+		if (Player::ePlayerState::Capture != dynamic_cast<Player*>(gameObject)->GetPlayerState())
 		{
-			Model* model = GetMeshRenderer()->GetModel();
-			//model->AllMeshRenderSwtichOff();
-			//model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");
-			GetBoneAnimator()->Play(L"PressDown");
-			SetMonsterState(Monster::eMonsterState::Die);
+			if (Calculate_RelativeDirection_ByCosTheta(gameObject) > 0.95f)
+			{
+				Model* model = GetMeshRenderer()->GetModel();
+				GetBoneAnimator()->Play(L"PressDown");
+				SetMonsterState(Monster::eMonsterState::Die);
+			}
+		}
+	}
+
+	if (eLayerType::Objects == gameObject->GetLayerType())
+	{
+		Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
+		Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
+
+		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
+		{
+			if (pentDir.y > 0.f && pentDir.x == 0.f && pentDir.z == 0.f)
+			{
+				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+				{
+					//GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent);
+					if (GetPhysXRigidBody()->IsOnAir())
+					{
+						GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+						GetPhysXRigidBody()->SetAirOff();
+						//mRigidBody->RemoveGravity();
+						SetMonsterState(Monster::eMonsterState::Idle);
+					}
+				}
+			}
 		}
 	}
 
@@ -356,6 +381,19 @@ void Goomba::OnTriggerExit(GameObj* gameObject)
 	{
 		GetPhysXRigidBody()->ApplyGravity();
 		GetPhysXRigidBody()->SetAirOn();
+	}
+
+	if (eLayerType::Objects == gameObject->GetLayerType())
+	{
+		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.6f)
+		{
+			if (!GetPhysXRigidBody()->IsOnAir())
+			{
+				GetPhysXRigidBody()->SetAirOn();
+				GetPhysXRigidBody()->ApplyGravity();
+				SetMonsterState(Monster::eMonsterState::Fall);
+			}
+		}
 	}
 }
 

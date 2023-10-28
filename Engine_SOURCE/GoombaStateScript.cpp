@@ -82,6 +82,7 @@ void GoombaStateScript::Idle()
 
 void GoombaStateScript::Move()
 {
+	rotateByKey();
 	if (mMonster->IsCapture())
 	{
 		if (!mRigidbody->IsOnAir())
@@ -118,11 +119,10 @@ void GoombaStateScript::Move()
 		}
 	}
 
-	if (KEY_DOWN(W) || KEY_DOWN(S) || KEY_DOWN(A) || KEY_DOWN(D))
+	if (!KEY_NONE(W) || !KEY_NONE(S) || !KEY_NONE(A) || !KEY_NONE(D))
 	{
 		MoveForward(GOOMBA_SPPED);
 	}
-	rotateByKey();
 }
 
 void GoombaStateScript::Jump()
@@ -233,8 +233,10 @@ void GoombaStateScript::rotateByKey()
 {
 	if (!mRigidbody->IsOnAir())
 	{
-		if (GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::W) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::S)
-			|| GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::A) || GETSINGLE(InputMgr)->GetKeyUp(eKeyCode::D))
+		if (GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::W)
+			&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::S)
+			&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::A)
+			&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::D))
 		{
 			mMonster->SetMonsterState(Monster::eMonsterState::Idle);
 			return;
@@ -247,19 +249,13 @@ void GoombaStateScript::rotateByKey()
 		if (able)
 			return;
 
-		if (GETSINGLE(InputMgr)->GetKeyDown(key))
+		if (GETSINGLE(InputMgr)->GetKeyDown(key) || GETSINGLE(InputMgr)->GetKeyTap(key))
 		{
-			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
+			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key) || GETSINGLE(InputMgr)->GetKeyTap(mult_key))
 			{
-				if (GETSINGLE(InputMgr)->GetKeyDown(key) || GETSINGLE(InputMgr)->GetKeyTap(key))
-				{
-					if (GETSINGLE(InputMgr)->GetKeyDown(mult_key) || GETSINGLE(InputMgr)->GetKeyTap(mult_key))
-					{
-						rotation.y += renderer::mainCamera->GetTransform()->GetRotationY();
-						mTransform->SetPhysicalRotation(rotation);
-						able = true;
-					}
-				}
+				rotation.y += renderer::mainCamera->GetTransform()->GetRotationY();
+				mTransform->SetPhysicalRotation(rotation);
+				able = true;
 			}
 		}
 	};
