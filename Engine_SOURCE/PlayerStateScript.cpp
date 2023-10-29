@@ -332,15 +332,17 @@ void PlayerStateScript::SquatMove()
 		if (able)
 			return;
 
-		if (GETSINGLE(InputMgr)->GetKeyDown(key))
+		if (GETSINGLE(InputMgr)->GetKeyDown(key) || GETSINGLE(InputMgr)->GetKeyTap(key))
 		{
-			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key))
+			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key) || GETSINGLE(InputMgr)->GetKeyTap(mult_key))
 			{
+				rotation.y += renderer::mainCamera->GetTransform()->GetRotationY();
 				tr->SetPhysicalRotation(rotation);
 				able = true;
 			}
 		}
 	};
+
 
 	Input_DownFunC(eKeyCode::W, eKeyCode::D, math::Vector3(0.0f, -135.f, 0.0f));
 	Input_DownFunC(eKeyCode::W, eKeyCode::A, math::Vector3(0.0f, -225, 0.0f));
@@ -351,7 +353,6 @@ void PlayerStateScript::SquatMove()
 	Input_DownFunC(eKeyCode::S, eKeyCode::S, math::Vector3(0.0f, 0.f, 0.0f));
 
 	Input_DownFunC(eKeyCode::A, eKeyCode::A, math::Vector3(0.0f, 90.f, 0.0f));
-	Input_DownFunC(eKeyCode::D, eKeyCode::D, math::Vector3(0.0f, -90.f, 0.0f));
 
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
 	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);

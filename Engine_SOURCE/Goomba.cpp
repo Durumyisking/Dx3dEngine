@@ -266,7 +266,7 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 
 		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
 		{
-			if (pentDir.y > 0.f && pentDir.x == 0.f && pentDir.z == 0.f)
+			if (pentDir.y > 0.f)
 			{
 				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
 				{

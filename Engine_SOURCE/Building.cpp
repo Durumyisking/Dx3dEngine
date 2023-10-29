@@ -9,7 +9,7 @@ Building::Building()
 	: GameObj()
 	, mModelName(L"CityWorldHomeBuilding002")
 	, mbPhysical(true)
-	, mPhysicalScale(10.f, 50.f, 10.f)
+	, mPhysicalScale(10.f, 50.f, 5.f)
 	, mGeometryType(eGeometryType::Box)
 	, mActorType(eActorType::Static)
 {
@@ -61,7 +61,7 @@ void Building::Save(FILE* File)
 			Physical* physical = GetComponent<Physical>();
 			mGeometryType = physical->GetGeometryType();
 			mActorType = physical->GetActorType();
-			mPhysicalScale = GetComponent<Transform>()->GetScale();
+			mPhysicalScale = physical->GetGeometrySize();
 		}
 	}
 
