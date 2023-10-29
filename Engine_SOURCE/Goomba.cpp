@@ -104,8 +104,8 @@ void Goomba::Initialize()
 	//Phsical^
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	assert(physical);
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.25f, 0.5f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.25f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.25f, 0.3f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.25f, 0.3f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	// Rigidbody
 	assert(AddComponent<PhysXRigidBody>(eComponentType::RigidBody));
@@ -314,7 +314,7 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 			if (mLowerLayerGoombas.empty())
 			{
 				// if °É¸®¸é ³»°¡ À­±À¹Ù
-				if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.9f)
+				if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.8f)
 				{
 					// ¾Æ·§±À¹Ù º¤ÅÍ º¹»ç
 					std::vector<Goomba*> vec = goomba->GetGoombaLayer();
@@ -365,7 +365,14 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 		}
 		SetPlayer(dynamic_cast<Player*>(cap->GetOwner()));
 		if (mLowerLayerGoombas.size())
+		{
 			mLowerLayerGoombas[0]->OnCapture();
+			mLowerLayerGoombas[0]->SetMonsterState(eMonsterState::Idle);
+		}
+		else
+		{
+			SetMonsterState(eMonsterState::Idle);
+		}
 		// capture±ÇÀº bottom ±À¹Ù¿¡°Ô Áà¾ßÇÔ
 	}
 	//Monster::OnTriggerEnter(gameObject);

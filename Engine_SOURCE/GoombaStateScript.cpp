@@ -52,6 +52,12 @@ void GoombaStateScript::Initialize()
 		mAnimator->Play(L"Dash");
 	}
 	);
+	mAnimator->GetAnimationClip(L"PressDown")->SetCompleteEvent(
+		[this]()
+	{
+		mMonster->Die();
+	}
+	);
 
 
 	mRigidbody = mMonster->GetComponent<PhysXRigidBody>();
@@ -197,7 +203,7 @@ void GoombaStateScript::Chase()
 
 		Vector3 moveDir = -mTransform->WorldForward();
 		moveDir.y = 0.f;
-		//mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
+		mRigidbody->AddForce((moveDir * GOOMBA_SPPED * DT));
 	}
 }
 

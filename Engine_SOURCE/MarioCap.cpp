@@ -13,6 +13,9 @@
 #include "TimeMgr.h"
 
 #include "Player.h"
+#include "InputMgr.h"
+#include "SceneMgr.h"
+#include "Scene.h"
 
 MarioCap::MarioCap()
 	: DynamicObject()
@@ -136,6 +139,14 @@ void MarioCap::Update()
 		pxPos.y += 1.5f;
 		tr->SetPhysicalPosition(pxPos);
 		tr->SetPhysicalRotation(OwnerTr->GetPhysicalRotation());
+	}
+
+	if (KEY_TAP(R))
+	{
+		mCapState = eCapState::Idle;
+		GameObj* obj = GETSINGLE(SceneMgr)->GetActiveScene()->GetPlayer();
+		mOwner = obj;
+		dynamic_cast<Player*>(obj)->SetMarioCap(this);
 	}
 
 	DynamicObject::Update();

@@ -267,6 +267,22 @@ void Transform::SetPhysicalRotation(const PxQuat& quat)
 	mTickPerSceond = 0.f;
 }
 
+
+void Transform::SetPhysicalRotation_For_Static(const Vector3& rotation_degrees)
+{
+	assert(GetOwner()->GetComponent<Physical>());
+
+	mRelativeRotation = rotation_degrees;
+
+	PxQuat rotationX(toRadian(mRelativeRotation.x), PxVec3(1.0f, 0.0f, 0.0f));
+	PxQuat rotationY(toRadian(mRelativeRotation.y), PxVec3(0.0f, 1.0f, 0.0f));
+	PxQuat rotationZ(toRadian(mRelativeRotation.z), PxVec3(0.0f, 0.0f, 1.0f));
+	// 회전을 적용합니다.
+	PxQuat finalRotation = rotationX * rotationY * rotationZ;
+	mPxTransform.q = finalRotation;
+	GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->setGlobalPose(mPxTransform);
+}
+
 void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)
 {
 	assert(GetOwner()->GetComponent<Physical>());

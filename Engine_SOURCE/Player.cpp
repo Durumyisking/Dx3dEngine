@@ -202,13 +202,6 @@ void Player::Update()
 		mRigidBody->ApplyGravity();
 		mRigidBody->SetAirOff();
 	}
-	if (KEY_TAP(F))
-	{
-		SetPos({0.f, 15.f, 0.f});
-		mPlayerState = ePlayerState::Fall;
-		mRigidBody->ApplyGravity();
-		mRigidBody->SetAirOn();
-	}
 }
 
 void Player::FixedUpdate()
@@ -292,18 +285,16 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
 			Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
 
-    			if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
+    		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
 			{
 				if (pentDir.y > 0.f && pentDir.x == 0.f && pentDir.z == 0.f)
 				{
 					if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
-					{
-						//GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent);
+					{						
 						if (mRigidBody->IsOnAir())
 						{
 							GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
 							mRigidBody->SetAirOff();
-							//mRigidBody->RemoveGravity();
 							SetPlayerState(Player::ePlayerState::Idle);
 						}
 					}
@@ -335,7 +326,7 @@ void Player::OnTriggerExit(GameObj* gameObject)
 {
 	if (eLayerType::Objects == gameObject->GetLayerType())
 	{
-		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.7f)
+		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
 		{
 			if (!mRigidBody->IsOnAir())
 			{
@@ -383,10 +374,20 @@ void Player::KeyCheck()
 	// 대기
  
 	// 이동
-	stateEvent(eKeyState::DOWN, eKeyCode::W, ePlayerState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::S, ePlayerState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::A, ePlayerState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::D, ePlayerState::Move);
+	if (!mRigidBody->IsOnAir())
+	{
+		stateEvent(eKeyState::DOWN, eKeyCode::W, ePlayerState::Move);
+		stateEvent(eKeyState::DOWN, eKeyCode::S, ePlayerState::Move);
+		stateEvent(eKeyState::DOWN, eKeyCode::A, ePlayerState::Move);
+		stateEvent(eKeyState::DOWN, eKeyCode::D, ePlayerState::Move);
+	}
+	else
+	{
+		stateEvent(eKeyState::DOWN, eKeyCode::W, ePlayerState::Fall);
+		stateEvent(eKeyState::DOWN, eKeyCode::S, ePlayerState::Fall);
+		stateEvent(eKeyState::DOWN, eKeyCode::A, ePlayerState::Fall);
+		stateEvent(eKeyState::DOWN, eKeyCode::D, ePlayerState::Fall);
+	}
 
 	// 모자 던지기
 	able = false;

@@ -107,6 +107,14 @@ namespace gui
 			{
 				tr->SetPhysicalPosition(mPosition);
 				tr->SetPhysicalRotation(mRotation);
+				if (eActorType::Static == GetTarget()->GetComponent<Physical>()->GetActorType())
+				{
+					tr->SetPhysicalRotation_For_Static(mRotation);
+				}
+				else
+				{
+					tr->SetPhysicalRotation(mRotation);
+				}
 				tr->SetScale(mScale);
 			}
 			else

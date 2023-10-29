@@ -201,10 +201,10 @@ void ScenePlay::Initialize()
 	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
 	//}	
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	//}
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	}
 
 
 
@@ -225,51 +225,76 @@ void ScenePlay::Initialize()
 		ground->SetPos(Vector3::Zero);
 	}
 
-{
-	GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-	directionalLight->SetPos({ 5.f, 5.f, 0.f });
-	Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-	lightComp->SetType(eLightType::Point);
-	lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
-	lightComp->SetRadius(10.f);
-	lightComp->SetFallOffStart(7.5f);
-	lightComp->SetFallOffEnd(10.f);
-}
+// 세현 포인트라이트
+	{
+		{
+			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
+			directionalLight->SetPos({ -74.75f, 18.f,-19.5f });
+			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
+			lightComp->SetRadius(1.f);
+			lightComp->SetFallOffStart(0.5f);
+			lightComp->SetFallOffEnd(1.f);
+		}
 
-{
-	GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-	directionalLight->SetPos({ -5.f, 5.f, 0.f });
-	Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-	lightComp->SetType(eLightType::Point);
-	lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
-	lightComp->SetRadius(10.f);
-	lightComp->SetFallOffStart(7.5f);
-	lightComp->SetFallOffEnd(10.f);
-}
-
-
-{
-	GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-	directionalLight->SetPos({ 0.f, 5.f, 5.f });
-	Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-	lightComp->SetType(eLightType::Point);
-	lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
-	lightComp->SetRadius(10.f);
-	lightComp->SetFallOffStart(7.5f);
-	lightComp->SetFallOffEnd(10.f);
-}
-{
-	GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-	directionalLight->SetPos({ 0.f, 5.f, -5.f });
-	Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-	lightComp->SetType(eLightType::Point);
-	lightComp->SetDiffuse(Vector4(0.f, 1.f, 1.f, 1.f));
-	lightComp->SetRadius(10.f);
-	lightComp->SetFallOffStart(7.5f);
-	lightComp->SetFallOffEnd(10.f);
-}
+		{
+			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
+			directionalLight->SetPos({ -75.f, 10.5f,-15.f });
+			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
+			lightComp->SetRadius(1.f);
+			lightComp->SetFallOffStart(0.5f);
+			lightComp->SetFallOffEnd(1.f);
+		}
 
 
+		{
+			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
+			directionalLight->SetPos({ -75.f, 8.5f, -4.5f });
+			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
+			lightComp->SetRadius(4.f);
+			lightComp->SetFallOffStart(2.5f);
+			lightComp->SetFallOffEnd(4.f);
+		}
+	}
+//////////////////////////////////
+
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(5.f, 1.f, 1.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(5.f, 1.f, 2.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(5.f, 1.f, 3.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(5.f, 1.f, 4.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(4.f, 1.f, 1.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(4.f, 1.f, 2.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(4.f, 1.f, 3.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(4.f, 1.f, 4.f));
+	}
 	//{
 	//	Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
 	//	block->SetPos(Vector3(40.f, -0.5f, 0.f));

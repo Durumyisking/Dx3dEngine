@@ -403,8 +403,48 @@ void PlayerStateScript::Air()
 
 void PlayerStateScript::Fall()
 {
-	GetPhysXRigidBody()->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 5.f);
+	PhysXRigidBody* rigidbody = GetOwner()->GetComponent<PhysXRigidBody>();
+	assert(rigidbody);
+	Transform* tr = mPlayer->GetComponent<Transform>();
+	assert(tr);
 
+
+	bool able = false;
+	auto Input_DownFunC = [&](eKeyCode key, eKeyCode mult_key, math::Vector3 rotation)
+	{
+		if (able)
+			return;
+
+		if (GETSINGLE(InputMgr)->GetKeyDown(key) || GETSINGLE(InputMgr)->GetKeyTap(key))
+		{
+			if (GETSINGLE(InputMgr)->GetKeyDown(mult_key) || GETSINGLE(InputMgr)->GetKeyTap(mult_key))
+			{
+				rotation.y += renderer::mainCamera->GetTransform()->GetRotationY();
+				tr->SetPhysicalRotation(rotation);
+				able = true;
+			}
+		}
+	};
+
+
+	Input_DownFunC(eKeyCode::W, eKeyCode::D, math::Vector3(0.0f, -135.f, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::A, math::Vector3(0.0f, -225, 0.0f));
+	Input_DownFunC(eKeyCode::W, eKeyCode::W, math::Vector3(0.0f, -180.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::S, eKeyCode::D, math::Vector3(0.0f, -45.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::A, math::Vector3(0.0f, 45.f, 0.0f));
+	Input_DownFunC(eKeyCode::S, eKeyCode::S, math::Vector3(0.0f, 0.f, 0.0f));
+
+	Input_DownFunC(eKeyCode::A, eKeyCode::A, math::Vector3(0.0f, 90.f, 0.0f));
+
+	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+
+	//rigidbody->SetMaxVelocity_XZ(PLAYER_WALK_VELOCITY);
+
+	rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 5.f);
+
+	rigidbody->AddForce(-tr->Forward() * mInitialForce * DT);
 }
 
 void PlayerStateScript::Wall()
