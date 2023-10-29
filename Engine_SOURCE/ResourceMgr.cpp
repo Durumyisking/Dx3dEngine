@@ -224,11 +224,17 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 
 #pragma region Streetlight
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight000", L"CityWorldHomeStreetlight000");
+	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight001", L"CityWorldHomeStreetlight001");
 
 #pragma endregion
 
 #pragma region Tree
 		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000", L"CityWorldHomeTree000");
+
+#pragma endregion
+
+#pragma region BrickBreak
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/BrickBreak", L"BlockBrickBreak");
 
 #pragma endregion
 
@@ -678,5 +684,12 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(4, L"Tree000_4Material");
 
 #pragma endregion
-
+	model = Find<Model>(L"BlockBrickBreak");
+	model->SetVariableMaterialsByKey(0, L"BlockBrickMaterial");
+	model->SetVariableMaterialsByKey(1, L"BlockBrickMaterial");
+	model->SetVariableMaterialsByKey(2, L"BlockBrickMaterial");
+	model->SetVariableMaterialsByKey(3, L"BlockBrickMaterial");
+	model->SetVariableMaterialsByKey(4, L"BlockBrickMaterial");
+	model->SetVariableMaterialsByKey(5, L"BlockBrickMaterial");
+	model->SetVariableMaterialsByKey(6, L"BlockBrickMaterial");
 }

@@ -5,7 +5,7 @@
 BlockBrickScript::BlockBrickScript()
 	:mState(eState::Idle)
 {
-	int a = 0;
+
 }
 
 BlockBrickScript::~BlockBrickScript()
