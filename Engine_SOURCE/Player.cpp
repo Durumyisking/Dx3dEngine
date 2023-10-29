@@ -287,19 +287,16 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
 
     		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
-			{
-				if (pentDir.y > 0.f && pentDir.x == 0.f && pentDir.z == 0.f)
-				{
-					if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
-					{						
-						if (mRigidBody->IsOnAir())
-						{
-							GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-							mRigidBody->SetAirOff();
-							SetPlayerState(Player::ePlayerState::Idle);
-						}
+			{				
+				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+				{						
+					if (mRigidBody->IsOnAir())
+					{
+						GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+						mRigidBody->SetAirOff();
+						SetPlayerState(Player::ePlayerState::Idle);
 					}
-				}
+				}			
 			}
 		}
 
@@ -336,16 +333,13 @@ void Player::OnTriggerPersist(GameObj* gameObject)
 
 		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
 		{
-			if (pentDir.y > 0.f && pentDir.x == 0.f && pentDir.z == 0.f)
+			if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
 			{
-				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+				if (mRigidBody->IsOnAir())
 				{
-					if (mRigidBody->IsOnAir())
-					{
-						GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-						mRigidBody->SetAirOff();
-						SetPlayerState(Player::ePlayerState::Idle);
-					}
+					GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+					mRigidBody->SetAirOff();
+					SetPlayerState(Player::ePlayerState::Idle);
 				}
 			}
 		}

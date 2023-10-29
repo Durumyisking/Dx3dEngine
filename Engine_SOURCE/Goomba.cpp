@@ -166,7 +166,16 @@ void Goomba::Update()
 			GetBoneAnimator()->GetPlayAnimation()->SetDuration(mLowerLayerGoombas[0]->GetBoneAnimator()->GetPlayAnimation()->GetDuration());
 		}
 	}
-
+	if (KEY_TAP(R))
+	{
+		if (0 == mLowerLayerGoombas.size())
+		{
+			mMonsterState = eMonsterState::Idle;
+			GetPhysXRigidBody()->SetVelocity(Vector3::Zero);
+			GetPhysXRigidBody()->ApplyGravity();
+			GetPhysXRigidBody()->SetAirOff();
+		}
+	}
 
 }
 
