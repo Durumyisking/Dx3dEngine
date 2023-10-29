@@ -612,6 +612,7 @@
     <ClCompile Include="HomeManhole_3.cpp">
       <Filter>Common\GameObj\Manhole</Filter>
     </ClCompile>
+    <ClCompile Include="BlockBrickScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -1254,6 +1255,7 @@
     <ClInclude Include="FenceB.h">
       <Filter>Common\GameObj\Fence</Filter>
     </ClInclude>
+    <ClInclude Include="BlockBrickScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

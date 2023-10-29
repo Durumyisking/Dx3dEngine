@@ -2,6 +2,7 @@
 #include "ResourceMgr.h"
 #include "Texture.h"
 #include "Material.h"
+#include "BoneAnimator.h"
 
 AsyncLoad::AsyncLoad()
 	: mbLoadFinish(false)
@@ -56,7 +57,6 @@ void AsyncLoad::LoadModels()
 
 void AsyncLoad::LoadTextures()
 {
-
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_alb", L"goomba/Image/KuriboBody_alb.png");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_nrm", L"goomba/Image/KuriboBody_nrm.png");
 	GETSINGLE(ResourceMgr)->Load<Texture>(L"goombaBody_rgh", L"goomba/Image/KuriboBody_rgh.png");

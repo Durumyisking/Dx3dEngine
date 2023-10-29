@@ -165,6 +165,7 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Objects);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Player);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Cap);
@@ -187,10 +188,10 @@ void ScenePlay::Initialize()
 	//}
 
 	{
-		//mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 
-		//mPlayer->SetPos(Vector3(0.f, 10.f, 0.f));
-		//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+		mPlayer->SetPos(Vector3(0.f, 10.f, 0.f));
+		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
 	{
 		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");

@@ -223,6 +223,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="BaseRenderer.h" />
     <ClInclude Include="BlockBrick.h" />
     <ClInclude Include="BenchA.h" />
+    <ClInclude Include="BlockBrickScript.h" />
     <ClInclude Include="CityObjects.h" />
     <ClInclude Include="FenceA.h" />
     <ClInclude Include="FenceB.h" />
@@ -439,6 +440,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="BaseRenderer.cpp" />
     <ClCompile Include="BlockBrick.cpp" />
     <ClCompile Include="BenchA.cpp" />
+    <ClCompile Include="BlockBrickScript.cpp" />
     <ClCompile Include="FenceA.cpp" />
     <ClCompile Include="FenceB.cpp" />
     <ClCompile Include="HomeBuilding_09.cpp" />
