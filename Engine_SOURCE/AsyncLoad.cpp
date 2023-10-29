@@ -1317,6 +1317,15 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"StreetLight01", L"DeferredShader", L"Streetlight000_1Material", TextureState::AlMtNrRg);
 
 #pragma endregion
+
+#pragma region Tree Material
+	createMaterial(L"LeafTree00", L"Tree000_0Material", TextureState::AlNrRg);
+	createMaterial(L"LeafTree01", L"Tree000_1Material", TextureState::AlNrRg);
+	createMaterial(L"SoilTree00", L"Tree000_2Material", TextureState::AlNrRg);
+	createMaterial(L"StoneTree00", L"Tree000_3Material", TextureState::AlNrRg);
+	createMaterial(L"WoodTree00", L"Tree000_4Material", TextureState::AlNrRg);
+
+#pragma endregion
 }
 
 void AsyncLoad::loadCityTexture()
@@ -1741,6 +1750,20 @@ void AsyncLoad::loadCityTexture()
 		textureLoad(L"StreetLight01", L"CityWorldObject/CityWorldHomeStreetlight/CityWorldHomeStreetlight001/Image", TextureState::AlMtNrRg);
 
 #pragma endregion
+
+#pragma region Tree
+		textureLoad(L"LeafTree00", L"CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000/Image", TextureState::AlNrRg);
+		textureLoad(L"LeafTree01", L"CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000/Image", TextureState::AlNrRg);
+		textureLoad(L"SoilTree00", L"CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000/Image", TextureState::AlNrRg);
+		textureLoad(L"StoneTree00", L"CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000/Image", TextureState::AlNrRg);
+		textureLoad(L"WoodTree00", L"CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000/Image", TextureState::AlNrRg);
+
+#pragma endregion
+}
+
+void AsyncLoad::loadBuildingMaterials()
+{
+
 }
 
 void AsyncLoad::LoadSounds()
@@ -2044,6 +2067,57 @@ void AsyncLoad::createMaterial(std::wstring fileName, std::wstring shaderName, s
 		break;
 	}
 }
+
+void AsyncLoad::createMaterial(std::wstring fileName, std::wstring materialName, TextureState state)
+{
+	Shader* shader = nullptr;
+	Material* material = nullptr;
+
+	switch (state)
+	{
+	case AsyncLoad::TextureState::Al:
+		break;
+	case AsyncLoad::TextureState::Em:
+		break;
+	case AsyncLoad::TextureState::Nr:
+		break;
+	case AsyncLoad::TextureState::AlNr:
+		break;
+	case AsyncLoad::TextureState::AlRg:
+		break;
+	case AsyncLoad::TextureState::AlEm:
+		break;
+	case AsyncLoad::TextureState::AlEmNr:
+		break;
+	case AsyncLoad::TextureState::AlMsNr:
+		break;
+	case AsyncLoad::TextureState::AlNrRg:
+		shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(fileName + L"_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(fileName + L"_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(fileName + L"_rgh", eTextureSlot::Roughness);
+		//material->SetRenderingMode(eRenderingMode::DeferredOpaque);
+		GETSINGLE(ResourceMgr)->Insert<Material>(materialName, material);
+		break;
+	case AsyncLoad::TextureState::AlMtNrRg:
+		break;
+	case AsyncLoad::TextureState::AlEmNrRg:
+		break;
+	case AsyncLoad::TextureState::AlEmMtNrRg:
+		break;
+	case AsyncLoad::TextureState::AlEmMsNrRg:
+		break;
+	case AsyncLoad::TextureState::AlEmMsMtNr:
+		break;
+	case AsyncLoad::TextureState::AlMtMsNrRg:
+		break;
+	default:
+		break;
+	}
+}
+
 
 void AsyncLoad::textureLoad(std::wstring fileName, std::wstring path, TextureState state)
 {

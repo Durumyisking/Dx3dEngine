@@ -227,6 +227,11 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 
 #pragma endregion
 
+#pragma region Tree
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000", L"CityWorldHomeTree000");
+
+#pragma endregion
+
 
 	*bfinish = true;
 }
@@ -661,6 +666,16 @@ void ResourceMgr::SettingModelMaterial()
 	model = Find<Model>(L"CityWorldHomeStreetlight000");
 	model->SetVariableMaterialsByKey(0, L"Streetlight000_0Material");
 	model->SetVariableMaterialsByKey(1, L"Streetlight000_1Material");
+
+#pragma endregion
+
+#pragma region Tree
+	model = Find<Model>(L"CityWorldHomeTree000");
+	model->SetVariableMaterialsByKey(0, L"Tree000_0Material");
+	model->SetVariableMaterialsByKey(1, L"Tree000_1Material");
+	model->SetVariableMaterialsByKey(2, L"Tree000_2Material");
+	model->SetVariableMaterialsByKey(3, L"Tree000_3Material");
+	model->SetVariableMaterialsByKey(4, L"Tree000_4Material");
 
 #pragma endregion
 
