@@ -61,6 +61,10 @@ void PlayerStateScript::Initialize()
 	assert(mAnimator);
 
 	mJumpCount = 0;
+
+	GetPhysXRigidBody()->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
+	GetPhysXRigidBody()->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
+
 }
 
 void PlayerStateScript::Idle()
@@ -134,11 +138,6 @@ void PlayerStateScript::Move()
 
 	Input_DownFunC(eKeyCode::A, eKeyCode::A, math::Vector3(0.0f, 90.f, 0.0f));
 	Input_DownFunC(eKeyCode::D, eKeyCode::D, math::Vector3(0.0f, -90.f, 0.0f));
-
-	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
-	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
-
-
 
 	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&& mAnimator->PlayAnimationName() != L"Run"

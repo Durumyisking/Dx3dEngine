@@ -264,6 +264,16 @@ void GameObj::FontRender()
 	}
 }
 
+void GameObj::OnTriggerEnter(GameObj* gameObject)
+{
+	mCollisionObj.push_back(gameObject);
+}
+
+void GameObj::OnTriggerExit(GameObj* gameObject)
+{
+	mCollisionObj.erase(std::remove(mCollisionObj.begin(), mCollisionObj.end(), gameObject), mCollisionObj.end());
+}
+
 void GameObj::AddComponent(Component* component)
 {
 	eComponentType order = component->GetOrder();
@@ -528,7 +538,7 @@ Vector3 GameObj::MoveToTarget_Smooth_vector3(GameObj* target, float speed, bool 
 	return result;
 }
 
-void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
+void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType, bool oneSide)
 {
 	assert(GetComponent<Physical>());
 	assert(GetComponent<PhysXCollider>());
@@ -554,7 +564,15 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType)
 				vResult.x = 0.f;
 				vResult.z = 0.f;
 				GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
+				if (oneSide)
+				{
+					vResult.y = vResult.y > 0.f ? vResult.y : -vResult.y;
+					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
+				}
+				else
+				{
+					GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
+				}
 				break;
 			case enums::AXIS::Z:
 				vResult.x = 0.f;

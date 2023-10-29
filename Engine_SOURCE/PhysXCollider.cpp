@@ -40,6 +40,14 @@ void PhysXCollider::Initialize()
 }
 void PhysXCollider::Update()
 {
+	std::list<GameObj*> list = GetOwner()->GetCollisionObjs();
+	for (GameObj* obj : list)
+	{
+		if(obj->GetPhysXCollider())
+			OnTriggerPersist(obj->GetPhysXCollider());
+	}
+
+
 	if (mPhysical)
 	{
 		mPhysical->GetShape()->setSimulationFilterData(mFilterData);

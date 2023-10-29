@@ -189,7 +189,6 @@ void ScenePlay::Initialize()
 	{
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 
-		mPlayer->SetPos(Vector3(0.f, 10.f, 0.f));
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
 	{
@@ -201,10 +200,7 @@ void ScenePlay::Initialize()
 	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
 	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
 	//}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	}
+
 
 
 
@@ -263,38 +259,6 @@ void ScenePlay::Initialize()
 	}
 //////////////////////////////////
 
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(5.f, 1.f, 1.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(5.f, 1.f, 2.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(5.f, 1.f, 3.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(5.f, 1.f, 4.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(4.f, 1.f, 1.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(4.f, 1.f, 2.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(4.f, 1.f, 3.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(4.f, 1.f, 4.f));
-	}
 	//{
 	//	Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
 	//	block->SetPos(Vector3(40.f, -0.5f, 0.f));

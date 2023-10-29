@@ -141,14 +141,6 @@ void MarioCap::Update()
 		tr->SetPhysicalRotation(OwnerTr->GetPhysicalRotation());
 	}
 
-	if (KEY_TAP(R))
-	{
-		mCapState = eCapState::Idle;
-		GameObj* obj = GETSINGLE(SceneMgr)->GetActiveScene()->GetPlayer();
-		mOwner = obj;
-		dynamic_cast<Player*>(obj)->SetMarioCap(this);
-	}
-
 	DynamicObject::Update();
 }
 

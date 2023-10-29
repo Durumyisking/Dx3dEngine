@@ -83,7 +83,7 @@ void Player::Load(FILE* File)
 void Player::Initialize()
 {
 	//기본 설정
-	SetPos(Vector3(20.f, 5.f, 10.f));
+	SetPos(Vector3(20.f, 10.f, 10.f));
 	SetScale(Vector3(1.f, 1.f, 1.f));
 
 	//마리오 body 초기화
@@ -92,7 +92,7 @@ void Player::Initialize()
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	mRigidBody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-	AddComponent<PhysXCollider>(eComponentType::Collider)->SetSwitchState(false);
+	AddComponent<PhysXCollider>(eComponentType::Collider)->SetSwitchState(true);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
 	AddComponent<GenericAnimator>(eComponentType::GenericAnimator);
 
@@ -201,6 +201,7 @@ void Player::Update()
 		mRigidBody->SetVelocity(Vector3::Zero);
 		mRigidBody->ApplyGravity();
 		mRigidBody->SetAirOff();
+		mScript->SetHavingCap(true);
 	}
 }
 
@@ -232,7 +233,7 @@ void Player::Render()
 {
 	if (GetState() != GameObj::eState::Active)
 		return;
-
+		
 	DynamicObject::Render();
 
 	for (auto i : mParts)
@@ -314,12 +315,41 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			}
 		}
 	}
-
+	GameObj::OnTriggerEnter(gameObject);
 }
 
 void Player::OnTriggerPersist(GameObj* gameObject)
 {
+	/*if (L"BlockBrick" == gameObject->GetName())
+	{
+		if (mRigidBody->IsOnAir())
+		{
+			GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+			mRigidBody->SetAirOff();
+			SetPlayerState(Player::ePlayerState::Idle);
+		}
+	}*/
+	if (eLayerType::Objects == gameObject->GetLayerType())
+	{
+		Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
+		Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
 
+		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
+		{
+			if (pentDir.y > 0.f && pentDir.x == 0.f && pentDir.z == 0.f)
+			{
+				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+				{
+					if (mRigidBody->IsOnAir())
+					{
+						GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+						mRigidBody->SetAirOff();
+						SetPlayerState(Player::ePlayerState::Idle);
+					}
+				}
+			}
+		}
+	}
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)
@@ -336,6 +366,8 @@ void Player::OnTriggerExit(GameObj* gameObject)
 			}
 		}
 	}
+	GameObj::OnTriggerExit(gameObject);
+
 }
 
 void Player::KeyCheck()

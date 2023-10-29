@@ -52,6 +52,8 @@ private:
 
 	Goomba* mTopGoomba;
 
+	PhysXRigidBody* mRigidbody;
+
 	/*
 	Body__BodyMT
 
