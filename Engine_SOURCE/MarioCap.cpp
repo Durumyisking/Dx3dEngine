@@ -13,6 +13,7 @@
 #include "TimeMgr.h"
 
 #include "Player.h"
+#include "AudioSource.h"
 
 MarioCap::MarioCap()
 	: DynamicObject()
@@ -208,6 +209,8 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		GetComponent<Transform>()->SetPhysicalRotation(rotation);
 		rigidbody->SetMaxVelocity(0.0f);
 
+		GetOwner()->GetComponent<AudioSource>()->Play(L"Capture", false);
+
 		GetComponent<BoneAnimator>()->Play(L"Capture", false);
 
 		SetCapState(MarioCap::eCapState::Capture);
@@ -300,6 +303,7 @@ void MarioCap::stateInfoInitalize()
 
 void MarioCap::FlyStart()
 {
+	GetOwner()->GetComponent<AudioSource>()->Play(L"CapThrow", true);
 	// 이전에 진행중이던 애니메이터 종료
 	GenericAnimator* animator = GetComponent<GenericAnimator>();
 	if (animator->IsRunning())
@@ -397,6 +401,7 @@ void MarioCap::FlyEnd()
 
 		SetCapState(eCapState::Return);
 		GetPhysical()->KinematicActorSleep();
+		GetOwner()->GetComponent<AudioSource>()->Stop(L"CapThrow");
 		Pause();
 	};
 

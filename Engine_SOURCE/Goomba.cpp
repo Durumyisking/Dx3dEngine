@@ -11,7 +11,10 @@
 #include "PhysicalMovement.h"
 
 #include "MarioCap.h"
+#include "TimeMgr.h"
 #include "Player.h"
+#include "EffectObject.h"
+#include "Object.h"
 
 Goomba::Goomba()
 	: Monster()
@@ -250,11 +253,14 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 	{
 		if (Calculate_RelativeDirection_ByCosTheta(gameObject) > 0.95f)
 		{
+			TrampleEffect();
 			Model* model = GetMeshRenderer()->GetModel();
 			//model->AllMeshRenderSwtichOff();
 			//model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");
 			GetBoneAnimator()->Play(L"PressDown");
 			SetMonsterState(Monster::eMonsterState::Die);
+
+
 		}
 	}
 
@@ -494,4 +500,48 @@ void Goomba::modelSetting()
 	}
 	
 	setCapturedModel();
+}
+
+void Goomba::TrampleEffect()
+{
+	// π‚»˚ ¿Ã∆Â∆Æ
+	float angle = -180.f;
+	std::vector<EffectObject*> objects;
+	objects.push_back(object::LateInstantiate<EffectObject>(eLayerType::Objects));
+	objects.push_back(object::LateInstantiate<EffectObject>(eLayerType::Objects));
+	objects.push_back(object::LateInstantiate<EffectObject>(eLayerType::Objects));
+	objects.push_back(object::LateInstantiate<EffectObject>(eLayerType::Objects));
+	objects.push_back(object::LateInstantiate<EffectObject>(eLayerType::Objects));
+
+
+	for (auto i : objects)
+	{
+		i->Initialize();
+	}
+
+	Transform* tr = GetComponent<Transform>();
+	Vector3 position = tr->GetPhysicalPosition();
+
+	for (auto i : objects)
+	{
+		i->GetComponent<Transform>()->SetPhysicalPosition(position);
+		i->GetComponent<Transform>()->SetPhysicalRotation(math::Vector3(0.0f, angle, 0.0f));
+
+		PhysXRigidBody* rigidbody = i->GetComponent<PhysXRigidBody>();
+
+		if (rigidbody)
+		{
+			//rigidbody->SetMaxVelocity_Y(5.f);
+			rigidbody->ApplyGravity();
+			rigidbody->SetAirOn();
+
+
+			Vector3 force = -i->GetComponent<Transform>()->WorldForward() * 350.f * DT;
+
+			rigidbody->AddForce(force);
+		}
+		angle += 72.f;
+	}
+
+
 }

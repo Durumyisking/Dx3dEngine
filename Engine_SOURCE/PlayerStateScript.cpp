@@ -7,6 +7,7 @@
 #include "InputMgr.h"
 #include "TimeMgr.h"
 #include "AudioSource.h"
+#include "PlayerBGMScript.h"
 
 PlayerStateScript::PlayerStateScript()
 	: Script()
@@ -100,7 +101,7 @@ void PlayerStateScript::Move()
 		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::D))
 	{
 		mAnimator->Play(L"Brake");
-		GetOwner()->GetComponent<AudioSource>()->Stop(L"FootNote");
+		//GetOwner()->GetComponent<AudioSource>()->Stop(L"FootNote");
 		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
 
 		return;
@@ -157,6 +158,7 @@ void PlayerStateScript::Move()
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&&(mAnimator->PlayAnimationName() == L"RunStart"))
 	{
+		mFootInterval = 0.1f;
 		mInitialForce += mForceIncrement;
 		rigidbody->SetMaxVelocity(PLAYER_RUN_VELOCITY);
 	}
@@ -169,8 +171,9 @@ void PlayerStateScript::Move()
 	}
 	else if(mAnimator->PlayAnimationName() != L"Walk")
 	{
-		GetOwner()->GetComponent<AudioSource>()->Stop(L"FootNote");
-		GetOwner()->GetComponent<AudioSource>()->Play(L"FootNote", true);
+		//GetOwner()->GetComponent<AudioSource>()->Stop(L"FootNote");
+		//mPlayer->GetComponent<PlayerBGMScript>()->SetSound(PlayerBGMScript::eSoundState::FootNote);
+		mFootInterval = 0.47f;
 		mAnimator->Play(L"Walk");
 		mInitialForce = 7000.f;
 		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
@@ -181,6 +184,15 @@ void PlayerStateScript::Move()
 		rigidbody->SetMaxVelocity(PLAYER_WALK_VELOCITY);
 	}
 	rigidbody->AddForce(-tr->Forward() * mInitialForce * DT);
+
+
+	if (mFootIntervalTime > mFootInterval)
+	{
+		mPlayer->GetComponent<AudioSource>()->Play(L"FootNote", false);
+		mFootIntervalTime = 0;
+	}
+
+	mFootIntervalTime += DT;
 
 }
 
@@ -203,6 +215,7 @@ void PlayerStateScript::Jump()
 		if (mJumpCount == 0)
 		{
 			mAnimator->Play(L"Jump");
+			mPlayer->GetComponent<AudioSource>()->Play(L"ha1", false);
 
 			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY);
 			rigidbody->ApplyGravity();
@@ -213,6 +226,7 @@ void PlayerStateScript::Jump()
 		else if (mJumpCount == 1)
 		{
 			mAnimator->Play(L"Jump2");
+			mPlayer->GetComponent<AudioSource>()->Play(L"ha2", false);
 
 			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 2.f);
 			rigidbody->ApplyGravity();
@@ -224,6 +238,7 @@ void PlayerStateScript::Jump()
 		else if (mJumpCount == 2)
 		{
 			mAnimator->Play(L"Jump3");
+			mPlayer->GetComponent<AudioSource>()->Play(L"wahoo", false);
 
 			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 5.f);
 			rigidbody->ApplyGravity();
@@ -459,3 +474,5 @@ void PlayerStateScript::Capture()
 void PlayerStateScript::Die()
 {
 }
+
+

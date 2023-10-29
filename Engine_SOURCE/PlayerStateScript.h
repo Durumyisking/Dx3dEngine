@@ -52,6 +52,9 @@ private:
 	UINT mJumpCount;
 	//float mMoveTime = 0.0f;
 
+	float mFootIntervalTime = 0.0f;
+	float mFootInterval = 0.0f;
+
 	bool mbHavingCap;
 
 protected:

@@ -190,20 +190,24 @@ void ScenePlay::Initialize()
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 		mPlayer->SetPos(Vector3(0.f, 10.f, 0.f));
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+		//AudioSource* mAudioSource= mCamera->AddComponent<AudioSource>(eComponentType::AudioSource);
+		//mAudioSource->AddClipByKey(L"NewDonkCity");
+		//mAudioSource->SetVolume(L"NewDonkCity", 0.00001f);
+		//mAudioSource->Play(L"NewDonkCity",true);
 	}
 	{
 		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
 		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
 	}
 
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
-	//}	
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	//}
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(15.f, 10.f, 10.f));
+	}	
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
+	}
 
 
 

@@ -612,6 +612,8 @@
     <ClCompile Include="HomeManhole_3.cpp">
       <Filter>Common\GameObj\Manhole</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerBGMScript.cpp" />
+    <ClCompile Include="EffectObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -1254,6 +1256,8 @@
     <ClInclude Include="FenceB.h">
       <Filter>Common\GameObj\Fence</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerBGMScript.h" />
+    <ClInclude Include="EffectObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

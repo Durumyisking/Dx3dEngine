@@ -42,6 +42,7 @@ private:
 	void setCapturedModel();
 
 	void modelSetting();
+	void TrampleEffect();
 
 	GETSET(Goomba*, mTopGoomba, TopGoomba)
 

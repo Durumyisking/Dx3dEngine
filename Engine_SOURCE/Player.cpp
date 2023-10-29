@@ -19,6 +19,7 @@
 
 #include "FootSmokeParticle.h"
 #include "Object.h"
+#include "PlayerBGMScript.h"
 
 Player::Player()
 	: mPlayerState(ePlayerState::Idle)
@@ -95,7 +96,19 @@ void Player::Initialize()
 
 	//효과음
 	AudioSource* mAudioSource = AddComponent<AudioSource>(eComponentType::AudioSource);
+	//AddComponent<PlayerBGMScript>(eComponentType::Script);
 	mAudioSource->AddClipByKey(L"FootNote");
+	mAudioSource->AddClipByKey(L"ha1");
+	mAudioSource->AddClipByKey(L"ha2");
+	mAudioSource->AddClipByKey(L"woo");
+	mAudioSource->AddClipByKey(L"wahoo");
+	mAudioSource->AddClipByKey(L"NewDonkCity");
+
+	mAudioSource->AddClipByKey(L"CapThrow");
+	mAudioSource->AddClipByKey(L"Capture");
+
+	mAudioSource->Play(L"NewDonkCity", true);
+	mAudioSource->SetVolume(L"ha2", 100.f);
 
 	AddComponent<PhysXCollider>(eComponentType::Collider)->SetSwitchState(false);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
@@ -381,7 +394,7 @@ void Player::KeyCheck()
 
 	// 모자 던지기
 	able = false;
-	//stateEvent(eKeyState::TAP, eKeyCode::LBTN, ePlayerState::ThrowCap);
+	stateEvent(eKeyState::TAP, eKeyCode::LBTN, ePlayerState::ThrowCap);
 
 	// 특수
 	able = false;
