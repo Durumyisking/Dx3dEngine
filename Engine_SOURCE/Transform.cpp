@@ -193,15 +193,55 @@ void Transform::SetConstantBuffer()
 	cb->Bind(eShaderStage::PS);
 	cb->Bind(eShaderStage::CS);
 
+	auto mult = [&](const Vector4& v, const Matrix& m) -> Vector4
+		{
+			Vector4 result;
+			result.x = (v.x * m._11) + (v.y * m._21) + (v.z * m._31) + (v.w * m._41);
+			result.y = (v.x * m._12) + (v.y * m._22) + (v.z * m._32) + (v.w * m._42);
+			result.z = (v.x * m._13) + (v.y * m._23) + (v.z * m._33) + (v.w * m._43);
+			result.w = (v.x * m._14) + (v.y * m._24) + (v.z * m._34) + (v.w * m._44);
+
+			return result;
+		};
+
 	if (GetOwner()->GetLayerType() == eLayerType::FX)
 	{
-		Vector4 test(0.f);
-		test.w = 1.f;
+		Vector4 pos(0.5f);
+		pos.w = 1.0f;
 
-		test = Vector4::Transform(test, trCb.world);
-		test = Vector4::Transform(test, trCb.view);
-		test = Vector4::Transform(test, trCb.projection);
+		//pos = mult(pos, trCb.world);
+		pos = mult(pos, trCb.view);
+		pos = mult(pos, trCb.projection);
 
+		Vector3 invView = pos.XYZ() / pos.w;
+		pos = Vector4(invView, 1.0f);
+
+		pos = mult(pos, trCb.inverseView);
+
+
+
+
+		Vector3 ndcPos = pos.XYZ() / pos.w;
+
+		int a = 0;
+
+		Vector2 UV = ndcPos * Vector2(0.5f, -0.5f);
+		UV += Vector2(0.5f, 0.5f);
+
+		Vector4 invPro = mult(Vector4(1.0f, 1.0f, 1.0f, 1.0f), trCb.inverseProjection);
+		//Vector4 invPro = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+
+		Vector2 rightTop = Vector2(invPro.x, invPro.y);
+		float x = math::Interpolation<float>(0, 1, UV.x, -rightTop.x, rightTop.x);
+		float y = math::Interpolation<float>(0, 1, UV.y, -rightTop.y, rightTop.y);
+
+		Vector3 viewRay = Vector3(x, y, invPro.z);
+		//viewRay *= depth;
+
+		//Vector4 viewPos = mult(Vector4(viewRay, 1.0f), trCb.inverseView);
+		//Vector4 worldPos = mult(Vector4(viewRay, 1.0f), trCb.inverseWorld);
+
+		int t = 0;
 	}
 }
 
