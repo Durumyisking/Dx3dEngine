@@ -108,8 +108,6 @@ void Building::Initialize()
 		Transform* tr = GetComponent<Transform>();
 		tr->SetPhysicalRotation(tr->GetRotation());
 
-		//GetTransform()->SetPhysicalPosition(GetTransform()->GetPosition());
-
 		PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 		rigid->RemoveGravity();
 

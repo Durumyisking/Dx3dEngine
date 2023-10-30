@@ -43,6 +43,8 @@ private:
 	void loadCityTexture();
 	void loadBuildingMaterials();
 
+	void loadCapWorldTexture();
+	void loadCapWorldMaterial();
 
 	void createMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state);
 	void createMaterial(std::wstring fileName,std::wstring materialName, TextureState state);

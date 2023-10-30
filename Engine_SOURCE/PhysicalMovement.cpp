@@ -36,7 +36,7 @@ void PhysicalMovement::Render()
 {
 }
 
-// ÀÌµ¿Àº ¿©±â¼­ ¼öÇà
+// Ã€ÃŒÂµÂ¿Ã€Âº Â¿Â©Â±Ã¢Â¼Â­ Â¼Ã¶Ã‡Ã 
 void PhysicalMovement::Move(const Vector3& velocity)
 {
 	PxTransform transform = GetOwner()->GetComponent<Transform>()->GetPxTransform();

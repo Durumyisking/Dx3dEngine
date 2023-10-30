@@ -38,10 +38,12 @@ void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geom
 	if (geometryType == eGeometryType::ConvexMesh)
 	{
 		InitialConvexMeshProperties(actorType, geometrySize);
+		return;
 	}
-	if (geometryType == eGeometryType::TriangleMesh)
+	else if (geometryType == eGeometryType::TriangleMesh)
 	{
 		InitialTriangleMeshProperties(geometrySize);
+		return;
 	}
 
 	mActorType = actorType;

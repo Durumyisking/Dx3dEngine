@@ -53,7 +53,7 @@ void ModelObj::Save(FILE* File)
 		Physical* physical = GetComponent<Physical>();
 		mGeomType = physical->GetGeometryType();
 		mActorType = physical->GetActorType();
-		mPhysicalScale = GetComponent<Transform>()->GetScale();
+		mPhysicalScale = physical->GetGeometrySize();
 	}
 	
 	// 이름 저장
@@ -89,50 +89,31 @@ void ModelObj::Initialize()
 {
 	if (!mModelName.empty())
 	{
-		// SetModel
 		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(mModelName);
-		MeshRenderer* mrd = GetComponent<MeshRenderer>();
-		Material* mt = model->GetMaterial(0);
 
-		if (mt == nullptr)
-			mt = GETSINGLE(ResourceMgr)->Find<Material>(L"PhongMaterial");
+		if (model == nullptr)
+			return;
 
-		mrd->SetModel(model, mt);
+		MeshRenderer* mr = GetComponent<MeshRenderer>();
+		mr->ForceSetMaterial(model->GetLastMaterial());
+		mr->SetModel(model);
+
+		this->GetComponent<Transform>()->SetOffsetScale(0.005f);
 	}
 
 	if (mbPhysical)
 	{
 		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
+		physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
+		Transform* tr = GetComponent<Transform>();
+		tr->SetPhysicalRotation(tr->GetRotation());
 
-		switch (mGeomType)
-		{
-		case enums::eGeometryType::Box:
-			physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
-			break;
-		case enums::eGeometryType::Capsule:
-			physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
-			break;
-		case enums::eGeometryType::Sphere:
-			physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
-			break;
-		case enums::eGeometryType::Plane:
-			physical->InitialDefaultProperties(mActorType, mGeomType, mPhysicalScale);
-			break;
-		case enums::eGeometryType::ConvexMesh:
-			physical->InitialConvexMeshProperties(mActorType, mPhysicalScale);
-			break;
-		case enums::eGeometryType::TriangleMesh:
-			physical->InitialTriangleMeshProperties(mPhysicalScale);
-			break;
-		case enums::eGeometryType::End:
-			break;
-		default:
-			break;
-		}
+		PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		rigid->RemoveGravity();
 
-		AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 		AddComponent<PhysXCollider>(eComponentType::Collider);
 	}
+
 
 	GameObj::Initialize();
 }

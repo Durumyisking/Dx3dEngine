@@ -74,8 +74,10 @@ void PhysXCollider::FixedUpdate()
 		colType = eColliderType::Box;
 		break;
 	case physx::PxGeometryType::eCONVEXMESH:
+		scale = shape->getGeometry().convexMesh().scale.scale;
 		break;
 	case physx::PxGeometryType::eTRIANGLEMESH:
+		scale = shape->getGeometry().triangleMesh().scale.scale;
 		break;
 	case physx::PxGeometryType::eHEIGHTFIELD:
 		break;
@@ -246,6 +248,22 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
 		break;
+		case eGeometryType::ConvexMesh:
+		{
+			PxConvexMeshGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->convexMeshGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, boxGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		case eGeometryType::TriangleMesh:
+		{
+			PxTriangleMeshGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->triangleMeshGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, boxGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
 		default:
 			break;
 		}
@@ -284,6 +302,22 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
 		}
 		break;
+		case eGeometryType::ConvexMesh:
+		{
+			PxConvexMeshGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->convexMeshGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, capsuleGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		case eGeometryType::TriangleMesh:
+		{
+			PxTriangleMeshGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->triangleMeshGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, capsuleGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
 		default:
 			break;
 		}
@@ -317,6 +351,22 @@ Vector3 PhysXCollider::ComputePenetration(GameObj* gameObject)
 		case eGeometryType::Sphere:
 		{
 			PxSphereGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->sphereGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, sphereGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		case eGeometryType::ConvexMesh:
+		{
+			PxConvexMeshGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->convexMeshGeom;
+			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, sphereGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
+			if (bIsPenet)
+				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);
+		}
+		break;
+		case eGeometryType::TriangleMesh:
+		{
+			PxTriangleMeshGeometry otherGeom = gameObject->GetPhysical()->GetGeometries()->triangleMeshGeom;
 			bIsPenet = PxGeometryQuery::computePenetration(mPenetDir, mPenetDepth, sphereGeom, GetPhysical()->GetActor<PxRigidActor>()->getGlobalPose(), otherGeom, otherTransform);
 			if (bIsPenet)
 				return convert::PxVec3ToVector3(mPenetDir * mPenetDepth);

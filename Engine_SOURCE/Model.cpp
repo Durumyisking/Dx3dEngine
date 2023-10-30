@@ -379,10 +379,13 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 
 		math::Vector3 tangent = {};
-		tangent.x = mesh->mTangents[i].x;
-		tangent.y = mesh->mTangents[i].y;
-		tangent.z = mesh->mTangents[i].z;
-		vertex.tangent = tangent;
+		if(mesh->mTangents != nullptr)
+		{
+			tangent.x = mesh->mTangents[i].x;
+			tangent.y = mesh->mTangents[i].y;
+			tangent.z = mesh->mTangents[i].z;
+			vertex.tangent = tangent;
+		}
 
 		// UV
 		if (mesh->mTextureCoords[0] != nullptr)

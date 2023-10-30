@@ -31,6 +31,7 @@ namespace gui
 		renderer->SetMaterial(material);
 		renderer->SetMesh(rectMesh);
 
+		mDebugObjects[static_cast<UINT>(eColliderType::Line)] = nullptr;
 
 		Mesh* circleMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Circlemesh");
 		mDebugObjects[static_cast<UINT>(eColliderType::Circle)] = new DebugObject();
@@ -54,6 +55,13 @@ namespace gui
 			= mDebugObjects[static_cast<UINT>(eColliderType::Sphere)]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
 		renderer->SetMaterial(material);
 		renderer->SetMesh(sphereMesh);
+
+		Mesh* capsuleMesh = GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh");
+		mDebugObjects[static_cast<UINT>(eColliderType::Capsule)] = new DebugObject();
+		renderer
+			= mDebugObjects[static_cast<UINT>(eColliderType::Capsule)]->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+		renderer->SetMaterial(material);
+		renderer->SetMesh(capsuleMesh);
 	}
 
 	void EditorObjMgr::Release()
@@ -75,6 +83,9 @@ namespace gui
 
 		delete mDebugObjects[static_cast<UINT>(eColliderType::Sphere)];
 		mDebugObjects[static_cast<UINT>(eColliderType::Sphere)] = nullptr;
+
+		delete mDebugObjects[static_cast<UINT>(eColliderType::Capsule)];
+		mDebugObjects[static_cast<UINT>(eColliderType::Capsule)] = nullptr;
 	}
 
 	void EditorObjMgr::Run()
@@ -97,6 +108,33 @@ namespace gui
 		{
 			obj->FixedUpdate();
 		}
+
+		//for (DebugObject* obj: mDebugObjects)
+		//{
+		//	Transform* tr = obj->GetComponent<Transform>();
+
+		//	if (nullptr == tr)
+		//		return;
+
+		//	Vector3 scale = tr->GetScale();
+		//	//scale *= Vector3(mScale.x, mScale.y, 1.f);
+		//	scale *= Vector3(1.f, 1.f, 1.f);
+
+		//	Vector3 rotation = tr->GetRotation();
+
+		//	Vector3 position = tr->GetWorldPosition();
+
+		//	DebugMesh meshAttribute = {};
+		//	meshAttribute.position = Vector3(position.x, position.y, position.z);
+		//	meshAttribute.radius = 10.f;
+		//	meshAttribute.rotation = rotation;
+		//	meshAttribute.scale = scale;
+		//	meshAttribute.type = enums::eColliderType::Box;
+		//	meshAttribute.state = enums::eCollisionState::CollisionNot;
+
+
+		//	renderer::debugMeshes.push_back(meshAttribute);
+		//}
 	}
 
 	void EditorObjMgr::Render()
@@ -110,7 +148,7 @@ namespace gui
 		{
 			if (KEY_DOWN(V))
 			{
-				DebugRender(mesh);
+				//DebugRender(mesh);
 			}
 		}
 		renderer::debugMeshes.clear();
@@ -119,6 +157,9 @@ namespace gui
 	void EditorObjMgr::DebugRender(DebugMesh& mesh)
 	{
 		DebugObject* debugObj = mDebugObjects[static_cast<UINT>(mesh.type)];
+
+		if (debugObj == nullptr)
+			return;
 
 		Transform* tr = debugObj->GetComponent<Transform>();
 		tr->SetPosition(mesh.position);
@@ -140,6 +181,9 @@ namespace gui
 			break;
 		case enums::eColliderType::Sphere:
 			tr->SetScale(Vector3(mesh.scale.x));
+			break;
+		case enums::eColliderType::Capsule:
+			tr->SetScale(mesh.scale);
 			break;
 		case enums::eColliderType::End:
 			break;

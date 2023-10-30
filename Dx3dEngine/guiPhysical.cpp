@@ -10,13 +10,16 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
+#include "MeshRenderer.h"
+#include "Model.h"
+
 const char* charActorType[(int)eActorType::End] =
 {
-    "Static", // Á¤ÀûÀÎ ¹°Ã¼ (¹°¸®ÀûÀ¸·Î ¿òÁ÷ÀÌÁö ¾ÊÀ» ¹°Ã¼)
-    "Dynamic", // µ¿ÀûÀÎ ¹°Ã¼ (¹°¸®¿£Áø¿¡ Á÷Á¢ÀûÀÎ ¿µÇâÀ» ¹Ş´Â´Ù)
-    "Kinematic", // ÇÁ·Î±×·¡¹Ö ¿îµ¿Á¦¾î ¹°¸® ½Ã¹Ä·¹ÀÌ¼Ç ¿µÇâÀ» ¹ŞÁö ¾Ê°í ½ºÅ©¸³Æ®·Î ¿òÁ÷ÀÎ´Ù.
-    "Character", // ÀÏ¹İÀûÀÎ ¾×ÅÍµé°ú ´Ù¸¥ ¿òÁ÷ÀÓÀ» Ã³¸®ÇÏ±â À§ÇØ »ç¿ëÇÑ´Ù. (ÄÁÆ®·Ñ·¯¸¦ ºÙ¿©Áà¾ßÇÑ´Ù)
-    "Monster", // Ä¿½ºÅÒ
+    "Static", // ì •ì ì¸ ë¬¼ì²´ (ë¬¼ë¦¬ì ìœ¼ë¡œ ì›€ì§ì´ì§€ ì•Šì„ ë¬¼ì²´)
+    "Dynamic", // ë™ì ì¸ ë¬¼ì²´ (ë¬¼ë¦¬ì—”ì§„ì— ì§ì ‘ì ì¸ ì˜í–¥ì„ ë°›ëŠ”ë‹¤)
+    "Kinematic", // í”„ë¡œê·¸ë˜ë° ìš´ë™ì œì–´ ë¬¼ë¦¬ ì‹œë®¬ë ˆì´ì…˜ ì˜í–¥ì„ ë°›ì§€ ì•Šê³  ìŠ¤í¬ë¦½íŠ¸ë¡œ ì›€ì§ì¸ë‹¤.
+    "Character", // ì¼ë°˜ì ì¸ ì•¡í„°ë“¤ê³¼ ë‹¤ë¥¸ ì›€ì§ì„ì„ ì²˜ë¦¬í•˜ê¸° ìœ„í•´ ì‚¬ìš©í•œë‹¤. (ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ë¶™ì—¬ì¤˜ì•¼í•œë‹¤)
+    "Monster", // ì»¤ìŠ¤í…€
 };
 
 const char* charGeometryType[(int)eGeometryType::End] =
@@ -103,7 +106,7 @@ namespace gui
             flag = ImGuiTreeNodeFlags_None;
         }
 
-        if (ImGui::TreeNodeEx("Select Actor :", flag)) // ¸ŞÀÎ Æ®¸®
+        if (ImGui::TreeNodeEx("Select Actor :", flag)) // ë©”ì¸ íŠ¸ë¦¬
         {
             for (int i = 0; i < static_cast<int>(eActorType::End); i++)
             {
@@ -159,7 +162,7 @@ namespace gui
         ImGui::PopID();
 
 
-        if (ImGui::TreeNodeEx("Select Geometry :", flag)) // ¸ŞÀÎ Æ®¸®
+        if (ImGui::TreeNodeEx("Select Geometry :", flag)) // ë©”ì¸ íŠ¸ë¦¬
         {
             for (int i = 0; i < static_cast<int>(eGeometryType::End); i++)
             {
@@ -282,16 +285,51 @@ namespace gui
         if (obj->GetComponent<Physical>() == nullptr)
             return false;
 
+        Physical* temp = obj->GetComponent<Physical>();
+
+        Physical* objPhysical = nullptr;
+
+        if (mGeometryType == eGeometryType::ConvexMesh)
+        {
+            MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
+            if (mr == nullptr)
+                return false;
+
+            Model* model = mr->GetModel();
+            if (model == nullptr)
+                return false;
+
+            float offset = GetTarget()->GetComponent<Transform>()->GetOffsetScale();
+
+            objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
+            objPhysical->InitialConvexMeshProperties(mActorType, mScale, model);
+        }
+        else if (mGeometryType == eGeometryType::TriangleMesh)
+        {
+            MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
+            if (mr == nullptr)
+                return false;
+
+            Model* model = mr->GetModel();
+            if (model == nullptr)
+                return false;
+
+            float offset = GetTarget()->GetComponent<Transform>()->GetOffsetScale();
+
+            objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
+            objPhysical->InitialTriangleMeshProperties(mScale * offset, model);
+        }
+        else
+        {
+            float offset = GetTarget()->GetComponent<Transform>()->GetOffsetScale();
+
+            objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
+            objPhysical->InitialDefaultProperties(mActorType, mGeometryType, mScale * offset);
+        }
+
         delete obj->GetComponent<PhysXCollider>();
-        delete obj->GetComponent<Physical>();
+        delete temp;
         delete obj->GetComponent<PhysXRigidBody>();
-
-
-        Physical* objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
-        PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-        PhysXCollider* collider = obj->AddComponent<PhysXCollider>(eComponentType::Collider);
-
-        objPhysical->InitialDefaultProperties(mActorType, mGeometryType, mScale);
 
         rigid->RemoveGravity();
 
