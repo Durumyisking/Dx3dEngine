@@ -85,6 +85,8 @@ public:
 
 	size_t GetMeshCount() const { return mMeshes.size(); }
 
+	void ResizeVarialble(int size) { mVariableMaterials.resize(size); }
+
 public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)
 	GETSET(const std::wstring&, mCurDirectoryPath, CurDirectoryPath)

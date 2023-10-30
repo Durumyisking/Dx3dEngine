@@ -266,6 +266,41 @@ void ScenePlay::Initialize()
 	//		int debug = 0;
 	//}
 
+	{
+		GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+		obj->SetPos(Vector3(0.f, -35.f, 0.f));
+		Vector3 scale(0.15, 0.15, 0.15);
+		obj->SetScale(scale);
+		obj->SetName(L"CapWorldTower");
+
+		Transform* tr = obj->GetComponent<Transform>();
+		float offset = 0.05;
+		tr->SetOffsetScale(offset);
+
+		// SetModel
+		Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CapWorldHomeTower000");
+		if (model)
+		{
+			//model->ResizeVarialble(20);
+
+			MeshRenderer* mr = obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+			mr->ForceSetMaterial(model->GetLastMaterial());
+			mr->SetModel(model);
+		}
+
+		//SetCollider
+		Model* collider = GETSINGLE(ResourceMgr)->Find<Model>(L"CapTowerCollider");
+		if (collider)
+		{
+			Physical* objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
+			objPhysical->InitialTriangleMeshProperties(scale * offset);
+
+			PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+			rigid->RemoveGravity();
+
+			PhysXCollider* collider = obj->AddComponent<PhysXCollider>(eComponentType::Collider);
+		}
+	}
 
 	CreatePlayerUI();
 

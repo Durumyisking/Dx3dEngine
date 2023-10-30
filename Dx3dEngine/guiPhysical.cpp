@@ -10,6 +10,9 @@
 #include "PhysXCollider.h"
 #include "PhysicalMovement.h"
 
+#include "MeshRenderer.h"
+#include "Model.h"
+
 const char* charActorType[(int)eActorType::End] =
 {
     "Static", // 정적인 물체 (물리적으로 움직이지 않을 물체)
@@ -282,13 +285,51 @@ namespace gui
         if (obj->GetComponent<Physical>() == nullptr)
             return false;
 
+        Physical* temp = obj->GetComponent<Physical>();
+
+        Physical* objPhysical = nullptr;
+
+        if (mGeometryType == eGeometryType::ConvexMesh)
+        {
+            MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
+            if (mr == nullptr)
+                return false;
+
+            Model* model = mr->GetModel();
+            if (model == nullptr)
+                return false;
+
+            float offset = GetTarget()->GetComponent<Transform>()->GetOffsetScale();
+
+            objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
+            objPhysical->InitialConvexMeshProperties(mActorType, mScale, model);
+        }
+        else if (mGeometryType == eGeometryType::TriangleMesh)
+        {
+            MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
+            if (mr == nullptr)
+                return false;
+
+            Model* model = mr->GetModel();
+            if (model == nullptr)
+                return false;
+
+            float offset = GetTarget()->GetComponent<Transform>()->GetOffsetScale();
+
+            objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
+            objPhysical->InitialTriangleMeshProperties(mScale * offset, model);
+        }
+        else
+        {
+            float offset = GetTarget()->GetComponent<Transform>()->GetOffsetScale();
+
+            objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
+            objPhysical->InitialDefaultProperties(mActorType, mGeometryType, mScale * offset);
+        }
+
         delete obj->GetComponent<PhysXCollider>();
-        delete obj->GetComponent<Physical>();
+        delete temp;
         delete obj->GetComponent<PhysXRigidBody>();
-
-
-        Physical* objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
-        objPhysical->InitialDefaultProperties(mActorType, mGeometryType, mScale);
 
         PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
         rigid->RemoveGravity();

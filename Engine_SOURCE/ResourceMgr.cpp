@@ -106,7 +106,8 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/SmokeParticle", L"CloudParticle");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/Coin", L"Coin");
 
-
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CapWorld/Tower", L"CapWorldHomeTower000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CapWorld/Collider", L"CapTowerCollider");
 
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/HomeStageGroundCollider", L"HomeStageGroundCollider");
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/NaviCollider", L"NaviCollider");
@@ -271,4 +272,22 @@ void ResourceMgr::SettingModelMaterial()
 	model = Find<Model>(L"CityWorldHomeBuilding024");
 	model = Find<Model>(L"CityWorldHomeBuilding026");
 
+	model = Find<Model>(L"CapWorldHomeTower000");
+	model->SetVariableMaterialsByKey(0, L"PhongMaterial");
+	model->SetVariableMaterialsByKey(1, L"DazzleCamouflage03");
+	model->SetVariableMaterialsByKey(2, L"DazzleCamouflageSingleLayer");
+	model->SetVariableMaterialsByKey(3, L"DazzleCamouflageSingleLayer");
+	model->SetVariableMaterialsByKey(4, L"FeltHair01_Material");
+	model->SetVariableMaterialsByKey(5, L"FeltHair01_Material");
+	model->SetVariableMaterialsByKey(6, L"FeltPlain02_Material");
+	model->SetVariableMaterialsByKey(7, L"FeltPlain02_Material");
+	model->SetVariableMaterialsByKey(8, L"FeltPlainHair01_Material");
+	model->SetVariableMaterialsByKey(9, L"FeltPlainHair01_Material");
+	model->SetVariableMaterialsByKey(10, L"FurPlane03_Material");
+	model->SetVariableMaterialsByKey(11, L"FurPlane05_Material");
+	model->SetVariableMaterialsByKey(12, L"FurPlane06_Material");
+	model->SetVariableMaterialsByKey(13, L"PhongMaterial");
+	model->SetVariableMaterialsByKey(14, L"PhongMaterial");
+	model->SetVariableMaterialsByKey(15, L"WallBrick00_Material");
+	model->SetVariableMaterialsByKey(16, L"WallPlaster00_Material");
 }

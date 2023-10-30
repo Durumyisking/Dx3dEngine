@@ -206,6 +206,9 @@ void AsyncLoad::LoadMaterials()
 	loadMario( L"DeferredShader");
 	loadCityObjectMaterial();
 
+	loadCapWorldTexture();
+	loadCapWorldMaterial();
+
 
 	renderer::CreateUIMaterial();
 }
@@ -1611,6 +1614,93 @@ void AsyncLoad::loadCityTexture()
 #pragma region CityWorldFenceA And CityWorldFenceB
 		textureLoad(L"BarricadePlasticWhite00", L"CityWorldObject/CityWorldFence/CityWorldFenceA/Image", TextureState::AlNrRg);
 
+#pragma endregion
+}
+
+void AsyncLoad::loadCapWorldTexture()
+{
+	textureLoad(L"DazzleCamouflage03", L"CapWorld/Tower/Image", TextureState::AlNrRg);
+	textureLoad(L"FeltHair00", L"CapWorld/Tower/Image", TextureState::AlNrRg);
+	textureLoad(L"FeltHair01", L"CapWorld/Tower/Image", TextureState::AlNrRg);
+	textureLoad(L"FurPlane02", L"CapWorld/Tower/Image", TextureState::Nr);
+	textureLoad(L"FurPlane03", L"CapWorld/Tower/Image", TextureState::AlNr);
+	textureLoad(L"FurPlane05", L"CapWorld/Tower/Image", TextureState::Al);
+	textureLoad(L"FurPlane06", L"CapWorld/Tower/Image", TextureState::AlRg);
+	textureLoad(L"WallBrick00", L"CapWorld/Tower/Image", TextureState::AlNrRg);
+	textureLoad(L"WallPlaster00", L"CapWorld/Tower/Image", TextureState::AlNrRg);
+}
+
+void AsyncLoad::loadCapWorldMaterial()
+{
+	createMaterial(L"DazzleCamouflage03",	L"DeferredShader",	L"DazzleCamouflage03Color", TextureState::AlNrRg);
+
+#pragma region DazzleCamouflageSingleLayer Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"DazzleCamouflage03_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"FeltHair00_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"FeltHair00_rgh", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"DazzleCamouflageSingleLayer", material);
+	}
+#pragma endregion
+	createMaterial(L"FeltHair01",			L"DeferredShader",	L"FeltHair01_Material", TextureState::AlNrRg);
+	createMaterial(L"FurPlane03",			L"DeferredShader",	L"FeltPlain02_Material", TextureState::AlNr);
+#pragma region FeltPlain02 Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"FurPlane03_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"FurPlane02_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"FurPlane06_rgh", eTextureSlot::Roughness);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"FeltPlain02_Material", material);
+	}
+#pragma endregion
+	createMaterial(L"FeltHair01",			L"DeferredShader",	L"FeltPlainHair01_Material", TextureState::AlNrRg);
+#pragma region FurPlane03 Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"FurPlane03_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"FurPlane03_nrm", eTextureSlot::Normal);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"FurPlane03_Material", material);
+	}
+#pragma endregion
+#pragma region FurPlane05 Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"FurPlane05_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"FurPlane02_nrm", eTextureSlot::Normal);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"FurPlane05_Material", material);
+	}
+#pragma endregion
+#pragma region FurPlane06 Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"FurPlane06_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"FurPlane06_nrm", eTextureSlot::Normal);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"FurPlane06_Material", material);
+	}
+#pragma endregion
+	createMaterial(L"WallBrick00",		L"DeferredShader",	L"WallBrick00_Material", TextureState::AlNrRg);
+#pragma region WallPlaster00 Material
+	{
+		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"DeferredShader");
+		Material* material = new Material();
+		material->SetShader(shader);
+		material->SetTextureByKey(L"WallPlaster00_alb", eTextureSlot::Albedo);
+		material->SetTextureByKey(L"WallPlaster00_nrm", eTextureSlot::Normal);
+		material->SetTextureByKey(L"WallPlaster00_rgh", eTextureSlot::Roughness);
+		material->SetRenderingMode(eRenderingMode::DeferredOpaque);
+		GETSINGLE(ResourceMgr)->Insert<Material>(L"WallPlaster00_Material", material);
+	}
 #pragma endregion
 }
 

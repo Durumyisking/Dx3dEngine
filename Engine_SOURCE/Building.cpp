@@ -56,7 +56,7 @@ void Building::Save(FILE* File)
 		Physical* physical = GetComponent<Physical>();
 		mGeometryType = physical->GetGeometryType();
 		mActorType = physical->GetActorType();
-		mPhysicalScale = GetComponent<Transform>()->GetScale();
+		mPhysicalScale = physical->GetGeometrySize();
 	}
 
 	// 이름 저장
@@ -105,6 +105,8 @@ void Building::Initialize()
 	{
 		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(mActorType, mGeometryType, mPhysicalScale);
+		Transform* tr = GetComponent<Transform>();
+		tr->SetPhysicalRotation(tr->GetRotation());
 
 		PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 		rigid->RemoveGravity();
