@@ -112,6 +112,8 @@ void Building::Initialize()
 		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(mActorType, mGeometryType, mPhysicalScale);
 
+		//GetTransform()->SetPhysicalPosition(GetTransform()->GetPosition());
+
 		PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 		rigid->RemoveGravity();
 
@@ -119,6 +121,8 @@ void Building::Initialize()
 	}
 
 	GameObj::Initialize();
+
+	GetTransform()->SetPhysicalRotation_For_Static(GetTransform()->GetRotation());
 }
 
 void Building::Update()
