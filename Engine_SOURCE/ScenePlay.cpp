@@ -137,7 +137,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ·Îµå Å×½ºÆ® ·Îµå½Ã¿¡ ¹İº¹ÇØ¼­ ¸ó½ºÅÍ Á¤ÀÇ ¹æÁö
+	//TestScene ë¡œë“œ í…ŒìŠ¤íŠ¸ ë¡œë“œì‹œì— ë°˜ë³µí•´ì„œ ëª¬ìŠ¤í„° ì •ì˜ ë°©ì§€
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		/*{
@@ -187,11 +187,16 @@ void ScenePlay::Initialize()
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+		//AudioSource* mAudioSource= mCamera->AddComponent<AudioSource>(eComponentType::AudioSource);
+		//mAudioSource->AddClipByKey(L"NewDonkCity");
+		//mAudioSource->SetVolume(L"NewDonkCity", 0.00001f);
+		//mAudioSource->Play(L"NewDonkCity",true);
 	}
 	{
 		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
 		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
 	}
+
 
 	//{
 	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
@@ -218,7 +223,7 @@ void ScenePlay::Initialize()
 		ground->SetPos(Vector3::Zero);
 	}
 
-// ¼¼Çö Æ÷ÀÎÆ®¶óÀÌÆ®
+// ì„¸í˜„ í¬ì¸íŠ¸ë¼ì´íŠ¸
 	{
 		{
 			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
@@ -313,15 +318,15 @@ void ScenePlay::Initialize()
 	//{
 	//	SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
 
-	//	//ÇöÀç .obj ÆÄÀÏ¸¸ ·Îµù °¡´É ºí·£´õ¿¡¼­ .obj ·Î ³»º¸³»±â ÇØ¼­ »ç¿ëÇÏ¸é µË´Ï´Ù
+	//	//í˜„ì¬ .obj íŒŒì¼ë§Œ ë¡œë”© ê°€ëŠ¥ ë¸”ëœë”ì—ì„œ .obj ë¡œ ë‚´ë³´ë‚´ê¸° í•´ì„œ ì‚¬ìš©í•˜ë©´ ë©ë‹ˆë‹¤
 	//	if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
 	//		int debug = 0;
 
 	//	if (!naviMesh->Build())
 	//		int debug = 0;
 
-	//	//¿ÀºêÁ§Æ®¿¡ std::<Vector3>mPath Ãß°¡ path¿¡ ÀÌµ¿°æ·Î°¡ Ãß°¡µÇ´Ï vector³»ÀÇ À§Ä¡¸¦ »ç¿ëÇØ¼­ ÀÌµ¿ÇÏ¸é µË´Ï´Ù
-	//	//À§Ä¡°¡ ³»ºñ¸Ş½¬ ¹ÛÀÌ¸é °è»êÀÌ ¾ÈµË´Ï´Ù
+	//	//ì˜¤ë¸Œì íŠ¸ì— std::<Vector3>mPath ì¶”ê°€ pathì— ì´ë™ê²½ë¡œê°€ ì¶”ê°€ë˜ë‹ˆ vectorë‚´ì˜ ìœ„ì¹˜ë¥¼ ì‚¬ìš©í•´ì„œ ì´ë™í•˜ë©´ ë©ë‹ˆë‹¤
+	//	//ìœ„ì¹˜ê°€ ë‚´ë¹„ë©”ì‰¬ ë°–ì´ë©´ ê³„ì‚°ì´ ì•ˆë©ë‹ˆë‹¤
 	//	if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
 	//		int debug = 0;
 	//}

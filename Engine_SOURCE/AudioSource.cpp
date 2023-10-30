@@ -150,3 +150,21 @@ float AudioSource::GetPitch(const std::wstring& key)
 	return mAudioClips.find(key)->second->GetPitch();
 }
 
+//void  AudioSource::Play_interval(const std::wstring& key, float time)
+//{
+//	if (mCurrentTime == 0)
+//	{
+//		GetClip(key)->SetLoop(false);
+//		GetClip(key)->Play();
+//	}
+//
+//	mCurrentTime += DT;
+//
+//	if (mCurrentTime > time)
+//	{
+//		GetClip(key)->SetLoop(false);
+//		GetClip(key)->Play();
+//		mCurrentTime = 0;
+//	}
+//}
+

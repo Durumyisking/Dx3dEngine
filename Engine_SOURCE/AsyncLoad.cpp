@@ -1869,6 +1869,20 @@ void AsyncLoad::LoadSounds()
 
 	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"GetMoonSoundEffect", L"Sound/GetMoon/YOU GOT A MOON_01.wav");
 
+	//마리오 사운드
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"ha1", L"Sound/Player/ha1.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"ha2", L"Sound/Player/ha2.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"woo", L"Sound/Player/woo.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"wahoo", L"Sound/Player/wahoo.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"FootNote", L"Sound/FootNote/0021.wav");
+
+	//모자 사운드
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"CapThrow", L"Sound/Player/Cappy Throw Sound Effect.wav");
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"Capture", L"Sound/Player/Cappy Sound Effect.wav");
+
+	//시티 배경음
+	GETSINGLE(ResourceMgr)->Load<AudioClip>(L"NewDonkCity", L"Sound/BGM/NewDonkCity.wav");
+
 	mbSoundLoad = true;
 }
 

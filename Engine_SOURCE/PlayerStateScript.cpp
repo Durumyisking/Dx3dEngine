@@ -6,6 +6,8 @@
 
 #include "InputMgr.h"
 #include "TimeMgr.h"
+#include "AudioSource.h"
+#include "PlayerBGMScript.h"
 
 PlayerStateScript::PlayerStateScript()
 	: Script()
@@ -14,10 +16,10 @@ PlayerStateScript::PlayerStateScript()
 	, mbAnimationRunning(false)
 	, mbHavingCap(true)
 {
-	// ¸Ş¸ğ¸® °ø°£ È®º¸
+	// ë©”ëª¨ë¦¬ ê³µê°„ í™•ë³´
 	mStateEventList.reserve(static_cast<UINT>(Player::ePlayerState::Die) + 1);
 
-	// ÀÌº¥Æ® ¹ÙÀÎµù
+	// ì´ë²¤íŠ¸ ë°”ì¸ë”©
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Idle, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Move, this));
 	mStateEventList.emplace_back(std::bind(&PlayerStateScript::Jump, this));
@@ -44,7 +46,7 @@ void PlayerStateScript::Update()
 		return;
 
 	UINT iState = static_cast<UINT>(mPlayer->GetPlayerState());
-	// enum »óÅÂ¿Í ¸ÅÄªµÇ´Â ¹è¿­À» ÀÎµ¦½º·Î Á¢±Ù
+	// enum ìƒíƒœì™€ ë§¤ì¹­ë˜ëŠ” ë°°ì—´ì„ ì¸ë±ìŠ¤ë¡œ ì ‘ê·¼
 	mStateEventList[iState]();
 
 
@@ -53,7 +55,7 @@ void PlayerStateScript::Update()
 
 void PlayerStateScript::Initialize()
 {
-	// Owner Çü º¯È¯
+	// Owner í˜• ë³€í™˜
 	if (GetOwner())
 		mPlayer = dynamic_cast<Player*>(GetOwner());
 
@@ -90,10 +92,12 @@ void PlayerStateScript::Move()
 
 	Physical* physical = GetOwner()->GetComponent<Physical>();
 	assert(physical);
-		
+
+
 
 	if (mAnimator->PlayAnimationName() == L"Brake")
 		return;
+
 
 	if (GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::W)
 		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::S)
@@ -101,6 +105,7 @@ void PlayerStateScript::Move()
 		&& GETSINGLE(InputMgr)->GetKeyNone(eKeyCode::D))
 	{
 		mAnimator->Play(L"Brake");
+		//GetOwner()->GetComponent<AudioSource>()->Stop(L"FootNote");
 		mPlayer->SetPlayerState(Player::ePlayerState::Idle);
 
 		return;
@@ -139,6 +144,7 @@ void PlayerStateScript::Move()
 	Input_DownFunC(eKeyCode::A, eKeyCode::A, math::Vector3(0.0f, 90.f, 0.0f));
 	Input_DownFunC(eKeyCode::D, eKeyCode::D, math::Vector3(0.0f, -90.f, 0.0f));
 
+
 	if (GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&& mAnimator->PlayAnimationName() != L"Run"
 		&& mAnimator->PlayAnimationName() != L"RunStart")
@@ -151,6 +157,7 @@ void PlayerStateScript::Move()
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&&(mAnimator->PlayAnimationName() == L"RunStart"))
 	{
+		mFootInterval = 0.1f;
 		mInitialForce += mForceIncrement;
 		rigidbody->SetMaxVelocity_XZ(PLAYER_RUN_VELOCITY);
 	}
@@ -163,6 +170,9 @@ void PlayerStateScript::Move()
 	}
 	else if(mAnimator->PlayAnimationName() != L"Walk")
 	{
+		//GetOwner()->GetComponent<AudioSource>()->Stop(L"FootNote");
+		//mPlayer->GetComponent<PlayerBGMScript>()->SetSound(PlayerBGMScript::eSoundState::FootNote);
+		mFootInterval = 0.47f;
 		mAnimator->Play(L"Walk");
 		mInitialForce = 35000.f;
 		rigidbody->SetMaxVelocity_XZ(PLAYER_WALK_VELOCITY);
@@ -173,6 +183,15 @@ void PlayerStateScript::Move()
 		rigidbody->SetMaxVelocity_XZ(PLAYER_WALK_VELOCITY);
 	}
 	rigidbody->AddForce(-tr->Forward() * mInitialForce * DT);
+
+
+	if (mFootIntervalTime > mFootInterval)
+	{
+		mPlayer->GetComponent<AudioSource>()->Play(L"FootNote", false);
+		mFootIntervalTime = 0;
+	}
+
+	mFootIntervalTime += DT;
 
 }
 
@@ -195,6 +214,7 @@ void PlayerStateScript::Jump()
 		if (mJumpCount == 0)
 		{
 			mAnimator->Play(L"Jump");
+			mPlayer->GetComponent<AudioSource>()->Play(L"ha1", false);
 
 			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY);
 			rigidbody->ApplyGravity();
@@ -205,6 +225,7 @@ void PlayerStateScript::Jump()
 		else if (mJumpCount == 1)
 		{
 			mAnimator->Play(L"Jump2");
+			mPlayer->GetComponent<AudioSource>()->Play(L"ha2", false);
 
 			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 2.f);
 			rigidbody->ApplyGravity();
@@ -216,6 +237,7 @@ void PlayerStateScript::Jump()
 		else if (mJumpCount == 2)
 		{
 			mAnimator->Play(L"Jump3");
+			mPlayer->GetComponent<AudioSource>()->Play(L"wahoo", false);
 
 			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 5.f);
 			rigidbody->ApplyGravity();
@@ -489,3 +511,5 @@ void PlayerStateScript::Capture()
 void PlayerStateScript::Die()
 {
 }
+
+

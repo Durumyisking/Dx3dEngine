@@ -36,9 +36,10 @@ public:
 	float GetVolume(const std::wstring& key);
 	float GetPitch(const std::wstring& key);
 
+	//void Play_interval(const std::wstring& key, float time);
 		
 
 private:
 	std::map<std::wstring, AudioClip*> mAudioClips;
-		
+	float mCurrentTime = 0;
 };
