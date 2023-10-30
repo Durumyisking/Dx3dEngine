@@ -253,7 +253,7 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 	{
 		if (Calculate_RelativeDirection_ByCosTheta(gameObject) > 0.95f)
 		{
-			TrampleEffect();
+			//TrampleEffect();
 			Model* model = GetMeshRenderer()->GetModel();
 			//model->AllMeshRenderSwtichOff();
 			//model->MeshRenderSwtich(L"PressModel__BodyMT-mesh");
@@ -525,7 +525,7 @@ void Goomba::TrampleEffect()
 	for (auto i : objects)
 	{
 		i->GetComponent<Transform>()->SetPhysicalPosition(position);
-		i->GetComponent<Transform>()->SetPhysicalRotation(math::Vector3(0.0f, angle, 0.0f));
+		i->GetComponent<Transform>()->SetPhysicalRotation(math::Vector3(0.0f,0.0f, angle));
 
 		PhysXRigidBody* rigidbody = i->GetComponent<PhysXRigidBody>();
 
@@ -535,10 +535,11 @@ void Goomba::TrampleEffect()
 			rigidbody->ApplyGravity();
 			rigidbody->SetAirOn();
 
-
-			Vector3 force = -i->GetComponent<Transform>()->WorldForward() * 350.f * DT;
+			//Vector3 force = -i->GetComponent<Transform>()->Forward() * 350.f * DT;
+			Vector3 force = -Vector3(0.0f, angle ,0.0f) * DT;
 
 			rigidbody->AddForce(force);
+		
 		}
 		angle += 72.f;
 	}
