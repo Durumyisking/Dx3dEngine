@@ -193,10 +193,10 @@ void ScenePlay::Initialize()
 		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
 	}
 
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
-	//}	
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(15.f, 10.f, 10.f));
+	}	
 
 
 

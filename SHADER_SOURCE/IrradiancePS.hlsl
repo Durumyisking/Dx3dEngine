@@ -18,12 +18,7 @@ float4 main(VSOut psIn) : SV_TARGET
 
     float sampleDelta = 0.012;
     float nrSamples = 0.0;
-    //for (int i = 0.0; i < 10; i++)
-    //{
-    //    irradiance = float3(1.f, 0.f, 1.f);        
-    //}
-    
-    
+
     
     for (float phi = 0.0; phi < 2.0 * 3.1415926535f; phi += sampleDelta)
     {
