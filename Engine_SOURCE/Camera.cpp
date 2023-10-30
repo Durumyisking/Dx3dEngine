@@ -344,9 +344,9 @@ void Camera::sortGameObjects()
 
 void Camera::renderShadow()
 {
-	for (size_t i = 0; i < renderer::lights.size(); i++)
+	for (size_t i = 0; i < 1; i++)
 	{
-		renderer::lights[i]->PrevRender();
+		//renderer::lights[i]->PrevRender();
 
 		for (GameObj* obj : mDeferredOpaqueGameObjects)
 		{

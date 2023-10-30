@@ -144,15 +144,19 @@ void Model::Bind_Render(bool bindMaterial)
 
 	boneMat.reserve(mBones.size());
 
+
 	for (Bone* bone : mBones)
 	{
 		aiMatrix4x4 finalMat = bone->mFinalMatrix;
 		boneInfo.FinalTransformation = ConvertMatrix(finalMat);
 		boneMat.emplace_back(boneInfo);
+
 	}
+	
 
 	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
 	mStructure->BindSRV(eShaderStage::VS, 30);
+	
 
 	for (size_t i = 0; i < mMeshes.size(); ++i)
 	{

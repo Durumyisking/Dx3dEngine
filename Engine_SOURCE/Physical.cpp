@@ -58,6 +58,13 @@ void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geom
 	
 	mbSceneIncludActor = true;
 //		createUniversalShape();
+
+	// 툴에서 로테이션 적용 위한 실험코드
+	Transform* tr = GetTransform();
+	if (tr)
+	{
+		tr->SetPhysicalRotation(tr->GetRotation());
+	}
 }
 
 void Physical::InitialDefaultProperties(eActorType actorType, eGeometryType geometryType, Vector3 geometrySize, Vector3 localPos, MassProperties massProperties)

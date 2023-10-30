@@ -47,7 +47,9 @@ void PhysXCollider::Update()
 }
 void PhysXCollider::FixedUpdate()
 {
-	
+
+
+
 	PxShape* shape = mPhysical->GetShape();
 	PxGeometryType::Enum geoType = shape->getGeometryType();
 	eColliderType colType = eColliderType::End;

@@ -47,6 +47,7 @@ private:
 	void loadCapWorldMaterial();
 
 	void createMaterial(std::wstring fileName, std::wstring shaderName, std::wstring materialName, TextureState state);
+	void createMaterial(std::wstring fileName,std::wstring materialName, TextureState state);
 	void textureLoad(std::wstring fileName,std::wstring _PathAndUntilfileName,TextureState state);
 private:
 	bool mbLoadFinish;

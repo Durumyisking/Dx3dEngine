@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset />
+  <library_images>
+    <image id="MetalSignal01_alb">
+      <init_from>MetalSignal01_alb.png</init_from>
+    </image>
+    <image id="MetalSignal01_nrm">
+      <init_from>MetalSignal01_nrm.png</init_from>
+    </image>
+    <image id="MetalSignal01_rgh">
+      <init_from>MetalSignal01_rgh.png</init_from>
+    </image>
+    <image id="MetalSignal01_mtl">
+      <init_from>MetalSignal01_mtl.png</init_from>
+    </image>
+    <image id="SignalRight00_SS_4">
+      <init_from>SignalRight00_SS_4.png</init_from>
+    </image>
+    <image id="SignalRight00_SS_alb">
+      <init_from>SignalRight00_SS_alb.png</init_from>
+    </image>
+    <image id="SignalRight00_SS_nrm">
+      <init_from>SignalRight00_SS_nrm.png</init_from>
+    </image>
+    <image id="SignalRight00_SS_spc">
+      <init_from>SignalRight00_SS_spc.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="MetalSignal01">
+      <instance_effect url="#Effect_MetalSignal01" />
+    </material>
+    <material id="SignalRight00_SS">
+      <instance_effect url="#Effect_SignalRight00_SS" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect_MetalSignal01">
+      <profile_COMMON>
+        <newparam sid="surface_MetalSignal01-diffuse">
+          <surface type="2D">
+            <init_from>MetalSignal01_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_MetalSignal01-diffuse">
+          <sampler2D>
+            <source>surface_MetalSignal01-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <newparam sid="surface_MetalSignal01-bump">
+          <surface type="2D">
+            <init_from>MetalSignal01_nrm</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_MetalSignal01-bump">
+          <sampler2D>
+            <source>surface_MetalSignal01-bump</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_MetalSignal01-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <bump>
+              <texture texture="sampler_MetalSignal01-bump" texcoord="CHANNEL0" />
+            </bump>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Effect_SignalRight00_SS">
+      <profile_COMMON>
+        <newparam sid="surface_SignalRight00_SS-diffuse">
+          <surface type="2D">
+            <init_from>SignalRight00_SS_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_SignalRight00_SS-diffuse">
+          <sampler2D>
+            <source>surface_SignalRight00_SS-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <newparam sid="surface_SignalRight00_SS-bump">
+          <surface type="2D">
+            <init_from>SignalRight00_SS_nrm</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_SignalRight00_SS-bump">
+          <sampler2D>
+            <source>surface_SignalRight00_SS-bump</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_SignalRight00_SS-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <bump>
+              <texture texture="sampler_SignalRight00_SS-bump" texcoord="CHANNEL0" />
+            </bump>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="pCube94__MetalSignal01-mesh" name="pCube94__MetalSignal01">
+      <mesh>
+        <source id="pCube94__MetalSignal01-position">
+          <float_array id="pCube94__MetalSignal01-position-array" count="546">35.00001 64.00059 26.58355 33.24281 68.24281 26.58355 37.34903 68.46054 26.58355 33.46054 72.34905 26.58355 29.0006 70 26.58355 -33.46054 72.34905 26.58355 -29.00058 70 26.58355 -33.24279 68.24281 26.58355 -37.34903 68.46054 26.58355 -34.99998 64.00059 26.58355 35.00001 64.00059 26.58355 37.34903 68.46054 26.58355 35.00001 5.999393 26.58355 37.34903 1.539478 26.58355 -34.99998 5.999393 26.58355 -33.24279 1.757202 26.58355 -37.34903 1.539478 26.58355 -29.00058 0 26.58355 -33.46054 -2.349033 26.58355 33.46054 -2.349033 26.58355 29.0006 0 26.58355 33.24281 1.757202 26.58355 37.34903 1.539478 26.58355 35.00001 5.999393 26.58355 -34.99998 5.999393 26.58355 -37.34903 1.539478 26.58355 -34.99998 64.00059 26.58355 -37.34903 68.46054 26.58355 -32.41446 2.585526 -32.41447 -33.2428 5.999393 -33.24281 -29.00058 5.999393 -34.99999 -29.00059 1.757202 -33.24281 -33.2428 64.00059 -33.24281 -29.00058 64.00059 -34.99999 29.00058 5.999393 -35 29.0006 1.757202 -33.24282 -32.41446 67.41447 -32.41447 29.00058 64.00059 -35 -29.00059 68.24281 -33.24281 33.24283 64.00059 -33.24281 33.24283 5.999393 -33.24281 32.41447 2.585526 -32.41447 29.0006 68.24281 -33.24282 32.41447 67.41447 -32.41447 -32.41446 2.585526 -32.41447 -33.2428 1.757202 -29.00059 -34.99998 5.999393 -29.00059 -33.2428 5.999393 -33.24281 -34.99998 5.999393 26.58355 -33.24279 1.757202 26.58355 -34.99998 64.00059 -29.00059 -33.2428 64.00059 -33.24281 -34.99998 64.00059 26.58355 -33.24279 68.24281 26.58355 -33.2428 68.24281 -29.00059 -32.41446 67.41447 -32.41447 -32.41446 2.585526 -32.41447 -29.00059 1.757202 -33.24281 -29.00059 0 -29.00059 -33.2428 1.757202 -29.00059 29.0006 1.757202 -33.24282 29.00059 0 -29.0006 29.0006 0 26.58355 -29.00058 0 26.58355 -33.24279 1.757202 26.58355 32.41447 2.585526 -32.41447 33.24282 1.757202 -29.0006 33.24281 1.757202 26.58355 -32.41446 67.41447 -32.41447 -33.2428 68.24281 -29.00059 -29.00059 70 -29.00059 -29.00059 68.24281 -33.24281 -29.00058 70 26.58355 -33.24279 68.24281 26.58355 29.00059 70 -29.0006 29.0006 68.24281 -33.24282 29.0006 70 26.58355 33.24281 68.24281 26.58355 33.24282 68.24281 -29.0006 32.41447 67.41447 -32.41447 32.41447 67.41447 -32.41447 33.24282 68.24281 -29.0006 35 64.00059 -29.0006 33.24283 64.00059 -33.24281 35.00001 64.00059 26.58355 33.24281 68.24281 26.58355 35 5.999393 -29.0006 33.24283 5.999393 -33.24281 35.00001 5.999393 26.58355 33.24281 1.757202 26.58355 33.24282 1.757202 -29.0006 32.41447 2.585526 -32.41447 -37.34903 1.539478 26.58355 -33.46054 -2.349033 26.58355 -37.34903 1.677532 34.99999 -33.32249 -2.349033 34.99999 -37.34903 1.677532 34.99999 -33.32249 -2.349033 34.99999 -34.99998 4.754276 34.99999 -30.24571 0 34.99999 -28.4597 2.651806 29.94765 -32.34818 6.540279 29.94764 -30.24571 0 34.99999 -34.99998 4.754276 34.99999 -33.46054 72.34905 26.58355 -37.34903 68.46054 26.58355 -33.32249 72.34905 34.99999 -37.34903 68.32249 34.99999 -37.34903 68.32249 34.99999 -34.99998 65.24573 34.99999 -30.24571 70 34.99999 -33.32249 72.34905 34.99999 33.32249 72.34905 34.99999 30.24571 70 34.99999 -32.34818 63.45972 29.94764 -28.4597 67.34821 29.94765 -34.99998 65.24573 34.99999 -30.24571 70 34.99999 37.34903 68.46054 26.58355 33.46054 72.34905 26.58355 37.34903 68.32249 35 33.32249 72.34905 34.99999 33.32249 72.34905 34.99999 30.24571 70 34.99999 35 65.24573 34.99999 37.34903 68.32249 35 37.34903 1.677532 35 35 4.754276 34.99999 28.45972 67.34821 29.94765 32.34822 63.45972 29.94765 30.24571 70 34.99999 35 65.24573 34.99999 33.46054 -2.349033 26.58355 37.34903 1.539478 26.58355 33.32249 -2.349033 34.99999 37.34903 1.677532 35 37.34903 1.677532 35 35 4.754276 34.99999 30.24571 0 34.99999 33.32249 -2.349033 34.99999 -33.32249 -2.349033 34.99999 -30.24571 0 34.99999 32.34822 6.540279 29.94765 28.45972 2.651806 29.94765 35 4.754276 34.99999 30.24571 0 34.99999 -34.99998 4.754276 34.99999 -32.34818 6.540279 29.94764 -34.99998 65.24573 34.99999 -32.34818 63.45972 29.94764 -30.24571 70 34.99999 -28.4597 67.34821 29.94765 30.24571 70 34.99999 28.45972 67.34821 29.94765 35 65.24573 34.99999 32.34822 63.45972 29.94765 35 4.754276 34.99999 32.34822 6.540279 29.94765 30.24571 0 34.99999 28.45972 2.651806 29.94765 -30.24571 0 34.99999 -28.4597 2.651806 29.94765 -34.99998 65.24573 34.99999 -37.34903 68.32249 34.99999 -34.99998 4.754276 34.99999 -37.34903 1.677532 34.99999 -33.32249 -2.349033 34.99999 -33.46054 -2.349033 26.58355 33.32249 -2.349033 34.99999 33.46054 -2.349033 26.58355 -37.34903 68.32249 34.99999 -37.34903 68.46054 26.58355 -37.34903 1.677532 34.99999 -37.34903 1.539478 26.58355 33.32249 72.34905 34.99999 33.46054 72.34905 26.58355 -33.32249 72.34905 34.99999 -33.46054 72.34905 26.58355 37.34903 1.677532 35 37.34903 1.539478 26.58355 37.34903 68.32249 35 37.34903 68.46054 26.58355</float_array>
+          <technique_common>
+            <accessor source="#pCube94__MetalSignal01-position-array" count="182" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube94__MetalSignal01-normal">
+          <float_array id="pCube94__MetalSignal01-normal-array" count="546">0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 -0.5772994 -0.5772994 -0.5772994 -0.7064579 -0.01956947 -0.7064579 -0.02739726 -0.02739726 -1 -0.01956947 -0.7064579 -0.7064579 -0.7064579 0.01956947 -0.7064579 -0.02739726 0.02739726 -1 0.02739726 -0.02739726 -1 0.01956947 -0.7064579 -0.7064579 -0.5772994 0.5772994 -0.5772994 0.02739726 0.02739726 -1 -0.01956947 0.7064579 -0.7064579 0.7064579 0.01956947 -0.7064579 0.7064579 -0.01956947 -0.7064579 0.5772994 -0.5772994 -0.5772994 0.01956947 0.7064579 -0.7064579 0.5772994 0.5772994 -0.5772994 -0.5772994 -0.5772994 -0.5772994 -0.7064579 -0.7064579 -0.01956947 -1 -0.02739726 -0.02935421 -0.7064579 -0.01956947 -0.7064579 -1 -0.02739726 0 -0.7064579 -0.7064579 0 -1 0.02739726 -0.02935421 -0.7064579 0.01956947 -0.7064579 -1 0.02739726 0 -0.7064579 0.7064579 0 -0.7064579 0.7064579 -0.01956947 -0.5772994 0.5772994 -0.5772994 -0.5772994 -0.5772994 -0.5772994 -0.01956947 -0.7064579 -0.7064579 -0.02739726 -1 -0.02935421 -0.7064579 -0.7064579 -0.01956947 0.01956947 -0.7064579 -0.7064579 0.02739726 -1 -0.02935421 0.02739726 -1 0 -0.02739726 -1 0 -0.7064579 -0.7064579 0 0.5772994 -0.5772994 -0.5772994 0.7064579 -0.7064579 -0.01956947 0.7064579 -0.7064579 0 -0.5772994 0.5772994 -0.5772994 -0.7064579 0.7064579 -0.01956947 -0.02739726 1 -0.02935421 -0.01956947 0.7064579 -0.7064579 -0.02739726 1 0 -0.7064579 0.7064579 0 0.02739726 1 -0.02935421 0.01956947 0.7064579 -0.7064579 0.02739726 1 0 0.7064579 0.7064579 0 0.7064579 0.7064579 -0.01956947 0.5772994 0.5772994 -0.5772994 0.5772994 0.5772994 -0.5772994 0.7064579 0.7064579 -0.01956947 1 0.02739726 -0.02935421 0.7064579 0.01956947 -0.7064579 1 0.02739726 0 0.7064579 0.7064579 0 1 -0.02739726 -0.02935421 0.7064579 -0.01956947 -0.7064579 1 -0.02739726 0 0.7064579 -0.7064579 0 0.7064579 -0.7064579 -0.01956947 0.5772994 -0.5772994 -0.5772994 -0.7064579 -0.7064579 0.01174168 -0.7064579 -0.7064579 0.01174168 -0.7064579 -0.7064579 0.01174168 -0.7064579 -0.7064579 0.01174168 0 0 1 0 0 1 0 0 1 0 0 1 0.6007828 0.6007828 0.5283757 0.6007828 0.6007828 0.5283757 0.6007828 0.6007828 0.5283757 0.6007828 0.6007828 0.5283757 -0.7064579 0.7064579 0.01174168 -0.7064579 0.7064579 0.01174168 -0.7064579 0.7064579 0.01174168 -0.7064579 0.7064579 0.01174168 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0.6007828 -0.6007828 0.5283757 0.6007828 -0.6007828 0.5283757 0.6007828 -0.6007828 0.5283757 0.6007828 -0.6007828 0.5283757 0.7064579 0.7064579 0.01174168 0.7064579 0.7064579 0.01174168 0.7064579 0.7064579 0.01174168 0.7064579 0.7064579 0.01174168 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -0.6007828 -0.6007828 0.5283757 -0.6007828 -0.6007828 0.5283757 -0.6007828 -0.6007828 0.5283757 -0.6007828 -0.6007828 0.5283757 0.7064579 -0.7064579 0.01174168 0.7064579 -0.7064579 0.01174168 0.7064579 -0.7064579 0.01174168 0.7064579 -0.7064579 0.01174168 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -0.6007828 0.6007828 0.5283757 -0.6007828 0.6007828 0.5283757 -0.6007828 0.6007828 0.5283757 -0.6007828 0.6007828 0.5283757 0.8845401 0 0.4637965 0.8845401 0 0.4637965 0.8845401 0 0.4637965 0.8845401 0 0.4637965 0 -0.8845401 0.4637965 0 -0.8845401 0.4637965 0 -0.8845401 0.4637965 0 -0.8845401 0.4637965 -0.8845401 0 0.4637965 -0.8845401 0 0.4637965 -0.8845401 0 0.4637965 -0.8845401 0 0.4637965 0 0.8845401 0.4637965 0 0.8845401 0.4637965 0 0.8845401 0.4637965 0 0.8845401 0.4637965 0 0 1 0 0 1 0 0 1 0 0 1 0 -1 0 0 -1 0 0 -1 0 0 -1 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 1 0 0 1 0 0 1 0 0 1 0 1 0 0 1 0 0 1 0 0 1 0 0</float_array>
+          <technique_common>
+            <accessor source="#pCube94__MetalSignal01-normal-array" count="182" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube94__MetalSignal01-texcoord">
+          <float_array id="pCube94__MetalSignal01-texcoord-array" count="364">0.45243 0.1825437 0.441825 0.1869383 0.4412757 0.1766689 0.4315557 0.186389 0.4374304 0.1975433 0.4315557 0.3536889 0.4374304 0.3425498 0.441825 0.3531548 0.4412757 0.3634241 0.45243 0.3575494 0.4298619 0.3407797 0.4239872 0.3519341 0.4298619 0.1957732 0.4239872 0.1846341 0.3931792 0.3576257 0.4037842 0.3532311 0.4043183 0.3634852 0.4081788 0.3426261 0.4140383 0.3537652 0.4140383 0.1864653 0.4081788 0.1976196 0.4037842 0.1870146 0.4043183 0.1767452 0.3931792 0.18262 0.4158846 0.1952697 0.4217594 0.1841154 0.4158846 0.3402609 0.4217594 0.3514153 0.4332647 0.5722896 0.435935 0.5832609 0.4222934 0.5832609 0.4222934 0.5696346 0.435935 0.7696956 0.4222934 0.7696956 0.2358587 0.5832609 0.2358587 0.5696346 0.4332647 0.7806668 0.2358587 0.7696956 0.4222934 0.7833371 0.2222324 0.7696956 0.2222324 0.5832609 0.2248875 0.5722896 0.2358587 0.7833371 0.2248875 0.7806668 0.1960021 0.5329213 0.1850309 0.5355917 0.1850309 0.5219501 0.1986572 0.5219501 0.006363012 0.5219501 0.006363012 0.5355917 0.1850309 0.3355154 0.1986572 0.3355154 0.006363012 0.3355154 0.006363012 0.321889 0.1850309 0.321889 0.1960021 0.3245441 0.1960021 0.5495384 0.1986572 0.5605249 0.1850309 0.5605249 0.1850309 0.5468833 0.1986572 0.7469444 0.1850309 0.7469444 0.006363012 0.7469444 0.006363012 0.5605249 0.006363012 0.5468833 0.1960021 0.7579309 0.1850309 0.760586 0.006363012 0.760586 0.4332647 0.7972991 0.435935 0.8082704 0.4222934 0.8082704 0.4222934 0.7946289 0.4222934 0.986923 0.435935 0.986923 0.2358587 0.8082704 0.2358587 0.7946289 0.2358587 0.986923 0.2222324 0.986923 0.2222324 0.8082704 0.2248875 0.7972991 0.1960021 0.9829252 0.1850309 0.9855802 0.1850309 0.9719539 0.1986572 0.9719539 0.006363012 0.9719539 0.006363012 0.9855802 0.1850309 0.7855192 0.1986572 0.7855192 0.006363012 0.7855192 0.006363012 0.7718776 0.1850309 0.7718776 0.1960021 0.7745479 0.4817884 0.7431296 0.4816816 0.7603571 0.4557412 0.7427939 0.4556039 0.7607538 0.2531014 0.4648356 0.2361181 0.4816357 0.2449378 0.4524453 0.2239567 0.4739757 0.213901 0.4539559 0.2257725 0.4430152 0.2239567 0.4739757 0.2449378 0.4524453 0.4817731 0.513283 0.4816816 0.5304799 0.4557107 0.5129168 0.4556496 0.5308766 0.2688182 0.5046158 0.2566567 0.4969558 0.2776226 0.4754254 0.2857862 0.4878157 0.2856489 0.2182193 0.2779889 0.2303807 0.2466011 0.476936 0.2584726 0.4659953 0.2566567 0.4969558 0.2776226 0.4754254 0.4818341 0.2831922 0.4817121 0.3003891 0.4556039 0.2828107 0.4556802 0.3007858 0.3353018 0.557412 0.3231403 0.549752 0.3441215 0.5282215 0.3522698 0.5406119 0.3521324 0.2710155 0.3444724 0.2831769 0.3130846 0.5297322 0.3249561 0.5187915 0.3231403 0.549752 0.3441215 0.5282215 0.482475 0.05331504 0.4822309 0.06608683 0.454902 0.05331504 0.4551461 0.06652933 0.3009537 0.5316854 0.2887923 0.5240253 0.3097734 0.5024948 0.317937 0.5148852 0.3177844 0.2452888 0.3101244 0.2574502 0.2787366 0.5040055 0.2906081 0.4930648 0.2887923 0.5240253 0.3097734 0.5024948 0.2449378 0.4524453 0.2257725 0.4430152 0.2452888 0.2074006 0.2252842 0.2174563 0.2776226 0.4754254 0.2584726 0.4659953 0.2779889 0.2303807 0.257969 0.2404364 0.3441215 0.5282215 0.3249561 0.5187915 0.3444724 0.2831769 0.3244526 0.2932326 0.3097734 0.5024948 0.2906081 0.4930648 0.3101244 0.2574502 0.2901198 0.2675059 0.4033723 0.3435416 0.3974975 0.3512322 0.4033723 0.1923094 0.3974975 0.1846189 0.4556039 0.7607538 0.4816816 0.7603571 0.4554055 0.9722744 0.4818189 0.9727169 0.4556496 0.5308766 0.4816816 0.5304799 0.4557412 0.7427939 0.4817884 0.7431296 0.4556802 0.3007858 0.4817121 0.3003891 0.4557107 0.5129168 0.4817731 0.513283 0.4551461 0.06652933 0.4822309 0.06608683 0.4556039 0.2828107 0.4818341 0.2831922</float_array>
+          <technique_common>
+            <accessor source="#pCube94__MetalSignal01-texcoord-array" count="182" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="pCube94__MetalSignal01-vertex">
+          <input semantic="POSITION" source="#pCube94__MetalSignal01-position" />
+        </vertices>
+        <triangles material="MetalSignal01" count="134">
+          <input semantic="VERTEX" source="#pCube94__MetalSignal01-vertex" offset="0" />
+          <input semantic="NORMAL" source="#pCube94__MetalSignal01-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#pCube94__MetalSignal01-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 2 2 2 1 1 1 3 3 3 1 1 1 4 4 4 3 3 3 3 3 3 4 4 4 5 5 5 4 4 4 6 6 6 5 5 5 5 5 5 6 6 6 7 7 7 5 5 5 7 7 7 8 8 8 7 7 7 9 9 9 8 8 8 10 10 10 11 11 11 12 12 12 11 11 11 13 13 13 12 12 12 14 14 14 15 15 15 16 16 16 15 15 15 17 17 17 18 18 18 15 15 15 18 18 18 16 16 16 17 17 17 19 19 19 18 18 18 17 17 17 20 20 20 19 19 19 19 19 19 20 20 20 21 21 21 19 19 19 21 21 21 22 22 22 21 21 21 23 23 23 22 22 22 24 24 24 25 25 25 26 26 26 25 25 25 27 27 27 26 26 26 28 28 28 29 29 29 30 30 30 28 28 28 30 30 30 31 31 31 29 29 29 32 32 32 33 33 33 29 29 29 33 33 33 30 30 30 30 30 30 33 33 33 34 34 34 30 30 30 34 34 34 35 35 35 30 30 30 35 35 35 31 31 31 32 32 32 36 36 36 33 33 33 33 33 33 37 37 37 34 34 34 33 33 33 38 38 38 37 37 37 33 33 33 36 36 36 38 38 38 34 34 34 39 39 39 40 40 40 34 34 34 37 37 37 39 39 39 34 34 34 41 41 41 35 35 35 34 34 34 40 40 40 41 41 41 37 37 37 38 38 38 42 42 42 37 37 37 43 43 43 39 39 39 37 37 37 42 42 42 43 43 43 44 44 44 45 45 45 46 46 46 44 44 44 46 46 46 47 47 47 45 45 45 48 48 48 46 46 46 45 45 45 49 49 49 48 48 48 46 46 46 48 48 48 50 50 50 46 46 46 50 50 50 51 51 51 46 46 46 51 51 51 47 47 47 48 48 48 52 52 52 50 50 50 50 50 50 53 53 53 54 54 54 50 50 50 52 52 52 53 53 53 50 50 50 55 55 55 51 51 51 50 50 50 54 54 54 55 55 55 56 56 56 57 57 57 58 58 58 56 56 56 58 58 58 59 59 59 57 57 57 60 60 60 61 61 61 57 57 57 61 61 61 58 58 58 58 58 58 62 62 62 63 63 63 58 58 58 61 61 61 62 62 62 58 58 58 64 64 64 59 59 59 58 58 58 63 63 63 64 64 64 60 60 60 65 65 65 61 61 61 61 61 61 66 66 66 62 62 62 61 61 61 65 65 65 66 66 66 62 62 62 66 66 66 67 67 67 68 68 68 69 69 69 70 70 70 68 68 68 70 70 70 71 71 71 69 69 69 72 72 72 70 70 70 69 69 69 73 73 73 72 72 72 70 70 70 72 72 72 74 74 74 70 70 70 74 74 74 75 75 75 70 70 70 75 75 75 71 71 71 72 72 72 76 76 76 74 74 74 74 74 74 77 77 77 78 78 78 74 74 74 76 76 76 77 77 77 74 74 74 79 79 79 75 75 75 74 74 74 78 78 78 79 79 79 80 80 80 81 81 81 82 82 82 80 80 80 82 82 82 83 83 83 81 81 81 84 84 84 82 82 82 81 81 81 85 85 85 84 84 84 82 82 82 84 84 84 86 86 86 82 82 82 86 86 86 87 87 87 82 82 82 87 87 87 83 83 83 84 84 84 88 88 88 86 86 86 86 86 86 89 89 89 90 90 90 86 86 86 88 88 88 89 89 89 86 86 86 91 91 91 87 87 87 86 86 86 90 90 90 91 91 91 92 92 92 93 93 93 94 94 94 93 93 93 95 95 95 94 94 94 96 96 96 97 97 97 98 98 98 97 97 97 99 99 99 98 98 98 100 100 100 101 101 101 102 102 102 101 101 101 103 103 103 102 102 102 104 104 104 105 105 105 106 106 106 105 105 105 107 107 107 106 106 106 108 108 108 109 109 109 110 110 110 108 108 108 110 110 110 111 111 111 110 110 110 112 112 112 111 111 111 110 110 110 113 113 113 112 112 112 114 114 114 115 115 115 116 116 116 115 115 115 117 117 117 116 116 116 118 118 118 119 119 119 120 120 120 119 119 119 121 121 121 120 120 120 122 122 122 123 123 123 124 124 124 122 122 122 124 124 124 125 125 125 124 124 124 126 126 126 125 125 125 124 124 124 127 127 127 126 126 126 128 128 128 129 129 129 130 130 130 129 129 129 131 131 131 130 130 130 132 132 132 133 133 133 134 134 134 133 133 133 135 135 135 134 134 134 136 136 136 137 137 137 138 138 138 136 136 136 138 138 138 139 139 139 138 138 138 140 140 140 139 139 139 138 138 138 141 141 141 140 140 140 142 142 142 143 143 143 144 144 144 143 143 143 145 145 145 144 144 144 146 146 146 147 147 147 148 148 148 147 147 147 149 149 149 148 148 148 150 150 150 151 151 151 152 152 152 151 151 151 153 153 153 152 152 152 154 154 154 155 155 155 156 156 156 155 155 155 157 157 157 156 156 156 158 158 158 159 159 159 160 160 160 159 159 159 161 161 161 160 160 160 162 162 162 163 163 163 164 164 164 163 163 163 165 165 165 164 164 164 166 166 166 167 167 167 168 168 168 167 167 167 169 169 169 168 168 168 170 170 170 171 171 171 172 172 172 171 171 171 173 173 173 172 172 172 174 174 174 175 175 175 176 176 176 175 175 175 177 177 177 176 176 176 178 178 178 179 179 179 180 180 180 179 179 179 181 181 181 180 180 180 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="pCube94__SignalRight00_SS-mesh" name="pCube94__SignalRight00_SS">
+      <mesh>
+        <source id="pCube94__SignalRight00_SS-position">
+          <float_array id="pCube94__SignalRight00_SS-position-array" count="24">-32.34818 6.540279 29.94764 -28.4597 2.651806 29.94765 -32.34818 63.45972 29.94764 28.45972 2.651806 29.94765 -28.4597 67.34821 29.94765 32.34822 6.540279 29.94765 28.45972 67.34821 29.94765 32.34822 63.45972 29.94765</float_array>
+          <technique_common>
+            <accessor source="#pCube94__SignalRight00_SS-position-array" count="8" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube94__SignalRight00_SS-normal">
+          <float_array id="pCube94__SignalRight00_SS-normal-array" count="24">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#pCube94__SignalRight00_SS-normal-array" count="8" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube94__SignalRight00_SS-texcoord">
+          <float_array id="pCube94__SignalRight00_SS-texcoord-array" count="16">0.007843138 0.06666666 0.06666667 0.007843137 0.007843138 0.9333333 0.9333333 0.007843137 0.06666667 0.9921569 0.9921569 0.06666666 0.9333333 0.9921569 0.9921569 0.9333333</float_array>
+          <technique_common>
+            <accessor source="#pCube94__SignalRight00_SS-texcoord-array" count="8" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="pCube94__SignalRight00_SS-vertex">
+          <input semantic="POSITION" source="#pCube94__SignalRight00_SS-position" />
+        </vertices>
+        <triangles material="SignalRight00_SS" count="6">
+          <input semantic="VERTEX" source="#pCube94__SignalRight00_SS-vertex" offset="0" />
+          <input semantic="NORMAL" source="#pCube94__SignalRight00_SS-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#pCube94__SignalRight00_SS-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 1 1 1 3 3 3 2 2 2 2 2 2 3 3 3 4 4 4 3 3 3 5 5 5 4 4 4 4 4 4 5 5 5 6 6 6 5 5 5 7 7 7 6 6 6 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_pCube94__MetalSignal01-mesh">
+      <skin source="#pCube94__MetalSignal01-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="pCube94__MetalSignal01-mesh-joint">
+          <Name_array id="pCube94__MetalSignal01-mesh-joint-array" count="1">CityWorldHomeSignal005</Name_array>
+          <technique_common>
+            <accessor source="#pCube94__MetalSignal01-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube94__MetalSignal01-mesh-inv_bind_matrix">
+          <float_array id="pCube94__MetalSignal01-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#pCube94__MetalSignal01-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube94__MetalSignal01-mesh-weight">
+          <float_array id="pCube94__MetalSignal01-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#pCube94__MetalSignal01-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#pCube94__MetalSignal01-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#pCube94__MetalSignal01-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="182">
+          <input semantic="JOINT" source="#pCube94__MetalSignal01-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#pCube94__MetalSignal01-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_pCube94__SignalRight00_SS-mesh">
+      <skin source="#pCube94__SignalRight00_SS-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="pCube94__SignalRight00_SS-mesh-joint">
+          <Name_array id="pCube94__SignalRight00_SS-mesh-joint-array" count="1">CityWorldHomeSignal005</Name_array>
+          <technique_common>
+            <accessor source="#pCube94__SignalRight00_SS-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube94__SignalRight00_SS-mesh-inv_bind_matrix">
+          <float_array id="pCube94__SignalRight00_SS-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#pCube94__SignalRight00_SS-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube94__SignalRight00_SS-mesh-weight">
+          <float_array id="pCube94__SignalRight00_SS-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#pCube94__SignalRight00_SS-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#pCube94__SignalRight00_SS-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#pCube94__SignalRight00_SS-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="8">
+          <input semantic="JOINT" source="#pCube94__SignalRight00_SS-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#pCube94__SignalRight00_SS-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="Armature_CityWorldHomeSignal005" name="CityWorldHomeSignal005" sid="CityWorldHomeSignal005" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+      </node>
+      <node id="pCube94__MetalSignal01" name="pCube94__MetalSignal01" type="NODE">
+        <instance_controller url="#Armature_pCube94__MetalSignal01-mesh">
+          <skeleton>#Armature_CityWorldHomeSignal005</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="MetalSignal01" target="#MetalSignal01" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="pCube94__SignalRight00_SS" name="pCube94__SignalRight00_SS" type="NODE">
+        <instance_controller url="#Armature_pCube94__SignalRight00_SS-mesh">
+          <skeleton>#Armature_CityWorldHomeSignal005</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="SignalRight00_SS" target="#SignalRight00_SS" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

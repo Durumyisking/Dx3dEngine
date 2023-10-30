@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "PhysXRigidBody.h"
 #include "TimeMgr.h"
+#include "Player.h"
 MonsterStateScript::MonsterStateScript()
 	: Script()
 	, mStateEventList{}
@@ -68,17 +69,21 @@ void MonsterStateScript::Idle()
 		{
 			if (GetOwner()->IsObjectInFOV(mPlayer, 30.f))
 			{
-				mMonster->SetIsFoundPlayer(true);
-				mMonster->SetMonsterState(Monster::eMonsterState::Turn);
-
-				Vector3 dirToPlayer = mPlayer->GetWorldPos() - GetTransform()->WorldForward();
-				dirToPlayer.Normalize();
-				Vector3 CrossRst = dirToPlayer.Cross(GetTransform()->WorldForward());
-				Vector3 worldUp = { 0.f, 1.f, 0.f };
-				
-				if (worldUp.Dot(CrossRst) < 0.f)
+				Player::ePlayerState state = dynamic_cast<Player*>(mPlayer)->GetPlayerState();
+				if (state != Player::ePlayerState::Capture)
 				{
-					mbTurnLeft = true;
+					mMonster->SetIsFoundPlayer(true);
+					mMonster->SetMonsterState(Monster::eMonsterState::Turn);
+
+					Vector3 dirToPlayer = mPlayer->GetWorldPos() - GetTransform()->WorldForward();
+					dirToPlayer.Normalize();
+					Vector3 CrossRst = dirToPlayer.Cross(GetTransform()->WorldForward());
+					Vector3 worldUp = { 0.f, 1.f, 0.f };
+
+					if (worldUp.Dot(CrossRst) < 0.f)
+					{
+						mbTurnLeft = true;
+					}
 				}
 			}
 		}

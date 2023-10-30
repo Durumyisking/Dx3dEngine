@@ -144,6 +144,7 @@ public:
 	void SetPhysicalPosition(const Vector3& position);
 	void SetPhysicalRotation(const Vector3& rotation_degrees);
 	void SetPhysicalRotation(const PxQuat& quat);
+	void SetPhysicalRotation_For_Static(const Vector3& rotation_degrees);
 	void AddPhysicalRotation(const Vector3& rotation_degrees);
 	void AddPhysicalRotation_Radian(const Vector3& rotation_radian);
 

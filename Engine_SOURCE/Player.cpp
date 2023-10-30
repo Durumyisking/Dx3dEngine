@@ -19,6 +19,8 @@
 #include "FootSmokeParticle.h"
 #include "Object.h"
 
+#include "BlockBrickScript.h"
+
 Player::Player()
 	: mPlayerState(ePlayerState::Idle)
 	, mMeshRenderer(nullptr)
@@ -83,7 +85,7 @@ void Player::Load(FILE* File)
 void Player::Initialize()
 {
 	//기본 설정
-	SetPos(Vector3(20.f, 5.f, 10.f));
+	SetPos(Vector3(20.f, 30.f, 10.f));
 	SetScale(Vector3(1.f, 1.f, 1.f));
 
 	//마리오 body 초기화
@@ -92,7 +94,7 @@ void Player::Initialize()
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	mRigidBody = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 
-	AddComponent<PhysXCollider>(eComponentType::Collider)->SetSwitchState(false);
+	AddComponent<PhysXCollider>(eComponentType::Collider)->SetSwitchState(true);
 	AddComponent<PhysicalMovement>(eComponentType::Movement);
 	AddComponent<GenericAnimator>(eComponentType::GenericAnimator);
 
@@ -104,8 +106,8 @@ void Player::Initialize()
 	mMeshRenderer->SetMaterialByKey(L"marioBodyMaterial", 0);
 
 
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.25f, 0.5f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.25f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	mRigidBody->SetFriction(Vector3(40.f, 0.f, 40.f));
 
@@ -194,7 +196,26 @@ void Player::Update()
 	{
 		i->Update();
 	}
-	//mMarioCap->Update();
+
+	if (KEY_TAP(R))
+	{
+		// 소프트리셋
+		mPlayerState = ePlayerState::Idle;
+		mRigidBody->SetVelocity(Vector3::Zero);
+		mRigidBody->ApplyGravity();
+		mRigidBody->SetAirOff();
+		mScript->SetHavingCap(true);
+	}
+	if (KEY_TAP(F))
+	{
+		// 하드리셋
+		mPlayerState = ePlayerState::Fall;
+		mRigidBody->SetVelocity(Vector3::Zero);
+		mRigidBody->ApplyGravity();
+		mRigidBody->SetAirOn();
+		mScript->SetHavingCap(true);
+		GetTransform()->SetPhysicalPosition(Vector3(0.f, 10.f, 0.f));
+	}
 }
 
 void Player::FixedUpdate()
@@ -225,7 +246,7 @@ void Player::Render()
 {
 	if (GetState() != GameObj::eState::Active)
 		return;
-
+		
 	DynamicObject::Render();
 
 	for (auto i : mParts)
@@ -269,6 +290,7 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			if (mRigidBody->IsOnAir())
 			{
 				mRigidBody->SetAirOff();
+				mRigidBody->RemoveGravity();
 				SetPlayerState(Player::ePlayerState::Idle);
 			}
 		}
@@ -278,23 +300,28 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
 			Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
 
-    			if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
-			{
-				if (pentDir.y > 0.f && pentDir.x == 0.f && pentDir.z == 0.f)
-				{
-					if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+    		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
+			{				
+				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+				{						
+					if (mRigidBody->IsOnAir())
 					{
-						//GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent);
-						if (mRigidBody->IsOnAir())
-						{
-							GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-							mRigidBody->SetAirOff();
-							//mRigidBody->RemoveGravity();
-							SetPlayerState(Player::ePlayerState::Idle);
-						}
+						GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
+						mRigidBody->SetAirOff();
+						mRigidBody->RemoveGravity();
+						SetPlayerState(Player::ePlayerState::Idle);
 					}
-				}
+				}			
 			}
+
+				if (Calculate_RelativeDirection_ByCosTheta(gameObject) < 0.95f && gameObject->GetObjectTypeName() == "BlockBrick")
+				{
+
+					if (gameObject->GetScript<BlockBrickScript>() == nullptr)
+						return;
+
+					gameObject->GetScript<BlockBrickScript>()->GetHit();
+				}
 		}
 
 		if (eLayerType::Monster == gameObject->GetLayerType())
@@ -303,34 +330,71 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			{
 				mScript->ResetJumpCount();
 				mRigidBody->SetAirOff();
-				mRigidBody->SetVelocity(AXIS::Y, 0.f);
+				//mRigidBody->SetVelocity(AXIS::Y, 0.f);
 				SetPlayerState(Player::ePlayerState::Jump);
 				GetBoneAnimator()->ResetAnimator();
 			}
 		}
 	}
-
+	GameObj::OnTriggerEnter(gameObject);
 }
 
 void Player::OnTriggerPersist(GameObj* gameObject)
 {
+	if (eLayerType::Objects == gameObject->GetLayerType())
+	{
+		Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
+		Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
 
+		if (!(pentDir == Vector3::Zero ))
+		{
+			if (pentDirDepth == Vector3::Zero)
+			{
+				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+				{
+					if (mRigidBody->IsOnAir())
+					{
+						mRigidBody->SetAirOff();
+						mRigidBody->RemoveGravity();
+						SetPlayerState(Player::ePlayerState::Idle);
+					}
+				}
+			}
+			else
+			{
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pentDirDepth);
+			}
+		}
+	}
 }
 
 void Player::OnTriggerExit(GameObj* gameObject)
 {
+	if (eLayerType::Platforms== gameObject->GetLayerType())
+	{
+		if (!mRigidBody->IsOnAir())
+		{
+			mRigidBody->SetAirOn();
+			mRigidBody->ApplyGravity();
+			if (mPlayerState != Player::ePlayerState::Jump)
+				SetPlayerState(Player::ePlayerState::Fall);
+		}
+	}
 	if (eLayerType::Objects == gameObject->GetLayerType())
 	{
-		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
+		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.5f)
 		{
 			if (!mRigidBody->IsOnAir())
 			{
 				mRigidBody->SetAirOn();
 				mRigidBody->ApplyGravity();
-				SetPlayerState(Player::ePlayerState::Fall);
+				if(mPlayerState != Player::ePlayerState::Jump)
+					SetPlayerState(Player::ePlayerState::Fall);
 			}
 		}
 	}
+	GameObj::OnTriggerExit(gameObject);
+
 }
 
 void Player::KeyCheck()
@@ -369,10 +433,20 @@ void Player::KeyCheck()
 	// 대기
  
 	// 이동
-	stateEvent(eKeyState::DOWN, eKeyCode::W, ePlayerState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::S, ePlayerState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::A, ePlayerState::Move);
-	stateEvent(eKeyState::DOWN, eKeyCode::D, ePlayerState::Move);
+	if (!mRigidBody->IsOnAir())
+	{
+		stateEvent(eKeyState::DOWN, eKeyCode::W, ePlayerState::Move);
+		stateEvent(eKeyState::DOWN, eKeyCode::S, ePlayerState::Move);
+		stateEvent(eKeyState::DOWN, eKeyCode::A, ePlayerState::Move);
+		stateEvent(eKeyState::DOWN, eKeyCode::D, ePlayerState::Move);
+	}
+	else
+	{
+		stateEvent(eKeyState::DOWN, eKeyCode::W, ePlayerState::Fall);
+		stateEvent(eKeyState::DOWN, eKeyCode::S, ePlayerState::Fall);
+		stateEvent(eKeyState::DOWN, eKeyCode::A, ePlayerState::Fall);
+		stateEvent(eKeyState::DOWN, eKeyCode::D, ePlayerState::Fall);
+	}
 
 	// 모자 던지기
 	able = false;
