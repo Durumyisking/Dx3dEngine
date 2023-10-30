@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset />
+  <library_images>
+    <image id="DoorGlassSteel00_alb">
+      <init_from>DoorGlassSteel00_alb.png</init_from>
+    </image>
+    <image id="DoorGlassSteel00_nrm">
+      <init_from>DoorGlassSteel00_nrm.png</init_from>
+    </image>
+    <image id="GlassBuilding1F00_emm">
+      <init_from>GlassBuilding1F00_emm.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="DoorGlassSteel00">
+      <instance_effect url="#Effect_DoorGlassSteel00" />
+    </material>
+    <material id="GlassBuilding1F01">
+      <instance_effect url="#Effect_GlassBuilding1F01" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect_DoorGlassSteel00">
+      <profile_COMMON>
+        <newparam sid="surface_DoorGlassSteel00-diffuse">
+          <surface type="2D">
+            <init_from>DoorGlassSteel00_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_DoorGlassSteel00-diffuse">
+          <sampler2D>
+            <source>surface_DoorGlassSteel00-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <newparam sid="surface_DoorGlassSteel00-bump">
+          <surface type="2D">
+            <init_from>DoorGlassSteel00_nrm</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_DoorGlassSteel00-bump">
+          <sampler2D>
+            <source>surface_DoorGlassSteel00-bump</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_DoorGlassSteel00-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <bump>
+              <texture texture="sampler_DoorGlassSteel00-bump" texcoord="CHANNEL0" />
+            </bump>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Effect_GlassBuilding1F01">
+      <profile_COMMON>
+        <newparam sid="surface_GlassBuilding1F01-diffuse">
+          <surface type="2D">
+            <init_from>DoorGlassSteel00_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_GlassBuilding1F01-diffuse">
+          <sampler2D>
+            <source>surface_GlassBuilding1F01-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <newparam sid="surface_GlassBuilding1F01-bump">
+          <surface type="2D">
+            <init_from>DoorGlassSteel00_nrm</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_GlassBuilding1F01-bump">
+          <sampler2D>
+            <source>surface_GlassBuilding1F01-bump</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_GlassBuilding1F01-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <bump>
+              <texture texture="sampler_GlassBuilding1F01-bump" texcoord="CHANNEL0" />
+            </bump>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="polySurface86__DoorGlassSteel00-mesh" name="polySurface86__DoorGlassSteel00">
+      <mesh>
+        <source id="polySurface86__DoorGlassSteel00-position">
+          <float_array id="polySurface86__DoorGlassSteel00-position-array" count="198">-32.71008 376.3477 7.627197 -31.46008 376.3477 6.377075 -31.46008 376.3477 2.735413 -41.71033 376.3477 7.627075 -43.96008 376.3477 2.735413 -43.96008 376.3477 5.377319 -31.46008 11.01161 6.377075 -32.71008 11.01161 7.627197 -31.46008 11.01161 2.735413 -41.71033 11.01161 7.627075 -43.96008 11.01161 2.735413 -43.96008 11.01161 5.377319 -1.249756 385 4.873657 0.0002441406 385 3.623474 0.0002441406 385 -7.626526 -10.25 385 4.873474 -12.49976 385 -7.626526 -12.49976 385 2.623718 -12.49976 0 2.373474 -174.9998 25 2.373474 -174.9998 0 2.373474 -12.49976 25 2.373474 -175 27.99999 -1.769287 -12.49976 27.99999 -1.769287 -174.9998 385 2.373474 -12.49976 360 2.373474 -12.49976 385 2.373474 -174.9998 360 2.373474 -12.49976 357 -1.769287 -175 357 -1.769287 -199.9998 385 4.873169 -199.9998 385 -7.626831 -199.9998 0 -7.626831 -199.9998 0 4.873169 -177.4995 0 4.873169 -177.4995 385 4.873169 -174.9998 385 2.373474 -174.9998 0 2.373474 -174.9998 0 -7.626831 -174.9998 385 -7.626831 -31.46008 376.3477 6.377075 -31.46008 11.01161 2.735413 -31.46008 376.3477 2.735413 -31.46008 11.01161 6.377075 -32.71008 11.01161 7.627197 -32.71008 376.3477 7.627197 -41.71033 376.3477 7.627075 -41.71033 11.01161 7.627075 -43.96008 11.01161 5.377319 -43.96008 376.3477 5.377319 -43.96008 376.3477 2.735413 -43.96008 11.01161 2.735413 -31.46008 11.01161 2.735413 -31.46008 376.3477 2.735413 -12.49976 0 2.623718 -12.49976 385 -7.626526 -12.49976 0 -7.626526 -12.49976 385 2.623718 -10.25 385 4.873474 -10.25 0 4.873474 -1.249756 0 4.873657 -1.249756 385 4.873657 0.0002441406 385 3.623474 0.0002441406 0 3.623474 0.0002441406 0 -7.626526 0.0002441406 385 -7.626526</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__DoorGlassSteel00-position-array" count="66" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface86__DoorGlassSteel00-normal">
+          <float_array id="polySurface86__DoorGlassSteel00-normal-array" count="198">0.1213308 0.01565558 0.9921722 0.9686888 0.001956947 0.2485322 0.2798434 0.009784736 -0.960861 -0.1956946 0.01565558 0.9804305 -0.2074365 0.007827789 -0.9784736 -0.9080234 0.001956947 0.4187868 0.9686888 -0.04696673 0.2465753 0.1213308 -0.02348337 0.9921722 0.2798434 -0.01174168 -0.960861 -0.1956946 -0.02152642 0.9804305 -0.2074365 -0.01174168 -0.9784736 -0.9080234 -0.04500978 0.4168298 0.1213308 0.037182 0.9921722 0.9941292 0.001956947 0.09980423 1 0.02935421 -7.54979E-08 -0.1956946 0.03522505 0.9804305 -1 0.03131115 7.54979E-08 -0.9843444 0.003913894 0.1780823 7.54979E-08 0 1 7.461143E-08 0.146771 0.9882583 7.54979E-08 0 1 7.461143E-08 0.146771 0.9882583 4.432362E-08 0.8101761 0.5870842 4.432362E-08 0.8101761 0.5870842 7.54979E-08 0 1 7.461143E-08 -0.146771 0.9882583 7.54979E-08 0 1 7.461143E-08 -0.146771 0.9882583 4.432362E-08 -0.8101761 0.5870842 4.432362E-08 -0.8101761 0.5870842 -0.4853228 0 0.8747554 -1 0 7.54979E-08 -1 0 7.54979E-08 -0.4853228 0 0.8747554 0.09980438 0 0.9941292 0.09980438 0 0.9941292 0.9804305 0 0.1956946 0.9804305 0 0.1956946 1 0 -7.54979E-08 1 0 -7.54979E-08 0.9686888 0.001956947 0.2485322 0.2798434 -0.01174168 -0.960861 0.2798434 0.009784736 -0.960861 0.9686888 -0.04696673 0.2465753 0.1213308 -0.02348337 0.9921722 0.1213308 0.01565558 0.9921722 -0.1956946 0.01565558 0.9804305 -0.1956946 -0.02152642 0.9804305 -0.9080234 -0.04500978 0.4168298 -0.9080234 0.001956947 0.4187868 -0.2074365 0.007827789 -0.9784736 -0.2074365 -0.01174168 -0.9784736 0.2798434 -0.01174168 -0.960861 0.2798434 0.009784736 -0.960861 -0.9843444 0 0.1780823 -1 0.03131115 7.54979E-08 -1 0 7.54979E-08 -0.9843444 0.003913894 0.1780823 -0.1956946 0.03522505 0.9804305 -0.1956946 0 0.9804305 0.1213308 0 0.9921722 0.1213308 0.037182 0.9921722 0.9941292 0.001956947 0.09980423 0.9941292 0 0.09980423 1 0 -7.54979E-08 1 0.02935421 -7.54979E-08</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__DoorGlassSteel00-normal-array" count="66" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface86__DoorGlassSteel00-texcoord">
+          <float_array id="polySurface86__DoorGlassSteel00-texcoord-array" count="132">0.01786831 0.7547265 0.02024872 0.7523613 0.02713054 0.7523613 0.01786831 0.7717708 0.02713054 0.7760281 0.02214084 0.7760281 0.04283207 0.7750973 0.04046693 0.7727321 0.04972915 0.7750973 0.04046693 0.7557031 0.04972915 0.7514305 0.04472419 0.7514305 0.1127794 0.7531548 0.1151446 0.7507896 0.1364462 0.7507896 0.1127794 0.7701839 0.1364462 0.7744411 0.1170367 0.7744411 0.9924926 0.7121233 0.6848249 0.7594568 0.6848249 0.7121233 0.9924926 0.7594568 0.6848249 0.7691463 0.9924926 0.7691463 0.3672389 0.697795 0.6748913 0.6504616 0.6748913 0.697795 0.3672389 0.6504616 0.6748913 0.6407874 0.3672389 0.6407874 0.0805066 0.007751584 0.1041733 0.007721066 0.1041733 0.7366598 0.0805066 0.7366292 0.03790341 0.7366292 0.03790341 0.007751584 0.0312047 0.007705808 0.0312047 0.736675 0.01226825 0.736675 0.01228351 0.007690549 0.297673 0.8385596 0.9893187 0.8454566 0.297673 0.8454566 0.9893187 0.8385596 0.9893187 0.8352178 0.297673 0.8352178 0.297673 0.8181735 0.9893187 0.8181735 0.9893339 0.8121614 0.2976577 0.8121614 0.2976425 0.8071565 0.9893492 0.8071565 0.9893644 0.7834897 0.297612 0.7834897 0.3096666 0.007919431 0.2902571 0.7368429 0.2902571 0.007888913 0.3096666 0.7368124 0.3156787 0.7367971 0.3156787 0.007919431 0.332723 0.007919431 0.332723 0.7368124 0.3360647 0.7368124 0.3360647 0.007904172 0.3573663 0.007888913 0.3573663 0.7368429</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__DoorGlassSteel00-texcoord-array" count="66" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface86__DoorGlassSteel00-vertex">
+          <input semantic="POSITION" source="#polySurface86__DoorGlassSteel00-position" />
+        </vertices>
+        <triangles material="DoorGlassSteel00" count="50">
+          <input semantic="VERTEX" source="#polySurface86__DoorGlassSteel00-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface86__DoorGlassSteel00-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface86__DoorGlassSteel00-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 3 3 3 0 0 0 2 2 2 3 3 3 2 2 2 4 4 4 5 5 5 3 3 3 4 4 4 6 6 6 7 7 7 8 8 8 7 7 7 9 9 9 8 8 8 8 8 8 9 9 9 10 10 10 9 9 9 11 11 11 10 10 10 12 12 12 13 13 13 14 14 14 15 15 15 12 12 12 14 14 14 15 15 15 14 14 14 16 16 16 17 17 17 15 15 15 16 16 16 18 18 18 19 19 19 20 20 20 18 18 18 21 21 21 19 19 19 19 19 19 21 21 21 22 22 22 21 21 21 23 23 23 22 22 22 24 24 24 25 25 25 26 26 26 24 24 24 27 27 27 25 25 25 25 25 25 27 27 27 28 28 28 27 27 27 29 29 29 28 28 28 30 30 30 31 31 31 32 32 32 30 30 30 32 32 32 33 33 33 34 34 34 30 30 30 33 33 33 34 34 34 35 35 35 30 30 30 34 34 34 36 36 36 35 35 35 34 34 34 37 37 37 36 36 36 36 36 36 37 37 37 38 38 38 36 36 36 38 38 38 39 39 39 40 40 40 41 41 41 42 42 42 40 40 40 43 43 43 41 41 41 44 44 44 43 43 43 40 40 40 44 44 44 40 40 40 45 45 45 44 44 44 45 45 45 46 46 46 47 47 47 44 44 44 46 46 46 47 47 47 46 46 46 48 48 48 46 46 46 49 49 49 48 48 48 48 48 48 49 49 49 50 50 50 48 48 48 50 50 50 51 51 51 50 50 50 52 52 52 51 51 51 50 50 50 53 53 53 52 52 52 54 54 54 55 55 55 56 56 56 54 54 54 57 57 57 55 55 55 58 58 58 57 57 57 54 54 54 59 59 59 58 58 58 54 54 54 59 59 59 60 60 60 58 58 58 60 60 60 61 61 61 58 58 58 60 60 60 62 62 62 61 61 61 60 60 60 63 63 63 62 62 62 62 62 62 63 63 63 64 64 64 62 62 62 64 64 64 65 65 65 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="polySurface86__GlassBuilding1F01-mesh" name="polySurface86__GlassBuilding1F01">
+      <mesh>
+        <source id="polySurface86__GlassBuilding1F01-position">
+          <float_array id="polySurface86__GlassBuilding1F01-position-array" count="12">-175 27.99999 -1.769287 -12.49976 27.99999 -1.769287 -175 357 -1.769287 -12.49976 357 -1.769287</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__GlassBuilding1F01-position-array" count="4" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface86__GlassBuilding1F01-normal">
+          <float_array id="polySurface86__GlassBuilding1F01-normal-array" count="12">7.54979E-08 0 1 7.54979E-08 0 1 7.54979E-08 0 1 7.54979E-08 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__GlassBuilding1F01-normal-array" count="4" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface86__GlassBuilding1F01-texcoord">
+          <float_array id="polySurface86__GlassBuilding1F01-texcoord-array" count="8">0.3667964 0.00704968 0.6744488 0.00704968 0.3667964 0.6299535 0.6744488 0.6299535</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__GlassBuilding1F01-texcoord-array" count="4" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface86__GlassBuilding1F01-texcoord_1">
+          <float_array id="polySurface86__GlassBuilding1F01-texcoord-array_1" count="8">0.1764706 0.3764706 0.254902 0.3764706 0.1764706 0.5294118 0.254902 0.5294118</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__GlassBuilding1F01-texcoord-array_1" count="4" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface86__GlassBuilding1F01-vertex">
+          <input semantic="POSITION" source="#polySurface86__GlassBuilding1F01-position" />
+        </vertices>
+        <triangles material="GlassBuilding1F01" count="2">
+          <input semantic="VERTEX" source="#polySurface86__GlassBuilding1F01-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface86__GlassBuilding1F01-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface86__GlassBuilding1F01-texcoord" offset="2" set="0" />
+          <input semantic="TEXCOORD" source="#polySurface86__GlassBuilding1F01-texcoord_1" offset="3" set="1" />
+          <p>0 0 0 0 1 1 1 1 2 2 2 2 1 1 1 1 3 3 3 3 2 2 2 2 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="polySurface87__DoorGlassSteel00-mesh" name="polySurface87__DoorGlassSteel00">
+      <mesh>
+        <source id="polySurface87__DoorGlassSteel00-position">
+          <float_array id="polySurface87__DoorGlassSteel00-position-array" count="261">156.053 4.946375 4.962982 155.2206 3.50481 2.735352 162.7206 3.504808 2.735352 161.8884 4.946374 4.96283 166.4706 9.999999 2.735352 164.806 9.999999 4.962982 162.7206 16.49519 2.735352 161.8882 15.05363 4.962982 155.2206 16.49519 2.735352 156.0529 15.05363 4.963135 151.4706 9.999999 2.735352 153.1353 10 4.962982 155.2206 3.50481 2.735352 156.053 4.946375 4.962982 12.5 0 2.373688 175 0 2.373718 175 25 2.373718 12.5 25 2.373688 175.0001 27.99999 -1.769043 12.5 27.99999 -1.769073 175 385 2.373718 12.5 385 2.373688 12.5 360 2.373688 175 360 2.373718 12.5 357 -1.769073 175.0001 357 -1.769043 43.96021 376.3477 5.377228 43.96021 376.3477 2.735321 41.71045 376.3477 7.626984 31.46021 376.3477 2.735321 32.71008 376.3477 7.627136 31.46021 376.3477 6.377289 43.96021 11.01161 5.377228 41.71045 11.01161 7.626984 43.96021 11.01161 2.735321 32.71008 11.01161 7.627136 31.46021 11.01161 2.735321 31.46021 11.01161 6.377289 12.5 385 2.623627 12.5 385 -7.626617 10.25024 385 4.873383 0 385 -7.626617 1.249756 385 4.873535 0 385 3.623688 200 385 4.873413 200 0 -7.626587 200 385 -7.626587 200 0 4.873413 177.4996 0 4.873413 177.4996 385 4.873413 175 385 2.373718 175 0 2.373718 175 0 -7.626587 175 385 -7.626587 31.46021 376.3477 6.377289 31.46021 376.3477 2.735321 31.46021 11.01161 2.735321 31.46021 11.01161 6.377289 32.71008 11.01161 7.627136 32.71008 376.3477 7.627136 41.71045 376.3477 7.626984 41.71045 11.01161 7.626984 43.96021 11.01161 5.377228 43.96021 376.3477 5.377228 43.96021 376.3477 2.735321 43.96021 11.01161 2.735321 31.46021 11.01161 2.735321 31.46021 376.3477 2.735321 12.5 0 2.623627 12.5 0 -7.626617 12.5 385 -7.626617 12.5 385 2.623627 10.25024 385 4.873383 10.25024 0 4.873383 1.249756 0 4.873535 1.249756 385 4.873535 0 385 3.623688 0 0 3.623688 0 0 -7.626617 0 385 -7.626617 153.1353 10 4.962982 158.9706 10 4.96283 156.0529 15.05363 4.963135 156.053 4.946375 4.962982 161.8882 15.05363 4.962982 161.8884 4.946374 4.96283 164.806 9.999999 4.962982</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__DoorGlassSteel00-position-array" count="87" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface87__DoorGlassSteel00-normal">
+          <float_array id="polySurface87__DoorGlassSteel00-normal-array" count="261">-0.2915852 -0.5068493 0.8121331 -0.4011742 -0.6927593 0.5988258 0.4011741 -0.6947162 0.5988259 0.2915851 -0.5068493 0.8121331 0.8003913 0 0.5988259 0.5851271 0 0.8121331 0.4011741 0.6947162 0.5988259 0.2915851 0.5068493 0.8121331 -0.4011742 0.6947162 0.5988258 -0.2915852 0.5068493 0.8121331 -0.8003914 0 0.5988258 -0.5851272 0 0.812133 -0.4011742 -0.6927593 0.5988258 -0.2915852 -0.5068493 0.8121331 -7.54979E-08 0 1 -7.54979E-08 0 1 -7.461143E-08 0.146771 0.9882583 -7.461143E-08 0.146771 0.9882583 -4.432362E-08 0.8101761 0.5870842 -4.432362E-08 0.8101761 0.5870842 -7.54979E-08 0 1 -7.54979E-08 0 1 -7.461143E-08 -0.146771 0.9882583 -7.461143E-08 -0.146771 0.9882583 -4.432362E-08 -0.8101761 0.5870842 -4.432362E-08 -0.8101761 0.5870842 0.9080234 0.001956947 0.4187868 0.2074365 0.007827789 -0.9784736 0.1956946 0.01565558 0.9804305 -0.2798434 0.009784736 -0.960861 -0.1213308 0.01565558 0.9921722 -0.9686888 0.001956947 0.2465753 0.9080234 -0.04500978 0.4168298 0.1956946 -0.02152642 0.9804305 0.2074365 -0.01174168 -0.9784736 -0.1213308 -0.02348337 0.9921722 -0.2798434 -0.01174168 -0.960861 -0.9686888 -0.04696673 0.2465753 0.9843444 0.003913894 0.1780823 1 0.03131115 7.54979E-08 0.1956946 0.03522505 0.9804305 -1 0.02935421 -7.54979E-08 -0.1213308 0.037182 0.9921722 -0.9941292 0.001956947 0.09980423 0.4853228 0 0.8747554 1 0 7.54979E-08 1 0 7.54979E-08 0.4853228 0 0.8747554 -0.09980438 0 0.9941292 -0.09980438 0 0.9941292 -0.9804305 0 0.1956946 -0.9804305 0 0.1956946 -1 0 -7.54979E-08 -1 0 -7.54979E-08 -0.9686888 0.001956947 0.2465753 -0.2798434 0.009784736 -0.960861 -0.2798434 -0.01174168 -0.960861 -0.9686888 -0.04696673 0.2465753 -0.1213308 -0.02348337 0.9921722 -0.1213308 0.01565558 0.9921722 0.1956946 0.01565558 0.9804305 0.1956946 -0.02152642 0.9804305 0.9080234 -0.04500978 0.4168298 0.9080234 0.001956947 0.4187868 0.2074365 0.007827789 -0.9784736 0.2074365 -0.01174168 -0.9784736 -0.2798434 -0.01174168 -0.960861 -0.2798434 0.009784736 -0.960861 0.9843444 0 0.1780823 1 0 7.54979E-08 1 0.03131115 7.54979E-08 0.9843444 0.003913894 0.1780823 0.1956946 0.03522505 0.9804305 0.1956946 0 0.9804305 -0.1213308 0 0.9921722 -0.1213308 0.037182 0.9921722 -0.9941292 0.001956947 0.09980423 -0.9941292 0 0.09980423 -1 0 -7.54979E-08 -1 0.02935421 -7.54979E-08 -0.5851272 0 0.812133 -7.54979E-08 0 1 -0.2915852 0.5068493 0.8121331 -0.2915852 -0.5068493 0.8121331 0.2915851 0.5068493 0.8121331 0.2915851 -0.5068493 0.8121331 0.5851271 0 0.8121331</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__DoorGlassSteel00-normal-array" count="87" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface87__DoorGlassSteel00-texcoord">
+          <float_array id="polySurface87__DoorGlassSteel00-texcoord-array" count="174">0.2691844 0.7630426 0.2674907 0.7577783 0.2808576 0.7577783 0.2808881 0.7630426 0.2927138 0.7577783 0.2927138 0.7630426 0.3045548 0.7577783 0.3045548 0.7630426 0.3163806 0.7577783 0.3163806 0.7630426 0.3282368 0.7577783 0.3282216 0.7630426 0.3416037 0.7577783 0.33991 0.7630426 0.9918212 0.696849 0.6841688 0.696849 0.6841688 0.6495155 0.9918212 0.6495155 0.6841688 0.6398261 0.9918212 0.6398261 0.6742352 0.7701076 0.3665675 0.7701076 0.3665675 0.7227741 0.6742352 0.7227741 0.3665675 0.7130846 0.6742352 0.7130846 0.1588464 0.751873 0.1638361 0.751873 0.1545739 0.7561303 0.1638361 0.7755398 0.1545739 0.7731746 0.1569543 0.7755398 0.1890898 0.7760434 0.1848325 0.7717861 0.1940948 0.7760434 0.1848325 0.7547417 0.1940948 0.7523766 0.1871977 0.7523766 0.07861448 0.7520256 0.09802396 0.7520256 0.07435721 0.7562829 0.09802396 0.7756923 0.07435721 0.7733272 0.07672236 0.7756923 0.2136873 0.007705808 0.1900206 0.7366598 0.1900206 0.007690549 0.2136873 0.7366445 0.2562905 0.736614 0.2562905 0.007751584 0.2629893 0.007751584 0.2629893 0.736614 0.2819104 0.7366445 0.2819104 0.007721066 0.2963302 0.8672007 0.2963302 0.8603036 0.9880369 0.8603036 0.9880369 0.8672007 0.9880369 0.8705425 0.2963302 0.8705577 0.2963455 0.8875868 0.9880369 0.8875868 0.9880217 0.8936141 0.2963455 0.8936141 0.2963455 0.8986191 0.9880217 0.8986191 0.9880064 0.9222858 0.2963607 0.9222858 0.1326009 0.7367971 0.1132067 0.7368276 0.1132067 0.007888913 0.1326009 0.007919431 0.1386282 0.007919431 0.1386282 0.7367971 0.1556725 0.7368124 0.1556725 0.007904172 0.1590143 0.007904172 0.1590143 0.7368124 0.1803159 0.7368429 0.1803159 0.007873654 0.239765 0.7630884 0.2287175 0.7626459 0.2342412 0.753521 0.2342412 0.7726558 0.2231937 0.753521 0.2231937 0.7726558 0.2176699 0.7630884</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__DoorGlassSteel00-texcoord-array" count="87" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface87__DoorGlassSteel00-vertex">
+          <input semantic="POSITION" source="#polySurface87__DoorGlassSteel00-position" />
+        </vertices>
+        <triangles material="DoorGlassSteel00" count="68">
+          <input semantic="VERTEX" source="#polySurface87__DoorGlassSteel00-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface87__DoorGlassSteel00-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface87__DoorGlassSteel00-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 3 3 3 0 0 0 2 2 2 3 3 3 2 2 2 4 4 4 5 5 5 3 3 3 4 4 4 5 5 5 4 4 4 6 6 6 7 7 7 5 5 5 6 6 6 7 7 7 6 6 6 8 8 8 9 9 9 7 7 7 8 8 8 9 9 9 8 8 8 10 10 10 11 11 11 9 9 9 10 10 10 11 11 11 10 10 10 12 12 12 13 13 13 11 11 11 12 12 12 14 14 14 15 15 15 16 16 16 14 14 14 16 16 16 17 17 17 16 16 16 18 18 18 17 17 17 17 17 17 18 18 18 19 19 19 20 20 20 21 21 21 22 22 22 20 20 20 22 22 22 23 23 23 22 22 22 24 24 24 23 23 23 23 23 23 24 24 24 25 25 25 26 26 26 27 27 27 28 28 28 27 27 27 29 29 29 28 28 28 28 28 28 29 29 29 30 30 30 29 29 29 31 31 31 30 30 30 32 32 32 33 33 33 34 34 34 33 33 33 35 35 35 34 34 34 34 34 34 35 35 35 36 36 36 35 35 35 37 37 37 36 36 36 38 38 38 39 39 39 40 40 40 39 39 39 41 41 41 40 40 40 40 40 40 41 41 41 42 42 42 41 41 41 43 43 43 42 42 42 44 44 44 45 45 45 46 46 46 44 44 44 47 47 47 45 45 45 48 48 48 47 47 47 44 44 44 48 48 48 44 44 44 49 49 49 48 48 48 49 49 49 50 50 50 48 48 48 50 50 50 51 51 51 50 50 50 52 52 52 51 51 51 50 50 50 53 53 53 52 52 52 54 54 54 55 55 55 56 56 56 54 54 54 56 56 56 57 57 57 58 58 58 54 54 54 57 57 57 58 58 58 59 59 59 54 54 54 60 60 60 59 59 59 58 58 58 61 61 61 60 60 60 58 58 58 61 61 61 62 62 62 60 60 60 60 60 60 62 62 62 63 63 63 62 62 62 64 64 64 63 63 63 62 62 62 65 65 65 64 64 64 64 64 64 65 65 65 66 66 66 64 64 64 66 66 66 67 67 67 68 68 68 69 69 69 70 70 70 68 68 68 70 70 70 71 71 71 72 72 72 68 68 68 71 71 71 73 73 73 68 68 68 72 72 72 73 73 73 72 72 72 74 74 74 72 72 72 75 75 75 74 74 74 74 74 74 75 75 75 76 76 76 74 74 74 76 76 76 77 77 77 76 76 76 78 78 78 77 77 77 76 76 76 79 79 79 78 78 78 80 80 80 81 81 81 82 82 82 80 80 80 83 83 83 81 81 81 82 82 82 81 81 81 84 84 84 83 83 83 85 85 85 81 81 81 84 84 84 81 81 81 86 86 86 81 81 81 85 85 85 86 86 86 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="polySurface87__GlassBuilding1F01-mesh" name="polySurface87__GlassBuilding1F01">
+      <mesh>
+        <source id="polySurface87__GlassBuilding1F01-position">
+          <float_array id="polySurface87__GlassBuilding1F01-position-array" count="12">175.0001 27.99999 -1.769043 175.0001 357 -1.769043 12.5 27.99999 -1.769073 12.5 357 -1.769073</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__GlassBuilding1F01-position-array" count="4" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface87__GlassBuilding1F01-normal">
+          <float_array id="polySurface87__GlassBuilding1F01-normal-array" count="12">-7.54979E-08 0 1 -7.54979E-08 0 1 -7.54979E-08 0 1 -7.54979E-08 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__GlassBuilding1F01-normal-array" count="4" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface87__GlassBuilding1F01-texcoord">
+          <float_array id="polySurface87__GlassBuilding1F01-texcoord-array" count="8">0.9902189 0.006652951 0.9902189 0.6295415 0.6825513 0.006652951 0.6825513 0.6295415</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__GlassBuilding1F01-texcoord-array" count="4" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface87__GlassBuilding1F01-texcoord_1">
+          <float_array id="polySurface87__GlassBuilding1F01-texcoord-array_1" count="8">0.3411765 0.3764706 0.3411765 0.5294118 0.2666667 0.3764706 0.2666667 0.5294118</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__GlassBuilding1F01-texcoord-array_1" count="4" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface87__GlassBuilding1F01-vertex">
+          <input semantic="POSITION" source="#polySurface87__GlassBuilding1F01-position" />
+        </vertices>
+        <triangles material="GlassBuilding1F01" count="2">
+          <input semantic="VERTEX" source="#polySurface87__GlassBuilding1F01-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface87__GlassBuilding1F01-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface87__GlassBuilding1F01-texcoord" offset="2" set="0" />
+          <input semantic="TEXCOORD" source="#polySurface87__GlassBuilding1F01-texcoord_1" offset="3" set="1" />
+          <p>0 0 0 0 1 1 1 1 2 2 2 2 1 1 1 1 3 3 3 3 2 2 2 2 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_polySurface86__DoorGlassSteel00-mesh">
+      <skin source="#polySurface86__DoorGlassSteel00-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface86__DoorGlassSteel00-mesh-joint">
+          <Name_array id="polySurface86__DoorGlassSteel00-mesh-joint-array" count="1">polySurface86</Name_array>
+          <technique_common>
+            <accessor source="#polySurface86__DoorGlassSteel00-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface86__DoorGlassSteel00-mesh-inv_bind_matrix">
+          <float_array id="polySurface86__DoorGlassSteel00-mesh-inv_bind_matrix-array" count="16">7.54979E-08 0 1 -700.3761 0 1 0 0 -1 0 7.54979E-08 1741.354 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__DoorGlassSteel00-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface86__DoorGlassSteel00-mesh-weight">
+          <float_array id="polySurface86__DoorGlassSteel00-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__DoorGlassSteel00-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface86__DoorGlassSteel00-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface86__DoorGlassSteel00-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="66">
+          <input semantic="JOINT" source="#polySurface86__DoorGlassSteel00-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface86__DoorGlassSteel00-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_polySurface86__GlassBuilding1F01-mesh">
+      <skin source="#polySurface86__GlassBuilding1F01-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface86__GlassBuilding1F01-mesh-joint">
+          <Name_array id="polySurface86__GlassBuilding1F01-mesh-joint-array" count="1">polySurface86</Name_array>
+          <technique_common>
+            <accessor source="#polySurface86__GlassBuilding1F01-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface86__GlassBuilding1F01-mesh-inv_bind_matrix">
+          <float_array id="polySurface86__GlassBuilding1F01-mesh-inv_bind_matrix-array" count="16">7.54979E-08 0 1 -700.3761 0 1 0 0 -1 0 7.54979E-08 1741.354 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__GlassBuilding1F01-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface86__GlassBuilding1F01-mesh-weight">
+          <float_array id="polySurface86__GlassBuilding1F01-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface86__GlassBuilding1F01-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface86__GlassBuilding1F01-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface86__GlassBuilding1F01-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="4">
+          <input semantic="JOINT" source="#polySurface86__GlassBuilding1F01-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface86__GlassBuilding1F01-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_polySurface87__DoorGlassSteel00-mesh">
+      <skin source="#polySurface87__DoorGlassSteel00-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface87__DoorGlassSteel00-mesh-joint">
+          <Name_array id="polySurface87__DoorGlassSteel00-mesh-joint-array" count="1">polySurface87</Name_array>
+          <technique_common>
+            <accessor source="#polySurface87__DoorGlassSteel00-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface87__DoorGlassSteel00-mesh-inv_bind_matrix">
+          <float_array id="polySurface87__DoorGlassSteel00-mesh-inv_bind_matrix-array" count="16">7.54979E-08 0 -1 -315.6297 0 1 0 0 1 0 7.54979E-08 1741.354 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__DoorGlassSteel00-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface87__DoorGlassSteel00-mesh-weight">
+          <float_array id="polySurface87__DoorGlassSteel00-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__DoorGlassSteel00-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface87__DoorGlassSteel00-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface87__DoorGlassSteel00-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="87">
+          <input semantic="JOINT" source="#polySurface87__DoorGlassSteel00-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface87__DoorGlassSteel00-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_polySurface87__GlassBuilding1F01-mesh">
+      <skin source="#polySurface87__GlassBuilding1F01-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface87__GlassBuilding1F01-mesh-joint">
+          <Name_array id="polySurface87__GlassBuilding1F01-mesh-joint-array" count="1">polySurface87</Name_array>
+          <technique_common>
+            <accessor source="#polySurface87__GlassBuilding1F01-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface87__GlassBuilding1F01-mesh-inv_bind_matrix">
+          <float_array id="polySurface87__GlassBuilding1F01-mesh-inv_bind_matrix-array" count="16">7.54979E-08 0 -1 -315.6297 0 1 0 0 1 0 7.54979E-08 1741.354 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__GlassBuilding1F01-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface87__GlassBuilding1F01-mesh-weight">
+          <float_array id="polySurface87__GlassBuilding1F01-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface87__GlassBuilding1F01-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface87__GlassBuilding1F01-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface87__GlassBuilding1F01-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="4">
+          <input semantic="JOINT" source="#polySurface87__GlassBuilding1F01-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface87__GlassBuilding1F01-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="Armature_CityWorldHomeDoor005" name="CityWorldHomeDoor005" sid="CityWorldHomeDoor005" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <node id="Armature_DoorRotL" name="DoorRotL" sid="DoorRotL" type="JOINT">
+            <matrix sid="transform">1 0 0 -200 0 1 0 0 0 0 1 -7.626877 0 0 0 1</matrix>
+            <node id="Armature_DoorL" name="DoorL" sid="DoorL" type="JOINT">
+              <matrix sid="transform">1 0 0 -7.629395E-05 0 1 0 0 0 0 1 12.5 0 0 0 1</matrix>
+              <node id="Armature_polySurface86" name="polySurface86" sid="polySurface86" type="JOINT">
+                <matrix sid="transform">7.54979E-08 0 -1 1941.354 0 1 0 0 1 0 7.54979E-08 695.5029 0 0 0 1</matrix>
+              </node>
+            </node>
+          </node>
+          <node id="Armature_DoorRotR" name="DoorRotR" sid="DoorRotR" type="JOINT">
+            <matrix sid="transform">1 0 0 200 0 1 0 0 0 0 1 -7.626877 0 0 0 1</matrix>
+            <node id="Armature_DoorR" name="DoorR" sid="DoorR" type="JOINT">
+              <matrix sid="transform">1 0 0 7.629395E-05 0 1 0 0 0 0 1 12.5 0 0 0 1</matrix>
+              <node id="Armature_polySurface87" name="polySurface87" sid="polySurface87" type="JOINT">
+                <matrix sid="transform">7.54979E-08 0 1 -1941.354 0 1 0 0 -1 0 7.54979E-08 -320.503 0 0 0 1</matrix>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node id="polySurface86__DoorGlassSteel00" name="polySurface86__DoorGlassSteel00" type="NODE">
+        <instance_controller url="#Armature_polySurface86__DoorGlassSteel00-mesh">
+          <skeleton>#Armature_CityWorldHomeDoor005</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="DoorGlassSteel00" target="#DoorGlassSteel00" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="polySurface86__GlassBuilding1F01" name="polySurface86__GlassBuilding1F01" type="NODE">
+        <instance_controller url="#Armature_polySurface86__GlassBuilding1F01-mesh">
+          <skeleton>#Armature_CityWorldHomeDoor005</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="GlassBuilding1F01" target="#GlassBuilding1F01" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="polySurface87__DoorGlassSteel00" name="polySurface87__DoorGlassSteel00" type="NODE">
+        <instance_controller url="#Armature_polySurface87__DoorGlassSteel00-mesh">
+          <skeleton>#Armature_CityWorldHomeDoor005</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="DoorGlassSteel00" target="#DoorGlassSteel00" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="polySurface87__GlassBuilding1F01" name="polySurface87__GlassBuilding1F01" type="NODE">
+        <instance_controller url="#Armature_polySurface87__GlassBuilding1F01-mesh">
+          <skeleton>#Armature_CityWorldHomeDoor005</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="GlassBuilding1F01" target="#GlassBuilding1F01" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

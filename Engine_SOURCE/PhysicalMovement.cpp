@@ -6,7 +6,6 @@
 #include "Physical.h"
 
 
-
 PhysicalMovement::PhysicalMovement()
 	:Component(eComponentType::Movement)
 {
@@ -22,13 +21,13 @@ void PhysicalMovement::Update()
 }
 void PhysicalMovement::FixedUpdate()
 {
-	Vector3 velocity = GetOwner()->GetComponent<PhysXRigidBody>()->GetVelocity();
-
 	if (eLayerType::Player== GetOwner()->GetLayerType())
 	{
 	}
-	GetOwner()->ReorganizePosition(AXIS::Y, eLayerType::Platforms);
+	GetOwner()->ReorganizePosition(AXIS::Y, eLayerType::Platforms, true);
 	GetOwner()->ReorganizePosition(AXIS::XZ, eLayerType::Objects);
+
+	Vector3 velocity = GetOwner()->GetComponent<PhysXRigidBody>()->GetVelocity();
 
 	Move(velocity);
 }
@@ -36,7 +35,7 @@ void PhysicalMovement::Render()
 {
 }
 
-// 이동은 여기서 수행
+
 void PhysicalMovement::Move(const Vector3& velocity)
 {
 	PxTransform transform = GetOwner()->GetComponent<Transform>()->GetPxTransform();

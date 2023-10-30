@@ -26,6 +26,5 @@ public:
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerPersist(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
-
 };
 

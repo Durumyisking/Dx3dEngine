@@ -1,0 +1,677 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset />
+  <library_images>
+    <image id="EntranceLightSeal00_emm">
+      <init_from>EntranceLightSeal00_emm.png</init_from>
+    </image>
+    <image id="WindowlGlassClaf01_alb">
+      <init_from>WindowlGlassClaf01_alb.png</init_from>
+    </image>
+    <image id="GlassBuilding1F00_emm">
+      <init_from>GlassBuilding1F00_emm.png</init_from>
+    </image>
+    <image id="WindowlGlassClaf01_nrm">
+      <init_from>WindowlGlassClaf01_nrm.png</init_from>
+    </image>
+    <image id="WindowlGlassClaf01_rgh">
+      <init_from>WindowlGlassClaf01_rgh.png</init_from>
+    </image>
+    <image id="WindowlGlassClaf01_msk">
+      <init_from>WindowlGlassClaf01_msk.png</init_from>
+    </image>
+    <image id="WindowlGlassClaf01_mtl">
+      <init_from>WindowlGlassClaf01_mtl.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="EntranceLightSeal00">
+      <instance_effect url="#Effect_EntranceLightSeal00" />
+    </material>
+    <material id="GlassBuilding1F00">
+      <instance_effect url="#Effect_GlassBuilding1F00" />
+    </material>
+    <material id="WindowlGlassClaf01">
+      <instance_effect url="#Effect_WindowlGlassClaf01" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect_EntranceLightSeal00">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <color sid="diffuse">1 1 1 1</color>
+            </diffuse>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Effect_GlassBuilding1F00">
+      <profile_COMMON>
+        <newparam sid="surface_GlassBuilding1F00-diffuse">
+          <surface type="2D">
+            <init_from>WindowlGlassClaf01_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_GlassBuilding1F00-diffuse">
+          <sampler2D>
+            <source>surface_GlassBuilding1F00-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <newparam sid="surface_GlassBuilding1F00-bump">
+          <surface type="2D">
+            <init_from>WindowlGlassClaf01_nrm</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_GlassBuilding1F00-bump">
+          <sampler2D>
+            <source>surface_GlassBuilding1F00-bump</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_GlassBuilding1F00-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <bump>
+              <texture texture="sampler_GlassBuilding1F00-bump" texcoord="CHANNEL0" />
+            </bump>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Effect_WindowlGlassClaf01">
+      <profile_COMMON>
+        <newparam sid="surface_WindowlGlassClaf01-diffuse">
+          <surface type="2D">
+            <init_from>WindowlGlassClaf01_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_WindowlGlassClaf01-diffuse">
+          <sampler2D>
+            <source>surface_WindowlGlassClaf01-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <newparam sid="surface_WindowlGlassClaf01-bump">
+          <surface type="2D">
+            <init_from>WindowlGlassClaf01_nrm</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_WindowlGlassClaf01-bump">
+          <sampler2D>
+            <source>surface_WindowlGlassClaf01-bump</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_WindowlGlassClaf01-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <bump>
+              <texture texture="sampler_WindowlGlassClaf01-bump" texcoord="CHANNEL0" />
+            </bump>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="polySurface2344__GlassBuilding1F00-mesh" name="polySurface2344__GlassBuilding1F00">
+      <mesh>
+        <source id="polySurface2344__GlassBuilding1F00-position">
+          <float_array id="polySurface2344__GlassBuilding1F00-position-array" count="24">-125 159.999 961.0034 -15 159.999 961.0034 -125 285 961.0034 -15 285 961.0034 -125 15 961.0034 -15 15 961.0034 -125 140.001 961.0034 -15 140.001 961.0034</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__GlassBuilding1F00-position-array" count="8" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2344__GlassBuilding1F00-normal">
+          <float_array id="polySurface2344__GlassBuilding1F00-normal-array" count="24">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__GlassBuilding1F00-normal-array" count="8" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2344__GlassBuilding1F00-texcoord">
+          <float_array id="polySurface2344__GlassBuilding1F00-texcoord-array" count="16">0.4751507 0.5029068 0.6126497 0.5029068 0.4751507 0.6591592 0.6126497 0.6591592 0.4734722 0.1714809 0.6109712 0.1714809 0.4734722 0.3277333 0.6109712 0.3277333</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__GlassBuilding1F00-texcoord-array" count="8" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2344__GlassBuilding1F00-texcoord_1">
+          <float_array id="polySurface2344__GlassBuilding1F00-texcoord-array_1" count="16">0.4156863 0.4549019 0.4901961 0.4549019 0.4156863 0.5411764 0.4901961 0.5411764 0.4156863 0.3568627 0.4901961 0.3568627 0.4156863 0.4431372 0.4901961 0.4431372</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__GlassBuilding1F00-texcoord-array_1" count="8" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface2344__GlassBuilding1F00-vertex">
+          <input semantic="POSITION" source="#polySurface2344__GlassBuilding1F00-position" />
+        </vertices>
+        <triangles material="GlassBuilding1F00" count="4">
+          <input semantic="VERTEX" source="#polySurface2344__GlassBuilding1F00-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface2344__GlassBuilding1F00-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface2344__GlassBuilding1F00-texcoord" offset="2" set="0" />
+          <input semantic="TEXCOORD" source="#polySurface2344__GlassBuilding1F00-texcoord_1" offset="3" set="1" />
+          <p>0 0 0 0 1 1 1 1 2 2 2 2 1 1 1 1 3 3 3 3 2 2 2 2 4 4 4 4 5 5 5 5 6 6 6 6 5 5 5 5 7 7 7 7 6 6 6 6 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="polySurface2344__WindowlGlassClaf01-mesh" name="polySurface2344__WindowlGlassClaf01">
+      <mesh>
+        <source id="polySurface2344__WindowlGlassClaf01-position">
+          <float_array id="polySurface2344__WindowlGlassClaf01-position-array" count="378">-125 159.999 963.0023 -125 140.001 963.0023 -15 159.999 963.0023 -15 140.001 963.0023 -125 159.999 963.0023 -15 159.999 963.0023 -125 159.999 961.0028 -15 159.999 961.0028 -125 140.001 961.0028 -15 140.001 961.0028 -125 140.001 963.0023 -15 140.001 963.0023 0 0 954.0033 0 300 954.0033 0 0 964.0033 0 300 964.0033 -125 15 961.0034 -125 285 961.0034 -125 15 964.0033 -125 285 964.0033 -125 285 961.0034 -15 285 961.0034 -125 285 964.0033 -15 285 964.0033 -15 285 961.0034 -15 15 961.0034 -15 285 964.0033 -15 15 964.0033 -15 15 961.0034 -125 15 961.0034 -15 15 964.0033 -125 15 964.0033 -125 15 964.0033 -125 285 964.0033 -140 0 964.0033 -140 300 964.0033 -125 285 964.0033 -15 285 964.0033 -140 300 964.0033 0 300 964.0033 -15 285 964.0033 -15 15 964.0033 0 300 964.0033 0 0 964.0033 -15 15 964.0033 -125 15 964.0033 0 0 964.0033 -140 0 964.0033 -140 300 964.0033 -140 300 954.0033 -140 0 964.0033 -140 0 954.0033 0 300 964.0033 0 300 954.0033 -140 300 964.0033 -140 300 954.0033 -7.5 128.7584 963.5034 -7.5 128.7584 973.0035 -9.085083 129.4149 973.0035 -9.085083 129.4149 963.5034 -9.741211 131 973.0035 -9.741211 131 963.5034 -9.085083 132.585 973.0035 -9.085083 132.585 963.5034 -7.5 133.2416 973.0035 -7.5 133.2416 963.5034 -5.914917 132.585 973.0029 -5.914917 132.585 963.5028 -5.258179 131 973.0035 -5.258179 131 963.5034 -5.914307 129.4149 973.0029 -5.914307 129.4149 963.5028 -7.5 128.7584 973.0035 -7.5 128.7584 963.5034 -7.5 156.7584 963.5034 -7.5 156.7584 973.0035 -9.085083 157.4149 973.0035 -9.085083 157.4149 963.5034 -9.741211 159 973.0035 -9.741211 159 963.5034 -9.085083 160.585 973.0035 -9.085083 160.585 963.5034 -7.5 161.2416 973.0035 -7.5 161.2416 963.5034 -5.914917 160.585 973.0029 -5.914917 160.585 963.5028 -5.258179 159 973.0035 -5.258179 159 963.5034 -5.914307 157.4149 973.0029 -5.914307 157.4149 963.5028 -7.5 156.7584 973.0035 -7.5 156.7584 963.5034 -7.5 167.5 970.8038 -7.5 122.5 970.8038 -9.762573 122.5 971.7407 -9.762573 167.5 971.7407 -10.70007 122.5 974.0039 -10.70007 167.5 974.0039 -9.762573 122.5 976.2665 -9.762573 167.5 976.2665 -7.5 122.5 977.204 -7.5 167.5 977.204 -5.237427 122.5 976.2665 -5.237427 167.5 976.2665 -4.299927 122.5 974.0033 -4.299927 167.5 974.0033 -5.236816 122.5 971.7413 -5.236816 167.5 971.7413 -7.5 122.5 970.8038 -7.5 167.5 970.8038 -7.5 167.5 977.204 -5.237427 167.5 976.2665 -9.762573 167.5 976.2665 -10.70007 167.5 974.0039 -4.299927 167.5 974.0033 -5.236816 167.5 971.7413 -9.762573 167.5 971.7407 -7.5 167.5 970.8038 -7.5 122.5 970.8038 -5.236816 122.5 971.7413 -9.762573 122.5 971.7407 -10.70007 122.5 974.0039 -4.299927 122.5 974.0033 -9.762573 122.5 976.2665 -5.237427 122.5 976.2665 -7.5 122.5 977.204</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__WindowlGlassClaf01-position-array" count="126" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2344__WindowlGlassClaf01-normal">
+          <float_array id="polySurface2344__WindowlGlassClaf01-normal-array" count="378">0 0 1 0 0 1 0 0 1 0 0 1 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 1 0 0 0.9060665 0.4227006 0 1 0 0 0.9060665 0.4227006 0 0.925636 0.3776908 0 0.925636 -0.3776908 0 0.925636 0.3776908 0 0.925636 -0.3776908 0 0.925636 -0.3776908 0 -0.925636 -0.3776908 0 0.925636 -0.3776908 0 -0.925636 -0.3776908 0 -0.925636 -0.3776908 0 -0.925636 0.3776908 0 -0.925636 -0.3776908 0 -0.925636 0.3776908 0 -0.925636 0.3776908 0 0.925636 0.3776908 0 -0.925636 0.3776908 0 0.925636 0.3776908 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -0.9060665 0.4227006 0 -0.9060665 0.4227006 0 -1 0 0 -1 0 0 0.9060665 0.4227006 0 0.9060665 0.4227006 0 -0.9060665 0.4227006 0 -0.9060665 0.4227006 0 0 -1 0 0 -1 0 -0.7064579 -0.7064579 0 -0.7064579 -0.7064579 0 -1 0 0 -1 0 0 -0.7064579 0.7064579 0 -0.7064579 0.7064579 0 0 1 0 0 1 0 0.7064579 0.7064579 0 0.7064579 0.7064579 0 1 0 0 1 0 0 0.7064579 -0.7064579 0 0.7064579 -0.7064579 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 -0.7064579 -0.7064579 0 -0.7064579 -0.7064579 0 -1 0 0 -1 0 0 -0.7064579 0.7064579 0 -0.7064579 0.7064579 0 0 1 0 0 1 0 0.7064579 0.7064579 0 0.7064579 0.7064579 0 1 0 0 1 0 0 0.7064579 -0.7064579 0 0.7064579 -0.7064579 0 0 -1 0 0 -1 0 0 0.01565558 -1 0 -0.01565558 -1 -0.704501 -0.07827789 -0.704501 -0.704501 0.07827789 -0.704501 -0.9960861 -0.09001957 0 -0.9960861 0.09001957 0 -0.704501 -0.07827789 0.704501 -0.704501 0.07827789 0.704501 0 -0.01565558 1 0 0.01565558 1 0.704501 -0.07827789 0.704501 0.704501 0.07827789 0.704501 0.9960861 -0.09001957 0 0.9960861 0.09001957 0 0.704501 -0.07827789 -0.704501 0.704501 0.07827789 -0.704501 0 -0.01565558 -1 0 0.01565558 -1 0 0.01565558 1 0.704501 0.07827789 0.704501 -0.704501 0.07827789 0.704501 -0.9960861 0.09001957 0 0.9960861 0.09001957 0 0.704501 0.07827789 -0.704501 -0.704501 0.07827789 -0.704501 0 0.01565558 -1 0 -0.01565558 -1 0.704501 -0.07827789 -0.704501 -0.704501 -0.07827789 -0.704501 -0.9960861 -0.09001957 0 0.9960861 -0.09001957 0 -0.704501 -0.07827789 0.704501 0.704501 -0.07827789 0.704501 0 -0.01565558 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__WindowlGlassClaf01-normal-array" count="126" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2344__WindowlGlassClaf01-texcoord">
+          <float_array id="polySurface2344__WindowlGlassClaf01-texcoord-array" count="252">0.04698253 0.8246128 0.04698253 0.7996338 0.1842527 0.8246128 0.1842527 0.7996338 0.04698253 0.8246128 0.1842527 0.8246128 0.04698253 0.8271306 0.1842527 0.8271306 0.04698253 0.7971313 0.1842527 0.7971313 0.04698253 0.7996338 0.1842527 0.7996338 0.9670253 0.03631645 0.9670253 0.4113069 0.9545281 0.03631645 0.9545281 0.4113069 0.9163348 0.03692681 0.9163348 0.3744411 0.9125811 0.03692681 0.9125811 0.3744411 0.8534828 0.3361257 0.8534828 0.1986267 0.8572366 0.3361257 0.8572366 0.1986267 0.9064164 0.3744411 0.9064164 0.03692681 0.9101701 0.3744411 0.9101701 0.03692681 0.851072 0.1986267 0.851072 0.3361257 0.8473182 0.1986267 0.8473182 0.3361257 0.7326162 0.05114824 0.7326162 0.3886473 0.7138628 0.03239489 0.7138628 0.4074006 0.6688792 0.465568 0.8063782 0.465568 0.6501259 0.4843061 0.8251316 0.4843061 0.741558 0.3886473 0.741558 0.05114824 0.7603113 0.4074006 0.7603113 0.03239489 0.8063782 0.458793 0.6688792 0.458793 0.8251316 0.4400397 0.6501259 0.4400397 0.9477989 0.4113069 0.9353017 0.4113069 0.9477989 0.03631645 0.9353017 0.03631645 0.8147402 0.05812162 0.8272526 0.05812162 0.8147402 0.2331274 0.8272526 0.2331274 0.1078965 0.8488289 0.1078965 0.8369573 0.1100481 0.8369573 0.1100481 0.8488289 0.1121843 0.8369573 0.1121843 0.8488289 0.1143358 0.8369573 0.1143358 0.8488289 0.1164721 0.8369573 0.1164721 0.8488289 0.1186236 0.8369573 0.1186236 0.8488441 0.1207599 0.8369573 0.1207599 0.8488289 0.1229114 0.8369573 0.1229114 0.8488441 0.1250629 0.8369573 0.1250629 0.8488289 0.1078965 0.8655375 0.1078965 0.8536507 0.1100481 0.8536507 0.1100481 0.8655375 0.1121843 0.8536507 0.1121843 0.8655375 0.1143358 0.8536507 0.1143358 0.8655375 0.1164721 0.8536507 0.1164721 0.8655375 0.1186236 0.8536507 0.1186236 0.8655375 0.1207599 0.8536507 0.1207599 0.8655375 0.1229114 0.8536507 0.1229114 0.8655375 0.1250629 0.8536507 0.1250629 0.8655375 0.07760739 0.8910353 0.07760739 0.8347906 0.08067445 0.8347906 0.08067445 0.8910353 0.08374152 0.8347906 0.08374152 0.8910353 0.08679332 0.8347906 0.08679332 0.8910353 0.08986038 0.8347906 0.08986038 0.8910353 0.09291218 0.8347906 0.09291218 0.8910353 0.09597925 0.8347906 0.09597925 0.8910353 0.09904631 0.8347906 0.09904631 0.8910353 0.1020981 0.8347906 0.1020981 0.8910353 0.1163958 0.8819257 0.1192187 0.8831006 0.1135576 0.8831006 0.112398 0.8859236 0.1203937 0.8859236 0.1192187 0.8887465 0.1135576 0.8887465 0.1163958 0.8899214 0.1163958 0.8710765 0.1192187 0.8722515 0.1135576 0.8722362 0.112398 0.8750744 0.1203937 0.8750744 0.1135576 0.8778973 0.1192187 0.8778973 0.1163958 0.8790722</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__WindowlGlassClaf01-texcoord-array" count="126" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface2344__WindowlGlassClaf01-vertex">
+          <input semantic="POSITION" source="#polySurface2344__WindowlGlassClaf01-position" />
+        </vertices>
+        <triangles material="WindowlGlassClaf01" count="88">
+          <input semantic="VERTEX" source="#polySurface2344__WindowlGlassClaf01-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface2344__WindowlGlassClaf01-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface2344__WindowlGlassClaf01-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 1 1 1 3 3 3 2 2 2 4 4 4 5 5 5 6 6 6 5 5 5 7 7 7 6 6 6 8 8 8 9 9 9 10 10 10 9 9 9 11 11 11 10 10 10 12 12 12 13 13 13 14 14 14 13 13 13 15 15 15 14 14 14 16 16 16 17 17 17 18 18 18 17 17 17 19 19 19 18 18 18 20 20 20 21 21 21 22 22 22 21 21 21 23 23 23 22 22 22 24 24 24 25 25 25 26 26 26 25 25 25 27 27 27 26 26 26 28 28 28 29 29 29 30 30 30 29 29 29 31 31 31 30 30 30 32 32 32 33 33 33 34 34 34 33 33 33 35 35 35 34 34 34 36 36 36 37 37 37 38 38 38 37 37 37 39 39 39 38 38 38 40 40 40 41 41 41 42 42 42 41 41 41 43 43 43 42 42 42 44 44 44 45 45 45 46 46 46 45 45 45 47 47 47 46 46 46 48 48 48 49 49 49 50 50 50 49 49 49 51 51 51 50 50 50 52 52 52 53 53 53 54 54 54 53 53 53 55 55 55 54 54 54 56 56 56 57 57 57 58 58 58 59 59 59 56 56 56 58 58 58 59 59 59 58 58 58 60 60 60 61 61 61 59 59 59 60 60 60 61 61 61 60 60 60 62 62 62 63 63 63 61 61 61 62 62 62 63 63 63 62 62 62 64 64 64 65 65 65 63 63 63 64 64 64 65 65 65 64 64 64 66 66 66 65 65 65 66 66 66 67 67 67 66 66 66 68 68 68 67 67 67 67 67 67 68 68 68 69 69 69 68 68 68 70 70 70 69 69 69 69 69 69 70 70 70 71 71 71 70 70 70 72 72 72 71 71 71 71 71 71 72 72 72 73 73 73 74 74 74 75 75 75 76 76 76 77 77 77 74 74 74 76 76 76 77 77 77 76 76 76 78 78 78 79 79 79 77 77 77 78 78 78 79 79 79 78 78 78 80 80 80 81 81 81 79 79 79 80 80 80 81 81 81 80 80 80 82 82 82 83 83 83 81 81 81 82 82 82 83 83 83 82 82 82 84 84 84 83 83 83 84 84 84 85 85 85 84 84 84 86 86 86 85 85 85 85 85 85 86 86 86 87 87 87 86 86 86 88 88 88 87 87 87 87 87 87 88 88 88 89 89 89 88 88 88 90 90 90 89 89 89 89 89 89 90 90 90 91 91 91 92 92 92 93 93 93 94 94 94 95 95 95 92 92 92 94 94 94 95 95 95 94 94 94 96 96 96 97 97 97 95 95 95 96 96 96 97 97 97 96 96 96 98 98 98 99 99 99 97 97 97 98 98 98 99 99 99 98 98 98 100 100 100 101 101 101 99 99 99 100 100 100 101 101 101 100 100 100 102 102 102 101 101 101 102 102 102 103 103 103 102 102 102 104 104 104 103 103 103 103 103 103 104 104 104 105 105 105 104 104 104 106 106 106 105 105 105 105 105 105 106 106 106 107 107 107 106 106 106 108 108 108 107 107 107 107 107 107 108 108 108 109 109 109 110 110 110 111 111 111 112 112 112 111 111 111 113 113 113 112 112 112 111 111 111 114 114 114 113 113 113 114 114 114 115 115 115 113 113 113 113 113 113 115 115 115 116 116 116 115 115 115 117 117 117 116 116 116 118 118 118 119 119 119 120 120 120 119 119 119 121 121 121 120 120 120 119 119 119 122 122 122 121 121 121 121 121 121 122 122 122 123 123 123 122 122 122 124 124 124 123 123 123 123 123 123 124 124 124 125 125 125 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="polySurface2345__GlassBuilding1F00-mesh" name="polySurface2345__GlassBuilding1F00">
+      <mesh>
+        <source id="polySurface2345__GlassBuilding1F00-position">
+          <float_array id="polySurface2345__GlassBuilding1F00-position-array" count="24">15 159.999 961.0034 125 159.999 961.0034 15 285 961.0034 125 285 961.0034 15 15 961.0034 125 15 961.0034 15 140.001 961.0034 125 140.001 961.0034</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__GlassBuilding1F00-position-array" count="8" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2345__GlassBuilding1F00-normal">
+          <float_array id="polySurface2345__GlassBuilding1F00-normal-array" count="24">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__GlassBuilding1F00-normal-array" count="8" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2345__GlassBuilding1F00-texcoord">
+          <float_array id="polySurface2345__GlassBuilding1F00-texcoord-array" count="16">0.4751202 0.3393759 0.6126192 0.3393759 0.4751202 0.4956283 0.6126192 0.4956283 0.4730754 0.008789182 0.6105745 0.008789182 0.4730754 0.1650416 0.6105745 0.1650416</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__GlassBuilding1F00-texcoord-array" count="8" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2345__GlassBuilding1F00-texcoord_1">
+          <float_array id="polySurface2345__GlassBuilding1F00-texcoord-array_1" count="16">0.509804 0.4549019 0.5843138 0.4549019 0.509804 0.5411764 0.5843138 0.5411764 0.509804 0.3568627 0.5843138 0.3568627 0.509804 0.4431372 0.5843138 0.4431372</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__GlassBuilding1F00-texcoord-array_1" count="8" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface2345__GlassBuilding1F00-vertex">
+          <input semantic="POSITION" source="#polySurface2345__GlassBuilding1F00-position" />
+        </vertices>
+        <triangles material="GlassBuilding1F00" count="4">
+          <input semantic="VERTEX" source="#polySurface2345__GlassBuilding1F00-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface2345__GlassBuilding1F00-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface2345__GlassBuilding1F00-texcoord" offset="2" set="0" />
+          <input semantic="TEXCOORD" source="#polySurface2345__GlassBuilding1F00-texcoord_1" offset="3" set="1" />
+          <p>0 0 0 0 1 1 1 1 2 2 2 2 1 1 1 1 3 3 3 3 2 2 2 2 4 4 4 4 5 5 5 5 6 6 6 6 5 5 5 5 7 7 7 7 6 6 6 6 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="polySurface2345__WindowlGlassClaf01-mesh" name="polySurface2345__WindowlGlassClaf01">
+      <mesh>
+        <source id="polySurface2345__WindowlGlassClaf01-position">
+          <float_array id="polySurface2345__WindowlGlassClaf01-position-array" count="378">0 300 954.0033 0 0 954.0033 0 300 964.0033 0 0 964.0033 15 15 961.0034 15 285 961.0034 15 15 964.0033 15 285 964.0033 15 285 961.0034 125 285 961.0034 15 285 964.0033 125 285 964.0033 125 285 961.0034 125 15 961.0034 125 285 964.0033 125 15 964.0033 125 15 961.0034 15 15 961.0034 125 15 964.0033 15 15 964.0033 15 15 964.0033 15 285 964.0033 0 0 964.0033 0 300 964.0033 15 285 964.0033 125 285 964.0033 0 300 964.0033 140 300 964.0033 125 285 964.0033 125 15 964.0033 140 300 964.0033 140 0 964.0033 125 15 964.0033 15 15 964.0033 140 0 964.0033 0 0 964.0033 140 0 964.0033 140 0 954.0033 140 300 964.0033 140 300 954.0033 140 300 964.0033 140 300 954.0033 0 300 964.0033 0 300 954.0033 7.5 133.2416 963.5022 5.914917 132.585 963.5022 7.5 133.2416 973.0023 9.085083 132.585 973.0017 9.085083 132.585 963.5016 5.258789 131 963.5022 5.914917 132.585 973.0023 9.741821 131 973.0023 9.741821 131 963.5022 5.914917 129.4149 963.5022 5.258789 131 973.0023 9.085693 129.4149 973.0017 9.085693 129.4149 963.5016 7.5 128.7584 963.5022 5.914917 129.4149 973.0023 7.5 128.7584 973.0023 7.5 128.7584 963.5022 7.5 128.7584 973.0023 7.5 161.2416 963.5022 5.914917 160.585 963.5022 7.5 161.2416 973.0023 9.085083 160.585 973.0017 9.085083 160.585 963.5016 5.258789 159 963.5022 5.914917 160.585 973.0023 9.741821 159 973.0023 9.741821 159 963.5022 5.914917 157.4149 963.5022 5.258789 159 973.0023 9.085693 157.4149 973.0017 9.085693 157.4149 963.5016 7.5 156.7584 963.5022 5.914917 157.4149 973.0023 7.5 156.7584 973.0023 7.5 156.7584 963.5022 7.5 156.7584 973.0023 7.5 167.5 977.2028 9.762573 167.5 976.2653 5.237427 167.5 976.2653 10.70007 167.5 974.0021 4.299927 167.5 974.0027 9.763184 167.5 971.7401 5.237427 167.5 971.7395 7.5 167.5 970.8026 7.5 122.5 970.8026 9.763184 122.5 971.7401 5.237427 122.5 971.7395 4.299927 122.5 974.0027 10.70007 122.5 974.0021 5.237427 122.5 976.2653 9.762573 122.5 976.2653 7.5 122.5 977.2028 7.5 167.5 977.2028 5.237427 167.5 976.2653 7.5 122.5 977.2028 9.762573 122.5 976.2653 9.762573 167.5 976.2653 4.299927 167.5 974.0027 5.237427 122.5 976.2653 10.70007 122.5 974.0021 10.70007 167.5 974.0021 5.237427 167.5 971.7395 4.299927 122.5 974.0027 9.763184 122.5 971.7401 9.763184 167.5 971.7401 7.5 167.5 970.8026 5.237427 122.5 971.7395 7.5 122.5 970.8026 7.5 167.5 970.8026 7.5 122.5 970.8026 15 159.999 963.0023 15 140.001 963.0023 125 159.999 963.0023 125 140.001 963.0023 15 159.999 963.0023 125 159.999 963.0023 15 159.999 961.0028 125 159.999 961.0028 15 140.001 961.0028 125 140.001 961.0028 15 140.001 963.0023 125 140.001 963.0023</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__WindowlGlassClaf01-position-array" count="126" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2345__WindowlGlassClaf01-normal">
+          <float_array id="polySurface2345__WindowlGlassClaf01-normal-array" count="378">-0.9060665 0.4227006 0 -1 0 0 -0.9060665 0.4227006 0 -1 0 0 0.925636 0.3776908 0 0.925636 -0.3776908 0 0.925636 0.3776908 0 0.925636 -0.3776908 0 0.925636 -0.3776908 0 -0.925636 -0.3776908 0 0.925636 -0.3776908 0 -0.925636 -0.3776908 0 -0.925636 -0.3776908 0 -0.925636 0.3776908 0 -0.925636 -0.3776908 0 -0.925636 0.3776908 0 -0.925636 0.3776908 0 0.925636 0.3776908 0 -0.925636 0.3776908 0 0.925636 0.3776908 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 1 0 0 1 0 0 0.9060665 0.4227006 0 0.9060665 0.4227006 0 0.9060665 0.4227006 0 0.9060665 0.4227006 0 -0.9060665 0.4227006 0 -0.9060665 0.4227006 0 0 1 0 -0.7064579 0.7064579 0 0 1 0 0.7064579 0.7064579 0 0.7064579 0.7064579 0 -1 0 0 -0.7064579 0.7064579 0 1 0 0 1 0 0 -0.7064579 -0.7064579 0 -1 0 0 0.7064579 -0.7064579 0 0.7064579 -0.7064579 0 0 -1 0 -0.7064579 -0.7064579 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 -0.7064579 0.7064579 0 0 1 0 0.7064579 0.7064579 0 0.7064579 0.7064579 0 -1 0 0 -0.7064579 0.7064579 0 1 0 0 1 0 0 -0.7064579 -0.7064579 0 -1 0 0 0.7064579 -0.7064579 0 0.7064579 -0.7064579 0 0 -1 0 -0.7064579 -0.7064579 0 0 -1 0 0 -1 0 0 -1 0 0 0.01565558 1 0.704501 0.07827789 0.704501 -0.704501 0.07827789 0.704501 0.9960861 0.09001957 0 -0.9960861 0.09001957 0 0.704501 0.07827789 -0.704501 -0.704501 0.07827789 -0.704501 0 0.01565558 -1 0 -0.01565558 -1 0.704501 -0.07827789 -0.704501 -0.704501 -0.07827789 -0.704501 -0.9960861 -0.09001957 0 0.9960861 -0.09001957 0 -0.704501 -0.07827789 0.704501 0.704501 -0.07827789 0.704501 0 -0.01565558 1 0 0.01565558 1 -0.704501 0.07827789 0.704501 0 -0.01565558 1 0.704501 -0.07827789 0.704501 0.704501 0.07827789 0.704501 -0.9960861 0.09001957 0 -0.704501 -0.07827789 0.704501 0.9960861 -0.09001957 0 0.9960861 0.09001957 0 -0.704501 0.07827789 -0.704501 -0.9960861 -0.09001957 0 0.704501 -0.07827789 -0.704501 0.704501 0.07827789 -0.704501 0 0.01565558 -1 -0.704501 -0.07827789 -0.704501 0 -0.01565558 -1 0 0.01565558 -1 0 -0.01565558 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 0 0 1 0 0 1 0 0 1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__WindowlGlassClaf01-normal-array" count="126" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2345__WindowlGlassClaf01-texcoord">
+          <float_array id="polySurface2345__WindowlGlassClaf01-texcoord-array" count="252">0.8863356 0.4083162 0.8863356 0.03331047 0.8988327 0.4083162 0.8988327 0.03331047 0.9281453 0.03692681 0.9281453 0.3744411 0.9243916 0.03692681 0.9243916 0.3744411 0.8534218 0.1962463 0.8534218 0.05874723 0.8571755 0.1962463 0.8571755 0.05874723 0.9182269 0.3744411 0.9182269 0.03692681 0.9219806 0.3744411 0.9219806 0.03692681 0.8510109 0.05874723 0.8510109 0.1962463 0.8472572 0.05874723 0.8472572 0.1962463 0.6822156 0.05206376 0.6822156 0.3895628 0.6634623 0.03331047 0.6634623 0.4083162 0.6696269 0.5135729 0.807126 0.5135729 0.6508736 0.5323262 0.8258793 0.5323262 0.6881819 0.3895628 0.6881819 0.05206376 0.70692 0.4083162 0.70692 0.03331047 0.807126 0.5096666 0.6696269 0.5096666 0.8258793 0.4909133 0.6508736 0.4909133 0.6483101 0.03331047 0.6608225 0.03331047 0.6483101 0.4083162 0.6608225 0.4083162 0.8321813 0.05874723 0.8446784 0.05874723 0.8321813 0.2337377 0.8446784 0.2337377 0.1711604 0.8488289 0.1690242 0.8488289 0.1711604 0.8369573 0.173312 0.8369573 0.173312 0.8488441 0.1668727 0.8488289 0.1690242 0.8369573 0.1754635 0.8369573 0.1754635 0.8488289 0.1647364 0.8488289 0.1668727 0.8369573 0.1775998 0.8369573 0.1775998 0.8488441 0.1625849 0.8488289 0.1647364 0.8369573 0.1797513 0.8369573 0.1797513 0.8488289 0.1625849 0.8369573 0.1711604 0.8655375 0.1690242 0.8655375 0.1711604 0.8536507 0.173312 0.8536507 0.173312 0.8655375 0.1668727 0.8655375 0.1690242 0.8536507 0.1754635 0.8536507 0.1754635 0.8655375 0.1647364 0.8655375 0.1668727 0.8536507 0.1775998 0.8536507 0.1775998 0.8655375 0.1625849 0.8655375 0.1647364 0.8536507 0.1797513 0.8536507 0.1797513 0.8655375 0.1625849 0.8536507 0.1710842 0.8819257 0.1739071 0.8831006 0.168246 0.8831006 0.175082 0.8859236 0.1670863 0.8859236 0.1739071 0.8887465 0.168246 0.8887465 0.1710842 0.8899214 0.1710842 0.8710765 0.1739071 0.8722515 0.168246 0.8722362 0.1670863 0.8750744 0.175082 0.8750744 0.168246 0.8778973 0.1739071 0.8778973 0.1710842 0.8790722 0.1445487 0.8910353 0.1414817 0.8910353 0.1445487 0.8347906 0.1476158 0.8347906 0.1476158 0.8910353 0.1384299 0.8910353 0.1414817 0.8347906 0.1506676 0.8347906 0.1506676 0.8910353 0.1353628 0.8910353 0.1384299 0.8347906 0.1537346 0.8347906 0.1537346 0.8910353 0.1322957 0.8910353 0.1353628 0.8347906 0.1567865 0.8347906 0.1567865 0.8910353 0.1322957 0.8347906 0.1895323 0.8239719 0.1895323 0.7989318 0.3268025 0.8239719 0.3268025 0.7989318 0.1895323 0.8239719 0.3268025 0.8239719 0.1895323 0.8264439 0.3268025 0.8264439 0.1895323 0.7963531 0.3268025 0.7963531 0.1895323 0.7989318 0.3268025 0.7989318</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__WindowlGlassClaf01-texcoord-array" count="126" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="polySurface2345__WindowlGlassClaf01-vertex">
+          <input semantic="POSITION" source="#polySurface2345__WindowlGlassClaf01-position" />
+        </vertices>
+        <triangles material="WindowlGlassClaf01" count="88">
+          <input semantic="VERTEX" source="#polySurface2345__WindowlGlassClaf01-vertex" offset="0" />
+          <input semantic="NORMAL" source="#polySurface2345__WindowlGlassClaf01-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#polySurface2345__WindowlGlassClaf01-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 1 1 1 3 3 3 2 2 2 4 4 4 5 5 5 6 6 6 5 5 5 7 7 7 6 6 6 8 8 8 9 9 9 10 10 10 9 9 9 11 11 11 10 10 10 12 12 12 13 13 13 14 14 14 13 13 13 15 15 15 14 14 14 16 16 16 17 17 17 18 18 18 17 17 17 19 19 19 18 18 18 20 20 20 21 21 21 22 22 22 21 21 21 23 23 23 22 22 22 24 24 24 25 25 25 26 26 26 25 25 25 27 27 27 26 26 26 28 28 28 29 29 29 30 30 30 29 29 29 31 31 31 30 30 30 32 32 32 33 33 33 34 34 34 33 33 33 35 35 35 34 34 34 36 36 36 37 37 37 38 38 38 37 37 37 39 39 39 38 38 38 40 40 40 41 41 41 42 42 42 41 41 41 43 43 43 42 42 42 44 44 44 45 45 45 46 46 46 44 44 44 46 46 46 47 47 47 44 44 44 47 47 47 48 48 48 45 45 45 49 49 49 50 50 50 45 45 45 50 50 50 46 46 46 47 47 47 51 51 51 48 48 48 48 48 48 51 51 51 52 52 52 49 49 49 53 53 53 54 54 54 49 49 49 54 54 54 50 50 50 51 51 51 55 55 55 52 52 52 52 52 52 55 55 55 56 56 56 53 53 53 57 57 57 58 58 58 53 53 53 58 58 58 54 54 54 55 55 55 59 59 59 56 56 56 56 56 56 59 59 59 60 60 60 57 57 57 61 61 61 58 58 58 62 62 62 63 63 63 64 64 64 62 62 62 64 64 64 65 65 65 62 62 62 65 65 65 66 66 66 63 63 63 67 67 67 68 68 68 63 63 63 68 68 68 64 64 64 65 65 65 69 69 69 66 66 66 66 66 66 69 69 69 70 70 70 67 67 67 71 71 71 72 72 72 67 67 67 72 72 72 68 68 68 69 69 69 73 73 73 70 70 70 70 70 70 73 73 73 74 74 74 71 71 71 75 75 75 76 76 76 71 71 71 76 76 76 72 72 72 73 73 73 77 77 77 74 74 74 74 74 74 77 77 77 78 78 78 75 75 75 79 79 79 76 76 76 80 80 80 81 81 81 82 82 82 81 81 81 83 83 83 84 84 84 81 81 81 84 84 84 82 82 82 83 83 83 85 85 85 84 84 84 84 84 84 85 85 85 86 86 86 85 85 85 87 87 87 86 86 86 88 88 88 89 89 89 90 90 90 89 89 89 91 91 91 90 90 90 89 89 89 92 92 92 91 91 91 91 91 91 92 92 92 93 93 93 92 92 92 94 94 94 93 93 93 93 93 93 94 94 94 95 95 95 96 96 96 97 97 97 98 98 98 96 96 96 98 98 98 99 99 99 96 96 96 99 99 99 100 100 100 97 97 97 101 101 101 102 102 102 97 97 97 102 102 102 98 98 98 99 99 99 103 103 103 100 100 100 100 100 100 103 103 103 104 104 104 101 101 101 105 105 105 106 106 106 101 101 101 106 106 106 102 102 102 103 103 103 107 107 107 104 104 104 104 104 104 107 107 107 108 108 108 105 105 105 109 109 109 110 110 110 105 105 105 110 110 110 106 106 106 107 107 107 111 111 111 108 108 108 108 108 108 111 111 111 112 112 112 109 109 109 113 113 113 110 110 110 114 114 114 115 115 115 116 116 116 115 115 115 117 117 117 116 116 116 118 118 118 119 119 119 120 120 120 119 119 119 121 121 121 120 120 120 122 122 122 123 123 123 124 124 124 123 123 123 125 125 125 124 124 124 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="pCube1225__EntranceLightSeal00-mesh" name="pCube1225__EntranceLightSeal00">
+      <mesh>
+        <source id="pCube1225__EntranceLightSeal00-position">
+          <float_array id="pCube1225__EntranceLightSeal00-position-array" count="12">146.3058 2.500001 1067 146.3058 3.5 823 -146.3052 2.500001 1067 -146.3052 3.5 823</float_array>
+          <technique_common>
+            <accessor source="#pCube1225__EntranceLightSeal00-position-array" count="4" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube1225__EntranceLightSeal00-normal">
+          <float_array id="pCube1225__EntranceLightSeal00-normal-array" count="12">0 1 0.004892368 0 1 0.004892368 0 1 0.004892368 0 1 0.004892368</float_array>
+          <technique_common>
+            <accessor source="#pCube1225__EntranceLightSeal00-normal-array" count="4" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube1225__EntranceLightSeal00-texcoord">
+          <float_array id="pCube1225__EntranceLightSeal00-texcoord-array" count="8">1 0 1 1 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#pCube1225__EntranceLightSeal00-texcoord-array" count="4" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="pCube1225__EntranceLightSeal00-vertex">
+          <input semantic="POSITION" source="#pCube1225__EntranceLightSeal00-position" />
+        </vertices>
+        <triangles material="EntranceLightSeal00" count="2">
+          <input semantic="VERTEX" source="#pCube1225__EntranceLightSeal00-vertex" offset="0" />
+          <input semantic="NORMAL" source="#pCube1225__EntranceLightSeal00-normal" offset="1" />
+          <input semantic="TEXCOORD" source="#pCube1225__EntranceLightSeal00-texcoord" offset="2" set="0" />
+          <p>0 0 0 1 1 1 2 2 2 1 1 1 3 3 3 2 2 2 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_polySurface2344__GlassBuilding1F00-mesh">
+      <skin source="#polySurface2344__GlassBuilding1F00-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface2344__GlassBuilding1F00-mesh-joint">
+          <Name_array id="polySurface2344__GlassBuilding1F00-mesh-joint-array" count="1">polySurface2344</Name_array>
+          <technique_common>
+            <accessor source="#polySurface2344__GlassBuilding1F00-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2344__GlassBuilding1F00-mesh-inv_bind_matrix">
+          <float_array id="polySurface2344__GlassBuilding1F00-mesh-inv_bind_matrix-array" count="16">1 0 0 140 0 1 0 0 0 0 1 -954.0033 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__GlassBuilding1F00-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2344__GlassBuilding1F00-mesh-weight">
+          <float_array id="polySurface2344__GlassBuilding1F00-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__GlassBuilding1F00-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface2344__GlassBuilding1F00-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface2344__GlassBuilding1F00-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="8">
+          <input semantic="JOINT" source="#polySurface2344__GlassBuilding1F00-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface2344__GlassBuilding1F00-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_polySurface2344__WindowlGlassClaf01-mesh">
+      <skin source="#polySurface2344__WindowlGlassClaf01-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface2344__WindowlGlassClaf01-mesh-joint">
+          <Name_array id="polySurface2344__WindowlGlassClaf01-mesh-joint-array" count="1">polySurface2344</Name_array>
+          <technique_common>
+            <accessor source="#polySurface2344__WindowlGlassClaf01-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2344__WindowlGlassClaf01-mesh-inv_bind_matrix">
+          <float_array id="polySurface2344__WindowlGlassClaf01-mesh-inv_bind_matrix-array" count="16">1 0 0 140 0 1 0 0 0 0 1 -954.0033 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__WindowlGlassClaf01-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2344__WindowlGlassClaf01-mesh-weight">
+          <float_array id="polySurface2344__WindowlGlassClaf01-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2344__WindowlGlassClaf01-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface2344__WindowlGlassClaf01-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface2344__WindowlGlassClaf01-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="126">
+          <input semantic="JOINT" source="#polySurface2344__WindowlGlassClaf01-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface2344__WindowlGlassClaf01-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_polySurface2345__GlassBuilding1F00-mesh">
+      <skin source="#polySurface2345__GlassBuilding1F00-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface2345__GlassBuilding1F00-mesh-joint">
+          <Name_array id="polySurface2345__GlassBuilding1F00-mesh-joint-array" count="1">polySurface2345</Name_array>
+          <technique_common>
+            <accessor source="#polySurface2345__GlassBuilding1F00-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2345__GlassBuilding1F00-mesh-inv_bind_matrix">
+          <float_array id="polySurface2345__GlassBuilding1F00-mesh-inv_bind_matrix-array" count="16">1 0 0 -140 0 1 0 0 0 0 1 -954.0033 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__GlassBuilding1F00-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2345__GlassBuilding1F00-mesh-weight">
+          <float_array id="polySurface2345__GlassBuilding1F00-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__GlassBuilding1F00-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface2345__GlassBuilding1F00-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface2345__GlassBuilding1F00-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="8">
+          <input semantic="JOINT" source="#polySurface2345__GlassBuilding1F00-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface2345__GlassBuilding1F00-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_polySurface2345__WindowlGlassClaf01-mesh">
+      <skin source="#polySurface2345__WindowlGlassClaf01-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="polySurface2345__WindowlGlassClaf01-mesh-joint">
+          <Name_array id="polySurface2345__WindowlGlassClaf01-mesh-joint-array" count="1">polySurface2345</Name_array>
+          <technique_common>
+            <accessor source="#polySurface2345__WindowlGlassClaf01-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2345__WindowlGlassClaf01-mesh-inv_bind_matrix">
+          <float_array id="polySurface2345__WindowlGlassClaf01-mesh-inv_bind_matrix-array" count="16">1 0 0 -140 0 1 0 0 0 0 1 -954.0033 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__WindowlGlassClaf01-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="polySurface2345__WindowlGlassClaf01-mesh-weight">
+          <float_array id="polySurface2345__WindowlGlassClaf01-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#polySurface2345__WindowlGlassClaf01-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#polySurface2345__WindowlGlassClaf01-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#polySurface2345__WindowlGlassClaf01-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="126">
+          <input semantic="JOINT" source="#polySurface2345__WindowlGlassClaf01-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#polySurface2345__WindowlGlassClaf01-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+    <controller id="Armature_pCube1225__EntranceLightSeal00-mesh">
+      <skin source="#pCube1225__EntranceLightSeal00-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="pCube1225__EntranceLightSeal00-mesh-joint">
+          <Name_array id="pCube1225__EntranceLightSeal00-mesh-joint-array" count="1">pCube1225</Name_array>
+          <technique_common>
+            <accessor source="#pCube1225__EntranceLightSeal00-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube1225__EntranceLightSeal00-mesh-inv_bind_matrix">
+          <float_array id="pCube1225__EntranceLightSeal00-mesh-inv_bind_matrix-array" count="16">1.111111 0 0 0 0 1 0 -6.5 0 0 1.25 -1218.75 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#pCube1225__EntranceLightSeal00-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCube1225__EntranceLightSeal00-mesh-weight">
+          <float_array id="pCube1225__EntranceLightSeal00-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#pCube1225__EntranceLightSeal00-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#pCube1225__EntranceLightSeal00-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#pCube1225__EntranceLightSeal00-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="4">
+          <input semantic="JOINT" source="#pCube1225__EntranceLightSeal00-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#pCube1225__EntranceLightSeal00-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="Armature_CityWorldHomeDoor004" name="CityWorldHomeDoor004" sid="CityWorldHomeDoor004" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <node id="Armature_DoorRotL" name="DoorRotL" sid="DoorRotL" type="JOINT">
+            <matrix sid="transform">1 0 0 -140 0 1 0 0 0 0 1 954.0033 0 0 0 1</matrix>
+            <node id="Armature_DoorL" name="DoorL" sid="DoorL" type="JOINT">
+              <matrix sid="transform">1 0 0 140 0 1 0 0 0 0 1 -954.0033 0 0 0 1</matrix>
+              <node id="Armature_polySurface2344" name="polySurface2344" sid="polySurface2344" type="JOINT">
+                <matrix sid="transform">1 0 0 -140 0 1 0 0 0 0 1 954.0033 0 0 0 1</matrix>
+              </node>
+            </node>
+          </node>
+          <node id="Armature_DoorRotR" name="DoorRotR" sid="DoorRotR" type="JOINT">
+            <matrix sid="transform">1 0 0 140 0 1 0 0 0 0 1 954.0033 0 0 0 1</matrix>
+            <node id="Armature_DoorR" name="DoorR" sid="DoorR" type="JOINT">
+              <matrix sid="transform">1 0 0 -140 0 1 0 0 0 0 1 -954.0033 0 0 0 1</matrix>
+              <node id="Armature_polySurface2345" name="polySurface2345" sid="polySurface2345" type="JOINT">
+                <matrix sid="transform">1 0 0 140 0 1 0 0 0 0 1 954.0033 0 0 0 1</matrix>
+              </node>
+            </node>
+          </node>
+          <node id="Armature_pCube1225" name="pCube1225" sid="pCube1225" type="JOINT">
+            <matrix sid="transform">0.9 0 0 0 0 1 0 6.5 0 0 0.8 975 0 0 0 1</matrix>
+          </node>
+        </node>
+      </node>
+      <node id="polySurface2344__GlassBuilding1F00" name="polySurface2344__GlassBuilding1F00" type="NODE">
+        <instance_controller url="#Armature_polySurface2344__GlassBuilding1F00-mesh">
+          <skeleton>#Armature_CityWorldHomeDoor004</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="GlassBuilding1F00" target="#GlassBuilding1F00" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="polySurface2344__WindowlGlassClaf01" name="polySurface2344__WindowlGlassClaf01" type="NODE">
+        <instance_controller url="#Armature_polySurface2344__WindowlGlassClaf01-mesh">
+          <skeleton>#Armature_CityWorldHomeDoor004</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="WindowlGlassClaf01" target="#WindowlGlassClaf01" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="polySurface2345__GlassBuilding1F00" name="polySurface2345__GlassBuilding1F00" type="NODE">
+        <instance_controller url="#Armature_polySurface2345__GlassBuilding1F00-mesh">
+          <skeleton>#Armature_CityWorldHomeDoor004</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="GlassBuilding1F00" target="#GlassBuilding1F00" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="polySurface2345__WindowlGlassClaf01" name="polySurface2345__WindowlGlassClaf01" type="NODE">
+        <instance_controller url="#Armature_polySurface2345__WindowlGlassClaf01-mesh">
+          <skeleton>#Armature_CityWorldHomeDoor004</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="WindowlGlassClaf01" target="#WindowlGlassClaf01" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+      <node id="pCube1225__EntranceLightSeal00" name="pCube1225__EntranceLightSeal00" type="NODE">
+        <instance_controller url="#Armature_pCube1225__EntranceLightSeal00-mesh">
+          <skeleton>#Armature_CityWorldHomeDoor004</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="EntranceLightSeal00" target="#EntranceLightSeal00" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

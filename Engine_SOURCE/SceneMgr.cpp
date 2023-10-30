@@ -134,30 +134,15 @@ void SceneMgr::LoadScene(eSceneType type)
 
 void SceneMgr::ChangeScene(eSceneType type)
 {
-	if (mActiveScene->GetType() == type)
-	{
-		//로딩 씬으로 넘어가서 작업하기
-	}
 
-	if (mActiveScene)
-		mActiveScene->Exit();
+	//std::vector<GameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
+	//for (GameObj* obj : gameObjs)
+	//{
+	//	delete obj;
+	//	obj = nullptr;
+	//}
+	//gameObjs.clear();
 
-	std::vector<GameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
-
-	for (GameObj* obj : gameObjs)
-	{
-		obj->DeleteComponents();
-
-		delete obj;
-		obj = nullptr;
-	}
-
-	gameObjs.clear();
-
-	mActiveScene = mScenes[static_cast<UINT>(type)];
-
-	if (mActiveScene)
-		mActiveScene->Enter();
 }
 
 
@@ -207,12 +192,67 @@ bool SceneMgr::LoadSceneFile(const std::wstring& filePath)
 	fread(&SceneType, sizeof(eSceneType), 1, File);
 
 	mScenes[static_cast<UINT>(SceneType)]->Load(File);
+	fclose(File);
+
+	//ChangeScene(SceneType);
+	{
+		if (mActiveScene->GetType() == SceneType)
+		{
+			//같은 씬에 씬을 넣어줄때 로딩 씬으로 넘어가서 작업하기
+		}
+
+		if (mActiveScene)
+			mActiveScene->Exit();
+
+		mActiveScene = mScenes[static_cast<UINT>(SceneType)];
+
+		if (mActiveScene)
+			mActiveScene->Enter();
+	}
+
+	{
+		std::vector<GameObj*> gameObjs = mActiveScene->GetDontDestroyObjects();
+
+
+		for (GameObj* obj : gameObjs)
+		{
+			mActiveScene->AddGameObject(obj, obj->GetLayerType());
+		}
+	}
+
+	//mScenes[static_cast<UINT>(SceneType)]->Initialize(); 
+
+	return true;
+}
+
+bool SceneMgr::SaveLayerObjects(eLayerType type, const std::wstring& filePath)
+{
+	FILE* File = nullptr;
+
+	_wfopen_s(&File, filePath.c_str(), L"wb");
+
+	if (!File)
+		return false;
+
+	mActiveScene->SaveLayerObjects(File, type);
 
 	fclose(File);
 
-	ChangeScene(SceneType);
+	return true;
+}
 
-	//mScenes[static_cast<UINT>(SceneType)]->Initialize(); 
+bool SceneMgr::LoadLayerObjects(eLayerType type, const std::wstring& filePath)
+{
+	FILE* File = nullptr;
+
+	_wfopen_s(&File, filePath.c_str(), L"rb");
+
+	if (!File)
+		return false;
+
+	mActiveScene->LoadLayerObjects(File, type);
+
+	fclose(File);
 
 	return true;
 }
@@ -295,73 +335,73 @@ void SceneMgr::CreateCDO()
     //BenchA* benchACDO = new BenchA();
     //GameObj::AddObjectCDO("BenchA", benchACDO);
 
-	HomeBuildingEight* buildingEightCDO = new HomeBuildingEight();
-	GameObj::AddObjectCDO("HomeBuildingEight", buildingEightCDO);
-	
+	//HomeBuildingEight* buildingEightCDO = new HomeBuildingEight();
+	//GameObj::AddObjectCDO("HomeBuildingEight", buildingEightCDO);
+
+	//HomeBuildingFour* buildingFourCDO = new HomeBuildingFour();
+	//GameObj::AddObjectCDO("HomeBuildingFour", buildingFourCDO);
+
+	//HomeBuildingFive* buildingFiveCDO = new HomeBuildingFive();
+	//GameObj::AddObjectCDO("HomeBuildingFive", buildingFiveCDO);
+	//
+	//HomeBuildingSeven* buildingSevenCDO = new HomeBuildingSeven();
+	//GameObj::AddObjectCDO("HomeBuildingSeven", buildingSevenCDO);
+
+	//HomeBuilding_09* building_9CDO = new HomeBuilding_09();
+	//GameObj::AddObjectCDO("HomeBuilding_09", building_9CDO);
+
+	//HomeBuilding_10* building_10CDO = new HomeBuilding_10();
+	//GameObj::AddObjectCDO("HomeBuilding_10", building_10CDO);
+
+	//HomeBuilding_11* building_11CDO = new HomeBuilding_11();
+	//GameObj::AddObjectCDO("HomeBuilding_11", building_11CDO);
+
+	//HomeBuilding_12* building_12CDO = new HomeBuilding_12();
+	//GameObj::AddObjectCDO("HomeBuilding_12", building_12CDO);
+
+	//HomeBuilding_13* building_13CDO = new HomeBuilding_13();
+	//GameObj::AddObjectCDO("HomeBuilding_13", building_13CDO);
+
+	//HomeBuilding_15* building_15CDO = new HomeBuilding_15();
+	//GameObj::AddObjectCDO("HomeBuilding_15", building_15CDO);
+
+	//HomeBuilding_16* building_16CDO = new HomeBuilding_16();
+	//GameObj::AddObjectCDO("HomeBuilding_16", building_16CDO);
+
+	//HomeBuilding_17* building_17CDO = new HomeBuilding_17();
+	//GameObj::AddObjectCDO("HomeBuilding_17", building_17CDO);
+
+	//HomeBuilding_18* building_18CDO = new HomeBuilding_18();
+	//GameObj::AddObjectCDO("HomeBuilding_18", building_18CDO);
+
+	//HomeBuilding_19* building_19CDO = new HomeBuilding_19();
+	//GameObj::AddObjectCDO("HomeBuilding_19", building_19CDO);
+
+	//HomeBuilding_20* building_20CDO = new HomeBuilding_20();
+	//GameObj::AddObjectCDO("HomeBuilding_20", building_20CDO);
+
+	//HomeBuilding_21* building_21CDO = new HomeBuilding_21();
+	//GameObj::AddObjectCDO("HomeBuilding_21", building_21CDO);
+
+	//HomeBuilding_22* building_22CDO = new HomeBuilding_22();
+	//GameObj::AddObjectCDO("HomeBuilding_22", building_22CDO);
+
+	//HomeBuilding_23* building_23CDO = new HomeBuilding_23();
+	//GameObj::AddObjectCDO("HomeBuilding_23", building_23CDO);
+
+	//HomeBuilding_24* building_24CDO = new HomeBuilding_24();
+	//GameObj::AddObjectCDO("HomeBuilding_24", building_24CDO);
+
+	//HomeBuilding_26* building_26CDO = new HomeBuilding_26();
+	//GameObj::AddObjectCDO("HomeBuilding_26", building_26CDO);
+
 	Building* buildingCDO = new Building();
 	GameObj::AddObjectCDO("Building", buildingCDO);
-
-	HomeBuildingFour* buildingFourCDO = new HomeBuildingFour();
-	GameObj::AddObjectCDO("HomeBuildingFour", buildingFourCDO);
-
-	HomeBuildingFive* buildingFiveCDO = new HomeBuildingFive();
-	GameObj::AddObjectCDO("HomeBuildingFive", buildingFiveCDO);
-	
-	HomeBuildingSeven* buildingSevenCDO = new HomeBuildingSeven();
-	GameObj::AddObjectCDO("HomeBuildingSeven", buildingSevenCDO);
-
-	HomeBuilding_09* building_9CDO = new HomeBuilding_09();
-	GameObj::AddObjectCDO("HomeBuilding_09", building_9CDO);
-
-	HomeBuilding_10* building_10CDO = new HomeBuilding_10();
-	GameObj::AddObjectCDO("HomeBuilding_10", building_10CDO);
-
-	HomeBuilding_11* building_11CDO = new HomeBuilding_11();
-	GameObj::AddObjectCDO("HomeBuilding_11", building_11CDO);
-
-	HomeBuilding_12* building_12CDO = new HomeBuilding_12();
-	GameObj::AddObjectCDO("HomeBuilding_12", building_12CDO);
-
-	HomeBuilding_13* building_13CDO = new HomeBuilding_13();
-	GameObj::AddObjectCDO("HomeBuilding_13", building_13CDO);
-
-	HomeBuilding_15* building_15CDO = new HomeBuilding_15();
-	GameObj::AddObjectCDO("HomeBuilding_15", building_15CDO);
-
-	HomeBuilding_16* building_16CDO = new HomeBuilding_16();
-	GameObj::AddObjectCDO("HomeBuilding_16", building_16CDO);
-
-	HomeBuilding_17* building_17CDO = new HomeBuilding_17();
-	GameObj::AddObjectCDO("HomeBuilding_17", building_17CDO);
-
-	HomeBuilding_18* building_18CDO = new HomeBuilding_18();
-	GameObj::AddObjectCDO("HomeBuilding_18", building_18CDO);
-
-	HomeBuilding_19* building_19CDO = new HomeBuilding_19();
-	GameObj::AddObjectCDO("HomeBuilding_19", building_19CDO);
-
-	HomeBuilding_20* building_20CDO = new HomeBuilding_20();
-	GameObj::AddObjectCDO("HomeBuilding_20", building_20CDO);
-
-	HomeBuilding_21* building_21CDO = new HomeBuilding_21();
-	GameObj::AddObjectCDO("HomeBuilding_21", building_21CDO);
-
-	HomeBuilding_22* building_22CDO = new HomeBuilding_22();
-	GameObj::AddObjectCDO("HomeBuilding_22", building_22CDO);
-
-	HomeBuilding_23* building_23CDO = new HomeBuilding_23();
-	GameObj::AddObjectCDO("HomeBuilding_23", building_23CDO);
-
-	HomeBuilding_24* building_24CDO = new HomeBuilding_24();
-	GameObj::AddObjectCDO("HomeBuilding_24", building_24CDO);
-
-	HomeBuilding_26* building_26CDO = new HomeBuilding_26();
-	GameObj::AddObjectCDO("HomeBuilding_26", building_26CDO);
 
 	BlockBrick* BlockBrickObjCDO = new BlockBrick();
 	GameObj::AddObjectCDO("BlockBrick", BlockBrickObjCDO);
 
 
-	//SkySphere* SkySphere = new SkySphere();
-	//GameObj::AddObjectCDO("SkySphere", SkySphere);
+	SkySphere* SkySphereCDO = new SkySphere();
+	GameObj::AddObjectCDO("SkySphere", SkySphereCDO);
 }

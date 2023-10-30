@@ -11,6 +11,9 @@ public:
 	virtual ~CityGround();
 
 	virtual CityGround* Clone() const;
+	virtual void Save(FILE* File) override;
+	virtual void Load(FILE* File) override;
+
 	virtual void Initialize() override;
 	virtual void Update() override;
 	virtual void FixedUpdate() override;

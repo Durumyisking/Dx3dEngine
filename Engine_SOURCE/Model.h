@@ -10,7 +10,13 @@
 #include "..//External/assimp/include/assimp/postprocess.h"
 #include "..//External/assimp/include/assimp/scene.h"
 
+#ifdef _DEBUG
 #pragma comment(lib, "..//External/assimp/lib/Debug/assimp-vc143-mtd.lib")
+#else
+#pragma comment(lib, "..//External/assimp/lib/Release/assimp-vc143-mt.lib")
+#endif
+
+
 #define ASSIMP_LOAD_FLAGES (aiProcess_Triangulate  | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace  | aiProcess_FixInfacingNormals | aiProcess_LimitBoneWeights | aiProcess_ConvertToLeftHanded)
 #define ASSIMP_TEST_FLAGES (aiProcess_RemoveRedundantMaterials | aiProcess_ImproveCacheLocality | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType  | aiProcess_LimitBoneWeights | aiProcess_CalcTangentSpace | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph |)
 // aiProcess_RemoveRedundantMaterials | aiProcess_ImproveCacheLocality | aiProcess_ConvertToLeftHanded | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_PopulateArmatureData | aiProcess_LimitBoneWeights | aiProcess_CalcTangentSpace | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph
@@ -84,6 +90,8 @@ public:
 	void Bind_RenderInstance(UINT instanceCount, bool bindMaterial = true);
 
 	size_t GetMeshCount() const { return mMeshes.size(); }
+
+	void ResizeVarialble(int size) { mVariableMaterials.resize(size); }
 
 public:
 	GETSET(const std::wstring&, mRootNodeName, RootNodeName)

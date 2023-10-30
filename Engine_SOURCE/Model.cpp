@@ -144,15 +144,19 @@ void Model::Bind_Render(bool bindMaterial)
 
 	boneMat.reserve(mBones.size());
 
+
 	for (Bone* bone : mBones)
 	{
 		aiMatrix4x4 finalMat = bone->mFinalMatrix;
 		boneInfo.FinalTransformation = ConvertMatrix(finalMat);
 		boneMat.emplace_back(boneInfo);
+
 	}
+	
 
 	mStructure->SetData(boneMat.data(), static_cast<UINT>(boneMat.size()));
 	mStructure->BindSRV(eShaderStage::VS, 30);
+	
 
 	for (size_t i = 0; i < mMeshes.size(); ++i)
 	{
@@ -172,12 +176,14 @@ void Model::Bind_Render(bool bindMaterial)
 			//{
 			//	if (Textures[slot] == nullptr)
 			//		continue;
-
 			//	mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
 			//}
 
-			if (!(mVariableMaterials.empty() && mMaterials.empty()))
-				mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
+			//if (!(mVariableMaterials.empty() && mMaterials.empty()))
+			//	mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
+
+			if (mVariableMaterials[i] != nullptr)
+				mVariableMaterials[i]->Bind();
 		}
 		Matrix m = mOwnerWorldMatrix;
 		mMeshes[i]->SetWorldMatrix(mOwnerWorldMatrix);
@@ -186,8 +192,12 @@ void Model::Bind_Render(bool bindMaterial)
 
 		if (bindMaterial)
 		{
-			if(!(mVariableMaterials.empty() && mMaterials.empty()))
-				mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+			//if(!(mVariableMaterials.empty() && mMaterials.empty()))
+			//	mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+
+
+			if (mVariableMaterials[i] != nullptr)
+				mVariableMaterials[i]->Clear();
 		}
 	}
 
@@ -369,10 +379,13 @@ void Model::recursiveProcessMesh(aiMesh* mesh, const aiScene* scene, const std::
 
 
 		math::Vector3 tangent = {};
-		tangent.x = mesh->mTangents[i].x;
-		tangent.y = mesh->mTangents[i].y;
-		tangent.z = mesh->mTangents[i].z;
-		vertex.tangent = tangent;
+		if(mesh->mTangents != nullptr)
+		{
+			tangent.x = mesh->mTangents[i].x;
+			tangent.y = mesh->mTangents[i].y;
+			tangent.z = mesh->mTangents[i].z;
+			vertex.tangent = tangent;
+		}
 
 		// UV
 		if (mesh->mTextureCoords[0] != nullptr)

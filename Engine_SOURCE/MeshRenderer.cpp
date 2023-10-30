@@ -10,6 +10,7 @@
 MeshRenderer::MeshRenderer()
 	: BaseRenderer(eComponentType::MeshRenderer)
 	, mBoneAnimator(nullptr)
+	, mbRenderShadow(true)
 {
 }
 
@@ -39,23 +40,26 @@ void MeshRenderer::FixedUpdate()
 
 void MeshRenderer::PrevRender()
 {
-	Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"ShadowMaterial");
-	material->Bind();
-
-	GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
-
-	if (GetModel() != nullptr)
+	if (mbRenderShadow)
 	{
-		GetModel()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
-		GetModel()->Bind_Render(false);
+		Material* material = GETSINGLE(ResourceMgr)->Find<Material>(L"ShadowMaterial");
+		material->Bind();
+
+		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
+
+		if (GetModel() != nullptr)
+		{
+			GetModel()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
+			GetModel()->Bind_Render(false);
+		}
+		else
+		{
+			GetMesh()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
+			GetMesh()->BindBuffer();
+			GetMesh()->Render();
+		}
+		material->Clear();
 	}
-	else
-	{
-		GetMesh()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
-		GetMesh()->BindBuffer();
-		GetMesh()->Render();
-	}
-	material->Clear();
 }
 
 void MeshRenderer::Render()
@@ -72,11 +76,7 @@ void MeshRenderer::Render()
 		}
 		GetModel()->SetWorldMatrix(GetTransform()->GetWorldMatrix());
 		
-		bool PreventBurstingWhenNoMaterialOnModel = true;
-		if (GetModel()->GetLastMaterial() == nullptr)
-			PreventBurstingWhenNoMaterialOnModel = false;
-
-		GetModel()->Bind_Render(PreventBurstingWhenNoMaterialOnModel);
+		GetModel()->Bind_Render();
 	}
 	else
 	{

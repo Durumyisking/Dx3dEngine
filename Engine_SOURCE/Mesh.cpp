@@ -98,26 +98,6 @@ void Mesh::BindBuffer(bool drawInstance)
 		/*CheckFrustumCull();
 		if (mbFrustumCulled)
 			return;*/
-
-		/*	if(mbFrustumCulled)
-			{
-				if (sMeshCount != 0)
-				{
-					if (r)
-					{
-						--sMeshCount;
-						r = false;
-					}
-				}
-			}
-			else
-			{
-				if (!r)
-				{
-					++sMeshCount;
-					r = true;
-				}
-			}*/
 	}
 
 	if (drawInstance)

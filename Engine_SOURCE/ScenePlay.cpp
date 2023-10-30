@@ -87,10 +87,6 @@
 #include "CityWorldFlag.h"
 #include "BenchA.h"
 #include "CheckpointFlag.h"
-#include "HomeBuildingFour.h"
-#include "HomeBuildingFive.h"
-#include "HomeBuildingSeven.h"
-#include "HomeBuildingEight.h"
 
 #include "CreateObject.h"
 
@@ -141,18 +137,18 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ·Îµå Å×½ºÆ® ·Îµå½Ã¿¡ ¹İº¹ÇØ¼­ ¸ó½ºÅÍ Á¤ÀÇ ¹æÁö
+	//TestScene ë¡œë“œ í…ŒìŠ¤íŠ¸ ë¡œë“œì‹œì— ë°˜ë³µí•´ì„œ ëª¬ìŠ¤í„° ì •ì˜ ë°©ì§€
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
-		{
+		/*{
 			SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
 			skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 			skySphere->SetName(L"SkySphere");
-		}
+		}*/
 
-		{
-			CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-		}
+		//{
+		//	CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+		//}
 
 		CreatePlayerUI();
 		Scene::Initialize();
@@ -165,6 +161,7 @@ void ScenePlay::Initialize()
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Monster);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Player, eLayerType::Objects);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Monster);
+	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Player);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Platforms);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Monster, eLayerType::Cap);
 	GETSINGLE(PhysXCollisionMgr)->SetCollisionGroup(eLayerType::Objects, eLayerType::Cap);
@@ -188,7 +185,7 @@ void ScenePlay::Initialize()
 
 	{
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
-		mPlayer->SetPos(Vector3(0.f, 10.f, 0.f));
+
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 		//AudioSource* mAudioSource= mCamera->AddComponent<AudioSource>(eComponentType::AudioSource);
 		//mAudioSource->AddClipByKey(L"NewDonkCity");
@@ -200,14 +197,12 @@ void ScenePlay::Initialize()
 		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
 	}
 
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(15.f, 10.f, 10.f));
-	}	
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(25.f, 10.f, -10.f));	
-	}
+
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
+	//}	
+
 
 
 
@@ -225,8 +220,79 @@ void ScenePlay::Initialize()
 
 	{
 		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+		ground->SetPos(Vector3::Zero);
 	}
 
+// ì„¸í˜„ í¬ì¸íŠ¸ë¼ì´íŠ¸
+	{
+		{
+			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
+			directionalLight->SetPos({ -74.75f, 18.f,-19.5f });
+			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
+			lightComp->SetRadius(1.f);
+			lightComp->SetFallOffStart(0.5f);
+			lightComp->SetFallOffEnd(1.f);
+		}
+
+		{
+			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
+			directionalLight->SetPos({ -75.f, 10.5f,-15.f });
+			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
+			lightComp->SetRadius(1.f);
+			lightComp->SetFallOffStart(0.5f);
+			lightComp->SetFallOffEnd(1.f);
+		}
+
+
+		{
+			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
+			directionalLight->SetPos({ -75.f, 8.5f, -4.5f });
+			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
+			lightComp->SetRadius(4.f);
+			lightComp->SetFallOffStart(2.5f);
+			lightComp->SetFallOffEnd(4.f);
+		}
+	}
+//////////////////////////////////
+
+	/*{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(5.f, 1.f, 1.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(5.f, 1.f, 2.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(5.f, 1.f, 3.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(5.f, 1.f, 4.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(4.f, 1.f, 1.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(4.f, 1.f, 2.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(4.f, 1.f, 3.f));
+	}
+	{
+		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+		block->SetPos(Vector3(4.f, 1.f, 4.f));
+	}*/
 	//{
 	//	Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
 	//	block->SetPos(Vector3(40.f, -0.5f, 0.f));
@@ -241,8 +307,8 @@ void ScenePlay::Initialize()
 	//			if (j > 4 && k > 1)
 	//				continue;
 
-	//			BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-	//			block->SetPos(Vector3(1.f * i, 1.f * k, 1.f * j));
+				//BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+				//block->SetPos(Vector3(0.f, 0.f, 0.f));
 	//			blockContainer->PushObject(block);
 	//		}
 	//	}
@@ -252,19 +318,54 @@ void ScenePlay::Initialize()
 	//{
 	//	SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
 
-	//	//ÇöÀç .obj ÆÄÀÏ¸¸ ·Îµù °¡´É ºí·£´õ¿¡¼­ .obj ·Î ³»º¸³»±â ÇØ¼­ »ç¿ëÇÏ¸é µË´Ï´Ù
+	//	//í˜„ì¬ .obj íŒŒì¼ë§Œ ë¡œë”© ê°€ëŠ¥ ë¸”ëœë”ì—ì„œ .obj ë¡œ ë‚´ë³´ë‚´ê¸° í•´ì„œ ì‚¬ìš©í•˜ë©´ ë©ë‹ˆë‹¤
 	//	if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
 	//		int debug = 0;
 
 	//	if (!naviMesh->Build())
 	//		int debug = 0;
 
-	//	//¿ÀºêÁ§Æ®¿¡ std::<Vector3>mPath Ãß°¡ path¿¡ ÀÌµ¿°æ·Î°¡ Ãß°¡µÇ´Ï vector³»ÀÇ À§Ä¡¸¦ »ç¿ëÇØ¼­ ÀÌµ¿ÇÏ¸é µË´Ï´Ù
-	//	//À§Ä¡°¡ ³»ºñ¸Ş½¬ ¹ÛÀÌ¸é °è»êÀÌ ¾ÈµË´Ï´Ù
+	//	//ì˜¤ë¸Œì íŠ¸ì— std::<Vector3>mPath ì¶”ê°€ pathì— ì´ë™ê²½ë¡œê°€ ì¶”ê°€ë˜ë‹ˆ vectorë‚´ì˜ ìœ„ì¹˜ë¥¼ ì‚¬ìš©í•´ì„œ ì´ë™í•˜ë©´ ë©ë‹ˆë‹¤
+	//	//ìœ„ì¹˜ê°€ ë‚´ë¹„ë©”ì‰¬ ë°–ì´ë©´ ê³„ì‚°ì´ ì•ˆë©ë‹ˆë‹¤
 	//	if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
 	//		int debug = 0;
 	//}
 
+	//{
+	//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+	//	obj->SetPos(Vector3(0.f, -35.f, 0.f));
+	//	Vector3 scale(0.15, 0.15, 0.15);
+	//	obj->SetScale(scale);
+	//	obj->SetName(L"CapWorldTower");
+
+	//	Transform* tr = obj->GetComponent<Transform>();
+	//	float offset = 0.05;
+	//	tr->SetOffsetScale(offset);
+
+	//	// SetModel
+	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CapWorldHomeTower000");
+	//	if (model)
+	//	{
+	//		//model->ResizeVarialble(20);
+
+	//		MeshRenderer* mr = obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	//		mr->ForceSetMaterial(model->GetLastMaterial());
+	//		mr->SetModel(model);
+	//	}
+
+	//	//SetCollider
+	//	Model* collider = GETSINGLE(ResourceMgr)->Find<Model>(L"CapTowerCollider");
+	//	if (collider)
+	//	{
+	//		Physical* objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
+	//		objPhysical->InitialTriangleMeshProperties(scale * offset);
+
+	//		PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//		rigid->RemoveGravity();
+
+	//		PhysXCollider* collider = obj->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//	}
+	//}
 
 	CreatePlayerUI();
 

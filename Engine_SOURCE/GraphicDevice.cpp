@@ -30,7 +30,7 @@ GraphicDevice::GraphicDevice(eValidationMode _ValidationMode)
 	HWND hwnd = application.GetHwnd(); // 윈도우 핸들 얻어옴
 				
 	// Device, Device Context
-	UINT DeviceFlag = D3D11_CREATE_DEVICE_DEBUG; // 디버그모드로 만들거임 릴리즈모드는 0
+	UINT DeviceFlag = 0; // 디버그모드로 만들거임 릴리즈모드는 0
 	D3D_FEATURE_LEVEL FeatureLevel = (D3D_FEATURE_LEVEL)0;
 
 	// 그냥 bool 형 반환값과 같음 SUCCEEDED / FAILED로 나뉨

@@ -6,6 +6,7 @@
 #include <charconv>
 #include "Physical.h"
 #include "guiInspector.h"
+#include "InputMgr.h"
 
 
 namespace gui
@@ -93,20 +94,27 @@ namespace gui
 			}
 		}
 
-		if (!(posChanged || rotChanged || scaleChanged))
+		if (GetTarget() == nullptr)
 			return;
 
-		if (GetTarget())
+		Transform* tr = GetTarget()->GetComponent<Transform>();
+
+		if (tr == nullptr)
+			return;
+
+		if ((posChanged || rotChanged || scaleChanged))
 		{
-			Transform* tr = GetTarget()->GetComponent<Transform>();
-
-			if (tr == nullptr)
-				return;
-
 			if (GetTarget()->GetComponent<Physical>() != nullptr)
 			{
 				tr->SetPhysicalPosition(mPosition);
-				tr->SetPhysicalRotation(mRotation);
+				if (eActorType::Static == GetTarget()->GetComponent<Physical>()->GetActorType())
+				{
+					tr->SetPhysicalRotation_For_Static(mRotation);
+				}
+				else
+				{
+					tr->SetPhysicalRotation(mRotation);
+				}
 				tr->SetScale(mScale);
 			}
 			else
@@ -116,12 +124,74 @@ namespace gui
 				tr->SetScale(mScale);
 			}
 		}
+
+		Vector3 pos = tr->GetPosition();
+
+	
+		if (GETSINGLE(InputMgr)->GetKeyState(eKeyCode::LEFT) == eKeyState::TAP)
+		{
+			pos.x -= 0.5f;
+
+			if (GetTarget()->GetComponent<Physical>() != nullptr)
+				tr->SetPhysicalPosition(pos);
+			else
+				tr->SetPosition(pos);
+		}
+		if (KEY_TAP(RIGHT))
+		{
+			pos.x += 0.5f;
+
+			if (GetTarget()->GetComponent<Physical>() != nullptr)
+				tr->SetPhysicalPosition(pos);
+			else
+				tr->SetPosition(pos);
+		}
+
+		if (KEY_TAP(DOWN) && KEY_DOWN(LSHIFT))
+		{
+			pos.y -= 0.5f;
+
+			if (GetTarget()->GetComponent<Physical>() != nullptr)
+				tr->SetPhysicalPosition(pos);
+			else
+				tr->SetPosition(pos);
+		}
+		else if (KEY_TAP(DOWN))
+		{
+			pos.z -= 0.5f;
+
+			if (GetTarget()->GetComponent<Physical>() != nullptr)
+				tr->SetPhysicalPosition(pos);
+			else
+				tr->SetPosition(pos);
+		}
+
+		if (KEY_TAP(UP) && KEY_DOWN(LSHIFT))
+		{
+			pos.y += 0.5f;
+
+			if (GetTarget()->GetComponent<Physical>() != nullptr)
+				tr->SetPhysicalPosition(pos);
+			else
+				tr->SetPosition(pos);
+		}
+		else if (KEY_TAP(UP))
+		{
+			pos.z += 0.5f;
+
+			if (GetTarget()->GetComponent<Physical>() != nullptr)
+				tr->SetPhysicalPosition(pos);
+			else
+				tr->SetPosition(pos);
+		}
+
+
 	}
 
 	void GUITransform::LateUpdate()
 	{
-		GUIComponent::LateUpdate();
 
+		GUIComponent::LateUpdate();
 	}
 
 	void GUITransform::InputFloatValues(math::Vector3& value) {

@@ -6,15 +6,24 @@
 #include "PhysXCollider.h"
 #include "InstancingContainer.h"
 
+#include "BoneAnimator.h"
+#include "BlockBrickScript.h"
+
 BlockBrick::BlockBrick()
 {
 	SetName(L"BlockBrick");
 	mObjectTypeName = "BlockBrick";
+	AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	AddComponent<BlockBrickScript>(eComponentType::Script);
 }
 
 BlockBrick::BlockBrick(const BlockBrick& Obj)
 	: InstantiativeObject(Obj)
 {
+	AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
+	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	AddComponent<BlockBrickScript>(eComponentType::Script);
 }
 
 BlockBrick::~BlockBrick()
@@ -40,7 +49,9 @@ void BlockBrick::Initialize()
 {
 	SetScale(Vector3(1.f, 1.f, 1.f));
 
-	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+	BoneAnimator* animator = this->GetComponent<BoneAnimator>();
+
+	animator->CreateAnimation(L"ReactionHipDrop", L"..//..//Resources/brick/Animation/ReactionHipDrop.smd", 0.05f);
 
 	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"BlockBrick");
 	assert(model);
@@ -53,12 +64,13 @@ void BlockBrick::Initialize()
 	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Box, { 0.5f, 0.5f, 0.5f });
+	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 0.5f, 0.5f, 0.5f });
 
 	PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 	rigid->RemoveGravity();
 
 	AddComponent<PhysXCollider>(eComponentType::Collider);
+
 	InstantiativeObject::Initialize();
 }
 
@@ -88,6 +100,7 @@ void BlockBrick::FontRender()
 
 void BlockBrick::OnCollisionEnter(GameObj* gameObject)
 {
+
 }
 
 void BlockBrick::OnTriggerEnter(GameObj* gameObject)

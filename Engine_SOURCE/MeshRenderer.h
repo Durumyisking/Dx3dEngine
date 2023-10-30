@@ -19,6 +19,9 @@ public:
 
 	void SetBoneAnimator(BoneAnimator* aniamtor) { mBoneAnimator = aniamtor; }
 
+	GETSET(bool, mbRenderShadow, RenderShadowFlag)
+
 private:
 	BoneAnimator* mBoneAnimator;
+	bool mbRenderShadow;
 };

@@ -37,7 +37,7 @@ void PhysicsMgr::Initialize()
 	//sceneDesc.staticKineFilteringMode = PxPairFilteringMode::Enum::eDEFAULT;
 
 	mPhysX->CreatePhysicsScene(sceneDesc);
-	mPhysX->ConnectDebuggerToScene();
+	//mPhysX->ConnectDebuggerToScene();
 
 	assert(mPhysX->GetPhysicsScene());
 }
@@ -45,8 +45,8 @@ void PhysicsMgr::Initialize()
 void PhysicsMgr::Update()
 {
 	// 현재 작동중인 씬의
-
-	GetScene()->simulate(DT);
+	float deltaTime = TimeMgr::GetInstance()->DeltaTime();
+	GetScene()->simulate(deltaTime);
 	GetScene()->fetchResults(true);
 }
 

@@ -10,7 +10,7 @@ CityGround::CityGround()
 	: GameObj()
 {
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	//AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+
 	mObjectTypeName = "CityGround";
 }
 
@@ -18,7 +18,7 @@ CityGround::CityGround(const CityGround& Obj)
 	:GameObj(Obj)
 {
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	//AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
+
 }
 
 CityGround::~CityGround()
@@ -29,6 +29,16 @@ CityGround::~CityGround()
 CityGround* CityGround::Clone() const
 {
 	return new CityGround(*this);
+}
+
+void CityGround::Save(FILE* File)
+{
+	GameObj::Save(File);
+}
+
+void CityGround::Load(FILE* File)
+{
+	GameObj::Load(File);
 }
 
 void CityGround::Initialize()
@@ -105,6 +115,7 @@ void CityGround::Initialize()
 	mr->SetMaterialByKey(L"GroundLawn00Material", 29); //?
 	mr->SetMaterialByKey(L"GrassFlowerSet00Material", 30);  //
 
+	//mr->SetRenderShadowFlag(false);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 
