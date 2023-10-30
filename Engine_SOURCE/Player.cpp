@@ -106,8 +106,8 @@ void Player::Initialize()
 	mMeshRenderer->SetMaterialByKey(L"marioBodyMaterial", 0);
 
 
-	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.25f, 0.5f, 0.5f));
-	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.25f, 0.5f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
+	physical->InitialDefaultProperties(eActorType::Kinematic, eGeometryType::Capsule, Vector3(0.5f, 0.25f, 0.5f));
+	physical->CreateSubShape(Vector3(0.f, 0.f, 0.f), eGeometryType::Capsule, Vector3(0.5f, 0.25f, 0.5f), PxShapeFlag::eTRIGGER_SHAPE);
 
 	mRigidBody->SetFriction(Vector3(40.f, 0.f, 40.f));
 
@@ -299,29 +299,38 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 		{
 			Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
 			Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
-
-    		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
-			{				
-				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
-				{						
-					if (mRigidBody->IsOnAir())
-					{
-						GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-						mRigidBody->SetAirOff();
-						mRigidBody->RemoveGravity();
-						SetPlayerState(Player::ePlayerState::Idle);
-					}
-				}			
+			if (KEY_NONE(W) && KEY_NONE(S) && KEY_NONE(A) && KEY_NONE(D))
+			{
+				SetPlayerState(Player::ePlayerState::Idle);
 			}
 
-				if (Calculate_RelativeDirection_ByCosTheta(gameObject) < 0.95f && gameObject->GetObjectTypeName() == "BlockBrick")
+			if (!(pentDir == Vector3::Zero))
+			{				
+				if (mRigidBody->IsOnAir())
 				{
-
-					if (gameObject->GetScript<BlockBrickScript>() == nullptr)
-						return;
-
-					gameObject->GetScript<BlockBrickScript>()->GetHit();
+					mRigidBody->SetAirOff();
+					mRigidBody->RemoveGravity();
+					if (KEY_DOWN(W) || KEY_DOWN(S) || KEY_DOWN(A) || KEY_DOWN(D))
+					{
+						SetPlayerState(Player::ePlayerState::Move);
+					}
 				}
+				
+				//SetPlayerState(Player::ePlayerState::Idle);
+				pentDirDepth.x = 0.f;
+				pentDirDepth.z = 0.f;
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pentDirDepth);
+				
+			}
+
+				//if (Calculate_RelativeDirection_ByCosTheta(gameObject) < 0.95f && gameObject->GetObjectTypeName() == "BlockBrick")
+				//{
+
+				//	if (gameObject->GetScript<BlockBrickScript>() == nullptr)
+				//		return;
+
+				//	gameObject->GetScript<BlockBrickScript>()->GetHit();
+				//}
 		}
 
 		if (eLayerType::Monster == gameObject->GetLayerType())
@@ -346,24 +355,29 @@ void Player::OnTriggerPersist(GameObj* gameObject)
 		Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
 		Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
 
+		if (KEY_NONE(W) && KEY_NONE(S) && KEY_NONE(A) && KEY_NONE(D))
+		{
+			SetPlayerState(Player::ePlayerState::Idle);
+		}
 		if (!(pentDir == Vector3::Zero ))
 		{
-			if (pentDirDepth == Vector3::Zero)
+			if (mRigidBody->IsOnAir())
 			{
-				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+				mRigidBody->SetAirOff();
+				mRigidBody->RemoveGravity();
+
+				// 인풋 없을때만 idle로
+				if (KEY_DOWN(W) || KEY_DOWN(S) || KEY_DOWN(A) || KEY_DOWN(D))
 				{
-					if (mRigidBody->IsOnAir())
-					{
-						mRigidBody->SetAirOff();
-						mRigidBody->RemoveGravity();
-						SetPlayerState(Player::ePlayerState::Idle);
-					}
+					SetPlayerState(Player::ePlayerState::Move);
 				}
 			}
-			else
-			{
-				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pentDirDepth);
-			}
+			//SetPlayerState(Player::ePlayerState::Idle);
+
+			pentDirDepth.x = 0.f;
+			pentDirDepth.z = 0.f;
+			GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pentDirDepth);
+			
 		}
 	}
 }

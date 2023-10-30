@@ -168,6 +168,14 @@ void GameObj::Update()
 			comp->Update();
 		}
 	}
+
+	std::list<GameObj*> list = GetCollisionObjs();
+	for (GameObj* obj : list)
+	{
+		if (obj->GetPhysXCollider())
+			OnTriggerPersist(obj);
+	}
+
 	for (Component* script : mScripts)
 	{
 		if (nullptr == script || GETSINGLE(SceneMgr)->GetActiveScene()->mbPause )
@@ -178,13 +186,6 @@ void GameObj::Update()
 			script->Update();
 		}
 	}
-	std::list<GameObj*> list = GetCollisionObjs();
-	for (GameObj* obj : list)
-	{
-		if (obj->GetPhysXCollider())
-			OnTriggerPersist(obj);
-	}
-
 }
 
 void GameObj::FixedUpdate()
