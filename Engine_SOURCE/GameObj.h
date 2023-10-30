@@ -55,9 +55,9 @@ public:
 
 public:
 	virtual void OnCollisionEnter(GameObj* gameObject) {};
-	virtual void OnTriggerEnter(GameObj* gameObject) {};
+	virtual void OnTriggerEnter(GameObj* gameObject);
 	virtual void OnTriggerPersist(GameObj* gameObject) {};
-	virtual void OnTriggerExit(GameObj* gameObject) {};
+	virtual void OnTriggerExit(GameObj* gameObject);
 
 	template <typename T>
 	T* AddComponent(eComponentType eType)
@@ -175,7 +175,7 @@ public:
 
 	std::vector<Component*> GetComponentsVec() { return mComponents; }
 
-	void ReorganizePosition(AXIS axis, eLayerType layerType); // 충돌체 겹친 크기만큼 밀어냄
+	void ReorganizePosition(AXIS axis, eLayerType layerType, bool oneSide = false); // 충돌체 겹친 크기만큼 밀어냄
 
 
 	Transform* GetTransform();
@@ -260,6 +260,8 @@ private:
 
 	bool mbBlockRendering;
 
+	std::list<GameObj*> mCollisionObj;
+
 public:
 	void SetPos(Vector3 value);
 	void SetPosAbs(Vector3 value);
@@ -276,6 +278,8 @@ public:
 
 	Vector3 GetScale();
 	Vector3 GetRotation();
+
+	GETSET(std::list<GameObj*>, mCollisionObj, CollisionObjs)
 
 
 	void SetMaterial(Material* material);

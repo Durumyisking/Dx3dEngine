@@ -22,13 +22,13 @@ void PhysicalMovement::Update()
 }
 void PhysicalMovement::FixedUpdate()
 {
-	Vector3 velocity = GetOwner()->GetComponent<PhysXRigidBody>()->GetVelocity();
-
 	if (eLayerType::Player== GetOwner()->GetLayerType())
 	{
 	}
-	GetOwner()->ReorganizePosition(AXIS::Y, eLayerType::Platforms);
+	GetOwner()->ReorganizePosition(AXIS::Y, eLayerType::Platforms, true);
 	GetOwner()->ReorganizePosition(AXIS::XZ, eLayerType::Objects);
+
+	Vector3 velocity = GetOwner()->GetComponent<PhysXRigidBody>()->GetVelocity();
 
 	Move(velocity);
 }

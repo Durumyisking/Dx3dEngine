@@ -9,7 +9,7 @@ Building::Building()
 	: GameObj()
 	, mModelName(L"CityWorldHomeBuilding002")
 	, mbPhysical(true)
-	, mPhysicalScale(10.f, 50.f, 10.f)
+	, mPhysicalScale(10.f, 50.f, 5.f)
 	, mGeometryType(eGeometryType::Box)
 	, mActorType(eActorType::Static)
 {
@@ -59,7 +59,7 @@ void Building::Save(FILE* File)
 		mPhysicalScale = physical->GetGeometrySize();
 	}
 
-	// ÀÌ¸§ ÀúÀå
+	// Ã€ÃŒÂ¸Â§ Ã€ÃºÃ€Ã¥
 	int numWChars = (int)mModelName.length();
 
 	fwrite(&numWChars, sizeof(int), 1, File);
@@ -108,6 +108,8 @@ void Building::Initialize()
 		Transform* tr = GetComponent<Transform>();
 		tr->SetPhysicalRotation(tr->GetRotation());
 
+		//GetTransform()->SetPhysicalPosition(GetTransform()->GetPosition());
+
 		PhysXRigidBody* rigid = AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
 		rigid->RemoveGravity();
 
@@ -115,6 +117,8 @@ void Building::Initialize()
 	}
 
 	GameObj::Initialize();
+
+	GetTransform()->SetPhysicalRotation_For_Static(GetTransform()->GetRotation());
 }
 
 void Building::Update()

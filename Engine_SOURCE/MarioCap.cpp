@@ -13,6 +13,9 @@
 #include "TimeMgr.h"
 
 #include "Player.h"
+#include "InputMgr.h"
+#include "SceneMgr.h"
+#include "Scene.h"
 
 MarioCap::MarioCap()
 	: DynamicObject()

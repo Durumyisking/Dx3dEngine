@@ -288,12 +288,13 @@ namespace gui
 
 
         Physical* objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
+        PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+        PhysXCollider* collider = obj->AddComponent<PhysXCollider>(eComponentType::Collider);
+
         objPhysical->InitialDefaultProperties(mActorType, mGeometryType, mScale);
 
-        PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
         rigid->RemoveGravity();
 
-        PhysXCollider* collider = obj->AddComponent<PhysXCollider>(eComponentType::Collider);
 
         rigid->Initialize();
         objPhysical->Initialize();
