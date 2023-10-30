@@ -193,10 +193,10 @@ void ScenePlay::Initialize()
 		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
 	}
 
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(15.f, 10.f, 10.f));
-	}	
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
+	//}	
 
 
 
@@ -256,7 +256,7 @@ void ScenePlay::Initialize()
 	}
 //////////////////////////////////
 
-	{
+	/*{
 		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
 		block->SetPos(Vector3(5.f, 1.f, 1.f));
 	}
@@ -287,7 +287,7 @@ void ScenePlay::Initialize()
 	{
 		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
 		block->SetPos(Vector3(4.f, 1.f, 4.f));
-	}
+	}*/
 	//{
 	//	Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
 	//	block->SetPos(Vector3(40.f, -0.5f, 0.f));
