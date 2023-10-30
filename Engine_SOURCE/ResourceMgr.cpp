@@ -530,7 +530,7 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(14, L"PhongMaterial");
 	model->SetVariableMaterialsByKey(15, L"WallBrick00_Material");
 	model->SetVariableMaterialsByKey(16, L"WallPlaster00_Material");
-}
+
 #pragma region Fence
 	model = Find<Model>(L"CityWorldFenceA");
 	model->SetVariableMaterialsByKey(0, L"FenceA_0Material");

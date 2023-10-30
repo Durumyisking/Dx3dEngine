@@ -59,7 +59,6 @@ void Building::Save(FILE* File)
 		mPhysicalScale = physical->GetGeometrySize();
 	}
 
-	// ÀÌ¸§ ÀúÀå
 	int numWChars = (int)mModelName.length();
 
 	fwrite(&numWChars, sizeof(int), 1, File);
