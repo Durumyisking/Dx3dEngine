@@ -76,7 +76,7 @@ float3 TextureMapping_normal(float2 uv, float3 Tangent, float3 Normal, float pix
     normal = (normal * 2.f) - 1.f;
     
     // 마리오가 아마 vulkan으로 만든거라서 노말 y 뒤집어줘야할거임
-    normal.y = -normal.y;
+    //normal.y = -normal.y;
     
     float3 N = Normal;
     float3 T = normalize(Tangent - dot(Tangent, N) * N);
