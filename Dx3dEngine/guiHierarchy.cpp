@@ -14,6 +14,7 @@
 
 #include "InputMgr.h"
 #include "PhysXRayCast.h"
+#include "guiObjectWindow.h"
 
 extern Application application;
 extern gui::Editor editor;
@@ -97,6 +98,8 @@ namespace gui
 		outline->ClearTarget();
 		outline->SetTargetGameObject(mTargetObject);
 		outline->InitializeTargetGameObject();
+
+		GETSINGLE(WidgetMgr)->GetWidget<ObjectWindow>("ObjectWindow")->CopyTargetObjectInfo(mTargetObject);
 	}
 
 

@@ -45,27 +45,21 @@ void Building::Save(FILE* File)
 
 	MeshRenderer* mrd = GetComponent<MeshRenderer>();
 
-	if (mModelName.empty())
+	if (mrd->GetModel() != nullptr)
 	{
-		if (mrd->GetModel() != nullptr)
-		{
-			mModelName = mrd->GetModel()->GetName();
-		}
+		mModelName = mrd->GetModel()->GetName();
 	}
 
-	if (!mbPhysical)
+	if (GetComponent<Physical>() != nullptr)
 	{
-		if (GetComponent<Physical>() != nullptr)
-		{
-			mbPhysical = true;
-			Physical* physical = GetComponent<Physical>();
-			mGeometryType = physical->GetGeometryType();
-			mActorType = physical->GetActorType();
-			mPhysicalScale = physical->GetGeometrySize();
-		}
+		mbPhysical = true;
+		Physical* physical = GetComponent<Physical>();
+		mGeometryType = physical->GetGeometryType();
+		mActorType = physical->GetActorType();
+		mPhysicalScale = physical->GetGeometrySize();
 	}
 
-	// ÀÌ¸§ ÀúÀå
+	// Ã€ÃŒÂ¸Â§ Ã€ÃºÃ€Ã¥
 	int numWChars = (int)mModelName.length();
 
 	fwrite(&numWChars, sizeof(int), 1, File);
@@ -111,6 +105,8 @@ void Building::Initialize()
 	{
 		Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 		physical->InitialDefaultProperties(mActorType, mGeometryType, mPhysicalScale);
+		Transform* tr = GetComponent<Transform>();
+		tr->SetPhysicalRotation(tr->GetRotation());
 
 		//GetTransform()->SetPhysicalPosition(GetTransform()->GetPosition());
 

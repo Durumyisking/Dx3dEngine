@@ -176,12 +176,14 @@ void Model::Bind_Render(bool bindMaterial)
 			//{
 			//	if (Textures[slot] == nullptr)
 			//		continue;
-
 			//	mMaterials[i]->SetTexture(static_cast<eTextureSlot>(slot), Textures[slot]);
 			//}
 
-			if (!(mVariableMaterials.empty() && mMaterials.empty()))
-				mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
+			//if (!(mVariableMaterials.empty() && mMaterials.empty()))
+			//	mVariableMaterials[i] == nullptr ? mMaterials[i]->Bind() : mVariableMaterials[i]->Bind();
+
+			if (mVariableMaterials[i] != nullptr)
+				mVariableMaterials[i]->Bind();
 		}
 		Matrix m = mOwnerWorldMatrix;
 		mMeshes[i]->SetWorldMatrix(mOwnerWorldMatrix);
@@ -190,8 +192,12 @@ void Model::Bind_Render(bool bindMaterial)
 
 		if (bindMaterial)
 		{
-			if(!(mVariableMaterials.empty() && mMaterials.empty()))
-				mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+			//if(!(mVariableMaterials.empty() && mMaterials.empty()))
+			//	mVariableMaterials[i] == nullptr ? mMaterials[i]->Clear() : mVariableMaterials[i]->Clear();
+
+
+			if (mVariableMaterials[i] != nullptr)
+				mVariableMaterials[i]->Clear();
 		}
 	}
 
