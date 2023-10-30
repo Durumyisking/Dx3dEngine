@@ -273,23 +273,28 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 	{
 		Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
 		Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
-
-		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
+		if (KEY_NONE(W) && KEY_NONE(S) && KEY_NONE(A) && KEY_NONE(D))
 		{
-			if (pentDir.y > 0.f)
+			SetMonsterState(Monster::eMonsterState::Idle);
+		}
+
+		if (!(pentDir == Vector3::Zero))
+		{
+			if (mRigidbody->IsOnAir())
 			{
-				if (mRigidbody->GetVelocity() != Vector3::Zero)
+				mRigidbody->SetAirOff();
+				mRigidbody->RemoveGravity();
+				if (KEY_DOWN(W) || KEY_DOWN(S) || KEY_DOWN(A) || KEY_DOWN(D))
 				{
-					//GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pent);
-					if (mRigidbody->IsOnAir())
-					{
-						mRigidbody->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-						mRigidbody->SetAirOff();
-						mRigidbody->RemoveGravity();
-						SetMonsterState(Monster::eMonsterState::Idle);
-					}
+					SetMonsterState(Monster::eMonsterState::Move);
 				}
 			}
+
+			//SetPlayerState(Player::ePlayerState::Idle);
+			pentDirDepth.x = 0.f;
+			pentDirDepth.z = 0.f;
+			GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pentDirDepth);
+
 		}
 	}
 
@@ -395,24 +400,29 @@ void Goomba::OnTriggerPersist(GameObj* gameObject)
 		Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
 		Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
 
+		if (KEY_NONE(W) && KEY_NONE(S) && KEY_NONE(A) && KEY_NONE(D))
+		{
+			SetMonsterState(Monster::eMonsterState::Idle); 
+		}
 		if (!(pentDir == Vector3::Zero))
 		{
-			if (pentDirDepth == Vector3::Zero)
+			if (mRigidbody->IsOnAir())
 			{
-				if (mRigidbody->GetVelocity() != Vector3::Zero)
+				mRigidbody->SetAirOff();
+				mRigidbody->RemoveGravity();
+
+				// 인풋 없을때만 idle로
+				if (KEY_DOWN(W) || KEY_DOWN(S) || KEY_DOWN(A) || KEY_DOWN(D))
 				{
-					if (mRigidbody->IsOnAir())
-					{
-						mRigidbody->SetAirOff();
-						mRigidbody->RemoveGravity();
-						SetMonsterState(Monster::eMonsterState::Idle);
-					}
+					SetMonsterState(Monster::eMonsterState::Move);
 				}
 			}
-			else
-			{
-				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pentDirDepth);
-			}
+			//SetPlayerState(Player::ePlayerState::Idle);
+
+			pentDirDepth.x = 0.f;
+			pentDirDepth.z = 0.f;
+			GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pentDirDepth);
+
 		}
 	}
 

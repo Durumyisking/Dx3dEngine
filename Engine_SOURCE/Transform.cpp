@@ -223,7 +223,7 @@ Vector3 Transform::GetPhysicalPosition()
 
 Vector3 Transform::GetPhysicalRotation()
 {
-	assert(GetOwner()->GetComponent<Physical>());
+	assert(GetPhysical());
 	return convert::PxQuatToQuaternion(GetOwner()->GetComponent<Physical>()->GetActor<PxRigidActor>()->getGlobalPose().q).ToEuler() / XM_PI * 180;
 }
 
@@ -238,7 +238,7 @@ void Transform::SetPhysicalPosition(const Vector3& position)
 
 void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 {
-	assert(GetOwner()->GetComponent<Physical>());
+	assert(GetPhysical());
 
 	mRelativeRotation = rotation_degrees;
 
@@ -257,7 +257,7 @@ void Transform::SetPhysicalRotation(const Vector3& rotation_degrees)
 
 void Transform::SetPhysicalRotation(const PxQuat& quat)
 {
-	assert(GetOwner()->GetComponent<Physical>());
+	assert(GetPhysical());
 
 	PxQuat finalRotation = quat;
 	mPxTransform.q = finalRotation;
@@ -270,7 +270,7 @@ void Transform::SetPhysicalRotation(const PxQuat& quat)
 
 void Transform::SetPhysicalRotation_For_Static(const Vector3& rotation_degrees)
 {
-	assert(GetOwner()->GetComponent<Physical>());
+	assert(GetPhysical());
 
 	mRelativeRotation = rotation_degrees;
 
@@ -285,7 +285,7 @@ void Transform::SetPhysicalRotation_For_Static(const Vector3& rotation_degrees)
 
 void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)
 {
-	assert(GetOwner()->GetComponent<Physical>());
+	assert(GetPhysical());
 
 	mRelativeRotation += rotation_degrees;
 
@@ -303,7 +303,7 @@ void Transform::AddPhysicalRotation(const Vector3& rotation_degrees)
 
 void Transform::AddPhysicalRotation_Radian(const Vector3& rotation_radian)
 {
-	assert(GetOwner()->GetComponent<Physical>());
+	assert(GetPhysical());
 
 	mRelativeRotation.x += toDegree(rotation_radian.x);
 	mRelativeRotation.y += toDegree(rotation_radian.y);

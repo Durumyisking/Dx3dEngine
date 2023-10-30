@@ -27,8 +27,8 @@ void PhysX::Init()
 {
 	mInitialization->CreateFoundation();
 	mInitialization->CreateCooking();
-	mInitialization->CreateVisualDebugger();
-	mInitialization->ConntectVisualDebugger();
+	//mInitialization->CreateVisualDebugger();
+	//mInitialization->ConntectVisualDebugger();
 	mInitialization->CreatePhysics();
 //	CreateSceneQuery();
 }

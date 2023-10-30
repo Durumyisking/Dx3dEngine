@@ -152,6 +152,13 @@ void GameObj::Update()
 	if (mState != eState::Active)
 		return;
 
+	std::list<GameObj*> list = GetCollisionObjs();
+	for (GameObj* obj : list)
+	{
+		if (obj->GetPhysXCollider())
+			OnTriggerPersist(obj);
+	}
+
 	for (Component* comp : mComponents)
 	{
 		if (nullptr == comp)
@@ -167,13 +174,6 @@ void GameObj::Update()
 		{
 			comp->Update();
 		}
-	}
-
-	std::list<GameObj*> list = GetCollisionObjs();
-	for (GameObj* obj : list)
-	{
-		if (obj->GetPhysXCollider())
-			OnTriggerPersist(obj);
 	}
 
 	for (Component* script : mScripts)
@@ -548,9 +548,9 @@ Vector3 GameObj::MoveToTarget_Smooth_vector3(GameObj* target, float speed, bool 
 
 void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType, bool oneSide)
 {
-	assert(GetComponent<Physical>());
-	assert(GetComponent<PhysXCollider>());
-	assert(GetComponent<PhysXRigidBody>());
+	assert(GetPhysical());
+	assert(GetPhysXCollider());
+	assert(GetPhysXRigidBody());
 
 	const auto& gameObjects = GETSINGLE(SceneMgr)->GetActiveScene()->GetGameObjects(layerType);
 
@@ -593,7 +593,7 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType, bool oneSide)
 				break;
 			case enums::AXIS::XZ:
 				vResult.y = 0.f;
-				GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
+				//GetPhysXRigidBody()->SetVelocity(AXIS::XZ, Vector3(0.f, 0.f, 0.f));
 				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + vResult);
 				break;
 			case enums::AXIS::YZ:

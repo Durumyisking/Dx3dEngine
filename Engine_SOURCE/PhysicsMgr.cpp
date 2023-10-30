@@ -37,7 +37,7 @@ void PhysicsMgr::Initialize()
 	//sceneDesc.staticKineFilteringMode = PxPairFilteringMode::Enum::eDEFAULT;
 
 	mPhysX->CreatePhysicsScene(sceneDesc);
-	mPhysX->ConnectDebuggerToScene();
+	//mPhysX->ConnectDebuggerToScene();
 
 	assert(mPhysX->GetPhysicsScene());
 }

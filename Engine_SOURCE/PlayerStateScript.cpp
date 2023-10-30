@@ -436,9 +436,6 @@ void PlayerStateScript::Fall()
 
 	Input_DownFunC(eKeyCode::A, eKeyCode::A, math::Vector3(0.0f, 90.f, 0.0f));
 
-	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_Z, true);
-	rigidbody->SetRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum::eLOCK_ANGULAR_X, true);
-
 	//rigidbody->SetMaxVelocity_XZ(PLAYER_WALK_VELOCITY);
 
 	rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 5.f);
