@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset />
+  <library_images>
+    <image id="MetalSignal01_alb">
+      <init_from>MetalSignal01_alb.png</init_from>
+    </image>
+    <image id="MetalSignal01_nrm">
+      <init_from>MetalSignal01_nrm.png</init_from>
+    </image>
+    <image id="MetalSignal01_rgh">
+      <init_from>MetalSignal01_rgh.png</init_from>
+    </image>
+    <image id="MetalSignal01_mtl">
+      <init_from>MetalSignal01_mtl.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="MetalSignal01">
+      <instance_effect url="#Effect_MetalSignal01" />
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect_MetalSignal01">
+      <profile_COMMON>
+        <newparam sid="surface_MetalSignal01-diffuse">
+          <surface type="2D">
+            <init_from>MetalSignal01_alb</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_MetalSignal01-diffuse">
+          <sampler2D>
+            <source>surface_MetalSignal01-diffuse</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <newparam sid="surface_MetalSignal01-bump">
+          <surface type="2D">
+            <init_from>MetalSignal01_nrm</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="sampler_MetalSignal01-bump">
+          <sampler2D>
+            <source>surface_MetalSignal01-bump</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <diffuse>
+              <texture texture="sampler_MetalSignal01-diffuse" texcoord="CHANNEL0" />
+            </diffuse>
+            <bump>
+              <texture texture="sampler_MetalSignal01-bump" texcoord="CHANNEL0" />
+            </bump>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="pCylinder159__MetalSignal01-mesh" name="pCylinder159__MetalSignal01">
+      <mesh>
+        <source id="pCylinder159__MetalSignal01-position">
+          <float_array id="pCylinder159__MetalSignal01-position-array" count="294">-144.7282 311.6222 -5.009078 -144.7282 323.4882 -5.009078 -136.0522 311.6222 -10.01816 -136.0522 323.4882 -10.01816 -136.0522 311.6222 -10.01816 -136.0522 323.4882 -10.01816 -127.3762 311.6222 -5.009076 -127.3762 323.4882 -5.009076 -127.3762 311.6222 -5.009076 -127.3762 323.4882 -5.009076 -127.3762 311.6222 5.009088 -127.3762 323.4882 5.009088 -127.3762 311.6222 5.009088 -127.3762 323.4882 5.009088 -136.0522 311.6222 10.01817 -136.0522 323.4882 10.01817 -136.0522 311.6222 10.01817 -136.0522 323.4882 10.01817 -144.7282 311.6222 5.009086 -144.7282 323.4882 5.009086 -144.7282 311.6222 5.009086 -144.7282 323.4882 5.009086 -144.7282 311.6222 -5.009078 -144.7282 323.4882 -5.009078 -140.3823 333.1427 -2.499995 -136.0522 333.1427 -4.999994 -140.3823 318.4057 -2.499995 -136.0522 318.4057 -4.999994 -136.0522 333.1427 -4.999994 -131.7221 333.1427 -2.499994 -136.0522 318.4057 -4.999994 -131.7221 318.4057 -2.499994 -131.7221 333.1427 -2.499994 -131.7221 333.1427 2.500006 -131.7221 318.4057 -2.499994 -131.7221 318.4057 2.500006 -131.7221 333.1427 2.500006 -136.0522 333.1427 5.000006 -131.7221 318.4057 2.500006 -136.0522 318.4057 5.000006 -136.0522 333.1427 5.000006 -140.3823 333.1427 2.500005 -136.0522 318.4057 5.000006 -140.3823 318.4057 2.500005 -140.3823 333.1427 2.500005 -140.3823 333.1427 -2.499995 -140.3823 318.4057 2.500005 -140.3823 318.4057 -2.499995 -5.691635 328.8552 2.500001 -5.691635 333.1853 5 -31.19565 328.8552 2.500002 -31.19565 333.1853 5.000001 -146.588 328.8552 2.500007 -146.588 333.1853 5.000007 -5.691635 328.8552 -2.5 -5.691635 328.8552 2.500001 -31.19565 328.8552 -2.499999 -31.19565 328.8552 2.500002 -146.588 328.8552 -2.499993 -146.588 328.8552 2.500007 -5.691635 333.1853 -5 -5.691635 328.8552 -2.5 -31.19565 333.1853 -4.999999 -31.19565 328.8552 -2.499999 -146.588 333.1853 -4.999993 -146.588 328.8552 -2.499993 -5.691635 337.5154 -2.500001 -5.691635 333.1853 -5 -31.19565 337.5154 -2.5 -31.19565 333.1853 -4.999999 -146.588 337.5154 -2.499995 -146.588 333.1853 -4.999993 -5.691635 337.5154 2.5 -5.691635 337.5154 -2.500001 -31.19565 337.5154 2.500001 -31.19565 337.5154 -2.5 -146.588 337.5154 2.500006 -146.588 337.5154 -2.499995 -5.691635 333.1853 5 -5.691635 337.5154 2.5 -31.19565 333.1853 5.000001 -31.19565 337.5154 2.500001 -146.588 333.1853 5.000007 -146.588 337.5154 2.500006 -144.7282 323.4882 5.009086 -136.0522 323.4882 10.01817 -136.0522 323.4882 3.558515E-06 -144.7282 323.4882 -5.009078 -127.3762 323.4882 5.009088 -136.0522 323.4882 -10.01816 -127.3762 323.4882 -5.009076 -146.588 333.1853 -4.999993 -146.588 328.8552 -2.499993 -148.5021 333.1853 6.437302E-06 -146.588 337.5154 -2.499995 -146.588 328.8552 2.500007 -146.588 337.5154 2.500006 -146.588 333.1853 5.000007</float_array>
+          <technique_common>
+            <accessor source="#pCylinder159__MetalSignal01-position-array" count="98" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCylinder159__MetalSignal01-normal">
+          <float_array id="pCylinder159__MetalSignal01-normal-array" count="294">-0.4990215 0 -0.8669276 -0.4990215 0 -0.8669276 -0.4990215 0 -0.8669276 -0.4990215 0 -0.8669276 0.4990215 0 -0.8669276 0.4990215 0 -0.8669276 0.4990215 0 -0.8669276 0.4990215 0 -0.8669276 1 0 0 1 0 0 1 0 0 1 0 0 0.4990215 0 0.8669276 0.4990215 0 0.8669276 0.4990215 0 0.8669276 0.4990215 0 0.8669276 -0.4990215 0 0.8669276 -0.4990215 0 0.8669276 -0.4990215 0 0.8669276 -0.4990215 0 0.8669276 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -0.4990215 0 -0.8669276 -0.4990215 0 -0.8669276 -0.4990215 0 -0.8669276 -0.4990215 0 -0.8669276 0.5009785 0 -0.8669276 0.5009785 0 -0.8669276 0.5009785 0 -0.8669276 0.5009785 0 -0.8669276 1 0 0 1 0 0 1 0 0 1 0 0 0.4990215 0 0.8669276 0.4990215 0 0.8669276 0.4990215 0 0.8669276 0.4990215 0 0.8669276 -0.5009785 0 0.8669276 -0.5009785 0 0.8669276 -0.5009785 0 0.8669276 -0.5009785 0 0.8669276 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 -0.4990215 0.8669276 0 -0.4990215 0.8669276 0 -0.4990215 0.8669276 0 -0.4990215 0.8669276 0 -0.4990215 0.8669276 0 -0.4990215 0.8669276 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -0.5009785 -0.8669276 0 -0.5009785 -0.8669276 0 -0.5009785 -0.8669276 0 -0.5009785 -0.8669276 0 -0.5009785 -0.8669276 0 -0.5009785 -0.8669276 0 0.4990215 -0.8669276 0 0.4990215 -0.8669276 0 0.4990215 -0.8669276 0 0.4990215 -0.8669276 0 0.4990215 -0.8669276 0 0.4990215 -0.8669276 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.5009785 0.8669276 0 0.5009785 0.8669276 0 0.5009785 0.8669276 0 0.5009785 0.8669276 0 0.5009785 0.8669276 0 0.5009785 0.8669276 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 -0.9334638 0 -0.3581213 -0.9334638 -0.3091977 -0.1780822 -1 0 0 -0.9334638 0.3091977 -0.1780822 -0.9334638 -0.3091977 0.1780822 -0.9334638 0.3091977 0.1780822 -0.9334638 0 0.3581213</float_array>
+          <technique_common>
+            <accessor source="#pCylinder159__MetalSignal01-normal-array" count="98" stride="3">
+              <param name="X" type="float" />
+              <param name="Y" type="float" />
+              <param name="Z" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCylinder159__MetalSignal01-color">
+          <float_array id="pCylinder159__MetalSignal01-color-array" count="392">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0.07843138 0.07843138 0.07843138 1 0.07843138 0.07843138 0.07843138 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#pCylinder159__MetalSignal01-color-array" count="98" stride="4">
+              <param name="R" type="float" />
+              <param name="G" type="float" />
+              <param name="B" type="float" />
+              <param name="A" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCylinder159__MetalSignal01-texcoord">
+          <float_array id="pCylinder159__MetalSignal01-texcoord-array" count="196">0.4448463 0.1395285 0.4448768 0.1695582 0.4200351 0.1395285 0.4200351 0.1695582 0.4200351 0.1395285 0.4200351 0.1695582 0.3952697 0.1395285 0.395285 0.1695582 0.3952697 0.1395285 0.395285 0.1695582 0.3706111 0.1395285 0.3706264 0.1695582 0.3706111 0.1395285 0.3706264 0.1695582 0.3459678 0.1395285 0.3459678 0.1695582 0.3459678 0.1395285 0.3459678 0.1695582 0.3212177 0.1395285 0.3212177 0.1695582 0.3212177 0.1395285 0.3212177 0.1695582 0.296376 0.1395285 0.2964065 0.1695582 0.4444648 0.1044328 0.4362249 0.1044328 0.4444648 0.08015567 0.4362249 0.08015567 0.4362249 0.1044328 0.427985 0.1044328 0.4362249 0.08015567 0.427985 0.08015567 0.427985 0.1044328 0.4197452 0.1044328 0.427985 0.08015567 0.4197452 0.08015567 0.4197452 0.1044328 0.4115053 0.1044328 0.4197452 0.08015567 0.4115053 0.08015567 0.4115053 0.1044328 0.4032807 0.1044328 0.4115053 0.08015567 0.4032807 0.08015567 0.4032807 0.1044328 0.3950408 0.1044328 0.4032807 0.08015567 0.3950408 0.08015567 0.0292668 0.04615855 0.02928206 0.03266954 0.09033341 0.04615855 0.09034867 0.03266954 0.3855192 0.04617381 0.3855039 0.03266954 0.02928206 0.05966276 0.0292668 0.04615855 0.09034867 0.05966276 0.09033341 0.04615855 0.3855039 0.05966276 0.3855192 0.04617381 0.02938888 0.07217515 0.02928206 0.05966276 0.09042496 0.07217515 0.09034867 0.05966276 0.3853971 0.07217515 0.3855039 0.05966276 0.02964828 0.08400095 0.02938888 0.07217515 0.090486 0.08400095 0.09042496 0.07217515 0.3850919 0.08400095 0.3853971 0.07217515 0.02938888 0.02015716 0.02964828 0.008331418 0.09042496 0.02015716 0.090486 0.008331418 0.3853971 0.02015716 0.3850919 0.008331418 0.02928206 0.03266954 0.02938888 0.02015716 0.09034867 0.03266954 0.09042496 0.02015716 0.3855039 0.03266954 0.3853971 0.02015716 0.2373693 0.1448234 0.2590524 0.1322957 0.2590524 0.1573358 0.2373693 0.1698634 0.2807355 0.1448234 0.2590524 0.1823911 0.2807355 0.1698634 0.2403296 0.531548 0.2337987 0.5428702 0.2272679 0.531548 0.2337987 0.5202411 0.220737 0.5428702 0.220737 0.5202411 0.2141909 0.531548</float_array>
+          <technique_common>
+            <accessor source="#pCylinder159__MetalSignal01-texcoord-array" count="98" stride="2">
+              <param name="S" type="float" />
+              <param name="T" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="pCylinder159__MetalSignal01-vertex">
+          <input semantic="POSITION" source="#pCylinder159__MetalSignal01-position" />
+        </vertices>
+        <triangles material="MetalSignal01" count="60">
+          <input semantic="VERTEX" source="#pCylinder159__MetalSignal01-vertex" offset="0" />
+          <input semantic="NORMAL" source="#pCylinder159__MetalSignal01-normal" offset="1" />
+          <input semantic="COLOR" source="#pCylinder159__MetalSignal01-color" offset="2" set="0" />
+          <input semantic="TEXCOORD" source="#pCylinder159__MetalSignal01-texcoord" offset="3" set="0" />
+          <p>0 0 0 0 1 1 1 1 2 2 2 2 1 1 1 1 3 3 3 3 2 2 2 2 4 4 4 4 5 5 5 5 6 6 6 6 5 5 5 5 7 7 7 7 6 6 6 6 8 8 8 8 9 9 9 9 10 10 10 10 9 9 9 9 11 11 11 11 10 10 10 10 12 12 12 12 13 13 13 13 14 14 14 14 13 13 13 13 15 15 15 15 14 14 14 14 16 16 16 16 17 17 17 17 18 18 18 18 17 17 17 17 19 19 19 19 18 18 18 18 20 20 20 20 21 21 21 21 22 22 22 22 21 21 21 21 23 23 23 23 22 22 22 22 24 24 24 24 25 25 25 25 26 26 26 26 25 25 25 25 27 27 27 27 26 26 26 26 28 28 28 28 29 29 29 29 30 30 30 30 29 29 29 29 31 31 31 31 30 30 30 30 32 32 32 32 33 33 33 33 34 34 34 34 33 33 33 33 35 35 35 35 34 34 34 34 36 36 36 36 37 37 37 37 38 38 38 38 37 37 37 37 39 39 39 39 38 38 38 38 40 40 40 40 41 41 41 41 42 42 42 42 41 41 41 41 43 43 43 43 42 42 42 42 44 44 44 44 45 45 45 45 46 46 46 46 45 45 45 45 47 47 47 47 46 46 46 46 48 48 48 48 49 49 49 49 50 50 50 50 49 49 49 49 51 51 51 51 50 50 50 50 50 50 50 50 51 51 51 51 52 52 52 52 51 51 51 51 53 53 53 53 52 52 52 52 54 54 54 54 55 55 55 55 56 56 56 56 55 55 55 55 57 57 57 57 56 56 56 56 56 56 56 56 57 57 57 57 58 58 58 58 57 57 57 57 59 59 59 59 58 58 58 58 60 60 60 60 61 61 61 61 62 62 62 62 61 61 61 61 63 63 63 63 62 62 62 62 62 62 62 62 63 63 63 63 64 64 64 64 63 63 63 63 65 65 65 65 64 64 64 64 66 66 66 66 67 67 67 67 68 68 68 68 67 67 67 67 69 69 69 69 68 68 68 68 68 68 68 68 69 69 69 69 70 70 70 70 69 69 69 69 71 71 71 71 70 70 70 70 72 72 72 72 73 73 73 73 74 74 74 74 73 73 73 73 75 75 75 75 74 74 74 74 74 74 74 74 75 75 75 75 76 76 76 76 75 75 75 75 77 77 77 77 76 76 76 76 78 78 78 78 79 79 79 79 80 80 80 80 79 79 79 79 81 81 81 81 80 80 80 80 80 80 80 80 81 81 81 81 82 82 82 82 81 81 81 81 83 83 83 83 82 82 82 82 84 84 84 84 85 85 85 85 86 86 86 86 84 84 84 84 86 86 86 86 87 87 87 87 85 85 85 85 88 88 88 88 86 86 86 86 87 87 87 87 86 86 86 86 89 89 89 89 86 86 86 86 88 88 88 88 90 90 90 90 86 86 86 86 90 90 90 90 89 89 89 89 91 91 91 91 92 92 92 92 93 93 93 93 91 91 91 91 93 93 93 93 94 94 94 94 92 92 92 92 95 95 95 95 93 93 93 93 93 93 93 93 96 96 96 96 94 94 94 94 93 93 93 93 95 95 95 95 97 97 97 97 93 93 93 93 97 97 97 97 96 96 96 96 </p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Armature_pCylinder159__MetalSignal01-mesh">
+      <skin source="#pCylinder159__MetalSignal01-mesh">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="pCylinder159__MetalSignal01-mesh-joint">
+          <Name_array id="pCylinder159__MetalSignal01-mesh-joint-array" count="1">CityWorldHomeSignal002</Name_array>
+          <technique_common>
+            <accessor source="#pCylinder159__MetalSignal01-mesh-joint-array" count="1" stride="1">
+              <param name="JOINT" type="name" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCylinder159__MetalSignal01-mesh-inv_bind_matrix">
+          <float_array id="pCylinder159__MetalSignal01-mesh-inv_bind_matrix-array" count="16">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#pCylinder159__MetalSignal01-mesh-inv_bind_matrix-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4" />
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pCylinder159__MetalSignal01-mesh-weight">
+          <float_array id="pCylinder159__MetalSignal01-mesh-weight-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#pCylinder159__MetalSignal01-mesh-weight-array" count="1" stride="1">
+              <param name="WEIGHT" type="float" />
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#pCylinder159__MetalSignal01-mesh-joint" />
+          <input semantic="INV_BIND_MATRIX" source="#pCylinder159__MetalSignal01-mesh-inv_bind_matrix" />
+        </joints>
+        <vertex_weights count="98">
+          <input semantic="JOINT" source="#pCylinder159__MetalSignal01-mesh-joint" offset="0" />
+          <input semantic="WEIGHT" source="#pCylinder159__MetalSignal01-mesh-weight" offset="1" />
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </v>
+        </vertex_weights>
+      </skin>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Armature" name="Armature" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <node id="Armature_CityWorldHomeSignal002" name="CityWorldHomeSignal002" sid="CityWorldHomeSignal002" type="JOINT">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        </node>
+      </node>
+      <node id="pCylinder159__MetalSignal01" name="pCylinder159__MetalSignal01" type="NODE">
+        <instance_controller url="#Armature_pCylinder159__MetalSignal01-mesh">
+          <skeleton>#Armature_CityWorldHomeSignal002</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="MetalSignal01" target="#MetalSignal01" />
+              <bind_vertex_input semantic="CHANNEL0" input_semantic="TEXCOORD" input_set="0" />
+              <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="1" />
+              <bind_vertex_input semantic="CHANNEL2" input_semantic="TEXCOORD" input_set="2" />
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene" />
+  </scene>
+</COLLADA>

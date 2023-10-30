@@ -19,6 +19,8 @@
 #include "FootSmokeParticle.h"
 #include "Object.h"
 
+#include "BlockBrickScript.h"
+
 Player::Player()
 	: mPlayerState(ePlayerState::Idle)
 	, mMeshRenderer(nullptr)
@@ -309,6 +311,15 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 					}
 				}
 			}
+
+				if (Calculate_RelativeDirection_ByCosTheta(gameObject) < 0.95f && gameObject->GetObjectTypeName() == "BlockBrick")
+				{
+
+					if (gameObject->GetScript<BlockBrickScript>() == nullptr)
+						return;
+
+					gameObject->GetScript<BlockBrickScript>()->GetHit();
+				}
 		}
 
 		if (eLayerType::Monster == gameObject->GetLayerType())
