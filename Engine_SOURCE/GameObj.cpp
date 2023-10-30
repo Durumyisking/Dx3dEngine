@@ -178,6 +178,13 @@ void GameObj::Update()
 			script->Update();
 		}
 	}
+	std::list<GameObj*> list = GetCollisionObjs();
+	for (GameObj* obj : list)
+	{
+		if (obj->GetPhysXCollider())
+			OnTriggerPersist(obj);
+	}
+
 }
 
 void GameObj::FixedUpdate()

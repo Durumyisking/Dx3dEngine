@@ -83,7 +83,7 @@ void Player::Load(FILE* File)
 void Player::Initialize()
 {
 	//기본 설정
-	SetPos(Vector3(20.f, 10.f, 10.f));
+	SetPos(Vector3(20.f, 30.f, 10.f));
 	SetScale(Vector3(1.f, 1.f, 1.f));
 
 	//마리오 body 초기화
@@ -197,11 +197,22 @@ void Player::Update()
 
 	if (KEY_TAP(R))
 	{
+		// 소프트리셋
 		mPlayerState = ePlayerState::Idle;
 		mRigidBody->SetVelocity(Vector3::Zero);
 		mRigidBody->ApplyGravity();
 		mRigidBody->SetAirOff();
 		mScript->SetHavingCap(true);
+	}
+	if (KEY_TAP(F))
+	{
+		// 하드리셋
+		mPlayerState = ePlayerState::Fall;
+		mRigidBody->SetVelocity(Vector3::Zero);
+		mRigidBody->ApplyGravity();
+		mRigidBody->SetAirOn();
+		mScript->SetHavingCap(true);
+		GetTransform()->SetPhysicalPosition(Vector3(0.f, 10.f, 0.f));
 	}
 }
 
@@ -277,6 +288,7 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			if (mRigidBody->IsOnAir())
 			{
 				mRigidBody->SetAirOff();
+				mRigidBody->RemoveGravity();
 				SetPlayerState(Player::ePlayerState::Idle);
 			}
 		}
@@ -294,6 +306,7 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 					{
 						GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
 						mRigidBody->SetAirOff();
+						mRigidBody->RemoveGravity();
 						SetPlayerState(Player::ePlayerState::Idle);
 					}
 				}			
@@ -317,30 +330,28 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 
 void Player::OnTriggerPersist(GameObj* gameObject)
 {
-	/*if (L"BlockBrick" == gameObject->GetName())
-	{
-		if (mRigidBody->IsOnAir())
-		{
-			GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-			mRigidBody->SetAirOff();
-			SetPlayerState(Player::ePlayerState::Idle);
-		}
-	}*/
 	if (eLayerType::Objects == gameObject->GetLayerType())
 	{
 		Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
 		Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
 
-		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
+		if (!(pentDir == Vector3::Zero ))
 		{
-			if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
+			if (pentDirDepth == Vector3::Zero)
 			{
-				if (mRigidBody->IsOnAir())
+				if (GetPhysXRigidBody()->GetVelocity() != Vector3::Zero)
 				{
-					GetPhysXRigidBody()->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
-					mRigidBody->SetAirOff();
-					SetPlayerState(Player::ePlayerState::Idle);
+					if (mRigidBody->IsOnAir())
+					{
+						mRigidBody->SetAirOff();
+						mRigidBody->RemoveGravity();
+						SetPlayerState(Player::ePlayerState::Idle);
+					}
 				}
+			}
+			else
+			{
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pentDirDepth);
 			}
 		}
 	}
@@ -348,15 +359,26 @@ void Player::OnTriggerPersist(GameObj* gameObject)
 
 void Player::OnTriggerExit(GameObj* gameObject)
 {
+	if (eLayerType::Platforms== gameObject->GetLayerType())
+	{
+		if (!mRigidBody->IsOnAir())
+		{
+			mRigidBody->SetAirOn();
+			mRigidBody->ApplyGravity();
+			if (mPlayerState != Player::ePlayerState::Jump)
+				SetPlayerState(Player::ePlayerState::Fall);
+		}
+	}
 	if (eLayerType::Objects == gameObject->GetLayerType())
 	{
-		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.65f)
+		if (Calculate_RelativeDirection_ByCosTheta(gameObject) < -0.5f)
 		{
 			if (!mRigidBody->IsOnAir())
 			{
 				mRigidBody->SetAirOn();
 				mRigidBody->ApplyGravity();
-				SetPlayerState(Player::ePlayerState::Fall);
+				if(mPlayerState != Player::ePlayerState::Jump)
+					SetPlayerState(Player::ePlayerState::Fall);
 			}
 		}
 	}

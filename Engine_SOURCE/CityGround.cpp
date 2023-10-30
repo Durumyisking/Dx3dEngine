@@ -115,6 +115,7 @@ void CityGround::Initialize()
 	mr->SetMaterialByKey(L"GroundLawn00Material", 29); //?
 	mr->SetMaterialByKey(L"GrassFlowerSet00Material", 30);  //
 
+	//mr->SetRenderShadowFlag(false);
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 

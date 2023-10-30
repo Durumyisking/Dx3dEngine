@@ -114,13 +114,11 @@ void Goomba::Initialize()
 	assert(mRigidbody);
 
 	// MoveMent
-	assert(AddComponent<PhysXCollider>(eComponentType::Collider));
-	
+	AddComponent<PhysXCollider>(eComponentType::Collider);
 	// Collider
-	assert(AddComponent<PhysicalMovement>(eComponentType::Movement));
-
+	AddComponent<PhysicalMovement>(eComponentType::Movement);
 	// Script
-	assert(AddComponent<GoombaStateScript>(eComponentType::Script));
+	AddComponent<GoombaStateScript>(eComponentType::Script);
 
 	// 상태 info 초기화	
 	stateInfoInitalize();
@@ -287,7 +285,7 @@ void Goomba::OnTriggerEnter(GameObj* gameObject)
 					{
 						mRigidbody->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
 						mRigidbody->SetAirOff();
-						//mRigidBody->RemoveGravity();
+						mRigidbody->RemoveGravity();
 						SetMonsterState(Monster::eMonsterState::Idle);
 					}
 				}
@@ -397,19 +395,23 @@ void Goomba::OnTriggerPersist(GameObj* gameObject)
 		Vector3 pentDir = GetPhysXCollider()->ComputePenetration_Direction(gameObject);
 		Vector3 pentDirDepth = GetPhysXCollider()->ComputePenetration(gameObject);
 
-		if (!(pentDir == Vector3::Zero && pentDirDepth == Vector3::Zero))
+		if (!(pentDir == Vector3::Zero))
 		{
-			if (pentDir.y > 0.f && pentDir.x == 0.f && pentDir.z == 0.f)
+			if (pentDirDepth == Vector3::Zero)
 			{
 				if (mRigidbody->GetVelocity() != Vector3::Zero)
 				{
 					if (mRigidbody->IsOnAir())
 					{
-						mRigidbody->SetVelocity(AXIS::Y, Vector3(0.f, 0.f, 0.f));
 						mRigidbody->SetAirOff();
-						SetMonsterState(eMonsterState::Idle);
+						mRigidbody->RemoveGravity();
+						SetMonsterState(Monster::eMonsterState::Idle);
 					}
 				}
+			}
+			else
+			{
+				GetTransform()->SetPhysicalPosition(GetTransform()->GetPhysicalPosition() + pentDirDepth);
 			}
 		}
 	}

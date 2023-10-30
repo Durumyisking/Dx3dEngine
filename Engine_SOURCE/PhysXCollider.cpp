@@ -47,12 +47,7 @@ void PhysXCollider::Update()
 }
 void PhysXCollider::FixedUpdate()
 {
-	std::list<GameObj*> list = GetOwner()->GetCollisionObjs();
-	for (GameObj* obj : list)
-	{
-		if (obj->GetPhysXCollider())
-			OnTriggerPersist(obj->GetPhysXCollider());
-	}
+
 
 
 	PxShape* shape = mPhysical->GetShape();

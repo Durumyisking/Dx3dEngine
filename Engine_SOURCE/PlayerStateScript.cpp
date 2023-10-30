@@ -198,7 +198,7 @@ void PlayerStateScript::Jump()
 
 			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY);
 			rigidbody->ApplyGravity();
-			rigidbody->SetAirOn();
+			//rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
 			mJumpCount++;
 		}
@@ -208,7 +208,7 @@ void PlayerStateScript::Jump()
 
 			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 2.f);
 			rigidbody->ApplyGravity();
-			rigidbody->SetAirOn();
+			//rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
 			mJumpCount++;
 
@@ -219,7 +219,7 @@ void PlayerStateScript::Jump()
 
 			rigidbody->SetMaxVelocity_Y(PLAYER_JUMP_VELOCITY + 5.f);
 			rigidbody->ApplyGravity();
-			rigidbody->SetAirOn();
+			//rigidbody->SetAirOn();
 			rigidbody->AddForce(math::Vector3(0.0f, PLAYER_JUMPFORCE, 0.0f));
   			mJumpCount = 0;
 		}
