@@ -40,14 +40,6 @@ void PhysXCollider::Initialize()
 }
 void PhysXCollider::Update()
 {
-	std::list<GameObj*> list = GetOwner()->GetCollisionObjs();
-	for (GameObj* obj : list)
-	{
-		if(obj->GetPhysXCollider())
-			OnTriggerPersist(obj->GetPhysXCollider());
-	}
-
-
 	if (mPhysical)
 	{
 		mPhysical->GetShape()->setSimulationFilterData(mFilterData);
@@ -55,7 +47,14 @@ void PhysXCollider::Update()
 }
 void PhysXCollider::FixedUpdate()
 {
-	
+	std::list<GameObj*> list = GetOwner()->GetCollisionObjs();
+	for (GameObj* obj : list)
+	{
+		if (obj->GetPhysXCollider())
+			OnTriggerPersist(obj->GetPhysXCollider());
+	}
+
+
 	PxShape* shape = mPhysical->GetShape();
 	PxGeometryType::Enum geoType = shape->getGeometryType();
 	eColliderType colType = eColliderType::End;

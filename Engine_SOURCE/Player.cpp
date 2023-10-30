@@ -306,7 +306,7 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 			{
 				mScript->ResetJumpCount();
 				mRigidBody->SetAirOff();
-				mRigidBody->SetVelocity(AXIS::Y, 0.f);
+				//mRigidBody->SetVelocity(AXIS::Y, 0.f);
 				SetPlayerState(Player::ePlayerState::Jump);
 				GetBoneAnimator()->ResetAnimator();
 			}

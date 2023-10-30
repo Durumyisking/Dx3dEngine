@@ -611,90 +611,79 @@ void GameObj::ReorganizePosition(AXIS axis, eLayerType layerType, bool oneSide)
 }
 
 Transform* GameObj::GetTransform()
-{
-	
-	Transform* comp = GetComponent<Transform>();
+{	
+	Transform* comp = dynamic_cast<Transform*>( mComponents[static_cast<UINT>(eComponentType::Transform)]);
 	assert(comp);
 	return comp;
 }
 
 Camera* GameObj::GetCamera()
 {
-	
-	Camera* comp = GetComponent<Camera>();
+	Camera* comp = dynamic_cast<Camera*>(mComponents[static_cast<UINT>(eComponentType::Camera)]);
 	assert(comp);
 	return comp;
 }
 
 
 RigidBody* GameObj::GetRigidBody()
-{
-	
-	RigidBody* comp = GetComponent<RigidBody>();
+{	
+	RigidBody* comp = dynamic_cast<RigidBody*>(mComponents[static_cast<UINT>(eComponentType::RigidBody)]);
 	assert(comp);
 	return comp;
 }
 
 PhysXRigidBody* GameObj::GetPhysXRigidBody()
 {
-	
-	PhysXRigidBody* comp = GetComponent<PhysXRigidBody>();
+	PhysXRigidBody* comp = dynamic_cast<PhysXRigidBody*>(mComponents[static_cast<UINT>(eComponentType::RigidBody)]);
 	assert(comp);
 	return comp;
 }
 
 PhysicalMovement* GameObj::GetMovement()
 {
-	
-	PhysicalMovement* comp = GetComponent<PhysicalMovement>();
+	PhysicalMovement* comp = dynamic_cast<PhysicalMovement*>(mComponents[static_cast<UINT>(eComponentType::Movement)]);
 	assert(comp);
 	return comp;
 }
 
 Physical* GameObj::GetPhysical()
 {
-	
-	Physical* comp = GetComponent<Physical>();
+	Physical* comp = dynamic_cast<Physical*>(mComponents[static_cast<UINT>(eComponentType::Physical)]);
 	assert(comp);
 	return comp;
 }
 
 PhysXCollider* GameObj::GetPhysXCollider()
 {
-	
-	PhysXCollider* comp = GetComponent<PhysXCollider>();
+	PhysXCollider* comp = dynamic_cast<PhysXCollider*>(mComponents[static_cast<UINT>(eComponentType::Collider)]);
 	assert(comp);
 	return comp;
 }
 
 Animator* GameObj::GetAnimator()
 {
-	
-	Animator* comp = GetComponent<Animator>();
+	Animator* comp = dynamic_cast<Animator*>(mComponents[static_cast<UINT>(eComponentType::Animator)]);
 	assert(comp);
 	return comp;
 }
 
 BoneAnimator* GameObj::GetBoneAnimator()
 {
-	
-	BoneAnimator* comp = GetComponent<BoneAnimator>();
+	BoneAnimator* comp = dynamic_cast<BoneAnimator*>(mComponents[static_cast<UINT>(eComponentType::BoneAnimator)]);
 	assert(comp);
 	return comp;
 }
 
 MeshRenderer* GameObj::GetMeshRenderer()
 {
-	
-	MeshRenderer* comp = GetComponent<MeshRenderer>();
+	MeshRenderer* comp = dynamic_cast<MeshRenderer*>(mComponents[static_cast<UINT>(eComponentType::MeshRenderer)]);
 	assert(comp);
 	return comp;
 }
 
 SpriteRenderer* GameObj::GetSpriteRenderer()
 {
-	
-	SpriteRenderer* comp = GetComponent<SpriteRenderer>();
+	SpriteRenderer* comp = dynamic_cast<SpriteRenderer*>(mComponents[static_cast<UINT>(eComponentType::Renderer)]);
 	assert(comp);
 	return comp;
 }
@@ -702,16 +691,14 @@ SpriteRenderer* GameObj::GetSpriteRenderer()
 
 ParticleSystem* GameObj::GetParticle()
 {
-	
-	ParticleSystem* comp = GetComponent<ParticleSystem>();
+	ParticleSystem* comp = dynamic_cast<ParticleSystem*>(mComponents[static_cast<UINT>(eComponentType::Particle)]);
 	assert(comp);
 	return comp;
 }
 
 Light* GameObj::GetLight()
 {
-	
-	Light* comp = GetComponent<Light>();
+	Light* comp = dynamic_cast<Light*>(mComponents[static_cast<UINT>(eComponentType::Light)]);
 	assert(comp);
 	return comp;
 }
