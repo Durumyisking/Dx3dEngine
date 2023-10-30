@@ -30,7 +30,7 @@
 #include "BlockBrick.h"
 #include "Building.h"
 
-
+#include "PowerMoonObject.h"
 
 SceneMgr::SceneMgr()
 	: mScenes{}
@@ -401,6 +401,8 @@ void SceneMgr::CreateCDO()
 	BlockBrick* BlockBrickObjCDO = new BlockBrick();
 	GameObj::AddObjectCDO("BlockBrick", BlockBrickObjCDO);
 
+	PowerMoonObject* powerMoonCOD = new PowerMoonObject();
+	GameObj::AddObjectCDO("PowerMoonObject", powerMoonCOD);
 
 	SkySphere* SkySphereCDO = new SkySphere();
 	GameObj::AddObjectCDO("SkySphere", SkySphereCDO);

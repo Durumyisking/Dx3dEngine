@@ -377,7 +377,7 @@ void ScenePlay::update()
 	{
 		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
-		(GETSINGLE(UIManager)->PlayerDie());
+		//(GETSINGLE(UIManager)->PlayerDie());
 		//mCoinPanal->GetScript<CoinUIScript>()->ActionToPlayerDied();
 	}
 

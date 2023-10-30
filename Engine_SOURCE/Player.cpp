@@ -20,6 +20,7 @@
 #include "Object.h"
 
 #include "BlockBrickScript.h"
+#include "MoonScript.h"
 
 Player::Player()
 	: mPlayerState(ePlayerState::Idle)
@@ -277,7 +278,6 @@ void Player::FontRender()
 void Player::OnCollisionEnter(GameObj* gameObject)
 {
 
-
 }
 
 void Player::OnTriggerEnter(GameObj* gameObject)
@@ -321,6 +321,11 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 						return;
 
 					gameObject->GetScript<BlockBrickScript>()->GetHit();
+				}
+
+				if (gameObject->GetObjectTypeName() == "PowerMoonObject" && gameObject->GetScript<MoonScript>()->GetState() != MoonScript::ePowerMoonState::None)
+				{
+					gameObject->GetScript<MoonScript>()->GetPowerMoon();
 				}
 		}
 

@@ -1329,6 +1329,12 @@ void AsyncLoad::loadCityObjectMaterial()
 	createMaterial(L"WoodTree00", L"Tree000_4Material", TextureState::AlNrRg);
 
 #pragma endregion
+
+
+#pragma region PowerMoon Material
+	createMaterial(L"shinebody", L"DeferredShader", L"PowerMoon_0Material", TextureState::AlMtNrRg);
+
+#pragma endregion
 }
 
 void AsyncLoad::loadCityTexture()
@@ -1760,6 +1766,11 @@ void AsyncLoad::loadCityTexture()
 		textureLoad(L"SoilTree00", L"CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000/Image", TextureState::AlNrRg);
 		textureLoad(L"StoneTree00", L"CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000/Image", TextureState::AlNrRg);
 		textureLoad(L"WoodTree00", L"CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000/Image", TextureState::AlNrRg);
+
+#pragma endregion
+
+#pragma region PowerMoon
+		textureLoad(L"shinebody", L"LifeAndShine/Shine/Image", TextureState::AlEmNrRg);
 
 #pragma endregion
 }
