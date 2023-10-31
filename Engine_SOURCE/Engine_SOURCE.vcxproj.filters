@@ -549,6 +549,10 @@
     <ClCompile Include="HomeManhole_3.cpp">
       <Filter>Common\GameObj\Manhole</Filter>
     </ClCompile>
+
+    <ClCompile Include="PlayerBGMScript.cpp" />
+    <ClCompile Include="EffectObject.cpp" />
+
     <ClCompile Include="BlockBrickScript.cpp" />
     <ClCompile Include="PowerMoonObject.cpp" />
     <ClCompile Include="UIManager.cpp">
@@ -1137,6 +1141,10 @@
     <ClInclude Include="FenceB.h">
       <Filter>Common\GameObj\Fence</Filter>
     </ClInclude>
+
+    <ClInclude Include="PlayerBGMScript.h" />
+    <ClInclude Include="EffectObject.h" />
+
     <ClInclude Include="BlockBrickScript.h" />
     <ClInclude Include="PowerMoonObject.h" />
     <ClInclude Include="MoonScript.h" />

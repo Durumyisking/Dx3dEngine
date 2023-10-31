@@ -6,7 +6,6 @@
 #include "Physical.h"
 
 
-
 PhysicalMovement::PhysicalMovement()
 	:Component(eComponentType::Movement)
 {
@@ -36,7 +35,7 @@ void PhysicalMovement::Render()
 {
 }
 
-// ÀÌµ¿Àº ¿©±â¼­ ¼öÇà
+
 void PhysicalMovement::Move(const Vector3& velocity)
 {
 	PxTransform transform = GetOwner()->GetComponent<Transform>()->GetPxTransform();
