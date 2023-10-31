@@ -95,9 +95,9 @@ void Mesh::BindBuffer(bool drawInstance)
 	// ui는 컬링하면 안돼
 	if (GETSINGLE(ResourceMgr)->Find<Mesh>(L"Rectmesh") != this)
 	{
-		/*CheckFrustumCull();
+		CheckFrustumCull();
 		if (mbFrustumCulled)
-			return;*/
+			return;
 	}
 
 	if (drawInstance)

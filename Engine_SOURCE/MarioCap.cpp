@@ -20,7 +20,6 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 
-
 MarioCap::MarioCap()
 	: DynamicObject()
 	, mCapState(eCapState::Idle)
@@ -116,7 +115,7 @@ void MarioCap::Initialize()
 
 void MarioCap::Update()
 {
-	// ownerê°€ í”Œë ˆì´ì–´ê°€ ì•„ë‹ˆë¼ë©´ ëª¨ììœ„ì¹˜ë¥¼ ëª¬ìŠ¤í„° ìœ„ë¡œ ë°”ê¿”ì¤€ë‹¤.
+	// owner°¡ ÇÃ·¹ÀÌ¾î°¡ ¾Æ´Ï¶ó¸é ¸ğÀÚÀ§Ä¡¸¦ ¸ó½ºÅÍ À§·Î ¹Ù²ãÁØ´Ù.
 
 	if (eLayerType::Player != mOwner->GetLayerType())
 	{
@@ -226,7 +225,7 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		//Pause();
 		//GetOwner()->GetPhysical()->RemoveActorToPxScene();
 
-		// ì¹´ë©”ë¼ì˜ ì£¼ì¸ì„ ìº¡ì²˜ ëŒ€ìƒìœ¼ë¡œ ë°”ê¿”ì¤€ë‹¤.
+		// Ä«¸Ş¶óÀÇ ÁÖÀÎÀ» Ä¸Ã³ ´ë»óÀ¸·Î ¹Ù²ãÁØ´Ù.
 		renderer::mainCamera->SetTarget(gameObject);
 	}
 
@@ -252,7 +251,7 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 	animator->CreateAnimation(L"CatchCap", L"..//..//Resources/MarioCap/Animation/CatchCap.smd", 0.05f);
 	//animator->Play(L"Capture");
 
-	//ëª¨ì ë˜ì§„í›„ flyStart
+	//¸ğÀÚ ´øÁøÈÄ flyStart
 	{
 		cilp = animator->GetAnimationClip(L"ThrowCap");
 		if (cilp)
@@ -263,7 +262,7 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 		});
 	}
 
-	//flyStartí›„ fly
+	//flyStartÈÄ fly
 	{
 		/*cilp = animator->GetAnimationClip(L"FlyingStart");
 		if (cilp)
@@ -273,7 +272,7 @@ void MarioCap::boneAnimatorInit(BoneAnimator* animator)
 		});*/
 	}
 
-	//CatchCap í›„ idleë¡œ
+	//CatchCap ÈÄ idle·Î
 	{
 		cilp = animator->GetAnimationClip(L"CatchCap");
 		if (cilp)
@@ -310,46 +309,46 @@ void MarioCap::stateInfoInitalize()
 void MarioCap::FlyStart()
 {
 	GetOwner()->GetComponent<AudioSource>()->Play(L"CapThrow", true);
-	// ì´ì „ì— ì§„í–‰ì¤‘ì´ë˜ ì• ë‹ˆë©”ì´í„° ì¢…ë£Œ
+	// ÀÌÀü¿¡ ÁøÇàÁßÀÌ´ø ¾Ö´Ï¸ŞÀÌÅÍ Á¾·á
 	GenericAnimator* animator = GetComponent<GenericAnimator>();
 	if (animator->IsRunning())
 		animator->Stop();
 
-	// í”Œë ˆì´ì–´ì˜ í˜„ì¬ í¬ì§€ì…˜ê³¼ Player forWard ë¥¼ ê°€ì ¸ì˜´
+	// ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç Æ÷Áö¼Ç°ú Player forWard ¸¦ °¡Á®¿È
 	Transform* tr = GetTransform();
 	Vector3 pos = mOwner->GetTransform()->GetPhysicalPosition();
 	Vector3 playerforward = mOwner->GetTransform()->WorldForward();
 
 	AnimatorParam param;
-	// ì§„í–‰íƒ€ì…
+	// ÁøÇàÅ¸ÀÔ
 	param.AnimType = eAnimType::Linear;
 
-	// ì§„í–‰ì¤‘ ì‚¬ìš©ë  Value ê°’
+	// ÁøÇàÁß »ç¿ëµÉ Value °ª
 	param.StartValue = 0.f;
 	param.EndValue= 15.f;
 
-	// ì§„í–‰ì‹œê°„
+	// ÁøÇà½Ã°£
 	param.DurationTime = 0.5f;
 
-	// ì§„í–‰ í•¨ìˆ˜ std::function<void(float)>
+	// ÁøÇà ÇÔ¼ö std::function<void(float)>
 	param.DurationFunc = [this, tr, pos, playerforward](float inCurValue)
 	{
 		tr->SetPhysicalPosition(pos + (-playerforward * inCurValue));
 	};
 
-	// ëë‚ ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+	// ³¡³¯¶§ È£ÃâµÇ´Â ÇÔ¼ö
 	param.CompleteFunc = [this](float inCurValue)
 	{
 		FlyEnd();
 	};
 
-	// ì´ë²¤íŠ¸ ì‹œì‘
+	// ÀÌº¥Æ® ½ÃÀÛ
 	animator->Start(param);
 }
 
 void MarioCap::FlyEnd()
 {
-	// ì´ì „ì— ì§„í–‰ì¤‘ì´ë˜ ì• ë‹ˆë©”ì´í„° ì¢…ë£Œ
+	// ÀÌÀü¿¡ ÁøÇàÁßÀÌ´ø ¾Ö´Ï¸ŞÀÌÅÍ Á¾·á
 	GenericAnimator* animator = GetComponent<GenericAnimator>();
 	if (animator->IsRunning())
 		animator->Stop();
@@ -360,40 +359,40 @@ void MarioCap::FlyEnd()
 	Transform* myTr = GetTransform();
 
 	AnimatorParam param;
-	// ì§„í–‰íƒ€ì…
+	// ÁøÇàÅ¸ÀÔ
 	param.AnimType = eAnimType::Linear;
 
 	param.StartValue = 1.f;
 	param.EndValue = 30.f;
 
-	// ì§„í–‰ì‹œê°„
+	// ÁøÇà½Ã°£
 	param.DurationTime = 10.f;
 
-	// ì§„í–‰ í•¨ìˆ˜ std::function<void(float)>
+	// ÁøÇà ÇÔ¼ö std::function<void(float)>
 	param.DurationFunc = [this, animator, playerTr, myTr](float inCurValue)
 	{
 		Vector3 playerPos = playerTr->GetPhysicalPosition();
 		Vector3 myPos = myTr->GetPhysicalPosition();
 
-		// í”Œë ˆì´ì–´ë°©í–¥ ë²¡í„°ë¥¼êµ¬í•¨
+		// ÇÃ·¹ÀÌ¾î¹æÇâ º¤ÅÍ¸¦±¸ÇÔ
 		Vector3 Dirction = playerPos - myPos; 
 
-		// í”Œë ˆì´ì–´ì™€ ëª¨ìì˜ ê±°ë¦¬ê°€ ê°€ê¹Œì›Œì¡Œìœ¼ë©´ ì¢…ë£Œ
+		// ÇÃ·¹ÀÌ¾î¿Í ¸ğÀÚÀÇ °Å¸®°¡ °¡±î¿öÁ³À¸¸é Á¾·á
 		if (Dirction.Length() <= 0.5f)
 			animator->Stop(true);
 
-		// ë°©í–¥ë²¡í„° ì •ê·œí™”
+		// ¹æÇâº¤ÅÍ Á¤±ÔÈ­
 		Dirction.Normalize();
 
-		// í•´ë‹¹ë°©í–¥ìœ¼ë¡œ ì´ë™
+		// ÇØ´ç¹æÇâÀ¸·Î ÀÌµ¿
 		float speed = 20.f;
 
-		// inCurValue ì„ ê³±í•˜ë¯€ë¡œì¨ ì‹œê°„ì˜ ê²½ê³¼ì—ë”°ë¼ ëŒì•„ì˜¤ëŠ” ì†ë„ê°€ ì¦ê°€í•¨
+		// inCurValue À» °öÇÏ¹Ç·Î½á ½Ã°£ÀÇ °æ°ú¿¡µû¶ó µ¹¾Æ¿À´Â ¼Óµµ°¡ Áõ°¡ÇÔ
 		myTr->SetPhysicalPosition(myPos + (Dirction * speed * inCurValue * DT));
 
 	};
 
-	// ëë‚ ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+	// ³¡³¯¶§ È£ÃâµÇ´Â ÇÔ¼ö
 	param.CompleteFunc = [this, animator, playerTr, myTr](float inCurValue)
 	{
 		myTr->SetPhysicalPosition(playerTr->GetPhysicalPosition());
@@ -411,6 +410,6 @@ void MarioCap::FlyEnd()
 		Pause();
 	};
 
-	// ì´ë²¤íŠ¸ ì‹œì‘
+	// ÀÌº¥Æ® ½ÃÀÛ
 	animator->Start(param);
 }

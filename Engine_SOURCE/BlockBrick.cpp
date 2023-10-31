@@ -10,6 +10,7 @@
 #include "BlockBrickScript.h"
 
 BlockBrick::BlockBrick()
+	:mbInst(false)
 {
 	SetName(L"BlockBrick");
 	mObjectTypeName = "BlockBrick";
@@ -20,6 +21,8 @@ BlockBrick::BlockBrick()
 
 BlockBrick::BlockBrick(const BlockBrick& Obj)
 	: InstantiativeObject(Obj)
+	, mbInst(false)
+
 {
 	AddComponent<BoneAnimator>(eComponentType::BoneAnimator);
 	AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
@@ -59,7 +62,14 @@ void BlockBrick::Initialize()
 	MeshRenderer* mr = GetComponent<MeshRenderer>();
 	mr->SetModel(model);
 
-	mr->SetMaterialByKey(L"BlockBrickMaterial", 0);
+	if (mbInst)
+	{
+		mr->SetMaterialByKey(L"BlockBrickMaterial_inst", 0);
+	}
+	else
+	{
+		mr->SetMaterialByKey(L"BlockBrickMaterial", 0);
+	}
 
 	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 

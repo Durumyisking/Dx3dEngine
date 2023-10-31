@@ -70,7 +70,7 @@ void MoonScript::GetPowerMoon()
 	mCurrentTime = 0;
 	mState = ePowerMoonState::None;
 	mPowerMoonPanal->GetScript<PowerMoonScript>()->GetPowerMoon();
-	//this->GetOwner()->Die();
+	this->GetOwner()->Die();
 }
 
 void MoonScript::PowerMoonAppears()

@@ -26,5 +26,10 @@ public:
 	virtual void OnTriggerEnter(GameObj* gameObject) override;
 	virtual void OnTriggerPersist(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
+
+	GETSET(bool, mbInst, Instance)
+
+private :
+	bool mbInst;
 };
 

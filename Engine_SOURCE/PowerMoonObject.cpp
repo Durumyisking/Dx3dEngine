@@ -72,7 +72,7 @@ void PowerMoonObject::Initialize()
 
 	AddComponent<PhysXCollider>(eComponentType::Collider);
 
-	mbHide = true;
+	mbHide = false;
 
 	AddComponent<MoonScript>(eComponentType::Script);
 

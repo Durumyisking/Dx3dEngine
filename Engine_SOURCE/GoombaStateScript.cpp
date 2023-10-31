@@ -71,7 +71,20 @@ void GoombaStateScript::Initialize()
 
 void GoombaStateScript::Update()
 {
+	if (KEY_TAP(N_6))
+	{
+		if (!mRigidbody->IsOnAir())
+		{
+			mRigidbody->SetAirOn();
+			mRigidbody->RemoveGravity();
+		}
+		else
+		{
+			mRigidbody->SetAirOff();
+			mRigidbody->ApplyGravity();
 
+		}
+	}
 	MonsterStateScript::Update();
 }
 
