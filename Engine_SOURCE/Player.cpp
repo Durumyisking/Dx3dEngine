@@ -350,8 +350,8 @@ void Player::OnTriggerEnter(GameObj* gameObject)
 				//	if (gameObject->GetScript<BlockBrickScript>() == nullptr)
 				//		return;
 
-					gameObject->GetScript<BlockBrickScript>()->GetHit();
-				}
+					//gameObject->GetScript<BlockBrickScript>()->GetHit();
+				
 
 				//	gameObject->GetScript<BlockBrickScript>()->GetHit();
 				//}
