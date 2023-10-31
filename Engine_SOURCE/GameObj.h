@@ -112,7 +112,7 @@ public:
 				return component;
 		}
 		return nullptr;
-	}
+ 	}
 
 	template <typename T>
 	T* GetComponents()

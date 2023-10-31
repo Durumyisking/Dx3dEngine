@@ -211,42 +211,7 @@ UIBase* UIManager::GetTitlePanal(eUIType type)
 
 void UIManager::MainMenuUI()
 {
-	//if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::UP)))
-	//{
-	//	if (GETSINGLE(UIManager)->mCount >= 3)
-	//		return;
 
-	//	(GETSINGLE(UIManager)->mCount++);
-
-	//	for (size_t i = 0; i < (GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds().size()); i++)
-	//	{
-	//		(GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false));
-	//	}
-
-	//	(GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[GETSINGLE(UIManager)->mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true));
-	//}
-	//else if ((GETSINGLE(InputMgr)->GetKeyTap(eKeyCode::DOWN)))
-	//{
-	//	if (GETSINGLE(UIManager)->mCount <= 0)
-	//		return;
-
-	//	GETSINGLE(UIManager)->mCount--;
-
-	//	for (size_t i = 0; i < GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds().size(); i++)
-	//	{
-	//		GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f), false);
-	//	}
-
-	//	GETSINGLE(UIManager)->GetPanal(eUIType::TitleText)->GetChilds()[GETSINGLE(UIManager)->mCount]->SetColor(Vector4(0.4f, 0.4f, 0.4, 1.0f), true);
-	//}
-
-	//if (KEY_TAP(N_1))
-	//{
-	//	GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
-	//	GETSINGLE(UIManager)->mCurrentUI = currentUI::Play;
-	//	GETSINGLE(UIManager)->mCount = 3;
-	//	return;
-	//}
 }
 
 void UIManager::GetCoin()

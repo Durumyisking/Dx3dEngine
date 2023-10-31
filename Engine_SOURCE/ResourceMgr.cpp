@@ -239,6 +239,11 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 
 #pragma endregion
 
+#pragma region PowerMoon
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/LifeAndShine/Shine", L"Shine");
+
+#pragma endregion
+
 
 	*bfinish = true;
 }
@@ -704,12 +709,19 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(4, L"Tree000_4Material");
 
 #pragma endregion
-	model = Find<Model>(L"BlockBrickBreak");
-	model->SetVariableMaterialsByKey(0, L"BlockBrickMaterial");
-	model->SetVariableMaterialsByKey(1, L"BlockBrickMaterial");
-	model->SetVariableMaterialsByKey(2, L"BlockBrickMaterial");
-	model->SetVariableMaterialsByKey(3, L"BlockBrickMaterial");
-	model->SetVariableMaterialsByKey(4, L"BlockBrickMaterial");
-	model->SetVariableMaterialsByKey(5, L"BlockBrickMaterial");
-	model->SetVariableMaterialsByKey(6, L"BlockBrickMaterial");
+	//model = Find<Model>(L"BlockBrickBreak");
+	//model->SetVariableMaterialsByKey(0, L"BlockBrickMaterial");
+	//model->SetVariableMaterialsByKey(1, L"BlockBrickMaterial");
+	//model->SetVariableMaterialsByKey(2, L"BlockBrickMaterial");
+	//model->SetVariableMaterialsByKey(3, L"BlockBrickMaterial");
+	//model->SetVariableMaterialsByKey(4, L"BlockBrickMaterial");
+	//model->SetVariableMaterialsByKey(5, L"BlockBrickMaterial");
+	//model->SetVariableMaterialsByKey(6, L"BlockBrickMaterial");
+
+#pragma region PowerMoon
+	model = Find<Model>(L"Shine");
+	model->SetVariableMaterialsByKey(0, L"PowerMoon_0Material");
+	model->SetVariableMaterialsByKey(1, L"PowerMoon_0Material");
+
+#pragma endregion
 }

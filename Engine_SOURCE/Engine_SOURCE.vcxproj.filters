@@ -397,9 +397,6 @@
     <ClCompile Include="HelpUIScript.cpp" />
     <ClCompile Include="MilestoneScript.cpp" />
     <ClCompile Include="TitleBGMScript.cpp" />
-    <ClCompile Include="UIManager.cpp">
-      <Filter>UI\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="UIFactory.cpp">
       <Filter>UI\Manager</Filter>
     </ClCompile>
@@ -557,7 +554,11 @@
     <ClCompile Include="EffectObject.cpp" />
 
     <ClCompile Include="BlockBrickScript.cpp" />
-
+    <ClCompile Include="PowerMoonObject.cpp" />
+    <ClCompile Include="UIManager.cpp">
+      <Filter>UI\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MoonScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FMod.h" />
@@ -1145,7 +1146,8 @@
     <ClInclude Include="EffectObject.h" />
 
     <ClInclude Include="BlockBrickScript.h" />
-
+    <ClInclude Include="PowerMoonObject.h" />
+    <ClInclude Include="MoonScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
