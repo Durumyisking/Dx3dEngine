@@ -40,7 +40,7 @@ float4 main(VSOut vsIn) : SV_Target
     for (unsigned int i = 0; i < lightCount; ++i)
     {
         float3 lightVec = lightAttributes[i].type == LIGHT_DIRECTIONAL 
-        ? -lightAttributes[i].direction.xyz
+        ? -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz
         : lightAttributes[i].position.xyz - vsIn.WorldPos;
           
         float3 radiance = LightRadiance(lightAttributes[i], vsIn.WorldPos, normal);

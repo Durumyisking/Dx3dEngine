@@ -244,7 +244,7 @@ float4 CombineLights(float4 color, LightColor lightColor)
 {
     color.rgb *= lightColor.diffuse.rgb;
 
-    //color.rgb += lightColor.specular.rgb;
+    color.rgb += lightColor.specular.rgb;
     
     color.rgb += color.rgb * lightColor.ambient.rgb;
 
@@ -488,7 +488,7 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         
     }
 
-    float3 radiance = light.color.diffuse.xyz * spotFator * att * shadowFactor;
+    float3 radiance = light.color.diffuse.xyz * spotFator * att;// * shadowFactor;
 
     return radiance;
 }
@@ -520,7 +520,7 @@ float3 PBR_DirectLighting(float3 pixelToEye, float3 lightDir, float3 albedo, flo
 
     // float3 radiance = lightAttributes[0].color.diffuse.xyz;
       
-    directLighting += (diffuseBRDF + specularBRDF); // * NdotI;
+    directLighting += specularBRDF; // * NdotI;
     
     return directLighting;
 }

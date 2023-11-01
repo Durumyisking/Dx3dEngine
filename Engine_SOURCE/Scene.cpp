@@ -143,6 +143,8 @@ void Scene::Enter()
 		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
 		lightComp->SetType(eLightType::Directional);
 		lightComp->SetDiffuse(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetSpecular(Vector4(1.f, 1.f, 1.f, 1.f));
+		lightComp->SetAmbient(Vector4(0.25f, 0.25f, 0.25f, 1.f));
 		lightComp->SetRadius(0.02f);
 	}
 
