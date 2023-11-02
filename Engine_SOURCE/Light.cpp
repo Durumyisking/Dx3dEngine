@@ -48,7 +48,7 @@ void Light::FixedUpdate()
 		if (nullptr != p)
 		{
 			position = p->GetWorldPos();
-			position.y += 12.5f;
+			position.y += 8.5f;
 		}
 	}
 

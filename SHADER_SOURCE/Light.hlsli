@@ -450,15 +450,15 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         );
         
         // Baisc Shadow
-        /*
+        
             // 3. 쉐도우맵에서 값 가져오기
             float depth = shadowMap.Sample(clampSampler, lightTexcoord).r;
         
             // 4. 가려져 있다면 그림자로 표시
-            if (depth + 0.00001 < lightScreen.z)
+            if (depth < lightScreen.z)
                 shadowFactor = 0.0;
         
-            
+        /*  
             ///////////////////////////////////////////////////////////////
             dx11에서는 위 코드를 함수로 사용할 수 있게 만들어놓음
             shadowMap.SampleCmpLevelZero(
@@ -472,12 +472,12 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         
         // pcf sampliing
         
-        uint width, height, numMips;
-        shadowMap.GetDimensions(0, width, height, numMips);
+        //uint width, height, numMips;
+        //shadowMap.GetDimensions(0, width, height, numMips); // SRV의 정보를 얻는다.
 
-        // Texel size
-        float dx = 5.0 / (float) width;
-        shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.00001, dx, shadowMap);
+        //// Texel size
+        //float dx = 3.0 / (float) width;
+        //shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.00001, dx, shadowMap);
         
         
         // pcss sampling
