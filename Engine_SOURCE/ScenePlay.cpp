@@ -173,20 +173,17 @@ void ScenePlay::Initialize()
 	{
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 
-		//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
 	{
 		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
 		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
 	}
 
-	//{
-	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
-	//}	
-
-
-
+	{
+		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+		goomba->SetPos(Vector3(15.f, 10.f, 10.f));
+	}	
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -200,10 +197,10 @@ void ScenePlay::Initialize()
 		skySphere->SetName(L"SkySphere");
 	}
 
-	//{
-	//	CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-	//	ground->SetPos(Vector3::Zero);
-	//}
+	{
+		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+		ground->SetPos(Vector3::Zero);
+	}
 
 	{
 		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
@@ -223,7 +220,7 @@ void ScenePlay::Initialize()
 
 	
 	BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-	block->SetPos(Vector3(0.f, 15.f, 0.f));
+	block->SetPos(Vector3(15.f, 2.f, 13.f));
 
 
 	//{

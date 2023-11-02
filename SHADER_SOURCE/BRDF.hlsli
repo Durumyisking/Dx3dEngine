@@ -52,7 +52,7 @@ float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
 // 반사율을 근사적으로 계산한다.
 // cosTheta (빛의 입사각) 
 float3 FresnelSchlick(float3 F0, float VDotH)
-{
+{   
     // Fresnel Schlick 
     float3 fresnel = F0 + (1.f - F0) * pow(1.f - VDotH, 5.f);
 

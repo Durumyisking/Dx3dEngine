@@ -488,7 +488,7 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         
     }
 
-    float3 radiance = light.color.diffuse.xyz * spotFator * att;// * shadowFactor;
+    float3 radiance = light.color.diffuse.xyz * spotFator * att * shadowFactor;
 
     return radiance;
 }
@@ -499,7 +499,6 @@ float3 PBR_DirectLighting(float3 pixelToEye, float3 lightDir, float3 albedo, flo
 {
     float3 directLighting = (float3) 0.f;   
     
-    // dir light빛 방향 월드 기준일거임
     float3 lightVec = -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz;
 
     float3 halfway = normalize(pixelToEye + lightVec);
@@ -509,7 +508,7 @@ float3 PBR_DirectLighting(float3 pixelToEye, float3 lightDir, float3 albedo, flo
     float NdotO = max(0.0, dot(normal.xyz, pixelToEye));
         
     const float3 Fdielectric = 0.4f; // 비금속(Dielectric) 재질의 F0
-    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic);
+    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // Metalness가 클수록 albedo 사용
     float3 F = fresnelSchlick(F0, max(0.0, dot(halfway, pixelToEye)));
     float3 kd = lerp(float3(1, 1, 1) - F, float3(0, 0, 0), metallic);
     float3 diffuseBRDF = kd * albedo.xyz;
@@ -517,10 +516,8 @@ float3 PBR_DirectLighting(float3 pixelToEye, float3 lightDir, float3 albedo, flo
     float D = ndfGGX(NdotH, roughness);
     float3 G = gaSchlickGGX(NdotI, NdotO, roughness);
     float3 specularBRDF = (F * D * G) / max(1e-5, 4.0 * NdotI * NdotO);
-
-    // float3 radiance = lightAttributes[0].color.diffuse.xyz;
       
-    directLighting += specularBRDF; // * NdotI;
+    directLighting += (diffuseBRDF + specularBRDF); // * NdotI // 마리오는 그림자 이외의 음영이 없음;
     
     return directLighting;
 }

@@ -61,7 +61,7 @@ void BlockBrick::Initialize()
 
 	mr->SetMaterialByKey(L"BlockBrickMaterial", 0);
 
-	this->GetComponent<Transform>()->SetOffsetScale(0.1f);
+	this->GetComponent<Transform>()->SetOffsetScale(0.01f);
 
 	Physical* physical = AddComponent<Physical>(eComponentType::Physical);
 	physical->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, { 0.5f, 0.5f, 0.5f });
