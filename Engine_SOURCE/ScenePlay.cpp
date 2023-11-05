@@ -171,9 +171,9 @@ void ScenePlay::Initialize()
 
 
 	{
-		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+	/*	mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 
-		//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);*/
 	}
 	//{
 	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
@@ -191,57 +191,61 @@ void ScenePlay::Initialize()
 		t->BindAllShaderResource(12);
 	}
 
-	{
-		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
-		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		skySphere->SetName(L"SkySphere");
-	}
+	//{
+	//	SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
+	//	skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+	//	skySphere->SetName(L"SkySphere");
+	//}
 
 	//{
 	//	CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
 	//	ground->SetPos(Vector3::Zero);
 	//}
 
-	{
-		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		plane->SetScale({ 1000.f, 0.5f, 1000.f });
-		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-		plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.0f);
-		plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.0f);
-		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+	//{
+	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+	//	plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+	//	plane->SetScale({ 1000.f, 0.5f, 1000.f });
+	//	plane->SetName(L"Plane");
+	//	plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
+	//	plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.0f);
+	//	plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.0f);
+	//	plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
-		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		rigid->RemoveGravity();
+	//	PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//	rigid->RemoveGravity();
 
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-	}
+	//	plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//}
 
 	
 	BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-	block->SetPos(Vector3(15.f, 2.f, 13.f));
+	block->SetPos(Vector3(15.f, 100.f, 13.f));
 
 
+	//for (size_t i = 0; i < 7; i++)
 	//{
-	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::NonePhysical, this);
-	//	plane->SetPos(Vector3(-5.f, 10.f, 0.f));
-	//	plane->SetName(L"Plane");
-	//	plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial_NT3");
-	//	plane->GetMeshRenderer()->SetMeshByKey(L"Spheremesh");
-	//	plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.f);
-	//	plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.99f);
-	//}
-	//{
-	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::NonePhysical, this);
-	//	plane->SetPos(Vector3(0.f, 10.f, -5.f));
-	//	plane->SetName(L"Plane");
-	//	plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"PBRMaterial_NT4");
-	//	plane->GetMeshRenderer()->SetMeshByKey(L"Spheremesh");
-	//	plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.99f);
-	//	plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.99f);
-	//}
+	//	for (size_t j = 0; j < 7; j++)
+	//	{
 
+	//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+	//		Material* material = new Material();
+	//		material->SetShader(shader);
+	//		material->SetTextureByKey(L"t_a", eTextureSlot::Albedo);
+	//		material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
+	//		GETSINGLE(ResourceMgr)->Insert<Material>(L"PBRMaterial_NT", material);
+
+
+	//		GameObj* plane = object::Instantiate<GameObj>(eLayerType::NonePhysical, this);
+	//		plane->SetPos(Vector3((float)i, (float)j, 0.f));
+	//		plane->SetName(L"Plane");
+	//		//Material* mat = GETSINGLE(ResourceMgr)->Find<Material>(L"PBRMaterial_NT");
+	//		material->SetMetallic((float)i / 7.f);
+	//		material->SetRoughness((float)j / 7.f);
+	//		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterial(material);
+	//		plane->GetMeshRenderer()->SetMeshByKey(L"Spheremesh");
+	//	}
+	//}
 
 
 // 세현 포인트라이트

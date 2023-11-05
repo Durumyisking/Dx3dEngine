@@ -269,8 +269,8 @@ float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
     if(mip > 6)
         mip = 6;
     float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(dot(normalWorld, pixelToEye), 1.0 - roughness), 0.0f).rg;
-    float3 specularIrradiance = prefilteredMap.SampleLevel(linearSampler, reflect(-pixelToEye, normalWorld),
-                                                            0 + roughness * 5.f).rgb;
+    float3 specularIrradiance = CubeMapTexture.SampleLevel(linearSampler, reflect(-pixelToEye, normalWorld),
+                                                            roughness * 7.f).rgb;
     const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
     float3 F0 = lerp(Fdielectric, albedo, metallic);
 
@@ -279,36 +279,11 @@ float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
 float3 AmbientLightingByIBL(float3 albedo, float3 normalW, float3 pixelToEye,
                             float metallic, float roughness, float pixelToCam)
 {
-    //float3 diffuseIBL = DiffuseIBL(albedo, normalW, pixelToEye, metallic);
-    //float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCam);
+    float3 diffuseIBL = DiffuseIBL(albedo, normalW, pixelToEye, metallic);
+    float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCam);
     
-    //return (diffuseIBL + specularIBL);
-    float3 diffuseIBL = (float3) 0.f;
-    float3 specularIBL = (float3) 0.f;
-    float3 irradiance = irradianceMap.SampleLevel(linearSampler, normalW, 0).rgb;
-    
-    {
-    
-        float3 F0 = lerp(Fdielectric, albedo, metallic);
-        float3 F = fresnelSchlick(F0, max(0.0, dot(normalW, pixelToEye)));
-        float3 kd = lerp(1.0 - F, 0.0, metallic);
-        //float3 irradiance = irradianceMap.SampleLevel(linearSampler, normalW, 0).rgb;
-        
-        diffuseIBL =  kd * albedo * irradiance;
-    }
-    {
-    
-        float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(dot(normalW, pixelToEye), 1.0 - roughness), 0.0f).rg;
-        float3 specularIrradiance = prefilteredMap.SampleLevel(linearSampler, reflect(-pixelToEye, normalW), 0).rgb;
-        
-        specularIrradiance = lerp(specularIrradiance, irradiance, roughness);
-        const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
-        float3 F0 = lerp(Fdielectric, albedo, metallic);
+    return (diffuseIBL + specularIBL);
 
-        specularIBL = (F0 * specularBRDF.x + specularBRDF.y) * specularIrradiance;
-    }
-    
-     return (diffuseIBL + specularIBL);
 }
 
 
@@ -514,7 +489,7 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         
     }
 
-    float3 radiance = light.color.diffuse.xyz * spotFator * att * shadowFactor;
+    float3 radiance = light.color.diffuse.xyz * spotFator * att * 1.f;
 
     return radiance;
 }
@@ -533,7 +508,7 @@ float3 PBR_DirectLighting(float3 pixelToEye, float3 lightDir, float3 albedo, flo
     float NdotH = max(0.0, dot(normal.xyz, halfway));
     float NdotO = max(0.0, dot(normal.xyz, pixelToEye));
         
-    const float3 Fdielectric = 0.4f; // 비금속(Dielectric) 재질의 F0
+    const float3 Fdielectric = 0.04f; // 비금속(Dielectric) 재질의 F0
     float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // Metalness가 클수록 albedo 사용
     float3 F = fresnelSchlick(F0, max(0.0, dot(halfway, pixelToEye)));
     float3 kd = lerp(float3(1, 1, 1) - F, float3(0, 0, 0), metallic);

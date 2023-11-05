@@ -59,26 +59,26 @@ float4 main(VSOut psIn) : SV_TARGET
     //뷰 방향을 반사 방향으로 초기화한다.
     float3 V = R;
 
-    const uint SAMPLE_COUNT = 1024u;
-    float totalWeight = 0.0;
+    //const uint SAMPLE_COUNT = 1024u;
+    //float totalWeight = 0.0;
     float3 prefilteredColor = float3(0.0, 0.0, 0.0);
-    for (uint i = 0u; i < SAMPLE_COUNT; ++i)
-    {
-        // half verter 계산
-        float2 Xi = Hammersley(i, SAMPLE_COUNT); // 샘플링 패턴
-        float3 H = ImportanceSampleGGX(Xi, N, roughness);
+    //for (uint i = 0u; i < SAMPLE_COUNT; ++i)
+    //{
+    //    // half verter 계산
+    //    float2 Xi = Hammersley(i, SAMPLE_COUNT); // 샘플링 패턴
+    //    float3 H = ImportanceSampleGGX(Xi, N, roughness);
 
-        float3 L = normalize(2.0 * dot(V, H) * H - V);
+    //    float3 L = normalize(2.0 * dot(V, H) * H - V);
 
-        float NdotL = max(dot(N, L), 0.0);
-        if (NdotL > 0.0)
-        {
-            prefilteredColor += CubeMapTexture.Sample(linearSampler, -L).rgb * NdotL;
-            totalWeight += NdotL;
-        }
-    }
-    prefilteredColor = prefilteredColor / totalWeight;
-
+    //    float NdotL = max(dot(N, L), 0.0);
+    //    if (NdotL > 0.0)
+    //    {
+    //        prefilteredColor += CubeMapTexture.Sample(linearSampler, -L).rgb * NdotL;
+    //        totalWeight += NdotL;
+    //    }
+    //}
+    //prefilteredColor = prefilteredColor / totalWeight;
+    prefilteredColor += CubeMapTexture.Sample(linearSampler, -N).rgb;
     return float4(prefilteredColor, 1.0);
 
 	//return tex.Sample(splr, input.worldPos);
