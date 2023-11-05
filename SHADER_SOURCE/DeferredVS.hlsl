@@ -61,4 +61,3 @@ VSOut main(VSIn vsIn)
     
     return vsOut;
 }
-

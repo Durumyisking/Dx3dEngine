@@ -2,7 +2,7 @@
 #include "Script.h"
 #include "BoneAnimator.h"
 
-#define PLAYER_SPPED 7000.f
+#define PLAYER_SPPED 70000.f
 #define PLAYER_JUMPFORCE 10000.f
 #define PLAYER_MASS 1.f
 #define PLAYER_WALK_VELOCITY 3.f
@@ -47,8 +47,8 @@ public:
 	
 private:
 	std::vector<std::function<void()>> mStateEventList;
-	float mInitialForce = 7000.f; // 초기 힘
-	float mForceIncrement = 20.f; // 시간에 따른 힘의 증가량
+	float mInitialForce = 35000.f; // 초기 힘
+	float mForceIncrement = 100.f; // 시간에 따른 힘의 증가량
 	UINT mJumpCount;
 	//float mMoveTime = 0.0f;
 

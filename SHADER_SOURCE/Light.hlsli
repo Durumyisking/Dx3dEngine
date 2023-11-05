@@ -279,10 +279,36 @@ float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
 float3 AmbientLightingByIBL(float3 albedo, float3 normalW, float3 pixelToEye,
                             float metallic, float roughness, float pixelToCam)
 {
-    float3 diffuseIBL = DiffuseIBL(albedo, normalW, pixelToEye, metallic);
-    float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCam);
+    //float3 diffuseIBL = DiffuseIBL(albedo, normalW, pixelToEye, metallic);
+    //float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCam);
     
-    return (diffuseIBL + specularIBL);
+    //return (diffuseIBL + specularIBL);
+    float3 diffuseIBL = (float3) 0.f;
+    float3 specularIBL = (float3) 0.f;
+    float3 irradiance = irradianceMap.SampleLevel(linearSampler, normalW, 0).rgb;
+    
+    {
+    
+        float3 F0 = lerp(Fdielectric, albedo, metallic);
+        float3 F = fresnelSchlick(F0, max(0.0, dot(normalW, pixelToEye)));
+        float3 kd = lerp(1.0 - F, 0.0, metallic);
+        //float3 irradiance = irradianceMap.SampleLevel(linearSampler, normalW, 0).rgb;
+        
+        diffuseIBL =  kd * albedo * irradiance;
+    }
+    {
+    
+        float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(dot(normalW, pixelToEye), 1.0 - roughness), 0.0f).rg;
+        float3 specularIrradiance = prefilteredMap.SampleLevel(linearSampler, reflect(-pixelToEye, normalW), 0).rgb;
+        
+        specularIrradiance = lerp(specularIrradiance, irradiance, roughness);
+        const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
+        float3 F0 = lerp(Fdielectric, albedo, metallic);
+
+        specularIBL = (F0 * specularBRDF.x + specularBRDF.y) * specularIrradiance;
+    }
+    
+     return (diffuseIBL + specularIBL);
 }
 
 
@@ -451,12 +477,12 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         
         // Baisc Shadow
         
-            // 3. 쉐도우맵에서 값 가져오기
-            float depth = shadowMap.Sample(clampSampler, lightTexcoord).r;
+            //// 3. 쉐도우맵에서 값 가져오기
+            //float depth = shadowMap.Sample(clampSampler, lightTexcoord).r;
         
-            // 4. 가려져 있다면 그림자로 표시
-            if (depth + 0.00001 < lightScreen.z)
-                shadowFactor = 0.0;
+            //// 4. 가려져 있다면 그림자로 표시
+            //if (depth + 0.00001 < lightScreen.z)
+            //    shadowFactor = 0.0;
         /*
             
             ///////////////////////////////////////////////////////////////
@@ -477,7 +503,7 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
 
         // Texel size
         float dx = 3.0 / (float) width;
-        shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.00001, dx, shadowMap);
+        shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.001, dx, shadowMap);
         
         
         // pcss sampling

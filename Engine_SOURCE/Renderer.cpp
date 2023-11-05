@@ -375,6 +375,7 @@ namespace renderer
 
 		samplerDesc.MipLODBias = 0.0f;
 		samplerDesc.MinLOD = 0.0f;
+		samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
 		//samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 		//GetDevice()->CreateSamplerState(&samplerDesc, samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
@@ -1573,8 +1574,8 @@ namespace renderer
 		sphereVtx.emplace_back(v);
 
 		// Body
-		UINT iStackCount = 40;
-		UINT iSliceCount = 40;
+		UINT iStackCount = 20;
+		UINT iSliceCount = 20;
 
 		float fStackAngle = XM_PI / iStackCount;
 		float fSliceAngle = XM_2PI / iSliceCount;

@@ -173,17 +173,17 @@ void ScenePlay::Initialize()
 	{
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 
-		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+		//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
-	{
-		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
-	}
+	//{
+	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+	//	mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
+	//}
 
-	{
-		Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
-		goomba->SetPos(Vector3(15.f, 10.f, 10.f));
-	}	
+	//{
+	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
+	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
+	//}	
 
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
@@ -197,10 +197,10 @@ void ScenePlay::Initialize()
 		skySphere->SetName(L"SkySphere");
 	}
 
-	{
-		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-		ground->SetPos(Vector3::Zero);
-	}
+	//{
+	//	CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+	//	ground->SetPos(Vector3::Zero);
+	//}
 
 	{
 		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
@@ -246,39 +246,21 @@ void ScenePlay::Initialize()
 
 // 세현 포인트라이트
 	{
-	/*	{
-			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-			directionalLight->SetPos({ -74.75f, 18.f,-19.5f });
-			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
-			lightComp->SetRadius(1.f);
-			lightComp->SetFallOffStart(0.5f);
-			lightComp->SetFallOffEnd(1.f);
-		}
-
-		{
-			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-			directionalLight->SetPos({ -75.f, 10.5f,-15.f });
-			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
-			lightComp->SetRadius(1.f);
-			lightComp->SetFallOffStart(0.5f);
-			lightComp->SetFallOffEnd(1.f);
-		}
-
-
-		{
-			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-			directionalLight->SetPos({ -75.f, 8.5f, -4.5f });
-			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
-			lightComp->SetRadius(4.f);
-			lightComp->SetFallOffStart(2.5f);
-			lightComp->SetFallOffEnd(4.f);
-		}*/
+		
+		//for (size_t i = 0; i < 10; i++)
+		//{
+		//	for (size_t j = 0; j < 10; j++)
+		//	{
+		//		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
+		//		directionalLight->SetPos({ static_cast<float>(i * 4), 1.f, static_cast<float>(j * 4) });
+		//		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+		//		lightComp->SetType(eLightType::Point);
+		//		lightComp->SetDiffuse(Vector4(static_cast<float>(i % 3), 1.f, static_cast<float>(j % 3), 1.f));
+		//		lightComp->SetRadius(3.f);
+		//		lightComp->SetFallOffStart(2.f);
+		//		lightComp->SetFallOffEnd(3.f);
+		//	}
+		//}
 	}
 //////////////////////////////////
 

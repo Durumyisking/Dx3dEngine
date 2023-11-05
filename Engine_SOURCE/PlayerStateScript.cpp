@@ -378,18 +378,18 @@ void PlayerStateScript::SquatMove()
 		GETSINGLE(InputMgr)->GetKeyDown(eKeyCode::LSHIFT)
 		&& (mAnimator->PlayAnimationName() == L"Rolling"))
 	{
-		mInitialForce = 10000.f;
+		mInitialForce = 50000.f;
 		rigidbody->SetMaxVelocity_XZ(PLAYER_ROLLING_VELOCITY);
 	}
 	else if (mAnimator->PlayAnimationName() != L"SquatWalk")
 	{
 		mAnimator->Play(L"SquatWalk");
-		mInitialForce = 7000.f;
+		mInitialForce = 35000.f;
 		rigidbody->SetMaxVelocity_XZ(PLAYER_SQUATWALK_VELOCITY);
 	}
 	else
 	{
-		mInitialForce = 7000.f;
+		mInitialForce = 35000.f;
 		rigidbody->SetMaxVelocity_XZ(PLAYER_SQUATWALK_VELOCITY);
 	}
 
