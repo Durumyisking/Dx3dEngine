@@ -2,7 +2,7 @@
 #include "Script.h"
 #include "BoneAnimator.h"
 
-#define PLAYER_SPPED 7000.f
+#define PLAYER_SPPED 70000.f
 #define PLAYER_JUMPFORCE 10000.f
 #define PLAYER_MASS 1.f
 #define PLAYER_WALK_VELOCITY 3.f

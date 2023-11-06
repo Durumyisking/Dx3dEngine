@@ -138,7 +138,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ∑ŒµÂ ≈◊Ω∫∆Æ ∑ŒµÂΩ√ø° π›∫π«ÿº≠ ∏ÛΩ∫≈Õ ¡§¿« πÊ¡ˆ
+	//TestScene Î°úÎìú ÌÖåÏä§Ìä∏ Î°úÎìúÏãúÏóê Î∞òÎ≥µÌï¥ÏÑú Î™¨Ïä§ÌÑ∞ Ï†ïÏùò Î∞©ÏßÄ
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		/*{
@@ -169,20 +169,7 @@ void ScenePlay::Initialize()
 	//Convex and Triangle Mesh TEST
 	
 	////TriangleMesh Test
-	//{
-	//	ModelObj* obj = object::Instantiate<ModelObj>(eLayerType::Platforms, this);
-	//	obj->SetPos(Vector3(0.f, 5.f, 0.f));
-	//	obj->SetScale(Vector3(0.01f, 0.01f, 0.01f));
-	//	obj->SetName(L"CityWorldHomeGroundCollider");
 
-	//	// SetModel
-	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CityWorld_RoadCollider");
-	//	if (model)
-	//	{
-	//		obj->SetModel(model->GetName());
-	//		obj->SetPhysical(eGeometryType::TriangleMesh, Vector3(1.f, 1.f, 1.f));
-	//	}
-	//}
 
 	{
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
@@ -204,9 +191,6 @@ void ScenePlay::Initialize()
 	//	goomba->SetPos(Vector3(15.f, 10.f, 10.f));
 	//}	
 
-
-
-
 	{
 		CubeMapHDR* cubeMap = object::Instantiate<CubeMapHDR>(eLayerType::CubeMap, this);
 		Texture* t = GETSINGLE(ResourceMgr)->Find<Texture>(L"night11");
@@ -224,80 +208,52 @@ void ScenePlay::Initialize()
 		ground->SetPos(Vector3::Zero);
 	}
 
-// ºº«ˆ ∆˜¿Œ∆Æ∂Û¿Ã∆Æ
-	{
-		{
-			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-			directionalLight->SetPos({ -74.75f, 18.f,-19.5f });
-			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
-			lightComp->SetRadius(1.f);
-			lightComp->SetFallOffStart(0.5f);
-			lightComp->SetFallOffEnd(1.f);
-		}
-
-		{
-			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-			directionalLight->SetPos({ -75.f, 10.5f,-15.f });
-			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
-			lightComp->SetRadius(1.f);
-			lightComp->SetFallOffStart(0.5f);
-			lightComp->SetFallOffEnd(1.f);
-		}
-
-
-		{
-			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-			directionalLight->SetPos({ -75.f, 8.5f, -4.5f });
-			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetDiffuse(Vector4(0.5f, 0.5f, 0.f, 1.f));
-			lightComp->SetRadius(4.f);
-			lightComp->SetFallOffStart(2.5f);
-			lightComp->SetFallOffEnd(4.f);
-		}
-	}
-//////////////////////////////////
-
-	/*{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(5.f, 1.f, 1.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(5.f, 1.f, 2.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(5.f, 1.f, 3.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(5.f, 1.f, 4.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(4.f, 1.f, 1.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(4.f, 1.f, 2.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(4.f, 1.f, 3.f));
-	}
-	{
-		BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-		block->SetPos(Vector3(4.f, 1.f, 4.f));
-	}*/
 	//{
-	//	Building* block = object::Instantiate<Building>(eLayerType::Objects, this, L"Building");
-	//	block->SetPos(Vector3(40.f, -0.5f, 0.f));
+	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+	//	plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+	//	plane->SetScale({ 1000.f, 0.5f, 1000.f });
+	//	plane->SetName(L"Plane");
+	//	plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
+	//	plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.0f);
+	//	plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.0f);
+	//	plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+
+	//	PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//	rigid->RemoveGravity();
+
+	//	plane->AddComponent<PhysXCollider>(eComponentType::Collider);
 	//}
+
+	
+	//BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+	//block->SetPos(Vector3(15.f, 100.f, 13.f));
+
+
+	//for (size_t i = 0; i < 7; i++)
+	//{
+	//	for (size_t j = 0; j < 7; j++)
+	//	{
+
+	//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+	//		Material* material = new Material();
+	//		material->SetShader(shader);
+	//		material->SetTextureByKey(L"t_a", eTextureSlot::Albedo);
+	//		material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
+	//		GETSINGLE(ResourceMgr)->Insert<Material>(L"PBRMaterial_NT", material);
+
+
+	//		GameObj* plane = object::Instantiate<GameObj>(eLayerType::NonePhysical, this);
+	//		plane->SetPos(Vector3((float)i, (float)j, 0.f));
+	//		plane->SetName(L"Plane");
+	//		//Material* mat = GETSINGLE(ResourceMgr)->Find<Material>(L"PBRMaterial_NT");
+	//		material->SetMetallic((float)i / 7.f);
+	//		material->SetRoughness((float)j / 7.f);
+	//		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterial(material);
+	//		plane->GetMeshRenderer()->SetMeshByKey(L"Spheremesh");
+	//	}
+	//}
+
+
 	//InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
 	//for (size_t i = 0; i < 10; i++)
 	//{
@@ -306,65 +262,35 @@ void ScenePlay::Initialize()
 	//		for (size_t k = 1; k < 10; k++)
 	//		{
 	//			BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-	//			block->SetInstance(true);
-	//			block->SetPos(Vector3(-10.f + i, 0.5f + j, 70.f - k));
-	//			blockContainer->PushObject(block);
+	//			//block->SetInstance(true);
+	//			block->SetPos(Vector3(static_cast<float>(i), 0.5f + static_cast<float>(j), static_cast<float>(k)));
+	//			//blockContainer->PushObject(block);
 	//		}
 	//	}
 	//}
 	//blockContainer->ResizeObjectInstancingData();
 
+// ÏÑ∏ÌòÑ Ìè¨Ïù∏Ìä∏ÎùºÏù¥Ìä∏
 	//{
-	//	SoloNaviMesh* naviMesh = GETSINGLE(NavigationMgr)->CreateNavigationMesh();
-
-	//	//«ˆ¿Á .obj ∆ƒ¿œ∏∏ ∑Œµ˘ ∞°¥… ∫Ì∑£¥ıø°º≠ .obj ∑Œ ≥ª∫∏≥ª±‚ «ÿº≠ ªÁøÎ«œ∏È µÀ¥œ¥Ÿ
-	//	if (!GETSINGLE(NavigationMgr)->SettingMesh(naviMesh, GETSINGLE(PathMgr)->FindPath(OBJ_SAVE_PATH) + L"CityWorld_HomeStage_GroundCollider.Obj"))
-	//		int debug = 0;
-
-	//	if (!naviMesh->Build())
-	//		int debug = 0;
-
-	//	//ø¿∫Í¡ß∆Æø° std::<Vector3>mPath √ﬂ∞° pathø° ¿Ãµø∞Ê∑Œ∞° √ﬂ∞°µ«¥œ vector≥ª¿« ¿ßƒ°∏¶ ªÁøÎ«ÿº≠ ¿Ãµø«œ∏È µÀ¥œ¥Ÿ
-	//	//¿ßƒ°∞° ≥ª∫Ò∏ﬁΩ¨ π€¿Ã∏È ∞ËªÍ¿Ã æ»µÀ¥œ¥Ÿ
-	//	if(!GETSINGLE(NavigationMgr)->FindPath(mPlayer, Vector3(10.f, 1.f, 30.f)))
-	//		int debug = 0;
-	//}
-
-	//{
-	//	GameObj* obj = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-	//	obj->SetPos(Vector3(0.f, -35.f, 0.f));
-	//	Vector3 scale(0.15, 0.15, 0.15);
-	//	obj->SetScale(scale);
-	//	obj->SetName(L"CapWorldTower");
-
-	//	Transform* tr = obj->GetComponent<Transform>();
-	//	float offset = 0.05;
-	//	tr->SetOffsetScale(offset);
-
-	//	// SetModel
-	//	Model* model = GETSINGLE(ResourceMgr)->Find<Model>(L"CapWorldHomeTower000");
-	//	if (model)
+	//	
+	//	for (size_t i = 0; i < 10; i++)
 	//	{
-	//		//model->ResizeVarialble(20);
-
-	//		MeshRenderer* mr = obj->AddComponent<MeshRenderer>(eComponentType::MeshRenderer);
-	//		mr->ForceSetMaterial(model->GetLastMaterial());
-	//		mr->SetModel(model);
-	//	}
-
-	//	//SetCollider
-	//	Model* collider = GETSINGLE(ResourceMgr)->Find<Model>(L"CapTowerCollider");
-	//	if (collider)
-	//	{
-	//		Physical* objPhysical = obj->AddComponent<Physical>(eComponentType::Physical);
-	//		objPhysical->InitialTriangleMeshProperties(scale * offset);
-
-	//		PhysXRigidBody* rigid = obj->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	//		rigid->RemoveGravity();
-
-	//		PhysXCollider* collider = obj->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//		for (size_t j = 0; j < 10; j++)
+	//		{
+	//			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
+	//			directionalLight->SetPos({ static_cast<float>(i * 4), 1.f, static_cast<float>(j * 4) });
+	//			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+	//			lightComp->SetType(eLightType::Point);
+	//			lightComp->SetDiffuse(Vector4(static_cast<float>(i % 3), 1.f, static_cast<float>(j % 3), 1.f));
+	//			lightComp->SetRadius(3.f);
+	//			lightComp->SetFallOffStart(2.f);
+	//			lightComp->SetFallOffEnd(3.f);
+	//		}
 	//	}
 	//}
+//////////////////////////////////
+
+
 
 	CreatePlayerUI();
 
@@ -430,8 +356,8 @@ void ScenePlay::Enter()
 {
 	Scene::Enter();
 
-	mCamera->SetPos(Vector3(0.f, 75.f, -75.f));
-	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
+	mCamera->SetPos(Vector3(0.f, 0.f, 0.f));
+	//mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }
 

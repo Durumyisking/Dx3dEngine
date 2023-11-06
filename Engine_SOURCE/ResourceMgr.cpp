@@ -155,7 +155,7 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding023", L"CityWorldHomeBuilding023");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding024", L"CityWorldHomeBuilding024");
 	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding026", L"CityWorldHomeBuilding026");
-	 
+
 	//GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeBuilding/CityWorldHomeBuilding014", L"CityWorldHomeBuilding014");  // --- 14번 Building 출력안됨
 
 #pragma endregion
@@ -230,12 +230,17 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 #pragma endregion
 
 #pragma region Tree
-		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000", L"CityWorldHomeTree000");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/CityWorldObject/CityWorldHomeTree/CityWorldHomeTree000", L"CityWorldHomeTree000");
 
 #pragma endregion
 
 #pragma region BrickBreak
-		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/BrickBreak", L"BlockBrickBreak");
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/BrickBreak", L"BlockBrickBreak");
+
+#pragma endregion
+
+#pragma region PowerMoon
+	GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/LifeAndShine/Shine", L"Shine");
 
 #pragma endregion
 
@@ -245,7 +250,7 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 #pragma endregion
 
 
-	*bfinish = true;
+	* bfinish = true;
 }
 
 
@@ -302,26 +307,26 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(8, L"HomeBuilding004_7Material");
 	model->SetVariableMaterialsByKey(9, L"HomeBuilding004_8Material");
 	model->SetVariableMaterialsByKey(10, L"HomeBuilding004_9Material");
-	model->SetVariableMaterialsByKey(11 , L"HomeBuilding004_10Material");
-	model->SetVariableMaterialsByKey(12 , L"HomeBuilding004_11Material");
-	model->SetVariableMaterialsByKey(13 , L"HomeBuilding004_13Material");
-	model->SetVariableMaterialsByKey(14 , L"HomeBuilding004_12Material");
+	model->SetVariableMaterialsByKey(11, L"HomeBuilding004_10Material");
+	model->SetVariableMaterialsByKey(12, L"HomeBuilding004_11Material");
+	model->SetVariableMaterialsByKey(13, L"HomeBuilding004_13Material");
+	model->SetVariableMaterialsByKey(14, L"HomeBuilding004_12Material");
 	model = Find<Model>(L"CityWorldHomeBuilding005");
-	model->SetVariableMaterialsByKey(0,L"HomeBuilding005_0Material");
-	model->SetVariableMaterialsByKey(1,L"HomeBuilding005_1Material");
-	model->SetVariableMaterialsByKey(2,L"HomeBuilding005_2Material");
-	model->SetVariableMaterialsByKey(3,L"HomeBuilding005_1Material"); //수정 필요 BuildingEntrance02
-	model->SetVariableMaterialsByKey(4,L"HomeBuilding005_3Material");
-	model->SetVariableMaterialsByKey(5,L"HomeBuilding005_4Material");
-	model->SetVariableMaterialsByKey(6,L"HomeBuilding005_5Material");
-	model->SetVariableMaterialsByKey(7,L"HomeBuilding005_6Material");
-	model->SetVariableMaterialsByKey(8,L"HomeBuilding005_7Material");
-	model->SetVariableMaterialsByKey(9,L"HomeBuilding005_8Material");
-	model->SetVariableMaterialsByKey(10,L"HomeBuilding005_9Material");
-	model->SetVariableMaterialsByKey(11,L"HomeBuilding005_10Material");
-	model->SetVariableMaterialsByKey(12,L"HomeBuilding005_11Material");
-	model->SetVariableMaterialsByKey(13,L"HomeBuilding005_13Material");
-	model->SetVariableMaterialsByKey(14,L"HomeBuilding005_12Material");
+	model->SetVariableMaterialsByKey(0, L"HomeBuilding005_0Material");
+	model->SetVariableMaterialsByKey(1, L"HomeBuilding005_1Material");
+	model->SetVariableMaterialsByKey(2, L"HomeBuilding005_2Material");
+	model->SetVariableMaterialsByKey(3, L"HomeBuilding005_1Material"); //수정 필요 BuildingEntrance02
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding005_3Material");
+	model->SetVariableMaterialsByKey(5, L"HomeBuilding005_4Material");
+	model->SetVariableMaterialsByKey(6, L"HomeBuilding005_5Material");
+	model->SetVariableMaterialsByKey(7, L"HomeBuilding005_6Material");
+	model->SetVariableMaterialsByKey(8, L"HomeBuilding005_7Material");
+	model->SetVariableMaterialsByKey(9, L"HomeBuilding005_8Material");
+	model->SetVariableMaterialsByKey(10, L"HomeBuilding005_9Material");
+	model->SetVariableMaterialsByKey(11, L"HomeBuilding005_10Material");
+	model->SetVariableMaterialsByKey(12, L"HomeBuilding005_11Material");
+	model->SetVariableMaterialsByKey(13, L"HomeBuilding005_13Material");
+	model->SetVariableMaterialsByKey(14, L"HomeBuilding005_12Material");
 	model = Find<Model>(L"CityWorldHomeBuilding007");
 	model->SetVariableMaterialsByKey(0, L"HomeBuilding007_0Material");
 	model->SetVariableMaterialsByKey(1, L"HomeBuilding007_1Material");
@@ -375,7 +380,7 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(8, L"HomeBuilding0011_8Material");
 	model->SetVariableMaterialsByKey(9, L"HomeBuilding0011_9Material");
 	model->SetVariableMaterialsByKey(10, L"HomeBuilding0011_9Material");
-	model->SetVariableMaterialsByKey(11,L"HomeBuilding0011_10Material");
+	model->SetVariableMaterialsByKey(11, L"HomeBuilding0011_10Material");
 	model = Find<Model>(L"CityWorldHomeBuilding012");
 	model->SetVariableMaterialsByKey(0, L"HomeBuilding0012_0Material");
 	model->SetVariableMaterialsByKey(1, L"HomeBuilding0012_1Material");
@@ -435,7 +440,7 @@ void ResourceMgr::SettingModelMaterial()
 	model->SetVariableMaterialsByKey(1, L"HomeBuilding0018_0Material");
 	model->SetVariableMaterialsByKey(2, L"HomeBuilding0018_4Material");
 	model->SetVariableMaterialsByKey(3, L"HomeBuilding0018_10Material"); //
-	model->SetVariableMaterialsByKey(4, L"HomeBuilding0018_4Material"); 
+	model->SetVariableMaterialsByKey(4, L"HomeBuilding0018_4Material");
 	model->SetVariableMaterialsByKey(5, L"HomeBuilding0018_5Material");
 	model->SetVariableMaterialsByKey(6, L"HomeBuilding0018_6Material");
 	model->SetVariableMaterialsByKey(7, L"HomeBuilding0018_7Material"); //

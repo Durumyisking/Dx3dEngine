@@ -37,16 +37,15 @@ float4 main(VSOut vsIn) : SV_Target
     
     // 빛 타입에 따라 다르게 적용되도록해야함 현재는 dir light만 적용중
     
-    for (unsigned int i = 0; i < lightCount; ++i)
+    for (uint i = 0; i < lightCount; ++i)
     {
-        float3 lightVec = lightAttributes[i].type == LIGHT_DIRECTIONAL 
-        ? -lightAttributes[i].direction.xyz
-        : lightAttributes[i].position.xyz - vsIn.WorldPos;
+        float3 pixelToLight = normalize(lightAttributes[i].position.xyz - vsIn.WorldPos);
+        //? -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz
+        //: normalize(lightAttributes[i].position.xyz - vsIn.WorldPos);
           
         float3 radiance = LightRadiance(lightAttributes[i], vsIn.WorldPos, normal);
                 
-        directLighting = PBR_DirectLighting(pixelToEye, lightVec, albedo.xyz, normal.xyz, metallic, roughness) ;
-        directLighting *= radiance;
+        directLighting += PBR_DirectLighting(pixelToEye, pixelToLight, albedo.xyz, normal.xyz, metallic, roughness) * radiance;
 
     }
 

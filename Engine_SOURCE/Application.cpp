@@ -78,7 +78,6 @@ void Application::Render()
 	if (!GETSINGLE(TimeMgr)->IsUpdatePass())
 	{
 		
-		GETSINGLE(TimeMgr)->Render(mHdc);
 		GETSINGLE(InputMgr)->Render(mHdc);
 		//		CollisionMgr::Render();
 		mGraphicDevice->AdjustToDefaultResolutionViewPorts();
@@ -87,6 +86,7 @@ void Application::Render()
 		//UIManager::Render();
 		//GETSINGLE(SceneMgr)->Render();
 		GETSINGLE(SceneMgr)->FontRender();
+		GETSINGLE(TimeMgr)->Render(mHdc);
 	}
 }	
 

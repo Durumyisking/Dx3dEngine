@@ -6,7 +6,7 @@ class Texture;
 class CubeMapHDR : public GameObj
 {
 #define SIZE_IRRADIANCE 32;
-#define SIZE_PREFILTER 256;
+#define SIZE_PREFILTER 128;
 
 
 public:

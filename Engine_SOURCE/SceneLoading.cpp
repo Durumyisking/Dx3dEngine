@@ -54,7 +54,7 @@ void SceneLoading::update()
 {
 	if (GETSINGLE(AsyncLoad)->IsLoadFinish())
 	{
-		GETSINGLE(ResourceMgr)->SettingModelMaterial();
+		//GETSINGLE(ResourceMgr)->SettingModelMaterial();
 		GETSINGLE(SceneMgr)->LoadScene(SceneMgr::eSceneType::Play);
 		return;
 	}

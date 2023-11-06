@@ -45,7 +45,7 @@ void FontWrapper::DrawFont(const wchar_t* str, float x, float y, float size, UIN
 		0      // Flags (for example FW1_RESTORESTATE to keep context states unchanged)
 	);
 
-	//GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Point), 1, renderer::samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
+	GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Linear), 1, renderer::samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
 }
 
 void FontWrapper::DrawFont(const wchar_t* str, math::Vector3 pos, float size, UINT rgb)
@@ -64,7 +64,7 @@ void FontWrapper::DrawFont(const wchar_t* str, math::Vector3 pos, float size, UI
 		0 
 	);
 
-	//GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Point), 1, renderer::samplerState[static_cast<UINT>(eSamplerType::Point)].GetAddressOf());
+	GetDevice()->BindSamplers(static_cast<UINT>(eSamplerType::Linear), 1, renderer::samplerState[static_cast<UINT>(eSamplerType::Linear)].GetAddressOf());
 }
 
 void FontWrapper::Release()

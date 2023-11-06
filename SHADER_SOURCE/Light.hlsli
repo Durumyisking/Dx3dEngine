@@ -244,7 +244,7 @@ float4 CombineLights(float4 color, LightColor lightColor)
 {
     color.rgb *= lightColor.diffuse.rgb;
 
-    //color.rgb += lightColor.specular.rgb;
+    color.rgb += lightColor.specular.rgb;
     
     color.rgb += color.rgb * lightColor.ambient.rgb;
 
@@ -263,26 +263,27 @@ float3 DiffuseIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
 }
 
 float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
-                   float metallic, float roughness, float pixelToCam)
+                   float metallic, float roughness, float pixelToCamDist)
 {
-    float mip = pixelToCam / 1.2f;
+    float mip = pixelToCamDist / 1.2f;
     if(mip > 6)
         mip = 6;
     float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(dot(normalWorld, pixelToEye), 1.0 - roughness), 0.0f).rg;
-    float3 specularIrradiance = prefilteredMap.SampleLevel(linearSampler, reflect(-pixelToEye, normalWorld),
-                                                            0 + roughness * 5.f).rgb;
+    float3 specularIrradiance = CubeMapTexture.SampleLevel(linearSampler, reflect(-pixelToEye, normalWorld),
+                                                            roughness * 7.f).rgb;
     const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
     float3 F0 = lerp(Fdielectric, albedo, metallic);
 
     return (F0 * specularBRDF.x + specularBRDF.y) * specularIrradiance;
 }
 float3 AmbientLightingByIBL(float3 albedo, float3 normalW, float3 pixelToEye,
-                            float metallic, float roughness, float pixelToCam)
+                            float metallic, float roughness, float pixelToCamDist)
 {
     float3 diffuseIBL = DiffuseIBL(albedo, normalW, pixelToEye, metallic);
-    float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCam);
+    float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCamDist);
     
     return (diffuseIBL + specularIBL);
+
 }
 
 
@@ -380,18 +381,21 @@ float PCSS(float2 uv, float zReceiverNdc, Texture2D shadowMap, matrix invProj, f
     }
 }
 
-float3 LightRadiance(in LightAttribute light, in float3 posWorld, in float3 normalWorld)
+float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld)
 {
     // Directional light
-    float3 lightVec = light.type & LIGHT_DIRECTIONAL
+    float3 lightVec = light.type == LIGHT_DIRECTIONAL
                       ? -light.direction.xyz
                       : light.position.xyz - posWorld;
         
     float lightDist = length(lightVec);
     lightVec /= lightDist;
-
+    if (lightDist > light.fallOffEnd)
+    {
+        return (float3)0.f;
+    }
     // Spot light
-    float spotFator = light.type & LIGHT_SPOT
+    float spotFator = light.type == LIGHT_SPOT
                      ? pow(max(-dot(lightVec, light.direction.xyz), 0.0f), light.spotPower)
                       : 1.0f;
         
@@ -406,14 +410,14 @@ float3 LightRadiance(in LightAttribute light, in float3 posWorld, in float3 norm
     
     // Shadow map
     float shadowFactor = 1.0;
-    float3 radiance = light.color.diffuse.xyz * spotFator * att * shadowFactor;
+    float3 radiance = light.color.diffuse.xyz * att;
 
     return radiance;
 }
 float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, Texture2D shadowMap)
 {
      // Directional light
-    float3 lightVec = light.type & LIGHT_DIRECTIONAL
+    float3 lightVec = light.type == LIGHT_DIRECTIONAL
                       ? -light.direction.xyz
                       : light.position.xyz - posWorld;
         
@@ -421,7 +425,7 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
     lightVec /= lightDist;
 
     // Spot light
-    float spotFator = light.type & LIGHT_SPOT
+    float spotFator = light.type == LIGHT_SPOT
                      ? pow(max(-dot(lightVec, light.direction.xyz), 0.0f), light.spotPower)
                       : 1.0f;
         
@@ -450,14 +454,14 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         );
         
         // Baisc Shadow
+        
+            //// 3. 쉐도우맵에서 값 가져오기
+            //float depth = shadowMap.Sample(clampSampler, lightTexcoord).r;
+        
+            //// 4. 가려져 있다면 그림자로 표시
+            //if (depth + 0.00001 < lightScreen.z)
+            //    shadowFactor = 0.0;
         /*
-            // 3. 쉐도우맵에서 값 가져오기
-            float depth = shadowMap.Sample(clampSampler, lightTexcoord).r;
-        
-            // 4. 가려져 있다면 그림자로 표시
-            if (depth + 0.00001 < lightScreen.z)
-                shadowFactor = 0.0;
-        
             
             ///////////////////////////////////////////////////////////////
             dx11에서는 위 코드를 함수로 사용할 수 있게 만들어놓음
@@ -473,11 +477,11 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         // pcf sampliing
         
         uint width, height, numMips;
-        shadowMap.GetDimensions(0, width, height, numMips);
+        shadowMap.GetDimensions(0, width, height, numMips); // SRV의 정보를 얻는다.
 
         // Texel size
-        float dx = 5.0 / (float) width;
-        shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.00001, dx, shadowMap);
+        float dx = 3.0 / (float) width;
+        shadowFactor = PCF_Filter(lightTexcoord.xy, lightScreen.z - 0.001, dx, shadowMap);
         
         
         // pcss sampling
@@ -488,28 +492,27 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         
     }
 
-    float3 radiance = light.color.diffuse.xyz * spotFator * att * shadowFactor;
+    float3 radiance = light.color.diffuse.xyz * spotFator * att * 1.f;
 
     return radiance;
 }
 
 
 
-float3 PBR_DirectLighting(float3 pixelToEye, float3 lightDir, float3 albedo, float3 normal, float metallic, float roughness)
+float3 PBR_DirectLighting(float3 pixelToEye, float3 pixelToLight, float3 albedo, float3 normal, float metallic, float roughness)
 {
     float3 directLighting = (float3) 0.f;   
     
-    // dir light빛 방향 월드 기준일거임
-    float3 lightVec = -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz;
+    //float3 lightVec = -normalize(lightDir).xyz;
 
-    float3 halfway = normalize(pixelToEye + lightVec);
+    float3 halfway = normalize(pixelToEye + pixelToLight);
         
-    float NdotI = max(0.0, dot(normal.xyz, lightVec));
+    float NdotI = max(0.0, dot(normal.xyz, pixelToLight));
     float NdotH = max(0.0, dot(normal.xyz, halfway));
     float NdotO = max(0.0, dot(normal.xyz, pixelToEye));
         
-    const float3 Fdielectric = 0.4f; // 비금속(Dielectric) 재질의 F0
-    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic);
+    const float3 Fdielectric = 0.04f; // 비금속(Dielectric) 재질의 F0
+    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // Metalness가 클수록 albedo 사용
     float3 F = fresnelSchlick(F0, max(0.0, dot(halfway, pixelToEye)));
     float3 kd = lerp(float3(1, 1, 1) - F, float3(0, 0, 0), metallic);
     float3 diffuseBRDF = kd * albedo.xyz;
@@ -517,10 +520,8 @@ float3 PBR_DirectLighting(float3 pixelToEye, float3 lightDir, float3 albedo, flo
     float D = ndfGGX(NdotH, roughness);
     float3 G = gaSchlickGGX(NdotI, NdotO, roughness);
     float3 specularBRDF = (F * D * G) / max(1e-5, 4.0 * NdotI * NdotO);
-
-    // float3 radiance = lightAttributes[0].color.diffuse.xyz;
       
-    directLighting += (diffuseBRDF + specularBRDF); // * NdotI;
+    directLighting += (diffuseBRDF + specularBRDF); // * NdotI // 마리오는 그림자 이외의 음영이 없음;
     
     return directLighting;
 }

@@ -20,13 +20,13 @@ float4 main(VSOut psIn) : SV_TARGET
     float nrSamples = 0.0;
 
     
-    for (float phi = 0.0; phi < 2.0 * 3.1415926535f; phi += sampleDelta)
+    for (float phi = 0.0; phi < 2.0 * 3.1415926535f; phi += sampleDelta) // 구면상에서의 좌 우 각도
     {
-        for (float theta = 0.0; theta < 0.5 * 3.1415926535f; theta += sampleDelta)
+        for (float theta = 0.0; theta < 0.5 * 3.1415926535f; theta += sampleDelta) // 구면상에서의 위 아래 각도
         {
-			// spherical to cartesian (in tangent space)
+			// 구면 -> 데카르트
             float3 tangentSample = float3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
-			// tangent space to world
+			// 데카르트 -> world
             float3 sampleVec = tangentSample.x * right + tangentSample.y * up + tangentSample.z * normal;
 
             irradiance += CubeMapTexture.Sample(linearSampler, -sampleVec).rgb * cos(theta) * sin(theta);
