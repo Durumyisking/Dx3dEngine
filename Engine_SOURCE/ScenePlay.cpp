@@ -171,14 +171,14 @@ void ScenePlay::Initialize()
 
 
 	{
-	/*	mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 
-		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);*/
+		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 	}
-	//{
-	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-	//	mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
-	//}
+	{
+		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
+	}
 
 	//{
 	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
@@ -191,16 +191,16 @@ void ScenePlay::Initialize()
 		t->BindAllShaderResource(12);
 	}
 
-	//{
-	//	SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
-	//	skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-	//	skySphere->SetName(L"SkySphere");
-	//}
+	{
+		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
+		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		skySphere->SetName(L"SkySphere");
+	}
 
-	//{
-	//	CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-	//	ground->SetPos(Vector3::Zero);
-	//}
+	{
+		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+		ground->SetPos(Vector3::Zero);
+	}
 
 	//{
 	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
@@ -219,8 +219,8 @@ void ScenePlay::Initialize()
 	//}
 
 	
-	BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-	block->SetPos(Vector3(15.f, 100.f, 13.f));
+	//BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+	//block->SetPos(Vector3(15.f, 100.f, 13.f));
 
 
 	//for (size_t i = 0; i < 7; i++)
@@ -248,24 +248,40 @@ void ScenePlay::Initialize()
 	//}
 
 
+	//InstancingContainer* blockContainer = object::Instantiate<InstancingContainer>(eLayerType::ObjectsContainer, this, L"BlockBrickContainer");
+	//for (size_t i = 0; i < 10; i++)
+	//{
+	//	for (size_t j = 0; j < 9; j++)
+	//	{
+	//		for (size_t k = 1; k < 10; k++)
+	//		{
+	//			BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+	//			//block->SetInstance(true);
+	//			block->SetPos(Vector3(static_cast<float>(i), 0.5f + static_cast<float>(j), static_cast<float>(k)));
+	//			//blockContainer->PushObject(block);
+	//		}
+	//	}
+	//}
+	//blockContainer->ResizeObjectInstancingData();
+
 // 세현 포인트라이트
-	{
-		
-		//for (size_t i = 0; i < 10; i++)
-		//{
-		//	for (size_t j = 0; j < 10; j++)
-		//	{
-		//		GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
-		//		directionalLight->SetPos({ static_cast<float>(i * 4), 1.f, static_cast<float>(j * 4) });
-		//		Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
-		//		lightComp->SetType(eLightType::Point);
-		//		lightComp->SetDiffuse(Vector4(static_cast<float>(i % 3), 1.f, static_cast<float>(j % 3), 1.f));
-		//		lightComp->SetRadius(3.f);
-		//		lightComp->SetFallOffStart(2.f);
-		//		lightComp->SetFallOffEnd(3.f);
-		//	}
-		//}
-	}
+	//{
+	//	
+	//	for (size_t i = 0; i < 10; i++)
+	//	{
+	//		for (size_t j = 0; j < 10; j++)
+	//		{
+	//			GameObj* directionalLight = object::Instantiate<GameObj>(eLayerType::Default, this, L"DirectionalLight");
+	//			directionalLight->SetPos({ static_cast<float>(i * 4), 1.f, static_cast<float>(j * 4) });
+	//			Light* lightComp = directionalLight->AddComponent<Light>(eComponentType::Light);
+	//			lightComp->SetType(eLightType::Point);
+	//			lightComp->SetDiffuse(Vector4(static_cast<float>(i % 3), 1.f, static_cast<float>(j % 3), 1.f));
+	//			lightComp->SetRadius(3.f);
+	//			lightComp->SetFallOffStart(2.f);
+	//			lightComp->SetFallOffEnd(3.f);
+	//		}
+	//	}
+	//}
 //////////////////////////////////
 
 
@@ -334,8 +350,8 @@ void ScenePlay::Enter()
 {
 	Scene::Enter();
 
-	mCamera->SetPos(Vector3(0.f, 75.f, -75.f));
-	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
+	mCamera->SetPos(Vector3(0.f, 0.f, 0.f));
+	//mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }
 

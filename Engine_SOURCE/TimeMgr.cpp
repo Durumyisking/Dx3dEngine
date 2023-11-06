@@ -1,5 +1,6 @@
 #include "TimeMgr.h"
 #include "Application.h"
+#include "FontWrapper.h"
 
 extern Application application;
 
@@ -56,6 +57,7 @@ void TimeMgr::Update()
 
 void TimeMgr::Render(HDC hdc)
 {
+    static wchar_t szFloat[50] = {}; 
     static int iCount = 0;
     ++iCount;
 
@@ -65,12 +67,11 @@ void TimeMgr::Render(HDC hdc)
     {
         HWND hWnd = application.GetHwnd();
 
-        wchar_t szFloat[50] = {};
+        //wchar_t szFloat[50] = {};
         float FPS = 1.f / mDeltaTimeConstant;
         swprintf_s(szFloat, 50, L"Fps : %d", iCount);
         int iLen = static_cast<int>(wcsnlen_s(szFloat, 50));
         //TextOut(_dc, 10, 10, szFloat, iLen);
-
         SetWindowText(hWnd, szFloat);
 
         // 누적시간, 카운트 초기화
@@ -78,6 +79,7 @@ void TimeMgr::Render(HDC hdc)
         iCount = 0;
     }
 
+    GETSINGLE(FontWrapper)->DrawFont(szFloat, 50.f, 800.f, 50.f, FONT_RGBA(255, 255, 255, 255));
 
 }
 

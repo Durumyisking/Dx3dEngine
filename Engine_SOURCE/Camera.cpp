@@ -121,7 +121,7 @@ void Camera::Render()
 		renderMergedOutput();
 	}
 
-	renderPostProcess();
+	//renderPostProcess();
 	//std::wcout << L"Rending Mesh Count\n" << Mesh::sMeshCount << std::endl;
 }
 

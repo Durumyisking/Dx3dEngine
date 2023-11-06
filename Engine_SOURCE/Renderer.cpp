@@ -826,7 +826,7 @@ namespace renderer
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"t_m", L"temp/metallic.png");
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"t_r", L"temp/roughness.png");
 
-		GETSINGLE(ResourceMgr)->Load<Texture>(L"BRDF", L"Textures/BRDF.png");
+		GETSINGLE(ResourceMgr)->Load<Texture>(L"BRDF", L"Textures/BRDF.dds");
 	
 		GETSINGLE(ResourceMgr)->Load<Texture>(L"loading", L"Loading.png");
 
