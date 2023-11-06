@@ -225,6 +225,7 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="BenchA.h" />
     <ClInclude Include="BlockBrickScript.h" />
     <ClInclude Include="CityObjects.h" />
+    <ClInclude Include="EffectObject.h" />
     <ClInclude Include="FenceA.h" />
     <ClInclude Include="FenceB.h" />
     <ClInclude Include="HomeFence_0.h" />
@@ -332,9 +333,12 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterAiScript.h" />
     <ClInclude Include="MonsterStateScript.h" />
+    <ClInclude Include="MoonScript.h" />
     <ClInclude Include="MultiRenderTarget.h" />
     <ClInclude Include="NavigationMgr.h" />
     <ClInclude Include="NaviMesh.h" />
+    <ClInclude Include="PowerMoonObject.h" />
+    <ClInclude Include="PlayerBGMScript.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SoloMeshPathTool.h" />
     <ClInclude Include="Object.h" />
@@ -420,7 +424,11 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="BaseRenderer.cpp" />
     <ClCompile Include="BlockBrick.cpp" />
     <ClCompile Include="BenchA.cpp" />
+
+    <ClCompile Include="EffectObject.cpp" />
+
     <ClCompile Include="BlockBrickScript.cpp" />
+
     <ClCompile Include="FenceA.cpp" />
     <ClCompile Include="FenceB.cpp" />
     <ClCompile Include="HomeFence_0.cpp" />
@@ -521,9 +529,12 @@ copy "$(SolutionDir)assimp-vc143-mtd.dll" "$(SolutionDir)x64\Debug\"
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterAiScript.cpp" />
     <ClCompile Include="MonsterStateScript.cpp" />
+    <ClCompile Include="MoonScript.cpp" />
     <ClCompile Include="MultiRenderTarget.cpp" />
     <ClCompile Include="NavigationMgr.cpp" />
     <ClCompile Include="NaviMesh.cpp" />
+    <ClCompile Include="PowerMoonObject.cpp" />
+    <ClCompile Include="PlayerBGMScript.cpp" />
     <ClCompile Include="SoloMeshPathTool.cpp" />
     <ClCompile Include="Packun.cpp" />
     <ClCompile Include="PackunPostionBall.cpp" />

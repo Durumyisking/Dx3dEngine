@@ -244,6 +244,11 @@ void ResourceMgr::LoadModel_Monster(bool* bfinish)
 
 #pragma endregion
 
+#pragma region PowerMoon
+		GETSINGLE(FileMgr)->ModelLoad(L"..//Resources/LifeAndShine/Shine", L"Shine");
+
+#pragma endregion
+
 
 	* bfinish = true;
 }

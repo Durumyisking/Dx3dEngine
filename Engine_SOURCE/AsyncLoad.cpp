@@ -1773,6 +1773,11 @@ void AsyncLoad::loadCityTexture()
 	textureLoad(L"shinebody", L"LifeAndShine/Shine/Image", TextureState::AlEmNrRg);
 
 #pragma endregion
+
+#pragma region PowerMoon
+		textureLoad(L"shinebody", L"LifeAndShine/Shine/Image", TextureState::AlEmNrRg);
+
+#pragma endregion
 }
 
 void AsyncLoad::loadBuildingMaterials()

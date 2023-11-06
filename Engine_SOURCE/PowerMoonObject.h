@@ -1,16 +1,23 @@
 #pragma once
 #include "InstantiativeObject.h"
 
+class Panal;
 class InstancingContainer;
-class BlockBrick : public InstantiativeObject
+class PowerMoonObject : public InstantiativeObject
 {
-
+	enum class ePowerMoonState
+	{
+		None,
+		Appear,
+		Down,
+		Wait,
+	};
 public:
-	BlockBrick();
-	BlockBrick(const BlockBrick& Obj);
-	virtual ~BlockBrick();
+	PowerMoonObject();
+	PowerMoonObject(const PowerMoonObject& Obj);
+	virtual ~PowerMoonObject();
 
-	virtual BlockBrick* Clone() const;
+	virtual PowerMoonObject* Clone() const;
 	virtual void Save(FILE* File) override;
 	virtual void Load(FILE* File) override;
 
@@ -27,9 +34,8 @@ public:
 	virtual void OnTriggerPersist(GameObj* gameObject) override;
 	virtual void OnTriggerExit(GameObj* gameObject) override;
 
-	GETSET(bool, mbInst, Instance)
+	void IsHide(bool isbool) { mbHide = isbool; }
 
-private :
-	bool mbInst;
+private:
+	bool mbHide;
 };
-

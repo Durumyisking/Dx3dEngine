@@ -29,6 +29,7 @@
 #include "Model.h"
 #include "FontWrapper.h"
 
+
 #include "GridScript.h"
 
 #include "Application.h"
@@ -137,7 +138,7 @@ void ScenePlay::Initialize()
 {
 	CreateCameras();
 
-	//TestScene ·Îµå Å×½ºÆ® ·Îµå½Ã¿¡ ¹İº¹ÇØ¼­ ¸ó½ºÅÍ Á¤ÀÇ ¹æÁö
+	//TestScene ë¡œë“œ í…ŒìŠ¤íŠ¸ ë¡œë“œì‹œì— ë°˜ë³µí•´ì„œ ëª¬ìŠ¤í„° ì •ì˜ ë°©ì§€
 	if (GetType() == SceneMgr::eSceneType::Test)
 	{
 		/*{
@@ -174,11 +175,16 @@ void ScenePlay::Initialize()
 		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 
 		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+		//AudioSource* mAudioSource= mCamera->AddComponent<AudioSource>(eComponentType::AudioSource);
+		//mAudioSource->AddClipByKey(L"NewDonkCity");
+		//mAudioSource->SetVolume(L"NewDonkCity", 0.00001f);
+		//mAudioSource->Play(L"NewDonkCity",true);
 	}
 	{
 		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
 		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
 	}
+
 
 	//{
 	//	Goomba* goomba = object::Instantiate<Goomba>(eLayerType::Monster, this);
@@ -264,7 +270,7 @@ void ScenePlay::Initialize()
 	//}
 	//blockContainer->ResizeObjectInstancingData();
 
-// ¼¼Çö Æ÷ÀÎÆ®¶óÀÌÆ®
+// ì„¸í˜„ í¬ì¸íŠ¸ë¼ì´íŠ¸
 	//{
 	//	
 	//	for (size_t i = 0; i < 10; i++)
@@ -298,7 +304,7 @@ void ScenePlay::update()
 	{
 		//mCoinPanal->GetScript<CoinUIScript>()->GetCoin();
 		//mCityCoinPanal->GetScript<CoinUIScript>()->GetCoin();
-		(GETSINGLE(UIManager)->PlayerDie());
+		//(GETSINGLE(UIManager)->PlayerDie());
 		//mCoinPanal->GetScript<CoinUIScript>()->ActionToPlayerDied();
 	}
 
