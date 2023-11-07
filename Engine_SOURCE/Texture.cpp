@@ -377,32 +377,32 @@ HRESULT Texture::Load(const std::wstring& path)
 			return S_FALSE;
 	}
 	////TEST
-	{
-		std::vector<std::uint8_t> pixels{};
-		pixels.resize(mImage.GetPixelsSize());
-		std::memcpy(pixels.data(), mImage.GetPixels(), pixels.size());
+	//{
+	//	std::vector<std::uint8_t> pixels{};
+	//	pixels.resize(mImage.GetPixelsSize());
+	//	std::memcpy(pixels.data(), mImage.GetPixels(), pixels.size());
 
-		ScratchImage image;
-		std::memcpy(&image, &mImage, sizeof(ScratchImage));
+	//	ScratchImage image;
+	//	std::memcpy(&image, &mImage, sizeof(ScratchImage));
 
-		for (size_t i = 0; i < pixels.size(); ++i)
-		{
-			if (i % 4 == 0)
-				pixels[i] = 255 - pixels[i];
-		}
+	//	for (size_t i = 0; i < pixels.size(); ++i)
+	//	{
+	//		if (i % 4 == 0)
+	//			pixels[i] = 255 - pixels[i];
+	//	}
 
-		std::memcpy(image.GetImages()->pixels, pixels.data(), pixels.size());
+	//	std::memcpy(image.GetImages()->pixels, pixels.data(), pixels.size());
 
-		{
-			const std::wstring folderName = L"C:/Users/csh/Desktop/Dx3dEngine-sehyun/Dx3dEngine/TEST/";
-			const std::wstring fileName = std::filesystem::path{ path }.filename().wstring();
-			if (fileName.find(L"_nrm") != std::wstring::npos)
-			{
-				HRESULT result = SaveToWICFile(*image.GetImages(), WIC_FLAGS_NONE, GetWICCodec(WIC_CODEC_PNG), (folderName + fileName).c_str());
-				assert(result == S_OK);
-			}
-		}
-	}
+	//	{
+	//		const std::wstring folderName = L"C:/Users/csh/Desktop/Dx3dEngine-sehyun/Dx3dEngine/TEST/";
+	//		const std::wstring fileName = std::filesystem::path{ path }.filename().wstring();
+	//		if (fileName.find(L"_nrm") != std::wstring::npos)
+	//		{
+	//			HRESULT result = SaveToWICFile(*image.GetImages(), WIC_FLAGS_NONE, GetWICCodec(WIC_CODEC_PNG), (folderName + fileName).c_str());
+	//			assert(result == S_OK);
+	//		}
+	//	}
+	//}
 
 	CreateShaderResourceView(
 		GetDevice()->GetID3D11Device()

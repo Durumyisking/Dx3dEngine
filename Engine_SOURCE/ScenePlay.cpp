@@ -170,19 +170,19 @@ void ScenePlay::Initialize()
 	////TriangleMesh Test
 
 
-	{
-		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+	//{
+	//	mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 
-		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
-		//AudioSource* mAudioSource= mCamera->AddComponent<AudioSource>(eComponentType::AudioSource);
-		//mAudioSource->AddClipByKey(L"NewDonkCity");
-		//mAudioSource->SetVolume(L"NewDonkCity", 0.00001f);
-		//mAudioSource->Play(L"NewDonkCity",true);
-	}
-	{
-		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
-	}
+	//	mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+	//	//AudioSource* mAudioSource= mCamera->AddComponent<AudioSource>(eComponentType::AudioSource);
+	//	//mAudioSource->AddClipByKey(L"NewDonkCity");
+	//	//mAudioSource->SetVolume(L"NewDonkCity", 0.00001f);
+	//	//mAudioSource->Play(L"NewDonkCity",true);
+	//}
+	//{
+	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+	//	mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
+	//}
 
 
 	//{
@@ -196,16 +196,16 @@ void ScenePlay::Initialize()
 		t->BindAllShaderResource(12);
 	}
 
-	{
-		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
-		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		skySphere->SetName(L"SkySphere");
-	}
+	//{
+	//	SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
+	//	skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+	//	skySphere->SetName(L"SkySphere");
+	//}
 
-	{
-		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-		ground->SetPos(Vector3::Zero);
-	}
+	//{
+	//	CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+	//	ground->SetPos(Vector3::Zero);
+	//}
 
 	//{
 	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
@@ -260,7 +260,7 @@ void ScenePlay::Initialize()
 	//	{
 	//		for (size_t k = 1; k < 10; k++)
 	//		{
-	//			BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
 	//			//block->SetInstance(true);
 	//			block->SetPos(Vector3(static_cast<float>(i), 0.5f + static_cast<float>(j), static_cast<float>(k)));
 	//			//blockContainer->PushObject(block);
@@ -356,7 +356,7 @@ void ScenePlay::Enter()
 	Scene::Enter();
 
 	mCamera->SetPos(Vector3(0.f, 0.f, 0.f));
-	//mCamera->GetComponent<Transform>()->SetRotationX(45.f);
+	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }
 

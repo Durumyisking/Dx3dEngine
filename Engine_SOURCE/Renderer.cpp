@@ -585,7 +585,7 @@ namespace renderer
 			shader->Create(eShaderStage::PS, L"PBRPS.hlsl", "main");
 			GETSINGLE(ResourceMgr)->Insert<Shader>(L"PBRShader", shader);
 			shader->SetBSState(eBlendStateType::Default);
-
+			//shader->SetRSState(eRasterizerType::SolidFront);
 		}
 #pragma endregion
 

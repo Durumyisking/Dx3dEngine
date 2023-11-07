@@ -54,7 +54,7 @@ float4 main(VSOut vsIn) : SV_Target
     //outColor.xyz = DiffuseIBL(albedo.xyz, normal, pixelToEye, metallic);
     //outColor.xyz = SpecularIBL(albedo.xyz, normal, pixelToEye, metallic, roughness);
     //outColor.xyz = directLighting;
-    outColor.xyz = ambientLighting + directLighting + emission;
+    outColor.xyz = ambientLighting ;
 
     
     return float4(outColor.xyz, 1.f);;

@@ -261,16 +261,17 @@ float3 DiffuseIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
     
     return kd * albedo * irradiance;
 }
-
 float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
                    float metallic, float roughness, float pixelToCamDist)
 {
-    float mip = pixelToCamDist / 1.2f;
-    if(mip > 6)
-        mip = 6;
-    float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(dot(normalWorld, pixelToEye), 1.0 - roughness), 0.0f).rg;
-    float3 specularIrradiance = CubeMapTexture.SampleLevel(linearSampler, reflect(-pixelToEye, normalWorld),
-                                                            roughness * 7.f).rgb;
+    float BRDF_X = dot(normalWorld, pixelToEye);
+    float BRDF_Y = 1.0 - roughness; // imageBaker의 LUT는 상하 반전
+    
+    float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(BRDF_X, BRDF_Y), 0.0f).rg; // 정확한 값 가져오기 위해 clampSampelr
+    
+    float3 reflectVector = reflect(-pixelToEye, normalWorld);
+    float mipLevel = roughness * 7.f;
+    float3 specularIrradiance = CubeMapTexture.SampleLevel(linearSampler, reflectVector, mipLevel).rgb;
     const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
     float3 F0 = lerp(Fdielectric, albedo, metallic);
 
@@ -521,7 +522,7 @@ float3 PBR_DirectLighting(float3 pixelToEye, float3 pixelToLight, float3 albedo,
     float3 G = gaSchlickGGX(NdotI, NdotO, roughness);
     float3 specularBRDF = (F * D * G) / max(1e-5, 4.0 * NdotI * NdotO);
       
-    directLighting += (diffuseBRDF + specularBRDF); // * NdotI // 마리오는 그림자 이외의 음영이 없음;
+    directLighting += (diffuseBRDF + specularBRDF) * NdotI; // 마리오는 그림자 이외의 음영이 없음;
     
     return directLighting;
 }
