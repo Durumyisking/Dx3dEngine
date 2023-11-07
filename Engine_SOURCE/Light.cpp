@@ -37,7 +37,7 @@ void Light::FixedUpdate()
 	Vector3 position = tr->GetPosition();
 	if (eLightType::Point == mAttribute.type)
 	{
-		tr->SetScale(Vector3(mAttribute.radius * 5.f, mAttribute.radius * 5.f, mAttribute.radius * 5.f));
+		//tr->SetScale(Vector3(mAttribute.radius * 5.f, mAttribute.radius * 5.f, mAttribute.radius * 5.f));
 	}
 	else
 	{

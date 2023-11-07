@@ -260,7 +260,7 @@ float3 DiffuseIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
     float3 kd = lerp(1.0 - F, 0.0, metallic);
     float3 irradiance = irradianceMap.SampleLevel(linearSampler, normalWorld, 0).rgb;
     
-    return irradiance;
+    return kd * albedo * irradiance;
 }
 float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
                    float metallic, float roughness, float pixelToCamDist)
@@ -283,7 +283,7 @@ float3 AmbientLightingByIBL(float3 albedo, float3 normalW, float3 pixelToEye,
     float3 diffuseIBL = DiffuseIBL(albedo, normalW, pixelToEye, metallic);
     float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCamDist);
     
-    return (diffuseIBL );
+    return (diffuseIBL + specularIBL);
 }
 
 
@@ -391,10 +391,10 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld)
         
     float lightDist = length(lightVec);
     lightVec /= lightDist;
-    if (lightDist > light.fallOffEnd)
-    {
-        return (float3)0.f;
-    }
+    //if (lightDist > light.fallOffEnd)
+    //{
+    //    return (float3)0.f;
+    //}
     // Spot light
     float spotFator = light.type == LIGHT_SPOT
                      ? pow(max(-dot(lightVec, light.direction.xyz), 0.0f), light.spotPower)
@@ -500,29 +500,28 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
 
 
 
-float3 PBR_DirectLighting(float3 pixelToEye, float3 pixelToLight, float3 albedo, float3 normal, float metallic, float roughness)
+float3 PBR_DirectLighting(float3 pixelToEye, float3 pixelToLight, float3 albedo, float3 normal, float metalness, float roughness)
 {
     float3 directLighting = (float3) 0.f;   
     
-    //float3 lightVec = -normalize(lightDir).xyz;
-
     float3 halfway = normalize(pixelToEye + pixelToLight);
         
-    float NdotI = max(0.0, dot(normal.xyz, pixelToLight));
+    float NdotL = max(0.0, dot(normal.xyz, pixelToLight));
     float NdotH = max(0.0, dot(normal.xyz, halfway));
     float NdotO = max(0.0, dot(normal.xyz, pixelToEye));
         
-    const float3 Fdielectric = 0.04f; // 비금속(Dielectric) 재질의 F0
-    float3 F0 = lerp(Fdielectric, albedo.xyz, metallic); // Metalness가 클수록 albedo 사용
-    float3 F = fresnelSchlick(F0, max(0.0, dot(halfway, pixelToEye)));
-    float3 kd = lerp(float3(1, 1, 1) - F, float3(0, 0, 0), metallic);
+    float3 F0 = lerp(Fdielectric, albedo.xyz, metalness);
+    float3 F = fresnelSchlick(F0, max(0.0, dot(halfway, pixelToEye))); // 프레넬 효과
+    // metalness가 높을수록 diffuse 비율 감소
+    // 프레넬이 강한 부분은 최대치 감소
+    float3 kd = lerp((float3) 1.0 - F, (float3)0.0, metalness); 
     float3 diffuseBRDF = kd * albedo.xyz;
 
     float D = ndfGGX(NdotH, roughness);
-    float3 G = gaSchlickGGX(NdotI, NdotO, roughness);
-    float3 specularBRDF = (F * D * G) / max(1e-5, 4.0 * NdotI * NdotO);
+    float3 G = gaSchlickGGX(NdotL, NdotO, roughness);
+    float3 specularBRDF = (F * D * G) / max(1e-5, 4.0 * NdotL * NdotO);
       
-    directLighting += (diffuseBRDF + specularBRDF) * NdotI; // 마리오는 그림자 이외의 음영이 없음;
+    directLighting = (diffuseBRDF + specularBRDF) * NdotL; // 마리오는 그림자 이외의 음영이 없음;
     
     return directLighting;
 }

@@ -39,11 +39,13 @@ float4 main(VSOut vsIn) : SV_Target
     
     for (uint i = 0; i < lightCount; ++i)
     {
-        float3 pixelToLight = normalize(lightAttributes[i].position.xyz - vsIn.WorldPos);
-        //? -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz
-        //: normalize(lightAttributes[i].position.xyz - vsIn.WorldPos);
+        float3 pixelToLight = lightAttributes[i].type == LIGHT_DIRECTIONAL
+        ? -normalize(float4(lightAttributes[0].direction.xyz, 0.f)).xyz
+        : normalize(lightAttributes[i].position.xyz - vsIn.WorldPos);
           
-        float3 radiance = LightRadiance(lightAttributes[i], vsIn.WorldPos, normal);
+        float3 radiance = lightAttributes[i].type == LIGHT_DIRECTIONAL
+        ? 1.f
+        : LightRadiance(lightAttributes[i], vsIn.WorldPos, normal);
                 
         directLighting += PBR_DirectLighting(pixelToEye, pixelToLight, albedo.xyz, normal.xyz, metallic, roughness) * radiance;
 
@@ -54,7 +56,7 @@ float4 main(VSOut vsIn) : SV_Target
     //outColor.xyz = DiffuseIBL(albedo.xyz, normal, pixelToEye, metallic);
     //outColor.xyz = SpecularIBL(albedo.xyz, normal, pixelToEye, metallic, roughness);
     //outColor.xyz = directLighting;
-    outColor.xyz = ambientLighting ;
+    outColor.xyz =  directLighting ;
 
     
     return float4(outColor.xyz, 1.f);;
