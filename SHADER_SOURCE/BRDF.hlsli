@@ -75,7 +75,7 @@ float gaSchlickG1(float cosTheta, float k)
 float gaSchlickGGX(float cosLi, float cosLo, float roughness)
 {
     float r = roughness + 1.0;
-    float k = (r * r) / 8.0; // Epic suggests using this roughness remapping for analytic lights.
+    float k = (r * r) / 8.0; // UnrealEngine에서 분석광은 r^2 사용을 권장
     return gaSchlickG1(cosLi, k) * gaSchlickG1(cosLo, k);
 }
 
