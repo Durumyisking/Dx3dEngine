@@ -29,7 +29,7 @@ float4 main(VSOut psIn) : SV_TARGET
         {
 			// 구면 -> 데카르트
             float3 cartesianSample = float3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
-			// 데카르트 -> world
+			// 데카르트 -> 로컬
             float3 sampleVec = cartesianSample.x * right + cartesianSample.y * up + cartesianSample.z * normal;
             float weight = cos(theta) * sin(theta);
             irradiance += CubeMapTexture.Sample(linearSampler, -sampleVec).rgb * weight;
