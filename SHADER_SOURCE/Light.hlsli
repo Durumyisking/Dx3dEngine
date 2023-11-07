@@ -260,7 +260,7 @@ float3 DiffuseIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
     float3 kd = lerp(1.0 - F, 0.0, metallic);
     float3 irradiance = irradianceMap.SampleLevel(linearSampler, normalWorld, 0).rgb;
     
-    return kd * albedo * irradiance;
+    return irradiance;
 }
 float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
                    float metallic, float roughness, float pixelToCamDist)
@@ -268,7 +268,7 @@ float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
     float BRDF_X = dot(normalWorld, pixelToEye);
     float BRDF_Y = 1.0 - roughness; // imageBaker의 LUT는 상하 반전
     
-    float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(BRDF_X, BRDF_Y), 0.0f).rg; // 정확한 값 가져오기 위한 clampSampelr
+    float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(BRDF_X, BRDF_Y), 0.0f).rg; // 정확한 값 가져오기 위한 clampSampler
     
     float3 reflectVector = reflect(-pixelToEye, normalWorld);
     float mipLevel = roughness * 7.f;
@@ -283,7 +283,7 @@ float3 AmbientLightingByIBL(float3 albedo, float3 normalW, float3 pixelToEye,
     float3 diffuseIBL = DiffuseIBL(albedo, normalW, pixelToEye, metallic);
     float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCamDist);
     
-    return (diffuseIBL + specularIBL);
+    return (diffuseIBL );
 }
 
 

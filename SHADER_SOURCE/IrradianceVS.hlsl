@@ -8,7 +8,7 @@ struct VSIn
 struct VSOut
 {
     float4 Position : SV_Position;
-    float3 WorldPos : Position;
+    float3 LocalPos : Position;
 };
 
 
@@ -16,7 +16,7 @@ VSOut main(VSIn vsIn)
 {
     VSOut vsOut;
     
-    vsOut.WorldPos = vsIn.Position.xyz;
+    vsOut.LocalPos = vsIn.Position.xyz;
     vsOut.Position = mul(float4(vsIn.Position.xyz, 1.0), cubemapMat);
     vsOut.Position.z = vsOut.Position.w;
 
