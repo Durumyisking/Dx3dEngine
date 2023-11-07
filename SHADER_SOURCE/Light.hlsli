@@ -254,6 +254,7 @@ float4 CombineLights(float4 color, LightColor lightColor)
 float3 DiffuseIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
                   float metallic)
 {
+    // Fdielectric = 0.04 비금속(Dielectric) 재질의 F0
     float3 F0 = lerp(Fdielectric, albedo, metallic);
     float3 F = fresnelSchlick(F0, max(0.0, dot(normalWorld, pixelToEye)));
     float3 kd = lerp(1.0 - F, 0.0, metallic);
@@ -267,12 +268,11 @@ float3 SpecularIBL(float3 albedo, float3 normalWorld, float3 pixelToEye,
     float BRDF_X = dot(normalWorld, pixelToEye);
     float BRDF_Y = 1.0 - roughness; // imageBaker의 LUT는 상하 반전
     
-    float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(BRDF_X, BRDF_Y), 0.0f).rg; // 정확한 값 가져오기 위해 clampSampelr
+    float2 specularBRDF = BRDF.SampleLevel(clampSampler, float2(BRDF_X, BRDF_Y), 0.0f).rg; // 정확한 값 가져오기 위한 clampSampelr
     
     float3 reflectVector = reflect(-pixelToEye, normalWorld);
     float mipLevel = roughness * 7.f;
     float3 specularIrradiance = CubeMapTexture.SampleLevel(linearSampler, reflectVector, mipLevel).rgb;
-    const float3 Fdielectric = 0.04; // 비금속(Dielectric) 재질의 F0
     float3 F0 = lerp(Fdielectric, albedo, metallic);
 
     return (F0 * specularBRDF.x + specularBRDF.y) * specularIrradiance;
@@ -284,8 +284,8 @@ float3 AmbientLightingByIBL(float3 albedo, float3 normalW, float3 pixelToEye,
     float3 specularIBL = SpecularIBL(albedo, normalW, pixelToEye, metallic, roughness, pixelToCamDist);
     
     return (diffuseIBL + specularIBL);
-
 }
+
 
 
 float VSM_FILTER(float2 moments, float fragDepth)
