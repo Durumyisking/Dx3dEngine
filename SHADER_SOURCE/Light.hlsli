@@ -511,19 +511,26 @@ float3 PBR_DirectLighting(float3 pixelToEye, float3 pixelToLight, float3 albedo,
     float NdotO = max(0.0, dot(normal.xyz, pixelToEye));
         
     float3 F0 = lerp(Fdielectric, albedo.xyz, metalness);
-    float3 F = fresnelSchlick(F0, max(0.0, dot(halfway, pixelToEye))); // 프레넬 효과
+    
+     // 프레넬 효과
+    float3 F = fresnelSchlick(F0, max(0.0, dot(normal, pixelToEye)));
     // metalness가 높을수록 diffuse 비율 감소
     // 프레넬이 강한 부분은 최대치 감소
     float3 kd = lerp((float3) 1.0 - F, (float3)0.0, metalness); 
     float3 diffuseBRDF = kd * albedo.xyz;
 
+    // 미세표면 거칠기에 대한 반사 효과
     float D = ndfGGX(NdotH, roughness);
-    float3 G = gaSchlickGGX(NdotL, NdotO, roughness);
+    
+    // 빛과 미세표면 거칠기에 대한 음영
+    float3 G = gaSchlickGGX(NdotL, NdotO, roughness); 
+                                    
+                                         // 0나누기 방지
     float3 specularBRDF = (F * D * G) / max(1e-5, 4.0 * NdotL * NdotO);
       
     directLighting = (diffuseBRDF + specularBRDF) * NdotL; // 마리오는 그림자 이외의 음영이 없음;
     
-    return directLighting;
+    return specularBRDF;
 }
 
 

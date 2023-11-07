@@ -228,29 +228,28 @@ void ScenePlay::Initialize()
 	//block->SetPos(Vector3(15.f, 100.f, 13.f));
 
 
-	//for (size_t i = 0; i < 7; i++)
-	//{
-	//	for (size_t j = 0; j < 7; j++)
-	//	{
+	for (size_t i = 0; i <= 7; i++)
+	{
+		//for (size_t j = 0; j <= 7; j++)
+		//{
 
-	//		Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
-	//		Material* material = new Material();
-	//		material->SetShader(shader);
-	//		material->SetTextureByKey(L"t_a", eTextureSlot::Albedo);
-	//		material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
-	//		GETSINGLE(ResourceMgr)->Insert<Material>(L"PBRMaterial_NT", material);
+			Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
+			Material* material = new Material();
+			material->SetShader(shader);
+			material->SetTextureByKey(L"t_a", eTextureSlot::Albedo);
+			material->SetTextureByKey(L"t_n", eTextureSlot::Normal);
+			GETSINGLE(ResourceMgr)->Insert<Material>(L"PBRMaterial_NT", material);
 
 
-	//		GameObj* plane = object::Instantiate<GameObj>(eLayerType::NonePhysical, this);
-	//		plane->SetPos(Vector3((float)i, (float)j, 0.f));
-	//		plane->SetName(L"Plane");
-	//		//Material* mat = GETSINGLE(ResourceMgr)->Find<Material>(L"PBRMaterial_NT");
-	//		material->SetMetallic((float)i / 7.f);
-	//		material->SetRoughness((float)j / 7.f);
-	//		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterial(material);
-	//		plane->GetMeshRenderer()->SetMeshByKey(L"Spheremesh");
-	//	}
-	//}
+			GameObj* plane = object::Instantiate<GameObj>(eLayerType::NonePhysical, this);
+			plane->SetPos(Vector3((float)i, 0.f, 0.f));
+			plane->SetName(L"Plane");
+			material->SetMetallic(0.99f);
+			material->SetRoughness((float)i / 7.f);
+			plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterial(material);
+			plane->GetMeshRenderer()->SetMeshByKey(L"Spheremesh");
+		//}
+	}
 
 			//Shader* shader = GETSINGLE(ResourceMgr)->Find<Shader>(L"PBRShader");
 			//Material* material = new Material();
@@ -276,8 +275,8 @@ void ScenePlay::Initialize()
 	//	{
 	//		for (size_t k = 1; k < 10; k++)
 	//		{
-				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-				block->SetPos({ 0.f, -15.f, 10.f });
+				//BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+				//block->SetPos({ 0.f, -15.f, 10.f });
 	//			//block->SetInstance(true);
 	//			block->SetPos(Vector3(static_cast<float>(i), 0.5f + static_cast<float>(j), static_cast<float>(k)));
 	//			//blockContainer->PushObject(block);
@@ -446,7 +445,7 @@ void ScenePlay::Enter()
 {
 	Scene::Enter();
 
-	mCamera->SetPos(Vector3(0.f, 0.f, 0.f));
+	mCamera->SetPos(Vector3(3.5f, 0.f, 0.f));
 	mCamera->GetComponent<Transform>()->SetRotationX(45.f);
 	//mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
 }
