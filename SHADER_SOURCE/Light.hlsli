@@ -438,11 +438,10 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         ? 1.0f
         : saturate((light.fallOffEnd - lightDist) / (light.fallOffEnd - light.fallOffStart));
 
+    // Shadow map
+    float shadowFactor = 1.0;
 
     { 
-         // Shadow map
-        float shadowFactor = 1.0;
-
         // 1. Project posWorld to light screen    
         float4 lightScreen = mul(float4(posWorld, 1.0), light.view);
         lightScreen = mul(float4(lightScreen.xyz, 1.0), light.projection);
@@ -457,13 +456,12 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         
         // Baisc Shadow
         
-        // 3. 쉐도우맵에서 값 가져오기
-        float depth = shadowMap.Sample(clampSampler, lightTexcoord).r;
+            //// 3. 쉐도우맵에서 값 가져오기
+            //float depth = shadowMap.Sample(clampSampler, lightTexcoord).r;
         
-        // 4. 가려져 있다면 그림자로 표시
-        if (depth + 0.00001 < lightScreen.z)
-            shadowFactor = 0.0;
-        
+            //// 4. 가려져 있다면 그림자로 표시
+            //if (depth + 0.00001 < lightScreen.z)
+            //    shadowFactor = 0.0;
         /*
             
             ///////////////////////////////////////////////////////////////
@@ -530,7 +528,7 @@ float3 PBR_DirectLighting(float3 pixelToEye, float3 pixelToLight, float3 albedo,
                                          // 0나누기 방지
     float3 specularBRDF = (D * G * F) / max(1e-5, 4.0 * NdotL * NdotO);
       
-    directLighting = (diffuseBRDF ) * NdotL; // 마리오는 그림자 이외의 음영이 없음;
+    directLighting = (diffuseBRDF + specularBRDF) * NdotL; // 마리오는 그림자 이외의 음영이 없음;
     
     return directLighting;
 }

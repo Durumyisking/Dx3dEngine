@@ -47,7 +47,7 @@ float4 main(VSOut vsIn) : SV_Target
         ? 1.f
         : LightRadiance(lightAttributes[i], vsIn.WorldPos, normal);
                 
-        directLighting += PBR_DirectLighting(pixelToEye, pixelToLight, albedo.xyz, normal.xyz, metallic, roughness) * radiance;
+        directLighting += (PBR_DirectLighting(pixelToEye, pixelToLight, albedo.xyz, normal.xyz, metallic, roughness) * radiance);
 
     }
 
@@ -56,7 +56,7 @@ float4 main(VSOut vsIn) : SV_Target
     //outColor.xyz = DiffuseIBL(albedo.xyz, normal, pixelToEye, metallic);
     //outColor.xyz = SpecularIBL(albedo.xyz, normal, pixelToEye, metallic, roughness);
     //outColor.xyz = directLighting;
-    outColor.xyz =   directLighting;
+    outColor.xyz = ambientLighting + directLighting;
 
     
     return float4(outColor.xyz, 1.f);;

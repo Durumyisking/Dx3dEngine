@@ -170,19 +170,19 @@ void ScenePlay::Initialize()
 	////TriangleMesh Test
 
 
-	//{
-	//	mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
+	{
+		mPlayer = object::Instantiate<Player>(eLayerType::Player, this);
 
-	//	mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
-	//	//AudioSource* mAudioSource= mCamera->AddComponent<AudioSource>(eComponentType::AudioSource);
-	//	//mAudioSource->AddClipByKey(L"NewDonkCity");
-	//	//mAudioSource->SetVolume(L"NewDonkCity", 0.00001f);
-	//	//mAudioSource->Play(L"NewDonkCity",true);
-	//}
-	//{
-	//	PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
-	//	mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
-	//}
+		mCamera->GetComponent<Camera>()->SetTarget(mPlayer);
+		//AudioSource* mAudioSource= mCamera->AddComponent<AudioSource>(eComponentType::AudioSource);
+		//mAudioSource->AddClipByKey(L"NewDonkCity");
+		//mAudioSource->SetVolume(L"NewDonkCity", 0.00001f);
+		//mAudioSource->Play(L"NewDonkCity",true);
+	}
+	{
+		PostProcess* mPostProcess_Replay = object::Instantiate<PostProcess>(eLayerType::PostProcess, L"PostProcess_LensFlare");
+		mPostProcess_Replay->SetMaterial(L"BasicPostProcessMaterial");
+	}
 
 
 	//{
@@ -196,32 +196,32 @@ void ScenePlay::Initialize()
 		t->BindAllShaderResource(12);
 	}
 
-	//{
-	//	SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
-	//	skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-	//	skySphere->SetName(L"SkySphere");
-	//}
+	{
+		SkySphere* skySphere = object::Instantiate<SkySphere>(eLayerType::NonePhysical, this);
+		skySphere->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		skySphere->SetName(L"SkySphere");
+	}
 
 	//{
 	//	CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
 	//	ground->SetPos(Vector3::Zero);
 	//}
 
-	//{
-	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-	//	plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-	//	plane->SetScale({ 1000.f, 0.5f, 1000.f });
-	//	plane->SetName(L"Plane");
-	//	plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-	//	plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.0f);
-	//	plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.0f);
-	//	plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+	{
+		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+		plane->SetScale({ 1000.f, 0.5f, 1000.f });
+		plane->SetName(L"Plane");
+		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
+		plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.0f);
+		plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.99f);
+		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
 
-	//	PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-	//	rigid->RemoveGravity();
+		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+		rigid->RemoveGravity();
 
-	//	plane->AddComponent<PhysXCollider>(eComponentType::Collider);
-	//}
+		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+	}
 
 	
 	//BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
@@ -275,8 +275,8 @@ void ScenePlay::Initialize()
 	//	{
 	//		for (size_t k = 1; k < 10; k++)
 	//		{
-				BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
-				block->SetPos({ 0.f, -15.f, 10.f });
+				//BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
+				//block->SetPos({ 0.f, -15.f, 10.f });
 	//			//block->SetInstance(true);
 	//			block->SetPos(Vector3(static_cast<float>(i), 0.5f + static_cast<float>(j), static_cast<float>(k)));
 	//			//blockContainer->PushObject(block);

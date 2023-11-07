@@ -968,7 +968,7 @@ void AsyncLoad::loadCityObjectMaterial()
 
 #pragma region BlockBrick Material
 	createMaterial(L"BlockBrickBody", L"DeferredInstancedShader", L"BlockBrickMaterial_inst", TextureState::AlEmMtNrRg);
-	createMaterial(L"BlockBrickBody", L"PBRShader", L"BlockBrickMaterial", TextureState::AlEmMtNrRg);
+	createMaterial(L"BlockBrickBody", L"DeferredShader", L"BlockBrickMaterial", TextureState::AlEmMtNrRg);
 
 #pragma endregion
 
