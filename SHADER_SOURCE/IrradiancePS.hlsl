@@ -28,9 +28,9 @@ float4 main(VSOut psIn) : SV_TARGET
         for (float theta = 0.0; theta < PI_05; theta += sampleDelta) // 구면상에서의 위 아래 각도
         {
 			// 구면 -> 데카르트
-            float3 catesianSample = float3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
+            float3 cartesianSample = float3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
 			// 데카르트 -> world
-            float3 sampleVec = catesianSample.x * right + catesianSample.y * up + catesianSample.z * normal;
+            float3 sampleVec = cartesianSample.x * right + cartesianSample.y * up + cartesianSample.z * normal;
             float weight = cos(theta) * sin(theta);
             irradiance += CubeMapTexture.Sample(linearSampler, -sampleVec).rgb * weight;
             nrSamples++;
