@@ -493,7 +493,7 @@ float3 LightRadiance(LightAttribute light, float3 posWorld, float3 normalWorld, 
         
     }
 
-    float3 radiance = light.color.diffuse.xyz * spotFator * att * 1.f;
+    float3 radiance = light.color.diffuse.xyz * spotFator * att * shadowFactor;
 
     return radiance;
 }

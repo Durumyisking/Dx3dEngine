@@ -202,26 +202,26 @@ void ScenePlay::Initialize()
 		skySphere->SetName(L"SkySphere");
 	}
 
-	//{
-	//	CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
-	//	ground->SetPos(Vector3::Zero);
-	//}
-
 	{
-		GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
-		plane->SetPos(Vector3(0.f, -0.251f, 0.f));
-		plane->SetScale({ 1000.f, 0.5f, 1000.f });
-		plane->SetName(L"Plane");
-		plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
-		plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.0f);
-		plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.99f);
-		plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
-
-		PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
-		rigid->RemoveGravity();
-
-		plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+		CityGround* ground = object::Instantiate<CityGround>(eLayerType::Platforms, this);
+		ground->SetPos(Vector3::Zero);
 	}
+
+	//{
+	//	GameObj* plane = object::Instantiate<GameObj>(eLayerType::Platforms, this);
+	//	plane->SetPos(Vector3(0.f, -0.251f, 0.f));
+	//	plane->SetScale({ 1000.f, 0.5f, 1000.f });
+	//	plane->SetName(L"Plane");
+	//	plane->AddComponent<MeshRenderer>(eComponentType::MeshRenderer)->SetMaterialByKey(L"DeferredMaterial_NT");
+	//	plane->GetMeshRenderer()->GetMaterial()->SetMetallic(0.0f);
+	//	plane->GetMeshRenderer()->GetMaterial()->SetRoughness(0.99f);
+	//	plane->AddComponent<Physical>(eComponentType::Physical)->InitialDefaultProperties(eActorType::Static, eGeometryType::Box, Vector3(500.f, 0.25f, 500.f));
+
+	//	PhysXRigidBody* rigid = plane->AddComponent<PhysXRigidBody>(eComponentType::RigidBody);
+	//	rigid->RemoveGravity();
+
+	//	plane->AddComponent<PhysXCollider>(eComponentType::Collider);
+	//}
 
 	
 	//BlockBrick* block = object::Instantiate<BlockBrick>(eLayerType::Objects, this, L"BlockBrick");
@@ -377,7 +377,7 @@ void ScenePlay::Initialize()
 	//		}
 	//	}
 	//}
-//////////////////////////////////
+////////////////////////////////
 
 
 

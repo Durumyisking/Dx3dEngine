@@ -80,7 +80,7 @@ float3 TextureMapping_normal(float2 uv, float3 TangentWorld, float3 NormalWorld,
     
     float3 N = NormalWorld;
     float3 T = normalize(TangentWorld - dot(TangentWorld, N) * N);
-    float3 B = normalize(cross(N, T));
+    float3 B = cross(N, T);
         
     float3x3 TBN = float3x3(T, B, N);
         

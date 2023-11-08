@@ -217,10 +217,9 @@ void Mesh::UpdateInstanceBuffer(std::vector<InstancingData> matrices)
 void Mesh::CheckFrustumCull()
 {
 	BoundingFrustum frustum = renderer::mainCamera->GetFrustum();
-	// todo bounding box에 월드행렬을 곱해서 구현해보자
 	mBoundingBox.Center = Vector3::Transform(mBoundingBox.Center, mOwnerWorldMatrix);
 
-	// extense에는 scale만 계산해주면 될 것 같다.
+	// extents에는 scale만 계산해주면 될 것 같다.
 	Vector3 extractedScale = { mOwnerWorldMatrix._11, mOwnerWorldMatrix._22, mOwnerWorldMatrix._33 };
 	mBoundingBox.Extents = mInitialExtent * extractedScale; // 계속 곱하니까 점이 되어버림(offset 0.00~~씩 해주니까) 초기 extent를 유지해야함
 	mbFrustumCulled = !frustum.Intersects(mBoundingBox);
