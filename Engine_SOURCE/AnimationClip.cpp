@@ -183,7 +183,7 @@ void AnimationClip::CreateAnimation(const std::wstring& name, const std::wstring
 	CreateAnimation(name, path, 1.0f / static_cast<float>(frameCount));
 }
 
-void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, const animation::SkeletonData& inNextData, double drutation )
+void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, const animation::SkeletonData& inNextData, double duration)
 {
 	// 본 정보들을 변경.
 	if (!mAnimator)
@@ -212,7 +212,7 @@ void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, cons
 			continue;
 
 		// T
-		Vector3 positionVec = Interpolation(curData.Translation[i].second, nextData.Translation[i].second, static_cast<float>(mTickPerSceond), static_cast<float>(drutation));
+		Vector3 positionVec = Interpolation(curData.Translation[i].second, nextData.Translation[i].second, static_cast<float>(mTickPerSceond), static_cast<float>(duration));
 
 		// R
 		Vector3 eRotation = curData.Rotation[i].second;
@@ -222,7 +222,7 @@ void AnimationClip::SetBoneMatrix(const animation::SkeletonData& inCurData, cons
 		aiQuaternion qNextRotation(-eNextRotation.y, eNextRotation.z, -eNextRotation.x);
 
 		aiQuaternion result = {};
-		result.Interpolate(result, qRotation, qNextRotation, static_cast<float>(mTickPerSceond / drutation));
+		result.Interpolate(result, qRotation, qNextRotation, static_cast<float>(mTickPerSceond / duration));
 
 		// T * R
 		node->SetTransformation(ToLeftHandMatrix(positionVec, result.GetMatrix()));

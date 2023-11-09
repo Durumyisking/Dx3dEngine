@@ -28,7 +28,7 @@ public:
 
 	void CreateAnimation(const std::wstring& name ,const std::wstring& path, double duration);
 	void CreateAnimation(const std::wstring& name, const std::wstring& path, int frameCount);
-	void SetBoneMatrix(const animation::SkeletonData& inCurData, const animation::SkeletonData& inNextData, double drutation = 1.f/ 60.f);
+	void SetBoneMatrix(const animation::SkeletonData& inCurData, const animation::SkeletonData& inNextData, double duration = 1.f/ 60.f);
 
 	void Reset();
 
