@@ -55,5 +55,10 @@ protected:
 private: 
 	eCapState mCapState;
 	GameObj* mOwner;
+
+
+	float mFlightDistance = 15.f;
+	float mFlightDuration = 0.5f;
+
 };
 

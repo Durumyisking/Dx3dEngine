@@ -100,20 +100,20 @@ void Player::Initialize()
 
 
 	//È¿°úÀ½
-	AudioSource* mAudioSource = AddComponent<AudioSource>(eComponentType::AudioSource);
-	//AddComponent<PlayerBGMScript>(eComponentType::Script);
-	mAudioSource->AddClipByKey(L"FootNote");
-	mAudioSource->AddClipByKey(L"ha1");
-	mAudioSource->AddClipByKey(L"ha2");
-	mAudioSource->AddClipByKey(L"woo");
-	mAudioSource->AddClipByKey(L"wahoo");
-	mAudioSource->AddClipByKey(L"NewDonkCity");
+	//AudioSource* mAudioSource = AddComponent<AudioSource>(eComponentType::AudioSource);
+	////AddComponent<PlayerBGMScript>(eComponentType::Script);
+	//mAudioSource->AddClipByKey(L"FootNote");
+	//mAudioSource->AddClipByKey(L"ha1");
+	//mAudioSource->AddClipByKey(L"ha2");
+	//mAudioSource->AddClipByKey(L"woo");
+	//mAudioSource->AddClipByKey(L"wahoo");
+	//mAudioSource->AddClipByKey(L"NewDonkCity");
 
-	mAudioSource->AddClipByKey(L"CapThrow");
-	mAudioSource->AddClipByKey(L"Capture");
+	//mAudioSource->AddClipByKey(L"CapThrow");
+	//mAudioSource->AddClipByKey(L"Capture");
 
-	mAudioSource->Play(L"NewDonkCity", true);
-	mAudioSource->SetVolume(L"ha2", 100.f);
+	//mAudioSource->Play(L"NewDonkCity", true);
+	//mAudioSource->SetVolume(L"ha2", 100.f);
 
 
 	AddComponent<PhysXCollider>(eComponentType::Collider)->SetSwitchState(true);

@@ -214,7 +214,7 @@ void MarioCap::OnTriggerEnter(GameObj* gameObject)
 		GetComponent<Transform>()->SetPhysicalRotation(rotation);
 		rigidbody->SetMaxVelocity(0.0f);
 
-		GetOwner()->GetComponent<AudioSource>()->Play(L"Capture", false);
+		//GetOwner()->GetComponent<AudioSource>()->Play(L"Capture", false);
 
 		GetComponent<BoneAnimator>()->Play(L"Capture", false);
 
@@ -308,7 +308,7 @@ void MarioCap::stateInfoInitalize()
 
 void MarioCap::FlyStart()
 {
-	GetOwner()->GetComponent<AudioSource>()->Play(L"CapThrow", true);
+	////GetOwner()->GetComponent<AudioSource>()->Play(L"CapThrow", true);
 	// 이전에 진행중이던 애니메이터 종료
 	GenericAnimator* animator = GetComponent<GenericAnimator>();
 	if (animator->IsRunning())
@@ -325,10 +325,10 @@ void MarioCap::FlyStart()
 
 	// 진행중 사용될 Value 값
 	param.StartValue = 0.f;
-	param.EndValue= 15.f;
+	param.EndValue= mFlightDistance;
 
 	// 진행시간
-	param.DurationTime = 0.5f;
+	param.DurationTime = mFlightDuration;
 
 	// 진행 함수 std::function<void(float)>
 	param.DurationFunc = [this, tr, pos, playerforward](float inCurValue)
@@ -363,10 +363,10 @@ void MarioCap::FlyEnd()
 	param.AnimType = eAnimType::Linear;
 
 	param.StartValue = 1.f;
-	param.EndValue = 30.f;
+	param.EndValue = mFlightDistance * 2.f;
 
 	// 진행시간
-	param.DurationTime = 10.f;
+	param.DurationTime = mFlightDuration;
 
 	// 진행 함수 std::function<void(float)>
 	param.DurationFunc = [this, animator, playerTr, myTr](float inCurValue)
@@ -406,7 +406,7 @@ void MarioCap::FlyEnd()
 
 		SetCapState(eCapState::Return);
 		GetPhysical()->KinematicActorSleep();
-		GetOwner()->GetComponent<AudioSource>()->Stop(L"CapThrow");
+		//GetOwner()->GetComponent<AudioSource>()->Stop(L"CapThrow");
 		Pause();
 	};
 
